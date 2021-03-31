@@ -3373,6 +3373,9 @@ type ProjectsInstancesCreateCall struct {
 // long running operation which contains an instance on completion.
 // While the long running operation is in progress, any call to
 // `GetInstance` returns an instance in state `CREATING`.
+//
+// - parent: Resource name of the project containing the instance.
+// Format: `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateinstancerequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3515,6 +3518,9 @@ type ProjectsInstancesDeleteCall struct {
 // operation which contains a `google.protobuf.Empty` response on
 // completion. Deleting an instance with worker pools in it will delete
 // these worker pools.
+//
+// - name: Name of the instance to delete. Format:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3646,6 +3652,9 @@ type ProjectsInstancesGetCall struct {
 }
 
 // Get: Returns the specified instance.
+//
+// - name: Name of the instance to retrieve. Format:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3793,6 +3802,9 @@ type ProjectsInstancesListCall struct {
 }
 
 // List: Lists instances in a project.
+//
+// - parent: Resource name of the project. Format:
+// `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3942,6 +3954,11 @@ type ProjectsInstancesPatchCall struct {
 // Patch: Updates the specified instance. Returns a long running
 // operation which contains the updated instance in the response on
 // completion.
+//
+// - name: Output only. Instance resource name formatted as:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be
+// populated when creating an instance since it is provided in the
+// `instance_id` field.
 func (r *ProjectsInstancesService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphainstance *GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4130,6 +4147,9 @@ type ProjectsInstancesWorkerpoolsCreateCall struct {
 // worker pool on completion. While the long running operation is in
 // progress, any call to `GetWorkerPool` returns a worker pool in state
 // `CREATING`.
+//
+// - parent: Resource name of the instance in which to create the new
+// worker pool. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsCreateCall {
 	c := &ProjectsInstancesWorkerpoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4272,6 +4292,9 @@ type ProjectsInstancesWorkerpoolsDeleteCall struct {
 // operation, which contains a `google.protobuf.Empty` response on
 // completion. While the long running operation is in progress, any call
 // to `GetWorkerPool` returns a worker pool in state `DELETING`.
+//
+// - name: Name of the worker pool to delete. Format:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) Delete(name string) *ProjectsInstancesWorkerpoolsDeleteCall {
 	c := &ProjectsInstancesWorkerpoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4403,6 +4426,9 @@ type ProjectsInstancesWorkerpoolsGetCall struct {
 }
 
 // Get: Returns the specified worker pool.
+//
+// - name: Name of the worker pool to retrieve. Format:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) Get(name string) *ProjectsInstancesWorkerpoolsGetCall {
 	c := &ProjectsInstancesWorkerpoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4550,6 +4576,9 @@ type ProjectsInstancesWorkerpoolsListCall struct {
 }
 
 // List: Lists worker pools in an instance.
+//
+// - parent: Resource name of the instance. Format:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInstancesWorkerpoolsListCall {
 	c := &ProjectsInstancesWorkerpoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4728,6 +4757,11 @@ type ProjectsInstancesWorkerpoolsPatchCall struct {
 // worker pool on completion. While the long running operation is in
 // progress, any call to `GetWorkerPool` returns a worker pool in state
 // `UPDATING`.
+//
+// - name: WorkerPool resource name formatted as:
+// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
+//  name should not be populated when creating a worker pool since it is
+// provided in the `poolId` field.
 func (r *ProjectsInstancesWorkerpoolsService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphaupdateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsPatchCall {
 	c := &ProjectsInstancesWorkerpoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4870,6 +4904,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

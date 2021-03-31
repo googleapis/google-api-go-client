@@ -8701,6 +8701,8 @@ type HybridIssuersListCall struct {
 // ids. This api is authenticated and unauthorized(allow all the users)
 // and used by runtime authn-authz service to query control plane's
 // issuer service account ids.
+//
+// - name: Must be of the form `hybrid/issuers`.
 func (r *HybridIssuersService) List(name string) *HybridIssuersListCall {
 	c := &HybridIssuersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8989,6 +8991,9 @@ type OrganizationsDeleteCall struct {
 
 // Delete: Delete an Apigee organization. Only supported for
 // SubscriptionType TRIAL.
+//
+// - name: Name of the organization. Use the following structure in your
+// request: `organizations/{org}`
 func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 	c := &OrganizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9122,6 +9127,9 @@ type OrganizationsGetCall struct {
 // Get: Gets the profile for an Apigee organization. See Understanding
 // organizations
 // (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
+//
+// - name: Apigee organization name in the following format:
+// `organizations/{org}`
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9267,6 +9275,9 @@ type OrganizationsGetDeployedIngressConfigCall struct {
 
 // GetDeployedIngressConfig: Gets the deployed ingress configuration for
 // an organization.
+//
+// - name: Name of the deployed configuration for the organization in
+// the following format: 'organizations/{org}/deployedIngressConfig'.
 func (r *OrganizationsService) GetDeployedIngressConfig(name string) *OrganizationsGetDeployedIngressConfigCall {
 	c := &OrganizationsGetDeployedIngressConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9454,6 +9465,9 @@ type OrganizationsGetSyncAuthorizationCall struct {
 // Synchronizer
 // (https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access).
 // **Note**: Available to Apigee hybrid only.
+//
+// - name: Name of the Apigee organization. Use the following structure
+// in your request: `organizations/{org}`
 func (r *OrganizationsService) GetSyncAuthorization(name string, googlecloudapigeev1getsyncauthorizationrequest *GoogleCloudApigeeV1GetSyncAuthorizationRequest) *OrganizationsGetSyncAuthorizationCall {
 	c := &OrganizationsGetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9597,6 +9611,9 @@ type OrganizationsListCall struct {
 // List: Lists the Apigee organizations and associated GCP projects that
 // you have permission to access. See Understanding organizations
 // (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
+//
+// - parent: Use the following structure in your request:
+// `organizations`
 func (r *OrganizationsService) List(parent string) *OrganizationsListCall {
 	c := &OrganizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9753,6 +9770,9 @@ type OrganizationsSetSyncAuthorizationCall struct {
 // see Configure the Synchronizer
 // (https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access).
 // **Note**: Available to Apigee hybrid only.
+//
+// - name: Name of the Apigee organization. Use the following structure
+// in your request: `organizations/{org}`
 func (r *OrganizationsService) SetSyncAuthorization(name string, googlecloudapigeev1syncauthorization *GoogleCloudApigeeV1SyncAuthorization) *OrganizationsSetSyncAuthorizationCall {
 	c := &OrganizationsSetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9895,6 +9915,9 @@ type OrganizationsUpdateCall struct {
 
 // Update: Updates the properties for an Apigee organization. No other
 // fields in the organization profile will be updated.
+//
+// - name: Apigee organization name in the following format:
+// `organizations/{org}`
 func (r *OrganizationsService) Update(name string, googlecloudapigeev1organization *GoogleCloudApigeeV1Organization) *OrganizationsUpdateCall {
 	c := &OrganizationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10035,6 +10058,9 @@ type OrganizationsAnalyticsDatastoresCreateCall struct {
 }
 
 // Create: Create a Datastore for an org
+//
+// - parent: The parent organization name. Must be of the form
+// `organizations/{org}`.
 func (r *OrganizationsAnalyticsDatastoresService) Create(parent string, googlecloudapigeev1datastore *GoogleCloudApigeeV1Datastore) *OrganizationsAnalyticsDatastoresCreateCall {
 	c := &OrganizationsAnalyticsDatastoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10174,6 +10200,9 @@ type OrganizationsAnalyticsDatastoresDeleteCall struct {
 }
 
 // Delete: Delete a Datastore from an org.
+//
+// - name: Resource name of the Datastore to be deleted. Must be of the
+// form `organizations/{org}/analytics/datastores/{datastoreId}`
 func (r *OrganizationsAnalyticsDatastoresService) Delete(name string) *OrganizationsAnalyticsDatastoresDeleteCall {
 	c := &OrganizationsAnalyticsDatastoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10305,6 +10334,9 @@ type OrganizationsAnalyticsDatastoresGetCall struct {
 }
 
 // Get: Get a Datastore
+//
+// - name: Resource name of the Datastore to be get. Must be of the form
+// `organizations/{org}/analytics/datastores/{datastoreId}`
 func (r *OrganizationsAnalyticsDatastoresService) Get(name string) *OrganizationsAnalyticsDatastoresGetCall {
 	c := &OrganizationsAnalyticsDatastoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10449,6 +10481,9 @@ type OrganizationsAnalyticsDatastoresListCall struct {
 }
 
 // List: List Datastores
+//
+// - parent: The parent organization name. Must be of the form
+// `organizations/{org}`.
 func (r *OrganizationsAnalyticsDatastoresService) List(parent string) *OrganizationsAnalyticsDatastoresListCall {
 	c := &OrganizationsAnalyticsDatastoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10609,6 +10644,9 @@ type OrganizationsAnalyticsDatastoresTestCall struct {
 // Test: Test if Datastore configuration is correct. This includes
 // checking if credentials provided by customer have required
 // permissions in target destination storage
+//
+// - parent: The parent organization name Must be of the form
+// `organizations/{org}`
 func (r *OrganizationsAnalyticsDatastoresService) Test(parent string, googlecloudapigeev1datastore *GoogleCloudApigeeV1Datastore) *OrganizationsAnalyticsDatastoresTestCall {
 	c := &OrganizationsAnalyticsDatastoresTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10751,6 +10789,9 @@ type OrganizationsAnalyticsDatastoresUpdateCall struct {
 }
 
 // Update: Update a Datastore
+//
+// - name: The resource name of datastore to be updated. Must be of the
+// form `organizations/{org}/analytics/datastores/{datastoreId}`
 func (r *OrganizationsAnalyticsDatastoresService) Update(name string, googlecloudapigeev1datastore *GoogleCloudApigeeV1Datastore) *OrganizationsAnalyticsDatastoresUpdateCall {
 	c := &OrganizationsAnalyticsDatastoresUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10901,6 +10942,9 @@ type OrganizationsApiproductsAttributesCall struct {
 // seconds after entity is accessed during runtime. In this case, the
 // `ExpiresIn` element on the OAuthV2 policy won't be able to expire an
 // access token in less than 180 seconds.
+//
+// - name: Name of the API product. Use the following structure in your
+// request: `organizations/{org}/apiproducts/{apiproduct}`
 func (r *OrganizationsApiproductsService) Attributes(name string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsApiproductsAttributesCall {
 	c := &OrganizationsApiproductsAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11059,6 +11103,10 @@ type OrganizationsApiproductsCreateCall struct {
 // you don't specify an environment in the request body, the product
 // allows access to all environments. For more information, see What is
 // an API product?
+//
+// - parent: Name of the organization in which the API product will be
+// created. Use the following structure in your request:
+// `organizations/{org}`
 func (r *OrganizationsApiproductsService) Create(parent string, googlecloudapigeev1apiproduct *GoogleCloudApigeeV1ApiProduct) *OrganizationsApiproductsCreateCall {
 	c := &OrganizationsApiproductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11206,6 +11254,9 @@ type OrganizationsApiproductsDeleteCall struct {
 // display name. While they may be the same, it depends on whether the
 // API product was created via the UI or the API. View the list of API
 // products to verify the internal name.
+//
+// - name: Name of the API product. Use the following structure in your
+// request: `organizations/{org}/apiproducts/{apiproduct}`
 func (r *OrganizationsApiproductsService) Delete(name string) *OrganizationsApiproductsDeleteCall {
 	c := &OrganizationsApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11341,6 +11392,9 @@ type OrganizationsApiproductsGetCall struct {
 // not the display name. While they may be the same, it depends on
 // whether the API product was created via the UI or the API. View the
 // list of API products to verify the internal name.
+//
+// - name: Name of the API product. Use the following structure in your
+// request: `organizations/{org}/apiproducts/{apiproduct}`
 func (r *OrganizationsApiproductsService) Get(name string) *OrganizationsApiproductsGetCall {
 	c := &OrganizationsApiproductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11489,6 +11543,9 @@ type OrganizationsApiproductsListCall struct {
 // the number of API products returned by the API is 1000. You can
 // paginate the list of API products returned using the `startKey` and
 // `count` query parameters.
+//
+// - parent: Name of the organization. Use the following structure in
+// your request: `organizations/{org}`
 func (r *OrganizationsApiproductsService) List(parent string) *OrganizationsApiproductsListCall {
 	c := &OrganizationsApiproductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11707,6 +11764,9 @@ type OrganizationsApiproductsUpdateCall struct {
 // Display Name. While they may be the same, it depends on whether the
 // API product was created via UI or API. View the list of API products
 // to identify their internal names.
+//
+// - name: Name of the API product. Use the following structure in your
+// request: `organizations/{org}/apiproducts/{apiproduct}`
 func (r *OrganizationsApiproductsService) Update(name string, googlecloudapigeev1apiproduct *GoogleCloudApigeeV1ApiProduct) *OrganizationsApiproductsUpdateCall {
 	c := &OrganizationsApiproductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11846,6 +11906,10 @@ type OrganizationsApiproductsAttributesDeleteCall struct {
 }
 
 // Delete: Deletes an API product attribute.
+//
+// - name: Name of the API product attribute. Use the following
+// structure in your request:
+// `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}`
 func (r *OrganizationsApiproductsAttributesService) Delete(name string) *OrganizationsApiproductsAttributesDeleteCall {
 	c := &OrganizationsApiproductsAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11977,6 +12041,10 @@ type OrganizationsApiproductsAttributesGetCall struct {
 }
 
 // Get: Gets the value of an API product attribute.
+//
+// - name: Name of the API product attribute. Use the following
+// structure in your request:
+// `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}`
 func (r *OrganizationsApiproductsAttributesService) Get(name string) *OrganizationsApiproductsAttributesGetCall {
 	c := &OrganizationsApiproductsAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12121,6 +12189,9 @@ type OrganizationsApiproductsAttributesListCall struct {
 }
 
 // List: Lists all API product attributes.
+//
+// - parent: Name of the API product. Use the following structure in
+// your request: `organizations/{org}/apiproducts/{apiproduct}`
 func (r *OrganizationsApiproductsAttributesService) List(parent string) *OrganizationsApiproductsAttributesListCall {
 	c := &OrganizationsApiproductsAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12272,6 +12343,9 @@ type OrganizationsApiproductsAttributesUpdateApiProductAttributeCall struct {
 // accessed during runtime. In this case, the `ExpiresIn` element on the
 // OAuthV2 policy won't be able to expire an access token in less than
 // 180 seconds.
+//
+// - name: Name of the API product. Use the following structure in your
+// request: `organizations/{org}/apiproducts/{apiproduct}`
 func (r *OrganizationsApiproductsAttributesService) UpdateApiProductAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall {
 	c := &OrganizationsApiproductsAttributesUpdateApiProductAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12427,6 +12501,9 @@ type OrganizationsApisCreateCall struct {
 // created. If the API proxy exists, then a new revision is created.
 // Invalid API proxy configurations are rejected, and a list of
 // validation errors is returned to the client.
+//
+// - parent: Name of the organization in the following format:
+// `organizations/{org}`
 func (r *OrganizationsApisService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsApisCreateCall {
 	c := &OrganizationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12609,6 +12686,9 @@ type OrganizationsApisDeleteCall struct {
 // Delete: Deletes an API proxy and all associated endpoints, policies,
 // resources, and revisions. The API proxy must be undeployed before you
 // can delete it.
+//
+// - name: Name of the API proxy in the following format:
+// `organizations/{org}/apis/{api}`
 func (r *OrganizationsApisService) Delete(name string) *OrganizationsApisDeleteCall {
 	c := &OrganizationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12740,6 +12820,9 @@ type OrganizationsApisGetCall struct {
 }
 
 // Get: Gets an API proxy including a list of existing revisions.
+//
+// - name: Name of the API proxy in the following format:
+// `organizations/{org}/apis/{api}`
 func (r *OrganizationsApisService) Get(name string) *OrganizationsApisGetCall {
 	c := &OrganizationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12886,6 +12969,9 @@ type OrganizationsApisListCall struct {
 // List: Lists the names of all API proxies in an organization. The
 // names returned correspond to the names defined in the configuration
 // files for each API proxy.
+//
+// - parent: Name of the organization in the following format:
+// `organizations/{org}`
 func (r *OrganizationsApisService) List(parent string) *OrganizationsApisListCall {
 	c := &OrganizationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13057,6 +13143,9 @@ type OrganizationsApisDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of an API proxy.
+//
+// - parent: Name of the API proxy for which to return deployment
+// information in the following format: `organizations/{org}/apis/{api}`
 func (r *OrganizationsApisDeploymentsService) List(parent string) *OrganizationsApisDeploymentsListCall {
 	c := &OrganizationsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13203,6 +13292,10 @@ type OrganizationsApisKeyvaluemapsCreateCall struct {
 }
 
 // Create: Creates a key value map in an api proxy.
+//
+// - parent: The name of the environment in which to create the key
+// value map. Must be of the form
+// `organizations/{organization}/apis/{api}`.
 func (r *OrganizationsApisKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsApisKeyvaluemapsCreateCall {
 	c := &OrganizationsApisKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13342,6 +13435,9 @@ type OrganizationsApisKeyvaluemapsDeleteCall struct {
 }
 
 // Delete: Delete a key value map in an api proxy.
+//
+// - name: The name of the key value map. Must be of the form
+// `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsApisKeyvaluemapsService) Delete(name string) *OrganizationsApisKeyvaluemapsDeleteCall {
 	c := &OrganizationsApisKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13474,6 +13570,9 @@ type OrganizationsApisRevisionsDeleteCall struct {
 // Delete: Deletes an API proxy revision and all policies, resources,
 // endpoints, and revisions associated with it. The API proxy revision
 // must be undeployed before you can delete it.
+//
+// - name: API proxy revision in the following format:
+// `organizations/{org}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsApisRevisionsService) Delete(name string) *OrganizationsApisRevisionsDeleteCall {
 	c := &OrganizationsApisRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13612,6 +13711,9 @@ type OrganizationsApisRevisionsGetCall struct {
 // displays to `stdout`. Then, develop the API proxy configuration
 // locally and upload the updated API proxy configuration revision, as
 // described in updateApiProxyRevision (updateApiProxyRevision).
+//
+// - name: API proxy revision in the following format:
+// `organizations/{org}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsApisRevisionsService) Get(name string) *OrganizationsApisRevisionsGetCall {
 	c := &OrganizationsApisRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13774,6 +13876,9 @@ type OrganizationsApisRevisionsUpdateApiProxyRevisionCall struct {
 // never been deployed. After deployment, an API proxy revision becomes
 // immutable, even if it is undeployed. Set the `Content-Type` header to
 // either `multipart/form-data` or `application/octet-stream`.
+//
+// - name: API proxy revision to update in the following format:
+// `organizations/{org}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsApisRevisionsService) UpdateApiProxyRevision(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsApisRevisionsUpdateApiProxyRevisionCall {
 	c := &OrganizationsApisRevisionsUpdateApiProxyRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13928,6 +14033,10 @@ type OrganizationsApisRevisionsDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of an API proxy revision.
+//
+// - parent: Name of the API proxy revision for which to return
+// deployment information in the following format:
+// `organizations/{org}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsApisRevisionsDeploymentsService) List(parent string) *OrganizationsApisRevisionsDeploymentsListCall {
 	c := &OrganizationsApisRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14074,6 +14183,9 @@ type OrganizationsAppsGetCall struct {
 }
 
 // Get: Gets the app profile for the specified app ID.
+//
+// - name: App ID in the following format:
+// `organizations/{org}/apps/{app}`
 func (r *OrganizationsAppsService) Get(name string) *OrganizationsAppsGetCall {
 	c := &OrganizationsAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14220,6 +14332,9 @@ type OrganizationsAppsListCall struct {
 // List: Lists IDs of apps within an organization that have the
 // specified app status (approved or revoked) or are of the specified
 // app type (developer or company).
+//
+// - parent: Resource path of the parent in the following format:
+// `organizations/{org}`
 func (r *OrganizationsAppsService) List(parent string) *OrganizationsAppsListCall {
 	c := &OrganizationsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14477,6 +14592,9 @@ type OrganizationsDatacollectorsCreateCall struct {
 }
 
 // Create: Creates a new data collector.
+//
+// - parent: Name of the organization in which to create the data
+// collector in the following format: `organizations/{org}`.
 func (r *OrganizationsDatacollectorsService) Create(parent string, googlecloudapigeev1datacollector *GoogleCloudApigeeV1DataCollector) *OrganizationsDatacollectorsCreateCall {
 	c := &OrganizationsDatacollectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14629,6 +14747,9 @@ type OrganizationsDatacollectorsDeleteCall struct {
 }
 
 // Delete: Deletes a data collector.
+//
+// - name: Name of the data collector in the following format:
+// `organizations/{org}/datacollectors/{data_collector_id}`.
 func (r *OrganizationsDatacollectorsService) Delete(name string) *OrganizationsDatacollectorsDeleteCall {
 	c := &OrganizationsDatacollectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14760,6 +14881,9 @@ type OrganizationsDatacollectorsGetCall struct {
 }
 
 // Get: Gets a data collector.
+//
+// - name: Name of the data collector in the following format:
+// `organizations/{org}/datacollectors/{data_collector_id}`.
 func (r *OrganizationsDatacollectorsService) Get(name string) *OrganizationsDatacollectorsGetCall {
 	c := &OrganizationsDatacollectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14904,6 +15028,9 @@ type OrganizationsDatacollectorsListCall struct {
 }
 
 // List: Lists all data collectors.
+//
+// - parent: Name of the organization for which to list data collectors
+// in the following format: `organizations/{org}`.
 func (r *OrganizationsDatacollectorsService) List(parent string) *OrganizationsDatacollectorsListCall {
 	c := &OrganizationsDatacollectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15097,6 +15224,9 @@ type OrganizationsDatacollectorsPatchCall struct {
 }
 
 // Patch: Updates a data collector.
+//
+// - name: Name of the data collector in the following format:
+// `organizations/{org}/datacollectors/{data_collector_id}`.
 func (r *OrganizationsDatacollectorsService) Patch(name string, googlecloudapigeev1datacollector *GoogleCloudApigeeV1DataCollector) *OrganizationsDatacollectorsPatchCall {
 	c := &OrganizationsDatacollectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15250,6 +15380,9 @@ type OrganizationsDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of API proxies or shared flows.
+//
+// - parent: Name of the organization for which to return deployment
+// information in the following format: `organizations/{org}`
 func (r *OrganizationsDeploymentsService) List(parent string) *OrganizationsDeploymentsListCall {
 	c := &OrganizationsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15420,6 +15553,10 @@ type OrganizationsDevelopersAttributesCall struct {
 // accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2
 // policy won't be able to expire an access token in less than 180
 // seconds.
+//
+// - parent: Email address of the developer for which attributes are
+// being updated in the following format:
+// `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersService) Attributes(parent string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsDevelopersAttributesCall {
 	c := &OrganizationsDevelopersAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15563,6 +15700,10 @@ type OrganizationsDevelopersCreateCall struct {
 // an app and obtain an API key. At creation time, a developer is set as
 // `active`. To change the developer status, use the SetDeveloperStatus
 // API.
+//
+// - parent: Name of the Apigee organization in which the developer is
+// created. Use the following structure in your request:
+// `organizations/{org}`.
 func (r *OrganizationsDevelopersService) Create(parent string, googlecloudapigeev1developer *GoogleCloudApigeeV1Developer) *OrganizationsDevelopersCreateCall {
 	c := &OrganizationsDevelopersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15710,6 +15851,9 @@ type OrganizationsDevelopersDeleteCall struct {
 // deleted immediately, but its associated resources, such as apps and
 // API keys, may take anywhere from a few seconds to a few minutes to be
 // deleted.
+//
+// - name: Email address of the developer. Use the following structure
+// in your request: `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersService) Delete(name string) *OrganizationsDevelopersDeleteCall {
 	c := &OrganizationsDevelopersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15843,6 +15987,9 @@ type OrganizationsDevelopersGetCall struct {
 // Get: Returns the developer details, including the developer's name,
 // email address, apps, and other information. **Note**: The response
 // includes only the first 100 developer apps.
+//
+// - name: Email address of the developer. Use the following structure
+// in your request: `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersService) Get(name string) *OrganizationsDevelopersGetCall {
 	c := &OrganizationsDevelopersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16004,6 +16151,9 @@ type OrganizationsDevelopersListCall struct {
 // developers. **Note**: A maximum of 1000 developers are returned in
 // the response. You paginate the list of developers returned using the
 // `startKey` and `count` query parameters.
+//
+// - parent: Name of the Apigee organization. Use the following
+// structure in your request: `organizations/{org}`.
 func (r *OrganizationsDevelopersService) List(parent string) *OrganizationsDevelopersListCall {
 	c := &OrganizationsDevelopersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16238,6 +16388,9 @@ type OrganizationsDevelopersSetDeveloperStatusCall struct {
 // portal and create apps; however, any new API keys generated during
 // app creation won't work. If successful, the API call returns the
 // following HTTP status code: `204 No Content`
+//
+// - name: Email address of the developer. Use the following structure
+// in your request: `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersService) SetDeveloperStatus(name string) *OrganizationsDevelopersSetDeveloperStatusCall {
 	c := &OrganizationsDevelopersSetDeveloperStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16390,6 +16543,9 @@ type OrganizationsDevelopersUpdateCall struct {
 // seconds after the entity is accessed at runtime. Therefore, an
 // `ExpiresIn` element on the OAuthV2 policy won't be able to expire an
 // access token in less than 180 seconds.
+//
+// - name: Email address of the developer. Use the following structure
+// in your request: `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersService) Update(name string, googlecloudapigeev1developer *GoogleCloudApigeeV1Developer) *OrganizationsDevelopersUpdateCall {
 	c := &OrganizationsDevelopersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16531,6 +16687,10 @@ type OrganizationsDevelopersAppsAttributesCall struct {
 
 // Attributes: Updates attributes for a developer app. This API replaces
 // the current attributes with those specified in the request.
+//
+// - name: Name of the developer app. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}`
 func (r *OrganizationsDevelopersAppsService) Attributes(name string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsDevelopersAppsAttributesCall {
 	c := &OrganizationsDevelopersAppsAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16677,6 +16837,9 @@ type OrganizationsDevelopersAppsCreateCall struct {
 // you can use in API calls. The `DisplayName` (set as an attribute)
 // appears in the UI. If you don't set the `DisplayName` attribute, the
 // `name` appears in the UI.
+//
+// - parent: Name of the developer. Use the following structure in your
+// request: `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersAppsService) Create(parent string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsCreateCall {
 	c := &OrganizationsDevelopersAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16819,6 +16982,10 @@ type OrganizationsDevelopersAppsDeleteCall struct {
 // asynchronous. The developer app is deleted immediately, but its
 // associated resources, such as app keys or access tokens, may take
 // anywhere from a few seconds to a few minutes to be deleted.
+//
+// - name: Name of the developer app. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}`
 func (r *OrganizationsDevelopersAppsService) Delete(name string) *OrganizationsDevelopersAppsDeleteCall {
 	c := &OrganizationsDevelopersAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16975,6 +17142,10 @@ type OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall st
 // any existing information that you want to retain or delete,
 // respectively. * To migrate existing consumer keys and secrets to
 // hybrid from another system, see the CreateDeveloperAppKey API.
+//
+// - name: Name of the developer app. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}`
 func (r *OrganizationsDevelopersAppsService) GenerateKeyPairOrUpdateDeveloperAppStatus(name string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall {
 	c := &OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17127,6 +17298,10 @@ type OrganizationsDevelopersAppsGetCall struct {
 }
 
 // Get: Returns the details for a developer app.
+//
+// - name: Name of the developer app. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}`
 func (r *OrganizationsDevelopersAppsService) Get(name string) *OrganizationsDevelopersAppsGetCall {
 	c := &OrganizationsDevelopersAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17303,6 +17478,9 @@ type OrganizationsDevelopersAppsListCall struct {
 // developer apps. A maximum of 100 developer apps are returned per API
 // call. You can paginate the list of deveoper apps returned using the
 // `startKey` and `count` query parameters.
+//
+// - parent: Name of the developer. Use the following structure in your
+// request: `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersAppsService) List(parent string) *OrganizationsDevelopersAppsListCall {
 	c := &OrganizationsDevelopersAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17517,6 +17695,10 @@ type OrganizationsDevelopersAppsUpdateCall struct {
 // This API replaces the existing attributes with those specified in the
 // request. Include or exclude any existing attributes that you want to
 // retain or delete, respectively.
+//
+// - name: Name of the developer app. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}`
 func (r *OrganizationsDevelopersAppsService) Update(name string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsUpdateCall {
 	c := &OrganizationsDevelopersAppsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17656,6 +17838,11 @@ type OrganizationsDevelopersAppsAttributesDeleteCall struct {
 }
 
 // Delete: Deletes a developer app attribute.
+//
+// - name: Name of the developer app attribute. Use the following
+// structure in your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/attribute
+// s/{attribute}`
 func (r *OrganizationsDevelopersAppsAttributesService) Delete(name string) *OrganizationsDevelopersAppsAttributesDeleteCall {
 	c := &OrganizationsDevelopersAppsAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17787,6 +17974,11 @@ type OrganizationsDevelopersAppsAttributesGetCall struct {
 }
 
 // Get: Returns a developer app attribute.
+//
+// - name: Name of the developer app attribute. Use the following
+// structure in your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/attribute
+// s/{attribute}`
 func (r *OrganizationsDevelopersAppsAttributesService) Get(name string) *OrganizationsDevelopersAppsAttributesGetCall {
 	c := &OrganizationsDevelopersAppsAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17931,6 +18123,10 @@ type OrganizationsDevelopersAppsAttributesListCall struct {
 }
 
 // List: Returns a list of all developer app attributes.
+//
+// - parent: Name of the developer app. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}`
 func (r *OrganizationsDevelopersAppsAttributesService) List(parent string) *OrganizationsDevelopersAppsAttributesListCall {
 	c := &OrganizationsDevelopersAppsAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18082,6 +18278,11 @@ type OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall struct
 // is accessed at runtime. Therefore, an `ExpiresIn` element on the
 // OAuthV2 policy won't be able to expire an access token in less than
 // 180 seconds.
+//
+// - name: Name of the developer app attribute. Use the following
+// structure in your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/attribute
+// s/{attribute}`
 func (r *OrganizationsDevelopersAppsAttributesService) UpdateDeveloperAppAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall {
 	c := &OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18234,6 +18435,10 @@ type OrganizationsDevelopersAppsKeysCreateCall struct {
 // key and secret are created. If a consumer key and secret already
 // exist, you can keep them or delete them using the
 // DeleteDeveloperAppKey API.
+//
+// - parent: Parent of the developer app key. Use the following
+// structure in your request:
+// `organizations/{org}/developers/{developer_email}/apps`
 func (r *OrganizationsDevelopersAppsKeysService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18380,6 +18585,11 @@ type OrganizationsDevelopersAppsKeysDeleteCall struct {
 // developer app using the CreateDeveloperAppKey API, and subsequently
 // add an API product to the key using the UpdateDeveloperAppKey API. 2.
 // Delete the developer app, if it is no longer required.
+//
+// - name: Name of the developer app key. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
+// }`
 func (r *OrganizationsDevelopersAppsKeysService) Delete(name string) *OrganizationsDevelopersAppsKeysDeleteCall {
 	c := &OrganizationsDevelopersAppsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18514,6 +18724,11 @@ type OrganizationsDevelopersAppsKeysGetCall struct {
 // Get: Returns details for a consumer key for a developer app,
 // including the key and secret value, associated API products, and
 // other information.
+//
+// - name: Name of the developer app key. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
+// }`
 func (r *OrganizationsDevelopersAppsKeysService) Get(name string) *OrganizationsDevelopersAppsKeysGetCall {
 	c := &OrganizationsDevelopersAppsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18665,6 +18880,11 @@ type OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall struct {
 // for the API products associated with the app. This API sets the
 // `scopes` element under the `apiProducts` element in the attributes of
 // the app.
+//
+// - name: Name of the developer app key. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
+// }`
 func (r *OrganizationsDevelopersAppsKeysService) ReplaceDeveloperAppKey(name string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall {
 	c := &OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18812,6 +19032,11 @@ type OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall struct {
 // those specified in the request. Include or exclude any existing
 // attributes that you want to retain or delete, respectively. You can
 // use the same key to access all API products associated with the app.
+//
+// - name: Name of the developer app key. Use the following structure in
+// your request:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
+// }`
 func (r *OrganizationsDevelopersAppsKeysService) UpdateDeveloperAppKey(name string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall {
 	c := &OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18968,6 +19193,11 @@ type OrganizationsDevelopersAppsKeysApiproductsDeleteCall struct {
 // API product is removed, the app cannot access the API resources
 // defined in that API product. **Note**: The consumer key is not
 // removed, only its association with the API product.
+//
+// - name: Name of the API product in the developer app key in the
+// following format:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
+// }/apiproducts/{apiproduct}`
 func (r *OrganizationsDevelopersAppsKeysApiproductsService) Delete(name string) *OrganizationsDevelopersAppsKeysApiproductsDeleteCall {
 	c := &OrganizationsDevelopersAppsKeysApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19105,6 +19335,11 @@ type OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCa
 // key will remain active. However, Apigee hybrid checks the status of
 // the consumer key and if set to `revoked` will not allow access to the
 // API.
+//
+// - name: Name of the API product in the developer app key in the
+// following format:
+// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
+// }/apiproducts/{apiproduct}`
 func (r *OrganizationsDevelopersAppsKeysApiproductsService) UpdateDeveloperAppKeyApiProduct(name string) *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall {
 	c := &OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19261,6 +19496,10 @@ type OrganizationsDevelopersAppsKeysCreateCreateCall struct {
 // key and secret are created. If a consumer key and secret already
 // exist, you can keep them or delete them using the
 // DeleteDeveloperAppKey API.
+//
+// - parent: Parent of the developer app key. Use the following
+// structure in your request:
+// `organizations/{org}/developers/{developer_email}/apps`
 func (r *OrganizationsDevelopersAppsKeysCreateService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19401,6 +19640,11 @@ type OrganizationsDevelopersAttributesDeleteCall struct {
 }
 
 // Delete: Deletes a developer attribute.
+//
+// - name: Name of the developer attribute. Use the following structure
+// in your request:
+// `organizations/{org}/developers/{developer_email}/attributes/{attribut
+// e}`
 func (r *OrganizationsDevelopersAttributesService) Delete(name string) *OrganizationsDevelopersAttributesDeleteCall {
 	c := &OrganizationsDevelopersAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19532,6 +19776,11 @@ type OrganizationsDevelopersAttributesGetCall struct {
 }
 
 // Get: Returns the value of the specified developer attribute.
+//
+// - name: Name of the developer attribute. Use the following structure
+// in your request:
+// `organizations/{org}/developers/{developer_email}/attributes/{attribut
+// e}`
 func (r *OrganizationsDevelopersAttributesService) Get(name string) *OrganizationsDevelopersAttributesGetCall {
 	c := &OrganizationsDevelopersAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19676,6 +19925,10 @@ type OrganizationsDevelopersAttributesListCall struct {
 }
 
 // List: Returns a list of all developer attributes.
+//
+// - parent: Email address of the developer for which attributes are
+// being listed in the following format:
+// `organizations/{org}/developers/{developer_email}`
 func (r *OrganizationsDevelopersAttributesService) List(parent string) *OrganizationsDevelopersAttributesListCall {
 	c := &OrganizationsDevelopersAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19826,6 +20079,11 @@ type OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall struct {
 // at least 180 seconds after the entity is accessed at runtime.
 // Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able
 // to expire an access token in less than 180 seconds.
+//
+// - name: Name of the developer attribute. Use the following structure
+// in your request:
+// `organizations/{org}/developers/{developer_email}/attributes/{attribut
+// e}`
 func (r *OrganizationsDevelopersAttributesService) UpdateDeveloperAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall {
 	c := &OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19966,6 +20224,9 @@ type OrganizationsEnvgroupsCreateCall struct {
 }
 
 // Create: Creates a new environment group.
+//
+// - parent: Name of the organization in which to create the environment
+// group in the following format: `organizations/{org}`.
 func (r *OrganizationsEnvgroupsService) Create(parent string, googlecloudapigeev1environmentgroup *GoogleCloudApigeeV1EnvironmentGroup) *OrganizationsEnvgroupsCreateCall {
 	c := &OrganizationsEnvgroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20117,6 +20378,9 @@ type OrganizationsEnvgroupsDeleteCall struct {
 }
 
 // Delete: Deletes an environment group.
+//
+// - name: Name of the environment group in the following format:
+// `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsService) Delete(name string) *OrganizationsEnvgroupsDeleteCall {
 	c := &OrganizationsEnvgroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20248,6 +20512,9 @@ type OrganizationsEnvgroupsGetCall struct {
 }
 
 // Get: Gets an environment group.
+//
+// - name: Name of the environment group in the following format:
+// `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsService) Get(name string) *OrganizationsEnvgroupsGetCall {
 	c := &OrganizationsEnvgroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20393,6 +20660,9 @@ type OrganizationsEnvgroupsListCall struct {
 }
 
 // List: Lists all environment groups.
+//
+// - parent: Name of the organization for which to list environment
+// groups in the following format: `organizations/{org}`.
 func (r *OrganizationsEnvgroupsService) List(parent string) *OrganizationsEnvgroupsListCall {
 	c := &OrganizationsEnvgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20586,6 +20856,9 @@ type OrganizationsEnvgroupsPatchCall struct {
 }
 
 // Patch: Updates an environment group.
+//
+// - name: Name of the environment group to update in the format:
+// `organizations/{org}/envgroups/{envgroup}.
 func (r *OrganizationsEnvgroupsService) Patch(name string, googlecloudapigeev1environmentgroup *GoogleCloudApigeeV1EnvironmentGroup) *OrganizationsEnvgroupsPatchCall {
 	c := &OrganizationsEnvgroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20740,6 +21013,9 @@ type OrganizationsEnvgroupsAttachmentsCreateCall struct {
 
 // Create: Creates a new attachment of an environment to an environment
 // group.
+//
+// - parent: EnvironmentGroup under which to create the attachment in
+// the following format: `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) Create(parent string, googlecloudapigeev1environmentgroupattachment *GoogleCloudApigeeV1EnvironmentGroupAttachment) *OrganizationsEnvgroupsAttachmentsCreateCall {
 	c := &OrganizationsEnvgroupsAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20879,6 +21155,10 @@ type OrganizationsEnvgroupsAttachmentsDeleteCall struct {
 }
 
 // Delete: Deletes an environment group attachment.
+//
+// - name: Name of the environment group attachment to delete in the
+// following format:
+// `organizations/{org}/envgroups/{envgroup}/attachments/{attachment}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) Delete(name string) *OrganizationsEnvgroupsAttachmentsDeleteCall {
 	c := &OrganizationsEnvgroupsAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21010,6 +21290,10 @@ type OrganizationsEnvgroupsAttachmentsGetCall struct {
 }
 
 // Get: Gets an environment group attachment.
+//
+// - name: Name of the environment group attachment in the following
+// format:
+// `organizations/{org}/envgroups/{envgroup}/attachments/{attachment}`
 func (r *OrganizationsEnvgroupsAttachmentsService) Get(name string) *OrganizationsEnvgroupsAttachmentsGetCall {
 	c := &OrganizationsEnvgroupsAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21156,6 +21440,9 @@ type OrganizationsEnvgroupsAttachmentsListCall struct {
 }
 
 // List: Lists all attachments of an environment group.
+//
+// - parent: Name of the environment group in the following format:
+// `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) List(parent string) *OrganizationsEnvgroupsAttachmentsListCall {
 	c := &OrganizationsEnvgroupsAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21351,6 +21638,10 @@ type OrganizationsEnvironmentsCreateCall struct {
 }
 
 // Create: Creates an environment in an organization.
+//
+// - parent: Name of the organization in which the environment will be
+// created. Use the following structure in your request:
+// `organizations/{org}`
 func (r *OrganizationsEnvironmentsService) Create(parent string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsCreateCall {
 	c := &OrganizationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21503,6 +21794,9 @@ type OrganizationsEnvironmentsDeleteCall struct {
 }
 
 // Delete: Deletes an environment from an organization.
+//
+// - name: Name of the environment. Use the following structure in your
+// request: `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsService) Delete(name string) *OrganizationsEnvironmentsDeleteCall {
 	c := &OrganizationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21634,6 +21928,9 @@ type OrganizationsEnvironmentsGetCall struct {
 }
 
 // Get: Gets environment details.
+//
+// - name: Name of the environment. Use the following structure in your
+// request: `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsService) Get(name string) *OrganizationsEnvironmentsGetCall {
 	c := &OrganizationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21779,6 +22076,9 @@ type OrganizationsEnvironmentsGetDebugmaskCall struct {
 
 // GetDebugmask: Gets the debug mask singleton resource for an
 // environment.
+//
+// - name: Name of the debug mask. Use the following structure in your
+// request: `organizations/{org}/environments/{env}/debugmask`.
 func (r *OrganizationsEnvironmentsService) GetDebugmask(name string) *OrganizationsEnvironmentsGetDebugmaskCall {
 	c := &OrganizationsEnvironmentsGetDebugmaskCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21924,6 +22224,10 @@ type OrganizationsEnvironmentsGetDeployedConfigCall struct {
 
 // GetDeployedConfig: Gets the deployed configuration for an
 // environment.
+//
+// - name: Name of the environment deployed configuration resource. Use
+// the following structure in your request:
+// `organizations/{org}/environments/{env}/deployedConfig`
 func (r *OrganizationsEnvironmentsService) GetDeployedConfig(name string) *OrganizationsEnvironmentsGetDeployedConfigCall {
 	c := &OrganizationsEnvironmentsGetDeployedConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22073,6 +22377,10 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles).
 // You must have the `apigee.environments.getIamPolicy` permission to
 // call this API.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22238,6 +22546,9 @@ type OrganizationsEnvironmentsGetTraceConfigCall struct {
 
 // GetTraceConfig: Get distributed trace configuration in an
 // environment.
+//
+// - name: Name of the trace configuration. Use the following structure
+// in your request: "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsService) GetTraceConfig(name string) *OrganizationsEnvironmentsGetTraceConfigCall {
 	c := &OrganizationsEnvironmentsGetTraceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22387,6 +22698,10 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles).
 // You must have the `apigee.environments.setIamPolicy` permission to
 // call this API.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22528,6 +22843,9 @@ type OrganizationsEnvironmentsSubscribeCall struct {
 // Subscribe: Creates a subscription for the environment's Pub/Sub
 // topic. The server will assign a random name for this subscription.
 // The "name" and "push_config" must *not* be specified.
+//
+// - parent: Name of the environment. Use the following structure in
+// your request: `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsService) Subscribe(parent string) *OrganizationsEnvironmentsSubscribeCall {
 	c := &OrganizationsEnvironmentsSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22662,6 +22980,10 @@ type OrganizationsEnvironmentsTestIamPermissionsCall struct {
 // environment, and returns a subset of permissions that the user has on
 // the environment. If the environment does not exist, an empty
 // permission set is returned (a NOT_FOUND error is not returned).
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *OrganizationsEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsEnvironmentsTestIamPermissionsCall {
 	c := &OrganizationsEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22804,6 +23126,9 @@ type OrganizationsEnvironmentsUnsubscribeCall struct {
 
 // Unsubscribe: Deletes a subscription for the environment's Pub/Sub
 // topic.
+//
+// - parent: Name of the environment. Use the following structure in
+// your request: `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsService) Unsubscribe(parent string, googlecloudapigeev1subscription *GoogleCloudApigeeV1Subscription) *OrganizationsEnvironmentsUnsubscribeCall {
 	c := &OrganizationsEnvironmentsUnsubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22948,6 +23273,9 @@ type OrganizationsEnvironmentsUpdateCall struct {
 // not being changed. If you omit properties from the payload, the
 // properties are removed. To get the current list of properties for the
 // environment, use the Get Environment API (get).
+//
+// - name: Name of the environment. Use the following structure in your
+// request: `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsService) Update(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsUpdateCall {
 	c := &OrganizationsEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23089,6 +23417,8 @@ type OrganizationsEnvironmentsUpdateDebugmaskCall struct {
 
 // UpdateDebugmask: Updates the debug mask singleton resource for an
 // environment.
+//
+// - name: Name of the debug mask.
 func (r *OrganizationsEnvironmentsService) UpdateDebugmask(name string, googlecloudapigeev1debugmask *GoogleCloudApigeeV1DebugMask) *OrganizationsEnvironmentsUpdateDebugmaskCall {
 	c := &OrganizationsEnvironmentsUpdateDebugmaskCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23261,6 +23591,9 @@ type OrganizationsEnvironmentsUpdateEnvironmentCall struct {
 // they are not being changed. If you omit properties from the payload,
 // the properties are removed. To get the current list of properties for
 // the environment, use the Get Environment API (get).
+//
+// - name: Name of the environment. Use the following structure in your
+// request: `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsService) UpdateEnvironment(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsUpdateEnvironmentCall {
 	c := &OrganizationsEnvironmentsUpdateEnvironmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23404,6 +23737,9 @@ type OrganizationsEnvironmentsUpdateTraceConfigCall struct {
 // environment. Note that the repeated fields have replace semantics
 // when included in the field mask and that they will be overwritten by
 // the value of the fields in the request body.
+//
+// - name: Name of the trace configuration. Use the following structure
+// in your request: "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsService) UpdateTraceConfig(name string, googlecloudapigeev1traceconfig *GoogleCloudApigeeV1TraceConfig) *OrganizationsEnvironmentsUpdateTraceConfigCall {
 	c := &OrganizationsEnvironmentsUpdateTraceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23560,6 +23896,10 @@ type OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call struct {
 // to create analytics queries and reports. Each schema element contains
 // the name of the field, its associated type, and a flag indicating
 // whether it is a standard or custom field.
+//
+// - name: Path to the schema. Use the following structure in your
+// request:
+// `organizations/{org}/environments/{env}/analytics/admin/schemav2`.
 func (r *OrganizationsEnvironmentsAnalyticsAdminService) GetSchemav2(name string) *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call {
 	c := &OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23734,6 +24074,9 @@ type OrganizationsEnvironmentsAnalyticsExportsCreateCall struct {
 // If the request is successful, the API returns a 201 status, a URI
 // that can be used to retrieve the status of the export job, and the
 // `state` value of "enqueued".
+//
+// - parent: Names of the parent organization and environment. Must be
+// of the form `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsAnalyticsExportsService) Create(parent string, googlecloudapigeev1exportrequest *GoogleCloudApigeeV1ExportRequest) *OrganizationsEnvironmentsAnalyticsExportsCreateCall {
 	c := &OrganizationsEnvironmentsAnalyticsExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23878,6 +24221,8 @@ type OrganizationsEnvironmentsAnalyticsExportsGetCall struct {
 // After the export job has completed successfully, its `state` is set
 // to "completed". If the export job fails, its `state` is set to
 // `failed`.
+//
+// - name: Resource name of the export to get.
 func (r *OrganizationsEnvironmentsAnalyticsExportsService) Get(name string) *OrganizationsEnvironmentsAnalyticsExportsGetCall {
 	c := &OrganizationsEnvironmentsAnalyticsExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24023,6 +24368,9 @@ type OrganizationsEnvironmentsAnalyticsExportsListCall struct {
 
 // List: Lists the details and status of all analytics export jobs
 // belonging to the parent organization and environment.
+//
+// - parent: Names of the parent organization and environment. Must be
+// of the form `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsAnalyticsExportsService) List(parent string) *OrganizationsEnvironmentsAnalyticsExportsListCall {
 	c := &OrganizationsEnvironmentsAnalyticsExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24168,6 +24516,9 @@ type OrganizationsEnvironmentsApisDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of an API proxy in an environment.
+//
+// - parent: Name representing an API proxy in an environment in the
+// following format: `organizations/{org}/environments/{env}/apis/{api}`
 func (r *OrganizationsEnvironmentsApisDeploymentsService) List(parent string) *OrganizationsEnvironmentsApisDeploymentsListCall {
 	c := &OrganizationsEnvironmentsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24325,6 +24676,10 @@ type OrganizationsEnvironmentsApisRevisionsDeployCall struct {
 // `organizations/{org}/environments/{env}` *
 // `apigee.proxyrevisions.deploy` on the resource
 // `organizations/{org}/apis/{api}/revisions/{rev}`
+//
+// - name: Name of the API proxy revision deployment in the following
+// format:
+// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsEnvironmentsApisRevisionsService) Deploy(name string) *OrganizationsEnvironmentsApisRevisionsDeployCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24498,6 +24853,10 @@ type OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall struct {
 
 // GetDeployments: Gets the deployment of an API proxy revision and
 // actual state reported by runtime pods.
+//
+// - name: Name representing an API proxy revision in an environment in
+// the following format:
+// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsEnvironmentsApisRevisionsService) GetDeployments(name string) *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall {
 	c := &OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24648,6 +25007,10 @@ type OrganizationsEnvironmentsApisRevisionsUndeployCall struct {
 // `organizations/{org}/environments/{env}` *
 // `apigee.proxyrevisions.undeploy` on the resource
 // `organizations/{org}/apis/{api}/revisions/{rev}`
+//
+// - name: Name of the API proxy revision deployment in the following
+// format:
+// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsEnvironmentsApisRevisionsService) Undeploy(name string) *OrganizationsEnvironmentsApisRevisionsUndeployCall {
 	c := &OrganizationsEnvironmentsApisRevisionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24801,6 +25164,11 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall struct {
 }
 
 // Create: Creates a debug session for a deployed API Proxy revision.
+//
+// - parent: The resource name of the API Proxy revision deployment for
+// which to create the DebugSession. Must be of the form
+// `organizations/{organization}/environments/{environment}/apis/{api}/re
+// visions/{revision}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Create(parent string, googlecloudapigeev1debugsession *GoogleCloudApigeeV1DebugSession) *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24956,6 +25324,10 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall struct {
 // DeleteData: Deletes the data from a debug session. This does not
 // cancel the debug session or prevent further data from being collected
 // if the session is still active in runtime pods.
+//
+// - name: The name of the debug session to delete. Must be of the form:
+// `organizations/{organization}/environments/{environment}/apis/{api}/re
+// visions/{revision}/debugsessions/{debugsession}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) DeleteData(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25087,6 +25459,11 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall struct {
 }
 
 // Get: Retrieves a debug session.
+//
+// - name: The name of the debug session to retrieve. Must be of the
+// form:
+// `organizations/{organization}/environments/{environment}/apis/{api}/re
+// visions/{revision}/debugsessions/{session}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25232,6 +25609,11 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall struct {
 
 // List: Lists debug sessions that are currently active in the given API
 // Proxy revision.
+//
+// - parent: The name of the API Proxy revision deployment for which to
+// list debug sessions. Must be of the form:
+// `organizations/{organization}/environments/{environment}/apis/{api}/re
+// visions/{revision}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) List(parent string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25425,6 +25807,11 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall struct {
 }
 
 // Get: Gets the debug data from a transaction.
+//
+// - name: The name of the debug session transaction. Must be of the
+// form:
+// `organizations/{organization}/environments/{environment}/apis/{api}/re
+// visions/{revision}/debugsessions/{session}/data/{transaction}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25583,6 +25970,10 @@ type OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReport
 // `organizations/{org}/environments/{env}` *
 // `apigee.proxyrevisions.deploy` on the resource
 // `organizations/{org}/apis/{api}/revisions/{rev}`
+//
+// - name: Name of the API proxy revision deployment in the following
+// format:
+// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsEnvironmentsApisRevisionsDeploymentsService) GenerateDeployChangeReport(name string) *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25742,6 +26133,10 @@ type OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeRepo
 // `organizations/{org}/environments/{env}` *
 // `apigee.proxyrevisions.undeploy` on the resource
 // `organizations/{org}/apis/{api}/revisions/{rev}`
+//
+// - name: Name of the API proxy revision deployment in the following
+// format:
+// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
 func (r *OrganizationsEnvironmentsApisRevisionsDeploymentsService) GenerateUndeployChangeReport(name string) *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeReportCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25874,6 +26269,10 @@ type OrganizationsEnvironmentsCachesDeleteCall struct {
 }
 
 // Delete: Deletes a cache.
+//
+// - name: Cache resource name of the form:
+// `organizations/{organization_id}/environments/{environment_id}/caches/
+// {cache_id}`
 func (r *OrganizationsEnvironmentsCachesService) Delete(name string) *OrganizationsEnvironmentsCachesDeleteCall {
 	c := &OrganizationsEnvironmentsCachesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26006,6 +26405,10 @@ type OrganizationsEnvironmentsDeploymentsListCall struct {
 
 // List: Lists all deployments of API proxies or shared flows in an
 // environment.
+//
+// - parent: Name of the environment for which to return deployment
+// information in the following format:
+// `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsDeploymentsService) List(parent string) *OrganizationsEnvironmentsDeploymentsListCall {
 	c := &OrganizationsEnvironmentsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26166,6 +26569,10 @@ type OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall struct {
 }
 
 // AttachSharedFlowToFlowHook: Attaches a shared flow to a flow hook.
+//
+// - name: Name of the flow hook to which the shared flow should be
+// attached in the following format:
+// `organizations/{org}/environments/{env}/flowhooks/{flowhook}`
 func (r *OrganizationsEnvironmentsFlowhooksService) AttachSharedFlowToFlowHook(name string, googlecloudapigeev1flowhook *GoogleCloudApigeeV1FlowHook) *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall {
 	c := &OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26306,6 +26713,9 @@ type OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall struct {
 
 // DetachSharedFlowFromFlowHook: Detaches a shared flow from a flow
 // hook.
+//
+// - name: Name of the flow hook to detach in the following format:
+// `organizations/{org}/environments/{env}/flowhooks/{flowhook}`
 func (r *OrganizationsEnvironmentsFlowhooksService) DetachSharedFlowFromFlowHook(name string) *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall {
 	c := &OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26440,6 +26850,9 @@ type OrganizationsEnvironmentsFlowhooksGetCall struct {
 // flow hook. If there's no shared flow attached to the flow hook, the
 // API does not return an error; it simply does not return a name in the
 // response.
+//
+// - name: Name of the flow hook in the following format:
+// `organizations/{org}/environments/{env}/flowhooks/{flowhook}`
 func (r *OrganizationsEnvironmentsFlowhooksService) Get(name string) *OrganizationsEnvironmentsFlowhooksGetCall {
 	c := &OrganizationsEnvironmentsFlowhooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26588,6 +27001,10 @@ type OrganizationsEnvironmentsKeystoresCreateCall struct {
 // trusted certificates used to validate a server's certificate. These
 // certificates are typically self-signed certificates or certificates
 // that are not signed by a trusted CA.
+//
+// - parent: Name of the environment in which to create the keystore.
+// Use the following format in your request:
+// `organizations/{org}/environments/{env}`
 func (r *OrganizationsEnvironmentsKeystoresService) Create(parent string, googlecloudapigeev1keystore *GoogleCloudApigeeV1Keystore) *OrganizationsEnvironmentsKeystoresCreateCall {
 	c := &OrganizationsEnvironmentsKeystoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26739,6 +27156,10 @@ type OrganizationsEnvironmentsKeystoresDeleteCall struct {
 }
 
 // Delete: Deletes a keystore or truststore.
+//
+// - name: Name of the keystore. Use the following format in your
+// request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}`
 func (r *OrganizationsEnvironmentsKeystoresService) Delete(name string) *OrganizationsEnvironmentsKeystoresDeleteCall {
 	c := &OrganizationsEnvironmentsKeystoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26870,6 +27291,10 @@ type OrganizationsEnvironmentsKeystoresGetCall struct {
 }
 
 // Get: Gets a keystore or truststore.
+//
+// - name: Name of the keystore. Use the following format in your
+// request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}`.
 func (r *OrganizationsEnvironmentsKeystoresService) Get(name string) *OrganizationsEnvironmentsKeystoresGetCall {
 	c := &OrganizationsEnvironmentsKeystoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27025,6 +27450,10 @@ type OrganizationsEnvironmentsKeystoresAliasesCreateCall struct {
 // body. - `selfsignedcert` - A new private key and certificate are
 // generated. Set `Content-Type: application/json` and include
 // CertificateGenerationSpec in the request body.
+//
+// - parent: Name of the keystore. Use the following format in your
+// request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsKeystoresAliasesCreateCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27238,6 +27667,10 @@ type OrganizationsEnvironmentsKeystoresAliasesCsrCall struct {
 
 // Csr: Generates a PKCS #10 Certificate Signing Request for the private
 // key in an alias.
+//
+// - name: Name of the alias. Use the following format in your request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
+// alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Csr(name string) *OrganizationsEnvironmentsKeystoresAliasesCsrCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesCsrCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27381,6 +27814,10 @@ type OrganizationsEnvironmentsKeystoresAliasesDeleteCall struct {
 }
 
 // Delete: Deletes an alias.
+//
+// - name: Name of the alias. Use the following format in your request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
+// alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Delete(name string) *OrganizationsEnvironmentsKeystoresAliasesDeleteCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27512,6 +27949,10 @@ type OrganizationsEnvironmentsKeystoresAliasesGetCall struct {
 }
 
 // Get: Gets an alias.
+//
+// - name: Name of the alias. Use the following format in your request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
+// alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Get(name string) *OrganizationsEnvironmentsKeystoresAliasesGetCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27657,6 +28098,10 @@ type OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall struct {
 
 // GetCertificate: Gets the certificate from an alias in PEM-encoded
 // form.
+//
+// - name: Name of the alias. Use the following format in your request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
+// alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) GetCertificate(name string) *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27801,6 +28246,10 @@ type OrganizationsEnvironmentsKeystoresAliasesUpdateCall struct {
 }
 
 // Update: Updates the certificate in an alias.
+//
+// - name: Name of the alias. Use the following format in your request:
+// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
+// alias}`
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Update(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsKeystoresAliasesUpdateCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27970,6 +28419,10 @@ type OrganizationsEnvironmentsKeyvaluemapsCreateCall struct {
 }
 
 // Create: Creates a key value map in an environment.
+//
+// - parent: The name of the environment in which to create the key
+// value map. Must be of the form
+// `organizations/{organization}/environments/{environment}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsEnvironmentsKeyvaluemapsCreateCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28109,6 +28562,10 @@ type OrganizationsEnvironmentsKeyvaluemapsDeleteCall struct {
 }
 
 // Delete: Delete a key value map in an environment.
+//
+// - name: The name of the key value map. Must be of the form
+// `organizations/{organization}/environments/{environment}/keyvaluemaps/
+// {keyvaluemap}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsService) Delete(name string) *OrganizationsEnvironmentsKeyvaluemapsDeleteCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28245,6 +28702,15 @@ type OrganizationsEnvironmentsOptimizedStatsGetCall struct {
 // behavior is not possible with protocol buffer and since this
 // parameter is predominantly used by Edge UI, we are introducing a
 // separate api.
+//
+// - name: The resource name for which the interactive query will be
+// executed. Must be of the form
+// `organizations/{organization_id}/environments/{environment_id/optimize
+// dStats/{dimensions}` Dimensions let you view metrics in meaningful
+// groupings. E.g. apiproxy, target_host. The value of dimensions should
+// be comma separated list as shown below
+// `organizations/{org}/environments/{env}/optimizedStats/apiproxy,reques
+// t_verb`
 func (r *OrganizationsEnvironmentsOptimizedStatsService) Get(name string) *OrganizationsEnvironmentsOptimizedStatsGetCall {
 	c := &OrganizationsEnvironmentsOptimizedStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28582,6 +29048,9 @@ type OrganizationsEnvironmentsQueriesCreateCall struct {
 // submission of the query succeeds, the API returns a 201 status and an
 // ID that refer to the query. In addition to the HTTP status 201, the
 // `state` of "enqueued" means that the request succeeded.
+//
+// - parent: The parent resource name. Must be of the form
+// `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsQueriesService) Create(parent string, googlecloudapigeev1query *GoogleCloudApigeeV1Query) *OrganizationsEnvironmentsQueriesCreateCall {
 	c := &OrganizationsEnvironmentsQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28724,6 +29193,9 @@ type OrganizationsEnvironmentsQueriesGetCall struct {
 // Get: Get query status If the query is still in progress, the `state`
 // is set to "running" After the query has completed successfully,
 // `state` is set to "completed"
+//
+// - name: Name of the asynchronous query to get. Must be of the form
+// `organizations/{org}/environments/{env}/queries/{queryId}`.
 func (r *OrganizationsEnvironmentsQueriesService) Get(name string) *OrganizationsEnvironmentsQueriesGetCall {
 	c := &OrganizationsEnvironmentsQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28872,6 +29344,10 @@ type OrganizationsEnvironmentsQueriesGetResultCall struct {
 // the result is downloaded to the client as a zipped JSON file. The
 // name of the downloaded file will be: OfflineQueryResult-.zip Example:
 // `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`
+//
+// - name: Name of the asynchronous query result to get. Must be of the
+// form
+// `organizations/{org}/environments/{env}/queries/{queryId}/result`.
 func (r *OrganizationsEnvironmentsQueriesService) GetResult(name string) *OrganizationsEnvironmentsQueriesGetResultCall {
 	c := &OrganizationsEnvironmentsQueriesGetResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29016,6 +29492,9 @@ type OrganizationsEnvironmentsQueriesListCall struct {
 }
 
 // List: Return a list of Asynchronous Queries
+//
+// - parent: The parent resource name. Must be of the form
+// `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsQueriesService) List(parent string) *OrganizationsEnvironmentsQueriesListCall {
 	c := &OrganizationsEnvironmentsQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29237,6 +29716,10 @@ type OrganizationsEnvironmentsReferencesCreateCall struct {
 }
 
 // Create: Creates a Reference in the specified environment.
+//
+// - parent: The parent environment name under which the Reference will
+// be created. Must be of the form
+// `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsReferencesService) Create(parent string, googlecloudapigeev1reference *GoogleCloudApigeeV1Reference) *OrganizationsEnvironmentsReferencesCreateCall {
 	c := &OrganizationsEnvironmentsReferencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29377,6 +29860,9 @@ type OrganizationsEnvironmentsReferencesDeleteCall struct {
 
 // Delete: Deletes a Reference from an environment. Returns the deleted
 // Reference resource.
+//
+// - name: The name of the Reference to delete. Must be of the form
+// `organizations/{org}/environments/{env}/references/{ref}`.
 func (r *OrganizationsEnvironmentsReferencesService) Delete(name string) *OrganizationsEnvironmentsReferencesDeleteCall {
 	c := &OrganizationsEnvironmentsReferencesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29508,6 +29994,9 @@ type OrganizationsEnvironmentsReferencesGetCall struct {
 }
 
 // Get: Gets a Reference resource.
+//
+// - name: The name of the Reference to get. Must be of the form
+// `organizations/{org}/environments/{env}/references/{ref}`.
 func (r *OrganizationsEnvironmentsReferencesService) Get(name string) *OrganizationsEnvironmentsReferencesGetCall {
 	c := &OrganizationsEnvironmentsReferencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29654,6 +30143,9 @@ type OrganizationsEnvironmentsReferencesUpdateCall struct {
 // Update: Updates an existing Reference. Note that this operation has
 // PUT semantics; it will replace the entirety of the existing Reference
 // with the resource in the request body.
+//
+// - name: The name of the Reference to update. Must be of the form
+// `organizations/{org}/environments/{env}/references/{ref}`.
 func (r *OrganizationsEnvironmentsReferencesService) Update(name string, googlecloudapigeev1reference *GoogleCloudApigeeV1Reference) *OrganizationsEnvironmentsReferencesUpdateCall {
 	c := &OrganizationsEnvironmentsReferencesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29797,6 +30289,10 @@ type OrganizationsEnvironmentsResourcefilesCreateCall struct {
 // `application/octet-stream` or `multipart/form-data`. For more
 // information about resource files, see Resource files
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
+//
+// - parent: Name of the environment in which to create the resource
+// file in the following format:
+// `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsResourcefilesService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesCreateCall {
 	c := &OrganizationsEnvironmentsResourcefilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29965,6 +30461,12 @@ type OrganizationsEnvironmentsResourcefilesDeleteCall struct {
 // Delete: Deletes a resource file. For more information about resource
 // files, see Resource files
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
+//
+// - name: ID of the resource file to delete. Must match the regular
+// expression: [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}
+// - parent: Name of the environment in the following format:
+// `organizations/{org}/environments/{env}`.
+// - type: Resource file type. {{ resource_file_type }}
 func (r *OrganizationsEnvironmentsResourcefilesService) Delete(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesDeleteCall {
 	c := &OrganizationsEnvironmentsResourcefilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30118,6 +30620,12 @@ type OrganizationsEnvironmentsResourcefilesGetCall struct {
 // Get: Gets the contents of a resource file. For more information about
 // resource files, see Resource files
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
+//
+// - name: ID of the resource file. Must match the regular expression:
+// [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}
+// - parent: Name of the environment in the following format:
+// `organizations/{org}/environments/{env}`.
+// - type: Resource file type. {{ resource_file_type }}
 func (r *OrganizationsEnvironmentsResourcefilesService) Get(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesGetCall {
 	c := &OrganizationsEnvironmentsResourcefilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30282,6 +30790,9 @@ type OrganizationsEnvironmentsResourcefilesListCall struct {
 // List: Lists all resource files, optionally filtering by type. For
 // more information about resource files, see Resource files
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
+//
+// - parent: Name of the environment in which to list resource files in
+// the following format: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsResourcefilesService) List(parent string) *OrganizationsEnvironmentsResourcefilesListCall {
 	c := &OrganizationsEnvironmentsResourcefilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30444,6 +30955,11 @@ type OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall struct {
 // filtering by type. For more information about resource files, see
 // Resource files
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
+//
+// - parent: Name of the environment in which to list resource files in
+// the following format: `organizations/{org}/environments/{env}`.
+// - type: Optional. Type of resource files to list. {{
+// resource_file_type }}
 func (r *OrganizationsEnvironmentsResourcefilesService) ListEnvironmentResources(parent string, type_ string) *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall {
 	c := &OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30604,6 +31120,12 @@ type OrganizationsEnvironmentsResourcefilesUpdateCall struct {
 // `application/octet-stream` or `multipart/form-data`. For more
 // information about resource files, see Resource files
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
+//
+// - name: ID of the resource file to update. Must match the regular
+// expression: [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}
+// - parent: Name of the environment in the following format:
+// `organizations/{org}/environments/{env}`.
+// - type: Resource file type. {{ resource_file_type }}
 func (r *OrganizationsEnvironmentsResourcefilesService) Update(parent string, type_ string, name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesUpdateCall {
 	c := &OrganizationsEnvironmentsResourcefilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30762,6 +31284,10 @@ type OrganizationsEnvironmentsSharedflowsDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of a shared flow in an environment.
+//
+// - parent: Name representing a shared flow in an environment in the
+// following format:
+// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}`
 func (r *OrganizationsEnvironmentsSharedflowsDeploymentsService) List(parent string) *OrganizationsEnvironmentsSharedflowsDeploymentsListCall {
 	c := &OrganizationsEnvironmentsSharedflowsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30917,6 +31443,11 @@ type OrganizationsEnvironmentsSharedflowsRevisionsDeployCall struct {
 // `organizations/{org}/environments/{env}` *
 // `apigee.sharedflowrevisions.deploy` on the resource
 // `organizations/{org}/sharedflows/{sf}/revisions/{rev}`
+//
+// - name: Name of the shared flow revision to deploy in the following
+// format:
+// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revis
+// ions/{rev}`
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) Deploy(name string) *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31065,6 +31596,11 @@ type OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall struct {
 
 // GetDeployments: Gets the deployment of a shared flow revision and
 // actual state reported by runtime pods.
+//
+// - name: Name representing a shared flow in an environment in the
+// following format:
+// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revis
+// ions/{rev}`
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) GetDeployments(name string) *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31215,6 +31751,11 @@ type OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall struct {
 // `organizations/{org}/environments/{env}` *
 // `apigee.sharedflowrevisions.undeploy` on the resource
 // `organizations/{org}/sharedflows/{sf}/revisions/{rev}`
+//
+// - name: Name of the shared flow revision to undeploy in the following
+// format:
+// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revis
+// ions/{rev}`
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) Undeploy(name string) *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31351,6 +31892,14 @@ type OrganizationsEnvironmentsStatsGetCall struct {
 // metrics in meaningful groups. The stats api does accept dimensions as
 // path params. The dimensions are optional in which case the metrics
 // are computed on the entire data for the given timerange.
+//
+// - name: The resource name for which the interactive query will be
+// executed. Must be of the form
+// `organizations/{organization_id}/environments/{environment_id/stats/{d
+// imensions}` Dimensions let you view metrics in meaningful groupings.
+// E.g. apiproxy, target_host. The value of dimensions should be comma
+// separated list as shown below
+// `organizations/{org}/environments/{env}/stats/apiproxy,request_verb`
 func (r *OrganizationsEnvironmentsStatsService) Get(name string) *OrganizationsEnvironmentsStatsGetCall {
 	c := &OrganizationsEnvironmentsStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31685,6 +32234,10 @@ type OrganizationsEnvironmentsTargetserversCreateCall struct {
 }
 
 // Create: Creates a TargetServer in the specified environment.
+//
+// - parent: The parent environment name under which the TargetServer
+// will be created. Must be of the form
+// `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Create(parent string, googlecloudapigeev1targetserver *GoogleCloudApigeeV1TargetServer) *OrganizationsEnvironmentsTargetserversCreateCall {
 	c := &OrganizationsEnvironmentsTargetserversCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31837,6 +32390,10 @@ type OrganizationsEnvironmentsTargetserversDeleteCall struct {
 
 // Delete: Deletes a TargetServer from an environment. Returns the
 // deleted TargetServer resource.
+//
+// - name: The name of the TargetServer to delete. Must be of the form
+// `organizations/{org}/environments/{env}/targetservers/{target_server_i
+// d}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Delete(name string) *OrganizationsEnvironmentsTargetserversDeleteCall {
 	c := &OrganizationsEnvironmentsTargetserversDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31968,6 +32525,10 @@ type OrganizationsEnvironmentsTargetserversGetCall struct {
 }
 
 // Get: Gets a TargetServer resource.
+//
+// - name: The name of the TargetServer to get. Must be of the form
+// `organizations/{org}/environments/{env}/targetservers/{target_server_i
+// d}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Get(name string) *OrganizationsEnvironmentsTargetserversGetCall {
 	c := &OrganizationsEnvironmentsTargetserversGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32114,6 +32675,10 @@ type OrganizationsEnvironmentsTargetserversUpdateCall struct {
 // Update: Updates an existing TargetServer. Note that this operation
 // has PUT semantics; it will replace the entirety of the existing
 // TargetServer with the resource in the request body.
+//
+// - name: The name of the TargetServer to replace. Must be of the form
+// `organizations/{org}/environments/{env}/targetservers/{target_server_i
+// d}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Update(name string, googlecloudapigeev1targetserver *GoogleCloudApigeeV1TargetServer) *OrganizationsEnvironmentsTargetserversUpdateCall {
 	c := &OrganizationsEnvironmentsTargetserversUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32257,6 +32822,10 @@ type OrganizationsEnvironmentsTraceConfigOverridesCreateCall struct {
 // a system-generated UUID, that can be used to view, update, or delete
 // the configuration override. Use the List API to view the existing
 // trace configuration overrides.
+//
+// - parent: Parent resource of the trace configuration override. Use
+// the following structure in your request.
+// "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Create(parent string, googlecloudapigeev1traceconfigoverride *GoogleCloudApigeeV1TraceConfigOverride) *OrganizationsEnvironmentsTraceConfigOverridesCreateCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32397,6 +32966,10 @@ type OrganizationsEnvironmentsTraceConfigOverridesDeleteCall struct {
 }
 
 // Delete: Deletes a distributed trace configuration override.
+//
+// - name: Name of the trace configuration override. Use the following
+// structure in your request:
+// "organizations/*/environments/*/traceConfig/overrides/*".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Delete(name string) *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32528,6 +33101,10 @@ type OrganizationsEnvironmentsTraceConfigOverridesGetCall struct {
 }
 
 // Get: Gets a trace configuration override.
+//
+// - name: Name of the trace configuration override. Use the following
+// structure in your request:
+// "organizations/*/environments/*/traceConfig/overrides/*".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Get(name string) *OrganizationsEnvironmentsTraceConfigOverridesGetCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32674,6 +33251,10 @@ type OrganizationsEnvironmentsTraceConfigOverridesListCall struct {
 
 // List: Lists all of the distributed trace configuration overrides in
 // an environment.
+//
+// - parent: Parent resource of the trace configuration override. Use
+// the following structure in your request:
+// "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) List(parent string) *OrganizationsEnvironmentsTraceConfigOverridesListCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32873,6 +33454,10 @@ type OrganizationsEnvironmentsTraceConfigOverridesPatchCall struct {
 // the repeated fields have replace semantics when included in the field
 // mask and that they will be overwritten by the value of the fields in
 // the request body.
+//
+// - name: Name of the trace configuration override. Use the following
+// structure in your request:
+// "organizations/*/environments/*/traceConfig/overrides/*".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Patch(name string, googlecloudapigeev1traceconfigoverride *GoogleCloudApigeeV1TraceConfigOverride) *OrganizationsEnvironmentsTraceConfigOverridesPatchCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33031,6 +33616,9 @@ type OrganizationsHostQueriesCreateCall struct {
 // a 201 status and an ID that refer to the query. In addition to the
 // HTTP status 201, the `state` of "enqueued" means that the request
 // succeeded.
+//
+// - parent: The parent resource name. Must be of the form
+// `organizations/{org}`.
 func (r *OrganizationsHostQueriesService) Create(parent string, googlecloudapigeev1query *GoogleCloudApigeeV1Query) *OrganizationsHostQueriesCreateCall {
 	c := &OrganizationsHostQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33173,6 +33761,9 @@ type OrganizationsHostQueriesGetCall struct {
 // Get: Get status of a query submitted at host level. If the query is
 // still in progress, the `state` is set to "running" After the query
 // has completed successfully, `state` is set to "completed"
+//
+// - name: Name of the asynchronous query to get. Must be of the form
+// `organizations/{org}/queries/{queryId}`.
 func (r *OrganizationsHostQueriesService) Get(name string) *OrganizationsHostQueriesGetCall {
 	c := &OrganizationsHostQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33321,6 +33912,9 @@ type OrganizationsHostQueriesGetResultCall struct {
 // the result is downloaded to the client as a zipped JSON file. The
 // name of the downloaded file will be: OfflineQueryResult-.zip Example:
 // `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`
+//
+// - name: Name of the asynchronous query result to get. Must be of the
+// form `organizations/{org}/queries/{queryId}/result`.
 func (r *OrganizationsHostQueriesService) GetResult(name string) *OrganizationsHostQueriesGetResultCall {
 	c := &OrganizationsHostQueriesGetResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33465,6 +34059,9 @@ type OrganizationsHostQueriesGetResultViewCall struct {
 }
 
 // GetResultView:
+//
+// - name: Name of the asynchronous query result view to get. Must be of
+// the form `organizations/{org}/queries/{queryId}/resultView`.
 func (r *OrganizationsHostQueriesService) GetResultView(name string) *OrganizationsHostQueriesGetResultViewCall {
 	c := &OrganizationsHostQueriesGetResultViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33610,6 +34207,9 @@ type OrganizationsHostQueriesListCall struct {
 }
 
 // List: Return a list of Asynchronous Queries at host level.
+//
+// - parent: The parent resource name. Must be of the form
+// `organizations/{org}`.
 func (r *OrganizationsHostQueriesService) List(parent string) *OrganizationsHostQueriesListCall {
 	c := &OrganizationsHostQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33848,6 +34448,13 @@ type OrganizationsHostStatsGetCall struct {
 // view metrics in meaningful groups. The stats api does accept
 // dimensions as path params. The dimensions are optional in which case
 // the metrics are computed on the entire data for the given timerange.
+//
+// - name: The resource name for which the interactive query will be
+// executed. Must be of the form
+// `organizations/{organization_id}/hostStats/{dimensions}`. Dimensions
+// let you view metrics in meaningful groupings. E.g. apiproxy,
+// target_host. The value of dimensions should be comma separated list
+// as shown below `organizations/{org}/hostStats/apiproxy,request_verb`
 func (r *OrganizationsHostStatsService) Get(name string) *OrganizationsHostStatsGetCall {
 	c := &OrganizationsHostStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34169,6 +34776,9 @@ type OrganizationsInstancesCreateCall struct {
 // Create: Creates an Apigee runtime instance. The instance is
 // accessible from the authorized network configured on the
 // organization. **Note:** Not supported for Apigee hybrid.
+//
+// - parent: Name of the organization. Use the following structure in
+// your request: `organizations/{org}`.
 func (r *OrganizationsInstancesService) Create(parent string, googlecloudapigeev1instance *GoogleCloudApigeeV1Instance) *OrganizationsInstancesCreateCall {
 	c := &OrganizationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34310,6 +34920,9 @@ type OrganizationsInstancesDeleteCall struct {
 // Delete: Deletes an Apigee runtime instance. The instance stops
 // serving requests and the runtime data is deleted. **Note:** Not
 // supported for Apigee hybrid.
+//
+// - name: Name of the instance. Use the following structure in your
+// request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesService) Delete(name string) *OrganizationsInstancesDeleteCall {
 	c := &OrganizationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34442,6 +35055,9 @@ type OrganizationsInstancesGetCall struct {
 
 // Get: Gets the details for an Apigee runtime instance. **Note:** Not
 // supported for Apigee hybrid.
+//
+// - name: Name of the instance. Use the following structure in your
+// request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesService) Get(name string) *OrganizationsInstancesGetCall {
 	c := &OrganizationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34587,6 +35203,9 @@ type OrganizationsInstancesListCall struct {
 
 // List: Lists all Apigee runtime instances for the organization.
 // **Note:** Not supported for Apigee hybrid.
+//
+// - parent: Name of the organization. Use the following structure in
+// your request: `organizations/{org}`.
 func (r *OrganizationsInstancesService) List(parent string) *OrganizationsInstancesListCall {
 	c := &OrganizationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34780,6 +35399,10 @@ type OrganizationsInstancesReportStatusCall struct {
 }
 
 // ReportStatus: Reports the latest status for a runtime instance.
+//
+// - instance: The name of the instance reporting this status. For SaaS
+// the request will be rejected if no instance exists under this name.
+// Format is organizations/{org}/instances/{instance}
 func (r *OrganizationsInstancesService) ReportStatus(instance string, googlecloudapigeev1reportinstancestatusrequest *GoogleCloudApigeeV1ReportInstanceStatusRequest) *OrganizationsInstancesReportStatusCall {
 	c := &OrganizationsInstancesReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instance = instance
@@ -34923,6 +35546,9 @@ type OrganizationsInstancesAttachmentsCreateCall struct {
 
 // Create: Creates a new attachment of an environment to an instance.
 // **Note:** Not supported for Apigee hybrid.
+//
+// - parent: Name of the instance. Use the following structure in your
+// request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesAttachmentsService) Create(parent string, googlecloudapigeev1instanceattachment *GoogleCloudApigeeV1InstanceAttachment) *OrganizationsInstancesAttachmentsCreateCall {
 	c := &OrganizationsInstancesAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35063,6 +35689,10 @@ type OrganizationsInstancesAttachmentsDeleteCall struct {
 
 // Delete: Deletes an attachment. **Note:** Not supported for Apigee
 // hybrid.
+//
+// - name: Name of the attachment. Use the following structure in your
+// request:
+// `organizations/{org}/instances/{instance}/attachments/{attachment}`.
 func (r *OrganizationsInstancesAttachmentsService) Delete(name string) *OrganizationsInstancesAttachmentsDeleteCall {
 	c := &OrganizationsInstancesAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35194,6 +35824,10 @@ type OrganizationsInstancesAttachmentsGetCall struct {
 }
 
 // Get: Gets an attachment. **Note:** Not supported for Apigee hybrid.
+//
+// - name: Name of the attachment. Use the following structure in your
+// request:
+// `organizations/{org}/instances/{instance}/attachments/{attachment}`
 func (r *OrganizationsInstancesAttachmentsService) Get(name string) *OrganizationsInstancesAttachmentsGetCall {
 	c := &OrganizationsInstancesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35340,6 +35974,9 @@ type OrganizationsInstancesAttachmentsListCall struct {
 
 // List: Lists all attachments to an instance. **Note:** Not supported
 // for Apigee hybrid.
+//
+// - parent: Name of the organization. Use the following structure in
+// your request: `organizations/{org}/instances/{instance}`
 func (r *OrganizationsInstancesAttachmentsService) List(parent string) *OrganizationsInstancesAttachmentsListCall {
 	c := &OrganizationsInstancesAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35533,6 +36170,9 @@ type OrganizationsInstancesCanaryevaluationsCreateCall struct {
 }
 
 // Create: Creates a new canary evaluation for an organization.
+//
+// - parent: Name of the organization. Use the following structure in
+// your request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesCanaryevaluationsService) Create(parent string, googlecloudapigeev1canaryevaluation *GoogleCloudApigeeV1CanaryEvaluation) *OrganizationsInstancesCanaryevaluationsCreateCall {
 	c := &OrganizationsInstancesCanaryevaluationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35673,6 +36313,10 @@ type OrganizationsInstancesCanaryevaluationsGetCall struct {
 }
 
 // Get: Gets a CanaryEvaluation for an organization.
+//
+// - name: Name of the CanaryEvaluation. Use the following structure in
+// your request:
+// `organizations/{org}/instances/*/canaryevaluations/{evaluation}`
 func (r *OrganizationsInstancesCanaryevaluationsService) Get(name string) *OrganizationsInstancesCanaryevaluationsGetCall {
 	c := &OrganizationsInstancesCanaryevaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35820,6 +36464,10 @@ type OrganizationsInstancesNatAddressesActivateCall struct {
 // Activate: Activates the NAT address. The Apigee instance can now use
 // this for Internet egress traffic. **Note:** Not supported for Apigee
 // hybrid.
+//
+// - name: Name of the nat address. Use the following structure in your
+// request:
+// `organizations/{org}/instances/{instances}/natAddresses/{nataddress}``
 func (r *OrganizationsInstancesNatAddressesService) Activate(name string, googlecloudapigeev1activatenataddressrequest *GoogleCloudApigeeV1ActivateNatAddressRequest) *OrganizationsInstancesNatAddressesActivateCall {
 	c := &OrganizationsInstancesNatAddressesActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35965,6 +36613,9 @@ type OrganizationsInstancesNatAddressesCreateCall struct {
 // traffic. The address can be activated for use once any required
 // firewall IP whitelisting has been completed. **Note:** Not supported
 // for Apigee hybrid.
+//
+// - parent: Name of the instance. Use the following structure in your
+// request: `organizations/{org}/instances/{instance}`
 func (r *OrganizationsInstancesNatAddressesService) Create(parent string, googlecloudapigeev1nataddress *GoogleCloudApigeeV1NatAddress) *OrganizationsInstancesNatAddressesCreateCall {
 	c := &OrganizationsInstancesNatAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36106,6 +36757,10 @@ type OrganizationsInstancesNatAddressesDeleteCall struct {
 // Delete: Deletes the NAT address. Connections that are actively using
 // the address are drained before it is removed. **Note:** Not supported
 // for Apigee hybrid.
+//
+// - name: Name of the nat address. Use the following structure in your
+// request:
+// `organizations/{org}/instances/{instances}/natAddresses/{nataddress}``
 func (r *OrganizationsInstancesNatAddressesService) Delete(name string) *OrganizationsInstancesNatAddressesDeleteCall {
 	c := &OrganizationsInstancesNatAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36238,6 +36893,10 @@ type OrganizationsInstancesNatAddressesGetCall struct {
 
 // Get: Gets the details of a NAT address. **Note:** Not supported for
 // Apigee hybrid.
+//
+// - name: Name of the nat address. Use the following structure in your
+// request:
+// `organizations/{org}/instances/{instances}/natAddresses/{nataddress}`
 func (r *OrganizationsInstancesNatAddressesService) Get(name string) *OrganizationsInstancesNatAddressesGetCall {
 	c := &OrganizationsInstancesNatAddressesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36383,6 +37042,9 @@ type OrganizationsInstancesNatAddressesListCall struct {
 
 // List: Lists the NAT addresses for an Apigee instance. **Note:** Not
 // supported for Apigee hybrid.
+//
+// - parent: Name of the instance. Use the following structure in your
+// request: `organizations/{org}/instances/{instance}`
 func (r *OrganizationsInstancesNatAddressesService) List(parent string) *OrganizationsInstancesNatAddressesListCall {
 	c := &OrganizationsInstancesNatAddressesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36576,6 +37238,9 @@ type OrganizationsKeyvaluemapsCreateCall struct {
 }
 
 // Create: Creates a key value map in an organization.
+//
+// - parent: The name of the organization in which to create the key
+// value map file. Must be of the form `organizations/{organization}`.
 func (r *OrganizationsKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsKeyvaluemapsCreateCall {
 	c := &OrganizationsKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36715,6 +37380,9 @@ type OrganizationsKeyvaluemapsDeleteCall struct {
 }
 
 // Delete: Delete a key value map in an organization.
+//
+// - name: The name of the key value map. Must be of the form
+// `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsKeyvaluemapsService) Delete(name string) *OrganizationsKeyvaluemapsDeleteCall {
 	c := &OrganizationsKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36848,6 +37516,8 @@ type OrganizationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37001,6 +37671,8 @@ type OrganizationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
 	c := &OrganizationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37205,6 +37877,14 @@ type OrganizationsOptimizedHostStatsGetCall struct {
 
 // Get: This api is similar to GetHostStats except that the response is
 // less verbose.
+//
+// - name: The resource name for which the interactive query will be
+// executed. Must be of the form
+// `organizations/{organization_id}/optimizedHostStats/{dimensions}`.
+// Dimensions let you view metrics in meaningful groupings. E.g.
+// apiproxy, target_host. The value of dimensions should be comma
+// separated list as shown below
+// `organizations/{org}/optimizedHostStats/apiproxy,request_verb`
 func (r *OrganizationsOptimizedHostStatsService) Get(name string) *OrganizationsOptimizedHostStatsGetCall {
 	c := &OrganizationsOptimizedHostStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37532,6 +38212,10 @@ type OrganizationsReportsCreateCall struct {
 // does not provide an executable entity. The Edge UI converts the
 // custom report definition into an analytics query and displays the
 // result in a chart.
+//
+// - parent: The parent organization name under which the Custom Report
+// will be created. Must be of the form:
+// `organizations/{organization_id}/reports`
 func (r *OrganizationsReportsService) Create(parent string, googlecloudapigeev1customreport *GoogleCloudApigeeV1CustomReport) *OrganizationsReportsCreateCall {
 	c := &OrganizationsReportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37671,6 +38355,9 @@ type OrganizationsReportsDeleteCall struct {
 }
 
 // Delete: Deletes an existing custom report definition
+//
+// - name: Custom Report name of the form:
+// `organizations/{organization_id}/reports/{report_name}`
 func (r *OrganizationsReportsService) Delete(name string) *OrganizationsReportsDeleteCall {
 	c := &OrganizationsReportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37804,6 +38491,9 @@ type OrganizationsReportsGetCall struct {
 }
 
 // Get: Retrieve a custom report definition.
+//
+// - name: Custom Report name of the form:
+// `organizations/{organization_id}/reports/{report_name}`
 func (r *OrganizationsReportsService) Get(name string) *OrganizationsReportsGetCall {
 	c := &OrganizationsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37948,6 +38638,9 @@ type OrganizationsReportsListCall struct {
 }
 
 // List: Return a list of Custom Reports
+//
+// - parent: The parent organization name under which the API product
+// will be listed `organizations/{organization_id}/reports`
 func (r *OrganizationsReportsService) List(parent string) *OrganizationsReportsListCall {
 	c := &OrganizationsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38106,6 +38799,9 @@ type OrganizationsReportsUpdateCall struct {
 }
 
 // Update: Update an existing custom report definition
+//
+// - name: Custom Report name of the form:
+// `organizations/{organization_id}/reports/{report_name}`
 func (r *OrganizationsReportsService) Update(name string, googlecloudapigeev1customreport *GoogleCloudApigeeV1CustomReport) *OrganizationsReportsUpdateCall {
 	c := &OrganizationsReportsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38251,6 +38947,10 @@ type OrganizationsSharedflowsCreateCall struct {
 // it. Once imported, the shared flow revision must be deployed before
 // it can be accessed at runtime. The size limit of a shared flow bundle
 // is 15 MB.
+//
+// - parent: The name of the parent organization under which to create
+// the shared flow. Must be of the form:
+// `organizations/{organization_id}`
 func (r *OrganizationsSharedflowsService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsSharedflowsCreateCall {
 	c := &OrganizationsSharedflowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38416,6 +39116,9 @@ type OrganizationsSharedflowsDeleteCall struct {
 
 // Delete: Deletes a shared flow and all it's revisions. The shared flow
 // must be undeployed before you can delete it.
+//
+// - name: shared flow name of the form:
+// `organizations/{organization_id}/sharedflows/{shared_flow_id}`
 func (r *OrganizationsSharedflowsService) Delete(name string) *OrganizationsSharedflowsDeleteCall {
 	c := &OrganizationsSharedflowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38547,6 +39250,9 @@ type OrganizationsSharedflowsGetCall struct {
 }
 
 // Get: Gets a shared flow by name, including a list of its revisions.
+//
+// - name: The name of the shared flow to get. Must be of the form:
+// `organizations/{organization_id}/sharedflows/{shared_flow_id}`
 func (r *OrganizationsSharedflowsService) Get(name string) *OrganizationsSharedflowsGetCall {
 	c := &OrganizationsSharedflowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38691,6 +39397,9 @@ type OrganizationsSharedflowsListCall struct {
 }
 
 // List: Lists all shared flows in the organization.
+//
+// - parent: The name of the parent organization under which to get
+// shared flows. Must be of the form: `organizations/{organization_id}`
 func (r *OrganizationsSharedflowsService) List(parent string) *OrganizationsSharedflowsListCall {
 	c := &OrganizationsSharedflowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38861,6 +39570,10 @@ type OrganizationsSharedflowsDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of a shared flow.
+//
+// - parent: Name of the shared flow for which to return deployment
+// information in the following format:
+// `organizations/{org}/sharedflows/{sharedflow}`
 func (r *OrganizationsSharedflowsDeploymentsService) List(parent string) *OrganizationsSharedflowsDeploymentsListCall {
 	c := &OrganizationsSharedflowsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39007,6 +39720,11 @@ type OrganizationsSharedflowsRevisionsDeleteCall struct {
 
 // Delete: Deletes a shared flow and all associated policies, resources,
 // and revisions. You must undeploy the shared flow before deleting it.
+//
+// - name: The name of the shared flow revision to delete. Must be of
+// the form:
+// `organizations/{organization_id}/sharedflows/{shared_flow_id}/revision
+// s/{revision_id}`
 func (r *OrganizationsSharedflowsRevisionsService) Delete(name string) *OrganizationsSharedflowsRevisionsDeleteCall {
 	c := &OrganizationsSharedflowsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39145,6 +39863,11 @@ type OrganizationsSharedflowsRevisionsGetCall struct {
 // displays to `stdout`. Then, develop the shared flow configuration
 // locally and upload the updated sharedFlow configuration revision, as
 // described in updateSharedFlowRevision (updateSharedFlowRevision).
+//
+// - name: The name of the shared flow revision to get. Must be of the
+// form:
+// `organizations/{organization_id}/sharedflows/{shared_flow_id}/revision
+// s/{revision_id}`
 func (r *OrganizationsSharedflowsRevisionsService) Get(name string) *OrganizationsSharedflowsRevisionsGetCall {
 	c := &OrganizationsSharedflowsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39307,6 +40030,11 @@ type OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall struct {
 // becomes undeployed. The payload is a ZIP-formatted shared flow.
 // Content type must be either multipart/form-data or
 // application/octet-stream.
+//
+// - name: The name of the shared flow revision to update. Must be of
+// the form:
+// `organizations/{organization_id}/sharedflows/{shared_flow_id}/revision
+// s/{revision_id}`
 func (r *OrganizationsSharedflowsRevisionsService) UpdateSharedFlowRevision(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall {
 	c := &OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39462,6 +40190,10 @@ type OrganizationsSharedflowsRevisionsDeploymentsListCall struct {
 }
 
 // List: Lists all deployments of a shared flow revision.
+//
+// - parent: Name of the API proxy revision for which to return
+// deployment information in the following format:
+// `organizations/{org}/sharedflows/{sharedflow}/revisions/{rev}`.
 func (r *OrganizationsSharedflowsRevisionsDeploymentsService) List(parent string) *OrganizationsSharedflowsRevisionsDeploymentsListCall {
 	c := &OrganizationsSharedflowsRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39608,6 +40340,9 @@ type OrganizationsSitesApicategoriesCreateCall struct {
 }
 
 // Create: Creates a new category on the portal.
+//
+// - parent: Name of the portal. Use the following structure in your
+// request: `organizations/{org}/sites/{site}`
 func (r *OrganizationsSitesApicategoriesService) Create(parent string, googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData) *OrganizationsSitesApicategoriesCreateCall {
 	c := &OrganizationsSitesApicategoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39747,6 +40482,10 @@ type OrganizationsSitesApicategoriesDeleteCall struct {
 }
 
 // Delete: Deletes a category from the portal.
+//
+// - name: Name of the category. Use the following structure in your
+// request:
+// `organizations/{org}/sites/{site}/apicategories/{apicategory}`
 func (r *OrganizationsSitesApicategoriesService) Delete(name string) *OrganizationsSitesApicategoriesDeleteCall {
 	c := &OrganizationsSitesApicategoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39879,6 +40618,10 @@ type OrganizationsSitesApicategoriesGetCall struct {
 }
 
 // Get: Gets a category on the portal.
+//
+// - name: Name of the category. Use the following structure in your
+// request:
+// `organizations/{org}/sites/{site}/apicategories/{apicategory}`
 func (r *OrganizationsSitesApicategoriesService) Get(name string) *OrganizationsSitesApicategoriesGetCall {
 	c := &OrganizationsSitesApicategoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40023,6 +40766,9 @@ type OrganizationsSitesApicategoriesListCall struct {
 }
 
 // List: Lists the categories on the portal.
+//
+// - parent: Name of the portal. Use the following structure in your
+// request: `organizations/{org}/sites/{site}`
 func (r *OrganizationsSitesApicategoriesService) List(parent string) *OrganizationsSitesApicategoriesListCall {
 	c := &OrganizationsSitesApicategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -40169,6 +40915,10 @@ type OrganizationsSitesApicategoriesPatchCall struct {
 }
 
 // Patch: Updates a category on the portal.
+//
+// - name: Name of the category. Use the following structure in your
+// request:
+// `organizations/{org}/sites/{site}/apicategories/{apicategory}`
 func (r *OrganizationsSitesApicategoriesService) Patch(name string, googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData) *OrganizationsSitesApicategoriesPatchCall {
 	c := &OrganizationsSitesApicategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40311,6 +41061,9 @@ type ProjectsProvisionOrganizationCall struct {
 // ProvisionOrganization: Provisions a new Apigee organization with a
 // functioning runtime. This is the standard way to create trial
 // organizations for a free Apigee trial.
+//
+// - project: Name of the GCP project with which to associate the Apigee
+// organization.
 func (r *ProjectsService) ProvisionOrganization(project string, googlecloudapigeev1provisionorganizationrequest *GoogleCloudApigeeV1ProvisionOrganizationRequest) *ProjectsProvisionOrganizationCall {
 	c := &ProjectsProvisionOrganizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

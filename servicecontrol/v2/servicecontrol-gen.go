@@ -1302,6 +1302,12 @@ type ServicesCheckCall struct {
 // `servicemanagement.services.check` permission on the specified
 // service. For more information, see Service Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
+//
+// - serviceName: The service name as specified in its service
+// configuration. For example, "pubsub.googleapis.com". See
+// google.api.Service
+// (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+// for the definition of a service name.
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -1454,6 +1460,12 @@ type ServicesReportCall struct {
 // `servicemanagement.services.report` permission on the specified
 // service. For more information, see Service Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
+//
+// - serviceName: The service name as specified in its service
+// configuration. For example, "pubsub.googleapis.com". See
+// google.api.Service
+// (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+// for the definition of a service name.
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName

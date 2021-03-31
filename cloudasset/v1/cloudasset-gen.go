@@ -4650,6 +4650,12 @@ type FeedsCreateCall struct {
 
 // Create: Creates a feed in a parent project/folder/organization to
 // listen to its asset updates.
+//
+// - parent: The name of the project/folder/organization where this feed
+// should be created in. It can only be an organization number (such as
+// "organizations/123"), a folder number (such as "folders/123"), a
+// project ID (such as "projects/my-project-id")", or a project number
+// (such as "projects/12345").
 func (r *FeedsService) Create(parent string, createfeedrequest *CreateFeedRequest) *FeedsCreateCall {
 	c := &FeedsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4789,6 +4795,11 @@ type FeedsDeleteCall struct {
 }
 
 // Delete: Deletes an asset feed.
+//
+// - name: The name of the feed and it must be in the format of:
+// projects/project_number/feeds/feed_id
+// folders/folder_number/feeds/feed_id
+// organizations/organization_number/feeds/feed_id
 func (r *FeedsService) Delete(name string) *FeedsDeleteCall {
 	c := &FeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4920,6 +4931,11 @@ type FeedsGetCall struct {
 }
 
 // Get: Gets details about an asset feed.
+//
+// - name: The name of the Feed and it must be in the format of:
+// projects/project_number/feeds/feed_id
+// folders/folder_number/feeds/feed_id
+// organizations/organization_number/feeds/feed_id
 func (r *FeedsService) Get(name string) *FeedsGetCall {
 	c := &FeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5064,6 +5080,11 @@ type FeedsListCall struct {
 }
 
 // List: Lists all asset feeds in a parent project/folder/organization.
+//
+// - parent: The parent project/folder/organization whose feeds are to
+// be listed. It can only be using project/folder/organization number
+// (such as "folders/12345")", or a project ID (such as
+// "projects/my-project-id").
 func (r *FeedsService) List(parent string) *FeedsListCall {
 	c := &FeedsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5208,6 +5229,13 @@ type FeedsPatchCall struct {
 }
 
 // Patch: Updates an asset feed configuration.
+//
+// - name: The format will be
+// projects/{project_number}/feeds/{client-assigned_feed_identifier} or
+// folders/{folder_number}/feeds/{client-assigned_feed_identifier} or
+// organizations/{organization_number}/feeds/{client-assigned_feed_identi
+// fier} The client-assigned feed identifier must be unique within the
+// parent project/folder/organization.
 func (r *FeedsService) Patch(nameid string, updatefeedrequest *UpdateFeedRequest) *FeedsPatchCall {
 	c := &FeedsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5350,6 +5378,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5495,6 +5525,16 @@ type V1AnalyzeIamPolicyCall struct {
 
 // AnalyzeIamPolicy: Analyzes IAM policies to answer which identities
 // have what accesses on which resources.
+//
+// - scope: The relative name of the root asset. Only resources and IAM
+// policies within the scope will be analyzed. This can only be an
+// organization number (such as "organizations/123"), a folder number
+// (such as "folders/123"), a project ID (such as
+// "projects/my-project-id"), or a project number (such as
+// "projects/12345"). To know how to get organization id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+// To know how to get folder or project id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicy(scope string) *V1AnalyzeIamPolicyCall {
 	c := &V1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -5851,6 +5891,16 @@ type V1AnalyzeIamPolicyLongrunningCall struct {
 // seconds with exponential backoff retry to poll the operation result.
 // The metadata contains the request to help callers to map responses to
 // requests.
+//
+// - scope: The relative name of the root asset. Only resources and IAM
+// policies within the scope will be analyzed. This can only be an
+// organization number (such as "organizations/123"), a folder number
+// (such as "folders/123"), a project ID (such as
+// "projects/my-project-id"), or a project number (such as
+// "projects/12345"). To know how to get organization id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+// To know how to get folder or project id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicyLongrunning(scope string, analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest) *V1AnalyzeIamPolicyLongrunningCall {
 	c := &V1AnalyzeIamPolicyLongrunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -5997,6 +6047,11 @@ type V1BatchGetAssetsHistoryCall struct {
 // history with asset in both non-delete or deleted status. If a
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+// - parent: The relative name of the root asset. It can only be an
+// organization number (such as "organizations/123"), a project ID (such
+// as "projects/my-project-id")", or a project number (such as
+// "projects/12345").
 func (r *V1Service) BatchGetAssetsHistory(parent string) *V1BatchGetAssetsHistoryCall {
 	c := &V1BatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6234,6 +6289,11 @@ type V1ExportAssetsCall struct {
 // exponential retry to poll the export operation result. For
 // regular-size resource parent, the export operation usually finishes
 // within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+// organization number (such as "organizations/123"), a project ID (such
+// as "projects/my-project-id"), or a project number (such as
+// "projects/12345"), or a folder number (such as "folders/123").
 func (r *V1Service) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *V1ExportAssetsCall {
 	c := &V1ExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6377,6 +6437,16 @@ type V1SearchAllIamPoliciesCall struct {
 // scope, such as a project, folder, or organization. The caller must be
 // granted the `cloudasset.assets.searchAllIamPolicies` permission on
 // the desired scope, otherwise the request will be rejected.
+//
+// - scope: A scope can be a project, a folder, or an organization. The
+// search is limited to the IAM policies within the `scope`. The caller
+// must be granted the `cloudasset.assets.searchAllIamPolicies`
+// (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
+// permission on the desired scope. The allowed values are: *
+// projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+// projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
+// folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
+// organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
 func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCall {
 	c := &V1SearchAllIamPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -6620,6 +6690,16 @@ type V1SearchAllResourcesCall struct {
 // scope, such as a project, folder, or organization. The caller must be
 // granted the `cloudasset.assets.searchAllResources` permission on the
 // desired scope, otherwise the request will be rejected.
+//
+// - scope: A scope can be a project, a folder, or an organization. The
+// search is limited to the resources within the `scope`. The caller
+// must be granted the `cloudasset.assets.searchAllResources`
+// (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
+// permission on the desired scope. The allowed values are: *
+// projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+// projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
+// folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
+// organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
 func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 	c := &V1SearchAllResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope

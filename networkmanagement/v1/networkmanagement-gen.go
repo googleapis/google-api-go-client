@@ -2163,6 +2163,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2308,6 +2310,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2522,6 +2527,9 @@ type ProjectsLocationsGlobalConnectivityTestsCreateCall struct {
 // If the endpoint specifications in `ConnectivityTest` are incomplete,
 // the reachability result returns a value of AMBIGUOUS. For more
 // information, see the Connectivity Test documentation.
+//
+// - parent: The parent resource of the Connectivity Test to create:
+// `projects/{project_id}/locations/global`
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Create(parent string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsCreateCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2677,6 +2685,9 @@ type ProjectsLocationsGlobalConnectivityTestsDeleteCall struct {
 }
 
 // Delete: Deletes a specific `ConnectivityTest`.
+//
+// - name: Connectivity Test resource name using the form:
+// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Delete(name string) *ProjectsLocationsGlobalConnectivityTestsDeleteCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2808,6 +2819,9 @@ type ProjectsLocationsGlobalConnectivityTestsGetCall struct {
 }
 
 // Get: Gets the details of a specific Connectivity Test.
+//
+// - name: `ConnectivityTest` resource name using the form:
+// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Get(name string) *ProjectsLocationsGlobalConnectivityTestsGetCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2954,6 +2968,10 @@ type ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3118,6 +3136,9 @@ type ProjectsLocationsGlobalConnectivityTestsListCall struct {
 }
 
 // List: Lists all Connectivity Tests owned by a project.
+//
+// - parent: The parent resource of the Connectivity Tests:
+// `projects/{project_id}/locations/global`
 func (r *ProjectsLocationsGlobalConnectivityTestsService) List(parent string) *ProjectsLocationsGlobalConnectivityTestsListCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3353,6 +3374,9 @@ type ProjectsLocationsGlobalConnectivityTestsPatchCall struct {
 // specifications in `ConnectivityTest` are incomplete, the reachability
 // result returns a value of `AMBIGUOUS`. See the documentation in
 // `ConnectivityTest` for for more details.
+//
+// - name: Unique name of the resource using the form:
+// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Patch(name string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsPatchCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3515,6 +3539,9 @@ type ProjectsLocationsGlobalConnectivityTestsRerunCall struct {
 // example, specified resources are deleted in the network, or you lost
 // read permissions to the network configurations of listed projects),
 // then the reachability result returns a value of `UNKNOWN`.
+//
+// - name: Connectivity Test resource name using the form:
+// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Rerun(name string, rerunconnectivitytestrequest *RerunConnectivityTestRequest) *ProjectsLocationsGlobalConnectivityTestsRerunCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsRerunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3657,6 +3684,10 @@ type ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3802,6 +3833,10 @@ type ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3951,6 +3986,8 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsGlobalOperationsCancelCall {
 	c := &ProjectsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4093,6 +4130,8 @@ type ProjectsLocationsGlobalOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsGlobalOperationsService) Delete(name string) *ProjectsLocationsGlobalOperationsDeleteCall {
 	c := &ProjectsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4226,6 +4265,8 @@ type ProjectsLocationsGlobalOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsGlobalOperationsService) Get(name string) *ProjectsLocationsGlobalOperationsGetCall {
 	c := &ProjectsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4379,6 +4420,8 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
 	c := &ProjectsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

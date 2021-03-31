@@ -1865,6 +1865,10 @@ type ProjectsDashboardsCreateCall struct {
 // This method requires the monitoring.dashboards.create permission on
 // the specified project. For more information about permissions, see
 // Cloud Identity and Access Management.
+//
+// - parent: The project on which to execute the request. The format is:
+// projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must match
+// the dashboard resource name.
 func (r *ProjectsDashboardsService) Create(parent string, dashboard *Dashboard) *ProjectsDashboardsCreateCall {
 	c := &ProjectsDashboardsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2009,6 +2013,9 @@ type ProjectsDashboardsDeleteCall struct {
 // monitoring.dashboards.delete permission on the specified dashboard.
 // For more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+// - name: The resource name of the Dashboard. The format is:
+// projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]
 func (r *ProjectsDashboardsService) Delete(name string) *ProjectsDashboardsDeleteCall {
 	c := &ProjectsDashboardsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2145,6 +2152,11 @@ type ProjectsDashboardsGetCall struct {
 // monitoring.dashboards.get permission on the specified dashboard. For
 // more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+// - name: The resource name of the Dashboard. The format is one of:
+// dashboards/[DASHBOARD_ID] (for system dashboards)
+// projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for custom
+// dashboards).
 func (r *ProjectsDashboardsService) Get(name string) *ProjectsDashboardsGetCall {
 	c := &ProjectsDashboardsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2294,6 +2306,9 @@ type ProjectsDashboardsListCall struct {
 // monitoring.dashboards.list permission on the specified project. For
 // more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+// - parent: The scope of the dashboards to list. The format is:
+// projects/[PROJECT_ID_OR_NUMBER]
 func (r *ProjectsDashboardsService) List(parent string) *ProjectsDashboardsListCall {
 	c := &ProjectsDashboardsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2492,6 +2507,8 @@ type ProjectsDashboardsPatchCall struct {
 // definition.This method requires the monitoring.dashboards.update
 // permission on the specified dashboard. For more information, see
 // Cloud Identity and Access Management (https://cloud.google.com/iam).
+//
+// - name: Immutable. The resource name of the dashboard.
 func (r *ProjectsDashboardsService) Patch(name string, dashboard *Dashboard) *ProjectsDashboardsPatchCall {
 	c := &ProjectsDashboardsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

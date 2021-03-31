@@ -406,6 +406,8 @@ type AutnumGetCall struct {
 
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
+//
+// - autnumId:
 func (r *AutnumService) Get(autnumId string) *AutnumGetCall {
 	c := &AutnumGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.autnumId = autnumId
@@ -545,6 +547,8 @@ type DomainGetCall struct {
 }
 
 // Get: Look up RDAP information for a domain by name.
+//
+// - domainName: Full domain name to look up. Example: "example.com"
 func (r *DomainService) Get(domainName string) *DomainGetCall {
 	c := &DomainGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.domainName = domainName
@@ -687,6 +691,8 @@ type EntityGetCall struct {
 
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
+//
+// - entityId:
 func (r *EntityService) Get(entityId string) *EntityGetCall {
 	c := &EntityGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityId = entityId
@@ -828,6 +834,9 @@ type IpGetCall struct {
 
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
+//
+// - ipId:
+// - ipId1:
 func (r *IpService) Get(ipId string, ipId1 string) *IpGetCall {
 	c := &IpGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ipId = ipId
@@ -976,6 +985,8 @@ type NameserverGetCall struct {
 
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
+//
+// - nameserverId:
 func (r *NameserverService) Get(nameserverId string) *NameserverGetCall {
 	c := &NameserverGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameserverId = nameserverId

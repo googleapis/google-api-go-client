@@ -1642,6 +1642,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1995,6 +1997,10 @@ type ProjectsLocationsCustomClassesCreateCall struct {
 }
 
 // Create: Create a custom class.
+//
+// - parent: The parent resource where this custom class will be
+// created. Format:
+// {api_version}/projects/{project}/locations/{location}/customClasses
 func (r *ProjectsLocationsCustomClassesService) Create(parent string, createcustomclassrequest *CreateCustomClassRequest) *ProjectsLocationsCustomClassesCreateCall {
 	c := &ProjectsLocationsCustomClassesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2134,6 +2140,10 @@ type ProjectsLocationsCustomClassesDeleteCall struct {
 }
 
 // Delete: Delete a custom class.
+//
+// - name: The name of the custom class to delete. Format:
+// {api_version}/projects/{project}/locations/{location}/customClasses/{c
+// ustom_class}
 func (r *ProjectsLocationsCustomClassesService) Delete(name string) *ProjectsLocationsCustomClassesDeleteCall {
 	c := &ProjectsLocationsCustomClassesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2265,6 +2275,10 @@ type ProjectsLocationsCustomClassesGetCall struct {
 }
 
 // Get: Get a custom class.
+//
+// - name: The name of the custom class to retrieve. Format:
+// {api_version}/projects/{project}/locations/{location}/customClasses/{c
+// ustom_class}
 func (r *ProjectsLocationsCustomClassesService) Get(name string) *ProjectsLocationsCustomClassesGetCall {
 	c := &ProjectsLocationsCustomClassesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2409,6 +2423,10 @@ type ProjectsLocationsCustomClassesListCall struct {
 }
 
 // List: List custom classes.
+//
+// - parent: The parent, which owns this collection of custom classes.
+// Format:
+// {api_version}/projects/{project}/locations/{location}/customClasses
 func (r *ProjectsLocationsCustomClassesService) List(parent string) *ProjectsLocationsCustomClassesListCall {
 	c := &ProjectsLocationsCustomClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2604,6 +2622,8 @@ type ProjectsLocationsCustomClassesPatchCall struct {
 }
 
 // Patch: Update a custom class.
+//
+// - name: The resource name of the custom class.
 func (r *ProjectsLocationsCustomClassesService) Patch(name string, customclass *CustomClass) *ProjectsLocationsCustomClassesPatchCall {
 	c := &ProjectsLocationsCustomClassesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2760,6 +2780,10 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // single word or a multi-word phrase. The items in the PhraseSet are
 // favored by the recognition model when you send a call that includes
 // the PhraseSet.
+//
+// - parent: The parent resource where this phrase set will be created.
+// Format:
+// {api_version}/projects/{project}/locations/{location}/phraseSets
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
 	c := &ProjectsLocationsPhraseSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2899,6 +2923,10 @@ type ProjectsLocationsPhraseSetsDeleteCall struct {
 }
 
 // Delete: Delete a phrase set.
+//
+// - name: The name of the phrase set to delete. Format:
+// {api_version}/projects/{project}/locations/{location}/phraseSets/{phra
+// se_set}
 func (r *ProjectsLocationsPhraseSetsService) Delete(name string) *ProjectsLocationsPhraseSetsDeleteCall {
 	c := &ProjectsLocationsPhraseSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3030,6 +3058,10 @@ type ProjectsLocationsPhraseSetsGetCall struct {
 }
 
 // Get: Get a phrase set.
+//
+// - name: The name of the phrase set to retrieve. Format:
+// {api_version}/projects/{project}/locations/{location}/phraseSets/{phra
+// se_set}
 func (r *ProjectsLocationsPhraseSetsService) Get(name string) *ProjectsLocationsPhraseSetsGetCall {
 	c := &ProjectsLocationsPhraseSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3174,6 +3206,9 @@ type ProjectsLocationsPhraseSetsListCall struct {
 }
 
 // List: List phrase sets.
+//
+// - parent: The parent, which owns this collection of phrase set.
+// Format: projects/{project}/locations/{location}
 func (r *ProjectsLocationsPhraseSetsService) List(parent string) *ProjectsLocationsPhraseSetsListCall {
 	c := &ProjectsLocationsPhraseSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3369,6 +3404,8 @@ type ProjectsLocationsPhraseSetsPatchCall struct {
 }
 
 // Patch: Update a phrase set.
+//
+// - name: The resource name of the phrase set.
 func (r *ProjectsLocationsPhraseSetsService) Patch(name string, phraseset *PhraseSet) *ProjectsLocationsPhraseSetsPatchCall {
 	c := &ProjectsLocationsPhraseSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

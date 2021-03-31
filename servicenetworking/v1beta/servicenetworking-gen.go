@@ -4094,6 +4094,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4248,6 +4250,15 @@ type ServicesAddSubnetworkCall struct {
 // producer's tenant project to be a shared VPC service project as
 // needed. The response from the `get` operation will be of type
 // `Subnetwork` if the operation successfully completes.
+//
+// - parent: A tenant project in the service producer organization, in
+// the following format:
+// services/{service}/{collection-id}/{resource-id}. {collection-id} is
+// the cloud resource collection type that represents the tenant
+// project. Only `projects` are supported. {resource-id} is the tenant
+// project numeric id, such as `123456`. {service} the name of the
+// peering service, such as `service-peering.example.com`. This service
+// must already be enabled in the service consumer's project.
 func (r *ServicesService) AddSubnetwork(parent string, addsubnetworkrequest *AddSubnetworkRequest) *ServicesAddSubnetworkCall {
 	c := &ServicesAddSubnetworkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4395,6 +4406,10 @@ type ServicesSearchRangeCall struct {
 // non-conflicting sub-range of requested size (expressed in number of
 // leading bits of ipv4 network mask, as in CIDR range notation).
 // Operation
+//
+// - parent: This is in a form services/{service}. {service} the name of
+// the private access management service, for example
+// 'service-peering.example.com'.
 func (r *ServicesService) SearchRange(parent string, searchrangerequest *SearchRangeRequest) *ServicesSearchRangeCall {
 	c := &ServicesSearchRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4538,6 +4553,11 @@ type ServicesUpdateConnectionsCall struct {
 // UpdateConnections: Updates the allocated ranges that are assigned to
 // a connection. The response from the `get` operation will be of type
 // `Connection` if the operation successfully completes.
+//
+// - name: The service producer peering service that is managing peering
+// connectivity for a service producer organization. For Google services
+// that support this functionality, this is
+// `services/servicenetworking.googleapis.com`.
 func (r *ServicesService) UpdateConnections(name string, googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection) *ServicesUpdateConnectionsCall {
 	c := &ServicesUpdateConnectionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4713,6 +4733,11 @@ type ServicesConnectionsCreateCall struct {
 // services in the service producer's organization, so it only needs to
 // be invoked once. The response from the `get` operation will be of
 // type `Connection` if the operation successfully completes.
+//
+// - parent: The service that is managing peering connectivity for a
+// service producer's organization. For Google services that support
+// this functionality, this value is
+// `services/servicenetworking.googleapis.com`.
 func (r *ServicesConnectionsService) Create(parent string, googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection) *ServicesConnectionsCreateCall {
 	c := &ServicesConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4855,6 +4880,13 @@ type ServicesConnectionsListCall struct {
 
 // List: List the private connections that are configured in a service
 // consumer's VPC network.
+//
+// - parent: The service that is managing peering connectivity for a
+// service producer's organization. For Google services that support
+// this functionality, this value is
+// `services/servicenetworking.googleapis.com`. If you specify `-` as
+// the parameter value, all configured public peering services are
+// listed.
 func (r *ServicesConnectionsService) List(parent string) *ServicesConnectionsListCall {
 	c := &ServicesConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

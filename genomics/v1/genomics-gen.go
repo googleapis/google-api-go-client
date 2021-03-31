@@ -959,6 +959,8 @@ type OperationsCancelCall struct {
 // or the operation completed despite cancellation. Authorization
 // requires the following Google IAM (https://cloud.google.com/iam)
 // permission: * `genomics.operations.cancel`
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1104,6 +1106,8 @@ type OperationsGetCall struct {
 // recommended by the API service. Authorization requires the following
 // Google IAM (https://cloud.google.com/iam) permission: *
 // `genomics.operations.get`
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1252,6 +1256,8 @@ type OperationsListCall struct {
 // request. Authorization requires the following Google IAM
 // (https://cloud.google.com/iam) permission: *
 // `genomics.operations.list`
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

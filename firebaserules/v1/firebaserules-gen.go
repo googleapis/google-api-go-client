@@ -1167,6 +1167,12 @@ type ProjectsTestCall struct {
 // request.auth.uid && (imageName.matches('*.png$') ||
 // imageName.matches('*.jpg$')) && resource.mimeType.matches('^image/')
 // } }
+//
+// - name: Tests may either provide `source` or a `Ruleset` resource
+// name. For tests against `source`, the resource name must refer to the
+// project: Format: `projects/{project_id}` For tests against a
+// `Ruleset`, this must be the `Ruleset` resource name: Format:
+// `projects/{project_id}/rulesets/{ruleset_id}`
 func (r *ProjectsService) Test(name string, testrulesetrequest *TestRulesetRequest) *ProjectsTestCall {
 	c := &ProjectsTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1324,6 +1330,9 @@ type ProjectsReleasesCreateCall struct {
 // `prod/beta` releases refer to the same `Ruleset`. However, `prod/v23`
 // refers to a new `Ruleset`. The `Ruleset` reference for a `Release`
 // may be updated using the UpdateRelease method.
+//
+// - name: Resource name for the project which owns this `Release`.
+// Format: `projects/{project_id}`
 func (r *ProjectsReleasesService) Create(name string, release *Release) *ProjectsReleasesCreateCall {
 	c := &ProjectsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1464,6 +1473,9 @@ type ProjectsReleasesDeleteCall struct {
 }
 
 // Delete: Delete a `Release` by resource name.
+//
+// - name: Resource name for the `Release` to delete. Format:
+// `projects/{project_id}/releases/{release_id}`
 func (r *ProjectsReleasesService) Delete(name string) *ProjectsReleasesDeleteCall {
 	c := &ProjectsReleasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1596,6 +1608,9 @@ type ProjectsReleasesGetCall struct {
 }
 
 // Get: Get a `Release` by name.
+//
+// - name: Resource name of the `Release`. Format:
+// `projects/{project_id}/releases/{release_id}`
 func (r *ProjectsReleasesService) Get(name string) *ProjectsReleasesGetCall {
 	c := &ProjectsReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1743,6 +1758,9 @@ type ProjectsReleasesGetExecutableCall struct {
 
 // GetExecutable: Get the `Release` executable to use when enforcing
 // rules.
+//
+// - name: Resource name of the `Release`. Format:
+// `projects/{project_id}/releases/{release_id}`
 func (r *ProjectsReleasesService) GetExecutable(name string) *ProjectsReleasesGetExecutableCall {
 	c := &ProjectsReleasesGetExecutableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1922,6 +1940,9 @@ type ProjectsReleasesListCall struct {
 // List: List the `Release` values for a project. This list may
 // optionally be filtered by `Release` name, `Ruleset` name, `TestSuite`
 // name, or any combination thereof.
+//
+// - name: Resource name for the project. Format:
+// `projects/{project_id}`
 func (r *ProjectsReleasesService) List(name string) *ProjectsReleasesListCall {
 	c := &ProjectsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2149,6 +2170,9 @@ type ProjectsReleasesPatchCall struct {
 // `ruleset_name` and `test_suite_name` fields will be honored.
 // `Release` rename is not supported. To create a `Release` use the
 // CreateRelease method.
+//
+// - name: Resource name for the project which owns this `Release`.
+// Format: `projects/{project_id}`
 func (r *ProjectsReleasesService) Patch(name string, updatereleaserequest *UpdateReleaseRequest) *ProjectsReleasesPatchCall {
 	c := &ProjectsReleasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2294,6 +2318,9 @@ type ProjectsRulesetsCreateCall struct {
 // containing syntactic or semantics errors will result in an error
 // response indicating the first error encountered. For a detailed view
 // of `Source` issues, use TestRuleset.
+//
+// - name: Resource name for Project which owns this `Ruleset`. Format:
+// `projects/{project_id}`
 func (r *ProjectsRulesetsService) Create(name string, ruleset *Ruleset) *ProjectsRulesetsCreateCall {
 	c := &ProjectsRulesetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2435,6 +2462,9 @@ type ProjectsRulesetsDeleteCall struct {
 
 // Delete: Delete a `Ruleset` by resource name. If the `Ruleset` is
 // referenced by a `Release` the operation will fail.
+//
+// - name: Resource name for the ruleset to delete. Format:
+// `projects/{project_id}/rulesets/{ruleset_id}`
 func (r *ProjectsRulesetsService) Delete(name string) *ProjectsRulesetsDeleteCall {
 	c := &ProjectsRulesetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2567,6 +2597,9 @@ type ProjectsRulesetsGetCall struct {
 }
 
 // Get: Get a `Ruleset` by name including the full `Source` contents.
+//
+// - name: Resource name for the ruleset to get. Format:
+// `projects/{project_id}/rulesets/{ruleset_id}`
 func (r *ProjectsRulesetsService) Get(name string) *ProjectsRulesetsGetCall {
 	c := &ProjectsRulesetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2715,6 +2748,9 @@ type ProjectsRulesetsListCall struct {
 // List: List `Ruleset` metadata only and optionally filter the results
 // by `Ruleset` name. The full `Source` contents of a `Ruleset` may be
 // retrieved with GetRuleset.
+//
+// - name: Resource name for the project. Format:
+// `projects/{project_id}`
 func (r *ProjectsRulesetsService) List(name string) *ProjectsRulesetsListCall {
 	c := &ProjectsRulesetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

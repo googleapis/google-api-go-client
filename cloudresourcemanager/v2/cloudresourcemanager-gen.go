@@ -1579,6 +1579,9 @@ type FoldersDeleteCall struct {
 // ACTIVE state, where a Folder is empty if it doesn't contain any
 // Folders or Projects in the ACTIVE state. The caller must have
 // `resourcemanager.folders.delete` permission on the identified folder.
+//
+// - name: the resource name of the Folder to be deleted. Must be of the
+// form `folders/{folder_id}`.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1713,6 +1716,9 @@ type FoldersGetCall struct {
 // Valid Folder resource names have the format `folders/{folder_id}`
 // (for example, `folders/1234`). The caller must have
 // `resourcemanager.folders.get` permission on the identified folder.
+//
+// - name: The resource name of the Folder to retrieve. Must be of the
+// form `folders/{folder_id}`.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1863,6 +1869,10 @@ type FoldersGetIamPolicyCall struct {
 // "folders/1234". The caller must have
 // `resourcemanager.folders.getIamPolicy` permission on the identified
 // folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2229,6 +2239,9 @@ type FoldersMoveCall struct {
 // constraints described in the CreateFolder documentation. The caller
 // must have `resourcemanager.folders.move` permission on the folder's
 // current and proposed new parent.
+//
+// - name: The resource name of the Folder to move. Must be of the form
+// folders/{folder_id}
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2380,6 +2393,9 @@ type FoldersPatchCall struct {
 // If the update fails due to the unique name constraint then a
 // PreconditionFailure explaining this violation will be returned in the
 // Status.details field.
+//
+// - name: Output only. The resource name of the Folder. Its format is
+// `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2688,6 +2704,10 @@ type FoldersSetIamPolicyCall struct {
 // resource name, e.g. "folders/1234". The caller must have
 // `resourcemanager.folders.setIamPolicy` permission on the identified
 // folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2831,6 +2851,10 @@ type FoldersTestIamPermissionsCall struct {
 // specified Folder. The `resource` field should be the Folder's
 // resource name, e.g. "folders/1234". There are no permissions required
 // for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2978,6 +3002,9 @@ type FoldersUndeleteCall struct {
 // CreateFolder documentation. The caller must have
 // `resourcemanager.folders.undelete` permission on the identified
 // folder.
+//
+// - name: The resource name of the Folder to undelete. Must be of the
+// form `folders/{folder_id}`.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3120,6 +3147,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -688,6 +688,8 @@ type AchievementConfigurationsDeleteCall struct {
 }
 
 // Delete: Delete the achievement configuration with the given ID.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementConfigurationsService) Delete(achievementId string) *AchievementConfigurationsDeleteCall {
 	c := &AchievementConfigurationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -791,6 +793,8 @@ type AchievementConfigurationsGetCall struct {
 
 // Get: Retrieves the metadata of the achievement configuration with the
 // given ID.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementConfigurationsService) Get(achievementId string) *AchievementConfigurationsGetCall {
 	c := &AchievementConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -934,6 +938,9 @@ type AchievementConfigurationsInsertCall struct {
 }
 
 // Insert: Insert a new achievement configuration in this application.
+//
+// - applicationId: The application ID from the Google Play developer
+// console.
 func (r *AchievementConfigurationsService) Insert(applicationId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsInsertCall {
 	c := &AchievementConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1074,6 +1081,9 @@ type AchievementConfigurationsListCall struct {
 
 // List: Returns a list of the achievement configurations in this
 // application.
+//
+// - applicationId: The application ID from the Google Play developer
+// console.
 func (r *AchievementConfigurationsService) List(applicationId string) *AchievementConfigurationsListCall {
 	c := &AchievementConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1267,6 +1277,8 @@ type AchievementConfigurationsUpdateCall struct {
 
 // Update: Update the metadata of the achievement configuration with the
 // given ID.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementConfigurationsService) Update(achievementId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsUpdateCall {
 	c := &AchievementConfigurationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -1408,6 +1420,9 @@ type ImageConfigurationsUploadCall struct {
 
 // Upload: Uploads an image for a resource with the given ID and image
 // type.
+//
+// - imageType: Selects which image in a resource for this method.
+// - resourceId: The ID of the resource used by this method.
 func (r *ImageConfigurationsService) Upload(resourceId string, imageType string) *ImageConfigurationsUploadCall {
 	c := &ImageConfigurationsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceId = resourceId
@@ -1636,6 +1651,8 @@ type LeaderboardConfigurationsDeleteCall struct {
 }
 
 // Delete: Delete the leaderboard configuration with the given ID.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *LeaderboardConfigurationsService) Delete(leaderboardId string) *LeaderboardConfigurationsDeleteCall {
 	c := &LeaderboardConfigurationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -1739,6 +1756,8 @@ type LeaderboardConfigurationsGetCall struct {
 
 // Get: Retrieves the metadata of the leaderboard configuration with the
 // given ID.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *LeaderboardConfigurationsService) Get(leaderboardId string) *LeaderboardConfigurationsGetCall {
 	c := &LeaderboardConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -1882,6 +1901,9 @@ type LeaderboardConfigurationsInsertCall struct {
 }
 
 // Insert: Insert a new leaderboard configuration in this application.
+//
+// - applicationId: The application ID from the Google Play developer
+// console.
 func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsInsertCall {
 	c := &LeaderboardConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2022,6 +2044,9 @@ type LeaderboardConfigurationsListCall struct {
 
 // List: Returns a list of the leaderboard configurations in this
 // application.
+//
+// - applicationId: The application ID from the Google Play developer
+// console.
 func (r *LeaderboardConfigurationsService) List(applicationId string) *LeaderboardConfigurationsListCall {
 	c := &LeaderboardConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2215,6 +2240,8 @@ type LeaderboardConfigurationsUpdateCall struct {
 
 // Update: Update the metadata of the leaderboard configuration with the
 // given ID.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *LeaderboardConfigurationsService) Update(leaderboardId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsUpdateCall {
 	c := &LeaderboardConfigurationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId

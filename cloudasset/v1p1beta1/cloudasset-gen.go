@@ -2284,6 +2284,12 @@ type IamPoliciesSearchAllCall struct {
 // all the IAM policies. Callers should have
 // `cloud.assets.SearchAllIamPolicies` permission on the requested
 // scope, otherwise the request will be rejected.
+//
+// - scope: The relative name of an asset. The search is limited to the
+// resources within the `scope`. The allowed value must be: *
+// Organization number (such as "organizations/123") * Folder
+// number(such as "folders/1234") * Project number (such as
+// "projects/12345") * Project id (such as "projects/abc")
 func (r *IamPoliciesService) SearchAll(scope string) *IamPoliciesSearchAllCall {
 	c := &IamPoliciesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -2500,6 +2506,12 @@ type ResourcesSearchAllCall struct {
 // resources. Callers should have `cloud.assets.SearchAllResources`
 // permission on the requested scope, otherwise the request will be
 // rejected.
+//
+// - scope: The relative name of an asset. The search is limited to the
+// resources within the `scope`. The allowed value must be: *
+// Organization number (such as "organizations/123") * Folder
+// number(such as "folders/1234") * Project number (such as
+// "projects/12345") * Project id (such as "projects/abc")
 func (r *ResourcesService) SearchAll(scope string) *ResourcesSearchAllCall {
 	c := &ResourcesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope

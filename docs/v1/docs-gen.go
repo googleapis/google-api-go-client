@@ -7083,6 +7083,8 @@ type DocumentsBatchUpdateCall struct {
 // changes. If there are no collaborators, the document should reflect
 // your changes. In any case, the updates in your request are guaranteed
 // to be applied together atomically.
+//
+// - documentId: The ID of the document to update.
 func (r *DocumentsService) BatchUpdate(documentId string, batchupdatedocumentrequest *BatchUpdateDocumentRequest) *DocumentsBatchUpdateCall {
 	c := &DocumentsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.documentId = documentId
@@ -7353,6 +7355,8 @@ type DocumentsGetCall struct {
 }
 
 // Get: Gets the latest version of the specified document.
+//
+// - documentId: The ID of the document to retrieve.
 func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.documentId = documentId

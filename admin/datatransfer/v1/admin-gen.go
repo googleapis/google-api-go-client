@@ -443,6 +443,8 @@ type ApplicationsGetCall struct {
 
 // Get: Retrieves information about an application for the given
 // application ID.
+//
+// - applicationId: ID of the application resource to be retrieved.
 func (r *ApplicationsService) Get(applicationId int64) *ApplicationsGetCall {
 	c := &ApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -780,6 +782,9 @@ type TransfersGetCall struct {
 }
 
 // Get: Retrieves a data transfer request by its resource ID.
+//
+// - dataTransferId: ID of the resource to be retrieved. This is
+// returned in the response from the insert method.
 func (r *TransfersService) Get(dataTransferId string) *TransfersGetCall {
 	c := &TransfersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dataTransferId = dataTransferId

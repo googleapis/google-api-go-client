@@ -2826,6 +2826,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2971,6 +2973,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3190,6 +3195,9 @@ type ProjectsLocationsGameServerDeploymentsCreateCall struct {
 
 // Create: Creates a new game server deployment in a given project and
 // location.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Create(parent string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3341,6 +3349,11 @@ type ProjectsLocationsGameServerDeploymentsDeleteCall struct {
 }
 
 // Delete: Deletes a single game server deployment.
+//
+// - name: The name of the game server delpoyment to delete, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3475,6 +3488,11 @@ type ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall struct {
 // of the game server deployment. Gathers all the Agones fleets and
 // Agones autoscalers, including fleets running an older version of the
 // game server deployment.
+//
+// - name: The name of the game server delpoyment, in the following
+// form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) FetchDeploymentState(name string, fetchdeploymentstaterequest *FetchDeploymentStateRequest) *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall {
 	c := &ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3615,6 +3633,11 @@ type ProjectsLocationsGameServerDeploymentsGetCall struct {
 }
 
 // Get: Gets details of a single game server deployment.
+//
+// - name: The name of the game server delpoyment to retrieve, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Get(name string) *ProjectsLocationsGameServerDeploymentsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3761,6 +3784,10 @@ type ProjectsLocationsGameServerDeploymentsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetIamPolicy(resource string) *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3925,6 +3952,11 @@ type ProjectsLocationsGameServerDeploymentsGetRolloutCall struct {
 }
 
 // GetRollout: Gets details a single game server deployment rollout.
+//
+// - name: The name of the game server delpoyment to retrieve, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetRollout(name string) *ProjectsLocationsGameServerDeploymentsGetRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4069,6 +4101,9 @@ type ProjectsLocationsGameServerDeploymentsListCall struct {
 }
 
 // List: Lists game server deployments in a given project and location.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) List(parent string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4288,6 +4323,13 @@ type ProjectsLocationsGameServerDeploymentsPatchCall struct {
 }
 
 // Patch: Patches a game server deployment.
+//
+// - name: The resource name of the game server deployment, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}`. For example,
+// `projects/my-project/locations/global/gameServerDeployments/my-deploym
+// ent`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Patch(name string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsPatchCall {
 	c := &ProjectsLocationsGameServerDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4444,6 +4486,13 @@ type ProjectsLocationsGameServerDeploymentsPreviewRolloutCall struct {
 
 // PreviewRollout: Previews the game server deployment rollout. This API
 // does not mutate the rollout resource.
+//
+// - name: The resource name of the game server deployment rollout, in
+// the following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/rollout`. For example,
+// `projects/my-project/locations/global/gameServerDeployments/my-deploym
+// ent/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) PreviewRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsPreviewRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4617,6 +4666,10 @@ type ProjectsLocationsGameServerDeploymentsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall {
 	c := &ProjectsLocationsGameServerDeploymentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4762,6 +4815,10 @@ type ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall {
 	c := &ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4908,6 +4965,13 @@ type ProjectsLocationsGameServerDeploymentsUpdateRolloutCall struct {
 // Similarly, if a non existing realm is explicitly called out in
 // game_server_config_overrides field, that will also not result in an
 // error.
+//
+// - name: The resource name of the game server deployment rollout, in
+// the following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/rollout`. For example,
+// `projects/my-project/locations/global/gameServerDeployments/my-deploym
+// ent/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) UpdateRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsUpdateRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5066,6 +5130,10 @@ type ProjectsLocationsGameServerDeploymentsConfigsCreateCall struct {
 // location, and game server deployment. Game server configs are
 // immutable, and are not applied until referenced in the game server
 // deployment rollout resource.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Create(parent string, gameserverconfig *GameServerConfig) *ProjectsLocationsGameServerDeploymentsConfigsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5219,6 +5287,11 @@ type ProjectsLocationsGameServerDeploymentsConfigsDeleteCall struct {
 // Delete: Deletes a single game server config. The deletion will fail
 // if the game server config is referenced in a game server deployment
 // rollout.
+//
+// - name: The name of the game server config to delete, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/configs/{config}`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5350,6 +5423,11 @@ type ProjectsLocationsGameServerDeploymentsConfigsGetCall struct {
 }
 
 // Get: Gets details of a single game server config.
+//
+// - name: The name of the game server config to retrieve, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/configs/{config}`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Get(name string) *ProjectsLocationsGameServerDeploymentsConfigsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5495,6 +5573,10 @@ type ProjectsLocationsGameServerDeploymentsConfigsListCall struct {
 
 // List: Lists game server configs in a given project, location, and
 // game server deployment.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
+// ment}/configs/*`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) List(parent string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5722,6 +5804,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5864,6 +5948,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5997,6 +6083,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6150,6 +6238,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6352,6 +6442,9 @@ type ProjectsLocationsRealmsCreateCall struct {
 }
 
 // Create: Creates a new realm in a given project and location.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *ProjectsLocationsRealmsCreateCall {
 	c := &ProjectsLocationsRealmsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6503,6 +6596,9 @@ type ProjectsLocationsRealmsDeleteCall struct {
 }
 
 // Delete: Deletes a single realm.
+//
+// - name: The name of the realm to delete, in the following form:
+// `projects/{project}/locations/{location}/realms/{realm}`.
 func (r *ProjectsLocationsRealmsService) Delete(name string) *ProjectsLocationsRealmsDeleteCall {
 	c := &ProjectsLocationsRealmsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6634,6 +6730,9 @@ type ProjectsLocationsRealmsGetCall struct {
 }
 
 // Get: Gets details of a single realm.
+//
+// - name: The name of the realm to retrieve, in the following form:
+// `projects/{project}/locations/{location}/realms/{realm}`.
 func (r *ProjectsLocationsRealmsService) Get(name string) *ProjectsLocationsRealmsGetCall {
 	c := &ProjectsLocationsRealmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6778,6 +6877,9 @@ type ProjectsLocationsRealmsListCall struct {
 }
 
 // List: Lists realms in a given project and location.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsRealmsService) List(parent string) *ProjectsLocationsRealmsListCall {
 	c := &ProjectsLocationsRealmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6996,6 +7098,10 @@ type ProjectsLocationsRealmsPatchCall struct {
 }
 
 // Patch: Patches a single realm.
+//
+// - name: The resource name of the realm, in the following form:
+// `projects/{project}/locations/{location}/realms/{realm}`. For
+// example, `projects/my-project/locations/{location}/realms/my-realm`.
 func (r *ProjectsLocationsRealmsService) Patch(name string, realm *Realm) *ProjectsLocationsRealmsPatchCall {
 	c := &ProjectsLocationsRealmsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7151,6 +7257,10 @@ type ProjectsLocationsRealmsPreviewUpdateCall struct {
 }
 
 // PreviewUpdate: Previews patches to a single realm.
+//
+// - name: The resource name of the realm, in the following form:
+// `projects/{project}/locations/{location}/realms/{realm}`. For
+// example, `projects/my-project/locations/{location}/realms/my-realm`.
 func (r *ProjectsLocationsRealmsService) PreviewUpdate(name string, realm *Realm) *ProjectsLocationsRealmsPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7320,6 +7430,9 @@ type ProjectsLocationsRealmsGameServerClustersCreateCall struct {
 
 // Create: Creates a new game server cluster in a given project and
 // location.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}/realms/{realm-id}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Create(parent string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersCreateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7472,6 +7585,11 @@ type ProjectsLocationsRealmsGameServerClustersDeleteCall struct {
 }
 
 // Delete: Deletes a single game server cluster.
+//
+// - name: The name of the game server cluster to delete, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerClusters/{cluster}`
+// .
 func (r *ProjectsLocationsRealmsGameServerClustersService) Delete(name string) *ProjectsLocationsRealmsGameServerClustersDeleteCall {
 	c := &ProjectsLocationsRealmsGameServerClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7603,6 +7721,11 @@ type ProjectsLocationsRealmsGameServerClustersGetCall struct {
 }
 
 // Get: Gets details of a single game server cluster.
+//
+// - name: The name of the game server cluster to retrieve, in the
+// following form:
+// `projects/{project}/locations/{location}/realms/{realm-id}/gameServerC
+// lusters/{cluster}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Get(name string) *ProjectsLocationsRealmsGameServerClustersGetCall {
 	c := &ProjectsLocationsRealmsGameServerClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7747,6 +7870,9 @@ type ProjectsLocationsRealmsGameServerClustersListCall struct {
 }
 
 // List: Lists game server clusters in a given project and location.
+//
+// - parent: The parent resource name, in the following form:
+// "projects/{project}/locations/{location}/realms/{realm}".
 func (r *ProjectsLocationsRealmsGameServerClustersService) List(parent string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c := &ProjectsLocationsRealmsGameServerClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7965,6 +8091,13 @@ type ProjectsLocationsRealmsGameServerClustersPatchCall struct {
 }
 
 // Patch: Patches a single game server cluster.
+//
+// - name: The resource name of the game server cluster, in the
+// following form:
+// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
+// ters/{cluster}`. For example,
+// `projects/my-project/locations/{location}/realms/zanzibar/gameServerCl
+// usters/my-onprem-cluster`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Patch(name string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPatchCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8121,6 +8254,9 @@ type ProjectsLocationsRealmsGameServerClustersPreviewCreateCall struct {
 
 // PreviewCreate: Previews creation of a new game server cluster in a
 // given project and location.
+//
+// - parent: The parent resource name, in the following form:
+// `projects/{project}/locations/{location}/realms/{realm}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewCreate(parent string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8287,6 +8423,11 @@ type ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall struct {
 }
 
 // PreviewDelete: Previews deletion of a single game server cluster.
+//
+// - name: The name of the game server cluster to delete, in the
+// following form:
+// `projects/{project}/locations/{location}/gameServerClusters/{cluster}`
+// .
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewDelete(name string) *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8432,6 +8573,13 @@ type ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall struct {
 }
 
 // PreviewUpdate: Previews updating a GameServerCluster.
+//
+// - name: The resource name of the game server cluster, in the
+// following form:
+// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
+// ters/{cluster}`. For example,
+// `projects/my-project/locations/{location}/realms/zanzibar/gameServerCl
+// usters/my-onprem-cluster`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewUpdate(name string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

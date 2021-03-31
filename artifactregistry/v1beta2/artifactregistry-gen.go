@@ -1284,6 +1284,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1430,6 +1432,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1638,6 +1643,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1792,6 +1799,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1997,6 +2006,9 @@ type ProjectsLocationsRepositoriesCreateCall struct {
 // Create: Creates a repository. The returned Operation will finish once
 // the repository has been created. Its response will be the created
 // Repository.
+//
+// - parent: The name of the parent resource where the repository will
+// be created.
 func (r *ProjectsLocationsRepositoriesService) Create(parent string, repository *Repository) *ProjectsLocationsRepositoriesCreateCall {
 	c := &ProjectsLocationsRepositoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2151,6 +2163,8 @@ type ProjectsLocationsRepositoriesDeleteCall struct {
 // Operation will finish once the repository has been deleted. It will
 // not have any Operation metadata and will return a
 // google.protobuf.Empty response.
+//
+// - name: The name of the repository to delete.
 func (r *ProjectsLocationsRepositoriesService) Delete(name string) *ProjectsLocationsRepositoriesDeleteCall {
 	c := &ProjectsLocationsRepositoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2282,6 +2296,8 @@ type ProjectsLocationsRepositoriesGetCall struct {
 }
 
 // Get: Gets a repository.
+//
+// - name: The name of the repository to retrieve.
 func (r *ProjectsLocationsRepositoriesService) Get(name string) *ProjectsLocationsRepositoriesGetCall {
 	c := &ProjectsLocationsRepositoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2427,6 +2443,10 @@ type ProjectsLocationsRepositoriesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the IAM policy for a given resource.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2592,6 +2612,9 @@ type ProjectsLocationsRepositoriesListCall struct {
 }
 
 // List: Lists repositories.
+//
+// - parent: The name of the parent resource whose repositories will be
+// listed.
 func (r *ProjectsLocationsRepositoriesService) List(parent string) *ProjectsLocationsRepositoriesListCall {
 	c := &ProjectsLocationsRepositoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2783,6 +2806,9 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 }
 
 // Patch: Updates a repository.
+//
+// - name: The name of the repository, for example:
+// "projects/p1/locations/us-central1/repositories/repo1".
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2937,6 +2963,10 @@ type ProjectsLocationsRepositoriesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Updates the IAM policy for a given resource.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRepositoriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRepositoriesSetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3078,6 +3108,10 @@ type ProjectsLocationsRepositoriesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests if the caller has a list of permissions on
 // a resource.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsRepositoriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRepositoriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRepositoriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3219,6 +3253,8 @@ type ProjectsLocationsRepositoriesFilesGetCall struct {
 }
 
 // Get: Gets a file.
+//
+// - name: The name of the file to retrieve.
 func (r *ProjectsLocationsRepositoriesFilesService) Get(name string) *ProjectsLocationsRepositoriesFilesGetCall {
 	c := &ProjectsLocationsRepositoriesFilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3364,6 +3400,8 @@ type ProjectsLocationsRepositoriesFilesListCall struct {
 }
 
 // List: Lists files.
+//
+// - parent: The name of the parent resource whose files will be listed.
 func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *ProjectsLocationsRepositoriesFilesListCall {
 	c := &ProjectsLocationsRepositoriesFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3574,6 +3612,8 @@ type ProjectsLocationsRepositoriesPackagesDeleteCall struct {
 
 // Delete: Deletes a package and all of its versions and tags. The
 // returned operation will complete once the package has been deleted.
+//
+// - name: The name of the package to delete.
 func (r *ProjectsLocationsRepositoriesPackagesService) Delete(name string) *ProjectsLocationsRepositoriesPackagesDeleteCall {
 	c := &ProjectsLocationsRepositoriesPackagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3705,6 +3745,8 @@ type ProjectsLocationsRepositoriesPackagesGetCall struct {
 }
 
 // Get: Gets a package.
+//
+// - name: The name of the package to retrieve.
 func (r *ProjectsLocationsRepositoriesPackagesService) Get(name string) *ProjectsLocationsRepositoriesPackagesGetCall {
 	c := &ProjectsLocationsRepositoriesPackagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3850,6 +3892,9 @@ type ProjectsLocationsRepositoriesPackagesListCall struct {
 }
 
 // List: Lists packages.
+//
+// - parent: The name of the parent resource whose packages will be
+// listed.
 func (r *ProjectsLocationsRepositoriesPackagesService) List(parent string) *ProjectsLocationsRepositoriesPackagesListCall {
 	c := &ProjectsLocationsRepositoriesPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4041,6 +4086,9 @@ type ProjectsLocationsRepositoriesPackagesTagsCreateCall struct {
 }
 
 // Create: Creates a tag.
+//
+// - parent: The name of the parent resource where the tag will be
+// created.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Create(parent string, tag *Tag) *ProjectsLocationsRepositoriesPackagesTagsCreateCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4192,6 +4240,8 @@ type ProjectsLocationsRepositoriesPackagesTagsDeleteCall struct {
 }
 
 // Delete: Deletes a tag.
+//
+// - name: The name of the tag to delete.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Delete(name string) *ProjectsLocationsRepositoriesPackagesTagsDeleteCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4323,6 +4373,8 @@ type ProjectsLocationsRepositoriesPackagesTagsGetCall struct {
 }
 
 // Get: Gets a tag.
+//
+// - name: The name of the tag to retrieve.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Get(name string) *ProjectsLocationsRepositoriesPackagesTagsGetCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4468,6 +4520,8 @@ type ProjectsLocationsRepositoriesPackagesTagsListCall struct {
 }
 
 // List: Lists tags.
+//
+// - parent: The name of the parent resource whose tags will be listed.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4676,6 +4730,10 @@ type ProjectsLocationsRepositoriesPackagesTagsPatchCall struct {
 }
 
 // Patch: Updates a tag.
+//
+// - name: The name of the tag, for example:
+// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/ta
+// gs/tag1".
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Patch(name string, tag *Tag) *ProjectsLocationsRepositoriesPackagesTagsPatchCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4830,6 +4888,8 @@ type ProjectsLocationsRepositoriesPackagesVersionsDeleteCall struct {
 
 // Delete: Deletes a version and all of its content. The returned
 // operation will complete once the version has been deleted.
+//
+// - name: The name of the version to delete.
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) Delete(name string) *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4974,6 +5034,8 @@ type ProjectsLocationsRepositoriesPackagesVersionsGetCall struct {
 }
 
 // Get: Gets a version
+//
+// - name: The name of the version to retrieve.
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) Get(name string) *ProjectsLocationsRepositoriesPackagesVersionsGetCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5148,6 +5210,9 @@ type ProjectsLocationsRepositoriesPackagesVersionsListCall struct {
 }
 
 // List: Lists versions.
+//
+// - parent: The name of the parent resource whose versions will be
+// listed.
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) List(parent string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

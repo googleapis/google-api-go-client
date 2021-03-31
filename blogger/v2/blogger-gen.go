@@ -1428,6 +1428,8 @@ type BlogsGetCall struct {
 }
 
 // Get: Gets a blog by id.
+//
+// - blogId:
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1570,6 +1572,8 @@ type BlogsListCall struct {
 }
 
 // List: Lists blogs by user id, possibly filtered.
+//
+// - userId:
 func (r *BlogsService) List(userId string) *BlogsListCall {
 	c := &BlogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1714,6 +1718,10 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets a comment by blog id, post id and comment id.
+//
+// - blogId:
+// - commentId:
+// - postId:
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1873,6 +1881,9 @@ type CommentsListCall struct {
 }
 
 // List: Lists comments.
+//
+// - blogId:
+// - postId:
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2086,6 +2097,9 @@ type PagesGetCall struct {
 }
 
 // Get: Gets a page by blog id and page id.
+//
+// - blogId:
+// - pageId:
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2236,6 +2250,8 @@ type PagesListCall struct {
 }
 
 // List: Lists pages.
+//
+// - blogId:
 func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2389,6 +2405,9 @@ type PostsGetCall struct {
 }
 
 // Get: Gets a post by blog id and post id
+//
+// - blogId:
+// - postId:
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2539,6 +2558,8 @@ type PostsListCall struct {
 }
 
 // List: Lists posts.
+//
+// - blogId:
 func (r *PostsService) List(blogId string) *PostsListCall {
 	c := &PostsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2743,6 +2764,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets a user by user id.
+//
+// - userId:
 func (r *UsersService) Get(userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId

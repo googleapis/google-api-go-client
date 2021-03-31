@@ -13885,6 +13885,13 @@ type ProjectsFilesAnnotateCall struct {
 // (customers can specify which 5 in AnnotateFileRequest.pages) frames
 // (gif) or pages (pdf or tiff) from each file provided and perform
 // detection and annotation for each image extracted.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) Annotate(parent string, googlecloudvisionv1p1beta1batchannotatefilesrequest *GoogleCloudVisionV1p1beta1BatchAnnotateFilesRequest) *ProjectsFilesAnnotateCall {
 	c := &ProjectsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14034,6 +14041,13 @@ type ProjectsFilesAsyncBatchAnnotateCall struct {
 // `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest *GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesRequest) *ProjectsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14175,6 +14189,13 @@ type ProjectsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) Annotate(parent string, googlecloudvisionv1p1beta1batchannotateimagesrequest *GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest) *ProjectsImagesAnnotateCall {
 	c := &ProjectsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14324,6 +14345,13 @@ type ProjectsImagesAsyncBatchAnnotateCall struct {
 // contains `AsyncBatchAnnotateImagesResponse` (results). This service
 // will write image annotation outputs to json files in customer GCS
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest *GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest) *ProjectsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14470,6 +14498,13 @@ type ProjectsLocationsFilesAnnotateCall struct {
 // (customers can specify which 5 in AnnotateFileRequest.pages) frames
 // (gif) or pages (pdf or tiff) from each file provided and perform
 // detection and annotation for each image extracted.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) Annotate(parent string, googlecloudvisionv1p1beta1batchannotatefilesrequest *GoogleCloudVisionV1p1beta1BatchAnnotateFilesRequest) *ProjectsLocationsFilesAnnotateCall {
 	c := &ProjectsLocationsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14619,6 +14654,13 @@ type ProjectsLocationsFilesAsyncBatchAnnotateCall struct {
 // `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p1beta1asyncbatchannotatefilesrequest *GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesRequest) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14760,6 +14802,13 @@ type ProjectsLocationsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) Annotate(parent string, googlecloudvisionv1p1beta1batchannotateimagesrequest *GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest) *ProjectsLocationsImagesAnnotateCall {
 	c := &ProjectsLocationsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14909,6 +14958,13 @@ type ProjectsLocationsImagesAsyncBatchAnnotateCall struct {
 // contains `AsyncBatchAnnotateImagesResponse` (results). This service
 // will write image annotation outputs to json files in customer GCS
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p1beta1asyncbatchannotateimagesrequest *GoogleCloudVisionV1p1beta1AsyncBatchAnnotateImagesRequest) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

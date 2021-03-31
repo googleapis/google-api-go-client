@@ -4547,6 +4547,8 @@ type ProjectsGetSettingsCall struct {
 // GetSettings: Gets the Tool Results settings for a project. May return
 // any of the following canonical error codes: - PERMISSION_DENIED - if
 // the user is not authorized to read from project
+//
+// - projectId: A Project id.
 func (r *ProjectsService) GetSettings(projectId string) *ProjectsGetSettingsCall {
 	c := &ProjectsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4709,6 +4711,8 @@ type ProjectsInitializeSettingsCall struct {
 // codes, including the following: - PERMISSION_DENIED - if the user is
 // not authorized to write to project - Any error code raised by Google
 // Cloud Storage
+//
+// - projectId: A Project id.
 func (r *ProjectsService) InitializeSettings(projectId string) *ProjectsInitializeSettingsCall {
 	c := &ProjectsInitializeSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4843,6 +4847,8 @@ type ProjectsHistoriesCreateCall struct {
 // PERMISSION_DENIED - if the user is not authorized to write to project
 // - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the
 // containing project does not exist
+//
+// - projectId: A Project id.
 func (r *ProjectsHistoriesService) Create(projectId string, history *History) *ProjectsHistoriesCreateCall {
 	c := &ProjectsHistoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4999,6 +5005,9 @@ type ProjectsHistoriesGetCall struct {
 // codes: - PERMISSION_DENIED - if the user is not authorized to read
 // project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND
 // - if the History does not exist
+//
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesService) Get(projectId string, historyId string) *ProjectsHistoriesGetCall {
 	c := &ProjectsHistoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5156,6 +5165,8 @@ type ProjectsHistoriesListCall struct {
 // any of the following canonical error codes: - PERMISSION_DENIED - if
 // the user is not authorized to read project - INVALID_ARGUMENT - if
 // the request is malformed - NOT_FOUND - if the History does not exist
+//
+// - projectId: A Project id.
 func (r *ProjectsHistoriesService) List(projectId string) *ProjectsHistoriesListCall {
 	c := &ProjectsHistoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5364,6 +5375,9 @@ type ProjectsHistoriesExecutionsCreateCall struct {
 // PERMISSION_DENIED - if the user is not authorized to write to project
 // - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the
 // containing History does not exist
+//
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsService) Create(projectId string, historyId string, execution *Execution) *ProjectsHistoriesExecutionsCreateCall {
 	c := &ProjectsHistoriesExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5530,6 +5544,10 @@ type ProjectsHistoriesExecutionsGetCall struct {
 // error codes: - PERMISSION_DENIED - if the user is not authorized to
 // write to project - INVALID_ARGUMENT - if the request is malformed -
 // NOT_FOUND - if the Execution does not exist
+//
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsService) Get(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsGetCall {
 	c := &ProjectsHistoriesExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5698,6 +5716,9 @@ type ProjectsHistoriesExecutionsListCall struct {
 // the user is not authorized to read project - INVALID_ARGUMENT - if
 // the request is malformed - NOT_FOUND - if the containing History does
 // not exist
+//
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsService) List(projectId string, historyId string) *ProjectsHistoriesExecutionsListCall {
 	c := &ProjectsHistoriesExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5904,6 +5925,10 @@ type ProjectsHistoriesExecutionsPatchCall struct {
 // - INVALID_ARGUMENT - if the request is malformed -
 // FAILED_PRECONDITION - if the requested state transition is illegal -
 // NOT_FOUND - if the containing History does not exist
+//
+// - executionId:
+// - historyId:
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsService) Patch(projectId string, historyId string, executionId string, execution *Execution) *ProjectsHistoriesExecutionsPatchCall {
 	c := &ProjectsHistoriesExecutionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6077,6 +6102,11 @@ type ProjectsHistoriesExecutionsClustersGetCall struct {
 }
 
 // Get: Retrieves a single screenshot cluster by its ID
+//
+// - clusterId: A Cluster id
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsClustersService) Get(projectId string, historyId string, executionId string, clusterId string) *ProjectsHistoriesExecutionsClustersGetCall {
 	c := &ProjectsHistoriesExecutionsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6255,6 +6285,10 @@ type ProjectsHistoriesExecutionsClustersListCall struct {
 // calculated based off their metadata that determines how similar they
 // are. Screenshots are placed in the cluster that has screens which
 // have the highest matching scores.
+//
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsClustersService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsClustersListCall {
 	c := &ProjectsHistoriesExecutionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6422,6 +6456,11 @@ type ProjectsHistoriesExecutionsEnvironmentsGetCall struct {
 // error codes: - PERMISSION_DENIED - if the user is not authorized to
 // read project - INVALID_ARGUMENT - if the request is malformed -
 // NOT_FOUND - if the Environment does not exist
+//
+// - environmentId: An Environment id.
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsEnvironmentsService) Get(projectId string, historyId string, executionId string, environmentId string) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
 	c := &ProjectsHistoriesExecutionsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6598,6 +6637,10 @@ type ProjectsHistoriesExecutionsEnvironmentsListCall struct {
 // error codes: - PERMISSION_DENIED - if the user is not authorized to
 // read project - INVALID_ARGUMENT - if the request is malformed -
 // NOT_FOUND - if the containing Execution does not exist
+//
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsEnvironmentsService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
 	c := &ProjectsHistoriesExecutionsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6812,6 +6855,10 @@ type ProjectsHistoriesExecutionsStepsAccessibilityClustersCall struct {
 // - if an argument in the request happens to be invalid; e.g. if the
 // locale format is incorrect - NOT_FOUND - if the containing Step does
 // not exist
+//
+// - name: A full resource name of the step. For example,
+// projects/my-project/histories/bh.1234567890abcdef/executions/
+// 1234567890123456789/steps/bs.1234567890abcdef
 func (r *ProjectsHistoriesExecutionsStepsService) AccessibilityClusters(name string) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
 	c := &ProjectsHistoriesExecutionsStepsAccessibilityClustersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6979,6 +7026,10 @@ type ProjectsHistoriesExecutionsStepsCreateCall struct {
 // - INVALID_ARGUMENT - if the request is malformed -
 // FAILED_PRECONDITION - if the step is too large (more than 10Mib) -
 // NOT_FOUND - if the containing Execution does not exist
+//
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsStepsService) Create(projectId string, historyId string, executionId string, step *Step) *ProjectsHistoriesExecutionsStepsCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7155,6 +7206,11 @@ type ProjectsHistoriesExecutionsStepsGetCall struct {
 // codes: - PERMISSION_DENIED - if the user is not authorized to read
 // project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND
 // - if the Step does not exist
+//
+// - executionId: A Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
+// - stepId: A Step id.
 func (r *ProjectsHistoriesExecutionsStepsService) Get(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsGetCall {
 	c := &ProjectsHistoriesExecutionsStepsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7330,6 +7386,11 @@ type ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall struct {
 // GetPerfMetricsSummary: Retrieves a PerfMetricsSummary. May return any
 // of the following error code(s): - NOT_FOUND - The specified
 // PerfMetricsSummary does not exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsService) GetPerfMetricsSummary(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall {
 	c := &ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7510,6 +7571,10 @@ type ProjectsHistoriesExecutionsStepsListCall struct {
 // happens to be invalid; e.g. if an attempt is made to list the
 // children of a nonexistent Step - NOT_FOUND - if the containing
 // Execution does not exist
+//
+// - executionId: A Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsStepsService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsStepsListCall {
 	c := &ProjectsHistoriesExecutionsStepsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7727,6 +7792,11 @@ type ProjectsHistoriesExecutionsStepsPatchCall struct {
 // - if the requested state transition is illegal (e.g try to upload a
 // duplicate xml file), if the updated step is too large (more than
 // 10Mib) - NOT_FOUND - if the containing Execution does not exist
+//
+// - executionId: A Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
+// - stepId: A Step id.
 func (r *ProjectsHistoriesExecutionsStepsService) Patch(projectId string, historyId string, executionId string, stepId string, step *Step) *ProjectsHistoriesExecutionsStepsPatchCall {
 	c := &ProjectsHistoriesExecutionsStepsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7915,6 +7985,12 @@ type ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall struct {
 // - if the requested state transition is illegal, e.g try to upload a
 // duplicate xml file or a file too large. - NOT_FOUND - if the
 // containing Execution does not exist
+//
+// - executionId: A Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
+// - stepId: A Step id. Note: This step must include a
+// TestExecutionStep.
 func (r *ProjectsHistoriesExecutionsStepsService) PublishXunitXmlFiles(projectId string, historyId string, executionId string, stepId string, publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest) *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall {
 	c := &ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8086,6 +8162,11 @@ type ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall struct {
 // Create: Creates a PerfMetricsSummary resource. Returns the existing
 // one if it has already been created. May return any of the following
 // error code(s): - NOT_FOUND - The containing Step does not exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService) Create(projectId string, historyId string, executionId string, stepId string, perfmetricssummary *PerfMetricsSummary) *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8257,6 +8338,11 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall struct {
 // Create: Creates a PerfSampleSeries. May return any of the following
 // error code(s): - ALREADY_EXISTS - PerfMetricSummary already exists
 // for the given Step - NOT_FOUND - The containing Step does not exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) Create(projectId string, historyId string, executionId string, stepId string, perfsampleseries *PerfSampleSeries) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8428,6 +8514,12 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall struct {
 
 // Get: Gets a PerfSampleSeries. May return any of the following error
 // code(s): - NOT_FOUND - The specified PerfSampleSeries does not exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - sampleSeriesId: A sample series id
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) Get(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8615,6 +8707,11 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall struct {
 // PerfSampleSeries are sorted by ids. May return any of the following
 // canonical error codes: - NOT_FOUND - The containing Step does not
 // exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8830,6 +8927,12 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall stru
 // returned in the response (omits items which already existed in the
 // database). May return any of the following canonical error codes: -
 // NOT_FOUND - The containing PerfSampleSeries does not exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - sampleSeriesId: A sample series id
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService) BatchCreate(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string, batchcreateperfsamplesrequest *BatchCreatePerfSamplesRequest) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9017,6 +9120,12 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall struct {
 // page limit May return any of the following canonical error codes: -
 // OUT_OF_RANGE - The specified request page_token is out of valid range
 // - NOT_FOUND - The containing PerfSampleSeries does not exist
+//
+// - executionId: A tool results execution ID.
+// - historyId: A tool results history ID.
+// - projectId: The cloud project
+// - sampleSeriesId: A sample series id
+// - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService) List(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9251,6 +9360,13 @@ type ProjectsHistoriesExecutionsStepsTestCasesGetCall struct {
 // canonical error codes: - PERMISSION_DENIED - if the user is not
 // authorized to write to project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the containing Test Case does not exist
+//
+// - executionId: A Execution id
+// - historyId: A History id.
+// - projectId: A Project id.
+// - stepId: A Step id. Note: This step must include a
+// TestExecutionStep.
+// - testCaseId: A Test Case id.
 func (r *ProjectsHistoriesExecutionsStepsTestCasesService) Get(projectId string, historyId string, executionId string, stepId string, testCaseId string) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
 	c := &ProjectsHistoriesExecutionsStepsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9437,6 +9553,12 @@ type ProjectsHistoriesExecutionsStepsTestCasesListCall struct {
 // canonical error codes: - PERMISSION_DENIED - if the user is not
 // authorized to write to project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the containing Step does not exist
+//
+// - executionId: A Execution id
+// - historyId: A History id.
+// - projectId: A Project id.
+// - stepId: A Step id. Note: This step must include a
+// TestExecutionStep.
 func (r *ProjectsHistoriesExecutionsStepsTestCasesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c := &ProjectsHistoriesExecutionsStepsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9661,6 +9783,11 @@ type ProjectsHistoriesExecutionsStepsThumbnailsListCall struct {
 // user is not authorized to read from the project, or from any of the
 // images - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND -
 // if the step does not exist, or if any of the images do not exist
+//
+// - executionId: An Execution id.
+// - historyId: A History id.
+// - projectId: A Project id.
+// - stepId: A Step id.
 func (r *ProjectsHistoriesExecutionsStepsThumbnailsService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
 	c := &ProjectsHistoriesExecutionsStepsThumbnailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

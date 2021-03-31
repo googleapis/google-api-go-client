@@ -4697,6 +4697,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5054,6 +5056,10 @@ type ServicesBatchEnableCall struct {
 // BatchEnable: Enable multiple services on a project. The operation is
 // atomic: if enabling any service fails, then the entire batch fails,
 // and no state changes occur. Operation
+//
+// - parent: Parent to enable services on. An example name would be:
+// `projects/123` where `123` is the project number (not project ID).
+// The `BatchEnableServices` method currently only supports projects.
 func (r *ServicesService) BatchEnable(parent string, batchenableservicesrequest *BatchEnableServicesRequest) *ServicesBatchEnableCall {
 	c := &ServicesBatchEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5200,6 +5206,12 @@ type ServicesDisableCall struct {
 // disable method on a service that is not currently enabled. Callers
 // will receive a `FAILED_PRECONDITION` status if the target service is
 // not currently enabled. Operation
+//
+// - name: Name of the consumer and service to disable the service on.
+// The enable and disable methods currently only support projects. An
+// example name would be:
+// `projects/123/services/serviceusage.googleapis.com` where `123` is
+// the project number (not project ID).
 func (r *ServicesService) Disable(name string, disableservicerequest *DisableServiceRequest) *ServicesDisableCall {
 	c := &ServicesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5342,6 +5354,13 @@ type ServicesEnableCall struct {
 
 // Enable: Enable a service so that it can be used with a project.
 // Operation
+//
+// - name: Name of the consumer and service to enable the service on.
+// The `EnableService` and `DisableService` methods currently only
+// support projects. Enabling a service requires that the service is
+// public or is shared with the user enabling the service. An example
+// name would be: `projects/123/services/serviceusage.googleapis.com`
+// where `123` is the project number (not project ID).
 func (r *ServicesService) Enable(name string, enableservicerequest *EnableServiceRequest) *ServicesEnableCall {
 	c := &ServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5482,6 +5501,12 @@ type ServicesGenerateServiceIdentityCall struct {
 }
 
 // GenerateServiceIdentity: Generate service identity for service.
+//
+// - parent: Name of the consumer and service to generate an identity
+// for. The `GenerateServiceIdentity` methods currently only support
+// projects. An example name would be:
+// `projects/123/services/example.googleapis.com` where `123` is the
+// project number.
 func (r *ServicesService) GenerateServiceIdentity(parent string) *ServicesGenerateServiceIdentityCall {
 	c := &ServicesGenerateServiceIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5615,6 +5640,11 @@ type ServicesGetCall struct {
 
 // Get: Returns the service configuration and enabled state for a given
 // service.
+//
+// - name: Name of the consumer and service to get the `ConsumerState`
+// for. An example name would be:
+// `projects/123/services/serviceusage.googleapis.com` where `123` is
+// the project number (not project ID).
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5766,6 +5796,9 @@ type ServicesListCall struct {
 // services that have already been enabled on the project. The list can
 // be filtered to only include services in a specific state, for example
 // to only include services enabled on the project.
+//
+// - parent: Parent to search for services on. An example name would be:
+// `projects/123` where `123` is the project number (not project ID).
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5973,6 +6006,11 @@ type ServicesConsumerQuotaMetricsGetCall struct {
 
 // Get: Retrieves a summary of quota information for a specific quota
 // metric
+//
+// - name: The resource name of the quota limit. An example name would
+// be:
+// projects/123/services/serviceusage.googleapis.com/quotas/metrics/servi
+// ceusage.googleapis.com%2Fmutate_requests
 func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumerQuotaMetricsGetCall {
 	c := &ServicesConsumerQuotaMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6154,6 +6192,9 @@ type ServicesConsumerQuotaMetricsImportAdminOverridesCall struct {
 // atomically, all on the same consumer, but on many different metrics
 // or limits. The name field in the quota override message should not be
 // set.
+//
+// - parent: The resource name of the consumer. An example name would
+// be: `projects/123/services/compute.googleapis.com`
 func (r *ServicesConsumerQuotaMetricsService) ImportAdminOverrides(parent string, importadminoverridesrequest *ImportAdminOverridesRequest) *ServicesConsumerQuotaMetricsImportAdminOverridesCall {
 	c := &ServicesConsumerQuotaMetricsImportAdminOverridesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6298,6 +6339,9 @@ type ServicesConsumerQuotaMetricsImportConsumerOverridesCall struct {
 // atomically, all on the same consumer, but on many different metrics
 // or limits. The name field in the quota override message should not be
 // set.
+//
+// - parent: The resource name of the consumer. An example name would
+// be: `projects/123/services/compute.googleapis.com`
 func (r *ServicesConsumerQuotaMetricsService) ImportConsumerOverrides(parent string, importconsumeroverridesrequest *ImportConsumerOverridesRequest) *ServicesConsumerQuotaMetricsImportConsumerOverridesCall {
 	c := &ServicesConsumerQuotaMetricsImportConsumerOverridesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6444,6 +6488,11 @@ type ServicesConsumerQuotaMetricsListCall struct {
 // limit configuration (quota unit, preciseness, default value), the
 // current effective limit value, and all of the overrides applied to
 // the limit.
+//
+// - parent: Parent of the quotas resource. Some example names would be:
+// projects/123/services/serviceconsumermanagement.googleapis.com
+// folders/345/services/serviceconsumermanagement.googleapis.com
+// organizations/456/services/serviceconsumermanagement.googleapis.com
 func (r *ServicesConsumerQuotaMetricsService) List(parent string) *ServicesConsumerQuotaMetricsListCall {
 	c := &ServicesConsumerQuotaMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6669,6 +6718,10 @@ type ServicesConsumerQuotaMetricsLimitsGetCall struct {
 
 // Get: Retrieves a summary of quota information for a specific quota
 // limit.
+//
+// - name: The resource name of the quota limit. Use the quota limit
+// resource name returned by previous ListConsumerQuotaMetrics and
+// GetConsumerQuotaMetric API calls.
 func (r *ServicesConsumerQuotaMetricsLimitsService) Get(name string) *ServicesConsumerQuotaMetricsLimitsGetCall {
 	c := &ServicesConsumerQuotaMetricsLimitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6851,6 +6904,12 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall struct {
 // consumer receiving the override. An admin override is intended to
 // limit the amount of quota the consumer can use out of the total quota
 // pool allocated to all children of the folder or organization.
+//
+// - parent: The resource name of the parent quota limit, returned by a
+// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+// name would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Create(parent string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7040,6 +7099,12 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall struct {
 }
 
 // Delete: Deletes an admin override.
+//
+// - name: The resource name of the override to delete. An example name
+// would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4
+// a3f2c1d`
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7221,6 +7286,12 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall struct {
 }
 
 // List: Lists all admin overrides on this limit.
+//
+// - parent: The resource name of the parent quota limit, returned by a
+// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+// name would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7412,6 +7483,12 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall struct {
 }
 
 // Patch: Updates an admin override.
+//
+// - name: The resource name of the override to update. An example name
+// would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4
+// a3f2c1d`
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Patch(name string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7620,6 +7697,12 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall struct {
 // Consumer overrides cannot be used to grant more quota than would be
 // allowed by admin overrides, producer overrides, or the default limit
 // of the service.
+//
+// - parent: The resource name of the parent quota limit, returned by a
+// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+// name would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Create(parent string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7809,6 +7892,12 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall struct {
 }
 
 // Delete: Deletes a consumer override.
+//
+// - name: The resource name of the override to delete. An example name
+// would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverride
+// s/4a3f2c1d`
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7990,6 +8079,12 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall struct {
 }
 
 // List: Lists all consumer overrides on this limit.
+//
+// - parent: The resource name of the parent quota limit, returned by a
+// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+// name would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8181,6 +8276,12 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall struct {
 }
 
 // Patch: Updates a consumer override.
+//
+// - name: The resource name of the override to update. An example name
+// would be:
+// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
+// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverride
+// s/4a3f2c1d`
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Patch(name string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

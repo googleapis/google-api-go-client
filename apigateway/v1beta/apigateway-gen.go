@@ -1512,6 +1512,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1657,6 +1659,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1862,6 +1867,9 @@ type ProjectsLocationsApisCreateCall struct {
 }
 
 // Create: Creates a new Api in a given project and location.
+//
+// - parent: Parent resource of the API, of the form:
+// `projects/*/locations/global`
 func (r *ProjectsLocationsApisService) Create(parent string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisCreateCall {
 	c := &ProjectsLocationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2014,6 +2022,9 @@ type ProjectsLocationsApisDeleteCall struct {
 }
 
 // Delete: Deletes a single Api.
+//
+// - name: Resource name of the form:
+// `projects/*/locations/global/apis/*`
 func (r *ProjectsLocationsApisService) Delete(name string) *ProjectsLocationsApisDeleteCall {
 	c := &ProjectsLocationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2145,6 +2156,9 @@ type ProjectsLocationsApisGetCall struct {
 }
 
 // Get: Gets details of a single Api.
+//
+// - name: Resource name of the form:
+// `projects/*/locations/global/apis/*`
 func (r *ProjectsLocationsApisService) Get(name string) *ProjectsLocationsApisGetCall {
 	c := &ProjectsLocationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2291,6 +2305,10 @@ type ProjectsLocationsApisGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsApisService) GetIamPolicy(resource string) *ProjectsLocationsApisGetIamPolicyCall {
 	c := &ProjectsLocationsApisGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2455,6 +2473,9 @@ type ProjectsLocationsApisListCall struct {
 }
 
 // List: Lists Apis in a given project and location.
+//
+// - parent: Parent resource of the API, of the form:
+// `projects/*/locations/global`
 func (r *ProjectsLocationsApisService) List(parent string) *ProjectsLocationsApisListCall {
 	c := &ProjectsLocationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2665,6 +2686,9 @@ type ProjectsLocationsApisPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single Api.
+//
+// - name: Output only. Resource name of the API. Format:
+// projects/{project}/locations/global/apis/{api}
 func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisPatchCall {
 	c := &ProjectsLocationsApisPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2824,6 +2848,10 @@ type ProjectsLocationsApisSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsApisService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsApisSetIamPolicyCall {
 	c := &ProjectsLocationsApisSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2969,6 +2997,10 @@ type ProjectsLocationsApisTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsApisService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsApisTestIamPermissionsCall {
 	c := &ProjectsLocationsApisTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3110,6 +3142,9 @@ type ProjectsLocationsApisConfigsCreateCall struct {
 }
 
 // Create: Creates a new ApiConfig in a given project and location.
+//
+// - parent: Parent resource of the API Config, of the form:
+// `projects/*/locations/global/apis/*`
 func (r *ProjectsLocationsApisConfigsService) Create(parent string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsCreateCall {
 	c := &ProjectsLocationsApisConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3262,6 +3297,9 @@ type ProjectsLocationsApisConfigsDeleteCall struct {
 }
 
 // Delete: Deletes a single ApiConfig.
+//
+// - name: Resource name of the form:
+// `projects/*/locations/global/apis/*/configs/*`
 func (r *ProjectsLocationsApisConfigsService) Delete(name string) *ProjectsLocationsApisConfigsDeleteCall {
 	c := &ProjectsLocationsApisConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3393,6 +3431,9 @@ type ProjectsLocationsApisConfigsGetCall struct {
 }
 
 // Get: Gets details of a single ApiConfig.
+//
+// - name: Resource name of the form:
+// `projects/*/locations/global/apis/*/configs/*`
 func (r *ProjectsLocationsApisConfigsService) Get(name string) *ProjectsLocationsApisConfigsGetCall {
 	c := &ProjectsLocationsApisConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3567,6 +3608,10 @@ type ProjectsLocationsApisConfigsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsApisConfigsService) GetIamPolicy(resource string) *ProjectsLocationsApisConfigsGetIamPolicyCall {
 	c := &ProjectsLocationsApisConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3731,6 +3776,9 @@ type ProjectsLocationsApisConfigsListCall struct {
 }
 
 // List: Lists ApiConfigs in a given project and location.
+//
+// - parent: Parent resource of the API Config, of the form:
+// `projects/*/locations/global/apis/*`
 func (r *ProjectsLocationsApisConfigsService) List(parent string) *ProjectsLocationsApisConfigsListCall {
 	c := &ProjectsLocationsApisConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3941,6 +3989,9 @@ type ProjectsLocationsApisConfigsPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single ApiConfig.
+//
+// - name: Output only. Resource name of the API Config. Format:
+// projects/{project}/locations/global/apis/{api}/configs/{api_config}
 func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsPatchCall {
 	c := &ProjectsLocationsApisConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4100,6 +4151,10 @@ type ProjectsLocationsApisConfigsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsApisConfigsService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsApisConfigsSetIamPolicyCall {
 	c := &ProjectsLocationsApisConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4245,6 +4300,10 @@ type ProjectsLocationsApisConfigsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsApisConfigsService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsApisConfigsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4386,6 +4445,9 @@ type ProjectsLocationsGatewaysCreateCall struct {
 }
 
 // Create: Creates a new Gateway in a given project and location.
+//
+// - parent: Parent resource of the Gateway, of the form:
+// `projects/*/locations/*`
 func (r *ProjectsLocationsGatewaysService) Create(parent string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysCreateCall {
 	c := &ProjectsLocationsGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4538,6 +4600,9 @@ type ProjectsLocationsGatewaysDeleteCall struct {
 }
 
 // Delete: Deletes a single Gateway.
+//
+// - name: Resource name of the form:
+// `projects/*/locations/*/gateways/*`
 func (r *ProjectsLocationsGatewaysService) Delete(name string) *ProjectsLocationsGatewaysDeleteCall {
 	c := &ProjectsLocationsGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4669,6 +4734,9 @@ type ProjectsLocationsGatewaysGetCall struct {
 }
 
 // Get: Gets details of a single Gateway.
+//
+// - name: Resource name of the form:
+// `projects/*/locations/*/gateways/*`
 func (r *ProjectsLocationsGatewaysService) Get(name string) *ProjectsLocationsGatewaysGetCall {
 	c := &ProjectsLocationsGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4815,6 +4883,10 @@ type ProjectsLocationsGatewaysGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsGatewaysGetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4979,6 +5051,9 @@ type ProjectsLocationsGatewaysListCall struct {
 }
 
 // List: Lists Gateways in a given project and location.
+//
+// - parent: Parent resource of the Gateway, of the form:
+// `projects/*/locations/*`
 func (r *ProjectsLocationsGatewaysService) List(parent string) *ProjectsLocationsGatewaysListCall {
 	c := &ProjectsLocationsGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5189,6 +5264,9 @@ type ProjectsLocationsGatewaysPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single Gateway.
+//
+// - name: Output only. Resource name of the Gateway. Format:
+// projects/{project}/locations/{location}/gateways/{gateway}
 func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5348,6 +5426,10 @@ type ProjectsLocationsGatewaysSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGatewaysService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsGatewaysSetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5493,6 +5575,10 @@ type ProjectsLocationsGatewaysTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsGatewaysService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsGatewaysTestIamPermissionsCall {
 	c := &ProjectsLocationsGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5643,6 +5729,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, apigatewaycanceloperationrequest *ApigatewayCancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5785,6 +5873,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5918,6 +6008,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6071,6 +6163,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

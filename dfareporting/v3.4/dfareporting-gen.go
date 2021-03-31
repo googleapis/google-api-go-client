@@ -15035,6 +15035,9 @@ type AccountActiveAdSummariesGetCall struct {
 }
 
 // Get: Gets the account's active ad summary by account ID.
+//
+// - profileId: User profile ID associated with this request.
+// - summaryAccountId: Account ID.
 func (r *AccountActiveAdSummariesService) Get(profileId int64, summaryAccountId int64) *AccountActiveAdSummariesGetCall {
 	c := &AccountActiveAdSummariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -15190,6 +15193,9 @@ type AccountPermissionGroupsGetCall struct {
 }
 
 // Get: Gets one account permission group by ID.
+//
+// - id: Account permission group ID.
+// - profileId: User profile ID associated with this request.
 func (r *AccountPermissionGroupsService) Get(profileId int64, id int64) *AccountPermissionGroupsGetCall {
 	c := &AccountPermissionGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -15344,6 +15350,8 @@ type AccountPermissionGroupsListCall struct {
 }
 
 // List: Retrieves the list of account permission groups.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountPermissionGroupsService) List(profileId int64) *AccountPermissionGroupsListCall {
 	c := &AccountPermissionGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -15490,6 +15498,9 @@ type AccountPermissionsGetCall struct {
 }
 
 // Get: Gets one account permission by ID.
+//
+// - id: Account permission ID.
+// - profileId: User profile ID associated with this request.
 func (r *AccountPermissionsService) Get(profileId int64, id int64) *AccountPermissionsGetCall {
 	c := &AccountPermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -15644,6 +15655,8 @@ type AccountPermissionsListCall struct {
 }
 
 // List: Retrieves the list of account permissions.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountPermissionsService) List(profileId int64) *AccountPermissionsListCall {
 	c := &AccountPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -15789,6 +15802,9 @@ type AccountUserProfilesGetCall struct {
 }
 
 // Get: Gets one account user profile by ID.
+//
+// - id: User profile ID.
+// - profileId: User profile ID associated with this request.
 func (r *AccountUserProfilesService) Get(profileId int64, id int64) *AccountUserProfilesGetCall {
 	c := &AccountUserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -15943,6 +15959,8 @@ type AccountUserProfilesInsertCall struct {
 }
 
 // Insert: Inserts a new account user profile.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountUserProfilesService) Insert(profileId int64, accountuserprofile *AccountUserProfile) *AccountUserProfilesInsertCall {
 	c := &AccountUserProfilesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -16084,6 +16102,8 @@ type AccountUserProfilesListCall struct {
 
 // List: Retrieves a list of account user profiles, possibly filtered.
 // This method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountUserProfilesService) List(profileId int64) *AccountUserProfilesListCall {
 	c := &AccountUserProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -16403,6 +16423,9 @@ type AccountUserProfilesPatchCall struct {
 
 // Patch: Updates an existing account user profile. This method supports
 // patch semantics.
+//
+// - id: AccountUserProfile ID.
+// - profileId: User profile ID associated with this request.
 func (r *AccountUserProfilesService) Patch(profileId int64, id int64, accountuserprofile *AccountUserProfile) *AccountUserProfilesPatchCall {
 	c := &AccountUserProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -16552,6 +16575,8 @@ type AccountUserProfilesUpdateCall struct {
 }
 
 // Update: Updates an existing account user profile.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountUserProfilesService) Update(profileId int64, accountuserprofile *AccountUserProfile) *AccountUserProfilesUpdateCall {
 	c := &AccountUserProfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -16693,6 +16718,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets one account by ID.
+//
+// - id: Account ID.
+// - profileId: User profile ID associated with this request.
 func (r *AccountsService) Get(profileId int64, id int64) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -16848,6 +16876,8 @@ type AccountsListCall struct {
 
 // List: Retrieves the list of accounts, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountsService) List(profileId int64) *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -17141,6 +17171,9 @@ type AccountsPatchCall struct {
 
 // Patch: Updates an existing account. This method supports patch
 // semantics.
+//
+// - id: Account ID.
+// - profileId: User profile ID associated with this request.
 func (r *AccountsService) Patch(profileId int64, id int64, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -17290,6 +17323,8 @@ type AccountsUpdateCall struct {
 }
 
 // Update: Updates an existing account.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AccountsService) Update(profileId int64, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -17431,6 +17466,9 @@ type AdsGetCall struct {
 }
 
 // Get: Gets one ad by ID.
+//
+// - id: Ad ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdsService) Get(profileId int64, id int64) *AdsGetCall {
 	c := &AdsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -17585,6 +17623,8 @@ type AdsInsertCall struct {
 }
 
 // Insert: Inserts a new ad.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdsService) Insert(profileId int64, ad *Ad) *AdsInsertCall {
 	c := &AdsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -17726,6 +17766,8 @@ type AdsListCall struct {
 
 // List: Retrieves a list of ads, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdsService) List(profileId int64) *AdsListCall {
 	c := &AdsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -18314,6 +18356,9 @@ type AdsPatchCall struct {
 }
 
 // Patch: Updates an existing ad. This method supports patch semantics.
+//
+// - id: Ad ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdsService) Patch(profileId int64, id int64, ad *Ad) *AdsPatchCall {
 	c := &AdsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -18463,6 +18508,8 @@ type AdsUpdateCall struct {
 }
 
 // Update: Updates an existing ad.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdsService) Update(profileId int64, ad *Ad) *AdsUpdateCall {
 	c := &AdsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -18603,6 +18650,9 @@ type AdvertiserGroupsDeleteCall struct {
 }
 
 // Delete: Deletes an existing advertiser group.
+//
+// - id: Advertiser group ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserGroupsService) Delete(profileId int64, id int64) *AdvertiserGroupsDeleteCall {
 	c := &AdvertiserGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -18717,6 +18767,9 @@ type AdvertiserGroupsGetCall struct {
 }
 
 // Get: Gets one advertiser group by ID.
+//
+// - id: Advertiser group ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserGroupsService) Get(profileId int64, id int64) *AdvertiserGroupsGetCall {
 	c := &AdvertiserGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -18871,6 +18924,8 @@ type AdvertiserGroupsInsertCall struct {
 }
 
 // Insert: Inserts a new advertiser group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserGroupsService) Insert(profileId int64, advertisergroup *AdvertiserGroup) *AdvertiserGroupsInsertCall {
 	c := &AdvertiserGroupsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -19012,6 +19067,8 @@ type AdvertiserGroupsListCall struct {
 
 // List: Retrieves a list of advertiser groups, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserGroupsService) List(profileId int64) *AdvertiserGroupsListCall {
 	c := &AdvertiserGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -19293,6 +19350,9 @@ type AdvertiserGroupsPatchCall struct {
 
 // Patch: Updates an existing advertiser group. This method supports
 // patch semantics.
+//
+// - id: AdvertiserGroup ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserGroupsService) Patch(profileId int64, id int64, advertisergroup *AdvertiserGroup) *AdvertiserGroupsPatchCall {
 	c := &AdvertiserGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -19442,6 +19502,8 @@ type AdvertiserGroupsUpdateCall struct {
 }
 
 // Update: Updates an existing advertiser group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserGroupsService) Update(profileId int64, advertisergroup *AdvertiserGroup) *AdvertiserGroupsUpdateCall {
 	c := &AdvertiserGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -19583,6 +19645,9 @@ type AdvertiserLandingPagesGetCall struct {
 }
 
 // Get: Gets one landing page by ID.
+//
+// - id: Landing page ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserLandingPagesService) Get(profileId int64, id int64) *AdvertiserLandingPagesGetCall {
 	c := &AdvertiserLandingPagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -19737,6 +19802,8 @@ type AdvertiserLandingPagesInsertCall struct {
 }
 
 // Insert: Inserts a new landing page.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserLandingPagesService) Insert(profileId int64, landingpage *LandingPage) *AdvertiserLandingPagesInsertCall {
 	c := &AdvertiserLandingPagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -19877,6 +19944,8 @@ type AdvertiserLandingPagesListCall struct {
 }
 
 // List: Retrieves a list of landing pages.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserLandingPagesService) List(profileId int64) *AdvertiserLandingPagesListCall {
 	c := &AdvertiserLandingPagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -20220,6 +20289,9 @@ type AdvertiserLandingPagesPatchCall struct {
 
 // Patch: Updates an existing advertiser landing page. This method
 // supports patch semantics.
+//
+// - id: LandingPage ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserLandingPagesService) Patch(profileId int64, id int64, landingpage *LandingPage) *AdvertiserLandingPagesPatchCall {
 	c := &AdvertiserLandingPagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -20369,6 +20441,8 @@ type AdvertiserLandingPagesUpdateCall struct {
 }
 
 // Update: Updates an existing landing page.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertiserLandingPagesService) Update(profileId int64, landingpage *LandingPage) *AdvertiserLandingPagesUpdateCall {
 	c := &AdvertiserLandingPagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -20510,6 +20584,9 @@ type AdvertisersGetCall struct {
 }
 
 // Get: Gets one advertiser by ID.
+//
+// - id: Advertiser ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertisersService) Get(profileId int64, id int64) *AdvertisersGetCall {
 	c := &AdvertisersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -20664,6 +20741,8 @@ type AdvertisersInsertCall struct {
 }
 
 // Insert: Inserts a new advertiser.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertisersService) Insert(profileId int64, advertiser *Advertiser) *AdvertisersInsertCall {
 	c := &AdvertisersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -20805,6 +20884,8 @@ type AdvertisersListCall struct {
 
 // List: Retrieves a list of advertisers, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertisersService) List(profileId int64) *AdvertisersListCall {
 	c := &AdvertisersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -21184,6 +21265,9 @@ type AdvertisersPatchCall struct {
 
 // Patch: Updates an existing advertiser. This method supports patch
 // semantics.
+//
+// - id: Advertiser ID.
+// - profileId: User profile ID associated with this request.
 func (r *AdvertisersService) Patch(profileId int64, id int64, advertiser *Advertiser) *AdvertisersPatchCall {
 	c := &AdvertisersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -21333,6 +21417,8 @@ type AdvertisersUpdateCall struct {
 }
 
 // Update: Updates an existing advertiser.
+//
+// - profileId: User profile ID associated with this request.
 func (r *AdvertisersService) Update(profileId int64, advertiser *Advertiser) *AdvertisersUpdateCall {
 	c := &AdvertisersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -21473,6 +21559,8 @@ type BrowsersListCall struct {
 }
 
 // List: Retrieves a list of browsers.
+//
+// - profileId: User profile ID associated with this request.
 func (r *BrowsersService) List(profileId int64) *BrowsersListCall {
 	c := &BrowsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -21620,6 +21708,9 @@ type CampaignCreativeAssociationsInsertCall struct {
 // Insert: Associates a creative with the specified campaign. This
 // method creates a default ad with dimensions matching the creative in
 // the campaign if such a default ad does not exist already.
+//
+// - campaignId: Campaign ID in this association.
+// - profileId: User profile ID associated with this request.
 func (r *CampaignCreativeAssociationsService) Insert(profileId int64, campaignId int64, campaigncreativeassociation *CampaignCreativeAssociation) *CampaignCreativeAssociationsInsertCall {
 	c := &CampaignCreativeAssociationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -21772,6 +21863,9 @@ type CampaignCreativeAssociationsListCall struct {
 
 // List: Retrieves the list of creative IDs associated with the
 // specified campaign. This method supports paging.
+//
+// - campaignId: Campaign ID in this association.
+// - profileId: User profile ID associated with this request.
 func (r *CampaignCreativeAssociationsService) List(profileId int64, campaignId int64) *CampaignCreativeAssociationsListCall {
 	c := &CampaignCreativeAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -22003,6 +22097,9 @@ type CampaignsGetCall struct {
 }
 
 // Get: Gets one campaign by ID.
+//
+// - id: Campaign ID.
+// - profileId: User profile ID associated with this request.
 func (r *CampaignsService) Get(profileId int64, id int64) *CampaignsGetCall {
 	c := &CampaignsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -22157,6 +22254,8 @@ type CampaignsInsertCall struct {
 }
 
 // Insert: Inserts a new campaign.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CampaignsService) Insert(profileId int64, campaign *Campaign) *CampaignsInsertCall {
 	c := &CampaignsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -22298,6 +22397,8 @@ type CampaignsListCall struct {
 
 // List: Retrieves a list of campaigns, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CampaignsService) List(profileId int64) *CampaignsListCall {
 	c := &CampaignsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -22686,6 +22787,9 @@ type CampaignsPatchCall struct {
 
 // Patch: Updates an existing campaign. This method supports patch
 // semantics.
+//
+// - id: Campaign ID.
+// - profileId: User profile ID associated with this request.
 func (r *CampaignsService) Patch(profileId int64, id int64, campaign *Campaign) *CampaignsPatchCall {
 	c := &CampaignsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -22835,6 +22939,8 @@ type CampaignsUpdateCall struct {
 }
 
 // Update: Updates an existing campaign.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CampaignsService) Update(profileId int64, campaign *Campaign) *CampaignsUpdateCall {
 	c := &CampaignsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -22976,6 +23082,9 @@ type ChangeLogsGetCall struct {
 }
 
 // Get: Gets one change log by ID.
+//
+// - id: Change log ID.
+// - profileId: User profile ID associated with this request.
 func (r *ChangeLogsService) Get(profileId int64, id int64) *ChangeLogsGetCall {
 	c := &ChangeLogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -23130,6 +23239,8 @@ type ChangeLogsListCall struct {
 }
 
 // List: Retrieves a list of change logs. This method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ChangeLogsService) List(profileId int64) *ChangeLogsListCall {
 	c := &ChangeLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -23633,6 +23744,8 @@ type CitiesListCall struct {
 }
 
 // List: Retrieves a list of cities, possibly filtered.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CitiesService) List(profileId int64) *CitiesListCall {
 	c := &CitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -23844,6 +23957,9 @@ type ConnectionTypesGetCall struct {
 }
 
 // Get: Gets one connection type by ID.
+//
+// - id: Connection type ID.
+// - profileId: User profile ID associated with this request.
 func (r *ConnectionTypesService) Get(profileId int64, id int64) *ConnectionTypesGetCall {
 	c := &ConnectionTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -23998,6 +24114,8 @@ type ConnectionTypesListCall struct {
 }
 
 // List: Retrieves a list of connection types.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ConnectionTypesService) List(profileId int64) *ConnectionTypesListCall {
 	c := &ConnectionTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -24142,6 +24260,9 @@ type ContentCategoriesDeleteCall struct {
 }
 
 // Delete: Deletes an existing content category.
+//
+// - id: Content category ID.
+// - profileId: User profile ID associated with this request.
 func (r *ContentCategoriesService) Delete(profileId int64, id int64) *ContentCategoriesDeleteCall {
 	c := &ContentCategoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -24256,6 +24377,9 @@ type ContentCategoriesGetCall struct {
 }
 
 // Get: Gets one content category by ID.
+//
+// - id: Content category ID.
+// - profileId: User profile ID associated with this request.
 func (r *ContentCategoriesService) Get(profileId int64, id int64) *ContentCategoriesGetCall {
 	c := &ContentCategoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -24410,6 +24534,8 @@ type ContentCategoriesInsertCall struct {
 }
 
 // Insert: Inserts a new content category.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ContentCategoriesService) Insert(profileId int64, contentcategory *ContentCategory) *ContentCategoriesInsertCall {
 	c := &ContentCategoriesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -24551,6 +24677,8 @@ type ContentCategoriesListCall struct {
 
 // List: Retrieves a list of content categories, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ContentCategoriesService) List(profileId int64) *ContentCategoriesListCall {
 	c := &ContentCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -24832,6 +24960,9 @@ type ContentCategoriesPatchCall struct {
 
 // Patch: Updates an existing content category. This method supports
 // patch semantics.
+//
+// - id: ContentCategory ID.
+// - profileId: User profile ID associated with this request.
 func (r *ContentCategoriesService) Patch(profileId int64, id int64, contentcategory *ContentCategory) *ContentCategoriesPatchCall {
 	c := &ContentCategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -24981,6 +25112,8 @@ type ContentCategoriesUpdateCall struct {
 }
 
 // Update: Updates an existing content category.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ContentCategoriesService) Update(profileId int64, contentcategory *ContentCategory) *ContentCategoriesUpdateCall {
 	c := &ContentCategoriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -25121,6 +25254,8 @@ type ConversionsBatchinsertCall struct {
 }
 
 // Batchinsert: Inserts conversions.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ConversionsService) Batchinsert(profileId int64, conversionsbatchinsertrequest *ConversionsBatchInsertRequest) *ConversionsBatchinsertCall {
 	c := &ConversionsBatchinsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -25261,6 +25396,8 @@ type ConversionsBatchupdateCall struct {
 }
 
 // Batchupdate: Updates existing conversions.
+//
+// - profileId: User profile ID associated with this request.
 func (r *ConversionsService) Batchupdate(profileId int64, conversionsbatchupdaterequest *ConversionsBatchUpdateRequest) *ConversionsBatchupdateCall {
 	c := &ConversionsBatchupdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -25402,6 +25539,9 @@ type CountriesGetCall struct {
 }
 
 // Get: Gets one country by ID.
+//
+// - dartId: Country DART ID.
+// - profileId: User profile ID associated with this request.
 func (r *CountriesService) Get(profileId int64, dartId int64) *CountriesGetCall {
 	c := &CountriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -25556,6 +25696,8 @@ type CountriesListCall struct {
 }
 
 // List: Retrieves a list of countries.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CountriesService) List(profileId int64) *CountriesListCall {
 	c := &CountriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -25702,6 +25844,10 @@ type CreativeAssetsInsertCall struct {
 }
 
 // Insert: Inserts a new creative asset.
+//
+// - advertiserId: Advertiser ID of this creative. This is a required
+// field.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeAssetsService) Insert(profileId int64, advertiserId int64, creativeassetmetadata *CreativeAssetMetadata) *CreativeAssetsInsertCall {
 	c := &CreativeAssetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -25933,6 +26079,10 @@ type CreativeFieldValuesDeleteCall struct {
 }
 
 // Delete: Deletes an existing creative field value.
+//
+// - creativeFieldId: Creative field ID for this creative field value.
+// - id: Creative Field Value ID
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldValuesService) Delete(profileId int64, creativeFieldId int64, id int64) *CreativeFieldValuesDeleteCall {
 	c := &CreativeFieldValuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -26058,6 +26208,10 @@ type CreativeFieldValuesGetCall struct {
 }
 
 // Get: Gets one creative field value by ID.
+//
+// - creativeFieldId: Creative field ID for this creative field value.
+// - id: Creative Field Value ID
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldValuesService) Get(profileId int64, creativeFieldId int64, id int64) *CreativeFieldValuesGetCall {
 	c := &CreativeFieldValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -26223,6 +26377,9 @@ type CreativeFieldValuesInsertCall struct {
 }
 
 // Insert: Inserts a new creative field value.
+//
+// - creativeFieldId: Creative field ID for this creative field value.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldValuesService) Insert(profileId int64, creativeFieldId int64, creativefieldvalue *CreativeFieldValue) *CreativeFieldValuesInsertCall {
 	c := &CreativeFieldValuesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -26375,6 +26532,9 @@ type CreativeFieldValuesListCall struct {
 
 // List: Retrieves a list of creative field values, possibly filtered.
 // This method supports paging.
+//
+// - creativeFieldId: Creative field ID for this creative field value.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldValuesService) List(profileId int64, creativeFieldId int64) *CreativeFieldValuesListCall {
 	c := &CreativeFieldValuesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -26661,6 +26821,10 @@ type CreativeFieldValuesPatchCall struct {
 
 // Patch: Updates an existing creative field value. This method supports
 // patch semantics.
+//
+// - creativeFieldId: CreativeField ID.
+// - id: CreativeFieldValue ID.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldValuesService) Patch(profileId int64, creativeFieldId int64, id int64, creativefieldvalue *CreativeFieldValue) *CreativeFieldValuesPatchCall {
 	c := &CreativeFieldValuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -26821,6 +26985,9 @@ type CreativeFieldValuesUpdateCall struct {
 }
 
 // Update: Updates an existing creative field value.
+//
+// - creativeFieldId: Creative field ID for this creative field value.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldValuesService) Update(profileId int64, creativeFieldId int64, creativefieldvalue *CreativeFieldValue) *CreativeFieldValuesUpdateCall {
 	c := &CreativeFieldValuesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -26971,6 +27138,9 @@ type CreativeFieldsDeleteCall struct {
 }
 
 // Delete: Deletes an existing creative field.
+//
+// - id: Creative Field ID
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldsService) Delete(profileId int64, id int64) *CreativeFieldsDeleteCall {
 	c := &CreativeFieldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -27085,6 +27255,9 @@ type CreativeFieldsGetCall struct {
 }
 
 // Get: Gets one creative field by ID.
+//
+// - id: Creative Field ID
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldsService) Get(profileId int64, id int64) *CreativeFieldsGetCall {
 	c := &CreativeFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -27239,6 +27412,8 @@ type CreativeFieldsInsertCall struct {
 }
 
 // Insert: Inserts a new creative field.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldsService) Insert(profileId int64, creativefield *CreativeField) *CreativeFieldsInsertCall {
 	c := &CreativeFieldsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -27380,6 +27555,8 @@ type CreativeFieldsListCall struct {
 
 // List: Retrieves a list of creative fields, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldsService) List(profileId int64) *CreativeFieldsListCall {
 	c := &CreativeFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -27679,6 +27856,9 @@ type CreativeFieldsPatchCall struct {
 
 // Patch: Updates an existing creative field. This method supports patch
 // semantics.
+//
+// - id: CreativeField ID.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldsService) Patch(profileId int64, id int64, creativefield *CreativeField) *CreativeFieldsPatchCall {
 	c := &CreativeFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -27828,6 +28008,8 @@ type CreativeFieldsUpdateCall struct {
 }
 
 // Update: Updates an existing creative field.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativeFieldsService) Update(profileId int64, creativefield *CreativeField) *CreativeFieldsUpdateCall {
 	c := &CreativeFieldsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -27969,6 +28151,9 @@ type CreativeGroupsGetCall struct {
 }
 
 // Get: Gets one creative group by ID.
+//
+// - id: Creative group ID.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeGroupsService) Get(profileId int64, id int64) *CreativeGroupsGetCall {
 	c := &CreativeGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -28123,6 +28308,8 @@ type CreativeGroupsInsertCall struct {
 }
 
 // Insert: Inserts a new creative group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativeGroupsService) Insert(profileId int64, creativegroup *CreativeGroup) *CreativeGroupsInsertCall {
 	c := &CreativeGroupsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -28264,6 +28451,8 @@ type CreativeGroupsListCall struct {
 
 // List: Retrieves a list of creative groups, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativeGroupsService) List(profileId int64) *CreativeGroupsListCall {
 	c := &CreativeGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -28578,6 +28767,9 @@ type CreativeGroupsPatchCall struct {
 
 // Patch: Updates an existing creative group. This method supports patch
 // semantics.
+//
+// - id: CreativeGroup ID.
+// - profileId: User profile ID associated with this request.
 func (r *CreativeGroupsService) Patch(profileId int64, id int64, creativegroup *CreativeGroup) *CreativeGroupsPatchCall {
 	c := &CreativeGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -28727,6 +28919,8 @@ type CreativeGroupsUpdateCall struct {
 }
 
 // Update: Updates an existing creative group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativeGroupsService) Update(profileId int64, creativegroup *CreativeGroup) *CreativeGroupsUpdateCall {
 	c := &CreativeGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -28868,6 +29062,9 @@ type CreativesGetCall struct {
 }
 
 // Get: Gets one creative by ID.
+//
+// - id: Creative ID.
+// - profileId: User profile ID associated with this request.
 func (r *CreativesService) Get(profileId int64, id int64) *CreativesGetCall {
 	c := &CreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -29022,6 +29219,8 @@ type CreativesInsertCall struct {
 }
 
 // Insert: Inserts a new creative.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativesService) Insert(profileId int64, creative *Creative) *CreativesInsertCall {
 	c := &CreativesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -29163,6 +29362,8 @@ type CreativesListCall struct {
 
 // List: Retrieves a list of creatives, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativesService) List(profileId int64) *CreativesListCall {
 	c := &CreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -29673,6 +29874,9 @@ type CreativesPatchCall struct {
 
 // Patch: Updates an existing creative. This method supports patch
 // semantics.
+//
+// - id: Creative ID.
+// - profileId: User profile ID associated with this request.
 func (r *CreativesService) Patch(profileId int64, id int64, creative *Creative) *CreativesPatchCall {
 	c := &CreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -29822,6 +30026,8 @@ type CreativesUpdateCall struct {
 }
 
 // Update: Updates an existing creative.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CreativesService) Update(profileId int64, creative *Creative) *CreativesUpdateCall {
 	c := &CreativesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -29962,6 +30168,8 @@ type CustomEventsBatchinsertCall struct {
 }
 
 // Batchinsert: Inserts custom events.
+//
+// - profileId: User profile ID associated with this request.
 func (r *CustomEventsService) Batchinsert(profileId int64, customeventsbatchinsertrequest *CustomEventsBatchInsertRequest) *CustomEventsBatchinsertCall {
 	c := &CustomEventsBatchinsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -30103,6 +30311,8 @@ type DimensionValuesQueryCall struct {
 
 // Query: Retrieves list of report dimension values for a list of
 // filters.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
 func (r *DimensionValuesService) Query(profileId int64, dimensionvaluerequest *DimensionValueRequest) *DimensionValuesQueryCall {
 	c := &DimensionValuesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -30293,6 +30503,9 @@ type DirectorySitesGetCall struct {
 }
 
 // Get: Gets one directory site by ID.
+//
+// - id: Directory site ID.
+// - profileId: User profile ID associated with this request.
 func (r *DirectorySitesService) Get(profileId int64, id int64) *DirectorySitesGetCall {
 	c := &DirectorySitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -30447,6 +30660,8 @@ type DirectorySitesInsertCall struct {
 }
 
 // Insert: Inserts a new directory site.
+//
+// - profileId: User profile ID associated with this request.
 func (r *DirectorySitesService) Insert(profileId int64, directorysite *DirectorySite) *DirectorySitesInsertCall {
 	c := &DirectorySitesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -30588,6 +30803,8 @@ type DirectorySitesListCall struct {
 
 // List: Retrieves a list of directory sites, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *DirectorySitesService) List(profileId int64) *DirectorySitesListCall {
 	c := &DirectorySitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -30932,6 +31149,15 @@ type DynamicTargetingKeysDeleteCall struct {
 }
 
 // Delete: Deletes an existing dynamic targeting key.
+//
+// - name: Name of this dynamic targeting key. This is a required field.
+// Must be less than 256 characters long and cannot contain commas. All
+// characters are converted to lowercase.
+// - objectId: ID of the object of this dynamic targeting key. This is a
+// required field.
+// - objectType: Type of the object of this dynamic targeting key. This
+// is a required field.
+// - profileId: User profile ID associated with this request.
 func (r *DynamicTargetingKeysService) Delete(profileId int64, objectId int64, name string, objectType string) *DynamicTargetingKeysDeleteCall {
 	c := &DynamicTargetingKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -31077,6 +31303,8 @@ type DynamicTargetingKeysInsertCall struct {
 // creatives, or placements. There is a maximum of 1000 keys per
 // advertiser, out of which a maximum of 20 keys can be assigned per ad,
 // creative, or placement.
+//
+// - profileId: User profile ID associated with this request.
 func (r *DynamicTargetingKeysService) Insert(profileId int64, dynamictargetingkey *DynamicTargetingKey) *DynamicTargetingKeysInsertCall {
 	c := &DynamicTargetingKeysInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -31217,6 +31445,8 @@ type DynamicTargetingKeysListCall struct {
 }
 
 // List: Retrieves a list of dynamic targeting keys.
+//
+// - profileId: User profile ID associated with this request.
 func (r *DynamicTargetingKeysService) List(profileId int64) *DynamicTargetingKeysListCall {
 	c := &DynamicTargetingKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -31430,6 +31660,9 @@ type EventTagsDeleteCall struct {
 }
 
 // Delete: Deletes an existing event tag.
+//
+// - id: Event tag ID.
+// - profileId: User profile ID associated with this request.
 func (r *EventTagsService) Delete(profileId int64, id int64) *EventTagsDeleteCall {
 	c := &EventTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -31544,6 +31777,9 @@ type EventTagsGetCall struct {
 }
 
 // Get: Gets one event tag by ID.
+//
+// - id: Event tag ID.
+// - profileId: User profile ID associated with this request.
 func (r *EventTagsService) Get(profileId int64, id int64) *EventTagsGetCall {
 	c := &EventTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -31698,6 +31934,8 @@ type EventTagsInsertCall struct {
 }
 
 // Insert: Inserts a new event tag.
+//
+// - profileId: User profile ID associated with this request.
 func (r *EventTagsService) Insert(profileId int64, eventtag *EventTag) *EventTagsInsertCall {
 	c := &EventTagsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -31838,6 +32076,8 @@ type EventTagsListCall struct {
 }
 
 // List: Retrieves a list of event tags, possibly filtered.
+//
+// - profileId: User profile ID associated with this request.
 func (r *EventTagsService) List(profileId int64) *EventTagsListCall {
 	c := &EventTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -32175,6 +32415,9 @@ type EventTagsPatchCall struct {
 
 // Patch: Updates an existing event tag. This method supports patch
 // semantics.
+//
+// - id: EventTag ID.
+// - profileId: User profile ID associated with this request.
 func (r *EventTagsService) Patch(profileId int64, id int64, eventtag *EventTag) *EventTagsPatchCall {
 	c := &EventTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -32324,6 +32567,8 @@ type EventTagsUpdateCall struct {
 }
 
 // Update: Updates an existing event tag.
+//
+// - profileId: User profile ID associated with this request.
 func (r *EventTagsService) Update(profileId int64, eventtag *EventTag) *EventTagsUpdateCall {
 	c := &EventTagsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -32466,6 +32711,9 @@ type FilesGetCall struct {
 
 // Get: Retrieves a report file by its report ID and file ID. This
 // method supports media download.
+//
+// - fileId: The ID of the report file.
+// - reportId: The ID of the report.
 func (r *FilesService) Get(reportId int64, fileId int64) *FilesGetCall {
 	c := &FilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportId = reportId
@@ -32637,6 +32885,8 @@ type FilesListCall struct {
 }
 
 // List: Lists files for a user profile.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
 func (r *FilesService) List(profileId int64) *FilesListCall {
 	c := &FilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -32908,6 +33158,9 @@ type FloodlightActivitiesDeleteCall struct {
 }
 
 // Delete: Deletes an existing floodlight activity.
+//
+// - id: Floodlight activity ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) Delete(profileId int64, id int64) *FloodlightActivitiesDeleteCall {
 	c := &FloodlightActivitiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -33020,6 +33273,8 @@ type FloodlightActivitiesGeneratetagCall struct {
 }
 
 // Generatetag: Generates a tag for a floodlight activity.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) Generatetag(profileId int64) *FloodlightActivitiesGeneratetagCall {
 	c := &FloodlightActivitiesGeneratetagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -33167,6 +33422,9 @@ type FloodlightActivitiesGetCall struct {
 }
 
 // Get: Gets one floodlight activity by ID.
+//
+// - id: Floodlight activity ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) Get(profileId int64, id int64) *FloodlightActivitiesGetCall {
 	c := &FloodlightActivitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -33321,6 +33579,8 @@ type FloodlightActivitiesInsertCall struct {
 }
 
 // Insert: Inserts a new floodlight activity.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) Insert(profileId int64, floodlightactivity *FloodlightActivity) *FloodlightActivitiesInsertCall {
 	c := &FloodlightActivitiesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -33462,6 +33722,8 @@ type FloodlightActivitiesListCall struct {
 
 // List: Retrieves a list of floodlight activities, possibly filtered.
 // This method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) List(profileId int64) *FloodlightActivitiesListCall {
 	c := &FloodlightActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -33856,6 +34118,9 @@ type FloodlightActivitiesPatchCall struct {
 
 // Patch: Updates an existing floodlight activity. This method supports
 // patch semantics.
+//
+// - id: FloodlightActivity ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) Patch(profileId int64, id int64, floodlightactivity *FloodlightActivity) *FloodlightActivitiesPatchCall {
 	c := &FloodlightActivitiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -34005,6 +34270,8 @@ type FloodlightActivitiesUpdateCall struct {
 }
 
 // Update: Updates an existing floodlight activity.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivitiesService) Update(profileId int64, floodlightactivity *FloodlightActivity) *FloodlightActivitiesUpdateCall {
 	c := &FloodlightActivitiesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -34146,6 +34413,9 @@ type FloodlightActivityGroupsGetCall struct {
 }
 
 // Get: Gets one floodlight activity group by ID.
+//
+// - id: Floodlight activity Group ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivityGroupsService) Get(profileId int64, id int64) *FloodlightActivityGroupsGetCall {
 	c := &FloodlightActivityGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -34300,6 +34570,8 @@ type FloodlightActivityGroupsInsertCall struct {
 }
 
 // Insert: Inserts a new floodlight activity group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivityGroupsService) Insert(profileId int64, floodlightactivitygroup *FloodlightActivityGroup) *FloodlightActivityGroupsInsertCall {
 	c := &FloodlightActivityGroupsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -34441,6 +34713,8 @@ type FloodlightActivityGroupsListCall struct {
 
 // List: Retrieves a list of floodlight activity groups, possibly
 // filtered. This method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivityGroupsService) List(profileId int64) *FloodlightActivityGroupsListCall {
 	c := &FloodlightActivityGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -34779,6 +35053,9 @@ type FloodlightActivityGroupsPatchCall struct {
 
 // Patch: Updates an existing floodlight activity group. This method
 // supports patch semantics.
+//
+// - id: FloodlightActivityGroup ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivityGroupsService) Patch(profileId int64, id int64, floodlightactivitygroup *FloodlightActivityGroup) *FloodlightActivityGroupsPatchCall {
 	c := &FloodlightActivityGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -34928,6 +35205,8 @@ type FloodlightActivityGroupsUpdateCall struct {
 }
 
 // Update: Updates an existing floodlight activity group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightActivityGroupsService) Update(profileId int64, floodlightactivitygroup *FloodlightActivityGroup) *FloodlightActivityGroupsUpdateCall {
 	c := &FloodlightActivityGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -35069,6 +35348,9 @@ type FloodlightConfigurationsGetCall struct {
 }
 
 // Get: Gets one floodlight configuration by ID.
+//
+// - id: Floodlight configuration ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightConfigurationsService) Get(profileId int64, id int64) *FloodlightConfigurationsGetCall {
 	c := &FloodlightConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -35224,6 +35506,8 @@ type FloodlightConfigurationsListCall struct {
 
 // List: Retrieves a list of floodlight configurations, possibly
 // filtered.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightConfigurationsService) List(profileId int64) *FloodlightConfigurationsListCall {
 	c := &FloodlightConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -35389,6 +35673,9 @@ type FloodlightConfigurationsPatchCall struct {
 
 // Patch: Updates an existing floodlight configuration. This method
 // supports patch semantics.
+//
+// - id: FloodlightConfiguration ID.
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightConfigurationsService) Patch(profileId int64, id int64, floodlightconfiguration *FloodlightConfiguration) *FloodlightConfigurationsPatchCall {
 	c := &FloodlightConfigurationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -35538,6 +35825,8 @@ type FloodlightConfigurationsUpdateCall struct {
 }
 
 // Update: Updates an existing floodlight configuration.
+//
+// - profileId: User profile ID associated with this request.
 func (r *FloodlightConfigurationsService) Update(profileId int64, floodlightconfiguration *FloodlightConfiguration) *FloodlightConfigurationsUpdateCall {
 	c := &FloodlightConfigurationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -35680,6 +35969,10 @@ type InventoryItemsGetCall struct {
 }
 
 // Get: Gets one inventory item by ID.
+//
+// - id: Inventory item ID.
+// - profileId: User profile ID associated with this request.
+// - projectId: Project ID for order documents.
 func (r *InventoryItemsService) Get(profileId int64, projectId int64, id int64) *InventoryItemsGetCall {
 	c := &InventoryItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -35846,6 +36139,9 @@ type InventoryItemsListCall struct {
 
 // List: Retrieves a list of inventory items, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
+// - projectId: Project ID for order documents.
 func (r *InventoryItemsService) List(profileId int64, projectId int64) *InventoryItemsListCall {
 	c := &InventoryItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -36189,6 +36485,8 @@ type LanguagesListCall struct {
 }
 
 // List: Retrieves a list of languages.
+//
+// - profileId: User profile ID associated with this request.
 func (r *LanguagesService) List(profileId int64) *LanguagesListCall {
 	c := &LanguagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -36333,6 +36631,8 @@ type MetrosListCall struct {
 }
 
 // List: Retrieves a list of metros.
+//
+// - profileId: User profile ID associated with this request.
 func (r *MetrosService) List(profileId int64) *MetrosListCall {
 	c := &MetrosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -36478,6 +36778,9 @@ type MobileAppsGetCall struct {
 }
 
 // Get: Gets one mobile app by ID.
+//
+// - id: Mobile app ID.
+// - profileId: User profile ID associated with this request.
 func (r *MobileAppsService) Get(profileId int64, id string) *MobileAppsGetCall {
 	c := &MobileAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -36631,6 +36934,8 @@ type MobileAppsListCall struct {
 }
 
 // List: Retrieves list of available mobile apps.
+//
+// - profileId: User profile ID associated with this request.
 func (r *MobileAppsService) List(profileId int64) *MobileAppsListCall {
 	c := &MobileAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -36883,6 +37188,9 @@ type MobileCarriersGetCall struct {
 }
 
 // Get: Gets one mobile carrier by ID.
+//
+// - id: Mobile carrier ID.
+// - profileId: User profile ID associated with this request.
 func (r *MobileCarriersService) Get(profileId int64, id int64) *MobileCarriersGetCall {
 	c := &MobileCarriersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37037,6 +37345,8 @@ type MobileCarriersListCall struct {
 }
 
 // List: Retrieves a list of mobile carriers.
+//
+// - profileId: User profile ID associated with this request.
 func (r *MobileCarriersService) List(profileId int64) *MobileCarriersListCall {
 	c := &MobileCarriersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37182,6 +37492,9 @@ type OperatingSystemVersionsGetCall struct {
 }
 
 // Get: Gets one operating system version by ID.
+//
+// - id: Operating system version ID.
+// - profileId: User profile ID associated with this request.
 func (r *OperatingSystemVersionsService) Get(profileId int64, id int64) *OperatingSystemVersionsGetCall {
 	c := &OperatingSystemVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37336,6 +37649,8 @@ type OperatingSystemVersionsListCall struct {
 }
 
 // List: Retrieves a list of operating system versions.
+//
+// - profileId: User profile ID associated with this request.
 func (r *OperatingSystemVersionsService) List(profileId int64) *OperatingSystemVersionsListCall {
 	c := &OperatingSystemVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37482,6 +37797,9 @@ type OperatingSystemsGetCall struct {
 }
 
 // Get: Gets one operating system by DART ID.
+//
+// - dartId: Operating system DART ID.
+// - profileId: User profile ID associated with this request.
 func (r *OperatingSystemsService) Get(profileId int64, dartId int64) *OperatingSystemsGetCall {
 	c := &OperatingSystemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37636,6 +37954,8 @@ type OperatingSystemsListCall struct {
 }
 
 // List: Retrieves a list of operating systems.
+//
+// - profileId: User profile ID associated with this request.
 func (r *OperatingSystemsService) List(profileId int64) *OperatingSystemsListCall {
 	c := &OperatingSystemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37782,6 +38102,10 @@ type OrderDocumentsGetCall struct {
 }
 
 // Get: Gets one order document by ID.
+//
+// - id: Order document ID.
+// - profileId: User profile ID associated with this request.
+// - projectId: Project ID for order documents.
 func (r *OrderDocumentsService) Get(profileId int64, projectId int64, id int64) *OrderDocumentsGetCall {
 	c := &OrderDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -37948,6 +38272,9 @@ type OrderDocumentsListCall struct {
 
 // List: Retrieves a list of order documents, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
+// - projectId: Project ID for order documents.
 func (r *OrderDocumentsService) List(profileId int64, projectId int64) *OrderDocumentsListCall {
 	c := &OrderDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -38288,6 +38615,10 @@ type OrdersGetCall struct {
 }
 
 // Get: Gets one order by ID.
+//
+// - id: Order ID.
+// - profileId: User profile ID associated with this request.
+// - projectId: Project ID for orders.
 func (r *OrdersService) Get(profileId int64, projectId int64, id int64) *OrdersGetCall {
 	c := &OrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -38454,6 +38785,9 @@ type OrdersListCall struct {
 
 // List: Retrieves a list of orders, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
+// - projectId: Project ID for orders.
 func (r *OrdersService) List(profileId int64, projectId int64) *OrdersListCall {
 	c := &OrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -38761,6 +39095,9 @@ type PlacementGroupsGetCall struct {
 }
 
 // Get: Gets one placement group by ID.
+//
+// - id: Placement group ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementGroupsService) Get(profileId int64, id int64) *PlacementGroupsGetCall {
 	c := &PlacementGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -38915,6 +39252,8 @@ type PlacementGroupsInsertCall struct {
 }
 
 // Insert: Inserts a new placement group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementGroupsService) Insert(profileId int64, placementgroup *PlacementGroup) *PlacementGroupsInsertCall {
 	c := &PlacementGroupsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -39056,6 +39395,8 @@ type PlacementGroupsListCall struct {
 
 // List: Retrieves a list of placement groups, possibly filtered. This
 // method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementGroupsService) List(profileId int64) *PlacementGroupsListCall {
 	c := &PlacementGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -39579,6 +39920,9 @@ type PlacementGroupsPatchCall struct {
 
 // Patch: Updates an existing placement group. This method supports
 // patch semantics.
+//
+// - id: PlacementGroup ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementGroupsService) Patch(profileId int64, id int64, placementgroup *PlacementGroup) *PlacementGroupsPatchCall {
 	c := &PlacementGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -39728,6 +40072,8 @@ type PlacementGroupsUpdateCall struct {
 }
 
 // Update: Updates an existing placement group.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementGroupsService) Update(profileId int64, placementgroup *PlacementGroup) *PlacementGroupsUpdateCall {
 	c := &PlacementGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -39868,6 +40214,9 @@ type PlacementStrategiesDeleteCall struct {
 }
 
 // Delete: Deletes an existing placement strategy.
+//
+// - id: Placement strategy ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementStrategiesService) Delete(profileId int64, id int64) *PlacementStrategiesDeleteCall {
 	c := &PlacementStrategiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -39982,6 +40331,9 @@ type PlacementStrategiesGetCall struct {
 }
 
 // Get: Gets one placement strategy by ID.
+//
+// - id: Placement strategy ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementStrategiesService) Get(profileId int64, id int64) *PlacementStrategiesGetCall {
 	c := &PlacementStrategiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -40136,6 +40488,8 @@ type PlacementStrategiesInsertCall struct {
 }
 
 // Insert: Inserts a new placement strategy.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementStrategiesService) Insert(profileId int64, placementstrategy *PlacementStrategy) *PlacementStrategiesInsertCall {
 	c := &PlacementStrategiesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -40277,6 +40631,8 @@ type PlacementStrategiesListCall struct {
 
 // List: Retrieves a list of placement strategies, possibly filtered.
 // This method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementStrategiesService) List(profileId int64) *PlacementStrategiesListCall {
 	c := &PlacementStrategiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -40558,6 +40914,9 @@ type PlacementStrategiesPatchCall struct {
 
 // Patch: Updates an existing placement strategy. This method supports
 // patch semantics.
+//
+// - id: PlacementStrategy ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementStrategiesService) Patch(profileId int64, id int64, placementstrategy *PlacementStrategy) *PlacementStrategiesPatchCall {
 	c := &PlacementStrategiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -40707,6 +41066,8 @@ type PlacementStrategiesUpdateCall struct {
 }
 
 // Update: Updates an existing placement strategy.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementStrategiesService) Update(profileId int64, placementstrategy *PlacementStrategy) *PlacementStrategiesUpdateCall {
 	c := &PlacementStrategiesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -40846,6 +41207,8 @@ type PlacementsGeneratetagsCall struct {
 }
 
 // Generatetags: Generates tags for a placement.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementsService) Generatetags(profileId int64) *PlacementsGeneratetagsCall {
 	c := &PlacementsGeneratetagsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -41086,6 +41449,9 @@ type PlacementsGetCall struct {
 }
 
 // Get: Gets one placement by ID.
+//
+// - id: Placement ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementsService) Get(profileId int64, id int64) *PlacementsGetCall {
 	c := &PlacementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -41240,6 +41606,8 @@ type PlacementsInsertCall struct {
 }
 
 // Insert: Inserts a new placement.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementsService) Insert(profileId int64, placement *Placement) *PlacementsInsertCall {
 	c := &PlacementsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -41381,6 +41749,8 @@ type PlacementsListCall struct {
 
 // List: Retrieves a list of placements, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementsService) List(profileId int64) *PlacementsListCall {
 	c := &PlacementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -41976,6 +42346,9 @@ type PlacementsPatchCall struct {
 
 // Patch: Updates an existing placement. This method supports patch
 // semantics.
+//
+// - id: Placement ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlacementsService) Patch(profileId int64, id int64, placement *Placement) *PlacementsPatchCall {
 	c := &PlacementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42125,6 +42498,8 @@ type PlacementsUpdateCall struct {
 }
 
 // Update: Updates an existing placement.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlacementsService) Update(profileId int64, placement *Placement) *PlacementsUpdateCall {
 	c := &PlacementsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42266,6 +42641,9 @@ type PlatformTypesGetCall struct {
 }
 
 // Get: Gets one platform type by ID.
+//
+// - id: Platform type ID.
+// - profileId: User profile ID associated with this request.
 func (r *PlatformTypesService) Get(profileId int64, id int64) *PlatformTypesGetCall {
 	c := &PlatformTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42420,6 +42798,8 @@ type PlatformTypesListCall struct {
 }
 
 // List: Retrieves a list of platform types.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PlatformTypesService) List(profileId int64) *PlatformTypesListCall {
 	c := &PlatformTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42565,6 +42945,9 @@ type PostalCodesGetCall struct {
 }
 
 // Get: Gets one postal code by ID.
+//
+// - code: Postal code ID.
+// - profileId: User profile ID associated with this request.
 func (r *PostalCodesService) Get(profileId int64, code string) *PostalCodesGetCall {
 	c := &PostalCodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42718,6 +43101,8 @@ type PostalCodesListCall struct {
 }
 
 // List: Retrieves a list of postal codes.
+//
+// - profileId: User profile ID associated with this request.
 func (r *PostalCodesService) List(profileId int64) *PostalCodesListCall {
 	c := &PostalCodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42863,6 +43248,9 @@ type ProjectsGetCall struct {
 }
 
 // Get: Gets one project by ID.
+//
+// - id: Project ID.
+// - profileId: User profile ID associated with this request.
 func (r *ProjectsService) Get(profileId int64, id int64) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -43018,6 +43406,8 @@ type ProjectsListCall struct {
 
 // List: Retrieves a list of projects, possibly filtered. This method
 // supports paging .
+//
+// - profileId: User profile ID associated with this request.
 func (r *ProjectsService) List(profileId int64) *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -43315,6 +43705,8 @@ type RegionsListCall struct {
 }
 
 // List: Retrieves a list of regions.
+//
+// - profileId: User profile ID associated with this request.
 func (r *RegionsService) List(profileId int64) *RegionsListCall {
 	c := &RegionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -43460,6 +43852,9 @@ type RemarketingListSharesGetCall struct {
 }
 
 // Get: Gets one remarketing list share by remarketing list ID.
+//
+// - profileId: User profile ID associated with this request.
+// - remarketingListId: Remarketing list ID.
 func (r *RemarketingListSharesService) Get(profileId int64, remarketingListId int64) *RemarketingListSharesGetCall {
 	c := &RemarketingListSharesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -43615,6 +44010,9 @@ type RemarketingListSharesPatchCall struct {
 
 // Patch: Updates an existing remarketing list share. This method
 // supports patch semantics.
+//
+// - id: RemarketingList ID.
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListSharesService) Patch(profileId int64, id int64, remarketinglistshare *RemarketingListShare) *RemarketingListSharesPatchCall {
 	c := &RemarketingListSharesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -43764,6 +44162,8 @@ type RemarketingListSharesUpdateCall struct {
 }
 
 // Update: Updates an existing remarketing list share.
+//
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListSharesService) Update(profileId int64, remarketinglistshare *RemarketingListShare) *RemarketingListSharesUpdateCall {
 	c := &RemarketingListSharesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -43905,6 +44305,9 @@ type RemarketingListsGetCall struct {
 }
 
 // Get: Gets one remarketing list by ID.
+//
+// - id: Remarketing list ID.
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListsService) Get(profileId int64, id int64) *RemarketingListsGetCall {
 	c := &RemarketingListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -44059,6 +44462,8 @@ type RemarketingListsInsertCall struct {
 }
 
 // Insert: Inserts a new remarketing list.
+//
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListsService) Insert(profileId int64, remarketinglist *RemarketingList) *RemarketingListsInsertCall {
 	c := &RemarketingListsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -44200,6 +44605,10 @@ type RemarketingListsListCall struct {
 
 // List: Retrieves a list of remarketing lists, possibly filtered. This
 // method supports paging.
+//
+// - advertiserId: Select only remarketing lists owned by this
+// advertiser.
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListsService) List(profileId int64, advertiserId int64) *RemarketingListsListCall {
 	c := &RemarketingListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -44497,6 +44906,9 @@ type RemarketingListsPatchCall struct {
 
 // Patch: Updates an existing remarketing list. This method supports
 // patch semantics.
+//
+// - id: RemarketingList ID.
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListsService) Patch(profileId int64, id int64, remarketinglist *RemarketingList) *RemarketingListsPatchCall {
 	c := &RemarketingListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -44646,6 +45058,8 @@ type RemarketingListsUpdateCall struct {
 }
 
 // Update: Updates an existing remarketing list.
+//
+// - profileId: User profile ID associated with this request.
 func (r *RemarketingListsService) Update(profileId int64, remarketinglist *RemarketingList) *RemarketingListsUpdateCall {
 	c := &RemarketingListsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -44786,6 +45200,9 @@ type ReportsDeleteCall struct {
 }
 
 // Delete: Deletes a report by its ID.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
+// - reportId: The ID of the report.
 func (r *ReportsService) Delete(profileId int64, reportId int64) *ReportsDeleteCall {
 	c := &ReportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -44900,6 +45317,9 @@ type ReportsGetCall struct {
 }
 
 // Get: Retrieves a report by its ID.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
+// - reportId: The ID of the report.
 func (r *ReportsService) Get(profileId int64, reportId int64) *ReportsGetCall {
 	c := &ReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -45054,6 +45474,8 @@ type ReportsInsertCall struct {
 }
 
 // Insert: Creates a report.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
 func (r *ReportsService) Insert(profileId int64, report *Report) *ReportsInsertCall {
 	c := &ReportsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -45194,6 +45616,8 @@ type ReportsListCall struct {
 }
 
 // List: Retrieves list of reports.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
 func (r *ReportsService) List(profileId int64) *ReportsListCall {
 	c := &ReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -45467,6 +45891,9 @@ type ReportsPatchCall struct {
 
 // Patch: Updates an existing report. This method supports patch
 // semantics.
+//
+// - profileId: The DFA user profile ID.
+// - reportId: The ID of the report.
 func (r *ReportsService) Patch(profileId int64, reportId int64, report *Report) *ReportsPatchCall {
 	c := &ReportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -45617,6 +46044,9 @@ type ReportsRunCall struct {
 }
 
 // Run: Runs a report.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
+// - reportId: The ID of the report.
 func (r *ReportsService) Run(profileId int64, reportId int64) *ReportsRunCall {
 	c := &ReportsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -45772,6 +46202,9 @@ type ReportsUpdateCall struct {
 }
 
 // Update: Updates a report.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
+// - reportId: The ID of the report.
 func (r *ReportsService) Update(profileId int64, reportId int64, report *Report) *ReportsUpdateCall {
 	c := &ReportsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -45924,6 +46357,8 @@ type ReportsCompatibleFieldsQueryCall struct {
 // Query: Returns the fields that are compatible to be selected in the
 // respective sections of a report criteria, given the fields already
 // selected in the input report and user permissions.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
 func (r *ReportsCompatibleFieldsService) Query(profileId int64, report *Report) *ReportsCompatibleFieldsQueryCall {
 	c := &ReportsCompatibleFieldsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -46067,6 +46502,10 @@ type ReportsFilesGetCall struct {
 
 // Get: Retrieves a report file by its report ID and file ID. This
 // method supports media download.
+//
+// - fileId: The ID of the report file.
+// - profileId: The Campaign Manager 360 user profile ID.
+// - reportId: The ID of the report.
 func (r *ReportsFilesService) Get(profileId int64, reportId int64, fileId int64) *ReportsFilesGetCall {
 	c := &ReportsFilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -46249,6 +46688,9 @@ type ReportsFilesListCall struct {
 }
 
 // List: Lists files for a report.
+//
+// - profileId: The Campaign Manager 360 user profile ID.
+// - reportId: The ID of the parent report.
 func (r *ReportsFilesService) List(profileId int64, reportId int64) *ReportsFilesListCall {
 	c := &ReportsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -46503,6 +46945,9 @@ type SitesGetCall struct {
 }
 
 // Get: Gets one site by ID.
+//
+// - id: Site ID.
+// - profileId: User profile ID associated with this request.
 func (r *SitesService) Get(profileId int64, id int64) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -46657,6 +47102,8 @@ type SitesInsertCall struct {
 }
 
 // Insert: Inserts a new site.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SitesService) Insert(profileId int64, site *Site) *SitesInsertCall {
 	c := &SitesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -46798,6 +47245,8 @@ type SitesListCall struct {
 
 // List: Retrieves a list of sites, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SitesService) List(profileId int64) *SitesListCall {
 	c := &SitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -47201,6 +47650,9 @@ type SitesPatchCall struct {
 
 // Patch: Updates an existing site. This method supports patch
 // semantics.
+//
+// - id: Site ID.
+// - profileId: User profile ID associated with this request.
 func (r *SitesService) Patch(profileId int64, id int64, site *Site) *SitesPatchCall {
 	c := &SitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -47350,6 +47802,8 @@ type SitesUpdateCall struct {
 }
 
 // Update: Updates an existing site.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SitesService) Update(profileId int64, site *Site) *SitesUpdateCall {
 	c := &SitesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -47491,6 +47945,9 @@ type SizesGetCall struct {
 }
 
 // Get: Gets one size by ID.
+//
+// - id: Size ID.
+// - profileId: User profile ID associated with this request.
 func (r *SizesService) Get(profileId int64, id int64) *SizesGetCall {
 	c := &SizesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -47645,6 +48102,8 @@ type SizesInsertCall struct {
 }
 
 // Insert: Inserts a new size.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SizesService) Insert(profileId int64, size *Size) *SizesInsertCall {
 	c := &SizesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -47788,6 +48247,8 @@ type SizesListCall struct {
 // are globally unique and may include values not currently in use by
 // your account. Due to this, the list of sizes returned by this method
 // may differ from the list seen in the Trafficking UI.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SizesService) List(profileId int64) *SizesListCall {
 	c := &SizesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -47993,6 +48454,9 @@ type SubaccountsGetCall struct {
 }
 
 // Get: Gets one subaccount by ID.
+//
+// - id: Subaccount ID.
+// - profileId: User profile ID associated with this request.
 func (r *SubaccountsService) Get(profileId int64, id int64) *SubaccountsGetCall {
 	c := &SubaccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -48147,6 +48611,8 @@ type SubaccountsInsertCall struct {
 }
 
 // Insert: Inserts a new subaccount.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SubaccountsService) Insert(profileId int64, subaccount *Subaccount) *SubaccountsInsertCall {
 	c := &SubaccountsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -48288,6 +48754,8 @@ type SubaccountsListCall struct {
 
 // List: Gets a list of subaccounts, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SubaccountsService) List(profileId int64) *SubaccountsListCall {
 	c := &SubaccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -48568,6 +49036,9 @@ type SubaccountsPatchCall struct {
 
 // Patch: Updates an existing subaccount. This method supports patch
 // semantics.
+//
+// - id: Subaccount ID.
+// - profileId: User profile ID associated with this request.
 func (r *SubaccountsService) Patch(profileId int64, id int64, subaccount *Subaccount) *SubaccountsPatchCall {
 	c := &SubaccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -48717,6 +49188,8 @@ type SubaccountsUpdateCall struct {
 }
 
 // Update: Updates an existing subaccount.
+//
+// - profileId: User profile ID associated with this request.
 func (r *SubaccountsService) Update(profileId int64, subaccount *Subaccount) *SubaccountsUpdateCall {
 	c := &SubaccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -48858,6 +49331,9 @@ type TargetableRemarketingListsGetCall struct {
 }
 
 // Get: Gets one remarketing list by ID.
+//
+// - id: Remarketing list ID.
+// - profileId: User profile ID associated with this request.
 func (r *TargetableRemarketingListsService) Get(profileId int64, id int64) *TargetableRemarketingListsGetCall {
 	c := &TargetableRemarketingListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -49013,6 +49489,10 @@ type TargetableRemarketingListsListCall struct {
 
 // List: Retrieves a list of targetable remarketing lists, possibly
 // filtered. This method supports paging.
+//
+// - advertiserId: Select only targetable remarketing lists targetable
+// by these advertisers.
+// - profileId: User profile ID associated with this request.
 func (r *TargetableRemarketingListsService) List(profileId int64, advertiserId int64) *TargetableRemarketingListsListCall {
 	c := &TargetableRemarketingListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -49297,6 +49777,9 @@ type TargetingTemplatesGetCall struct {
 }
 
 // Get: Gets one targeting template by ID.
+//
+// - id: Targeting template ID.
+// - profileId: User profile ID associated with this request.
 func (r *TargetingTemplatesService) Get(profileId int64, id int64) *TargetingTemplatesGetCall {
 	c := &TargetingTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -49451,6 +49934,8 @@ type TargetingTemplatesInsertCall struct {
 }
 
 // Insert: Inserts a new targeting template.
+//
+// - profileId: User profile ID associated with this request.
 func (r *TargetingTemplatesService) Insert(profileId int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesInsertCall {
 	c := &TargetingTemplatesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -49592,6 +50077,8 @@ type TargetingTemplatesListCall struct {
 
 // List: Retrieves a list of targeting templates, optionally filtered.
 // This method supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *TargetingTemplatesService) List(profileId int64) *TargetingTemplatesListCall {
 	c := &TargetingTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -49885,6 +50372,9 @@ type TargetingTemplatesPatchCall struct {
 
 // Patch: Updates an existing targeting template. This method supports
 // patch semantics.
+//
+// - id: TargetingTemplate ID.
+// - profileId: User profile ID associated with this request.
 func (r *TargetingTemplatesService) Patch(profileId int64, id int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesPatchCall {
 	c := &TargetingTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -50034,6 +50524,8 @@ type TargetingTemplatesUpdateCall struct {
 }
 
 // Update: Updates an existing targeting template.
+//
+// - profileId: User profile ID associated with this request.
 func (r *TargetingTemplatesService) Update(profileId int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesUpdateCall {
 	c := &TargetingTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -50174,6 +50666,8 @@ type UserProfilesGetCall struct {
 }
 
 // Get: Gets one user profile by ID.
+//
+// - profileId: The user profile ID.
 func (r *UserProfilesService) Get(profileId int64) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -50452,6 +50946,9 @@ type UserRolePermissionGroupsGetCall struct {
 }
 
 // Get: Gets one user role permission group by ID.
+//
+// - id: User role permission group ID.
+// - profileId: User profile ID associated with this request.
 func (r *UserRolePermissionGroupsService) Get(profileId int64, id int64) *UserRolePermissionGroupsGetCall {
 	c := &UserRolePermissionGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -50606,6 +51103,8 @@ type UserRolePermissionGroupsListCall struct {
 }
 
 // List: Gets a list of all supported user role permission groups.
+//
+// - profileId: User profile ID associated with this request.
 func (r *UserRolePermissionGroupsService) List(profileId int64) *UserRolePermissionGroupsListCall {
 	c := &UserRolePermissionGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -50752,6 +51251,9 @@ type UserRolePermissionsGetCall struct {
 }
 
 // Get: Gets one user role permission by ID.
+//
+// - id: User role permission ID.
+// - profileId: User profile ID associated with this request.
 func (r *UserRolePermissionsService) Get(profileId int64, id int64) *UserRolePermissionsGetCall {
 	c := &UserRolePermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -50906,6 +51408,8 @@ type UserRolePermissionsListCall struct {
 }
 
 // List: Gets a list of user role permissions, possibly filtered.
+//
+// - profileId: User profile ID associated with this request.
 func (r *UserRolePermissionsService) List(profileId int64) *UserRolePermissionsListCall {
 	c := &UserRolePermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -51068,6 +51572,9 @@ type UserRolesDeleteCall struct {
 }
 
 // Delete: Deletes an existing user role.
+//
+// - id: User role ID.
+// - profileId: User profile ID associated with this request.
 func (r *UserRolesService) Delete(profileId int64, id int64) *UserRolesDeleteCall {
 	c := &UserRolesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -51182,6 +51689,9 @@ type UserRolesGetCall struct {
 }
 
 // Get: Gets one user role by ID.
+//
+// - id: User role ID.
+// - profileId: User profile ID associated with this request.
 func (r *UserRolesService) Get(profileId int64, id int64) *UserRolesGetCall {
 	c := &UserRolesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -51336,6 +51846,8 @@ type UserRolesInsertCall struct {
 }
 
 // Insert: Inserts a new user role.
+//
+// - profileId: User profile ID associated with this request.
 func (r *UserRolesService) Insert(profileId int64, userrole *UserRole) *UserRolesInsertCall {
 	c := &UserRolesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -51477,6 +51989,8 @@ type UserRolesListCall struct {
 
 // List: Retrieves a list of user roles, possibly filtered. This method
 // supports paging.
+//
+// - profileId: User profile ID associated with this request.
 func (r *UserRolesService) List(profileId int64) *UserRolesListCall {
 	c := &UserRolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -51783,6 +52297,9 @@ type UserRolesPatchCall struct {
 
 // Patch: Updates an existing user role. This method supports patch
 // semantics.
+//
+// - id: UserRole ID.
+// - profileId: User profile ID associated with this request.
 func (r *UserRolesService) Patch(profileId int64, id int64, userrole *UserRole) *UserRolesPatchCall {
 	c := &UserRolesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -51932,6 +52449,8 @@ type UserRolesUpdateCall struct {
 }
 
 // Update: Updates an existing user role.
+//
+// - profileId: User profile ID associated with this request.
 func (r *UserRolesService) Update(profileId int64, userrole *UserRole) *UserRolesUpdateCall {
 	c := &UserRolesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -52073,6 +52592,9 @@ type VideoFormatsGetCall struct {
 }
 
 // Get: Gets one video format by ID.
+//
+// - id: Video format ID.
+// - profileId: User profile ID associated with this request.
 func (r *VideoFormatsService) Get(profileId int64, id int64) *VideoFormatsGetCall {
 	c := &VideoFormatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -52227,6 +52749,8 @@ type VideoFormatsListCall struct {
 }
 
 // List: Lists available video formats.
+//
+// - profileId: User profile ID associated with this request.
 func (r *VideoFormatsService) List(profileId int64) *VideoFormatsListCall {
 	c := &VideoFormatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId

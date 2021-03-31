@@ -4406,6 +4406,15 @@ type ProjectsLocationsAutoscalingPoliciesCreateCall struct {
 }
 
 // Create: Creates new autoscaling policy.
+//
+// - parent: The "resource name" of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.create, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.autoscalingPolicies.create, the resource name of
+// the location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsLocationsAutoscalingPoliciesService) Create(parent string, autoscalingpolicy *AutoscalingPolicy) *ProjectsLocationsAutoscalingPoliciesCreateCall {
 	c := &ProjectsLocationsAutoscalingPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4546,6 +4555,16 @@ type ProjectsLocationsAutoscalingPoliciesDeleteCall struct {
 
 // Delete: Deletes an autoscaling policy. It is an error to delete an
 // autoscaling policy that is in use by one or more clusters.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.delete, the resource name of the
+// policy has the following format:
+// projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}
+//  For projects.locations.autoscalingPolicies.delete, the resource name
+// of the policy has the following format:
+// projects/{project_id}/locations/{location}/autoscalingPolicies/{policy
+// _id}
 func (r *ProjectsLocationsAutoscalingPoliciesService) Delete(name string) *ProjectsLocationsAutoscalingPoliciesDeleteCall {
 	c := &ProjectsLocationsAutoscalingPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4677,6 +4696,16 @@ type ProjectsLocationsAutoscalingPoliciesGetCall struct {
 }
 
 // Get: Retrieves autoscaling policy.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.get, the resource name of the
+// policy has the following format:
+// projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}
+//  For projects.locations.autoscalingPolicies.get, the resource name of
+// the policy has the following format:
+// projects/{project_id}/locations/{location}/autoscalingPolicies/{policy
+// _id}
 func (r *ProjectsLocationsAutoscalingPoliciesService) Get(name string) *ProjectsLocationsAutoscalingPoliciesGetCall {
 	c := &ProjectsLocationsAutoscalingPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4823,6 +4852,10 @@ type ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4963,6 +4996,15 @@ type ProjectsLocationsAutoscalingPoliciesListCall struct {
 }
 
 // List: Lists autoscaling policies in the project.
+//
+// - parent: The "resource name" of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.list, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.autoscalingPolicies.list, the resource name of the
+// location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsLocationsAutoscalingPoliciesService) List(parent string) *ProjectsLocationsAutoscalingPoliciesListCall {
 	c := &ProjectsLocationsAutoscalingPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5156,6 +5198,10 @@ type ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5301,6 +5347,10 @@ type ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5442,6 +5492,16 @@ type ProjectsLocationsAutoscalingPoliciesUpdateCall struct {
 
 // Update: Updates (replaces) autoscaling policy.Disabled check for
 // update_mask, because all updates will be full replacements.
+//
+// - name: Output only. The "resource name" of the autoscaling policy,
+// as described in https://cloud.google.com/apis/design/resource_names.
+// For projects.regions.autoscalingPolicies, the resource name of the
+// policy has the following format:
+// projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}
+//  For projects.locations.autoscalingPolicies, the resource name of the
+// policy has the following format:
+// projects/{project_id}/locations/{location}/autoscalingPolicies/{policy
+// _id}
 func (r *ProjectsLocationsAutoscalingPoliciesService) Update(name string, autoscalingpolicy *AutoscalingPolicy) *ProjectsLocationsAutoscalingPoliciesUpdateCall {
 	c := &ProjectsLocationsAutoscalingPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5582,6 +5642,15 @@ type ProjectsLocationsWorkflowTemplatesCreateCall struct {
 }
 
 // Create: Creates new workflow template.
+//
+// - parent: The resource name of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates,create, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.workflowTemplates.create, the resource name of the
+// location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsLocationsWorkflowTemplatesService) Create(parent string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesCreateCall {
 	c := &ProjectsLocationsWorkflowTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5722,6 +5791,16 @@ type ProjectsLocationsWorkflowTemplatesDeleteCall struct {
 
 // Delete: Deletes a workflow template. It does not cancel in-progress
 // workflows.
+//
+// - name: The resource name of the workflow template, as described in
+// https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates.delete, the resource name of the
+// template has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates.instantiate, the resource
+// name of the template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsLocationsWorkflowTemplatesService) Delete(name string) *ProjectsLocationsWorkflowTemplatesDeleteCall {
 	c := &ProjectsLocationsWorkflowTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5868,6 +5947,16 @@ type ProjectsLocationsWorkflowTemplatesGetCall struct {
 
 // Get: Retrieves the latest workflow template.Can retrieve previously
 // instantiated template by specifying optional version parameter.
+//
+// - name: The resource name of the workflow template, as described in
+// https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates.get, the resource name of the
+// template has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates.get, the resource name of
+// the template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsLocationsWorkflowTemplatesService) Get(name string) *ProjectsLocationsWorkflowTemplatesGetCall {
 	c := &ProjectsLocationsWorkflowTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6028,6 +6117,10 @@ type ProjectsLocationsWorkflowTemplatesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsWorkflowTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6178,6 +6271,16 @@ type ProjectsLocationsWorkflowTemplatesInstantiateCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - name: The resource name of the workflow template, as described in
+// https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates.instantiate, the resource name of
+// the template has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates.instantiate, the resource
+// name of the template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsLocationsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsLocationsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6330,6 +6433,15 @@ type ProjectsLocationsWorkflowTemplatesInstantiateInlineCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - parent: The resource name of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates,instantiateinline, the resource
+// name of the region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.workflowTemplates.instantiateinline, the resource
+// name of the location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsLocationsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6487,6 +6599,15 @@ type ProjectsLocationsWorkflowTemplatesListCall struct {
 }
 
 // List: Lists workflows that match the specified filter in the request.
+//
+// - parent: The resource name of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates,list, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.workflowTemplates.list, the resource name of the
+// location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsLocationsWorkflowTemplatesService) List(parent string) *ProjectsLocationsWorkflowTemplatesListCall {
 	c := &ProjectsLocationsWorkflowTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6679,6 +6800,10 @@ type ProjectsLocationsWorkflowTemplatesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsWorkflowTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6824,6 +6949,10 @@ type ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6965,6 +7094,16 @@ type ProjectsLocationsWorkflowTemplatesUpdateCall struct {
 
 // Update: Updates (replaces) workflow template. The updated template
 // must contain version that matches the current server version.
+//
+// - name: Output only. The resource name of the workflow template, as
+// described in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates, the resource name of the template
+// has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates, the resource name of the
+// template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsLocationsWorkflowTemplatesService) Update(name string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesUpdateCall {
 	c := &ProjectsLocationsWorkflowTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7105,6 +7244,15 @@ type ProjectsRegionsAutoscalingPoliciesCreateCall struct {
 }
 
 // Create: Creates new autoscaling policy.
+//
+// - parent: The "resource name" of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.create, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.autoscalingPolicies.create, the resource name of
+// the location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsRegionsAutoscalingPoliciesService) Create(parent string, autoscalingpolicy *AutoscalingPolicy) *ProjectsRegionsAutoscalingPoliciesCreateCall {
 	c := &ProjectsRegionsAutoscalingPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7245,6 +7393,16 @@ type ProjectsRegionsAutoscalingPoliciesDeleteCall struct {
 
 // Delete: Deletes an autoscaling policy. It is an error to delete an
 // autoscaling policy that is in use by one or more clusters.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.delete, the resource name of the
+// policy has the following format:
+// projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}
+//  For projects.locations.autoscalingPolicies.delete, the resource name
+// of the policy has the following format:
+// projects/{project_id}/locations/{location}/autoscalingPolicies/{policy
+// _id}
 func (r *ProjectsRegionsAutoscalingPoliciesService) Delete(name string) *ProjectsRegionsAutoscalingPoliciesDeleteCall {
 	c := &ProjectsRegionsAutoscalingPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7376,6 +7534,16 @@ type ProjectsRegionsAutoscalingPoliciesGetCall struct {
 }
 
 // Get: Retrieves autoscaling policy.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.get, the resource name of the
+// policy has the following format:
+// projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}
+//  For projects.locations.autoscalingPolicies.get, the resource name of
+// the policy has the following format:
+// projects/{project_id}/locations/{location}/autoscalingPolicies/{policy
+// _id}
 func (r *ProjectsRegionsAutoscalingPoliciesService) Get(name string) *ProjectsRegionsAutoscalingPoliciesGetCall {
 	c := &ProjectsRegionsAutoscalingPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7522,6 +7690,10 @@ type ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall {
 	c := &ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7662,6 +7834,15 @@ type ProjectsRegionsAutoscalingPoliciesListCall struct {
 }
 
 // List: Lists autoscaling policies in the project.
+//
+// - parent: The "resource name" of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.autoscalingPolicies.list, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.autoscalingPolicies.list, the resource name of the
+// location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsRegionsAutoscalingPoliciesService) List(parent string) *ProjectsRegionsAutoscalingPoliciesListCall {
 	c := &ProjectsRegionsAutoscalingPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7855,6 +8036,10 @@ type ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall {
 	c := &ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8000,6 +8185,10 @@ type ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall {
 	c := &ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8141,6 +8330,16 @@ type ProjectsRegionsAutoscalingPoliciesUpdateCall struct {
 
 // Update: Updates (replaces) autoscaling policy.Disabled check for
 // update_mask, because all updates will be full replacements.
+//
+// - name: Output only. The "resource name" of the autoscaling policy,
+// as described in https://cloud.google.com/apis/design/resource_names.
+// For projects.regions.autoscalingPolicies, the resource name of the
+// policy has the following format:
+// projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}
+//  For projects.locations.autoscalingPolicies, the resource name of the
+// policy has the following format:
+// projects/{project_id}/locations/{location}/autoscalingPolicies/{policy
+// _id}
 func (r *ProjectsRegionsAutoscalingPoliciesService) Update(name string, autoscalingpolicy *AutoscalingPolicy) *ProjectsRegionsAutoscalingPoliciesUpdateCall {
 	c := &ProjectsRegionsAutoscalingPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8284,6 +8483,10 @@ type ProjectsRegionsClustersCreateCall struct {
 // Create: Creates a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+//
+// - projectId: The ID of the Google Cloud Platform project that the
+// cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Create(projectId string, region string, cluster *Cluster) *ProjectsRegionsClustersCreateCall {
 	c := &ProjectsRegionsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8455,6 +8658,11 @@ type ProjectsRegionsClustersDeleteCall struct {
 // Delete: Deletes a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project that the
+// cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Delete(projectId string, region string, clusterName string) *ProjectsRegionsClustersDeleteCall {
 	c := &ProjectsRegionsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8643,6 +8851,11 @@ type ProjectsRegionsClustersDiagnoseCall struct {
 // After the operation completes, Operation.response contains
 // DiagnoseClusterResults
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project that the
+// cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Diagnose(projectId string, region string, clusterName string, diagnoseclusterrequest *DiagnoseClusterRequest) *ProjectsRegionsClustersDiagnoseCall {
 	c := &ProjectsRegionsClustersDiagnoseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8802,6 +9015,11 @@ type ProjectsRegionsClustersGetCall struct {
 }
 
 // Get: Gets the resource representation for a cluster in a project.
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project that the
+// cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Get(projectId string, region string, clusterName string) *ProjectsRegionsClustersGetCall {
 	c := &ProjectsRegionsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8965,6 +9183,10 @@ type ProjectsRegionsClustersGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsClustersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsClustersGetIamPolicyCall {
 	c := &ProjectsRegionsClustersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9109,6 +9331,11 @@ type ProjectsRegionsClustersInjectCredentialsCall struct {
 // InjectCredentials: Inject encrypted credentials into all of the VMs
 // in a cluster.The target cluster must be a personal auth cluster
 // assigned to the user who is issuing the RPC.
+//
+// - cluster: The cluster, in the form clusters/.
+// - project: The ID of the Google Cloud Platform project the cluster
+// belongs to, of the form projects/.
+// - region: The region containing the cluster, of the form regions/.
 func (r *ProjectsRegionsClustersService) InjectCredentials(project string, region string, cluster string, injectcredentialsrequest *InjectCredentialsRequest) *ProjectsRegionsClustersInjectCredentialsCall {
 	c := &ProjectsRegionsClustersInjectCredentialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9271,6 +9498,10 @@ type ProjectsRegionsClustersListCall struct {
 
 // List: Lists all regions/{region}/clusters in a project
 // alphabetically.
+//
+// - projectId: The ID of the Google Cloud Platform project that the
+// cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) List(projectId string, region string) *ProjectsRegionsClustersListCall {
 	c := &ProjectsRegionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9496,6 +9727,11 @@ type ProjectsRegionsClustersPatchCall struct {
 // Patch: Updates a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project the cluster
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, clusterName string, cluster *Cluster) *ProjectsRegionsClustersPatchCall {
 	c := &ProjectsRegionsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9723,6 +9959,10 @@ type ProjectsRegionsClustersSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsClustersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsClustersSetIamPolicyCall {
 	c := &ProjectsRegionsClustersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9865,6 +10105,11 @@ type ProjectsRegionsClustersStartCall struct {
 }
 
 // Start: Starts a cluster in a project.
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project the cluster
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Start(projectId string, region string, clusterName string, startclusterrequest *StartClusterRequest) *ProjectsRegionsClustersStartCall {
 	c := &ProjectsRegionsClustersStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10024,6 +10269,11 @@ type ProjectsRegionsClustersStopCall struct {
 }
 
 // Stop: Stops a cluster in a project.
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project the cluster
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Stop(projectId string, region string, clusterName string, stopclusterrequest *StopClusterRequest) *ProjectsRegionsClustersStopCall {
 	c := &ProjectsRegionsClustersStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10186,6 +10436,10 @@ type ProjectsRegionsClustersTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsRegionsClustersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsClustersTestIamPermissionsCall {
 	c := &ProjectsRegionsClustersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10332,6 +10586,11 @@ type ProjectsRegionsJobsCancelCall struct {
 // (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/list)
 // or regions/{region}/jobs.get
 // (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Cancel(projectId string, region string, jobId string, canceljobrequest *CancelJobRequest) *ProjectsRegionsJobsCancelCall {
 	c := &ProjectsRegionsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10491,6 +10750,11 @@ type ProjectsRegionsJobsDeleteCall struct {
 
 // Delete: Deletes the job from the project. If the job is active, the
 // delete fails, and the response returns FAILED_PRECONDITION.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Delete(projectId string, region string, jobId string) *ProjectsRegionsJobsDeleteCall {
 	c := &ProjectsRegionsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10641,6 +10905,11 @@ type ProjectsRegionsJobsGetCall struct {
 }
 
 // Get: Gets the resource representation for a job in a project.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Get(projectId string, region string, jobId string) *ProjectsRegionsJobsGetCall {
 	c := &ProjectsRegionsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10804,6 +11073,10 @@ type ProjectsRegionsJobsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsJobsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsJobsGetIamPolicyCall {
 	c := &ProjectsRegionsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10945,6 +11218,10 @@ type ProjectsRegionsJobsListCall struct {
 }
 
 // List: Lists regions/{region}/jobs in a project.
+//
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) List(projectId string, region string) *ProjectsRegionsJobsListCall {
 	c := &ProjectsRegionsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11206,6 +11483,11 @@ type ProjectsRegionsJobsPatchCall struct {
 }
 
 // Patch: Updates a job in a project.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Patch(projectId string, region string, jobId string, job *Job) *ProjectsRegionsJobsPatchCall {
 	c := &ProjectsRegionsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11382,6 +11664,10 @@ type ProjectsRegionsJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsJobsSetIamPolicyCall {
 	c := &ProjectsRegionsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11523,6 +11809,10 @@ type ProjectsRegionsJobsSubmitCall struct {
 }
 
 // Submit: Submits a job to a cluster.
+//
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Submit(projectId string, region string, submitjobrequest *SubmitJobRequest) *ProjectsRegionsJobsSubmitCall {
 	c := &ProjectsRegionsJobsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11672,6 +11962,10 @@ type ProjectsRegionsJobsSubmitAsOperationCall struct {
 }
 
 // SubmitAsOperation: Submits job to a cluster.
+//
+// - projectId: The ID of the Google Cloud Platform project that the job
+// belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) SubmitAsOperation(projectId string, region string, submitjobrequest *SubmitJobRequest) *ProjectsRegionsJobsSubmitAsOperationCall {
 	c := &ProjectsRegionsJobsSubmitAsOperationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11825,6 +12119,10 @@ type ProjectsRegionsJobsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsRegionsJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsJobsTestIamPermissionsCall {
 	c := &ProjectsRegionsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11973,6 +12271,8 @@ type ProjectsRegionsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // Code.CANCELLED.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsRegionsOperationsService) Cancel(name string) *ProjectsRegionsOperationsCancelCall {
 	c := &ProjectsRegionsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12106,6 +12406,8 @@ type ProjectsRegionsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns google.rpc.Code.UNIMPLEMENTED.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsRegionsOperationsService) Delete(name string) *ProjectsRegionsOperationsDeleteCall {
 	c := &ProjectsRegionsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12239,6 +12541,8 @@ type ProjectsRegionsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsRegionsOperationsService) Get(name string) *ProjectsRegionsOperationsGetCall {
 	c := &ProjectsRegionsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12385,6 +12689,10 @@ type ProjectsRegionsOperationsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsOperationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsOperationsGetIamPolicyCall {
 	c := &ProjectsRegionsOperationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12534,6 +12842,8 @@ type ProjectsRegionsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsRegionsOperationsService) List(name string) *ProjectsRegionsOperationsListCall {
 	c := &ProjectsRegionsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12738,6 +13048,10 @@ type ProjectsRegionsOperationsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsOperationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsOperationsSetIamPolicyCall {
 	c := &ProjectsRegionsOperationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12883,6 +13197,10 @@ type ProjectsRegionsOperationsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsRegionsOperationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsOperationsTestIamPermissionsCall {
 	c := &ProjectsRegionsOperationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13023,6 +13341,15 @@ type ProjectsRegionsWorkflowTemplatesCreateCall struct {
 }
 
 // Create: Creates new workflow template.
+//
+// - parent: The resource name of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates,create, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.workflowTemplates.create, the resource name of the
+// location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsRegionsWorkflowTemplatesService) Create(parent string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesCreateCall {
 	c := &ProjectsRegionsWorkflowTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13163,6 +13490,16 @@ type ProjectsRegionsWorkflowTemplatesDeleteCall struct {
 
 // Delete: Deletes a workflow template. It does not cancel in-progress
 // workflows.
+//
+// - name: The resource name of the workflow template, as described in
+// https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates.delete, the resource name of the
+// template has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates.instantiate, the resource
+// name of the template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsRegionsWorkflowTemplatesService) Delete(name string) *ProjectsRegionsWorkflowTemplatesDeleteCall {
 	c := &ProjectsRegionsWorkflowTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13309,6 +13646,16 @@ type ProjectsRegionsWorkflowTemplatesGetCall struct {
 
 // Get: Retrieves the latest workflow template.Can retrieve previously
 // instantiated template by specifying optional version parameter.
+//
+// - name: The resource name of the workflow template, as described in
+// https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates.get, the resource name of the
+// template has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates.get, the resource name of
+// the template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsRegionsWorkflowTemplatesService) Get(name string) *ProjectsRegionsWorkflowTemplatesGetCall {
 	c := &ProjectsRegionsWorkflowTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13469,6 +13816,10 @@ type ProjectsRegionsWorkflowTemplatesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall {
 	c := &ProjectsRegionsWorkflowTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13619,6 +13970,16 @@ type ProjectsRegionsWorkflowTemplatesInstantiateCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - name: The resource name of the workflow template, as described in
+// https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates.instantiate, the resource name of
+// the template has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates.instantiate, the resource
+// name of the template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsRegionsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsRegionsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13771,6 +14132,15 @@ type ProjectsRegionsWorkflowTemplatesInstantiateInlineCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - parent: The resource name of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates,instantiateinline, the resource
+// name of the region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.workflowTemplates.instantiateinline, the resource
+// name of the location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsRegionsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13928,6 +14298,15 @@ type ProjectsRegionsWorkflowTemplatesListCall struct {
 }
 
 // List: Lists workflows that match the specified filter in the request.
+//
+// - parent: The resource name of the region or location, as described
+// in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates,list, the resource name of the
+// region has the following format:
+// projects/{project_id}/regions/{region} For
+// projects.locations.workflowTemplates.list, the resource name of the
+// location has the following format:
+// projects/{project_id}/locations/{location}
 func (r *ProjectsRegionsWorkflowTemplatesService) List(parent string) *ProjectsRegionsWorkflowTemplatesListCall {
 	c := &ProjectsRegionsWorkflowTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14120,6 +14499,10 @@ type ProjectsRegionsWorkflowTemplatesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall {
 	c := &ProjectsRegionsWorkflowTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14265,6 +14648,10 @@ type ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall {
 	c := &ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14406,6 +14793,16 @@ type ProjectsRegionsWorkflowTemplatesUpdateCall struct {
 
 // Update: Updates (replaces) workflow template. The updated template
 // must contain version that matches the current server version.
+//
+// - name: Output only. The resource name of the workflow template, as
+// described in https://cloud.google.com/apis/design/resource_names. For
+// projects.regions.workflowTemplates, the resource name of the template
+// has the following format:
+// projects/{project_id}/regions/{region}/workflowTemplates/{template_id}
+//  For projects.locations.workflowTemplates, the resource name of the
+// template has the following format:
+// projects/{project_id}/locations/{location}/workflowTemplates/{template
+// _id}
 func (r *ProjectsRegionsWorkflowTemplatesService) Update(name string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesUpdateCall {
 	c := &ProjectsRegionsWorkflowTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

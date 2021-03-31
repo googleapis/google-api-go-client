@@ -16340,6 +16340,9 @@ type ProjectsLocationsAgentsCreateCall struct {
 }
 
 // Create: Creates an agent in the specified location.
+//
+// - parent: The location to create a agent for. Format:
+// `projects//locations/`.
 func (r *ProjectsLocationsAgentsService) Create(parent string, googleclouddialogflowcxv3beta1agent *GoogleCloudDialogflowCxV3beta1Agent) *ProjectsLocationsAgentsCreateCall {
 	c := &ProjectsLocationsAgentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16481,6 +16484,9 @@ type ProjectsLocationsAgentsDeleteCall struct {
 }
 
 // Delete: Deletes the specified agent.
+//
+// - name: The name of the agent to delete. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsService) Delete(name string) *ProjectsLocationsAgentsDeleteCall {
 	c := &ProjectsLocationsAgentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16613,6 +16619,9 @@ type ProjectsLocationsAgentsExportCall struct {
 }
 
 // Export: Exports the specified agent to a binary file.
+//
+// - name: The name of the agent to export. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsService) Export(name string, googleclouddialogflowcxv3beta1exportagentrequest *GoogleCloudDialogflowCxV3beta1ExportAgentRequest) *ProjectsLocationsAgentsExportCall {
 	c := &ProjectsLocationsAgentsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16754,6 +16763,9 @@ type ProjectsLocationsAgentsGetCall struct {
 }
 
 // Get: Retrieves the specified agent.
+//
+// - name: The name of the agent. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsService) Get(name string) *ProjectsLocationsAgentsGetCall {
 	c := &ProjectsLocationsAgentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16901,6 +16913,9 @@ type ProjectsLocationsAgentsGetValidationResultCall struct {
 
 // GetValidationResult: Gets the latest agent validation result. Agent
 // validation is performed when ValidateAgent is called.
+//
+// - name: The agent name. Format:
+// `projects//locations//agents//validationResult`.
 func (r *ProjectsLocationsAgentsService) GetValidationResult(name string) *ProjectsLocationsAgentsGetValidationResultCall {
 	c := &ProjectsLocationsAgentsGetValidationResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17060,6 +17075,9 @@ type ProjectsLocationsAgentsListCall struct {
 }
 
 // List: Returns the list of all agents in the specified location.
+//
+// - parent: The location to list all agents for. Format:
+// `projects//locations/`.
 func (r *ProjectsLocationsAgentsService) List(parent string) *ProjectsLocationsAgentsListCall {
 	c := &ProjectsLocationsAgentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17253,6 +17271,10 @@ type ProjectsLocationsAgentsPatchCall struct {
 }
 
 // Patch: Updates the specified agent.
+//
+// - name: The unique identifier of the agent. Required for the
+// Agents.UpdateAgent method. Agents.CreateAgent populates the name
+// automatically. Format: `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsService) Patch(nameid string, googleclouddialogflowcxv3beta1agent *GoogleCloudDialogflowCxV3beta1Agent) *ProjectsLocationsAgentsPatchCall {
 	c := &ProjectsLocationsAgentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -17411,6 +17433,9 @@ type ProjectsLocationsAgentsRestoreCall struct {
 // Restore: Restores the specified agent from a binary file. Replaces
 // the current agent with a new one. Note that all existing resources in
 // agent (e.g. intents, entity types, flows) will be removed.
+//
+// - name: The name of the agent to restore into. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsService) Restore(name string, googleclouddialogflowcxv3beta1restoreagentrequest *GoogleCloudDialogflowCxV3beta1RestoreAgentRequest) *ProjectsLocationsAgentsRestoreCall {
 	c := &ProjectsLocationsAgentsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17555,6 +17580,9 @@ type ProjectsLocationsAgentsValidateCall struct {
 // validation results. The agent in draft version is validated. Please
 // call this API after the training is completed to get the complete
 // validation results.
+//
+// - name: The agent to validate. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsService) Validate(name string, googleclouddialogflowcxv3beta1validateagentrequest *GoogleCloudDialogflowCxV3beta1ValidateAgentRequest) *ProjectsLocationsAgentsValidateCall {
 	c := &ProjectsLocationsAgentsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17698,6 +17726,9 @@ type ProjectsLocationsAgentsEntityTypesCreateCall struct {
 }
 
 // Create: Creates an entity type in the specified agent.
+//
+// - parent: The agent to create a entity type for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsEntityTypesService) Create(parent string, googleclouddialogflowcxv3beta1entitytype *GoogleCloudDialogflowCxV3beta1EntityType) *ProjectsLocationsAgentsEntityTypesCreateCall {
 	c := &ProjectsLocationsAgentsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17858,6 +17889,9 @@ type ProjectsLocationsAgentsEntityTypesDeleteCall struct {
 }
 
 // Delete: Deletes the specified entity type.
+//
+// - name: The name of the entity type to delete. Format:
+// `projects//locations//agents//entityTypes/`.
 func (r *ProjectsLocationsAgentsEntityTypesService) Delete(name string) *ProjectsLocationsAgentsEntityTypesDeleteCall {
 	c := &ProjectsLocationsAgentsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18008,6 +18042,9 @@ type ProjectsLocationsAgentsEntityTypesGetCall struct {
 }
 
 // Get: Retrieves the specified entity type.
+//
+// - name: The name of the entity type. Format:
+// `projects//locations//agents//entityTypes/`.
 func (r *ProjectsLocationsAgentsEntityTypesService) Get(name string) *ProjectsLocationsAgentsEntityTypesGetCall {
 	c := &ProjectsLocationsAgentsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18174,6 +18211,9 @@ type ProjectsLocationsAgentsEntityTypesListCall struct {
 }
 
 // List: Returns the list of all entity types in the specified agent.
+//
+// - parent: The agent to list all entity types for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsEntityTypesService) List(parent string) *ProjectsLocationsAgentsEntityTypesListCall {
 	c := &ProjectsLocationsAgentsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18386,6 +18426,10 @@ type ProjectsLocationsAgentsEntityTypesPatchCall struct {
 }
 
 // Patch: Updates the specified entity type.
+//
+// - name: The unique identifier of the entity type. Required for
+// EntityTypes.UpdateEntityType. Format:
+// `projects//locations//agents//entityTypes/`.
 func (r *ProjectsLocationsAgentsEntityTypesService) Patch(nameid string, googleclouddialogflowcxv3beta1entitytype *GoogleCloudDialogflowCxV3beta1EntityType) *ProjectsLocationsAgentsEntityTypesPatchCall {
 	c := &ProjectsLocationsAgentsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -18560,6 +18604,9 @@ type ProjectsLocationsAgentsEnvironmentsCreateCall struct {
 }
 
 // Create: Creates an Environment in the specified Agent.
+//
+// - parent: The Agent to create an Environment for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) Create(parent string, googleclouddialogflowcxv3beta1environment *GoogleCloudDialogflowCxV3beta1Environment) *ProjectsLocationsAgentsEnvironmentsCreateCall {
 	c := &ProjectsLocationsAgentsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18700,6 +18747,9 @@ type ProjectsLocationsAgentsEnvironmentsDeleteCall struct {
 }
 
 // Delete: Deletes the specified Environment.
+//
+// - name: The name of the Environment to delete. Format:
+// `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) Delete(name string) *ProjectsLocationsAgentsEnvironmentsDeleteCall {
 	c := &ProjectsLocationsAgentsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18832,6 +18882,9 @@ type ProjectsLocationsAgentsEnvironmentsGetCall struct {
 }
 
 // Get: Retrieves the specified Environment.
+//
+// - name: The name of the Environment. Format:
+// `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) Get(name string) *ProjectsLocationsAgentsEnvironmentsGetCall {
 	c := &ProjectsLocationsAgentsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18979,6 +19032,9 @@ type ProjectsLocationsAgentsEnvironmentsListCall struct {
 }
 
 // List: Returns the list of all environments in the specified Agent.
+//
+// - parent: The Agent to list all environments for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) List(parent string) *ProjectsLocationsAgentsEnvironmentsListCall {
 	c := &ProjectsLocationsAgentsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19174,6 +19230,9 @@ type ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall struct {
 
 // LookupEnvironmentHistory: Looks up the history of the specified
 // Environment.
+//
+// - name: Resource name of the environment to look up the history for.
+// Format: `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) LookupEnvironmentHistory(name string) *ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall {
 	c := &ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19368,6 +19427,9 @@ type ProjectsLocationsAgentsEnvironmentsPatchCall struct {
 }
 
 // Patch: Updates the specified Environment.
+//
+// - name: The name of the environment. Format:
+// `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsService) Patch(name string, googleclouddialogflowcxv3beta1environment *GoogleCloudDialogflowCxV3beta1Environment) *ProjectsLocationsAgentsEnvironmentsPatchCall {
 	c := &ProjectsLocationsAgentsEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19522,6 +19584,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall struct {
 }
 
 // Create: Creates an Experiment in the specified Environment.
+//
+// - parent: The Agent to create an Environment for. Format:
+// `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Create(parent string, googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment) *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19664,6 +19729,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall struct {
 }
 
 // Delete: Deletes the specified Experiment.
+//
+// - name: The name of the Environment to delete. Format:
+// `projects//locations//agents//environments//experiments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Delete(name string) *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19796,6 +19864,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsGetCall struct {
 }
 
 // Get: Retrieves the specified Experiment.
+//
+// - name: The name of the Environment. Format:
+// `projects//locations//agents//environments//experiments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Get(name string) *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19944,6 +20015,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsListCall struct {
 
 // List: Returns the list of all experiments in the specified
 // Environment.
+//
+// - parent: The Environment to list all environments for. Format:
+// `projects//locations//agents//environments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) List(parent string) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20137,6 +20211,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall struct {
 }
 
 // Patch: Updates the specified Experiment.
+//
+// - name: The name of the experiment. Format:
+// projects//locations//agents//environments//experiments/..
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Patch(name string, googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment) *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20294,6 +20371,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsStartCall struct {
 
 // Start: Starts the specified Experiment. This rpc only changes the
 // state of experiment from PENDING to RUNNING.
+//
+// - name: Resource name of the experiment to start. Format:
+// `projects//locations//agents//environments//experiments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Start(name string, googleclouddialogflowcxv3beta1startexperimentrequest *GoogleCloudDialogflowCxV3beta1StartExperimentRequest) *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20438,6 +20518,9 @@ type ProjectsLocationsAgentsEnvironmentsExperimentsStopCall struct {
 
 // Stop: Stops the specified Experiment. This rpc only changes the state
 // of experiment from RUNNING to DONE.
+//
+// - name: Resource name of the experiment to stop. Format:
+// `projects//locations//agents//environments//experiments/`.
 func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Stop(name string, googleclouddialogflowcxv3beta1stopexperimentrequest *GoogleCloudDialogflowCxV3beta1StopExperimentRequest) *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall {
 	c := &ProjectsLocationsAgentsEnvironmentsExperimentsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20587,6 +20670,19 @@ type ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall struct {
 // use agent versions for production traffic. See Versions and
 // environments
 // (https://cloud.google.com/dialogflow/cx/docs/concept/version).
+//
+// - session: The name of the session this query is sent to. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment. It's up to the API caller to choose an appropriate
+// `Session ID`. It can be a random number or some type of session
+// identifiers (preferably hashed). The length of the `Session ID` must
+// not exceed 36 characters. For more information, see the sessions
+// guide (https://cloud.google.com/dialogflow/cx/docs/concept/session).
+// Note: Always use agent versions for production traffic. See Versions
+// and environments
+// (https://cloud.google.com/dialogflow/cx/docs/concept/version).
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsService) DetectIntent(sessionid string, googleclouddialogflowcxv3beta1detectintentrequest *GoogleCloudDialogflowCxV3beta1DetectIntentRequest) *ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -20732,6 +20828,16 @@ type ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall struct {
 // FulfillIntent: Fulfills a matched intent returned by MatchIntent.
 // Must be called after MatchIntent, with input from
 // MatchIntentResponse. Otherwise, the behavior is undefined.
+//
+// - session: The name of the session this query is sent to. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment. It's up to the API caller to choose an appropriate
+// `Session ID`. It can be a random number or some type of session
+// identifiers (preferably hashed). The length of the `Session ID` must
+// not exceed 36 characters. For more information, see the sessions
+// guide (https://cloud.google.com/dialogflow/cx/docs/concept/session).
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsService) FulfillIntent(sessionid string, googleclouddialogflowcxv3beta1fulfillintentrequest *GoogleCloudDialogflowCxV3beta1FulfillIntentRequest) *ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -20876,6 +20982,16 @@ type ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall struct {
 
 // MatchIntent: Returns preliminary intent match results, doesn't change
 // the session status.
+//
+// - session: The name of the session this query is sent to. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment. It's up to the API caller to choose an appropriate
+// `Session ID`. It can be a random number or some type of session
+// identifiers (preferably hashed). The length of the `Session ID` must
+// not exceed 36 characters. For more information, see the sessions
+// guide (https://cloud.google.com/dialogflow/cx/docs/concept/session).
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsService) MatchIntent(sessionid string, googleclouddialogflowcxv3beta1matchintentrequest *GoogleCloudDialogflowCxV3beta1MatchIntentRequest) *ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -21019,6 +21135,12 @@ type ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall struct {
 }
 
 // Create: Creates a session entity type.
+//
+// - parent: The session to create a session entity type for. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesService) Create(parent string, googleclouddialogflowcxv3beta1sessionentitytype *GoogleCloudDialogflowCxV3beta1SessionEntityType) *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21161,6 +21283,12 @@ type ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall struct {
 }
 
 // Delete: Deletes the specified session entity type.
+//
+// - name: The name of the session entity type to delete. Format:
+// `projects//locations//agents//sessions//entityTypes/` or
+// `projects//locations//agents//environments//sessions//entityTypes/`.
+// If `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesService) Delete(name string) *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21293,6 +21421,12 @@ type ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall struct {
 }
 
 // Get: Retrieves the specified session entity type.
+//
+// - name: The name of the session entity type. Format:
+// `projects//locations//agents//sessions//entityTypes/` or
+// `projects//locations//agents//environments//sessions//entityTypes/`.
+// If `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesService) Get(name string) *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21441,6 +21575,12 @@ type ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall struct {
 
 // List: Returns the list of all session entity types in the specified
 // session.
+//
+// - parent: The session to list all session entity types from. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesService) List(parent string) *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21635,6 +21775,12 @@ type ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall struct {
 }
 
 // Patch: Updates the specified session entity type.
+//
+// - name: The unique identifier of the session entity type. Format:
+// `projects//locations//agents//sessions//entityTypes/` or
+// `projects//locations//agents//environments//sessions//entityTypes/`.
+// If `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesService) Patch(nameid string, googleclouddialogflowcxv3beta1sessionentitytype *GoogleCloudDialogflowCxV3beta1SessionEntityType) *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall {
 	c := &ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -21791,6 +21937,9 @@ type ProjectsLocationsAgentsFlowsCreateCall struct {
 }
 
 // Create: Creates a flow in the specified agent.
+//
+// - parent: The agent to create a flow for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsFlowsService) Create(parent string, googleclouddialogflowcxv3beta1flow *GoogleCloudDialogflowCxV3beta1Flow) *ProjectsLocationsAgentsFlowsCreateCall {
 	c := &ProjectsLocationsAgentsFlowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21950,6 +22099,9 @@ type ProjectsLocationsAgentsFlowsDeleteCall struct {
 }
 
 // Delete: Deletes a specified flow.
+//
+// - name: The name of the flow to delete. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsService) Delete(name string) *ProjectsLocationsAgentsFlowsDeleteCall {
 	c := &ProjectsLocationsAgentsFlowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22099,6 +22251,9 @@ type ProjectsLocationsAgentsFlowsGetCall struct {
 }
 
 // Get: Retrieves the specified flow.
+//
+// - name: The name of the flow to get. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsService) Get(name string) *ProjectsLocationsAgentsFlowsGetCall {
 	c := &ProjectsLocationsAgentsFlowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22264,6 +22419,9 @@ type ProjectsLocationsAgentsFlowsGetValidationResultCall struct {
 
 // GetValidationResult: Gets the latest flow validation result. Flow
 // validation is performed when ValidateFlow is called.
+//
+// - name: The flow name. Format:
+// `projects//locations//agents//flows//validationResult`.
 func (r *ProjectsLocationsAgentsFlowsService) GetValidationResult(name string) *ProjectsLocationsAgentsFlowsGetValidationResultCall {
 	c := &ProjectsLocationsAgentsFlowsGetValidationResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22423,6 +22581,9 @@ type ProjectsLocationsAgentsFlowsListCall struct {
 }
 
 // List: Returns the list of all flows in the specified agent.
+//
+// - parent: The agent containing the flows. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsFlowsService) List(parent string) *ProjectsLocationsAgentsFlowsListCall {
 	c := &ProjectsLocationsAgentsFlowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22634,6 +22795,9 @@ type ProjectsLocationsAgentsFlowsPatchCall struct {
 }
 
 // Patch: Updates the specified flow.
+//
+// - name: The unique identifier of the flow. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsService) Patch(nameid string, googleclouddialogflowcxv3beta1flow *GoogleCloudDialogflowCxV3beta1Flow) *ProjectsLocationsAgentsFlowsPatchCall {
 	c := &ProjectsLocationsAgentsFlowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -22809,6 +22973,9 @@ type ProjectsLocationsAgentsFlowsTrainCall struct {
 
 // Train: Trains the specified flow. Note that only the flow in 'draft'
 // environment is trained.
+//
+// - name: The flow to train. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsService) Train(name string, googleclouddialogflowcxv3beta1trainflowrequest *GoogleCloudDialogflowCxV3beta1TrainFlowRequest) *ProjectsLocationsAgentsFlowsTrainCall {
 	c := &ProjectsLocationsAgentsFlowsTrainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22952,6 +23119,9 @@ type ProjectsLocationsAgentsFlowsValidateCall struct {
 // Validate: Validates the specified flow and creates or updates
 // validation results. Please call this API after the training is
 // completed to get the complete validation results.
+//
+// - name: The flow to validate. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsService) Validate(name string, googleclouddialogflowcxv3beta1validateflowrequest *GoogleCloudDialogflowCxV3beta1ValidateFlowRequest) *ProjectsLocationsAgentsFlowsValidateCall {
 	c := &ProjectsLocationsAgentsFlowsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23095,6 +23265,9 @@ type ProjectsLocationsAgentsFlowsPagesCreateCall struct {
 }
 
 // Create: Creates a page in the specified flow.
+//
+// - parent: The flow to create a page for. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsPagesService) Create(parent string, googleclouddialogflowcxv3beta1page *GoogleCloudDialogflowCxV3beta1Page) *ProjectsLocationsAgentsFlowsPagesCreateCall {
 	c := &ProjectsLocationsAgentsFlowsPagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23259,6 +23432,9 @@ type ProjectsLocationsAgentsFlowsPagesDeleteCall struct {
 }
 
 // Delete: Deletes the specified page.
+//
+// - name: The name of the page to delete. Format:
+// `projects//locations//agents//Flows//pages/`.
 func (r *ProjectsLocationsAgentsFlowsPagesService) Delete(name string) *ProjectsLocationsAgentsFlowsPagesDeleteCall {
 	c := &ProjectsLocationsAgentsFlowsPagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23408,6 +23584,9 @@ type ProjectsLocationsAgentsFlowsPagesGetCall struct {
 }
 
 // Get: Retrieves the specified page.
+//
+// - name: The name of the page. Format:
+// `projects//locations//agents//flows//pages/`.
 func (r *ProjectsLocationsAgentsFlowsPagesService) Get(name string) *ProjectsLocationsAgentsFlowsPagesGetCall {
 	c := &ProjectsLocationsAgentsFlowsPagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23577,6 +23756,9 @@ type ProjectsLocationsAgentsFlowsPagesListCall struct {
 }
 
 // List: Returns the list of all pages in the specified flow.
+//
+// - parent: The flow to list all pages for. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsPagesService) List(parent string) *ProjectsLocationsAgentsFlowsPagesListCall {
 	c := &ProjectsLocationsAgentsFlowsPagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23793,6 +23975,10 @@ type ProjectsLocationsAgentsFlowsPagesPatchCall struct {
 }
 
 // Patch: Updates the specified page.
+//
+// - name: The unique identifier of the page. Required for the
+// Pages.UpdatePage method. Pages.CreatePage populates the name
+// automatically. Format: `projects//locations//agents//flows//pages/`.
 func (r *ProjectsLocationsAgentsFlowsPagesService) Patch(nameid string, googleclouddialogflowcxv3beta1page *GoogleCloudDialogflowCxV3beta1Page) *ProjectsLocationsAgentsFlowsPagesPatchCall {
 	c := &ProjectsLocationsAgentsFlowsPagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -23972,6 +24158,9 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall struct {
 }
 
 // Create: Creates an TransitionRouteGroup in the specified flow.
+//
+// - parent: The flow to create an TransitionRouteGroup for. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Create(parent string, googleclouddialogflowcxv3beta1transitionroutegroup *GoogleCloudDialogflowCxV3beta1TransitionRouteGroup) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24131,6 +24320,9 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall struct {
 }
 
 // Delete: Deletes the specified TransitionRouteGroup.
+//
+// - name: The name of the TransitionRouteGroup to delete. Format:
+// `projects//locations//agents//flows//transitionRouteGroups/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Delete(name string) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24280,6 +24472,9 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall struct {
 }
 
 // Get: Retrieves the specified TransitionRouteGroup.
+//
+// - name: The name of the TransitionRouteGroup. Format:
+// `projects//locations//agents//flows//transitionRouteGroups/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Get(name string) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24445,6 +24640,9 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall struct {
 
 // List: Returns the list of all transition route groups in the
 // specified flow.
+//
+// - parent: The flow to list all transition route groups for. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) List(parent string) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24656,6 +24854,11 @@ type ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall struct {
 }
 
 // Patch: Updates the specified TransitionRouteGroup.
+//
+// - name: The unique identifier of the transition route group.
+// TransitionRouteGroups.CreateTransitionRouteGroup populates the name
+// automatically. Format:
+// `projects//locations//agents//flows//transitionRouteGroups/`.
 func (r *ProjectsLocationsAgentsFlowsTransitionRouteGroupsService) Patch(nameid string, googleclouddialogflowcxv3beta1transitionroutegroup *GoogleCloudDialogflowCxV3beta1TransitionRouteGroup) *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall {
 	c := &ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -24829,6 +25032,9 @@ type ProjectsLocationsAgentsFlowsVersionsCreateCall struct {
 }
 
 // Create: Creates a Version in the specified Flow.
+//
+// - parent: The Flow to create an Version for. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) Create(parent string, googleclouddialogflowcxv3beta1version *GoogleCloudDialogflowCxV3beta1Version) *ProjectsLocationsAgentsFlowsVersionsCreateCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24969,6 +25175,9 @@ type ProjectsLocationsAgentsFlowsVersionsDeleteCall struct {
 }
 
 // Delete: Deletes the specified Version.
+//
+// - name: The name of the Version to delete. Format:
+// `projects//locations//agents//flows//versions/`.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) Delete(name string) *ProjectsLocationsAgentsFlowsVersionsDeleteCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25101,6 +25310,9 @@ type ProjectsLocationsAgentsFlowsVersionsGetCall struct {
 }
 
 // Get: Retrieves the specified Version.
+//
+// - name: The name of the Version. Format:
+// `projects//locations//agents//flows//versions/`.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) Get(name string) *ProjectsLocationsAgentsFlowsVersionsGetCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25247,6 +25459,9 @@ type ProjectsLocationsAgentsFlowsVersionsListCall struct {
 }
 
 // List: Returns the list of all versions in the specified Flow.
+//
+// - parent: The Flow to list all versions for. Format:
+// `projects//locations//agents//flows/`.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) List(parent string) *ProjectsLocationsAgentsFlowsVersionsListCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25440,6 +25655,9 @@ type ProjectsLocationsAgentsFlowsVersionsLoadCall struct {
 }
 
 // Load: Loads a specified version to draft version.
+//
+// - name: The Version to be loaded to draft version. Format:
+// `projects//locations//agents//flows//versions/`.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) Load(name string, googleclouddialogflowcxv3beta1loadversionrequest *GoogleCloudDialogflowCxV3beta1LoadVersionRequest) *ProjectsLocationsAgentsFlowsVersionsLoadCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsLoadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25581,6 +25799,10 @@ type ProjectsLocationsAgentsFlowsVersionsPatchCall struct {
 }
 
 // Patch: Updates the specified Version.
+//
+// - name: Format: projects//locations//agents//flows//versions/.
+// Version ID is a self-increasing number generated by Dialogflow upon
+// version creation.
 func (r *ProjectsLocationsAgentsFlowsVersionsService) Patch(name string, googleclouddialogflowcxv3beta1version *GoogleCloudDialogflowCxV3beta1Version) *ProjectsLocationsAgentsFlowsVersionsPatchCall {
 	c := &ProjectsLocationsAgentsFlowsVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25737,6 +25959,9 @@ type ProjectsLocationsAgentsIntentsCreateCall struct {
 }
 
 // Create: Creates an intent in the specified agent.
+//
+// - parent: The agent to create an intent for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsIntentsService) Create(parent string, googleclouddialogflowcxv3beta1intent *GoogleCloudDialogflowCxV3beta1Intent) *ProjectsLocationsAgentsIntentsCreateCall {
 	c := &ProjectsLocationsAgentsIntentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25895,6 +26120,9 @@ type ProjectsLocationsAgentsIntentsDeleteCall struct {
 }
 
 // Delete: Deletes the specified intent.
+//
+// - name: The name of the intent to delete. Format:
+// `projects//locations//agents//intents/`.
 func (r *ProjectsLocationsAgentsIntentsService) Delete(name string) *ProjectsLocationsAgentsIntentsDeleteCall {
 	c := &ProjectsLocationsAgentsIntentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26027,6 +26255,9 @@ type ProjectsLocationsAgentsIntentsGetCall struct {
 }
 
 // Get: Retrieves the specified intent.
+//
+// - name: The name of the intent. Format:
+// `projects//locations//agents//intents/`.
 func (r *ProjectsLocationsAgentsIntentsService) Get(name string) *ProjectsLocationsAgentsIntentsGetCall {
 	c := &ProjectsLocationsAgentsIntentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26190,6 +26421,9 @@ type ProjectsLocationsAgentsIntentsListCall struct {
 }
 
 // List: Returns the list of all intents in the specified agent.
+//
+// - parent: The agent to list all intents for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsIntentsService) List(parent string) *ProjectsLocationsAgentsIntentsListCall {
 	c := &ProjectsLocationsAgentsIntentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26429,6 +26663,10 @@ type ProjectsLocationsAgentsIntentsPatchCall struct {
 }
 
 // Patch: Updates the specified intent.
+//
+// - name: The unique identifier of the intent. Required for the
+// Intents.UpdateIntent method. Intents.CreateIntent populates the name
+// automatically. Format: `projects//locations//agents//intents/`.
 func (r *ProjectsLocationsAgentsIntentsService) Patch(nameid string, googleclouddialogflowcxv3beta1intent *GoogleCloudDialogflowCxV3beta1Intent) *ProjectsLocationsAgentsIntentsPatchCall {
 	c := &ProjectsLocationsAgentsIntentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -26608,6 +26846,19 @@ type ProjectsLocationsAgentsSessionsDetectIntentCall struct {
 // use agent versions for production traffic. See Versions and
 // environments
 // (https://cloud.google.com/dialogflow/cx/docs/concept/version).
+//
+// - session: The name of the session this query is sent to. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment. It's up to the API caller to choose an appropriate
+// `Session ID`. It can be a random number or some type of session
+// identifiers (preferably hashed). The length of the `Session ID` must
+// not exceed 36 characters. For more information, see the sessions
+// guide (https://cloud.google.com/dialogflow/cx/docs/concept/session).
+// Note: Always use agent versions for production traffic. See Versions
+// and environments
+// (https://cloud.google.com/dialogflow/cx/docs/concept/version).
 func (r *ProjectsLocationsAgentsSessionsService) DetectIntent(sessionid string, googleclouddialogflowcxv3beta1detectintentrequest *GoogleCloudDialogflowCxV3beta1DetectIntentRequest) *ProjectsLocationsAgentsSessionsDetectIntentCall {
 	c := &ProjectsLocationsAgentsSessionsDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -26753,6 +27004,16 @@ type ProjectsLocationsAgentsSessionsFulfillIntentCall struct {
 // FulfillIntent: Fulfills a matched intent returned by MatchIntent.
 // Must be called after MatchIntent, with input from
 // MatchIntentResponse. Otherwise, the behavior is undefined.
+//
+// - session: The name of the session this query is sent to. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment. It's up to the API caller to choose an appropriate
+// `Session ID`. It can be a random number or some type of session
+// identifiers (preferably hashed). The length of the `Session ID` must
+// not exceed 36 characters. For more information, see the sessions
+// guide (https://cloud.google.com/dialogflow/cx/docs/concept/session).
 func (r *ProjectsLocationsAgentsSessionsService) FulfillIntent(sessionid string, googleclouddialogflowcxv3beta1fulfillintentrequest *GoogleCloudDialogflowCxV3beta1FulfillIntentRequest) *ProjectsLocationsAgentsSessionsFulfillIntentCall {
 	c := &ProjectsLocationsAgentsSessionsFulfillIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -26897,6 +27158,16 @@ type ProjectsLocationsAgentsSessionsMatchIntentCall struct {
 
 // MatchIntent: Returns preliminary intent match results, doesn't change
 // the session status.
+//
+// - session: The name of the session this query is sent to. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment. It's up to the API caller to choose an appropriate
+// `Session ID`. It can be a random number or some type of session
+// identifiers (preferably hashed). The length of the `Session ID` must
+// not exceed 36 characters. For more information, see the sessions
+// guide (https://cloud.google.com/dialogflow/cx/docs/concept/session).
 func (r *ProjectsLocationsAgentsSessionsService) MatchIntent(sessionid string, googleclouddialogflowcxv3beta1matchintentrequest *GoogleCloudDialogflowCxV3beta1MatchIntentRequest) *ProjectsLocationsAgentsSessionsMatchIntentCall {
 	c := &ProjectsLocationsAgentsSessionsMatchIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -27040,6 +27311,12 @@ type ProjectsLocationsAgentsSessionsEntityTypesCreateCall struct {
 }
 
 // Create: Creates a session entity type.
+//
+// - parent: The session to create a session entity type for. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsSessionsEntityTypesService) Create(parent string, googleclouddialogflowcxv3beta1sessionentitytype *GoogleCloudDialogflowCxV3beta1SessionEntityType) *ProjectsLocationsAgentsSessionsEntityTypesCreateCall {
 	c := &ProjectsLocationsAgentsSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27182,6 +27459,12 @@ type ProjectsLocationsAgentsSessionsEntityTypesDeleteCall struct {
 }
 
 // Delete: Deletes the specified session entity type.
+//
+// - name: The name of the session entity type to delete. Format:
+// `projects//locations//agents//sessions//entityTypes/` or
+// `projects//locations//agents//environments//sessions//entityTypes/`.
+// If `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsSessionsEntityTypesService) Delete(name string) *ProjectsLocationsAgentsSessionsEntityTypesDeleteCall {
 	c := &ProjectsLocationsAgentsSessionsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27314,6 +27597,12 @@ type ProjectsLocationsAgentsSessionsEntityTypesGetCall struct {
 }
 
 // Get: Retrieves the specified session entity type.
+//
+// - name: The name of the session entity type. Format:
+// `projects//locations//agents//sessions//entityTypes/` or
+// `projects//locations//agents//environments//sessions//entityTypes/`.
+// If `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsSessionsEntityTypesService) Get(name string) *ProjectsLocationsAgentsSessionsEntityTypesGetCall {
 	c := &ProjectsLocationsAgentsSessionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27462,6 +27751,12 @@ type ProjectsLocationsAgentsSessionsEntityTypesListCall struct {
 
 // List: Returns the list of all session entity types in the specified
 // session.
+//
+// - parent: The session to list all session entity types from. Format:
+// `projects//locations//agents//sessions/` or
+// `projects//locations//agents//environments//sessions/`. If
+// `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsSessionsEntityTypesService) List(parent string) *ProjectsLocationsAgentsSessionsEntityTypesListCall {
 	c := &ProjectsLocationsAgentsSessionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27656,6 +27951,12 @@ type ProjectsLocationsAgentsSessionsEntityTypesPatchCall struct {
 }
 
 // Patch: Updates the specified session entity type.
+//
+// - name: The unique identifier of the session entity type. Format:
+// `projects//locations//agents//sessions//entityTypes/` or
+// `projects//locations//agents//environments//sessions//entityTypes/`.
+// If `Environment ID` is not specified, we assume default 'draft'
+// environment.
 func (r *ProjectsLocationsAgentsSessionsEntityTypesService) Patch(nameid string, googleclouddialogflowcxv3beta1sessionentitytype *GoogleCloudDialogflowCxV3beta1SessionEntityType) *ProjectsLocationsAgentsSessionsEntityTypesPatchCall {
 	c := &ProjectsLocationsAgentsSessionsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -27812,6 +28113,9 @@ type ProjectsLocationsAgentsTestCasesBatchDeleteCall struct {
 }
 
 // BatchDelete: Batch deletes test cases.
+//
+// - parent: The agent to delete test cases from. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) BatchDelete(parent string, googleclouddialogflowcxv3beta1batchdeletetestcasesrequest *GoogleCloudDialogflowCxV3beta1BatchDeleteTestCasesRequest) *ProjectsLocationsAgentsTestCasesBatchDeleteCall {
 	c := &ProjectsLocationsAgentsTestCasesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27953,6 +28257,8 @@ type ProjectsLocationsAgentsTestCasesBatchRunCall struct {
 }
 
 // BatchRun: Kicks off a batch run of test cases.
+//
+// - parent: Agent name. Format: `projects//locations//agents/ `.
 func (r *ProjectsLocationsAgentsTestCasesService) BatchRun(parent string, googleclouddialogflowcxv3beta1batchruntestcasesrequest *GoogleCloudDialogflowCxV3beta1BatchRunTestCasesRequest) *ProjectsLocationsAgentsTestCasesBatchRunCall {
 	c := &ProjectsLocationsAgentsTestCasesBatchRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28094,6 +28400,9 @@ type ProjectsLocationsAgentsTestCasesCalculateCoverageCall struct {
 }
 
 // CalculateCoverage: Calculates the test coverage for an agent.
+//
+// - agent: The agent to calculate coverage for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) CalculateCoverage(agent string) *ProjectsLocationsAgentsTestCasesCalculateCoverageCall {
 	c := &ProjectsLocationsAgentsTestCasesCalculateCoverageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agent = agent
@@ -28272,6 +28581,9 @@ type ProjectsLocationsAgentsTestCasesCreateCall struct {
 }
 
 // Create: Creates a test case for the given agent.
+//
+// - parent: The agent to create the test case for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Create(parent string, googleclouddialogflowcxv3beta1testcase *GoogleCloudDialogflowCxV3beta1TestCase) *ProjectsLocationsAgentsTestCasesCreateCall {
 	c := &ProjectsLocationsAgentsTestCasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28416,6 +28728,9 @@ type ProjectsLocationsAgentsTestCasesExportCall struct {
 // Export: Exports the test cases under the agent to a Cloud Storage
 // bucket or a local file. Filter can be applied to export a subset of
 // test cases.
+//
+// - parent: The agent where to export test cases from. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Export(parent string, googleclouddialogflowcxv3beta1exporttestcasesrequest *GoogleCloudDialogflowCxV3beta1ExportTestCasesRequest) *ProjectsLocationsAgentsTestCasesExportCall {
 	c := &ProjectsLocationsAgentsTestCasesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28557,6 +28872,9 @@ type ProjectsLocationsAgentsTestCasesGetCall struct {
 }
 
 // Get: Gets a test case.
+//
+// - name: The name of the testcase. Format:
+// `projects//locations//agents//testCases/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Get(name string) *ProjectsLocationsAgentsTestCasesGetCall {
 	c := &ProjectsLocationsAgentsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28706,6 +29024,9 @@ type ProjectsLocationsAgentsTestCasesImportCall struct {
 // file. It always creates new test cases and won't overwite any
 // existing ones. The provided ID in the imported test case is
 // neglected.
+//
+// - parent: The agent to import test cases to. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Import(parent string, googleclouddialogflowcxv3beta1importtestcasesrequest *GoogleCloudDialogflowCxV3beta1ImportTestCasesRequest) *ProjectsLocationsAgentsTestCasesImportCall {
 	c := &ProjectsLocationsAgentsTestCasesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28847,6 +29168,9 @@ type ProjectsLocationsAgentsTestCasesListCall struct {
 }
 
 // List: Fetches a list of test cases for a given agent.
+//
+// - parent: The agent to list all pages for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsTestCasesService) List(parent string) *ProjectsLocationsAgentsTestCasesListCall {
 	c := &ProjectsLocationsAgentsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29071,6 +29395,10 @@ type ProjectsLocationsAgentsTestCasesPatchCall struct {
 }
 
 // Patch: Updates the specified test case.
+//
+// - name: The unique identifier of the test case.
+// TestCases.CreateTestCase will populate the name automatically.
+// Otherwise use format: `projects//locations//agents/ /testCases/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Patch(nameid string, googleclouddialogflowcxv3beta1testcase *GoogleCloudDialogflowCxV3beta1TestCase) *ProjectsLocationsAgentsTestCasesPatchCall {
 	c := &ProjectsLocationsAgentsTestCasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -29227,6 +29555,9 @@ type ProjectsLocationsAgentsTestCasesRunCall struct {
 }
 
 // Run: Kicks off a test case run.
+//
+// - name: Format of test case name to run: `projects//locations/
+// /agents//testCases/`.
 func (r *ProjectsLocationsAgentsTestCasesService) Run(name string, googleclouddialogflowcxv3beta1runtestcaserequest *GoogleCloudDialogflowCxV3beta1RunTestCaseRequest) *ProjectsLocationsAgentsTestCasesRunCall {
 	c := &ProjectsLocationsAgentsTestCasesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29368,6 +29699,9 @@ type ProjectsLocationsAgentsTestCasesResultsGetCall struct {
 }
 
 // Get: Gets a test case result.
+//
+// - name: The name of the testcase. Format:
+// `projects//locations//agents//testCases//results/`.
 func (r *ProjectsLocationsAgentsTestCasesResultsService) Get(name string) *ProjectsLocationsAgentsTestCasesResultsGetCall {
 	c := &ProjectsLocationsAgentsTestCasesResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29515,6 +29849,10 @@ type ProjectsLocationsAgentsTestCasesResultsListCall struct {
 }
 
 // List: Fetches a list of results for a given test case.
+//
+// - parent: The test case to list results for. Format:
+// `projects//locations//agents// testCases/`. Specify a `-` as a
+// wildcard for TestCase ID to list results across multiple test cases.
 func (r *ProjectsLocationsAgentsTestCasesResultsService) List(parent string) *ProjectsLocationsAgentsTestCasesResultsListCall {
 	c := &ProjectsLocationsAgentsTestCasesResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29733,6 +30071,9 @@ type ProjectsLocationsAgentsWebhooksCreateCall struct {
 }
 
 // Create: Creates a webhook in the specified agent.
+//
+// - parent: The agent to create a webhook for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsWebhooksService) Create(parent string, googleclouddialogflowcxv3beta1webhook *GoogleCloudDialogflowCxV3beta1Webhook) *ProjectsLocationsAgentsWebhooksCreateCall {
 	c := &ProjectsLocationsAgentsWebhooksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29874,6 +30215,9 @@ type ProjectsLocationsAgentsWebhooksDeleteCall struct {
 }
 
 // Delete: Deletes the specified webhook.
+//
+// - name: The name of the webhook to delete. Format:
+// `projects//locations//agents//webhooks/`.
 func (r *ProjectsLocationsAgentsWebhooksService) Delete(name string) *ProjectsLocationsAgentsWebhooksDeleteCall {
 	c := &ProjectsLocationsAgentsWebhooksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30023,6 +30367,9 @@ type ProjectsLocationsAgentsWebhooksGetCall struct {
 }
 
 // Get: Retrieves the specified webhook.
+//
+// - name: The name of the webhook. Format:
+// `projects//locations//agents//webhooks/`.
 func (r *ProjectsLocationsAgentsWebhooksService) Get(name string) *ProjectsLocationsAgentsWebhooksGetCall {
 	c := &ProjectsLocationsAgentsWebhooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30169,6 +30516,9 @@ type ProjectsLocationsAgentsWebhooksListCall struct {
 }
 
 // List: Returns the list of all webhooks in the specified agent.
+//
+// - parent: The agent to list all webhooks for. Format:
+// `projects//locations//agents/`.
 func (r *ProjectsLocationsAgentsWebhooksService) List(parent string) *ProjectsLocationsAgentsWebhooksListCall {
 	c := &ProjectsLocationsAgentsWebhooksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30362,6 +30712,10 @@ type ProjectsLocationsAgentsWebhooksPatchCall struct {
 }
 
 // Patch: Updates the specified webhook.
+//
+// - name: The unique identifier of the webhook. Required for the
+// Webhooks.UpdateWebhook method. Webhooks.CreateWebhook populates the
+// name automatically. Format: `projects//locations//agents//webhooks/`.
 func (r *ProjectsLocationsAgentsWebhooksService) Patch(nameid string, googleclouddialogflowcxv3beta1webhook *GoogleCloudDialogflowCxV3beta1Webhook) *ProjectsLocationsAgentsWebhooksPatchCall {
 	c := &ProjectsLocationsAgentsWebhooksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -30526,6 +30880,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30660,6 +31016,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30814,6 +31172,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31018,6 +31378,9 @@ type ProjectsLocationsSecuritySettingsCreateCall struct {
 }
 
 // Create: Create security settings in the specified location.
+//
+// - parent: The location to create an SecuritySettings for. Format:
+// `projects//locations/`.
 func (r *ProjectsLocationsSecuritySettingsService) Create(parent string, googleclouddialogflowcxv3beta1securitysettings *GoogleCloudDialogflowCxV3beta1SecuritySettings) *ProjectsLocationsSecuritySettingsCreateCall {
 	c := &ProjectsLocationsSecuritySettingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31160,6 +31523,9 @@ type ProjectsLocationsSecuritySettingsDeleteCall struct {
 }
 
 // Delete: Deletes the specified SecuritySettings.
+//
+// - name: The name of the SecuritySettings to delete. Format:
+// `projects//locations//securitySettings/`.
 func (r *ProjectsLocationsSecuritySettingsService) Delete(name string) *ProjectsLocationsSecuritySettingsDeleteCall {
 	c := &ProjectsLocationsSecuritySettingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31293,6 +31659,9 @@ type ProjectsLocationsSecuritySettingsGetCall struct {
 
 // Get: Retrieves the specified SecuritySettings. The returned settings
 // may be stale by up to 1 minute.
+//
+// - name: Resource name of the settings. Format:
+// `projects//locations//securitySettings/`.
 func (r *ProjectsLocationsSecuritySettingsService) Get(name string) *ProjectsLocationsSecuritySettingsGetCall {
 	c := &ProjectsLocationsSecuritySettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31441,6 +31810,9 @@ type ProjectsLocationsSecuritySettingsListCall struct {
 
 // List: Returns the list of all security settings in the specified
 // location.
+//
+// - parent: The location to list all security settings for. Format:
+// `projects//locations/`.
 func (r *ProjectsLocationsSecuritySettingsService) List(parent string) *ProjectsLocationsSecuritySettingsListCall {
 	c := &ProjectsLocationsSecuritySettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31635,6 +32007,9 @@ type ProjectsLocationsSecuritySettingsPatchCall struct {
 }
 
 // Patch: Updates the specified SecuritySettings.
+//
+// - name: Resource name of the settings. Format:
+// `projects//locations//securitySettings/`.
 func (r *ProjectsLocationsSecuritySettingsService) Patch(name string, googleclouddialogflowcxv3beta1securitysettings *GoogleCloudDialogflowCxV3beta1SecuritySettings) *ProjectsLocationsSecuritySettingsPatchCall {
 	c := &ProjectsLocationsSecuritySettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31800,6 +32175,8 @@ type ProjectsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31934,6 +32311,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32088,6 +32467,8 @@ type ProjectsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

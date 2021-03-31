@@ -2384,6 +2384,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2530,6 +2532,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2736,6 +2741,9 @@ type ProjectsLocationsKeyRingsCreateCall struct {
 }
 
 // Create: Create a new KeyRing in a given Project and Location.
+//
+// - parent: The resource name of the location associated with the
+// KeyRings, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsKeyRingsService) Create(parent string, keyring *KeyRing) *ProjectsLocationsKeyRingsCreateCall {
 	c := &ProjectsLocationsKeyRingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2890,6 +2898,8 @@ type ProjectsLocationsKeyRingsGetCall struct {
 }
 
 // Get: Returns metadata for a given KeyRing.
+//
+// - name: The name of the KeyRing to get.
 func (r *ProjectsLocationsKeyRingsService) Get(name string) *ProjectsLocationsKeyRingsGetCall {
 	c := &ProjectsLocationsKeyRingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3037,6 +3047,10 @@ type ProjectsLocationsKeyRingsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsKeyRingsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3202,6 +3216,9 @@ type ProjectsLocationsKeyRingsListCall struct {
 }
 
 // List: Lists KeyRings.
+//
+// - parent: The resource name of the location associated with the
+// KeyRings, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsKeyRingsService) List(parent string) *ProjectsLocationsKeyRingsListCall {
 	c := &ProjectsLocationsKeyRingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3428,6 +3445,10 @@ type ProjectsLocationsKeyRingsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsKeyRingsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3574,6 +3595,10 @@ type ProjectsLocationsKeyRingsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsKeyRingsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3716,6 +3741,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCreateCall struct {
 
 // Create: Create a new CryptoKey within a KeyRing. CryptoKey.purpose
 // and CryptoKey.version_template.algorithm are required.
+//
+// - parent: The name of the KeyRing associated with the CryptoKeys.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Create(parent string, cryptokey *CryptoKey) *ProjectsLocationsKeyRingsCryptoKeysCreateCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3886,6 +3913,9 @@ type ProjectsLocationsKeyRingsCryptoKeysDecryptCall struct {
 
 // Decrypt: Decrypts data that was protected by Encrypt. The
 // CryptoKey.purpose must be ENCRYPT_DECRYPT.
+//
+// - name: The resource name of the CryptoKey to use for decryption. The
+// server will choose the appropriate version.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Decrypt(name string, decryptrequest *DecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysDecryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4028,6 +4058,10 @@ type ProjectsLocationsKeyRingsCryptoKeysEncryptCall struct {
 
 // Encrypt: Encrypts data, so that it can only be recovered by a call to
 // Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.
+//
+// - name: The resource name of the CryptoKey or CryptoKeyVersion to use
+// for encryption. If a CryptoKey is specified, the server will use its
+// primary version.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Encrypt(name string, encryptrequest *EncryptRequest) *ProjectsLocationsKeyRingsCryptoKeysEncryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysEncryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4170,6 +4204,8 @@ type ProjectsLocationsKeyRingsCryptoKeysGetCall struct {
 
 // Get: Returns metadata for a given CryptoKey, as well as its primary
 // CryptoKeyVersion.
+//
+// - name: The name of the CryptoKey to get.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Get(name string) *ProjectsLocationsKeyRingsCryptoKeysGetCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4317,6 +4353,10 @@ type ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4482,6 +4522,9 @@ type ProjectsLocationsKeyRingsCryptoKeysListCall struct {
 }
 
 // List: Lists CryptoKeys.
+//
+// - parent: The resource name of the KeyRing to list, in the format
+// `projects/*/locations/*/keyRings/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) List(parent string) *ProjectsLocationsKeyRingsCryptoKeysListCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4732,6 +4775,9 @@ type ProjectsLocationsKeyRingsCryptoKeysPatchCall struct {
 }
 
 // Patch: Update a CryptoKey.
+//
+// - name: Output only. The resource name for this CryptoKey in the
+// format `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Patch(name string, cryptokey *CryptoKey) *ProjectsLocationsKeyRingsCryptoKeysPatchCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4888,6 +4934,10 @@ type ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5034,6 +5084,10 @@ type ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5176,6 +5230,8 @@ type ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall struct {
 
 // UpdatePrimaryVersion: Update the version of a CryptoKey that will be
 // used in Encrypt. Returns an error if called on an asymmetric key.
+//
+// - name: The resource name of the CryptoKey to update.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) UpdatePrimaryVersion(name string, updatecryptokeyprimaryversionrequest *UpdateCryptoKeyPrimaryVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5319,6 +5375,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall s
 // AsymmetricDecrypt: Decrypts data that was encrypted with a public key
 // retrieved from GetPublicKey corresponding to a CryptoKeyVersion with
 // CryptoKey.purpose ASYMMETRIC_DECRYPT.
+//
+// - name: The resource name of the CryptoKeyVersion to use for
+// decryption.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) AsymmetricDecrypt(name string, asymmetricdecryptrequest *AsymmetricDecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5462,6 +5521,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall stru
 // AsymmetricSign: Signs data using a CryptoKeyVersion with
 // CryptoKey.purpose ASYMMETRIC_SIGN, producing a signature that can be
 // verified with the public key retrieved from GetPublicKey.
+//
+// - name: The resource name of the CryptoKeyVersion to use for signing.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) AsymmetricSign(name string, asymmetricsignrequest *AsymmetricSignRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5605,6 +5666,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall struct {
 // Create: Create a new CryptoKeyVersion in a CryptoKey. The server will
 // assign the next sequential id. If unset, state will be set to
 // ENABLED.
+//
+// - parent: The name of the CryptoKey associated with the
+// CryptoKeyVersions.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Create(parent string, cryptokeyversion *CryptoKeyVersion) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5752,6 +5816,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall struct {
 // material will be irrevocably destroyed. Before the destroy_time is
 // reached, RestoreCryptoKeyVersion may be called to reverse the
 // process.
+//
+// - name: The resource name of the CryptoKeyVersion to destroy.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Destroy(name string, destroycryptokeyversionrequest *DestroyCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5893,6 +5959,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall struct {
 }
 
 // Get: Returns metadata for a given CryptoKeyVersion.
+//
+// - name: The name of the CryptoKeyVersion to get.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Get(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6039,6 +6107,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall struct
 
 // GetPublicKey: Returns the public key for the given CryptoKeyVersion.
 // The CryptoKey.purpose must be ASYMMETRIC_SIGN or ASYMMETRIC_DECRYPT.
+//
+// - name: The name of the CryptoKeyVersion public key to get.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) GetPublicKey(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6186,6 +6256,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall struct {
 // Import: Imports a new CryptoKeyVersion into an existing CryptoKey
 // using the wrapped key material provided in the request. The version
 // ID will be assigned the next sequential id within the CryptoKey.
+//
+// - parent: The name of the CryptoKey to be imported into.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Import(parent string, importcryptokeyversionrequest *ImportCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6327,6 +6399,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall struct {
 }
 
 // List: Lists CryptoKeyVersions.
+//
+// - parent: The resource name of the CryptoKey to list, in the format
+// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) List(parent string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6580,6 +6655,10 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall struct {
 // between ENABLED and DISABLED using this method. See
 // DestroyCryptoKeyVersion and RestoreCryptoKeyVersion to move between
 // other states.
+//
+// - name: Output only. The resource name for this CryptoKeyVersion in
+// the format
+// `projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Patch(name string, cryptokeyversion *CryptoKeyVersion) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6736,6 +6815,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall struct {
 // Restore: Restore a CryptoKeyVersion in the DESTROY_SCHEDULED state.
 // Upon restoration of the CryptoKeyVersion, state will be set to
 // DISABLED, and destroy_time will be cleared.
+//
+// - name: The resource name of the CryptoKeyVersion to restore.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Restore(name string, restorecryptokeyversionrequest *RestoreCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6878,6 +6959,8 @@ type ProjectsLocationsKeyRingsImportJobsCreateCall struct {
 
 // Create: Create a new ImportJob within a KeyRing.
 // ImportJob.import_method is required.
+//
+// - parent: The name of the KeyRing associated with the ImportJobs.
 func (r *ProjectsLocationsKeyRingsImportJobsService) Create(parent string, importjob *ImportJob) *ProjectsLocationsKeyRingsImportJobsCreateCall {
 	c := &ProjectsLocationsKeyRingsImportJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7032,6 +7115,8 @@ type ProjectsLocationsKeyRingsImportJobsGetCall struct {
 }
 
 // Get: Returns metadata for a given ImportJob.
+//
+// - name: The name of the ImportJob to get.
 func (r *ProjectsLocationsKeyRingsImportJobsService) Get(name string) *ProjectsLocationsKeyRingsImportJobsGetCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7179,6 +7264,10 @@ type ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7344,6 +7433,9 @@ type ProjectsLocationsKeyRingsImportJobsListCall struct {
 }
 
 // List: Lists ImportJobs.
+//
+// - parent: The resource name of the KeyRing to list, in the format
+// `projects/*/locations/*/keyRings/*`.
 func (r *ProjectsLocationsKeyRingsImportJobsService) List(parent string) *ProjectsLocationsKeyRingsImportJobsListCall {
 	c := &ProjectsLocationsKeyRingsImportJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7570,6 +7662,10 @@ type ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7716,6 +7812,10 @@ type ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

@@ -3150,6 +3150,8 @@ type QueriesDeletequeryCall struct {
 
 // Deletequery: Deletes a stored query as well as the associated stored
 // reports.
+//
+// - queryId: Query ID to delete.
 func (r *QueriesService) Deletequery(queryId int64) *QueriesDeletequeryCall {
 	c := &QueriesDeletequeryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3253,6 +3255,8 @@ type QueriesGetqueryCall struct {
 }
 
 // Getquery: Retrieves a stored query.
+//
+// - queryId: Query ID to retrieve.
 func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
 	c := &QueriesGetqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3574,6 +3578,8 @@ type QueriesRunqueryCall struct {
 }
 
 // Runquery: Runs a stored query to generate a report.
+//
+// - queryId: Query ID to run.
 func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryRequest) *QueriesRunqueryCall {
 	c := &QueriesRunqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3699,6 +3705,8 @@ type ReportsListreportsCall struct {
 }
 
 // Listreports: Retrieves stored reports.
+//
+// - queryId: Query ID with which the reports are associated.
 func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
 	c := &ReportsListreportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId

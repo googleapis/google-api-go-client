@@ -2288,6 +2288,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2433,6 +2435,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2635,6 +2640,8 @@ type ProjectsLocationsEnvironmentsCreateCall struct {
 }
 
 // Create: Creates a new Environment.
+//
+// - parent: Format: `projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsEnvironmentsService) Create(parent string, environment *Environment) *ProjectsLocationsEnvironmentsCreateCall {
 	c := &ProjectsLocationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2789,6 +2796,10 @@ type ProjectsLocationsEnvironmentsDeleteCall struct {
 }
 
 // Delete: Deletes a single Environment.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/environments/{environment_
+// id}`
 func (r *ProjectsLocationsEnvironmentsService) Delete(name string) *ProjectsLocationsEnvironmentsDeleteCall {
 	c := &ProjectsLocationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2920,6 +2931,10 @@ type ProjectsLocationsEnvironmentsGetCall struct {
 }
 
 // Get: Gets details of a single Environment.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/environments/{environment_
+// id}`
 func (r *ProjectsLocationsEnvironmentsService) Get(name string) *ProjectsLocationsEnvironmentsGetCall {
 	c := &ProjectsLocationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3064,6 +3079,8 @@ type ProjectsLocationsEnvironmentsListCall struct {
 }
 
 // List: Lists environments in a project.
+//
+// - parent: Format: `projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsEnvironmentsService) List(parent string) *ProjectsLocationsEnvironmentsListCall {
 	c := &ProjectsLocationsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3256,6 +3273,8 @@ type ProjectsLocationsExecutionsCreateCall struct {
 
 // Create: Creates a new Scheduled Notebook in a given project and
 // location.
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsExecutionsService) Create(parent string, execution *Execution) *ProjectsLocationsExecutionsCreateCall {
 	c := &ProjectsLocationsExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3407,6 +3426,9 @@ type ProjectsLocationsExecutionsDeleteCall struct {
 }
 
 // Delete: Deletes execution
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/executions/{execution_id}`
 func (r *ProjectsLocationsExecutionsService) Delete(name string) *ProjectsLocationsExecutionsDeleteCall {
 	c := &ProjectsLocationsExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3538,6 +3560,9 @@ type ProjectsLocationsExecutionsGetCall struct {
 }
 
 // Get: Gets details of executions
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/schedules/{execution_id}`
 func (r *ProjectsLocationsExecutionsService) Get(name string) *ProjectsLocationsExecutionsGetCall {
 	c := &ProjectsLocationsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3682,6 +3707,8 @@ type ProjectsLocationsExecutionsListCall struct {
 }
 
 // List: Lists executions in a given project and location
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsExecutionsService) List(parent string) *ProjectsLocationsExecutionsListCall {
 	c := &ProjectsLocationsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3896,6 +3923,8 @@ type ProjectsLocationsInstancesCreateCall struct {
 }
 
 // Create: Creates a new Instance in a given project and location.
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4047,6 +4076,9 @@ type ProjectsLocationsInstancesDeleteCall struct {
 }
 
 // Delete: Deletes a single Instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4178,6 +4210,9 @@ type ProjectsLocationsInstancesGetCall struct {
 }
 
 // Get: Gets details of a single Instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4324,6 +4359,10 @@ type ProjectsLocationsInstancesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4488,6 +4527,9 @@ type ProjectsLocationsInstancesGetInstanceHealthCall struct {
 }
 
 // GetInstanceHealth: Check if a notebook instance is healthy.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) GetInstanceHealth(name string) *ProjectsLocationsInstancesGetInstanceHealthCall {
 	c := &ProjectsLocationsInstancesGetInstanceHealthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4632,6 +4674,9 @@ type ProjectsLocationsInstancesIsUpgradeableCall struct {
 }
 
 // IsUpgradeable: Check if a notebook instance is upgradable.
+//
+// - notebookInstance: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) IsUpgradeable(notebookInstance string) *ProjectsLocationsInstancesIsUpgradeableCall {
 	c := &ProjectsLocationsInstancesIsUpgradeableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.notebookInstance = notebookInstance
@@ -4776,6 +4821,8 @@ type ProjectsLocationsInstancesListCall struct {
 }
 
 // List: Lists instances in a given project and location.
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4971,6 +5018,8 @@ type ProjectsLocationsInstancesRegisterCall struct {
 // legacy Compute Engine calls. They are not manageable by the Notebooks
 // API out of the box. This call makes these instances manageable by the
 // Notebooks API.
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsInstancesService) Register(parent string, registerinstancerequest *RegisterInstanceRequest) *ProjectsLocationsInstancesRegisterCall {
 	c := &ProjectsLocationsInstancesRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5114,6 +5163,9 @@ type ProjectsLocationsInstancesReportCall struct {
 // information to the Notebooks API server. The server will merge the
 // reported information to the instance metadata store. Do not use this
 // method directly.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Report(name string, reportinstanceinforequest *ReportInstanceInfoRequest) *ProjectsLocationsInstancesReportCall {
 	c := &ProjectsLocationsInstancesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5254,6 +5306,9 @@ type ProjectsLocationsInstancesResetCall struct {
 }
 
 // Reset: Resets a notebook instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Reset(name string, resetinstancerequest *ResetInstanceRequest) *ProjectsLocationsInstancesResetCall {
 	c := &ProjectsLocationsInstancesResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5394,6 +5449,9 @@ type ProjectsLocationsInstancesSetAcceleratorCall struct {
 }
 
 // SetAccelerator: Updates the guest accelerators of a single Instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) SetAccelerator(name string, setinstanceacceleratorrequest *SetInstanceAcceleratorRequest) *ProjectsLocationsInstancesSetAcceleratorCall {
 	c := &ProjectsLocationsInstancesSetAcceleratorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5536,6 +5594,10 @@ type ProjectsLocationsInstancesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5676,6 +5738,9 @@ type ProjectsLocationsInstancesSetLabelsCall struct {
 }
 
 // SetLabels: Replaces all the labels of an Instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) SetLabels(name string, setinstancelabelsrequest *SetInstanceLabelsRequest) *ProjectsLocationsInstancesSetLabelsCall {
 	c := &ProjectsLocationsInstancesSetLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5816,6 +5881,9 @@ type ProjectsLocationsInstancesSetMachineTypeCall struct {
 }
 
 // SetMachineType: Updates the machine type of a single Instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) SetMachineType(name string, setinstancemachinetyperequest *SetInstanceMachineTypeRequest) *ProjectsLocationsInstancesSetMachineTypeCall {
 	c := &ProjectsLocationsInstancesSetMachineTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5956,6 +6024,9 @@ type ProjectsLocationsInstancesStartCall struct {
 }
 
 // Start: Starts a notebook instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Start(name string, startinstancerequest *StartInstanceRequest) *ProjectsLocationsInstancesStartCall {
 	c := &ProjectsLocationsInstancesStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6096,6 +6167,9 @@ type ProjectsLocationsInstancesStopCall struct {
 }
 
 // Stop: Stops a notebook instance.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Stop(name string, stopinstancerequest *StopInstanceRequest) *ProjectsLocationsInstancesStopCall {
 	c := &ProjectsLocationsInstancesStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6241,6 +6315,10 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6381,6 +6459,9 @@ type ProjectsLocationsInstancesUpgradeCall struct {
 }
 
 // Upgrade: Upgrades a notebook instance to the latest version.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) Upgrade(name string, upgradeinstancerequest *UpgradeInstanceRequest) *ProjectsLocationsInstancesUpgradeCall {
 	c := &ProjectsLocationsInstancesUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6522,6 +6603,9 @@ type ProjectsLocationsInstancesUpgradeInternalCall struct {
 
 // UpgradeInternal: Allows notebook instances to call this endpoint to
 // upgrade themselves. Do not use this method directly.
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/instances/{instance_id}`
 func (r *ProjectsLocationsInstancesService) UpgradeInternal(name string, upgradeinstanceinternalrequest *UpgradeInstanceInternalRequest) *ProjectsLocationsInstancesUpgradeInternalCall {
 	c := &ProjectsLocationsInstancesUpgradeInternalCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6671,6 +6755,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6813,6 +6899,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6946,6 +7034,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7099,6 +7189,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7302,6 +7394,8 @@ type ProjectsLocationsSchedulesCreateCall struct {
 
 // Create: Creates a new Scheduled Notebook in a given project and
 // location.
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsSchedulesService) Create(parent string, schedule *Schedule) *ProjectsLocationsSchedulesCreateCall {
 	c := &ProjectsLocationsSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7453,6 +7547,9 @@ type ProjectsLocationsSchedulesDeleteCall struct {
 }
 
 // Delete: Deletes schedule and all underlying jobs
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/schedules/{schedule_id}`
 func (r *ProjectsLocationsSchedulesService) Delete(name string) *ProjectsLocationsSchedulesDeleteCall {
 	c := &ProjectsLocationsSchedulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7584,6 +7681,9 @@ type ProjectsLocationsSchedulesGetCall struct {
 }
 
 // Get: Gets details of schedule
+//
+// - name: Format:
+// `projects/{project_id}/locations/{location}/schedules/{schedule_id}`
 func (r *ProjectsLocationsSchedulesService) Get(name string) *ProjectsLocationsSchedulesGetCall {
 	c := &ProjectsLocationsSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7728,6 +7828,8 @@ type ProjectsLocationsSchedulesListCall struct {
 }
 
 // List: Lists schedules in a given project and location.
+//
+// - parent: Format: `parent=projects/{project_id}/locations/{location}`
 func (r *ProjectsLocationsSchedulesService) List(parent string) *ProjectsLocationsSchedulesListCall {
 	c := &ProjectsLocationsSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7943,6 +8045,10 @@ type ProjectsLocationsSchedulesTriggerCall struct {
 }
 
 // Trigger: Triggers execution of an existing schedule.
+//
+// - name: Format:
+// `parent=projects/{project_id}/locations/{location}/schedules/{schedule
+// _id}`
 func (r *ProjectsLocationsSchedulesService) Trigger(name string, triggerschedulerequest *TriggerScheduleRequest) *ProjectsLocationsSchedulesTriggerCall {
 	c := &ProjectsLocationsSchedulesTriggerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

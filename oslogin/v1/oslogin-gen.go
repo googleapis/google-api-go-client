@@ -390,6 +390,8 @@ type UsersGetLoginProfileCall struct {
 
 // GetLoginProfile: Retrieves the profile information used for logging
 // in to a virtual machine on Google Compute Engine.
+//
+// - name: The unique ID for the user in format `users/{user}`.
 func (r *UsersService) GetLoginProfile(name string) *UsersGetLoginProfileCall {
 	c := &UsersGetLoginProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -561,6 +563,8 @@ type UsersImportSshPublicKeyCall struct {
 // ImportSshPublicKey: Adds an SSH public key and returns the profile
 // information. Default POSIX account information is set when no
 // username and UID exist as part of the login profile.
+//
+// - parent: The unique ID for the user in format `users/{user}`.
 func (r *UsersService) ImportSshPublicKey(parent string, sshpublickey *SshPublicKey) *UsersImportSshPublicKeyCall {
 	c := &UsersImportSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -713,6 +717,11 @@ type UsersProjectsDeleteCall struct {
 }
 
 // Delete: Deletes a POSIX account.
+//
+// - name: A reference to the POSIX account to update. POSIX accounts
+// are identified by the project ID they are associated with. A
+// reference to the POSIX account is in format
+// `users/{user}/projects/{project}`.
 func (r *UsersProjectsService) Delete(name string) *UsersProjectsDeleteCall {
 	c := &UsersProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -844,6 +853,10 @@ type UsersSshPublicKeysDeleteCall struct {
 }
 
 // Delete: Deletes an SSH public key.
+//
+// - name: The fingerprint of the public key to update. Public keys are
+// identified by their SHA-256 fingerprint. The fingerprint of the
+// public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
 func (r *UsersSshPublicKeysService) Delete(name string) *UsersSshPublicKeysDeleteCall {
 	c := &UsersSshPublicKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -976,6 +989,10 @@ type UsersSshPublicKeysGetCall struct {
 }
 
 // Get: Retrieves an SSH public key.
+//
+// - name: The fingerprint of the public key to retrieve. Public keys
+// are identified by their SHA-256 fingerprint. The fingerprint of the
+// public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
 func (r *UsersSshPublicKeysService) Get(name string) *UsersSshPublicKeysGetCall {
 	c := &UsersSshPublicKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1122,6 +1139,10 @@ type UsersSshPublicKeysPatchCall struct {
 
 // Patch: Updates an SSH public key and returns the profile information.
 // This method supports patch semantics.
+//
+// - name: The fingerprint of the public key to update. Public keys are
+// identified by their SHA-256 fingerprint. The fingerprint of the
+// public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
 func (r *UsersSshPublicKeysService) Patch(name string, sshpublickey *SshPublicKey) *UsersSshPublicKeysPatchCall {
 	c := &UsersSshPublicKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

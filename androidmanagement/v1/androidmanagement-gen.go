@@ -4868,6 +4868,9 @@ type EnterprisesDeleteCall struct {
 
 // Delete: This feature is not generally available yet. Deletes an
 // enterprise.
+//
+// - name: This feature is not generally available yet. The name of the
+// enterprise in the form enterprises/{enterpriseId}.
 func (r *EnterprisesService) Delete(name string) *EnterprisesDeleteCall {
 	c := &EnterprisesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4999,6 +5002,9 @@ type EnterprisesGetCall struct {
 }
 
 // Get: Gets an enterprise.
+//
+// - name: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesService) Get(name string) *EnterprisesGetCall {
 	c := &EnterprisesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5363,6 +5369,9 @@ type EnterprisesPatchCall struct {
 }
 
 // Patch: Updates an enterprise.
+//
+// - name: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesService) Patch(name string, enterprise *Enterprise) *EnterprisesPatchCall {
 	c := &EnterprisesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5517,6 +5526,9 @@ type EnterprisesApplicationsGetCall struct {
 }
 
 // Get: Gets info about an application.
+//
+// - name: The name of the application in the form
+// enterprises/{enterpriseId}/applications/{package_name}.
 func (r *EnterprisesApplicationsService) Get(name string) *EnterprisesApplicationsGetCall {
 	c := &EnterprisesApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5674,6 +5686,9 @@ type EnterprisesDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device. This operation wipes the device.
+//
+// - name: The name of the device in the form
+// enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDeleteCall {
 	c := &EnterprisesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5849,6 +5864,9 @@ type EnterprisesDevicesGetCall struct {
 }
 
 // Get: Gets a device.
+//
+// - name: The name of the device in the form
+// enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5995,6 +6013,9 @@ type EnterprisesDevicesIssueCommandCall struct {
 // IssueCommand: Issues a command to a device. The Operation resource
 // returned contains a Command in its metadata field. Use the get
 // operation method to get the status of the command.
+//
+// - name: The name of the device in the form
+// enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) IssueCommand(name string, command *Command) *EnterprisesDevicesIssueCommandCall {
 	c := &EnterprisesDevicesIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6135,6 +6156,9 @@ type EnterprisesDevicesListCall struct {
 }
 
 // List: Lists devices for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6325,6 +6349,9 @@ type EnterprisesDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+// - name: The name of the device in the form
+// enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Patch(name string, device *Device) *EnterprisesDevicesPatchCall {
 	c := &EnterprisesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6487,6 +6514,8 @@ type EnterprisesDevicesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // Code.CANCELLED.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *EnterprisesDevicesOperationsService) Cancel(name string) *EnterprisesDevicesOperationsCancelCall {
 	c := &EnterprisesDevicesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6620,6 +6649,8 @@ type EnterprisesDevicesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns google.rpc.Code.UNIMPLEMENTED.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *EnterprisesDevicesOperationsService) Delete(name string) *EnterprisesDevicesOperationsDeleteCall {
 	c := &EnterprisesDevicesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6753,6 +6784,8 @@ type EnterprisesDevicesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *EnterprisesDevicesOperationsService) Get(name string) *EnterprisesDevicesOperationsGetCall {
 	c := &EnterprisesDevicesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6906,6 +6939,8 @@ type EnterprisesDevicesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *EnterprisesDevicesOperationsService) List(name string) *EnterprisesDevicesOperationsListCall {
 	c := &EnterprisesDevicesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7108,6 +7143,9 @@ type EnterprisesEnrollmentTokensCreateCall struct {
 }
 
 // Create: Creates an enrollment token for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) Create(parent string, enrollmenttoken *EnrollmentToken) *EnterprisesEnrollmentTokensCreateCall {
 	c := &EnterprisesEnrollmentTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7248,6 +7286,9 @@ type EnterprisesEnrollmentTokensDeleteCall struct {
 
 // Delete: Deletes an enrollment token. This operation invalidates the
 // token, preventing its future use.
+//
+// - name: The name of the enrollment token in the form
+// enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 func (r *EnterprisesEnrollmentTokensService) Delete(name string) *EnterprisesEnrollmentTokensDeleteCall {
 	c := &EnterprisesEnrollmentTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7379,6 +7420,9 @@ type EnterprisesPoliciesDeleteCall struct {
 
 // Delete: Deletes a policy. This operation is only permitted if no
 // devices are currently referencing the policy.
+//
+// - name: The name of the policy in the form
+// enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Delete(name string) *EnterprisesPoliciesDeleteCall {
 	c := &EnterprisesPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7510,6 +7554,9 @@ type EnterprisesPoliciesGetCall struct {
 }
 
 // Get: Gets a policy.
+//
+// - name: The name of the policy in the form
+// enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Get(name string) *EnterprisesPoliciesGetCall {
 	c := &EnterprisesPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7654,6 +7701,9 @@ type EnterprisesPoliciesListCall struct {
 }
 
 // List: Lists policies for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesPoliciesService) List(parent string) *EnterprisesPoliciesListCall {
 	c := &EnterprisesPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7844,6 +7894,9 @@ type EnterprisesPoliciesPatchCall struct {
 }
 
 // Patch: Updates or creates a policy.
+//
+// - name: The name of the policy in the form
+// enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Patch(name string, policy *Policy) *EnterprisesPoliciesPatchCall {
 	c := &EnterprisesPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7998,6 +8051,9 @@ type EnterprisesWebAppsCreateCall struct {
 }
 
 // Create: Creates a web app.
+//
+// - parent: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) Create(parent string, webapp *WebApp) *EnterprisesWebAppsCreateCall {
 	c := &EnterprisesWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8137,6 +8193,9 @@ type EnterprisesWebAppsDeleteCall struct {
 }
 
 // Delete: Deletes a web app.
+//
+// - name: The name of the web app in the form
+// enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Delete(name string) *EnterprisesWebAppsDeleteCall {
 	c := &EnterprisesWebAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8268,6 +8327,9 @@ type EnterprisesWebAppsGetCall struct {
 }
 
 // Get: Gets a web app.
+//
+// - name: The name of the web app in the form
+// enterprises/{enterpriseId}/webApp/{packageName}.
 func (r *EnterprisesWebAppsService) Get(name string) *EnterprisesWebAppsGetCall {
 	c := &EnterprisesWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8412,6 +8474,9 @@ type EnterprisesWebAppsListCall struct {
 }
 
 // List: Lists web apps for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListCall {
 	c := &EnterprisesWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8602,6 +8667,9 @@ type EnterprisesWebAppsPatchCall struct {
 }
 
 // Patch: Updates a web app.
+//
+// - name: The name of the web app in the form
+// enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Patch(name string, webapp *WebApp) *EnterprisesWebAppsPatchCall {
 	c := &EnterprisesWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8757,6 +8825,9 @@ type EnterprisesWebTokensCreateCall struct {
 
 // Create: Creates a web token to access an embeddable managed Google
 // Play web UI for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+// enterprises/{enterpriseId}.
 func (r *EnterprisesWebTokensService) Create(parent string, webtoken *WebToken) *EnterprisesWebTokensCreateCall {
 	c := &EnterprisesWebTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

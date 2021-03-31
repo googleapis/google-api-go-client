@@ -2182,6 +2182,8 @@ type AlertsDeleteCall struct {
 // Marking an alert for deletion has no effect on an alert which has
 // already been marked for deletion. Attempting to mark a nonexistent
 // alert for deletion results in a `NOT_FOUND` error.
+//
+// - alertId: The identifier of the alert to delete.
 func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 	c := &AlertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -2327,6 +2329,8 @@ type AlertsGetCall struct {
 
 // Get: Gets the specified alert. Attempting to get a nonexistent alert
 // returns `NOT_FOUND` error.
+//
+// - alertId: The identifier of the alert to retrieve.
 func (r *AlertsService) Get(alertId string) *AlertsGetCall {
 	c := &AlertsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -2485,6 +2489,8 @@ type AlertsGetMetadataCall struct {
 
 // GetMetadata: Returns the metadata of an alert. Attempting to get
 // metadata for a non-existent alert returns `NOT_FOUND` error.
+//
+// - alertId: The identifier of the alert this metadata belongs to.
 func (r *AlertsService) GetMetadata(alertId string) *AlertsGetMetadataCall {
 	c := &AlertsGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -2871,6 +2877,8 @@ type AlertsUndeleteCall struct {
 // removed from the Alert Center database) or a nonexistent alert
 // returns a `NOT_FOUND` error. Attempting to undelete an alert which
 // has not been marked for deletion has no effect.
+//
+// - alertId: The identifier of the alert to undelete.
 func (r *AlertsService) Undelete(alertId string, undeletealertrequest *UndeleteAlertRequest) *AlertsUndeleteCall {
 	c := &AlertsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -3013,6 +3021,8 @@ type AlertsFeedbackCreateCall struct {
 // feedback for a non-existent alert returns `NOT_FOUND` error.
 // Attempting to create a feedback for an alert that is marked for
 // deletion returns `FAILED_PRECONDITION' error.
+//
+// - alertId: The identifier of the alert this feedback belongs to.
 func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedback) *AlertsFeedbackCreateCall {
 	c := &AlertsFeedbackCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -3167,6 +3177,9 @@ type AlertsFeedbackListCall struct {
 
 // List: Lists all the feedback for an alert. Attempting to list
 // feedbacks for a non-existent alert returns `NOT_FOUND` error.
+//
+// - alertId: The alert identifier. The "-" wildcard could be used to
+// represent all alerts.
 func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 	c := &AlertsFeedbackListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId

@@ -2461,6 +2461,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2606,6 +2608,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2811,6 +2816,8 @@ type ProjectsLocationsGlobalHubsCreateCall struct {
 }
 
 // Create: Creates a new Hub in a given project and location.
+//
+// - parent: The parent resource's name of the Hub.
 func (r *ProjectsLocationsGlobalHubsService) Create(parent string, hub *Hub) *ProjectsLocationsGlobalHubsCreateCall {
 	c := &ProjectsLocationsGlobalHubsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2985,6 +2992,8 @@ type ProjectsLocationsGlobalHubsDeleteCall struct {
 }
 
 // Delete: Deletes a single Hub.
+//
+// - name: The name of the Hub to delete.
 func (r *ProjectsLocationsGlobalHubsService) Delete(name string) *ProjectsLocationsGlobalHubsDeleteCall {
 	c := &ProjectsLocationsGlobalHubsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3139,6 +3148,8 @@ type ProjectsLocationsGlobalHubsGetCall struct {
 }
 
 // Get: Gets details of a single Hub.
+//
+// - name: Name of the Hub resource to get.
 func (r *ProjectsLocationsGlobalHubsService) Get(name string) *ProjectsLocationsGlobalHubsGetCall {
 	c := &ProjectsLocationsGlobalHubsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3285,6 +3296,10 @@ type ProjectsLocationsGlobalHubsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalHubsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalHubsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalHubsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3449,6 +3464,8 @@ type ProjectsLocationsGlobalHubsListCall struct {
 }
 
 // List: Lists Hubs in a given project and location.
+//
+// - parent: The parent resource's name.
 func (r *ProjectsLocationsGlobalHubsService) List(parent string) *ProjectsLocationsGlobalHubsListCall {
 	c := &ProjectsLocationsGlobalHubsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3662,6 +3679,8 @@ type ProjectsLocationsGlobalHubsPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single Hub.
+//
+// - name: Immutable. The name of a Hub resource.
 func (r *ProjectsLocationsGlobalHubsService) Patch(name string, hub *Hub) *ProjectsLocationsGlobalHubsPatchCall {
 	c := &ProjectsLocationsGlobalHubsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3844,6 +3863,10 @@ type ProjectsLocationsGlobalHubsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalHubsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalHubsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalHubsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3989,6 +4012,10 @@ type ProjectsLocationsGlobalHubsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsGlobalHubsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalHubsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalHubsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4131,6 +4158,10 @@ type ProjectsLocationsInternalRangesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsInternalRangesService) GetIamPolicy(resource string) *ProjectsLocationsInternalRangesGetIamPolicyCall {
 	c := &ProjectsLocationsInternalRangesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4297,6 +4328,10 @@ type ProjectsLocationsInternalRangesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsInternalRangesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInternalRangesSetIamPolicyCall {
 	c := &ProjectsLocationsInternalRangesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4442,6 +4477,10 @@ type ProjectsLocationsInternalRangesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsInternalRangesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInternalRangesTestIamPermissionsCall {
 	c := &ProjectsLocationsInternalRangesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4591,6 +4630,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4733,6 +4774,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4866,6 +4909,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5019,6 +5064,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5224,6 +5271,10 @@ type ProjectsLocationsPolicyBasedRoutesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsPolicyBasedRoutesService) GetIamPolicy(resource string) *ProjectsLocationsPolicyBasedRoutesGetIamPolicyCall {
 	c := &ProjectsLocationsPolicyBasedRoutesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5390,6 +5441,10 @@ type ProjectsLocationsPolicyBasedRoutesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsPolicyBasedRoutesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsPolicyBasedRoutesSetIamPolicyCall {
 	c := &ProjectsLocationsPolicyBasedRoutesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5535,6 +5590,10 @@ type ProjectsLocationsPolicyBasedRoutesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsPolicyBasedRoutesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsPolicyBasedRoutesTestIamPermissionsCall {
 	c := &ProjectsLocationsPolicyBasedRoutesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5675,6 +5734,8 @@ type ProjectsLocationsSpokesCreateCall struct {
 }
 
 // Create: Creates a new Spoke in a given project and location.
+//
+// - parent: The parent's resource name of the Spoke.
 func (r *ProjectsLocationsSpokesService) Create(parent string, spoke *Spoke) *ProjectsLocationsSpokesCreateCall {
 	c := &ProjectsLocationsSpokesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5849,6 +5910,8 @@ type ProjectsLocationsSpokesDeleteCall struct {
 }
 
 // Delete: Deletes a single Spoke.
+//
+// - name: The name of the Spoke to delete.
 func (r *ProjectsLocationsSpokesService) Delete(name string) *ProjectsLocationsSpokesDeleteCall {
 	c := &ProjectsLocationsSpokesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6003,6 +6066,8 @@ type ProjectsLocationsSpokesGetCall struct {
 }
 
 // Get: Gets details of a single Spoke.
+//
+// - name: The name of Spoke resource.
 func (r *ProjectsLocationsSpokesService) Get(name string) *ProjectsLocationsSpokesGetCall {
 	c := &ProjectsLocationsSpokesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6149,6 +6214,10 @@ type ProjectsLocationsSpokesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsSpokesService) GetIamPolicy(resource string) *ProjectsLocationsSpokesGetIamPolicyCall {
 	c := &ProjectsLocationsSpokesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6313,6 +6382,8 @@ type ProjectsLocationsSpokesListCall struct {
 }
 
 // List: Lists Spokes in a given project and location.
+//
+// - parent: The parent's resource name.
 func (r *ProjectsLocationsSpokesService) List(parent string) *ProjectsLocationsSpokesListCall {
 	c := &ProjectsLocationsSpokesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6526,6 +6597,8 @@ type ProjectsLocationsSpokesPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single Spoke.
+//
+// - name: Immutable. The name of a Spoke resource.
 func (r *ProjectsLocationsSpokesService) Patch(name string, spoke *Spoke) *ProjectsLocationsSpokesPatchCall {
 	c := &ProjectsLocationsSpokesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6708,6 +6781,10 @@ type ProjectsLocationsSpokesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsSpokesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsSpokesSetIamPolicyCall {
 	c := &ProjectsLocationsSpokesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6853,6 +6930,10 @@ type ProjectsLocationsSpokesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsSpokesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsSpokesTestIamPermissionsCall {
 	c := &ProjectsLocationsSpokesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

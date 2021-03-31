@@ -1005,6 +1005,9 @@ type PagesDeleteCall struct {
 }
 
 // Delete: Delete all `ClaimReview` markup on a page.
+//
+// - name: The name of the resource to delete, in the form of
+// `pages/{page_id}`.
 func (r *PagesService) Delete(name string) *PagesDeleteCall {
 	c := &PagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1136,6 +1139,9 @@ type PagesGetCall struct {
 }
 
 // Get: Get all `ClaimReview` markup on a page.
+//
+// - name: The name of the resource to get, in the form of
+// `pages/{page_id}`.
 func (r *PagesService) Get(name string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1515,6 +1521,10 @@ type PagesUpdateCall struct {
 // page, first perform a Get operation, then modify the returned markup,
 // and finally call Update with the entire `ClaimReview` markup as the
 // body.
+//
+// - name: The name of this `ClaimReview` markup page resource, in the
+// form of `pages/{page_id}`. Except for update requests, this field is
+// output-only and should not be set by the user.
 func (r *PagesService) Update(name string, googlefactcheckingfactchecktoolsv1alpha1claimreviewmarkuppage *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage) *PagesUpdateCall {
 	c := &PagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -1116,6 +1116,8 @@ type PhotoDeleteCall struct {
 // following error codes: * google.rpc.Code.PERMISSION_DENIED if the
 // requesting user did not create the requested photo. *
 // google.rpc.Code.NOT_FOUND if the photo ID does not exist.
+//
+// - photoId: ID of the Photo.
 func (r *PhotoService) Delete(photoId string) *PhotoDeleteCall {
 	c := &PhotoDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.photoId = photoId
@@ -1251,6 +1253,8 @@ type PhotoGetCall struct {
 // google.rpc.Code.NOT_FOUND if the requested Photo does not exist. *
 // google.rpc.Code.UNAVAILABLE if the requested Photo is still being
 // indexed.
+//
+// - photoId: ID of the Photo.
 func (r *PhotoService) Get(photoId string) *PhotoGetCall {
 	c := &PhotoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.photoId = photoId
@@ -1583,6 +1587,8 @@ type PhotoUpdateCall struct {
 // request is malformed. * google.rpc.Code.NOT_FOUND if the requested
 // photo does not exist. * google.rpc.Code.UNAVAILABLE if the requested
 // Photo is still being indexed.
+//
+// - id: A unique identifier for a photo.
 func (r *PhotoService) Update(id string, photo *Photo) *PhotoUpdateCall {
 	c := &PhotoUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id

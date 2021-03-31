@@ -3441,6 +3441,9 @@ type MediaDownloadCall struct {
 
 // Download: Downloads media. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
+//
+// - resourceName: Name of the media that is being downloaded. See
+// ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3604,6 +3607,9 @@ type MediaUploadCall struct {
 
 // Upload: Uploads media. Upload is supported on the URI
 // `/upload/v1/media/{+name}`.
+//
+// - resourceName: Name of the media that is being downloaded. See
+// ReadRequest.resource_name.
 func (r *MediaService) Upload(resourceName string, googlebytestreammedia *GoogleBytestreamMedia) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3832,6 +3838,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3974,6 +3982,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4114,6 +4124,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4319,6 +4331,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

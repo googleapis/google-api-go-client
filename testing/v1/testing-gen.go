@@ -3375,6 +3375,9 @@ type ProjectsTestMatricesCancelCall struct {
 // PERMISSION_DENIED - if the user is not authorized to read project -
 // INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the
 // Test Matrix does not exist
+//
+// - projectId: Cloud project that owns the test.
+// - testMatrixId: Test matrix that will be canceled.
 func (r *ProjectsTestMatricesService) Cancel(projectId string, testMatrixId string) *ProjectsTestMatricesCancelCall {
 	c := &ProjectsTestMatricesCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3520,6 +3523,8 @@ type ProjectsTestMatricesCreateCall struct {
 // codes: - PERMISSION_DENIED - if the user is not authorized to write
 // to project - INVALID_ARGUMENT - if the request is malformed or if the
 // matrix tries to use too many simultaneous devices.
+//
+// - projectId: The GCE project under which this job will run.
 func (r *ProjectsTestMatricesService) Create(projectId string, testmatrix *TestMatrix) *ProjectsTestMatricesCreateCall {
 	c := &ProjectsTestMatricesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3677,6 +3682,10 @@ type ProjectsTestMatricesGetCall struct {
 // following canonical error codes: - PERMISSION_DENIED - if the user is
 // not authorized to read project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the Test Matrix does not exist
+//
+// - projectId: Cloud project that owns the test matrix.
+// - testMatrixId: Unique test matrix id which was assigned by the
+// service.
 func (r *ProjectsTestMatricesService) Get(projectId string, testMatrixId string) *ProjectsTestMatricesGetCall {
 	c := &ProjectsTestMatricesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3833,6 +3842,8 @@ type TestEnvironmentCatalogGetCall struct {
 // of the following canonical error codes: - INVALID_ARGUMENT - if the
 // request is malformed - NOT_FOUND - if the environment type does not
 // exist - INTERNAL - if an internal error occurred
+//
+// - environmentType: The type of environment that should be listed.
 func (r *TestEnvironmentCatalogService) Get(environmentType string) *TestEnvironmentCatalogGetCall {
 	c := &TestEnvironmentCatalogGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environmentType = environmentType

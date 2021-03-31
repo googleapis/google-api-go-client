@@ -1014,6 +1014,8 @@ type OrganizationsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OrganizationsLocationsOperationsService) Get(name string) *OrganizationsLocationsOperationsGetCall {
 	c := &OrganizationsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1167,6 +1169,8 @@ type OrganizationsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OrganizationsLocationsOperationsService) List(name string) *OrganizationsLocationsOperationsListCall {
 	c := &OrganizationsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1370,6 +1374,9 @@ type OrganizationsLocationsWorkloadsCreateCall struct {
 }
 
 // Create: Creates Assured Workload.
+//
+// - parent: The resource name of the new Workload's parent. Must be of
+// the form `organizations/{org_id}/locations/{location_id}`.
 func (r *OrganizationsLocationsWorkloadsService) Create(parent string, googlecloudassuredworkloadsv1workload *GoogleCloudAssuredworkloadsV1Workload) *OrganizationsLocationsWorkloadsCreateCall {
 	c := &OrganizationsLocationsWorkloadsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1526,6 +1533,9 @@ type OrganizationsLocationsWorkloadsDeleteCall struct {
 // Delete: Deletes the workload. Make sure that workload's direct
 // children are already in a deleted state, otherwise the request will
 // fail with a FAILED_PRECONDITION error.
+//
+// - name: The `name` field is used to identify the workload. Format:
+// organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
 func (r *OrganizationsLocationsWorkloadsService) Delete(name string) *OrganizationsLocationsWorkloadsDeleteCall {
 	c := &OrganizationsLocationsWorkloadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1669,6 +1679,12 @@ type OrganizationsLocationsWorkloadsGetCall struct {
 }
 
 // Get: Gets Assured Workload associated with a CRM Node
+//
+// - name: The resource name of the Workload to fetch. This is the
+// workloads's relative path in the API, formatted as
+// "organizations/{organization_id}/locations/{location_id}/workloads/{wo
+// rkload_id}". For example,
+// "organizations/123/locations/us-east1/workloads/assured-workload-1".
 func (r *OrganizationsLocationsWorkloadsService) Get(name string) *OrganizationsLocationsWorkloadsGetCall {
 	c := &OrganizationsLocationsWorkloadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1814,6 +1830,9 @@ type OrganizationsLocationsWorkloadsListCall struct {
 }
 
 // List: Lists Assured Workloads under a CRM Node.
+//
+// - parent: Parent Resource to list workloads from. Must be of the form
+// `organizations/{org_id}/locations/{location}`.
 func (r *OrganizationsLocationsWorkloadsService) List(parent string) *OrganizationsLocationsWorkloadsListCall {
 	c := &OrganizationsLocationsWorkloadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2023,6 +2042,10 @@ type OrganizationsLocationsWorkloadsPatchCall struct {
 // workload display_name and labels. For force updates don't set etag
 // field in the Workload. Only one update operation per workload can be
 // in progress.
+//
+// - name: Optional. The resource name of the workload. Format:
+// organizations/{organization}/locations/{location}/workloads/{workload}
+//  Read-only.
 func (r *OrganizationsLocationsWorkloadsService) Patch(name string, googlecloudassuredworkloadsv1workload *GoogleCloudAssuredworkloadsV1Workload) *OrganizationsLocationsWorkloadsPatchCall {
 	c := &OrganizationsLocationsWorkloadsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

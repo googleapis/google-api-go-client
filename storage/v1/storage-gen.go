@@ -2400,6 +2400,11 @@ type BucketAccessControlsDeleteCall struct {
 
 // Delete: Permanently deletes the ACL entry for the specified entity on
 // the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Delete(bucket string, entity string) *BucketAccessControlsDeleteCall {
 	c := &BucketAccessControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -2538,6 +2543,11 @@ type BucketAccessControlsGetCall struct {
 
 // Get: Returns the ACL entry for the specified entity on the specified
 // bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Get(bucket string, entity string) *BucketAccessControlsGetCall {
 	c := &BucketAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -2715,6 +2725,8 @@ type BucketAccessControlsInsertCall struct {
 }
 
 // Insert: Creates a new ACL entry on the specified bucket.
+//
+// - bucket: Name of a bucket.
 func (r *BucketAccessControlsService) Insert(bucket string, bucketaccesscontrol *BucketAccessControl) *BucketAccessControlsInsertCall {
 	c := &BucketAccessControlsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -2879,6 +2891,8 @@ type BucketAccessControlsListCall struct {
 }
 
 // List: Retrieves ACL entries on the specified bucket.
+//
+// - bucket: Name of a bucket.
 func (r *BucketAccessControlsService) List(bucket string) *BucketAccessControlsListCall {
 	c := &BucketAccessControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3048,6 +3062,11 @@ type BucketAccessControlsPatchCall struct {
 }
 
 // Patch: Patches an ACL entry on the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Patch(bucket string, entity string, bucketaccesscontrol *BucketAccessControl) *BucketAccessControlsPatchCall {
 	c := &BucketAccessControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3222,6 +3241,11 @@ type BucketAccessControlsUpdateCall struct {
 }
 
 // Update: Updates an ACL entry on the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Update(bucket string, entity string, bucketaccesscontrol *BucketAccessControl) *BucketAccessControlsUpdateCall {
 	c := &BucketAccessControlsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3394,6 +3418,8 @@ type BucketsDeleteCall struct {
 }
 
 // Delete: Permanently deletes an empty bucket.
+//
+// - bucket: Name of a bucket.
 func (r *BucketsService) Delete(bucket string) *BucketsDeleteCall {
 	c := &BucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3550,6 +3576,8 @@ type BucketsGetCall struct {
 }
 
 // Get: Returns metadata for the specified bucket.
+//
+// - bucket: Name of a bucket.
 func (r *BucketsService) Get(bucket string) *BucketsGetCall {
 	c := &BucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3775,6 +3803,8 @@ type BucketsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Returns an IAM policy for the specified bucket.
+//
+// - bucket: Name of a bucket.
 func (r *BucketsService) GetIamPolicy(bucket string) *BucketsGetIamPolicyCall {
 	c := &BucketsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3959,6 +3989,8 @@ type BucketsInsertCall struct {
 }
 
 // Insert: Creates a new bucket.
+//
+// - project: A valid API project identifier.
 func (r *BucketsService) Insert(projectid string, bucket *Bucket) *BucketsInsertCall {
 	c := &BucketsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("project", projectid)
@@ -4225,6 +4257,8 @@ type BucketsListCall struct {
 }
 
 // List: Retrieves a list of buckets for a given project.
+//
+// - project: A valid API project identifier.
 func (r *BucketsService) List(projectid string) *BucketsListCall {
 	c := &BucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("project", projectid)
@@ -4478,6 +4512,10 @@ type BucketsLockRetentionPolicyCall struct {
 }
 
 // LockRetentionPolicy: Locks retention policy on a bucket.
+//
+// - bucket: Name of a bucket.
+// - ifMetagenerationMatch: Makes the operation conditional on whether
+// bucket's current metageneration matches the given value.
 func (r *BucketsService) LockRetentionPolicy(bucket string, ifMetagenerationMatch int64) *BucketsLockRetentionPolicyCall {
 	c := &BucketsLockRetentionPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -4645,6 +4683,8 @@ type BucketsPatchCall struct {
 // Patch: Patches a bucket. Changes to the bucket will be readable
 // immediately after writing, but configuration changes may take time to
 // propagate.
+//
+// - bucket: Name of a bucket.
 func (r *BucketsService) Patch(bucket string, bucket2 *Bucket) *BucketsPatchCall {
 	c := &BucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -4942,6 +4982,8 @@ type BucketsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Updates an IAM policy for the specified bucket.
+//
+// - bucket: Name of a bucket.
 func (r *BucketsService) SetIamPolicy(bucket string, policy *Policy) *BucketsSetIamPolicyCall {
 	c := &BucketsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -5107,6 +5149,9 @@ type BucketsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests a set of permissions on the given bucket to
 // see which, if any, are held by the caller.
+//
+// - bucket: Name of a bucket.
+// - permissions: Permissions to test.
 func (r *BucketsService) TestIamPermissions(bucket string, permissions []string) *BucketsTestIamPermissionsCall {
 	c := &BucketsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -5289,6 +5334,8 @@ type BucketsUpdateCall struct {
 // Update: Updates a bucket. Changes to the bucket will be readable
 // immediately after writing, but configuration changes may take time to
 // propagate.
+//
+// - bucket: Name of a bucket.
 func (r *BucketsService) Update(bucket string, bucket2 *Bucket) *BucketsUpdateCall {
 	c := &BucketsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -5686,6 +5733,11 @@ type DefaultObjectAccessControlsDeleteCall struct {
 
 // Delete: Permanently deletes the default object ACL entry for the
 // specified entity on the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Delete(bucket string, entity string) *DefaultObjectAccessControlsDeleteCall {
 	c := &DefaultObjectAccessControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -5824,6 +5876,11 @@ type DefaultObjectAccessControlsGetCall struct {
 
 // Get: Returns the default object ACL entry for the specified entity on
 // the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Get(bucket string, entity string) *DefaultObjectAccessControlsGetCall {
 	c := &DefaultObjectAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6002,6 +6059,8 @@ type DefaultObjectAccessControlsInsertCall struct {
 
 // Insert: Creates a new default object ACL entry on the specified
 // bucket.
+//
+// - bucket: Name of a bucket.
 func (r *DefaultObjectAccessControlsService) Insert(bucket string, objectaccesscontrol *ObjectAccessControl) *DefaultObjectAccessControlsInsertCall {
 	c := &DefaultObjectAccessControlsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6166,6 +6225,8 @@ type DefaultObjectAccessControlsListCall struct {
 }
 
 // List: Retrieves default object ACL entries on the specified bucket.
+//
+// - bucket: Name of a bucket.
 func (r *DefaultObjectAccessControlsService) List(bucket string) *DefaultObjectAccessControlsListCall {
 	c := &DefaultObjectAccessControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6364,6 +6425,11 @@ type DefaultObjectAccessControlsPatchCall struct {
 }
 
 // Patch: Patches a default object ACL entry on the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Patch(bucket string, entity string, objectaccesscontrol *ObjectAccessControl) *DefaultObjectAccessControlsPatchCall {
 	c := &DefaultObjectAccessControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6538,6 +6604,11 @@ type DefaultObjectAccessControlsUpdateCall struct {
 }
 
 // Update: Updates a default object ACL entry on the specified bucket.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Update(bucket string, entity string, objectaccesscontrol *ObjectAccessControl) *DefaultObjectAccessControlsUpdateCall {
 	c := &DefaultObjectAccessControlsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6711,6 +6782,9 @@ type NotificationsDeleteCall struct {
 }
 
 // Delete: Permanently deletes a notification subscription.
+//
+// - bucket: The parent bucket of the notification.
+// - notification: ID of the notification to delete.
 func (r *NotificationsService) Delete(bucket string, notification string) *NotificationsDeleteCall {
 	c := &NotificationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6849,6 +6923,9 @@ type NotificationsGetCall struct {
 }
 
 // Get: View a notification configuration.
+//
+// - bucket: The parent bucket of the notification.
+// - notification: Notification ID
 func (r *NotificationsService) Get(bucket string, notification string) *NotificationsGetCall {
 	c := &NotificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7029,6 +7106,8 @@ type NotificationsInsertCall struct {
 }
 
 // Insert: Creates a notification subscription for a given bucket.
+//
+// - bucket: The parent bucket of the notification.
 func (r *NotificationsService) Insert(bucket string, notification *Notification) *NotificationsInsertCall {
 	c := &NotificationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7195,6 +7274,8 @@ type NotificationsListCall struct {
 
 // List: Retrieves a list of notification subscriptions for a given
 // bucket.
+//
+// - bucket: Name of a Google Cloud Storage bucket.
 func (r *NotificationsService) List(bucket string) *NotificationsListCall {
 	c := &NotificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7368,6 +7449,13 @@ type ObjectAccessControlsDeleteCall struct {
 
 // Delete: Permanently deletes the ACL entry for the specified entity on
 // the specified object.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Delete(bucket string, object string, entity string) *ObjectAccessControlsDeleteCall {
 	c := &ObjectAccessControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7530,6 +7618,13 @@ type ObjectAccessControlsGetCall struct {
 
 // Get: Returns the ACL entry for the specified entity on the specified
 // object.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Get(bucket string, object string, entity string) *ObjectAccessControlsGetCall {
 	c := &ObjectAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7731,6 +7826,10 @@ type ObjectAccessControlsInsertCall struct {
 }
 
 // Insert: Creates a new ACL entry on the specified object.
+//
+// - bucket: Name of a bucket.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Insert(bucket string, object string, objectaccesscontrol *ObjectAccessControl) *ObjectAccessControlsInsertCall {
 	c := &ObjectAccessControlsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7919,6 +8018,10 @@ type ObjectAccessControlsListCall struct {
 }
 
 // List: Retrieves ACL entries on the specified object.
+//
+// - bucket: Name of a bucket.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) List(bucket string, object string) *ObjectAccessControlsListCall {
 	c := &ObjectAccessControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -8112,6 +8215,13 @@ type ObjectAccessControlsPatchCall struct {
 }
 
 // Patch: Patches an ACL entry on the specified object.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Patch(bucket string, object string, entity string, objectaccesscontrol *ObjectAccessControl) *ObjectAccessControlsPatchCall {
 	c := &ObjectAccessControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -8310,6 +8420,13 @@ type ObjectAccessControlsUpdateCall struct {
 }
 
 // Update: Updates an ACL entry on the specified object.
+//
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+// user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+// allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Update(bucket string, object string, entity string, objectaccesscontrol *ObjectAccessControl) *ObjectAccessControlsUpdateCall {
 	c := &ObjectAccessControlsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -8508,6 +8625,12 @@ type ObjectsComposeCall struct {
 
 // Compose: Concatenates a list of existing objects into a new object in
 // the same bucket.
+//
+// - destinationBucket: Name of the bucket containing the source
+// objects. The destination object is stored in this bucket.
+// - destinationObject: Name of the new object. For information about
+// how to URL encode object names to be path safe, see Encoding URI Path
+// Parts.
 func (r *ObjectsService) Compose(destinationBucket string, destinationObject string, composerequest *ComposeRequest) *ObjectsComposeCall {
 	c := &ObjectsComposeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.destinationBucket = destinationBucket
@@ -8772,6 +8895,19 @@ type ObjectsCopyCall struct {
 
 // Copy: Copies a source object to a destination object. Optionally
 // overrides metadata.
+//
+// - destinationBucket: Name of the bucket in which to store the new
+// object. Overrides the provided object metadata's bucket value, if
+// any.For information about how to URL encode object names to be path
+// safe, see Encoding URI Path Parts.
+// - destinationObject: Name of the new object. Required when the object
+// metadata is not otherwise provided. Overrides the object metadata's
+// name value, if any.
+// - sourceBucket: Name of the bucket in which to find the source
+// object.
+// - sourceObject: Name of the source object. For information about how
+// to URL encode object names to be path safe, see Encoding URI Path
+// Parts.
 func (r *ObjectsService) Copy(sourceBucket string, sourceObject string, destinationBucket string, destinationObject string, object *Object) *ObjectsCopyCall {
 	c := &ObjectsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceBucket = sourceBucket
@@ -9184,6 +9320,10 @@ type ObjectsDeleteCall struct {
 // Delete: Deletes an object and its metadata. Deletions are permanent
 // if versioning is not enabled for the bucket, or if the generation
 // parameter is used.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Delete(bucket string, object string) *ObjectsDeleteCall {
 	c := &ObjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9396,6 +9536,10 @@ type ObjectsGetCall struct {
 }
 
 // Get: Retrieves an object or its metadata.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Get(bucket string, object string) *ObjectsGetCall {
 	c := &ObjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9693,6 +9837,10 @@ type ObjectsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Returns an IAM policy for the specified object.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) GetIamPolicy(bucket string, object string) *ObjectsGetIamPolicyCall {
 	c := &ObjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9888,6 +10036,9 @@ type ObjectsInsertCall struct {
 }
 
 // Insert: Stores a new object and metadata.
+//
+// - bucket: Name of the bucket in which to store the new object.
+// Overrides the provided object metadata's bucket value, if any.
 func (r *ObjectsService) Insert(bucket string, object *Object) *ObjectsInsertCall {
 	c := &ObjectsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -10310,6 +10461,8 @@ type ObjectsListCall struct {
 }
 
 // List: Retrieves a list of objects matching the criteria.
+//
+// - bucket: Name of the bucket in which to look for objects.
 func (r *ObjectsService) List(bucket string) *ObjectsListCall {
 	c := &ObjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -10642,6 +10795,10 @@ type ObjectsPatchCall struct {
 }
 
 // Patch: Patches an object's metadata.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *ObjectsPatchCall {
 	c := &ObjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -10958,6 +11115,19 @@ type ObjectsRewriteCall struct {
 
 // Rewrite: Rewrites a source object to a destination object. Optionally
 // overrides metadata.
+//
+// - destinationBucket: Name of the bucket in which to store the new
+// object. Overrides the provided object metadata's bucket value, if
+// any.
+// - destinationObject: Name of the new object. Required when the object
+// metadata is not otherwise provided. Overrides the object metadata's
+// name value, if any. For information about how to URL encode object
+// names to be path safe, see Encoding URI Path Parts.
+// - sourceBucket: Name of the bucket in which to find the source
+// object.
+// - sourceObject: Name of the source object. For information about how
+// to URL encode object names to be path safe, see Encoding URI Path
+// Parts.
 func (r *ObjectsService) Rewrite(sourceBucket string, sourceObject string, destinationBucket string, destinationObject string, object *Object) *ObjectsRewriteCall {
 	c := &ObjectsRewriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceBucket = sourceBucket
@@ -11404,6 +11574,10 @@ type ObjectsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Updates an IAM policy for the specified object.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) SetIamPolicy(bucket string, object string, policy *Policy) *ObjectsSetIamPolicyCall {
 	c := &ObjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -11594,6 +11768,11 @@ type ObjectsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests a set of permissions on the given object to
 // see which, if any, are held by the caller.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
+// - permissions: Permissions to test.
 func (r *ObjectsService) TestIamPermissions(bucket string, object string, permissions []string) *ObjectsTestIamPermissionsCall {
 	c := &ObjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -11798,6 +11977,10 @@ type ObjectsUpdateCall struct {
 }
 
 // Update: Updates an object's metadata.
+//
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+// object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Update(bucket string, object string, object2 *Object) *ObjectsUpdateCall {
 	c := &ObjectsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -12110,6 +12293,8 @@ type ObjectsWatchAllCall struct {
 }
 
 // WatchAll: Watch for changes on all objects in a bucket.
+//
+// - bucket: Name of the bucket in which to look for objects.
 func (r *ObjectsService) WatchAll(bucket string, channel *Channel) *ObjectsWatchAllCall {
 	c := &ObjectsWatchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -12416,6 +12601,9 @@ type ProjectsHmacKeysCreateCall struct {
 }
 
 // Create: Creates a new HMAC key for the specified service account.
+//
+// - projectId: Project ID owning the service account.
+// - serviceAccountEmail: Email address of the service account.
 func (r *ProjectsHmacKeysService) Create(projectId string, serviceAccountEmail string) *ProjectsHmacKeysCreateCall {
 	c := &ProjectsHmacKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12566,6 +12754,9 @@ type ProjectsHmacKeysDeleteCall struct {
 }
 
 // Delete: Deletes an HMAC key.
+//
+// - accessId: Name of the HMAC key to be deleted.
+// - projectId: Project ID owning the requested key
 func (r *ProjectsHmacKeysService) Delete(projectId string, accessId string) *ProjectsHmacKeysDeleteCall {
 	c := &ProjectsHmacKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12691,6 +12882,10 @@ type ProjectsHmacKeysGetCall struct {
 }
 
 // Get: Retrieves an HMAC key's metadata
+//
+// - accessId: Name of the HMAC key.
+// - projectId: Project ID owning the service account of the requested
+// key.
 func (r *ProjectsHmacKeysService) Get(projectId string, accessId string) *ProjectsHmacKeysGetCall {
 	c := &ProjectsHmacKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12857,6 +13052,8 @@ type ProjectsHmacKeysListCall struct {
 }
 
 // List: Retrieves a list of HMAC keys matching the criteria.
+//
+// - projectId: Name of the project in which to look for HMAC keys.
 func (r *ProjectsHmacKeysService) List(projectId string) *ProjectsHmacKeysListCall {
 	c := &ProjectsHmacKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13095,6 +13292,10 @@ type ProjectsHmacKeysUpdateCall struct {
 
 // Update: Updates the state of an HMAC key. See the HMAC Key resource
 // descriptor for valid states.
+//
+// - accessId: Name of the HMAC key being updated.
+// - projectId: Project ID owning the service account of the updated
+// key.
 func (r *ProjectsHmacKeysService) Update(projectId string, accessId string, hmackeymetadata *HmacKeyMetadata) *ProjectsHmacKeysUpdateCall {
 	c := &ProjectsHmacKeysUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13256,6 +13457,8 @@ type ProjectsServiceAccountGetCall struct {
 
 // Get: Get the email address of this project's Google Cloud Storage
 // service account.
+//
+// - projectId: Project ID
 func (r *ProjectsServiceAccountService) Get(projectId string) *ProjectsServiceAccountGetCall {
 	c := &ProjectsServiceAccountGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

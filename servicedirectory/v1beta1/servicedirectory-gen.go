@@ -1063,6 +1063,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1208,6 +1210,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1413,6 +1418,9 @@ type ProjectsLocationsNamespacesCreateCall struct {
 }
 
 // Create: Creates a namespace, and returns the new namespace.
+//
+// - parent: The resource name of the project and location the namespace
+// will be created in.
 func (r *ProjectsLocationsNamespacesService) Create(parent string, namespace *Namespace) *ProjectsLocationsNamespacesCreateCall {
 	c := &ProjectsLocationsNamespacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1570,6 +1578,8 @@ type ProjectsLocationsNamespacesDeleteCall struct {
 
 // Delete: Deletes a namespace. This also deletes all services and
 // endpoints in the namespace.
+//
+// - name: The name of the namespace to delete.
 func (r *ProjectsLocationsNamespacesService) Delete(name string) *ProjectsLocationsNamespacesDeleteCall {
 	c := &ProjectsLocationsNamespacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1701,6 +1711,8 @@ type ProjectsLocationsNamespacesGetCall struct {
 }
 
 // Get: Gets a namespace.
+//
+// - name: The name of the namespace to retrieve.
 func (r *ProjectsLocationsNamespacesService) Get(name string) *ProjectsLocationsNamespacesGetCall {
 	c := &ProjectsLocationsNamespacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1846,6 +1858,10 @@ type ProjectsLocationsNamespacesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsNamespacesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1986,6 +2002,9 @@ type ProjectsLocationsNamespacesListCall struct {
 }
 
 // List: Lists all namespaces.
+//
+// - parent: The resource name of the project and location whose
+// namespaces you'd like to list.
 func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocationsNamespacesListCall {
 	c := &ProjectsLocationsNamespacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2220,6 +2239,9 @@ type ProjectsLocationsNamespacesPatchCall struct {
 }
 
 // Patch: Updates a namespace.
+//
+// - name: Immutable. The resource name for the namespace in the format
+// `projects/*/locations/*/namespaces/*`.
 func (r *ProjectsLocationsNamespacesService) Patch(name string, namespace *Namespace) *ProjectsLocationsNamespacesPatchCall {
 	c := &ProjectsLocationsNamespacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2374,6 +2396,10 @@ type ProjectsLocationsNamespacesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsNamespacesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2515,6 +2541,10 @@ type ProjectsLocationsNamespacesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests IAM permissions for a resource (namespace
 // or service only).
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsNamespacesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2655,6 +2685,9 @@ type ProjectsLocationsNamespacesServicesCreateCall struct {
 }
 
 // Create: Creates a service, and returns the new service.
+//
+// - parent: The resource name of the namespace this service will belong
+// to.
 func (r *ProjectsLocationsNamespacesServicesService) Create(parent string, service *Service) *ProjectsLocationsNamespacesServicesCreateCall {
 	c := &ProjectsLocationsNamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2812,6 +2845,8 @@ type ProjectsLocationsNamespacesServicesDeleteCall struct {
 
 // Delete: Deletes a service. This also deletes all endpoints associated
 // with the service.
+//
+// - name: The name of the service to delete.
 func (r *ProjectsLocationsNamespacesServicesService) Delete(name string) *ProjectsLocationsNamespacesServicesDeleteCall {
 	c := &ProjectsLocationsNamespacesServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2943,6 +2978,8 @@ type ProjectsLocationsNamespacesServicesGetCall struct {
 }
 
 // Get: Gets a service.
+//
+// - name: The name of the service to get.
 func (r *ProjectsLocationsNamespacesServicesService) Get(name string) *ProjectsLocationsNamespacesServicesGetCall {
 	c := &ProjectsLocationsNamespacesServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3088,6 +3125,10 @@ type ProjectsLocationsNamespacesServicesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsNamespacesServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesServicesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3228,6 +3269,9 @@ type ProjectsLocationsNamespacesServicesListCall struct {
 }
 
 // List: Lists all services belonging to a namespace.
+//
+// - parent: The resource name of the namespace whose services you'd
+// like to list.
 func (r *ProjectsLocationsNamespacesServicesService) List(parent string) *ProjectsLocationsNamespacesServicesListCall {
 	c := &ProjectsLocationsNamespacesServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3463,6 +3507,9 @@ type ProjectsLocationsNamespacesServicesPatchCall struct {
 }
 
 // Patch: Updates a service.
+//
+// - name: Immutable. The resource name for the service in the format
+// `projects/*/locations/*/namespaces/*/services/*`.
 func (r *ProjectsLocationsNamespacesServicesService) Patch(name string, service *Service) *ProjectsLocationsNamespacesServicesPatchCall {
 	c := &ProjectsLocationsNamespacesServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3617,6 +3664,8 @@ type ProjectsLocationsNamespacesServicesResolveCall struct {
 
 // Resolve: Returns a service and its associated endpoints. Resolving a
 // service is not considered an active developer method.
+//
+// - name: The name of the service to resolve.
 func (r *ProjectsLocationsNamespacesServicesService) Resolve(name string, resolveservicerequest *ResolveServiceRequest) *ProjectsLocationsNamespacesServicesResolveCall {
 	c := &ProjectsLocationsNamespacesServicesResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3758,6 +3807,10 @@ type ProjectsLocationsNamespacesServicesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsNamespacesServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesServicesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3899,6 +3952,10 @@ type ProjectsLocationsNamespacesServicesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests IAM permissions for a resource (namespace
 // or service only).
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4039,6 +4096,9 @@ type ProjectsLocationsNamespacesServicesEndpointsCreateCall struct {
 }
 
 // Create: Creates an endpoint, and returns the new endpoint.
+//
+// - parent: The resource name of the service that this endpoint
+// provides.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Create(parent string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsCreateCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4195,6 +4255,8 @@ type ProjectsLocationsNamespacesServicesEndpointsDeleteCall struct {
 }
 
 // Delete: Deletes an endpoint.
+//
+// - name: The name of the endpoint to delete.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Delete(name string) *ProjectsLocationsNamespacesServicesEndpointsDeleteCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4326,6 +4388,8 @@ type ProjectsLocationsNamespacesServicesEndpointsGetCall struct {
 }
 
 // Get: Gets an endpoint.
+//
+// - name: The name of the endpoint to get.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Get(name string) *ProjectsLocationsNamespacesServicesEndpointsGetCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4470,6 +4534,9 @@ type ProjectsLocationsNamespacesServicesEndpointsListCall struct {
 }
 
 // List: Lists all endpoints.
+//
+// - parent: The resource name of the service whose endpoints you'd like
+// to list.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4708,6 +4775,9 @@ type ProjectsLocationsNamespacesServicesEndpointsPatchCall struct {
 }
 
 // Patch: Updates an endpoint.
+//
+// - name: Immutable. The resource name for the endpoint in the format
+// `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Patch(name string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsPatchCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

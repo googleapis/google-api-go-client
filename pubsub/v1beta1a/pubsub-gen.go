@@ -1134,6 +1134,8 @@ type SubscriptionsDeleteCall struct {
 // Delete: Deletes an existing subscription. All pending messages in the
 // subscription are immediately dropped. Calls to Pull after deletion
 // will return NOT_FOUND.
+//
+// - subscription: The subscription to delete.
 func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -1266,6 +1268,8 @@ type SubscriptionsGetCall struct {
 }
 
 // Get: Gets the configuration details of a subscription.
+//
+// - subscription: The name of the subscription to get.
 func (r *SubscriptionsService) Get(subscription string) *SubscriptionsGetCall {
 	c := &SubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -2243,6 +2247,8 @@ type TopicsDeleteCall struct {
 // Delete: Deletes the topic with the given name. Returns NOT_FOUND if
 // the topic does not exist. After a topic is deleted, a new topic may
 // be created with the same name.
+//
+// - topic: Name of the topic to delete.
 func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
 	c := &TopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -2378,6 +2384,8 @@ type TopicsGetCall struct {
 // name attribute, this method is only useful to check the existence of
 // a topic. If other attributes are added in the future, they will be
 // returned here.
+//
+// - topic: The name of the topic to get.
 func (r *TopicsService) Get(topic string) *TopicsGetCall {
 	c := &TopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic

@@ -1259,6 +1259,9 @@ type ProjectsLocationsEnvironmentsCreateCall struct {
 }
 
 // Create: Create a new environment.
+//
+// - parent: The parent must be of the form
+// "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) Create(parent string, environment *Environment) *ProjectsLocationsEnvironmentsCreateCall {
 	c := &ProjectsLocationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1398,6 +1401,10 @@ type ProjectsLocationsEnvironmentsDeleteCall struct {
 }
 
 // Delete: Delete an environment.
+//
+// - name: The environment to delete, in the form:
+// "projects/{projectId}/locations/{locationId}/environments/{environment
+// Id}"
 func (r *ProjectsLocationsEnvironmentsService) Delete(name string) *ProjectsLocationsEnvironmentsDeleteCall {
 	c := &ProjectsLocationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1529,6 +1536,10 @@ type ProjectsLocationsEnvironmentsGetCall struct {
 }
 
 // Get: Get an existing environment.
+//
+// - name: The resource name of the environment to get, in the form:
+// "projects/{projectId}/locations/{locationId}/environments/{environment
+// Id}"
 func (r *ProjectsLocationsEnvironmentsService) Get(name string) *ProjectsLocationsEnvironmentsGetCall {
 	c := &ProjectsLocationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1673,6 +1684,9 @@ type ProjectsLocationsEnvironmentsListCall struct {
 }
 
 // List: List environments.
+//
+// - parent: List environments in the given project and location, in the
+// form: "projects/{projectId}/locations/{locationId}"
 func (r *ProjectsLocationsEnvironmentsService) List(parent string) *ProjectsLocationsEnvironmentsListCall {
 	c := &ProjectsLocationsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1863,6 +1877,11 @@ type ProjectsLocationsEnvironmentsPatchCall struct {
 }
 
 // Patch: Update an environment.
+//
+// - name: The relative resource name of the environment to update, in
+// the form:
+// "projects/{projectId}/locations/{locationId}/environments/{environment
+// Id}"
 func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *Environment) *ProjectsLocationsEnvironmentsPatchCall {
 	c := &ProjectsLocationsEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2085,6 +2104,9 @@ type ProjectsLocationsImageVersionsListCall struct {
 }
 
 // List: List ImageVersions for provided location.
+//
+// - parent: List ImageVersions in the given project and location, in
+// the form: "projects/{projectId}/locations/{locationId}"
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2290,6 +2312,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2423,6 +2447,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2576,6 +2602,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

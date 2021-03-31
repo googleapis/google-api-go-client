@@ -739,6 +739,8 @@ type GroupsGetCall struct {
 }
 
 // Get: Gets one resource by id.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -882,6 +884,8 @@ type GroupsPatchCall struct {
 
 // Patch: Updates an existing resource. This method supports patch
 // semantics.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -1020,6 +1024,8 @@ type GroupsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId

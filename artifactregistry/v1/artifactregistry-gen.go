@@ -473,6 +473,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -615,6 +617,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -748,6 +752,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1103,6 +1109,9 @@ type ProjectsLocationsRepositoriesDockerImagesListCall struct {
 }
 
 // List: Lists docker images.
+//
+// - parent: The name of the parent resource whose docker images will be
+// listed.
 func (r *ProjectsLocationsRepositoriesDockerImagesService) List(parent string) *ProjectsLocationsRepositoriesDockerImagesListCall {
 	c := &ProjectsLocationsRepositoriesDockerImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

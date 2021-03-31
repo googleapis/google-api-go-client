@@ -2932,6 +2932,16 @@ type V1p4beta1AnalyzeIamPolicyCall struct {
 
 // AnalyzeIamPolicy: Analyzes IAM policies to answer which identities
 // have what accesses on which resources.
+//
+// - parent: The relative name of the root asset. Only resources and IAM
+// policies within the parent will be analyzed. This can only be an
+// organization number (such as "organizations/123"), a folder number
+// (such as "folders/123"), a project ID (such as
+// "projects/my-project-id"), or a project number (such as
+// "projects/12345"). To know how to get organization id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+// To know how to get folder or project id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1p4beta1Service) AnalyzeIamPolicy(parent string) *V1p4beta1AnalyzeIamPolicyCall {
 	c := &V1p4beta1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3278,6 +3288,16 @@ type V1p4beta1ExportIamPolicyAnalysisCall struct {
 // the export. We recommend intervals of at least 2 seconds with
 // exponential retry to poll the export operation result. The metadata
 // contains the request to help callers to map responses to requests.
+//
+// - parent: The relative name of the root asset. Only resources and IAM
+// policies within the parent will be analyzed. This can only be an
+// organization number (such as "organizations/123"), a folder number
+// (such as "folders/123"), a project ID (such as
+// "projects/my-project-id"), or a project number (such as
+// "projects/12345"). To know how to get organization id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+// To know how to get folder or project id, visit here
+// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1p4beta1Service) ExportIamPolicyAnalysis(parent string, exportiampolicyanalysisrequest *ExportIamPolicyAnalysisRequest) *V1p4beta1ExportIamPolicyAnalysisCall {
 	c := &V1p4beta1ExportIamPolicyAnalysisCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

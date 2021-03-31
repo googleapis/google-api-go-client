@@ -1832,6 +1832,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1977,6 +1979,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2192,6 +2197,10 @@ type ProjectsLocationsBackupsCreateCall struct {
 }
 
 // Create: Creates a backup.
+//
+// - parent: The backup's project and location, in the format
+// projects/{project_number}/locations/{location}. In Cloud Filestore,
+// backup locations map to GCP regions, for example **us-west1**.
 func (r *ProjectsLocationsBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsBackupsCreateCall {
 	c := &ProjectsLocationsBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2347,6 +2356,9 @@ type ProjectsLocationsBackupsDeleteCall struct {
 }
 
 // Delete: Deletes a backup.
+//
+// - name: The backup resource name, in the format
+// projects/{project_number}/locations/{location}/backups/{backup_id}
 func (r *ProjectsLocationsBackupsService) Delete(name string) *ProjectsLocationsBackupsDeleteCall {
 	c := &ProjectsLocationsBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2478,6 +2490,9 @@ type ProjectsLocationsBackupsGetCall struct {
 }
 
 // Get: Gets the details of a specific backup.
+//
+// - name: The backup resource name, in the format
+// projects/{project_number}/locations/{location}/backups/{backup_id}.
 func (r *ProjectsLocationsBackupsService) Get(name string) *ProjectsLocationsBackupsGetCall {
 	c := &ProjectsLocationsBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2623,6 +2638,13 @@ type ProjectsLocationsBackupsListCall struct {
 
 // List: Lists all backups in a project for either a specified location
 // or for all locations.
+//
+// - parent: The project and location for which to retrieve backup
+// information, in the format
+// projects/{project_number}/locations/{location}. In Cloud Filestore,
+// backup locations map to GCP regions, for example **us-west1**. To
+// retrieve backup information for all locations, use "-" for the
+// {location} value.
 func (r *ProjectsLocationsBackupsService) List(parent string) *ProjectsLocationsBackupsListCall {
 	c := &ProjectsLocationsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2837,6 +2859,9 @@ type ProjectsLocationsBackupsPatchCall struct {
 }
 
 // Patch: Updates the settings of a specific backup.
+//
+// - name: Output only. The resource name of the backup, in the format
+// projects/{project_number}/locations/{location_id}/backups/{backup_id}.
 func (r *ProjectsLocationsBackupsService) Patch(name string, backup *Backup) *ProjectsLocationsBackupsPatchCall {
 	c := &ProjectsLocationsBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2994,6 +3019,10 @@ type ProjectsLocationsInstancesCreateCall struct {
 // capacity of the new instance needs to be equal to or larger than the
 // capacity of the backup (and also equal to or larger than the minimum
 // capacity of the tier).
+//
+// - parent: The instance's project and location, in the format
+// projects/{project_id}/locations/{location}. In Cloud Filestore,
+// locations map to GCP zones, for example **us-west1-b**.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3146,6 +3175,9 @@ type ProjectsLocationsInstancesDeleteCall struct {
 }
 
 // Delete: Deletes an instance.
+//
+// - name: The instance resource name, in the format
+// projects/{project_id}/locations/{location}/instances/{instance_id}
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3277,6 +3309,9 @@ type ProjectsLocationsInstancesGetCall struct {
 }
 
 // Get: Gets the details of a specific instance.
+//
+// - name: The instance resource name, in the format
+// projects/{project_id}/locations/{location}/instances/{instance_id}.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3422,6 +3457,13 @@ type ProjectsLocationsInstancesListCall struct {
 
 // List: Lists all instances in a project for either a specified
 // location or for all locations.
+//
+// - parent: The project and location for which to retrieve instance
+// information, in the format
+// projects/{project_id}/locations/{location}. In Cloud Filestore,
+// locations map to GCP zones, for example **us-west1-b**. To retrieve
+// instance information for all locations, use "-" for the {location}
+// value.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3636,6 +3678,9 @@ type ProjectsLocationsInstancesPatchCall struct {
 }
 
 // Patch: Updates the settings of a specific instance.
+//
+// - name: Output only. The resource name of the instance, in the format
+// projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3794,6 +3839,10 @@ type ProjectsLocationsInstancesRestoreCall struct {
 // The capacity of the instance needs to be equal to or larger than the
 // capacity of the backup (and also equal to or larger than the minimum
 // capacity of the tier).
+//
+// - name: The resource name of the instance, in the format
+// projects/{project_number}/locations/{location_id}/instances/{instance_
+// id}.
 func (r *ProjectsLocationsInstancesService) Restore(name string, restoreinstancerequest *RestoreInstanceRequest) *ProjectsLocationsInstancesRestoreCall {
 	c := &ProjectsLocationsInstancesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3943,6 +3992,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4085,6 +4136,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4218,6 +4271,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4371,6 +4426,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

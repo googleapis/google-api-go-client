@@ -2332,6 +2332,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2477,6 +2479,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2682,6 +2687,9 @@ type ProjectsLocationsGlobalDomainsAttachTrustCall struct {
 }
 
 // AttachTrust: Adds AD trust in a given domain. Operation
+//
+// - name: The resource domain name, project name and location using the
+// form: `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) AttachTrust(name string, attachtrustrequest *AttachTrustRequest) *ProjectsLocationsGlobalDomainsAttachTrustCall {
 	c := &ProjectsLocationsGlobalDomainsAttachTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2822,6 +2830,9 @@ type ProjectsLocationsGlobalDomainsCreateCall struct {
 }
 
 // Create: Creates a Microsoft AD Domain in a given project. Operation
+//
+// - parent: Resource project name and location using the form:
+// `projects/{project_id}/locations/global`
 func (r *ProjectsLocationsGlobalDomainsService) Create(parent string, domain *Domain) *ProjectsLocationsGlobalDomainsCreateCall {
 	c := &ProjectsLocationsGlobalDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2980,6 +2991,9 @@ type ProjectsLocationsGlobalDomainsDeleteCall struct {
 }
 
 // Delete: Deletes identified domain. Operation
+//
+// - name: Domain resource name using the form:
+// `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) Delete(name string) *ProjectsLocationsGlobalDomainsDeleteCall {
 	c := &ProjectsLocationsGlobalDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3111,6 +3125,10 @@ type ProjectsLocationsGlobalDomainsDetachTrustCall struct {
 }
 
 // DetachTrust: Removes identified trust. Operation
+//
+// - name: The resource domain name, project name, and location using
+// the form:
+// `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) DetachTrust(name string, detachtrustrequest *DetachTrustRequest) *ProjectsLocationsGlobalDomainsDetachTrustCall {
 	c := &ProjectsLocationsGlobalDomainsDetachTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3251,6 +3269,9 @@ type ProjectsLocationsGlobalDomainsGetCall struct {
 }
 
 // Get: Gets details of a single Domain.
+//
+// - name: Domain resource name using the form:
+// `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) Get(name string) *ProjectsLocationsGlobalDomainsGetCall {
 	c := &ProjectsLocationsGlobalDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3397,6 +3418,10 @@ type ProjectsLocationsGlobalDomainsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalDomainsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalDomainsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3561,6 +3586,9 @@ type ProjectsLocationsGlobalDomainsListCall struct {
 }
 
 // List: Lists Domains in a given project.
+//
+// - parent: The resource name of the domain location using the form:
+// `projects/{project_id}/locations/global`
 func (r *ProjectsLocationsGlobalDomainsService) List(parent string) *ProjectsLocationsGlobalDomainsListCall {
 	c := &ProjectsLocationsGlobalDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3781,6 +3809,10 @@ type ProjectsLocationsGlobalDomainsPatchCall struct {
 
 // Patch: Updates the metadata and configuration of a specified domain.
 // Operation
+//
+// - name: Output only. Unique name of the domain in this scope
+// including projects and location using the form:
+// `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Patch(name string, domain *Domain) *ProjectsLocationsGlobalDomainsPatchCall {
 	c := &ProjectsLocationsGlobalDomainsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3937,6 +3969,9 @@ type ProjectsLocationsGlobalDomainsReconfigureTrustCall struct {
 }
 
 // ReconfigureTrust: Updates the dns conditional forwarder. Operation
+//
+// - name: The resource domain name, project name and location using the
+// form: `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) ReconfigureTrust(name string, reconfiguretrustrequest *ReconfigureTrustRequest) *ProjectsLocationsGlobalDomainsReconfigureTrustCall {
 	c := &ProjectsLocationsGlobalDomainsReconfigureTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4078,6 +4113,9 @@ type ProjectsLocationsGlobalDomainsResetAdminPasswordCall struct {
 
 // ResetAdminPassword: Resets managed identities admin password
 // identified by managed_identities_admin_name
+//
+// - name: The domain resource name using the form:
+// `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) ResetAdminPassword(name string, resetadminpasswordrequest *ResetAdminPasswordRequest) *ProjectsLocationsGlobalDomainsResetAdminPasswordCall {
 	c := &ProjectsLocationsGlobalDomainsResetAdminPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4220,6 +4258,10 @@ type ProjectsLocationsGlobalDomainsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalDomainsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalDomainsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4365,6 +4407,10 @@ type ProjectsLocationsGlobalDomainsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalDomainsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalDomainsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4505,6 +4551,10 @@ type ProjectsLocationsGlobalDomainsValidateTrustCall struct {
 }
 
 // ValidateTrust: Validate the trust state Operation
+//
+// - name: The resource domain name, project name, and location using
+// the form:
+// `projects/{project_id}/locations/global/domains/{domain_name}`
 func (r *ProjectsLocationsGlobalDomainsService) ValidateTrust(name string, validatetrustrequest *ValidateTrustRequest) *ProjectsLocationsGlobalDomainsValidateTrustCall {
 	c := &ProjectsLocationsGlobalDomainsValidateTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4645,6 +4695,10 @@ type ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall struct {
 }
 
 // Get: Gets details of a single sqlIntegration.
+//
+// - name: MangedOU resource name using the form:
+// `projects/{project_id}/locations/global/domains/*/sqlIntegrations/{nam
+// e}`
 func (r *ProjectsLocationsGlobalDomainsSqlIntegrationsService) Get(name string) *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall {
 	c := &ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4789,6 +4843,9 @@ type ProjectsLocationsGlobalDomainsSqlIntegrationsListCall struct {
 }
 
 // List: Lists SQLIntegrations in a given domain.
+//
+// - parent: The resource name of the SqlIntegrations using the form:
+// `projects/{project_id}/locations/global/domains/*`
 func (r *ProjectsLocationsGlobalDomainsSqlIntegrationsService) List(parent string) *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall {
 	c := &ProjectsLocationsGlobalDomainsSqlIntegrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5018,6 +5075,8 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsGlobalOperationsCancelCall {
 	c := &ProjectsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5160,6 +5219,8 @@ type ProjectsLocationsGlobalOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsGlobalOperationsService) Delete(name string) *ProjectsLocationsGlobalOperationsDeleteCall {
 	c := &ProjectsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5293,6 +5354,8 @@ type ProjectsLocationsGlobalOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsGlobalOperationsService) Get(name string) *ProjectsLocationsGlobalOperationsGetCall {
 	c := &ProjectsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5446,6 +5509,8 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
 	c := &ProjectsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5650,6 +5715,10 @@ type ProjectsLocationsGlobalPeeringsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalPeeringsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalPeeringsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5816,6 +5885,10 @@ type ProjectsLocationsGlobalPeeringsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsGlobalPeeringsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalPeeringsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalPeeringsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5961,6 +6034,10 @@ type ProjectsLocationsGlobalPeeringsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsGlobalPeeringsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalPeeringsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

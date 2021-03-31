@@ -3297,6 +3297,11 @@ type ChangesListCall struct {
 }
 
 // List: Lists the changes for a user or shared drive.
+//
+// - pageToken: The token for continuing a previous list request on the
+// next page. This should be set to the value of 'nextPageToken' from
+// the previous response or to the response from the getStartPageToken
+// method.
 func (r *ChangesService) List(pageToken string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
@@ -3613,6 +3618,11 @@ type ChangesWatchCall struct {
 }
 
 // Watch: Subscribes to changes for a user.
+//
+// - pageToken: The token for continuing a previous list request on the
+// next page. This should be set to the value of 'nextPageToken' from
+// the previous response or to the response from the getStartPageToken
+// method.
 func (r *ChangesService) Watch(pageToken string, channel *Channel) *ChangesWatchCall {
 	c := &ChangesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
@@ -4028,6 +4038,8 @@ type CommentsCreateCall struct {
 }
 
 // Create: Creates a new comment on a file.
+//
+// - fileId: The ID of the file.
 func (r *CommentsService) Create(fileId string, comment *Comment) *CommentsCreateCall {
 	c := &CommentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4167,6 +4179,9 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Deletes a comment.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *CommentsService) Delete(fileId string, commentId string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4279,6 +4294,9 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets a comment by ID.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4446,6 +4464,8 @@ type CommentsListCall struct {
 }
 
 // List: Lists a file's comments.
+//
+// - fileId: The ID of the file.
 func (r *CommentsService) List(fileId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4668,6 +4688,9 @@ type CommentsUpdateCall struct {
 }
 
 // Update: Updates a comment with patch semantics.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *CommentsService) Update(fileId string, commentId string, comment *Comment) *CommentsUpdateCall {
 	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4815,6 +4838,13 @@ type DrivesCreateCall struct {
 }
 
 // Create: Creates a new shared drive.
+//
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+// this user's request for idempotent creation of a shared drive. A
+// repeated request by the same user and with the same request ID will
+// avoid creating duplicates by attempting to create the same shared
+// drive. If the shared drive already exists a 409 error will be
+// returned.
 func (r *DrivesService) Create(requestId string, drive *Drive) *DrivesCreateCall {
 	c := &DrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -4950,6 +4980,8 @@ type DrivesDeleteCall struct {
 
 // Delete: Permanently deletes a shared drive for which the user is an
 // organizer. The shared drive cannot contain any untrashed items.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Delete(driveId string) *DrivesDeleteCall {
 	c := &DrivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5051,6 +5083,8 @@ type DrivesGetCall struct {
 }
 
 // Get: Gets a shared drive's metadata by ID.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Get(driveId string) *DrivesGetCall {
 	c := &DrivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5208,6 +5242,8 @@ type DrivesHideCall struct {
 }
 
 // Hide: Hides a shared drive from the default view.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Hide(driveId string) *DrivesHideCall {
 	c := &DrivesHideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5541,6 +5577,8 @@ type DrivesUnhideCall struct {
 }
 
 // Unhide: Restores a shared drive to the default view.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Unhide(driveId string) *DrivesUnhideCall {
 	c := &DrivesUnhideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5670,6 +5708,8 @@ type DrivesUpdateCall struct {
 }
 
 // Update: Updates the metadate for a shared drive.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
 	c := &DrivesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5824,6 +5864,8 @@ type FilesCopyCall struct {
 
 // Copy: Creates a copy of a file and applies any requested updates with
 // patch semantics. Folders cannot be copied.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 	c := &FilesCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6393,6 +6435,8 @@ type FilesDeleteCall struct {
 // it to the trash. If the file belongs to a shared drive the user must
 // be an organizer on the parent. If the target is a folder, all
 // descendants owned by the user are also deleted.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
 	c := &FilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6641,6 +6685,9 @@ type FilesExportCall struct {
 // Export: Exports a Google Doc to the requested MIME type and returns
 // the exported content. Please note that the exported content is
 // limited to 10MB.
+//
+// - fileId: The ID of the file.
+// - mimeType: The MIME type of the format requested for this export.
 func (r *FilesService) Export(fileId string, mimeType string) *FilesExportCall {
 	c := &FilesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6943,6 +6990,8 @@ type FilesGetCall struct {
 }
 
 // Get: Gets a file's metadata or content by ID.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Get(fileId string) *FilesGetCall {
 	c := &FilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -7535,6 +7584,8 @@ type FilesUpdateCall struct {
 
 // Update: Updates a file's metadata and/or content. This method
 // supports patch semantics.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {
 	c := &FilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -7882,6 +7933,8 @@ type FilesWatchCall struct {
 }
 
 // Watch: Subscribes to changes to a file
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 	c := &FilesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8102,6 +8155,8 @@ type PermissionsCreateCall struct {
 }
 
 // Create: Creates a permission for a file or shared drive.
+//
+// - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
 	c := &PermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8357,6 +8412,9 @@ type PermissionsDeleteCall struct {
 }
 
 // Delete: Deletes a permission.
+//
+// - fileId: The ID of the file or shared drive.
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Delete(fileId string, permissionId string) *PermissionsDeleteCall {
 	c := &PermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8512,6 +8570,9 @@ type PermissionsGetCall struct {
 }
 
 // Get: Gets a permission by ID.
+//
+// - fileId: The ID of the file.
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Get(fileId string, permissionId string) *PermissionsGetCall {
 	c := &PermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8711,6 +8772,8 @@ type PermissionsListCall struct {
 }
 
 // List: Lists a file's or shared drive's permissions.
+//
+// - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) List(fileId string) *PermissionsListCall {
 	c := &PermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8967,6 +9030,9 @@ type PermissionsUpdateCall struct {
 }
 
 // Update: Updates a permission with patch semantics.
+//
+// - fileId: The ID of the file or shared drive.
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Update(fileId string, permissionId string, permission *Permission) *PermissionsUpdateCall {
 	c := &PermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9187,6 +9253,9 @@ type RepliesCreateCall struct {
 }
 
 // Create: Creates a new reply to a comment.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *RepliesService) Create(fileId string, commentId string, reply *Reply) *RepliesCreateCall {
 	c := &RepliesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9336,6 +9405,10 @@ type RepliesDeleteCall struct {
 }
 
 // Delete: Deletes a reply.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
+// - replyId: The ID of the reply.
 func (r *RepliesService) Delete(fileId string, commentId string, replyId string) *RepliesDeleteCall {
 	c := &RepliesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9458,6 +9531,10 @@ type RepliesGetCall struct {
 }
 
 // Get: Gets a reply by ID.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
+// - replyId: The ID of the reply.
 func (r *RepliesService) Get(fileId string, commentId string, replyId string) *RepliesGetCall {
 	c := &RepliesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9635,6 +9712,9 @@ type RepliesListCall struct {
 }
 
 // List: Lists a comment's replies.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall {
 	c := &RepliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9854,6 +9934,10 @@ type RepliesUpdateCall struct {
 }
 
 // Update: Updates a reply with patch semantics.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
+// - replyId: The ID of the reply.
 func (r *RepliesService) Update(fileId string, commentId string, replyId string, reply *Reply) *RepliesUpdateCall {
 	c := &RepliesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10014,6 +10098,9 @@ type RevisionsDeleteCall struct {
 // revisions for files with binary content in Google Drive, like images
 // or videos. Revisions for other files, like Google Docs or Sheets, and
 // the last remaining file version can't be deleted.
+//
+// - fileId: The ID of the file.
+// - revisionId: The ID of the revision.
 func (r *RevisionsService) Delete(fileId string, revisionId string) *RevisionsDeleteCall {
 	c := &RevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10127,6 +10214,9 @@ type RevisionsGetCall struct {
 }
 
 // Get: Gets a revision's metadata or content by ID.
+//
+// - fileId: The ID of the file.
+// - revisionId: The ID of the revision.
 func (r *RevisionsService) Get(fileId string, revisionId string) *RevisionsGetCall {
 	c := &RevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10317,6 +10407,8 @@ type RevisionsListCall struct {
 }
 
 // List: Lists a file's revisions.
+//
+// - fileId: The ID of the file.
 func (r *RevisionsService) List(fileId string) *RevisionsListCall {
 	c := &RevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10516,6 +10608,9 @@ type RevisionsUpdateCall struct {
 }
 
 // Update: Updates a revision with patch semantics.
+//
+// - fileId: The ID of the file.
+// - revisionId: The ID of the revision.
 func (r *RevisionsService) Update(fileId string, revisionId string, revision *Revision) *RevisionsUpdateCall {
 	c := &RevisionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10664,6 +10759,12 @@ type TeamdrivesCreateCall struct {
 }
 
 // Create: Deprecated use drives.create instead.
+//
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+// this user's request for idempotent creation of a Team Drive. A
+// repeated request by the same user and with the same request ID will
+// avoid creating duplicates by attempting to create the same Team
+// Drive. If the Team Drive already exists a 409 error will be returned.
 func (r *TeamdrivesService) Create(requestId string, teamdrive *TeamDrive) *TeamdrivesCreateCall {
 	c := &TeamdrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -10798,6 +10899,8 @@ type TeamdrivesDeleteCall struct {
 }
 
 // Delete: Deprecated use drives.delete instead.
+//
+// - teamDriveId: The ID of the Team Drive
 func (r *TeamdrivesService) Delete(teamDriveId string) *TeamdrivesDeleteCall {
 	c := &TeamdrivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -10899,6 +11002,8 @@ type TeamdrivesGetCall struct {
 }
 
 // Get: Deprecated use drives.get instead.
+//
+// - teamDriveId: The ID of the Team Drive
 func (r *TeamdrivesService) Get(teamDriveId string) *TeamdrivesGetCall {
 	c := &TeamdrivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -11262,6 +11367,8 @@ type TeamdrivesUpdateCall struct {
 }
 
 // Update: Deprecated use drives.update instead
+//
+// - teamDriveId: The ID of the Team Drive
 func (r *TeamdrivesService) Update(teamDriveId string, teamdrive *TeamDrive) *TeamdrivesUpdateCall {
 	c := &TeamdrivesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId

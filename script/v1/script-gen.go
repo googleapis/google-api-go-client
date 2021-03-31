@@ -2646,6 +2646,8 @@ type ProjectsGetCall struct {
 }
 
 // Get: Gets a script project's metadata.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsService) Get(scriptId string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -2791,6 +2793,8 @@ type ProjectsGetContentCall struct {
 
 // GetContent: Gets the content of the script project, including the
 // code source and metadata for each script file.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsService) GetContent(scriptId string) *ProjectsGetContentCall {
 	c := &ProjectsGetContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -2950,6 +2954,8 @@ type ProjectsGetMetricsCall struct {
 
 // GetMetrics: Get metrics data for scripts, such as number of
 // executions and active users.
+//
+// - scriptId: Required field indicating the script to get metrics for.
 func (r *ProjectsService) GetMetrics(scriptId string) *ProjectsGetMetricsCall {
 	c := &ProjectsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3138,6 +3144,8 @@ type ProjectsUpdateContentCall struct {
 // script is executed as a trigger, in the script editor, in add-on
 // preview mode, or as a web app or Apps Script API in development mode.
 // This clears all the existing files in the project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsService) UpdateContent(scriptId string, content *Content) *ProjectsUpdateContentCall {
 	c := &ProjectsUpdateContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3277,6 +3285,8 @@ type ProjectsDeploymentsCreateCall struct {
 }
 
 // Create: Creates a deployment of an Apps Script project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Create(scriptId string, deploymentconfig *DeploymentConfig) *ProjectsDeploymentsCreateCall {
 	c := &ProjectsDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3416,6 +3426,9 @@ type ProjectsDeploymentsDeleteCall struct {
 }
 
 // Delete: Deletes a deployment of an Apps Script project.
+//
+// - deploymentId: The deployment ID to be undeployed.
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Delete(scriptId string, deploymentId string) *ProjectsDeploymentsDeleteCall {
 	c := &ProjectsDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3556,6 +3569,9 @@ type ProjectsDeploymentsGetCall struct {
 }
 
 // Get: Gets a deployment of an Apps Script project.
+//
+// - deploymentId: The deployment ID.
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Get(scriptId string, deploymentId string) *ProjectsDeploymentsGetCall {
 	c := &ProjectsDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3709,6 +3725,8 @@ type ProjectsDeploymentsListCall struct {
 }
 
 // List: Lists the deployments of an Apps Script project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) List(scriptId string) *ProjectsDeploymentsListCall {
 	c := &ProjectsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3901,6 +3919,9 @@ type ProjectsDeploymentsUpdateCall struct {
 }
 
 // Update: Updates a deployment of an Apps Script project.
+//
+// - deploymentId: The deployment ID for this deployment.
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Update(scriptId string, deploymentId string, updatedeploymentrequest *UpdateDeploymentRequest) *ProjectsDeploymentsUpdateCall {
 	c := &ProjectsDeploymentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4050,6 +4071,8 @@ type ProjectsVersionsCreateCall struct {
 
 // Create: Creates a new immutable version using the current code, with
 // a unique version number.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsVersionsService) Create(scriptId string, version *Version) *ProjectsVersionsCreateCall {
 	c := &ProjectsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4190,6 +4213,9 @@ type ProjectsVersionsGetCall struct {
 }
 
 // Get: Gets a version of a script project.
+//
+// - scriptId: The script project's Drive ID.
+// - versionNumber: The version number.
 func (r *ProjectsVersionsService) Get(scriptId string, versionNumber int64) *ProjectsVersionsGetCall {
 	c := &ProjectsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4344,6 +4370,8 @@ type ProjectsVersionsListCall struct {
 }
 
 // List: List the versions of a script project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsVersionsService) List(scriptId string) *ProjectsVersionsListCall {
 	c := &ProjectsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4546,6 +4574,9 @@ type ScriptsRunCall struct {
 // PERMISSION_DENIED: The caller does not have permission` indicates
 // that the Cloud Platform project used to authorize the request is not
 // the same as the one used by the script.
+//
+// - scriptId: The script ID of the script to be executed. Find the
+// script ID on the **Project settings** page under "IDs."
 func (r *ScriptsService) Run(scriptId string, executionrequest *ExecutionRequest) *ScriptsRunCall {
 	c := &ScriptsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId

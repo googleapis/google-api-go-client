@@ -1648,6 +1648,8 @@ type V1GetLinkStatsCall struct {
 // GetLinkStats: Fetches analytics stats of a short Dynamic Link for a
 // given duration. Metrics include number of clicks, redirects,
 // installs, app first opens, and app reopens.
+//
+// - dynamicLink: Dynamic Link URL. e.g. https://abcd.app.goo.gl/wxyz
 func (r *V1Service) GetLinkStats(dynamicLink string) *V1GetLinkStatsCall {
 	c := &V1GetLinkStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dynamicLink = dynamicLink

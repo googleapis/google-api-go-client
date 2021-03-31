@@ -601,6 +601,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -746,6 +748,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -953,6 +958,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1086,6 +1093,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1239,6 +1248,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1443,6 +1454,9 @@ type ProjectsLocationsWorkflowsCreateCall struct {
 // Create: Creates a new workflow. If a workflow with the specified name
 // already exists in the specified project and location, the long
 // running operation will return ALREADY_EXISTS error.
+//
+// - parent: Project and location in which the workflow should be
+// created. Format: projects/{project}/locations/{location}
 func (r *ProjectsLocationsWorkflowsService) Create(parent string, workflow *Workflow) *ProjectsLocationsWorkflowsCreateCall {
 	c := &ProjectsLocationsWorkflowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1599,6 +1613,9 @@ type ProjectsLocationsWorkflowsDeleteCall struct {
 
 // Delete: Deletes a workflow with the specified name. This method also
 // cancels and deletes all running executions of the workflow.
+//
+// - name: Name of the workflow to be deleted. Format:
+// projects/{project}/locations/{location}/workflows/{workflow}
 func (r *ProjectsLocationsWorkflowsService) Delete(name string) *ProjectsLocationsWorkflowsDeleteCall {
 	c := &ProjectsLocationsWorkflowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1730,6 +1747,9 @@ type ProjectsLocationsWorkflowsGetCall struct {
 }
 
 // Get: Gets details of a single Workflow.
+//
+// - name: Name of the workflow which information should be retrieved.
+// Format: projects/{project}/locations/{location}/workflows/{workflow}
 func (r *ProjectsLocationsWorkflowsService) Get(name string) *ProjectsLocationsWorkflowsGetCall {
 	c := &ProjectsLocationsWorkflowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1875,6 +1895,9 @@ type ProjectsLocationsWorkflowsListCall struct {
 
 // List: Lists Workflows in a given project and location. The default
 // order is not specified.
+//
+// - parent: Project and location from which the workflows should be
+// listed. Format: projects/{project}/locations/{location}
 func (r *ProjectsLocationsWorkflowsService) List(parent string) *ProjectsLocationsWorkflowsListCall {
 	c := &ProjectsLocationsWorkflowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2102,6 +2125,9 @@ type ProjectsLocationsWorkflowsPatchCall struct {
 // of the workflow may be created as a result of a successful update
 // operation. In that case, such revision will be used in new workflow
 // executions.
+//
+// - name: The resource name of the workflow. Format:
+// projects/{project}/locations/{location}/workflows/{workflow}
 func (r *ProjectsLocationsWorkflowsService) Patch(name string, workflow *Workflow) *ProjectsLocationsWorkflowsPatchCall {
 	c := &ProjectsLocationsWorkflowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

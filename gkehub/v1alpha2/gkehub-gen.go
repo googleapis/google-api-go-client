@@ -1599,6 +1599,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1744,6 +1746,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1955,6 +1960,9 @@ type ProjectsLocationsGlobalMembershipsInitializeHubCall struct {
 // when the first Membership cannot be registered without these
 // resources. A common example is granting the Hub Service Account
 // access to another project, which requires the account to exist first.
+//
+// - project: The Hub to initialize, in the format
+// `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsGlobalMembershipsService) InitializeHub(project string, initializehubrequest *InitializeHubRequest) *ProjectsLocationsGlobalMembershipsInitializeHubCall {
 	c := &ProjectsLocationsGlobalMembershipsInitializeHubCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2095,6 +2103,9 @@ type ProjectsLocationsMembershipsCreateCall struct {
 }
 
 // Create: Adds a new Membership.
+//
+// - parent: The parent (project and location) where the Memberships
+// will be created. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsMembershipsService) Create(parent string, membership *Membership) *ProjectsLocationsMembershipsCreateCall {
 	c := &ProjectsLocationsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2251,6 +2262,9 @@ type ProjectsLocationsMembershipsDeleteCall struct {
 }
 
 // Delete: Removes a Membership.
+//
+// - name: The Membership resource name in the format
+// `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) Delete(name string) *ProjectsLocationsMembershipsDeleteCall {
 	c := &ProjectsLocationsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2383,6 +2397,9 @@ type ProjectsLocationsMembershipsGenerateConnectManifestCall struct {
 
 // GenerateConnectManifest: Generates the manifest for deployment of the
 // GKE connect agent.
+//
+// - name: The Membership resource name the Agent will associate with,
+// in the format `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) GenerateConnectManifest(name string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
 	c := &ProjectsLocationsMembershipsGenerateConnectManifestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2610,6 +2627,9 @@ type ProjectsLocationsMembershipsGetCall struct {
 }
 
 // Get: Gets the details of a Membership.
+//
+// - name: The Membership resource name in the format
+// `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) Get(name string) *ProjectsLocationsMembershipsGetCall {
 	c := &ProjectsLocationsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2756,6 +2776,10 @@ type ProjectsLocationsMembershipsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsMembershipsService) GetIamPolicy(resource string) *ProjectsLocationsMembershipsGetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2920,6 +2944,9 @@ type ProjectsLocationsMembershipsListCall struct {
 }
 
 // List: Lists Memberships in a given project and location.
+//
+// - parent: The parent (project and location) where the Memberships
+// will be listed. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsMembershipsService) List(parent string) *ProjectsLocationsMembershipsListCall {
 	c := &ProjectsLocationsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3143,6 +3170,9 @@ type ProjectsLocationsMembershipsPatchCall struct {
 }
 
 // Patch: Updates an existing Membership.
+//
+// - name: The Membership resource name in the format
+// `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) Patch(name string, membership *Membership) *ProjectsLocationsMembershipsPatchCall {
 	c := &ProjectsLocationsMembershipsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3298,6 +3328,10 @@ type ProjectsLocationsMembershipsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsMembershipsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMembershipsSetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3443,6 +3477,10 @@ type ProjectsLocationsMembershipsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsMembershipsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMembershipsTestIamPermissionsCall {
 	c := &ProjectsLocationsMembershipsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3592,6 +3630,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3734,6 +3774,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3867,6 +3909,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4020,6 +4064,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

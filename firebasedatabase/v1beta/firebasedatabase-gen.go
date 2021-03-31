@@ -322,6 +322,9 @@ type ProjectsLocationsInstancesCreateCall struct {
 // https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo.
 // Note that it might take a few minutes for billing enablement state to
 // propagate to Firebase systems.
+//
+// - parent: The parent project for which to create a database instance,
+// in the form: `projects/{project-number}/locations/{location-id}`.
 func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstance *DatabaseInstance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -490,6 +493,11 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // deleted. IDs for deleted database instances may never be recovered or
 // re-used. The Database may only be deleted if it is already in a
 // DISABLED state.
+//
+// - name: The fully qualified resource name of the database instance,
+// in the form:
+// `projects/{project-number}/locations/{location-id}/instances/{database
+// -id}`
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -625,6 +633,11 @@ type ProjectsLocationsInstancesDisableCall struct {
 // later using ReenableDatabaseInstance. When a database is disabled,
 // all reads and writes are denied, including view access in the
 // Firebase console.
+//
+// - name: The fully qualified resource name of the database instance,
+// in the form:
+// `projects/{project-number}/locations/{location-id}/instances/{database
+// -id}`
 func (r *ProjectsLocationsInstancesService) Disable(name string, disabledatabaseinstancerequest *DisableDatabaseInstanceRequest) *ProjectsLocationsInstancesDisableCall {
 	c := &ProjectsLocationsInstancesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -767,6 +780,15 @@ type ProjectsLocationsInstancesGetCall struct {
 
 // Get: Gets the DatabaseInstance identified by the specified resource
 // name.
+//
+// - name: The fully qualified resource name of the database instance,
+// in the form:
+// `projects/{project-number}/locations/{location-id}/instances/{database
+// -id}`. `database-id` is a globally unique identifier across all
+// parent collections. For convenience, this method allows you to supply
+// `-` as a wildcard character in place of specific collections under
+// `projects` and `locations`. The resulting wildcarding form of the
+// method is: `projects/-/locations/-/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Get(nameid string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -919,6 +941,11 @@ type ProjectsLocationsInstancesListCall struct {
 // additional requests are made with a `pageToken`. The resulting list
 // contains instances in any STATE. The list results may be stale by a
 // few seconds. Use GetDatabaseInstance for consistent reads.
+//
+// - parent: The parent project for which to list database instances, in
+// the form: `projects/{project-number}/locations/{location-id}` To list
+// across all locations, use a parent in the form:
+// `projects/{project-number}/locations/-`
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1118,6 +1145,11 @@ type ProjectsLocationsInstancesReenableCall struct {
 // Reenable: Enables a DatabaseInstance. The database must have been
 // disabled previously using DisableDatabaseInstance. The state of a
 // successfully reenabled DatabaseInstance is ACTIVE.
+//
+// - name: The fully qualified resource name of the database instance,
+// in the form:
+// `projects/{project-number}/locations/{location-id}/instances/{database
+// -id}`
 func (r *ProjectsLocationsInstancesService) Reenable(name string, reenabledatabaseinstancerequest *ReenableDatabaseInstanceRequest) *ProjectsLocationsInstancesReenableCall {
 	c := &ProjectsLocationsInstancesReenableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -2217,6 +2217,8 @@ type ProjectsAllocateIdsCall struct {
 
 // AllocateIds: Allocates IDs for the given keys, which is useful for
 // referencing an entity before it is inserted.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) AllocateIds(projectId string, allocateidsrequest *AllocateIdsRequest) *ProjectsAllocateIdsCall {
 	c := &ProjectsAllocateIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2357,6 +2359,8 @@ type ProjectsBeginTransactionCall struct {
 }
 
 // BeginTransaction: Begins a new transaction.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) BeginTransaction(projectId string, begintransactionrequest *BeginTransactionRequest) *ProjectsBeginTransactionCall {
 	c := &ProjectsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2498,6 +2502,8 @@ type ProjectsCommitCall struct {
 
 // Commit: Commits a transaction, optionally creating, deleting or
 // modifying some entities.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Commit(projectId string, commitrequest *CommitRequest) *ProjectsCommitCall {
 	c := &ProjectsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2638,6 +2644,8 @@ type ProjectsLookupCall struct {
 }
 
 // Lookup: Looks up entities by key.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Lookup(projectId string, lookuprequest *LookupRequest) *ProjectsLookupCall {
 	c := &ProjectsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2779,6 +2787,8 @@ type ProjectsReserveIdsCall struct {
 
 // ReserveIds: Prevents the supplied keys' IDs from being auto-allocated
 // by Cloud Datastore.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) ReserveIds(projectId string, reserveidsrequest *ReserveIdsRequest) *ProjectsReserveIdsCall {
 	c := &ProjectsReserveIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2919,6 +2929,8 @@ type ProjectsRollbackCall struct {
 }
 
 // Rollback: Rolls back a transaction.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Rollback(projectId string, rollbackrequest *RollbackRequest) *ProjectsRollbackCall {
 	c := &ProjectsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3059,6 +3071,8 @@ type ProjectsRunQueryCall struct {
 }
 
 // RunQuery: Queries for entities.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) RunQuery(projectId string, runqueryrequest *RunQueryRequest) *ProjectsRunQueryCall {
 	c := &ProjectsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

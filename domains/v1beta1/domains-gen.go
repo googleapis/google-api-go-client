@@ -2018,6 +2018,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2163,6 +2165,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2367,6 +2372,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2520,6 +2527,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2724,6 +2733,10 @@ type ProjectsLocationsRegistrationsConfigureContactSettingsCall struct {
 // ConfigureContactSettings: Updates a `Registration`'s contact
 // settings. Some changes require confirmation by the domain's
 // registrant contact .
+//
+// - registration: The name of the `Registration` whose contact settings
+// are being updated, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureContactSettings(registration string, configurecontactsettingsrequest *ConfigureContactSettingsRequest) *ProjectsLocationsRegistrationsConfigureContactSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureContactSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -2864,6 +2877,10 @@ type ProjectsLocationsRegistrationsConfigureDnsSettingsCall struct {
 }
 
 // ConfigureDnsSettings: Updates a `Registration`'s DNS settings.
+//
+// - registration: The name of the `Registration` whose DNS settings are
+// being updated, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureDnsSettings(registration string, configurednssettingsrequest *ConfigureDnsSettingsRequest) *ProjectsLocationsRegistrationsConfigureDnsSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureDnsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3005,6 +3022,10 @@ type ProjectsLocationsRegistrationsConfigureManagementSettingsCall struct {
 
 // ConfigureManagementSettings: Updates a `Registration`'s management
 // settings.
+//
+// - registration: The name of the `Registration` whose management
+// settings are being updated, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureManagementSettings(registration string, configuremanagementsettingsrequest *ConfigureManagementSettingsRequest) *ProjectsLocationsRegistrationsConfigureManagementSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureManagementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3146,6 +3167,9 @@ type ProjectsLocationsRegistrationsDeleteCall struct {
 // Delete: Deletes a `Registration` resource. This method only works on
 // resources in one of the following states: * `state` is `EXPORTED`
 // with `expire_time` in the past * `state` is `REGISTRATION_FAILED`
+//
+// - name: The name of the `Registration` to delete, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Delete(name string) *ProjectsLocationsRegistrationsDeleteCall {
 	c := &ProjectsLocationsRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3286,6 +3310,9 @@ type ProjectsLocationsRegistrationsExportCall struct {
 // managed in Google Domains. * Without further action, the domain does
 // not renew automatically. The new owner can set up billing in Google
 // Domains to renew the domain if needed.
+//
+// - name: The name of the `Registration` to export, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Export(name string, exportregistrationrequest *ExportRegistrationRequest) *ProjectsLocationsRegistrationsExportCall {
 	c := &ProjectsLocationsRegistrationsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3426,6 +3453,9 @@ type ProjectsLocationsRegistrationsGetCall struct {
 }
 
 // Get: Gets the details of a `Registration` resource.
+//
+// - name: The name of the `Registration` to get, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Get(name string) *ProjectsLocationsRegistrationsGetCall {
 	c := &ProjectsLocationsRegistrationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3572,6 +3602,10 @@ type ProjectsLocationsRegistrationsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRegistrationsService) GetIamPolicy(resource string) *ProjectsLocationsRegistrationsGetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3736,6 +3770,9 @@ type ProjectsLocationsRegistrationsListCall struct {
 }
 
 // List: Lists the `Registration` resources in a project.
+//
+// - parent: The project and location from which to list
+// `Registration`s, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) List(parent string) *ProjectsLocationsRegistrationsListCall {
 	c := &ProjectsLocationsRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3956,6 +3993,9 @@ type ProjectsLocationsRegistrationsPatchCall struct {
 // `ConfigureManagementSettings` * To update DNS configuration, see
 // `ConfigureDnsSettings` * To update contact information, see
 // `ConfigureContactSettings`
+//
+// - name: Output only. Name of the `Registration` resource, in the
+// format `projects/*/locations/*/registrations/`.
 func (r *ProjectsLocationsRegistrationsService) Patch(name string, registration *Registration) *ProjectsLocationsRegistrationsPatchCall {
 	c := &ProjectsLocationsRegistrationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4120,6 +4160,9 @@ type ProjectsLocationsRegistrationsRegisterCall struct {
 // the resource ends up in state `REGISTRATION_FAILED`, it indicates
 // that the domain was not registered successfully, and you can safely
 // delete the resource and retry registration.
+//
+// - parent: The parent resource of the `Registration`. Must be in the
+// format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Register(parent string, registerdomainrequest *RegisterDomainRequest) *ProjectsLocationsRegistrationsRegisterCall {
 	c := &ProjectsLocationsRegistrationsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4262,6 +4305,10 @@ type ProjectsLocationsRegistrationsResetAuthorizationCodeCall struct {
 // ResetAuthorizationCode: Resets the authorization code of the
 // `Registration` to a new random string. You can call this method only
 // after 60 days have elapsed since the initial domain registration.
+//
+// - registration: The name of the `Registration` whose authorization
+// code is being reset, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ResetAuthorizationCode(registration string, resetauthorizationcoderequest *ResetAuthorizationCodeRequest) *ProjectsLocationsRegistrationsResetAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsResetAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4405,6 +4452,10 @@ type ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall struct {
 // `Registration` for the purpose of transferring the domain to another
 // registrar. You can call this method only after 60 days have elapsed
 // since the initial domain registration.
+//
+// - registration: The name of the `Registration` whose authorization
+// code is being retrieved, in the format
+// `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveAuthorizationCode(registration string) *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4551,6 +4602,9 @@ type ProjectsLocationsRegistrationsRetrieveRegisterParametersCall struct {
 // RetrieveRegisterParameters: Gets parameters needed to register a new
 // domain name, including price and up-to-date availability. Use the
 // returned values to call `RegisterDomain`.
+//
+// - location: The location. Must be in the format
+// `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveRegisterParameters(location string) *ProjectsLocationsRegistrationsRetrieveRegisterParametersCall {
 	c := &ProjectsLocationsRegistrationsRetrieveRegisterParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -4712,6 +4766,9 @@ type ProjectsLocationsRegistrationsSearchDomainsCall struct {
 // provided query. Availability results from this method are
 // approximate; call `RetrieveRegisterParameters` on a domain before
 // registering to confirm availability.
+//
+// - location: The location. Must be in the format
+// `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) SearchDomains(location string) *ProjectsLocationsRegistrationsSearchDomainsCall {
 	c := &ProjectsLocationsRegistrationsSearchDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -4870,6 +4927,10 @@ type ProjectsLocationsRegistrationsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRegistrationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistrationsSetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5015,6 +5076,10 @@ type ProjectsLocationsRegistrationsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsRegistrationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistrationsTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistrationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

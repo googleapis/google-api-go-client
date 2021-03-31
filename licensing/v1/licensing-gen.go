@@ -302,6 +302,18 @@ type LicenseAssignmentsDeleteCall struct {
 }
 
 // Delete: Revoke a license.
+//
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
+// - skuId: A product SKU's unique identifier. For more information
+// about available SKUs in this version of the API, see Products and
+// SKUs.
+// - userId: The user's current primary email address. If the user's
+// email address changes, use the new email address in your API
+// requests. Since a `userId` is subject to change, do not use a
+// `userId` value as a key for persistent data. This key could break if
+// the current user's email address changes. If the `userId` is
+// suspended, the license status changes.
 func (r *LicenseAssignmentsService) Delete(productId string, skuId string, userId string) *LicenseAssignmentsDeleteCall {
 	c := &LicenseAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -452,6 +464,18 @@ type LicenseAssignmentsGetCall struct {
 }
 
 // Get: Get a specific user's license by product SKU.
+//
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
+// - skuId: A product SKU's unique identifier. For more information
+// about available SKUs in this version of the API, see Products and
+// SKUs.
+// - userId: The user's current primary email address. If the user's
+// email address changes, use the new email address in your API
+// requests. Since a `userId` is subject to change, do not use a
+// `userId` value as a key for persistent data. This key could break if
+// the current user's email address changes. If the `userId` is
+// suspended, the license status changes.
 func (r *LicenseAssignmentsService) Get(productId string, skuId string, userId string) *LicenseAssignmentsGetCall {
 	c := &LicenseAssignmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -614,6 +638,12 @@ type LicenseAssignmentsInsertCall struct {
 }
 
 // Insert: Assign a license.
+//
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
+// - skuId: A product SKU's unique identifier. For more information
+// about available SKUs in this version of the API, see Products and
+// SKUs.
 func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licenseassignmentinsert *LicenseAssignmentInsert) *LicenseAssignmentsInsertCall {
 	c := &LicenseAssignmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -763,6 +793,12 @@ type LicenseAssignmentsListForProductCall struct {
 
 // ListForProduct: List all users assigned licenses for a specific
 // product SKU.
+//
+// - customerId: Customer's `customerId`. A previous version of this API
+// accepted the primary domain name as a value for this field. If the
+// customer is suspended, the server returns an error.
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
 func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId string) *LicenseAssignmentsListForProductCall {
 	c := &LicenseAssignmentsListForProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -971,6 +1007,15 @@ type LicenseAssignmentsListForProductAndSkuCall struct {
 
 // ListForProductAndSku: List all users assigned licenses for a specific
 // product SKU.
+//
+// - customerId: Customer's `customerId`. A previous version of this API
+// accepted the primary domain name as a value for this field. If the
+// customer is suspended, the server returns an error.
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
+// - skuId: A product SKU's unique identifier. For more information
+// about available SKUs in this version of the API, see Products and
+// SKUs.
 func (r *LicenseAssignmentsService) ListForProductAndSku(productId string, skuId string, customerId string) *LicenseAssignmentsListForProductAndSkuCall {
 	c := &LicenseAssignmentsListForProductAndSkuCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -1189,6 +1234,18 @@ type LicenseAssignmentsPatchCall struct {
 
 // Patch: Reassign a user's product SKU with a different SKU in the same
 // product. This method supports patch semantics.
+//
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
+// - skuId: A product SKU's unique identifier. For more information
+// about available SKUs in this version of the API, see Products and
+// SKUs.
+// - userId: The user's current primary email address. If the user's
+// email address changes, use the new email address in your API
+// requests. Since a `userId` is subject to change, do not use a
+// `userId` value as a key for persistent data. This key could break if
+// the current user's email address changes. If the `userId` is
+// suspended, the license status changes.
 func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsPatchCall {
 	c := &LicenseAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -1349,6 +1406,18 @@ type LicenseAssignmentsUpdateCall struct {
 
 // Update: Reassign a user's product SKU with a different SKU in the
 // same product.
+//
+// - productId: A product's unique identifier. For more information
+// about products in this version of the API, see Products and SKUs.
+// - skuId: A product SKU's unique identifier. For more information
+// about available SKUs in this version of the API, see Products and
+// SKUs.
+// - userId: The user's current primary email address. If the user's
+// email address changes, use the new email address in your API
+// requests. Since a `userId` is subject to change, do not use a
+// `userId` value as a key for persistent data. This key could break if
+// the current user's email address changes. If the `userId` is
+// suspended, the license status changes.
 func (r *LicenseAssignmentsService) Update(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsUpdateCall {
 	c := &LicenseAssignmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId

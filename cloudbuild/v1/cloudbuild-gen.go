@@ -2273,6 +2273,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2415,6 +2417,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2560,6 +2564,9 @@ type ProjectsBuildsCancelCall struct {
 }
 
 // Cancel: Cancels a build in progress.
+//
+// - id: ID of the build.
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Cancel(projectId string, id string, cancelbuildrequest *CancelBuildRequest) *ProjectsBuildsCancelCall {
 	c := &ProjectsBuildsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2711,6 +2718,8 @@ type ProjectsBuildsCreateCall struct {
 // returns a long-running `Operation`, which includes the build ID. Pass
 // the build ID to `GetBuild` to determine the build status (such as
 // `SUCCESS` or `FAILURE`).
+//
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Create(projectId string, build *Build) *ProjectsBuildsCreateCall {
 	c := &ProjectsBuildsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2866,6 +2875,9 @@ type ProjectsBuildsGetCall struct {
 // Get: Returns information about a previously requested build. The
 // `Build` that is returned includes its status (such as `SUCCESS`,
 // `FAILURE`, or `WORKING`), and timing information.
+//
+// - id: ID of the build.
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Get(projectId string, id string) *ProjectsBuildsGetCall {
 	c := &ProjectsBuildsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3033,6 +3045,8 @@ type ProjectsBuildsListCall struct {
 // List: Lists previously requested builds. Previously requested builds
 // may still be in-progress, or may have finished successfully or
 // unsuccessfully.
+//
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) List(projectId string) *ProjectsBuildsListCall {
 	c := &ProjectsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3269,6 +3283,9 @@ type ProjectsBuildsRetryCall struct {
 // object, the new build will attempt to use the same object, which may
 // or may not be available depending on the bucket's lifecycle
 // management settings.
+//
+// - id: Build ID of the original build.
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Retry(projectId string, id string, retrybuildrequest *RetryBuildRequest) *ProjectsBuildsRetryCall {
 	c := &ProjectsBuildsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3417,6 +3434,9 @@ type ProjectsLocationsBuildsCancelCall struct {
 }
 
 // Cancel: Cancels a build in progress.
+//
+// - name: The name of the `Build` to cancel. Format:
+// `projects/{project}/locations/{location}/builds/{build}`
 func (r *ProjectsLocationsBuildsService) Cancel(name string, cancelbuildrequest *CancelBuildRequest) *ProjectsLocationsBuildsCancelCall {
 	c := &ProjectsLocationsBuildsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3560,6 +3580,9 @@ type ProjectsLocationsBuildsCreateCall struct {
 // returns a long-running `Operation`, which includes the build ID. Pass
 // the build ID to `GetBuild` to determine the build status (such as
 // `SUCCESS` or `FAILURE`).
+//
+// - parent: The parent resource where this build will be created.
+// Format: `projects/{project}/locations/{location}`
 func (r *ProjectsLocationsBuildsService) Create(parent string, build *Build) *ProjectsLocationsBuildsCreateCall {
 	c := &ProjectsLocationsBuildsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3714,6 +3737,9 @@ type ProjectsLocationsBuildsGetCall struct {
 // Get: Returns information about a previously requested build. The
 // `Build` that is returned includes its status (such as `SUCCESS`,
 // `FAILURE`, or `WORKING`), and timing information.
+//
+// - name: The name of the `Build` to retrieve. Format:
+// `projects/{project}/locations/{location}/builds/{build}`
 func (r *ProjectsLocationsBuildsService) Get(name string) *ProjectsLocationsBuildsGetCall {
 	c := &ProjectsLocationsBuildsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3883,6 +3909,9 @@ type ProjectsLocationsBuildsListCall struct {
 // List: Lists previously requested builds. Previously requested builds
 // may still be in-progress, or may have finished successfully or
 // unsuccessfully.
+//
+// - parent: The parent of the collection of `Builds`. Format:
+// `projects/{project}/locations/location`
 func (r *ProjectsLocationsBuildsService) List(parent string) *ProjectsLocationsBuildsListCall {
 	c := &ProjectsLocationsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4118,6 +4147,9 @@ type ProjectsLocationsBuildsRetryCall struct {
 // object, the new build will attempt to use the same object, which may
 // or may not be available depending on the bucket's lifecycle
 // management settings.
+//
+// - name: The name of the `Build` to retry. Format:
+// `projects/{project}/locations/{location}/builds/{build}`
 func (r *ProjectsLocationsBuildsService) Retry(name string, retrybuildrequest *RetryBuildRequest) *ProjectsLocationsBuildsRetryCall {
 	c := &ProjectsLocationsBuildsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4267,6 +4299,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4409,6 +4443,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4553,6 +4589,9 @@ type ProjectsTriggersCreateCall struct {
 }
 
 // Create: Creates a new `BuildTrigger`. This API is experimental.
+//
+// - projectId: ID of the project for which to configure automatic
+// builds.
 func (r *ProjectsTriggersService) Create(projectId string, buildtrigger *BuildTrigger) *ProjectsTriggersCreateCall {
 	c := &ProjectsTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4693,6 +4732,9 @@ type ProjectsTriggersDeleteCall struct {
 
 // Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
 // This API is experimental.
+//
+// - projectId: ID of the project that owns the trigger.
+// - triggerId: ID of the `BuildTrigger` to delete.
 func (r *ProjectsTriggersService) Delete(projectId string, triggerId string) *ProjectsTriggersDeleteCall {
 	c := &ProjectsTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4834,6 +4876,10 @@ type ProjectsTriggersGetCall struct {
 
 // Get: Returns information about a `BuildTrigger`. This API is
 // experimental.
+//
+// - projectId: ID of the project that owns the trigger.
+// - triggerId: Identifier (`id` or `name`) of the `BuildTrigger` to
+// get.
 func (r *ProjectsTriggersService) Get(projectId string, triggerId string) *ProjectsTriggersGetCall {
 	c := &ProjectsTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4986,6 +5032,8 @@ type ProjectsTriggersListCall struct {
 }
 
 // List: Lists existing `BuildTrigger`s. This API is experimental.
+//
+// - projectId: ID of the project for which to list BuildTriggers.
 func (r *ProjectsTriggersService) List(projectId string) *ProjectsTriggersListCall {
 	c := &ProjectsTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5177,6 +5225,9 @@ type ProjectsTriggersPatchCall struct {
 
 // Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
 // This API is experimental.
+//
+// - projectId: ID of the project that owns the trigger.
+// - triggerId: ID of the `BuildTrigger` to update.
 func (r *ProjectsTriggersService) Patch(projectId string, triggerId string, buildtrigger *BuildTrigger) *ProjectsTriggersPatchCall {
 	c := &ProjectsTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5326,6 +5377,9 @@ type ProjectsTriggersRunCall struct {
 }
 
 // Run: Runs a `BuildTrigger` at a particular source revision.
+//
+// - projectId: ID of the project.
+// - triggerId: ID of the trigger.
 func (r *ProjectsTriggersService) Run(projectId string, triggerId string, reposource *RepoSource) *ProjectsTriggersRunCall {
 	c := &ProjectsTriggersRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5476,6 +5530,9 @@ type ProjectsTriggersWebhookCall struct {
 
 // Webhook: ReceiveTriggerWebhook [Experimental] is called when the API
 // receives a webhook request targeted at a specific trigger.
+//
+// - projectId: Project in which the specified trigger lives
+// - trigger: Name of the trigger to run the payload against
 func (r *ProjectsTriggersService) Webhook(projectId string, trigger string, httpbody *HttpBody) *ProjectsTriggersWebhookCall {
 	c := &ProjectsTriggersWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

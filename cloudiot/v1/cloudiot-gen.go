@@ -1751,6 +1751,10 @@ type ProjectsLocationsRegistriesBindDeviceToGatewayCall struct {
 }
 
 // BindDeviceToGateway: Associates the device with the gateway.
+//
+// - parent: The name of the registry. For example,
+// `projects/example-project/locations/us-central1/registries/my-registry
+// `.
 func (r *ProjectsLocationsRegistriesService) BindDeviceToGateway(parent string, binddevicetogatewayrequest *BindDeviceToGatewayRequest) *ProjectsLocationsRegistriesBindDeviceToGatewayCall {
 	c := &ProjectsLocationsRegistriesBindDeviceToGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1892,6 +1896,10 @@ type ProjectsLocationsRegistriesCreateCall struct {
 }
 
 // Create: Creates a device registry that contains devices.
+//
+// - parent: The project and cloud region where this device registry
+// must be created. For example,
+// `projects/example-project/locations/us-central1`.
 func (r *ProjectsLocationsRegistriesService) Create(parent string, deviceregistry *DeviceRegistry) *ProjectsLocationsRegistriesCreateCall {
 	c := &ProjectsLocationsRegistriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2032,6 +2040,10 @@ type ProjectsLocationsRegistriesDeleteCall struct {
 }
 
 // Delete: Deletes a device registry configuration.
+//
+// - name: The name of the device registry. For example,
+// `projects/example-project/locations/us-central1/registries/my-registry
+// `.
 func (r *ProjectsLocationsRegistriesService) Delete(name string) *ProjectsLocationsRegistriesDeleteCall {
 	c := &ProjectsLocationsRegistriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2164,6 +2176,10 @@ type ProjectsLocationsRegistriesGetCall struct {
 }
 
 // Get: Gets a device registry configuration.
+//
+// - name: The name of the device registry. For example,
+// `projects/example-project/locations/us-central1/registries/my-registry
+// `.
 func (r *ProjectsLocationsRegistriesService) Get(name string) *ProjectsLocationsRegistriesGetCall {
 	c := &ProjectsLocationsRegistriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2311,6 +2327,10 @@ type ProjectsLocationsRegistriesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRegistriesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsRegistriesGetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2452,6 +2472,9 @@ type ProjectsLocationsRegistriesListCall struct {
 }
 
 // List: Lists device registries.
+//
+// - parent: The project and cloud region path. For example,
+// `projects/example-project/locations/us-central1`.
 func (r *ProjectsLocationsRegistriesService) List(parent string) *ProjectsLocationsRegistriesListCall {
 	c := &ProjectsLocationsRegistriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2648,6 +2671,10 @@ type ProjectsLocationsRegistriesPatchCall struct {
 }
 
 // Patch: Updates a device registry configuration.
+//
+// - name: The resource path name. For example,
+// `projects/example-project/locations/us-central1/registries/my-registry
+// `.
 func (r *ProjectsLocationsRegistriesService) Patch(name string, deviceregistry *DeviceRegistry) *ProjectsLocationsRegistriesPatchCall {
 	c := &ProjectsLocationsRegistriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2807,6 +2834,10 @@ type ProjectsLocationsRegistriesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRegistriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistriesSetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2950,6 +2981,10 @@ type ProjectsLocationsRegistriesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified resource. If the resource does not exist, this will return
 // an empty set of permissions, not a NOT_FOUND error.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsRegistriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3092,6 +3127,10 @@ type ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall struct {
 
 // UnbindDeviceFromGateway: Deletes the association between the device
 // and the gateway.
+//
+// - parent: The name of the registry. For example,
+// `projects/example-project/locations/us-central1/registries/my-registry
+// `.
 func (r *ProjectsLocationsRegistriesService) UnbindDeviceFromGateway(parent string, unbinddevicefromgatewayrequest *UnbindDeviceFromGatewayRequest) *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall {
 	c := &ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3233,6 +3272,11 @@ type ProjectsLocationsRegistriesDevicesCreateCall struct {
 }
 
 // Create: Creates a device in a device registry.
+//
+// - parent: The name of the device registry where this device should be
+// created. For example,
+// `projects/example-project/locations/us-central1/registries/my-registry
+// `.
 func (r *ProjectsLocationsRegistriesDevicesService) Create(parent string, device *Device) *ProjectsLocationsRegistriesDevicesCreateCall {
 	c := &ProjectsLocationsRegistriesDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3373,6 +3417,12 @@ type ProjectsLocationsRegistriesDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device.
+//
+// - name: The name of the device. For example,
+// `projects/p0/locations/us-central1/registries/registry0/devices/device
+// 0` or
+// `projects/p0/locations/us-central1/registries/registry0/devices/{num_i
+// d}`.
 func (r *ProjectsLocationsRegistriesDevicesService) Delete(name string) *ProjectsLocationsRegistriesDevicesDeleteCall {
 	c := &ProjectsLocationsRegistriesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3505,6 +3555,12 @@ type ProjectsLocationsRegistriesDevicesGetCall struct {
 }
 
 // Get: Gets details about a device.
+//
+// - name: The name of the device. For example,
+// `projects/p0/locations/us-central1/registries/registry0/devices/device
+// 0` or
+// `projects/p0/locations/us-central1/registries/registry0/devices/{num_i
+// d}`.
 func (r *ProjectsLocationsRegistriesDevicesService) Get(name string) *ProjectsLocationsRegistriesDevicesGetCall {
 	c := &ProjectsLocationsRegistriesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3665,6 +3721,9 @@ type ProjectsLocationsRegistriesDevicesListCall struct {
 }
 
 // List: List devices in a device registry.
+//
+// - parent: The device registry path. Required. For example,
+// `projects/my-project/locations/us-central1/registries/my-registry`.
 func (r *ProjectsLocationsRegistriesDevicesService) List(parent string) *ProjectsLocationsRegistriesDevicesListCall {
 	c := &ProjectsLocationsRegistriesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3974,6 +4033,12 @@ type ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall struct {
 // ModifyCloudToDeviceConfig: Modifies the configuration for the device,
 // which is eventually sent from the Cloud IoT Core servers. Returns the
 // modified configuration version and its metadata.
+//
+// - name: The name of the device. For example,
+// `projects/p0/locations/us-central1/registries/registry0/devices/device
+// 0` or
+// `projects/p0/locations/us-central1/registries/registry0/devices/{num_i
+// d}`.
 func (r *ProjectsLocationsRegistriesDevicesService) ModifyCloudToDeviceConfig(name string, modifycloudtodeviceconfigrequest *ModifyCloudToDeviceConfigRequest) *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall {
 	c := &ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4115,6 +4180,13 @@ type ProjectsLocationsRegistriesDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+// - name: The resource path name. For example,
+// `projects/p1/locations/us-central1/registries/registry0/devices/dev0`
+// or
+// `projects/p1/locations/us-central1/registries/registry0/devices/{num_i
+// d}`. When `name` is populated as a response from the service, it
+// always ends in the device numeric ID.
 func (r *ProjectsLocationsRegistriesDevicesService) Patch(name string, device *Device) *ProjectsLocationsRegistriesDevicesPatchCall {
 	c := &ProjectsLocationsRegistriesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4285,6 +4357,12 @@ type ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall struct {
 // FAILED_PRECONDITION. Otherwise, this method will return OK. If the
 // subscription is QoS 1, at least once delivery will be guaranteed; for
 // QoS 0, no acknowledgment will be expected from the device.
+//
+// - name: The name of the device. For example,
+// `projects/p0/locations/us-central1/registries/registry0/devices/device
+// 0` or
+// `projects/p0/locations/us-central1/registries/registry0/devices/{num_i
+// d}`.
 func (r *ProjectsLocationsRegistriesDevicesService) SendCommandToDevice(name string, sendcommandtodevicerequest *SendCommandToDeviceRequest) *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall {
 	c := &ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4427,6 +4505,12 @@ type ProjectsLocationsRegistriesDevicesConfigVersionsListCall struct {
 
 // List: Lists the last few versions of the device configuration in
 // descending order (i.e.: newest first).
+//
+// - name: The name of the device. For example,
+// `projects/p0/locations/us-central1/registries/registry0/devices/device
+// 0` or
+// `projects/p0/locations/us-central1/registries/registry0/devices/{num_i
+// d}`.
 func (r *ProjectsLocationsRegistriesDevicesConfigVersionsService) List(name string) *ProjectsLocationsRegistriesDevicesConfigVersionsListCall {
 	c := &ProjectsLocationsRegistriesDevicesConfigVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4588,6 +4672,12 @@ type ProjectsLocationsRegistriesDevicesStatesListCall struct {
 
 // List: Lists the last few versions of the device state in descending
 // order (i.e.: newest first).
+//
+// - name: The name of the device. For example,
+// `projects/p0/locations/us-central1/registries/registry0/devices/device
+// 0` or
+// `projects/p0/locations/us-central1/registries/registry0/devices/{num_i
+// d}`.
 func (r *ProjectsLocationsRegistriesDevicesStatesService) List(name string) *ProjectsLocationsRegistriesDevicesStatesListCall {
 	c := &ProjectsLocationsRegistriesDevicesStatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4750,6 +4840,10 @@ type ProjectsLocationsRegistriesGroupsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRegistriesGroupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsRegistriesGroupsGetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4892,6 +4986,10 @@ type ProjectsLocationsRegistriesGroupsSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsRegistriesGroupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistriesGroupsSetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5035,6 +5133,10 @@ type ProjectsLocationsRegistriesGroupsTestIamPermissionsCall struct {
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified resource. If the resource does not exist, this will return
 // an empty set of permissions, not a NOT_FOUND error.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsRegistriesGroupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistriesGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5176,6 +5278,9 @@ type ProjectsLocationsRegistriesGroupsDevicesListCall struct {
 }
 
 // List: List devices in a device registry.
+//
+// - parent: The device registry path. Required. For example,
+// `projects/my-project/locations/us-central1/registries/my-registry`.
 func (r *ProjectsLocationsRegistriesGroupsDevicesService) List(parent string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c := &ProjectsLocationsRegistriesGroupsDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

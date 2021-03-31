@@ -1008,6 +1008,9 @@ type SearchanalyticsQueryCall struct {
 // result list. If you need to know which days have data, issue a broad
 // date range query grouped by date for any metric, and see which day
 // rows are returned.
+//
+// - siteUrl: The site's URL, including protocol. For example:
+// `http://www.example.com/`.
 func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryrequest *SearchAnalyticsQueryRequest) *SearchanalyticsQueryCall {
 	c := &SearchanalyticsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1148,6 +1151,11 @@ type SitemapsDeleteCall struct {
 }
 
 // Delete: Deletes a sitemap from this site.
+//
+// - feedpath: The URL of the actual sitemap. For example:
+// `http://www.example.com/sitemap.xml`.
+// - siteUrl: The site's URL, including protocol. For example:
+// `http://www.example.com/`.
 func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDeleteCall {
 	c := &SitemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1260,6 +1268,11 @@ type SitemapsGetCall struct {
 }
 
 // Get: Retrieves information about a specific sitemap.
+//
+// - feedpath: The URL of the actual sitemap. For example:
+// `http://www.example.com/sitemap.xml`.
+// - siteUrl: The site's URL, including protocol. For example:
+// `http://www.example.com/`.
 func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall {
 	c := &SitemapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1415,6 +1428,9 @@ type SitemapsListCall struct {
 // List:  Lists the sitemaps-entries (/webmaster-tools/v3/sitemaps)
 // submitted for this site, or included in the sitemap index file (if
 // `sitemapIndex` is specified in the request).
+//
+// - siteUrl: The site's URL, including protocol. For example:
+// `http://www.example.com/`.
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	c := &SitemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1572,6 +1588,11 @@ type SitemapsSubmitCall struct {
 }
 
 // Submit: Submits a sitemap for a site.
+//
+// - feedpath: The URL of the actual sitemap. For example:
+// `http://www.example.com/sitemap.xml`.
+// - siteUrl: The site's URL, including protocol. For example:
+// `http://www.example.com/`.
 func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmitCall {
 	c := &SitemapsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1682,6 +1703,8 @@ type SitesAddCall struct {
 }
 
 // Add:  Adds a site to the set of the user's sites in Search Console.
+//
+// - siteUrl: The URL of the site to add.
 func (r *SitesService) Add(siteUrl string) *SitesAddCall {
 	c := &SitesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1784,6 +1807,9 @@ type SitesDeleteCall struct {
 
 // Delete:  Removes a site from the set of the user's Search Console
 // sites.
+//
+// - siteUrl: The URI of the property as defined in Search Console.
+// **Examples:** `http://www.example.com/` or `sc-domain:example.com`.
 func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
 	c := &SitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1886,6 +1912,9 @@ type SitesGetCall struct {
 }
 
 // Get:  Retrieves information about specific site.
+//
+// - siteUrl: The URI of the property as defined in Search Console.
+// **Examples:** `http://www.example.com/` or `sc-domain:example.com`.
 func (r *SitesService) Get(siteUrl string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl

@@ -2643,6 +2643,8 @@ type ProjectsAllocateIdsCall struct {
 
 // AllocateIds: Allocates IDs for the given keys, which is useful for
 // referencing an entity before it is inserted.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) AllocateIds(projectId string, allocateidsrequest *AllocateIdsRequest) *ProjectsAllocateIdsCall {
 	c := &ProjectsAllocateIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2783,6 +2785,8 @@ type ProjectsBeginTransactionCall struct {
 }
 
 // BeginTransaction: Begins a new transaction.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) BeginTransaction(projectId string, begintransactionrequest *BeginTransactionRequest) *ProjectsBeginTransactionCall {
 	c := &ProjectsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2924,6 +2928,8 @@ type ProjectsCommitCall struct {
 
 // Commit: Commits a transaction, optionally creating, deleting or
 // modifying some entities.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Commit(projectId string, commitrequest *CommitRequest) *ProjectsCommitCall {
 	c := &ProjectsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3071,6 +3077,8 @@ type ProjectsExportCall struct {
 // output of an export may only be used once the associated operation is
 // done. If an export operation is cancelled before completion it may
 // leave partial data behind in Google Cloud Storage.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsService) Export(projectId string, googledatastoreadminv1exportentitiesrequest *GoogleDatastoreAdminV1ExportEntitiesRequest) *ProjectsExportCall {
 	c := &ProjectsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3216,6 +3224,8 @@ type ProjectsImportCall struct {
 // Operation resource that is created. If an ImportEntities operation is
 // cancelled, it is possible that a subset of the data has already been
 // imported to Cloud Datastore.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsService) Import(projectId string, googledatastoreadminv1importentitiesrequest *GoogleDatastoreAdminV1ImportEntitiesRequest) *ProjectsImportCall {
 	c := &ProjectsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3356,6 +3366,8 @@ type ProjectsLookupCall struct {
 }
 
 // Lookup: Looks up entities by key.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Lookup(projectId string, lookuprequest *LookupRequest) *ProjectsLookupCall {
 	c := &ProjectsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3497,6 +3509,8 @@ type ProjectsReserveIdsCall struct {
 
 // ReserveIds: Prevents the supplied keys' IDs from being auto-allocated
 // by Cloud Datastore.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) ReserveIds(projectId string, reserveidsrequest *ReserveIdsRequest) *ProjectsReserveIdsCall {
 	c := &ProjectsReserveIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3637,6 +3651,8 @@ type ProjectsRollbackCall struct {
 }
 
 // Rollback: Rolls back a transaction.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Rollback(projectId string, rollbackrequest *RollbackRequest) *ProjectsRollbackCall {
 	c := &ProjectsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3777,6 +3793,8 @@ type ProjectsRunQueryCall struct {
 }
 
 // RunQuery: Queries for entities.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) RunQuery(projectId string, runqueryrequest *RunQueryRequest) *ProjectsRunQueryCall {
 	c := &ProjectsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3925,6 +3943,8 @@ type ProjectsIndexesCreateCall struct {
 // recovered by fixing the data that caused the error, removing the
 // index with delete, then re-creating the index with create. Indexes
 // with a single property cannot be created.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsIndexesService) Create(projectId string, googledatastoreadminv1index *GoogleDatastoreAdminV1Index) *ProjectsIndexesCreateCall {
 	c := &ProjectsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4072,6 +4092,9 @@ type ProjectsIndexesDeleteCall struct {
 // in which case the index will move to the `ERROR` state. The process
 // can be recovered by fixing the data that caused the error, followed
 // by calling delete again.
+//
+// - indexId: The resource ID of the index to delete.
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsIndexesService) Delete(projectId string, indexId string) *ProjectsIndexesDeleteCall {
 	c := &ProjectsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4213,6 +4236,9 @@ type ProjectsIndexesGetCall struct {
 }
 
 // Get: Gets an index.
+//
+// - indexId: The resource ID of the index to get.
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsIndexesService) Get(projectId string, indexId string) *ProjectsIndexesGetCall {
 	c := &ProjectsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4368,6 +4394,8 @@ type ProjectsIndexesListCall struct {
 // List: Lists the indexes that match the specified filters. Datastore
 // uses an eventually consistent query to fetch the list of indexes and
 // may occasionally return stale results.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsIndexesService) List(projectId string) *ProjectsIndexesListCall {
 	c := &ProjectsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4578,6 +4606,8 @@ type ProjectsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4712,6 +4742,8 @@ type ProjectsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
 	c := &ProjectsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4846,6 +4878,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5000,6 +5034,8 @@ type ProjectsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

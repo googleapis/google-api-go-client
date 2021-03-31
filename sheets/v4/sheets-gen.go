@@ -11587,6 +11587,8 @@ type SpreadsheetsBatchUpdateCall struct {
 // Your changes may be altered with respect to collaborator changes. If
 // there are no collaborators, the spreadsheet should reflect your
 // changes.
+//
+// - spreadsheetId: The spreadsheet to apply the updates to.
 func (r *SpreadsheetsService) BatchUpdate(spreadsheetId string, batchupdatespreadsheetrequest *BatchUpdateSpreadsheetRequest) *SpreadsheetsBatchUpdateCall {
 	c := &SpreadsheetsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -11867,6 +11869,8 @@ type SpreadsheetsGetCall struct {
 // specified. Limiting the range will return only the portions of the
 // spreadsheet that intersect the requested ranges. Ranges are specified
 // using A1 notation.
+//
+// - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) Get(spreadsheetId string) *SpreadsheetsGetCall {
 	c := &SpreadsheetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12052,6 +12056,8 @@ type SpreadsheetsGetByDataFilterCall struct {
 // a field mask is set, the `includeGridData` parameter is ignored For
 // large spreadsheets, it is recommended to retrieve only the specific
 // fields of the spreadsheet that you want.
+//
+// - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) GetByDataFilter(spreadsheetId string, getspreadsheetbydatafilterrequest *GetSpreadsheetByDataFilterRequest) *SpreadsheetsGetByDataFilterCall {
 	c := &SpreadsheetsGetByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12196,6 +12202,9 @@ type SpreadsheetsDeveloperMetadataGetCall struct {
 // Get: Returns the developer metadata with the specified ID. The caller
 // must specify the spreadsheet ID and the developer metadata's unique
 // metadataId.
+//
+// - metadataId: The ID of the developer metadata to retrieve.
+// - spreadsheetId: The ID of the spreadsheet to retrieve metadata from.
 func (r *SpreadsheetsDeveloperMetadataService) Get(spreadsheetId string, metadataId int64) *SpreadsheetsDeveloperMetadataGetCall {
 	c := &SpreadsheetsDeveloperMetadataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12357,6 +12366,8 @@ type SpreadsheetsDeveloperMetadataSearchCall struct {
 // represents a location in a spreadsheet, this will return all
 // developer metadata associated with locations intersecting that
 // region.
+//
+// - spreadsheetId: The ID of the spreadsheet to retrieve metadata from.
 func (r *SpreadsheetsDeveloperMetadataService) Search(spreadsheetId string, searchdevelopermetadatarequest *SearchDeveloperMetadataRequest) *SpreadsheetsDeveloperMetadataSearchCall {
 	c := &SpreadsheetsDeveloperMetadataSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12500,6 +12511,10 @@ type SpreadsheetsSheetsCopyToCall struct {
 
 // CopyTo: Copies a single sheet from a spreadsheet to another
 // spreadsheet. Returns the properties of the newly created sheet.
+//
+// - sheetId: The ID of the sheet to copy.
+// - spreadsheetId: The ID of the spreadsheet containing the sheet to
+// copy.
 func (r *SpreadsheetsSheetsService) CopyTo(spreadsheetId string, sheetId int64, copysheettoanotherspreadsheetrequest *CopySheetToAnotherSpreadsheetRequest) *SpreadsheetsSheetsCopyToCall {
 	c := &SpreadsheetsSheetsCopyToCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12662,6 +12677,10 @@ type SpreadsheetsValuesAppendCall struct {
 // `valueInputOption` only controls how the input data will be added to
 // the sheet (column-wise or row-wise), it does not influence what cell
 // the data starts being written to.
+//
+// - range: The A1 notation of a range to search for a logical table of
+// data. Values are appended after the last row of the table.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesAppendCall {
 	c := &SpreadsheetsValuesAppendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12961,6 +12980,8 @@ type SpreadsheetsValuesBatchClearCall struct {
 // The caller must specify the spreadsheet ID and one or more ranges.
 // Only values are cleared -- all other properties of the cell (such as
 // formatting, data validation, etc..) are kept.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClear(spreadsheetId string, batchclearvaluesrequest *BatchClearValuesRequest) *SpreadsheetsValuesBatchClearCall {
 	c := &SpreadsheetsValuesBatchClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13106,6 +13127,8 @@ type SpreadsheetsValuesBatchClearByDataFilterCall struct {
 // more DataFilters. Ranges matching any of the specified data filters
 // will be cleared. Only values are cleared -- all other properties of
 // the cell (such as formatting, data validation, etc..) are kept.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClearByDataFilter(spreadsheetId string, batchclearvaluesbydatafilterrequest *BatchClearValuesByDataFilterRequest) *SpreadsheetsValuesBatchClearByDataFilterCall {
 	c := &SpreadsheetsValuesBatchClearByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13249,6 +13272,8 @@ type SpreadsheetsValuesBatchGetCall struct {
 
 // BatchGet: Returns one or more ranges of values from a spreadsheet.
 // The caller must specify the spreadsheet ID and one or more ranges.
+//
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *SpreadsheetsValuesBatchGetCall {
 	c := &SpreadsheetsValuesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13516,6 +13541,8 @@ type SpreadsheetsValuesBatchGetByDataFilterCall struct {
 // the specified data filters. The caller must specify the spreadsheet
 // ID and one or more DataFilters. Ranges that match any of the data
 // filters in the request will be returned.
+//
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) BatchGetByDataFilter(spreadsheetId string, batchgetvaluesbydatafilterrequest *BatchGetValuesByDataFilterRequest) *SpreadsheetsValuesBatchGetByDataFilterCall {
 	c := &SpreadsheetsValuesBatchGetByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13660,6 +13687,8 @@ type SpreadsheetsValuesBatchUpdateCall struct {
 // BatchUpdate: Sets values in one or more ranges of a spreadsheet. The
 // caller must specify the spreadsheet ID, a valueInputOption, and one
 // or more ValueRanges.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchUpdate(spreadsheetId string, batchupdatevaluesrequest *BatchUpdateValuesRequest) *SpreadsheetsValuesBatchUpdateCall {
 	c := &SpreadsheetsValuesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13803,6 +13832,8 @@ type SpreadsheetsValuesBatchUpdateByDataFilterCall struct {
 // BatchUpdateByDataFilter: Sets values in one or more ranges of a
 // spreadsheet. The caller must specify the spreadsheet ID, a
 // valueInputOption, and one or more DataFilterValueRanges.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchUpdateByDataFilter(spreadsheetId string, batchupdatevaluesbydatafilterrequest *BatchUpdateValuesByDataFilterRequest) *SpreadsheetsValuesBatchUpdateByDataFilterCall {
 	c := &SpreadsheetsValuesBatchUpdateByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13949,6 +13980,9 @@ type SpreadsheetsValuesClearCall struct {
 // spreadsheet ID and range. Only values are cleared -- all other
 // properties of the cell (such as formatting, data validation, etc..)
 // are kept.
+//
+// - range: The A1 notation or R1C1 notation of the values to clear.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Clear(spreadsheetId string, range_ string, clearvaluesrequest *ClearValuesRequest) *SpreadsheetsValuesClearCall {
 	c := &SpreadsheetsValuesClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14101,6 +14135,10 @@ type SpreadsheetsValuesGetCall struct {
 
 // Get: Returns a range of values from a spreadsheet. The caller must
 // specify the spreadsheet ID and a range.
+//
+// - range: The A1 notation or R1C1 notation of the range to retrieve
+// values from.
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *SpreadsheetsValuesGetCall {
 	c := &SpreadsheetsValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14363,6 +14401,9 @@ type SpreadsheetsValuesUpdateCall struct {
 
 // Update: Sets values in a range of a spreadsheet. The caller must
 // specify the spreadsheet ID, range, and a valueInputOption.
+//
+// - range: The A1 notation of the values to update.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesUpdateCall {
 	c := &SpreadsheetsValuesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId

@@ -8028,6 +8028,9 @@ type DatasetsDeleteCall struct {
 // you can delete a dataset, you must delete all its tables, either
 // manually or by specifying deleteContents. Immediately after deletion,
 // you can create another dataset with the same name.
+//
+// - datasetId: Dataset ID of dataset being deleted
+// - projectId: Project ID of the dataset being deleted
 func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDeleteCall {
 	c := &DatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8153,6 +8156,9 @@ type DatasetsGetCall struct {
 }
 
 // Get: Returns the dataset specified by datasetID.
+//
+// - datasetId: Dataset ID of the requested dataset
+// - projectId: Project ID of the requested dataset
 func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCall {
 	c := &DatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8307,6 +8313,8 @@ type DatasetsInsertCall struct {
 }
 
 // Insert: Creates a new empty dataset.
+//
+// - projectId: Project ID of the new dataset
 func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsInsertCall {
 	c := &DatasetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8447,6 +8455,8 @@ type DatasetsListCall struct {
 
 // List: Lists all datasets in the specified project to which you have
 // been granted the READER dataset role.
+//
+// - projectId: Project ID of the datasets to be listed
 func (r *DatasetsService) List(projectId string) *DatasetsListCall {
 	c := &DatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8669,6 +8679,9 @@ type DatasetsPatchCall struct {
 // replaces the entire dataset resource, whereas the patch method only
 // replaces fields that are provided in the submitted dataset resource.
 // This method supports patch semantics.
+//
+// - datasetId: Dataset ID of the dataset being updated
+// - projectId: Project ID of the dataset being updated
 func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dataset) *DatasetsPatchCall {
 	c := &DatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8820,6 +8833,9 @@ type DatasetsUpdateCall struct {
 // Update: Updates information in an existing dataset. The update method
 // replaces the entire dataset resource, whereas the patch method only
 // replaces fields that are provided in the submitted dataset resource.
+//
+// - datasetId: Dataset ID of the dataset being updated
+// - projectId: Project ID of the dataset being updated
 func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Dataset) *DatasetsUpdateCall {
 	c := &DatasetsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8971,6 +8987,9 @@ type JobsCancelCall struct {
 // immediately, and the client will need to poll for the job status to
 // see if the cancel completed successfully. Cancelled jobs may still
 // incur costs.
+//
+// - jobId: [Required] Job ID of the job to cancel
+// - projectId: [Required] Project ID of the job to cancel
 func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 	c := &JobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9126,6 +9145,9 @@ type JobsGetCall struct {
 // Get: Returns information about a specific job. Job information is
 // available for a six month period after creation. Requires that you're
 // the person who ran the job, or have the Is Owner project role.
+//
+// - jobId: [Required] Job ID of the requested job
+// - projectId: [Required] Project ID of the requested job
 func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9294,6 +9316,9 @@ type JobsGetQueryResultsCall struct {
 }
 
 // GetQueryResults: Retrieves the results of a query job.
+//
+// - jobId: [Required] Job ID of the query job
+// - projectId: [Required] Project ID of the query job
 func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQueryResultsCall {
 	c := &JobsGetQueryResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9538,6 +9563,9 @@ type JobsInsertCall struct {
 
 // Insert: Starts a new asynchronous job. Requires the Can View project
 // role.
+//
+// - projectId: Project ID of the project that will be billed for the
+// job
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 	c := &JobsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9767,6 +9795,8 @@ type JobsListCall struct {
 // job list is sorted in reverse chronological order, by job creation
 // time. Requires the Can View project role, or the Is Owner project
 // role if you set the allUsers property.
+//
+// - projectId: Project ID of the jobs to list
 func (r *JobsService) List(projectId string) *JobsListCall {
 	c := &JobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10064,6 +10094,8 @@ type JobsQueryCall struct {
 
 // Query: Runs a BigQuery SQL query synchronously and returns query
 // results if the query completes within a specified timeout.
+//
+// - projectId: Project ID of the project billed for the query
 func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
 	c := &JobsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10206,6 +10238,10 @@ type ModelsDeleteCall struct {
 }
 
 // Delete: Deletes the model specified by modelId from the dataset.
+//
+// - datasetId: Dataset ID of the model to delete.
+// - modelId: Model ID of the model to delete.
+// - projectId: Project ID of the model to delete.
 func (r *ModelsService) Delete(projectId string, datasetId string, modelId string) *ModelsDeleteCall {
 	c := &ModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10332,6 +10368,10 @@ type ModelsGetCall struct {
 }
 
 // Get: Gets the specified model resource by model ID.
+//
+// - datasetId: Dataset ID of the requested model.
+// - modelId: Model ID of the requested model.
+// - projectId: Project ID of the requested model.
 func (r *ModelsService) Get(projectId string, datasetId string, modelId string) *ModelsGetCall {
 	c := &ModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10501,6 +10541,9 @@ type ModelsListCall struct {
 
 // List: Lists all models in the specified dataset. Requires the READER
 // dataset role.
+//
+// - datasetId: Dataset ID of the models to list.
+// - projectId: Project ID of the models to list.
 func (r *ModelsService) List(projectId string, datasetId string) *ModelsListCall {
 	c := &ModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10707,6 +10750,10 @@ type ModelsPatchCall struct {
 }
 
 // Patch: Patch specific fields in the specified model.
+//
+// - datasetId: Dataset ID of the model to patch.
+// - modelId: Model ID of the model to patch.
+// - projectId: Project ID of the model to patch.
 func (r *ModelsService) Patch(projectId string, datasetId string, modelId string, model *Model) *ModelsPatchCall {
 	c := &ModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10869,6 +10916,8 @@ type ProjectsGetServiceAccountCall struct {
 
 // GetServiceAccount: Returns the email address of the service account
 // for your project used for interactions with Google Cloud KMS.
+//
+// - projectId: Project ID for which the service account is requested.
 func (r *ProjectsService) GetServiceAccount(projectId string) *ProjectsGetServiceAccountCall {
 	c := &ProjectsGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11193,6 +11242,10 @@ type RoutinesDeleteCall struct {
 }
 
 // Delete: Deletes the routine specified by routineId from the dataset.
+//
+// - datasetId: Dataset ID of the routine to delete
+// - projectId: Project ID of the routine to delete
+// - routineId: Routine ID of the routine to delete
 func (r *RoutinesService) Delete(projectId string, datasetId string, routineId string) *RoutinesDeleteCall {
 	c := &RoutinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11319,6 +11372,10 @@ type RoutinesGetCall struct {
 }
 
 // Get: Gets the specified routine resource by routine ID.
+//
+// - datasetId: Dataset ID of the requested routine
+// - projectId: Project ID of the requested routine
+// - routineId: Routine ID of the requested routine
 func (r *RoutinesService) Get(projectId string, datasetId string, routineId string) *RoutinesGetCall {
 	c := &RoutinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11501,6 +11558,9 @@ type RoutinesInsertCall struct {
 }
 
 // Insert: Creates a new routine in the dataset.
+//
+// - datasetId: Dataset ID of the new routine
+// - projectId: Project ID of the new routine
 func (r *RoutinesService) Insert(projectId string, datasetId string, routine *Routine) *RoutinesInsertCall {
 	c := &RoutinesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11654,6 +11714,9 @@ type RoutinesListCall struct {
 
 // List: Lists all routines in the specified dataset. Requires the
 // READER dataset role.
+//
+// - datasetId: Dataset ID of the routines to list
+// - projectId: Project ID of the routines to list
 func (r *RoutinesService) List(projectId string, datasetId string) *RoutinesListCall {
 	c := &RoutinesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11892,6 +11955,10 @@ type RoutinesUpdateCall struct {
 
 // Update: Updates information in an existing routine. The update method
 // replaces the entire Routine resource.
+//
+// - datasetId: Dataset ID of the routine to update
+// - projectId: Project ID of the routine to update
+// - routineId: Routine ID of the routine to update
 func (r *RoutinesService) Update(projectId string, datasetId string, routineId string, routine *Routine) *RoutinesUpdateCall {
 	c := &RoutinesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12055,6 +12122,10 @@ type RowAccessPoliciesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *RowAccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RowAccessPoliciesGetIamPolicyCall {
 	c := &RowAccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12200,6 +12271,10 @@ type RowAccessPoliciesListCall struct {
 }
 
 // List: Lists all row access policies on the specified table.
+//
+// - datasetId: Dataset ID of row access policies to list.
+// - projectId: Project ID of the row access policies to list.
+// - tableId: Table ID of the table to list row access policies.
 func (r *RowAccessPoliciesService) List(projectId string, datasetId string, tableId string) *RowAccessPoliciesListCall {
 	c := &RowAccessPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12416,6 +12491,10 @@ type RowAccessPoliciesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *RowAccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RowAccessPoliciesSetIamPolicyCall {
 	c := &RowAccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12562,6 +12641,10 @@ type RowAccessPoliciesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *RowAccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RowAccessPoliciesTestIamPermissionsCall {
 	c := &RowAccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12708,6 +12791,10 @@ type TabledataInsertAllCall struct {
 
 // InsertAll: Streams data into BigQuery one record at a time without
 // needing to run a load job. Requires the WRITER dataset role.
+//
+// - datasetId: Dataset ID of the destination table.
+// - projectId: Project ID of the destination table.
+// - tableId: Table ID of the destination table.
 func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId string, tabledatainsertallrequest *TableDataInsertAllRequest) *TabledataInsertAllCall {
 	c := &TabledataInsertAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12869,6 +12956,10 @@ type TabledataListCall struct {
 
 // List: Retrieves table data from a specified set of rows. Requires the
 // READER dataset role.
+//
+// - datasetId: Dataset ID of the table to read
+// - projectId: Project ID of the table to read
+// - tableId: Table ID of the table to read
 func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
 	c := &TabledataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13106,6 +13197,10 @@ type TablesDeleteCall struct {
 
 // Delete: Deletes the table specified by tableId from the dataset. If
 // the table contains data, all the data will be deleted.
+//
+// - datasetId: Dataset ID of the table to delete
+// - projectId: Project ID of the table to delete
+// - tableId: Table ID of the table to delete
 func (r *TablesService) Delete(projectId string, datasetId string, tableId string) *TablesDeleteCall {
 	c := &TablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13230,6 +13325,10 @@ type TablesGetCall struct {
 // Get: Gets the specified table resource by table ID. This method does
 // not return the data in the table, it only returns the table resource,
 // which describes the structure of this table.
+//
+// - datasetId: Dataset ID of the requested table
+// - projectId: Project ID of the requested table
+// - tableId: Table ID of the requested table
 func (r *TablesService) Get(projectId string, datasetId string, tableId string) *TablesGetCall {
 	c := &TablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13408,6 +13507,10 @@ type TablesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13552,6 +13655,9 @@ type TablesInsertCall struct {
 }
 
 // Insert: Creates a new, empty table in the dataset.
+//
+// - datasetId: Dataset ID of the new table
+// - projectId: Project ID of the new table
 func (r *TablesService) Insert(projectId string, datasetId string, table *Table) *TablesInsertCall {
 	c := &TablesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13702,6 +13808,9 @@ type TablesListCall struct {
 
 // List: Lists all tables in the specified dataset. Requires the READER
 // dataset role.
+//
+// - datasetId: Dataset ID of the tables to list
+// - projectId: Project ID of the tables to list
 func (r *TablesService) List(projectId string, datasetId string) *TablesListCall {
 	c := &TablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13907,6 +14016,10 @@ type TablesPatchCall struct {
 // replaces the entire table resource, whereas the patch method only
 // replaces fields that are provided in the submitted table resource.
 // This method supports patch semantics.
+//
+// - datasetId: Dataset ID of the table to update
+// - projectId: Project ID of the table to update
+// - tableId: Table ID of the table to update
 func (r *TablesService) Patch(projectId string, datasetId string, tableId string, table *Table) *TablesPatchCall {
 	c := &TablesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14066,6 +14179,10 @@ type TablesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14212,6 +14329,10 @@ type TablesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14359,6 +14480,10 @@ type TablesUpdateCall struct {
 // Update: Updates information in an existing table. The update method
 // replaces the entire table resource, whereas the patch method only
 // replaces fields that are provided in the submitted table resource.
+//
+// - datasetId: Dataset ID of the table to update
+// - projectId: Project ID of the table to update
+// - tableId: Table ID of the table to update
 func (r *TablesService) Update(projectId string, datasetId string, tableId string, table *Table) *TablesUpdateCall {
 	c := &TablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

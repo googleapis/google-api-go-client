@@ -2157,6 +2157,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2290,6 +2292,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2423,6 +2427,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2576,6 +2582,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2786,6 +2794,8 @@ type ProjectsLocationsOperationsWaitCall struct {
 // latest state before the specified timeout (including immediately),
 // meaning even an immediate response is no guarantee that the operation
 // is done.
+//
+// - name: The name of the operation resource to wait on.
 func (r *ProjectsLocationsOperationsService) Wait(name string) *ProjectsLocationsOperationsWaitCall {
 	c := &ProjectsLocationsOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2932,6 +2942,9 @@ type ProjectsLocationsScansAnalyzePackagesCall struct {
 }
 
 // AnalyzePackages: Initiates an analysis of the provided packages.
+//
+// - parent: The parent of the resource for which analysis is requested.
+// Format: projects/[project_name]/locations/[location]
 func (r *ProjectsLocationsScansService) AnalyzePackages(parent string, analyzepackagesrequest *AnalyzePackagesRequest) *ProjectsLocationsScansAnalyzePackagesCall {
 	c := &ProjectsLocationsScansAnalyzePackagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3073,6 +3086,10 @@ type ProjectsLocationsScansVulnerabilitiesListCall struct {
 
 // List: Lists vulnerabilities resulting from a successfully completed
 // scan.
+//
+// - parent: The parent of the collection of Vulnerabilities being
+// requested. Format:
+// projects/[project_name]/locations/[location]/scans/[scan_id]
 func (r *ProjectsLocationsScansVulnerabilitiesService) List(parent string) *ProjectsLocationsScansVulnerabilitiesListCall {
 	c := &ProjectsLocationsScansVulnerabilitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

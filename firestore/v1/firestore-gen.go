@@ -3464,6 +3464,9 @@ type ProjectsDatabasesExportDocumentsCall struct {
 // completion it may leave partial data behind in Google Cloud Storage.
 // For more details on export behavior and output format, refer to:
 // https://cloud.google.com/firestore/docs/manage-data/export-import
+//
+// - name: Database to export. Should be of the form:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestoreadminv1exportdocumentsrequest *GoogleFirestoreAdminV1ExportDocumentsRequest) *ProjectsDatabasesExportDocumentsCall {
 	c := &ProjectsDatabasesExportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3610,6 +3613,9 @@ type ProjectsDatabasesImportDocumentsCall struct {
 // managed via the Operation resource that is created. If an
 // ImportDocuments operation is cancelled, it is possible that a subset
 // of the data has already been imported to Cloud Firestore.
+//
+// - name: Database to import into. Should be of the form:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestoreadminv1importdocumentsrequest *GoogleFirestoreAdminV1ImportDocumentsRequest) *ProjectsDatabasesImportDocumentsCall {
 	c := &ProjectsDatabasesImportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3751,6 +3757,10 @@ type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 }
 
 // Get: Gets the metadata and configuration for a Field.
+//
+// - name: A name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}/fields/{field_id}`
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3900,6 +3910,10 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 // that have been explicitly overridden. To issue this query, call
 // FirestoreAdmin.ListFields with the filter set to
 // `indexConfig.usesAncestorConfig:false`.
+//
+// - parent: A parent name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}`
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4120,6 +4134,27 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 // name:
 // `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
 // ult__/fields/*`.
+//
+// - name: A field name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}/fields/{field_path}` A field path may be a simple field
+// name, e.g. `address` or a path to fields within map_value , e.g.
+// `address.city`, or a special field path. The only valid special field
+// is `*`, which represents any field. Field paths may be quoted using `
+// (backtick). The only character that needs to be escaped within a
+// quoted field path is the backtick character itself, escaped using a
+// backslash. Special characters in field paths that must be quoted
+// include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii
+// symbolic characters. Examples: (Note: Comments here are written in
+// markdown syntax, so there is an additional layer of backticks to
+// represent a code block) `\`address.city\`` represents a field named
+// `address.city`, not the map key `city` in the field `address`.
+// `\`*\`` represents a field named `*`, not any field. A special
+// `Field` contains the default indexing settings for all fields. This
+// field's resource name is:
+// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
+// ult__/fields/*` Indexes defined on this `Field` will be applied to
+// all fields which do not have their own `Field` index configuration.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, googlefirestoreadminv1field *GoogleFirestoreAdminV1Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4278,6 +4313,10 @@ type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 // google.longrunning.Operation which may be used to track the status of
 // the creation. The metadata for the operation will be the type
 // IndexOperationMetadata.
+//
+// - parent: A parent name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}`
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1index *GoogleFirestoreAdminV1Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4418,6 +4457,10 @@ type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 }
 
 // Delete: Deletes a composite index.
+//
+// - name: A name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}/indexes/{index_id}`
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4550,6 +4593,10 @@ type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 }
 
 // Get: Gets a composite index.
+//
+// - name: A name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}/indexes/{index_id}`
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4695,6 +4742,10 @@ type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 }
 
 // List: Lists composite indexes.
+//
+// - parent: A parent name of the form
+// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+// ction_id}`
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4903,6 +4954,9 @@ type ProjectsDatabasesDocumentsBatchGetCall struct {
 // BatchGet: Gets multiple documents. Documents returned by this method
 // are not guaranteed to be returned in the same order that they were
 // requested.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BatchGet(database string, batchgetdocumentsrequest *BatchGetDocumentsRequest) *ProjectsDatabasesDocumentsBatchGetCall {
 	c := &ProjectsDatabasesDocumentsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5049,6 +5103,9 @@ type ProjectsDatabasesDocumentsBatchWriteCall struct {
 // document. Each write succeeds or fails independently. See the
 // BatchWriteResponse for the success status of each write. If you
 // require an atomically applied set of writes, use Commit instead.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BatchWrite(database string, batchwriterequest *BatchWriteRequest) *ProjectsDatabasesDocumentsBatchWriteCall {
 	c := &ProjectsDatabasesDocumentsBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5190,6 +5247,9 @@ type ProjectsDatabasesDocumentsBeginTransactionCall struct {
 }
 
 // BeginTransaction: Starts a new transaction.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BeginTransaction(database string, begintransactionrequest *BeginTransactionRequest) *ProjectsDatabasesDocumentsBeginTransactionCall {
 	c := &ProjectsDatabasesDocumentsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5331,6 +5391,9 @@ type ProjectsDatabasesDocumentsCommitCall struct {
 }
 
 // Commit: Commits a transaction, while optionally updating documents.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Commit(database string, commitrequest *CommitRequest) *ProjectsDatabasesDocumentsCommitCall {
 	c := &ProjectsDatabasesDocumentsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5473,6 +5536,13 @@ type ProjectsDatabasesDocumentsCreateDocumentCall struct {
 }
 
 // CreateDocument: Creates a new document.
+//
+// - collectionId: The collection ID, relative to `parent`, to list. For
+// example: `chatrooms`.
+// - parent: The parent resource. For example:
+// `projects/{project_id}/databases/{database_id}/documents` or
+// `projects/{project_id}/databases/{database_id}/documents/chatrooms/{ch
+// atroom_id}`
 func (r *ProjectsDatabasesDocumentsService) CreateDocument(parent string, collectionId string, document *Document) *ProjectsDatabasesDocumentsCreateDocumentCall {
 	c := &ProjectsDatabasesDocumentsCreateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5649,6 +5719,10 @@ type ProjectsDatabasesDocumentsDeleteCall struct {
 }
 
 // Delete: Deletes a document.
+//
+// - name: The resource name of the Document to delete. In the format:
+// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+// h}`.
 func (r *ProjectsDatabasesDocumentsService) Delete(name string) *ProjectsDatabasesDocumentsDeleteCall {
 	c := &ProjectsDatabasesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5808,6 +5882,10 @@ type ProjectsDatabasesDocumentsGetCall struct {
 }
 
 // Get: Gets a single document.
+//
+// - name: The resource name of the Document to get. In the format:
+// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+// h}`.
 func (r *ProjectsDatabasesDocumentsService) Get(name string) *ProjectsDatabasesDocumentsGetCall {
 	c := &ProjectsDatabasesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5995,6 +6073,16 @@ type ProjectsDatabasesDocumentsListCall struct {
 }
 
 // List: Lists documents.
+//
+// - collectionId: The collection ID, relative to `parent`, to list. For
+// example: `chatrooms` or `messages`.
+// - parent: The parent resource name. In the format:
+// `projects/{project_id}/databases/{database_id}/documents` or
+// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+// h}`. For example:
+// `projects/my-project/databases/my-database/documents` or
+// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
+// room`
 func (r *ProjectsDatabasesDocumentsService) List(parent string, collectionId string) *ProjectsDatabasesDocumentsListCall {
 	c := &ProjectsDatabasesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6265,6 +6353,12 @@ type ProjectsDatabasesDocumentsListCollectionIdsCall struct {
 
 // ListCollectionIds: Lists all the collection IDs underneath a
 // document.
+//
+// - parent: The parent document. In the format:
+// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+// h}`. For example:
+// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
+// room`
 func (r *ProjectsDatabasesDocumentsService) ListCollectionIds(parent string, listcollectionidsrequest *ListCollectionIdsRequest) *ProjectsDatabasesDocumentsListCollectionIdsCall {
 	c := &ProjectsDatabasesDocumentsListCollectionIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6427,6 +6521,9 @@ type ProjectsDatabasesDocumentsListenCall struct {
 }
 
 // Listen: Listens to changes.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Listen(database string, listenrequest *ListenRequest) *ProjectsDatabasesDocumentsListenCall {
 	c := &ProjectsDatabasesDocumentsListenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -6571,6 +6668,11 @@ type ProjectsDatabasesDocumentsPartitionQueryCall struct {
 // that can be used to run the query in parallel. The returned partition
 // cursors are split points that can be used by RunQuery as starting/end
 // points for the query results.
+//
+// - parent: The parent resource name. In the format:
+// `projects/{project_id}/databases/{database_id}/documents`. Document
+// resource names are not supported; only database resource names can be
+// specified.
 func (r *ProjectsDatabasesDocumentsService) PartitionQuery(parent string, partitionqueryrequest *PartitionQueryRequest) *ProjectsDatabasesDocumentsPartitionQueryCall {
 	c := &ProjectsDatabasesDocumentsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6733,6 +6835,10 @@ type ProjectsDatabasesDocumentsPatchCall struct {
 }
 
 // Patch: Updates or inserts a document.
+//
+// - name: The resource name of the document, for example
+// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+// h}`.
 func (r *ProjectsDatabasesDocumentsService) Patch(name string, document *Document) *ProjectsDatabasesDocumentsPatchCall {
 	c := &ProjectsDatabasesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6929,6 +7035,9 @@ type ProjectsDatabasesDocumentsRollbackCall struct {
 }
 
 // Rollback: Rolls back a transaction.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Rollback(database string, rollbackrequest *RollbackRequest) *ProjectsDatabasesDocumentsRollbackCall {
 	c := &ProjectsDatabasesDocumentsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -7070,6 +7179,14 @@ type ProjectsDatabasesDocumentsRunQueryCall struct {
 }
 
 // RunQuery: Runs a query.
+//
+// - parent: The parent resource name. In the format:
+// `projects/{project_id}/databases/{database_id}/documents` or
+// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+// h}`. For example:
+// `projects/my-project/databases/my-database/documents` or
+// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
+// room`
 func (r *ProjectsDatabasesDocumentsService) RunQuery(parent string, runqueryrequest *RunQueryRequest) *ProjectsDatabasesDocumentsRunQueryCall {
 	c := &ProjectsDatabasesDocumentsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7211,6 +7328,10 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 }
 
 // Write: Streams batches of document updates and deletes, in order.
+//
+// - database: The database name. In the format:
+// `projects/{project_id}/databases/{database_id}`. This is only
+// required in the first message.
 func (r *ProjectsDatabasesDocumentsService) Write(database string, writerequest *WriteRequest) *ProjectsDatabasesDocumentsWriteCall {
 	c := &ProjectsDatabasesDocumentsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -7361,6 +7482,8 @@ type ProjectsDatabasesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsDatabasesOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *ProjectsDatabasesOperationsCancelCall {
 	c := &ProjectsDatabasesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7504,6 +7627,8 @@ type ProjectsDatabasesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsDatabasesOperationsService) Delete(name string) *ProjectsDatabasesOperationsDeleteCall {
 	c := &ProjectsDatabasesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7638,6 +7763,8 @@ type ProjectsDatabasesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsDatabasesOperationsService) Get(name string) *ProjectsDatabasesOperationsGetCall {
 	c := &ProjectsDatabasesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7792,6 +7919,8 @@ type ProjectsDatabasesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsDatabasesOperationsService) List(name string) *ProjectsDatabasesOperationsListCall {
 	c := &ProjectsDatabasesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7996,6 +8125,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8142,6 +8273,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

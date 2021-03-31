@@ -1010,6 +1010,9 @@ type ApisGetRestCall struct {
 }
 
 // GetRest: Retrieve the description of a particular version of an api.
+//
+// - api: The name of the API.
+// - version: The version of the API.
 func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
 	c := &ApisGetRestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.api = api

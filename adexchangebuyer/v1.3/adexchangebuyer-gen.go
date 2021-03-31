@@ -1583,6 +1583,8 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets one account by ID.
+//
+// - id: The account id
 func (r *AccountsService) Get(id int64) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -1853,6 +1855,8 @@ type AccountsPatchCall struct {
 
 // Patch: Updates an existing account. This method supports patch
 // semantics.
+//
+// - id: The account id
 func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -1992,6 +1996,8 @@ type AccountsUpdateCall struct {
 }
 
 // Update: Updates an existing account.
+//
+// - id: The account id
 func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -2132,6 +2138,8 @@ type BillingInfoGetCall struct {
 
 // Get: Returns the billing information for one account specified by
 // account ID.
+//
+// - accountId: The account id.
 func (r *BillingInfoService) Get(accountId int64) *BillingInfoGetCall {
 	c := &BillingInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2404,6 +2412,9 @@ type BudgetGetCall struct {
 
 // Get: Returns the budget information for the adgroup specified by the
 // accountId and billingId.
+//
+// - accountId: The account id to get the budget information for.
+// - billingId: The billing id to get the budget information for.
 func (r *BudgetService) Get(accountId int64, billingId int64) *BudgetGetCall {
 	c := &BudgetGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2560,6 +2571,9 @@ type BudgetPatchCall struct {
 // Patch: Updates the budget amount for the budget of the adgroup
 // specified by the accountId and billingId, with the budget amount in
 // the request. This method supports patch semantics.
+//
+// - accountId: The account id associated with the budget being updated.
+// - billingId: The billing id associated with the budget being updated.
 func (r *BudgetService) Patch(accountId int64, billingId int64, budget *Budget) *BudgetPatchCall {
 	c := &BudgetPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2712,6 +2726,9 @@ type BudgetUpdateCall struct {
 // Update: Updates the budget amount for the budget of the adgroup
 // specified by the accountId and billingId, with the budget amount in
 // the request.
+//
+// - accountId: The account id associated with the budget being updated.
+// - billingId: The billing id associated with the budget being updated.
 func (r *BudgetService) Update(accountId int64, billingId int64, budget *Budget) *BudgetUpdateCall {
 	c := &BudgetUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2863,6 +2880,9 @@ type CreativesGetCall struct {
 
 // Get: Gets the status for a single creative. A creative will be
 // available 30-40 minutes after submission.
+//
+// - accountId: The id for the account that will serve this creative.
+// - buyerCreativeId: The buyer-specific id for this creative.
 func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *CreativesGetCall {
 	c := &CreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3376,6 +3396,8 @@ type DirectDealsGetCall struct {
 }
 
 // Get: Gets one direct deal by ID.
+//
+// - id: The direct deal id
 func (r *DirectDealsService) Get(id int64) *DirectDealsGetCall {
 	c := &DirectDealsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3644,6 +3666,12 @@ type PerformanceReportListCall struct {
 }
 
 // List: Retrieves the authenticated user's list of performance metrics.
+//
+// - accountId: The account id to get the reports.
+// - endDateTime: The end time of the report in ISO 8601 timestamp
+// format using UTC.
+// - startDateTime: The start time of the report in ISO 8601 timestamp
+// format using UTC.
 func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
 	c := &PerformanceReportListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("accountId", fmt.Sprint(accountId))
@@ -3830,6 +3858,9 @@ type PretargetingConfigDeleteCall struct {
 }
 
 // Delete: Deletes an existing pretargeting config.
+//
+// - accountId: The account id to delete the pretargeting config for.
+// - configId: The specific id of the configuration to delete.
 func (r *PretargetingConfigService) Delete(accountId int64, configId int64) *PretargetingConfigDeleteCall {
 	c := &PretargetingConfigDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3943,6 +3974,9 @@ type PretargetingConfigGetCall struct {
 }
 
 // Get: Gets a specific pretargeting configuration
+//
+// - accountId: The account id to get the pretargeting config for.
+// - configId: The specific id of the configuration to retrieve.
 func (r *PretargetingConfigService) Get(accountId int64, configId int64) *PretargetingConfigGetCall {
 	c := &PretargetingConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4096,6 +4130,8 @@ type PretargetingConfigInsertCall struct {
 }
 
 // Insert: Inserts a new pretargeting configuration.
+//
+// - accountId: The account id to insert the pretargeting config for.
 func (r *PretargetingConfigService) Insert(accountId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigInsertCall {
 	c := &PretargetingConfigInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4236,6 +4272,8 @@ type PretargetingConfigListCall struct {
 
 // List: Retrieves a list of the authenticated user's pretargeting
 // configurations.
+//
+// - accountId: The account id to get the pretargeting configs for.
 func (r *PretargetingConfigService) List(accountId int64) *PretargetingConfigListCall {
 	c := &PretargetingConfigListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4381,6 +4419,9 @@ type PretargetingConfigPatchCall struct {
 
 // Patch: Updates an existing pretargeting config. This method supports
 // patch semantics.
+//
+// - accountId: The account id to update the pretargeting config for.
+// - configId: The specific id of the configuration to update.
 func (r *PretargetingConfigService) Patch(accountId int64, configId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigPatchCall {
 	c := &PretargetingConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4531,6 +4572,9 @@ type PretargetingConfigUpdateCall struct {
 }
 
 // Update: Updates an existing pretargeting config.
+//
+// - accountId: The account id to update the pretargeting config for.
+// - configId: The specific id of the configuration to update.
 func (r *PretargetingConfigService) Update(accountId int64, configId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigUpdateCall {
 	c := &PretargetingConfigUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId

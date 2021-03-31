@@ -3053,6 +3053,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3198,6 +3200,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3407,6 +3412,9 @@ type ProjectsLocationsCertificateAuthoritiesActivateCall struct {
 // Certificate Authority signs a certificate signing request from
 // FetchCertificateAuthorityCsr, this method can complete the activation
 // process.
+//
+// - name: The resource name for this CertificateAuthority in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Activate(name string, activatecertificateauthorityrequest *ActivateCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesActivateCall {
 	c := &ProjectsLocationsCertificateAuthoritiesActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3548,6 +3556,9 @@ type ProjectsLocationsCertificateAuthoritiesCreateCall struct {
 
 // Create: Create a new CertificateAuthority in a given Project and
 // Location.
+//
+// - parent: The resource name of the location associated with the
+// CertificateAuthorities, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Create(parent string, certificateauthority *CertificateAuthority) *ProjectsLocationsCertificateAuthoritiesCreateCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3723,6 +3734,9 @@ type ProjectsLocationsCertificateAuthoritiesDisableCall struct {
 }
 
 // Disable: Disable a CertificateAuthority.
+//
+// - name: The resource name for this CertificateAuthority in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Disable(name string, disablecertificateauthorityrequest *DisableCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesDisableCall {
 	c := &ProjectsLocationsCertificateAuthoritiesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3863,6 +3877,9 @@ type ProjectsLocationsCertificateAuthoritiesEnableCall struct {
 }
 
 // Enable: Enable a CertificateAuthority.
+//
+// - name: The resource name for this CertificateAuthority in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Enable(name string, enablecertificateauthorityrequest *EnableCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesEnableCall {
 	c := &ProjectsLocationsCertificateAuthoritiesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4008,6 +4025,9 @@ type ProjectsLocationsCertificateAuthoritiesFetchCall struct {
 // Certificate Authority, which could be another CertificateAuthority
 // resource, or could be an on-prem certificate authority. See also
 // ActivateCertificateAuthority.
+//
+// - name: The resource name for this CertificateAuthority in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Fetch(name string) *ProjectsLocationsCertificateAuthoritiesFetchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4153,6 +4173,8 @@ type ProjectsLocationsCertificateAuthoritiesGetCall struct {
 }
 
 // Get: Returns a CertificateAuthority.
+//
+// - name: The name of the CertificateAuthority to get.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Get(name string) *ProjectsLocationsCertificateAuthoritiesGetCall {
 	c := &ProjectsLocationsCertificateAuthoritiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4299,6 +4321,10 @@ type ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesService) GetIamPolicy(resource string) *ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4463,6 +4489,9 @@ type ProjectsLocationsCertificateAuthoritiesListCall struct {
 }
 
 // List: Lists CertificateAuthorities.
+//
+// - parent: The resource name of the location associated with the
+// CertificateAuthorities, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) List(parent string) *ProjectsLocationsCertificateAuthoritiesListCall {
 	c := &ProjectsLocationsCertificateAuthoritiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4682,6 +4711,9 @@ type ProjectsLocationsCertificateAuthoritiesPatchCall struct {
 }
 
 // Patch: Update a CertificateAuthority.
+//
+// - name: Output only. The resource name for this CertificateAuthority
+// in the format `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Patch(name string, certificateauthority *CertificateAuthority) *ProjectsLocationsCertificateAuthoritiesPatchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4858,6 +4890,9 @@ type ProjectsLocationsCertificateAuthoritiesRestoreCall struct {
 
 // Restore: Restore a CertificateAuthority that is scheduled for
 // deletion.
+//
+// - name: The resource name for this CertificateAuthority in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Restore(name string, restorecertificateauthorityrequest *RestoreCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesRestoreCall {
 	c := &ProjectsLocationsCertificateAuthoritiesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4998,6 +5033,9 @@ type ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall struct {
 }
 
 // ScheduleDelete: Schedule a CertificateAuthority for deletion.
+//
+// - name: The resource name for this CertificateAuthority in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) ScheduleDelete(name string, scheduledeletecertificateauthorityrequest *ScheduleDeleteCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall {
 	c := &ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5140,6 +5178,10 @@ type ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5285,6 +5327,10 @@ type ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall {
 	c := &ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5425,6 +5471,8 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall st
 }
 
 // Get: Returns a CertificateRevocationList.
+//
+// - name: The name of the CertificateRevocationList to get.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) Get(name string) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5571,6 +5619,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPoli
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) GetIamPolicy(resource string) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5735,6 +5787,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall s
 }
 
 // List: Lists CertificateRevocationLists.
+//
+// - parent: The resource name of the location associated with the
+// CertificateRevocationLists, in the format
+// `projects/*/locations/*/certificateauthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) List(parent string) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5955,6 +6011,11 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall 
 }
 
 // Patch: Update a CertificateRevocationList.
+//
+// - name: Output only. The resource path for this
+// CertificateRevocationList in the format
+// `projects/*/locations/*/certificateAuthorities/*/
+// certificateRevocationLists/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) Patch(name string, certificaterevocationlist *CertificateRevocationList) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6132,6 +6193,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPoli
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6277,6 +6342,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPer
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6418,6 +6487,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall struct {
 
 // Create: Create a new Certificate in a given Project, Location from a
 // particular CertificateAuthority.
+//
+// - parent: The resource name of the location and CertificateAuthority
+// associated with the Certificate, in the format
+// `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Create(parent string, certificate *Certificate) *ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6595,6 +6668,8 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesGetCall struct {
 }
 
 // Get: Returns a Certificate.
+//
+// - name: The name of the Certificate to get.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Get(name string) *ProjectsLocationsCertificateAuthoritiesCertificatesGetCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6739,6 +6814,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesListCall struct {
 }
 
 // List: Lists Certificates.
+//
+// - parent: The resource name of the location associated with the
+// Certificates, in the format
+// `projects/*/locations/*/certificateauthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) List(parent string) *ProjectsLocationsCertificateAuthoritiesCertificatesListCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6961,6 +7040,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall struct {
 
 // Patch: Update a Certificate. Currently, the only field you can update
 // is the labels field.
+//
+// - name: Output only. The resource path for this Certificate in the
+// format
+// `projects/*/locations/*/certificateAuthorities/*/certificates/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7136,6 +7219,9 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall struct {
 }
 
 // Revoke: Revoke a Certificate.
+//
+// - name: The resource name for this Certificate in the format
+// `projects/*/locations/*/certificateAuthorities/*/certificates/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Revoke(name string, revokecertificaterequest *RevokeCertificateRequest) *ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7285,6 +7371,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7427,6 +7515,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7560,6 +7650,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7713,6 +7805,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7915,6 +8009,8 @@ type ProjectsLocationsReusableConfigsGetCall struct {
 }
 
 // Get: Returns a ReusableConfig.
+//
+// - name: The name of the ReusableConfigs to get.
 func (r *ProjectsLocationsReusableConfigsService) Get(name string) *ProjectsLocationsReusableConfigsGetCall {
 	c := &ProjectsLocationsReusableConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8061,6 +8157,10 @@ type ProjectsLocationsReusableConfigsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// requested. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsReusableConfigsService) GetIamPolicy(resource string) *ProjectsLocationsReusableConfigsGetIamPolicyCall {
 	c := &ProjectsLocationsReusableConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8225,6 +8325,9 @@ type ProjectsLocationsReusableConfigsListCall struct {
 }
 
 // List: Lists ReusableConfigs.
+//
+// - parent: The resource name of the location associated with the
+// ReusableConfigs, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsReusableConfigsService) List(parent string) *ProjectsLocationsReusableConfigsListCall {
 	c := &ProjectsLocationsReusableConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8444,6 +8547,10 @@ type ProjectsLocationsReusableConfigsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+// specified. See the operation documentation for the appropriate value
+// for this field.
 func (r *ProjectsLocationsReusableConfigsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsReusableConfigsSetIamPolicyCall {
 	c := &ProjectsLocationsReusableConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8589,6 +8696,10 @@ type ProjectsLocationsReusableConfigsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+// being requested. See the operation documentation for the appropriate
+// value for this field.
 func (r *ProjectsLocationsReusableConfigsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsReusableConfigsTestIamPermissionsCall {
 	c := &ProjectsLocationsReusableConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

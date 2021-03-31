@@ -7669,6 +7669,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7814,6 +7816,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+// applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8023,6 +8028,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8168,6 +8175,11 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+// projects/{project}/locations/{location}/processors/{processor}, or
+// projects/{project}/locations/{location}/processors/{processor}/process
+// orVersions/{processorVersion}
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8308,6 +8320,13 @@ type ProjectsLocationsProcessorsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+// for processing. If a Processor is specified, the server will use its
+// default version. Format:
+// projects/{project}/locations/{location}/processors/{processor}, or
+// projects/{project}/locations/{location}/processors/{processor}/process
+// orVersions/{processorVersion}
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8451,6 +8470,9 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 
 // ReviewDocument: Send a document for Human Review. The input document
 // should be processed by the specified processor.
+//
+// - humanReviewConfig: The resource name of the HumanReviewConfig that
+// the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1beta3reviewdocumentrequest *GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -8592,6 +8614,11 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+// projects/{project}/locations/{location}/processors/{processor}, or
+// projects/{project}/locations/{location}/processors/{processor}/process
+// orVersions/{processorVersion}
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8732,6 +8759,13 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+// for processing. If a Processor is specified, the server will use its
+// default version. Format:
+// projects/{project}/locations/{location}/processors/{processor}, or
+// projects/{project}/locations/{location}/processors/{processor}/process
+// orVersions/{processorVersion}
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

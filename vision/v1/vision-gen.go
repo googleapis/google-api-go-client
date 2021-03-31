@@ -14466,6 +14466,8 @@ type LocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *LocationsOperationsService) Get(name string) *LocationsOperationsGetCall {
 	c := &LocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14620,6 +14622,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14763,6 +14767,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14897,6 +14903,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15051,6 +15059,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15259,6 +15269,13 @@ type ProjectsFilesAnnotateCall struct {
 // (customers can specify which 5 in AnnotateFileRequest.pages) frames
 // (gif) or pages (pdf or tiff) from each file provided and perform
 // detection and annotation for each image extracted.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsFilesAnnotateCall {
 	c := &ProjectsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15406,6 +15423,13 @@ type ProjectsFilesAsyncBatchAnnotateCall struct {
 // `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15547,6 +15571,13 @@ type ProjectsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsImagesAnnotateCall {
 	c := &ProjectsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15694,6 +15725,13 @@ type ProjectsImagesAsyncBatchAnnotateCall struct {
 // contains `AsyncBatchAnnotateImagesResponse` (results). This service
 // will write image annotation outputs to json files in customer GCS
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15840,6 +15878,13 @@ type ProjectsLocationsFilesAnnotateCall struct {
 // (customers can specify which 5 in AnnotateFileRequest.pages) frames
 // (gif) or pages (pdf or tiff) from each file provided and perform
 // detection and annotation for each image extracted.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsLocationsFilesAnnotateCall {
 	c := &ProjectsLocationsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15987,6 +16032,13 @@ type ProjectsLocationsFilesAsyncBatchAnnotateCall struct {
 // `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16128,6 +16180,13 @@ type ProjectsLocationsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsLocationsImagesAnnotateCall {
 	c := &ProjectsLocationsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16275,6 +16334,13 @@ type ProjectsLocationsImagesAsyncBatchAnnotateCall struct {
 // contains `AsyncBatchAnnotateImagesResponse` (results). This service
 // will write image annotation outputs to json files in customer GCS
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
+//
+// - parent: Optional. Target project and location to make a call.
+// Format: `projects/{project-id}/locations/{location-id}`. If no parent
+// is specified, a region will be chosen automatically. Supported
+// location-ids: `us`: USA country only, `asia`: East asia areas, like
+// Japan, Taiwan, `eu`: The European Union. Example:
+// `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16418,6 +16484,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16566,6 +16634,9 @@ type ProjectsLocationsProductSetsAddProductCall struct {
 // Product is already present, no change is made. One Product can be
 // added to at most 100 ProductSets. Possible errors: * Returns
 // NOT_FOUND if the Product or the ProductSet doesn't exist.
+//
+// - name: The resource name for the ProductSet to modify. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
 func (r *ProjectsLocationsProductSetsService) AddProduct(name string, addproducttoproductsetrequest *AddProductToProductSetRequest) *ProjectsLocationsProductSetsAddProductCall {
 	c := &ProjectsLocationsProductSetsAddProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16709,6 +16780,9 @@ type ProjectsLocationsProductSetsCreateCall struct {
 // Create: Creates and returns a new ProductSet resource. Possible
 // errors: * Returns INVALID_ARGUMENT if display_name is missing, or is
 // longer than 4096 characters.
+//
+// - parent: The project in which the ProductSet should be created.
+// Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) Create(parent string, productset *ProductSet) *ProjectsLocationsProductSetsCreateCall {
 	c := &ProjectsLocationsProductSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16866,6 +16940,9 @@ type ProjectsLocationsProductSetsDeleteCall struct {
 // Delete: Permanently deletes a ProductSet. Products and
 // ReferenceImages in the ProductSet are not deleted. The actual image
 // files are not deleted from Google Cloud Storage.
+//
+// - name: Resource name of the ProductSet to delete. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
 func (r *ProjectsLocationsProductSetsService) Delete(name string) *ProjectsLocationsProductSetsDeleteCall {
 	c := &ProjectsLocationsProductSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16999,6 +17076,9 @@ type ProjectsLocationsProductSetsGetCall struct {
 
 // Get: Gets information associated with a ProductSet. Possible errors:
 // * Returns NOT_FOUND if the ProductSet does not exist.
+//
+// - name: Resource name of the ProductSet to get. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
 func (r *ProjectsLocationsProductSetsService) Get(name string) *ProjectsLocationsProductSetsGetCall {
 	c := &ProjectsLocationsProductSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17151,6 +17231,9 @@ type ProjectsLocationsProductSetsImportCall struct {
 // `ImportProductSetsResponse`. (results) The input source of this
 // method is a csv file on Google Cloud Storage. For the format of the
 // csv file please see ImportProductSetsGcsSource.csv_file_uri.
+//
+// - parent: The project in which the ProductSets should be imported.
+// Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) Import(parent string, importproductsetsrequest *ImportProductSetsRequest) *ProjectsLocationsProductSetsImportCall {
 	c := &ProjectsLocationsProductSetsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17294,6 +17377,9 @@ type ProjectsLocationsProductSetsListCall struct {
 // List: Lists ProductSets in an unspecified order. Possible errors: *
 // Returns INVALID_ARGUMENT if page_size is greater than 100, or less
 // than 1.
+//
+// - parent: The project from which ProductSets should be listed. Format
+// is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) List(parent string) *ProjectsLocationsProductSetsListCall {
 	c := &ProjectsLocationsProductSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17489,6 +17575,10 @@ type ProjectsLocationsProductSetsPatchCall struct {
 // ProductSet does not exist. * Returns INVALID_ARGUMENT if display_name
 // is present in update_mask but missing from the request or longer than
 // 4096 characters.
+//
+// - name: The resource name of the ProductSet. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
+// This field is ignored when creating a ProductSet.
 func (r *ProjectsLocationsProductSetsService) Patch(name string, productset *ProductSet) *ProjectsLocationsProductSetsPatchCall {
 	c := &ProjectsLocationsProductSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17645,6 +17735,9 @@ type ProjectsLocationsProductSetsRemoveProductCall struct {
 }
 
 // RemoveProduct: Removes a Product from the specified ProductSet.
+//
+// - name: The resource name for the ProductSet to modify. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
 func (r *ProjectsLocationsProductSetsService) RemoveProduct(name string, removeproductfromproductsetrequest *RemoveProductFromProductSetRequest) *ProjectsLocationsProductSetsRemoveProductCall {
 	c := &ProjectsLocationsProductSetsRemoveProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17789,6 +17882,10 @@ type ProjectsLocationsProductSetsProductsListCall struct {
 // the ProductSet does not exist, the products field of the response
 // will be empty. Possible errors: * Returns INVALID_ARGUMENT if
 // page_size is greater than 100 or less than 1.
+//
+// - name: The ProductSet resource for which to retrieve Products.
+// Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
 func (r *ProjectsLocationsProductSetsProductsService) List(name string) *ProjectsLocationsProductSetsProductsListCall {
 	c := &ProjectsLocationsProductSetsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17984,6 +18081,9 @@ type ProjectsLocationsProductsCreateCall struct {
 // 4096 characters. * Returns INVALID_ARGUMENT if description is longer
 // than 4096 characters. * Returns INVALID_ARGUMENT if product_category
 // is missing or invalid.
+//
+// - parent: The project in which the Product should be created. Format
+// is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) Create(parent string, product *Product) *ProjectsLocationsProductsCreateCall {
 	c := &ProjectsLocationsProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18142,6 +18242,9 @@ type ProjectsLocationsProductsDeleteCall struct {
 // Metadata of the product and all its images will be deleted right
 // away, but search queries against ProductSets containing the product
 // may still work until all related caches are refreshed.
+//
+// - name: Resource name of product to delete. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
 func (r *ProjectsLocationsProductsService) Delete(name string) *ProjectsLocationsProductsDeleteCall {
 	c := &ProjectsLocationsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18275,6 +18378,9 @@ type ProjectsLocationsProductsGetCall struct {
 
 // Get: Gets information associated with a Product. Possible errors: *
 // Returns NOT_FOUND if the Product does not exist.
+//
+// - name: Resource name of the Product to get. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
 func (r *ProjectsLocationsProductsService) Get(name string) *ProjectsLocationsProductsGetCall {
 	c := &ProjectsLocationsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18422,6 +18528,9 @@ type ProjectsLocationsProductsListCall struct {
 // List: Lists products in an unspecified order. Possible errors: *
 // Returns INVALID_ARGUMENT if page_size is greater than 100 or less
 // than 1.
+//
+// - parent: The project OR ProductSet from which Products should be
+// listed. Format: `projects/PROJECT_ID/locations/LOC_ID`
 func (r *ProjectsLocationsProductsService) List(parent string) *ProjectsLocationsProductsListCall {
 	c := &ProjectsLocationsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18621,6 +18730,10 @@ type ProjectsLocationsProductsPatchCall struct {
 // 4096 characters. * Returns INVALID_ARGUMENT if description is present
 // in update_mask but is longer than 4096 characters. * Returns
 // INVALID_ARGUMENT if product_category is present in update_mask.
+//
+// - name: The resource name of the product. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+// field is ignored when creating a product.
 func (r *ProjectsLocationsProductsService) Patch(name string, product *Product) *ProjectsLocationsProductsPatchCall {
 	c := &ProjectsLocationsProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18794,6 +18907,9 @@ type ProjectsLocationsProductsPurgeCall struct {
 // ProductSet. The google.longrunning.Operation API can be used to keep
 // track of the progress and results of the request.
 // `Operation.metadata` contains `BatchOperationMetadata`. (progress)
+//
+// - parent: The project and location in which the Products should be
+// deleted. Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) Purge(parent string, purgeproductsrequest *PurgeProductsRequest) *ProjectsLocationsProductsPurgeCall {
 	c := &ProjectsLocationsProductsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18948,6 +19064,10 @@ type ProjectsLocationsProductsReferenceImagesCreateCall struct {
 // compatible with the parent product's product_category is detected. *
 // Returns INVALID_ARGUMENT if bounding_poly contains more than 10
 // polygons.
+//
+// - parent: Resource name of the product in which to create the
+// reference image. Format is
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Create(parent string, referenceimage *ReferenceImage) *ProjectsLocationsProductsReferenceImagesCreateCall {
 	c := &ProjectsLocationsProductsReferenceImagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19108,6 +19228,11 @@ type ProjectsLocationsProductsReferenceImagesDeleteCall struct {
 // containing the image may still work until all related caches are
 // refreshed. The actual image files are not deleted from Google Cloud
 // Storage.
+//
+// - name: The resource name of the reference image to delete. Format
+// is:
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
+// ges/IMAGE_ID`
 func (r *ProjectsLocationsProductsReferenceImagesService) Delete(name string) *ProjectsLocationsProductsReferenceImagesDeleteCall {
 	c := &ProjectsLocationsProductsReferenceImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19241,6 +19366,10 @@ type ProjectsLocationsProductsReferenceImagesGetCall struct {
 
 // Get: Gets information associated with a ReferenceImage. Possible
 // errors: * Returns NOT_FOUND if the specified image does not exist.
+//
+// - name: The resource name of the ReferenceImage to get. Format is:
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
+// ges/IMAGE_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Get(name string) *ProjectsLocationsProductsReferenceImagesGetCall {
 	c := &ProjectsLocationsProductsReferenceImagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19388,6 +19517,10 @@ type ProjectsLocationsProductsReferenceImagesListCall struct {
 // List: Lists reference images. Possible errors: * Returns NOT_FOUND if
 // the parent product does not exist. * Returns INVALID_ARGUMENT if the
 // page_size is greater than 100, or less than 1.
+//
+// - parent: Resource name of the product containing the reference
+// images. Format is
+// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) List(parent string) *ProjectsLocationsProductsReferenceImagesListCall {
 	c := &ProjectsLocationsProductsReferenceImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19583,6 +19716,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

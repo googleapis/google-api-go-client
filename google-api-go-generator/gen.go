@@ -1776,6 +1776,12 @@ func (m *Method) OptParams() []*Param {
 	})
 }
 
+func (m *Method) ReqParams() []*Param {
+	return m.grepParams(func(p *Param) bool {
+		return p.p.Required
+	})
+}
+
 func (meth *Method) cacheResponseTypes(api *API) {
 	if retType := responseType(api, meth.m); retType != "" && strings.HasPrefix(retType, "*") {
 		api.responseTypes[retType] = true
@@ -1837,6 +1843,20 @@ func (meth *Method) generateCode() {
 	pn("}")
 
 	p("\n%s", asComment("", methodName+": "+removeMarkdownLinks(meth.m.Description)))
+
+	// Add required parameter docs.
+	params := meth.ReqParams()
+	// Sort to the same order params are listed in method.
+	sort.Slice(params, func(i, j int) bool { return params[i].p.Name < params[j].p.Name })
+	for i, v := range params {
+		if i == 0 {
+			p("//\n")
+		}
+		des := v.p.Description
+		des = strings.Replace(des, "Required.", "", 1)
+		des = strings.TrimSpace(des)
+		p("%s", asComment("", fmt.Sprintf("- %s: %s", depunct(v.p.Name, false), removeMarkdownLinks(des))))
+	}
 	if res != nil {
 		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.m.Name)]; url != "" {
 			pn("// For details, see %v", url)
@@ -2338,7 +2358,7 @@ func (meth *Method) NewArguments() *arguments {
 	pnames := meth.m.ParameterOrder
 	if len(pnames) == 0 {
 		// No parameterOrder; collect required parameters and sort by name.
-		for _, reqParam := range meth.grepParams(func(p *Param) bool { return p.p.Required }) {
+		for _, reqParam := range meth.ReqParams() {
 			pnames = append(pnames, reqParam.p.Name)
 		}
 		sort.Strings(pnames)

@@ -81,7 +81,7 @@ const mtlsBasePath = "https://speech.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -546,8 +546,7 @@ type RecognitionConfig struct {
 
 	// SpeechContexts: Array of SpeechContext. A means to provide context to
 	// assist the speech recognition. For more information, see speech
-	// adaptation
-	// (https://cloud.google.com/speech-to-text/docs/context-strength).
+	// adaptation (https://cloud.google.com/speech-to-text/docs/adaptation).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// UseEnhanced: Set to true to use an enhanced model for speech
@@ -1090,7 +1089,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1269,7 +1268,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1437,7 +1436,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1563,7 +1562,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

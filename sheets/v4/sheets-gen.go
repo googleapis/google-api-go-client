@@ -11621,7 +11621,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11761,7 +11761,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11925,7 +11925,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12086,7 +12086,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12240,7 +12240,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12391,7 +12391,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12535,7 +12535,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12782,7 +12782,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12995,7 +12995,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13140,7 +13140,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13360,7 +13360,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13550,7 +13550,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13694,7 +13694,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13837,7 +13837,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13984,7 +13984,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14206,7 +14206,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14473,7 +14473,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210329")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

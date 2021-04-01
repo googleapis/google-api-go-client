@@ -325,6 +325,8 @@ type ShelvesGetCall struct {
 }
 
 // Get: Gets a shelf. Returns NOT_FOUND if the shelf does not exist.
+//
+// - name: The name of the shelf to retrieve.
 func (r *ShelvesService) Get(name string) *ShelvesGetCall {
 	c := &ShelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -654,6 +656,8 @@ type ShelvesBooksBorrowCall struct {
 // borrowed successfully. Returns NOT_FOUND if the book does not exist
 // in the library. Returns quota exceeded error if the amount of books
 // borrowed exceeds allocation quota in any dimensions.
+//
+// - name: The name of the book to borrow.
 func (r *ShelvesBooksService) Borrow(name string) *ShelvesBooksBorrowCall {
 	c := &ShelvesBooksBorrowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -785,6 +789,8 @@ type ShelvesBooksGetCall struct {
 }
 
 // Get: Gets a book. Returns NOT_FOUND if the book does not exist.
+//
+// - name: The name of the book to retrieve.
 func (r *ShelvesBooksService) Get(name string) *ShelvesBooksGetCall {
 	c := &ShelvesBooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -931,6 +937,8 @@ type ShelvesBooksListCall struct {
 // List: Lists books in a shelf. The order is unspecified but
 // deterministic. Newly created books will not necessarily be added to
 // the end of this list. Returns NOT_FOUND if the shelf does not exist.
+//
+// - parent: The name of the shelf whose books we'd like to list.
 func (r *ShelvesBooksService) List(parent string) *ShelvesBooksListCall {
 	c := &ShelvesBooksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1127,6 +1135,8 @@ type ShelvesBooksReturnCall struct {
 // Return: Return a book to the library. Returns the book if it is
 // returned to the library successfully. Returns error if the book does
 // not belong to the library or the users didn't borrow before.
+//
+// - name: The name of the book to return.
 func (r *ShelvesBooksService) Return(name string) *ShelvesBooksReturnCall {
 	c := &ShelvesBooksReturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

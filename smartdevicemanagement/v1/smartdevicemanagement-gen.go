@@ -528,6 +528,9 @@ type EnterprisesDevicesExecuteCommandCall struct {
 
 // ExecuteCommand: Executes a command to device managed by the
 // enterprise.
+//
+// - name: The name of the device requested. For example:
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) ExecuteCommand(name string, googlehomeenterprisesdmv1executedevicecommandrequest *GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest) *EnterprisesDevicesExecuteCommandCall {
 	c := &EnterprisesDevicesExecuteCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -670,6 +673,9 @@ type EnterprisesDevicesGetCall struct {
 }
 
 // Get: Gets a device managed by the enterprise.
+//
+// - name: The name of the device requested. For example:
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -814,6 +820,9 @@ type EnterprisesDevicesListCall struct {
 }
 
 // List: Lists devices managed by the enterprise.
+//
+// - parent: The parent enterprise to list devices under. E.g.
+//   "enterprises/XYZ".
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1020,6 +1029,9 @@ type EnterprisesStructuresGetCall struct {
 }
 
 // Get: Gets a structure managed by the enterprise.
+//
+// - name: The name of the structure requested. For example:
+//   "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresService) Get(name string) *EnterprisesStructuresGetCall {
 	c := &EnterprisesStructuresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1165,6 +1177,9 @@ type EnterprisesStructuresListCall struct {
 }
 
 // List: Lists structures managed by the enterprise.
+//
+// - parent: The parent enterprise to list structures under. E.g.
+//   "enterprises/XYZ".
 func (r *EnterprisesStructuresService) List(parent string) *EnterprisesStructuresListCall {
 	c := &EnterprisesStructuresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1370,6 +1385,9 @@ type EnterprisesStructuresRoomsGetCall struct {
 }
 
 // Get: Gets a room managed by the enterprise.
+//
+// - name: The name of the room requested. For example:
+//   "enterprises/XYZ/structures/ABC/rooms/123".
 func (r *EnterprisesStructuresRoomsService) Get(name string) *EnterprisesStructuresRoomsGetCall {
 	c := &EnterprisesStructuresRoomsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1514,6 +1532,9 @@ type EnterprisesStructuresRoomsListCall struct {
 }
 
 // List: Lists rooms managed by the enterprise.
+//
+// - parent: The parent resource name of the rooms requested. For
+//   example: "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresRoomsService) List(parent string) *EnterprisesStructuresRoomsListCall {
 	c := &EnterprisesStructuresRoomsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

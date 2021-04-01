@@ -1210,6 +1210,9 @@ type ProjectsBrandsCreateCall struct {
 // manually changed in the Google Cloud console. Requires that a brand
 // does not already exist for the project, and that the specified
 // support email is owned by the caller.
+//
+// - parent: GCP Project number/id under which the brand is to be
+//   created. In the following format: projects/{project_number/id}.
 func (r *ProjectsBrandsService) Create(parent string, brand *Brand) *ProjectsBrandsCreateCall {
 	c := &ProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1350,6 +1353,9 @@ type ProjectsBrandsGetCall struct {
 }
 
 // Get: Retrieves the OAuth brand of the project.
+//
+// - name: Name of the brand to be fetched. In the following format:
+//   projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsService) Get(name string) *ProjectsBrandsGetCall {
 	c := &ProjectsBrandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1494,6 +1500,9 @@ type ProjectsBrandsListCall struct {
 }
 
 // List: Lists the existing brands for the project.
+//
+// - parent: GCP Project number/id. In the following format:
+//   projects/{project_number/id}.
 func (r *ProjectsBrandsService) List(parent string) *ProjectsBrandsListCall {
 	c := &ProjectsBrandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1640,6 +1649,10 @@ type ProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 // Create: Creates an Identity Aware Proxy (IAP) OAuth client. The
 // client is owned by IAP. Requires that the brand for the project
 // exists and that it is set for internal-only use.
+//
+// - parent: Path to create the client in. In the following format:
+//   projects/{project_number/id}/brands/{brand}. The project must
+//   belong to a G Suite account.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1782,6 +1795,11 @@ type ProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 // for removing obsolete clients, managing the number of clients in a
 // given project, and cleaning up after tests. Requires that the client
 // is owned by IAP.
+//
+// - name: Name of the Identity Aware Proxy client to be deleted. In the
+//   following format:
+//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//   s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1914,6 +1932,11 @@ type ProjectsBrandsIdentityAwareProxyClientsGetCall struct {
 
 // Get: Retrieves an Identity Aware Proxy (IAP) OAuth client. Requires
 // that the client is owned by IAP.
+//
+// - name: Name of the Identity Aware Proxy client to be fetched. In the
+//   following format:
+//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//   s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2058,6 +2081,9 @@ type ProjectsBrandsIdentityAwareProxyClientsListCall struct {
 }
 
 // List: Lists the existing clients for the brand.
+//
+// - parent: Full brand path. In the following format:
+//   projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2256,6 +2282,11 @@ type ProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 // ResetSecret: Resets an Identity Aware Proxy (IAP) OAuth client
 // secret. Useful if the secret was compromised. Requires that the
 // client is owned by IAP.
+//
+// - name: Name of the Identity Aware Proxy client to that will have its
+//   secret reset. In the following format:
+//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//   s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2399,6 +2430,10 @@ type V1GetIamPolicyCall struct {
 // Proxy protected resource. More information about managing access via
 // IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *V1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1GetIamPolicyCall {
 	c := &V1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2540,6 +2575,10 @@ type V1GetIapSettingsCall struct {
 
 // GetIapSettings: Gets the IAP settings on a particular IAP protected
 // resource.
+//
+// - name: The resource name for which to retrieve the settings.
+//   Authorization: Requires the `getSettings` permission for the
+//   associated resource.
 func (r *V1Service) GetIapSettings(name string) *V1GetIapSettingsCall {
 	c := &V1GetIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2687,6 +2726,10 @@ type V1SetIamPolicyCall struct {
 // Proxy protected resource. Replaces any existing policy. More
 // information about managing access via IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *V1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1SetIamPolicyCall {
 	c := &V1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2830,6 +2873,10 @@ type V1TestIamPermissionsCall struct {
 // Identity-Aware Proxy protected resource. More information about
 // managing access via IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *V1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1TestIamPermissionsCall {
 	c := &V1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2972,6 +3019,8 @@ type V1UpdateIapSettingsCall struct {
 // UpdateIapSettings: Updates the IAP settings on a particular IAP
 // protected resource. It replaces all fields unless the `update_mask`
 // is set.
+//
+// - name: The resource name of the IAP protected resource.
 func (r *V1Service) UpdateIapSettings(name string, iapsettings *IapSettings) *V1UpdateIapSettingsCall {
 	c := &V1UpdateIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

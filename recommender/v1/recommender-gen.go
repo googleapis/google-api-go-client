@@ -1277,6 +1277,8 @@ type BillingAccountsLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *BillingAccountsLocationsInsightTypesInsightsService) Get(name string) *BillingAccountsLocationsInsightTypesInsightsGetCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1422,6 +1424,20 @@ type BillingAccountsLocationsInsightTypesInsightsListCall struct {
 
 // List: Lists insights for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1637,6 +1653,8 @@ type BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *BillingAccountsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1markinsightacceptedrequest *GoogleCloudRecommenderV1MarkInsightAcceptedRequest) *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1778,6 +1796,8 @@ type BillingAccountsLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) Get(name string) *BillingAccountsLocationsRecommendersRecommendationsGetCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1924,6 +1944,20 @@ type BillingAccountsLocationsRecommendersRecommendationsListCall struct {
 
 // List: Lists recommendations for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2142,6 +2176,8 @@ type BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // recommendations in CLAIMED, SUCCEEDED, FAILED, or ACTIVE state.
 // Requires the recommender.*.update IAM permission for the specified
 // recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1markrecommendationclaimedrequest *GoogleCloudRecommenderV1MarkRecommendationClaimedRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2290,6 +2326,8 @@ type BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1markrecommendationfailedrequest *GoogleCloudRecommenderV1MarkRecommendationFailedRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2438,6 +2476,8 @@ type BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall struct
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1markrecommendationsucceededrequest *GoogleCloudRecommenderV1MarkRecommendationSucceededRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2580,6 +2620,8 @@ type FoldersLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *FoldersLocationsInsightTypesInsightsService) Get(name string) *FoldersLocationsInsightTypesInsightsGetCall {
 	c := &FoldersLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2725,6 +2767,20 @@ type FoldersLocationsInsightTypesInsightsListCall struct {
 
 // List: Lists insights for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *FoldersLocationsInsightTypesInsightsListCall {
 	c := &FoldersLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2940,6 +2996,8 @@ type FoldersLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *FoldersLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1markinsightacceptedrequest *GoogleCloudRecommenderV1MarkInsightAcceptedRequest) *FoldersLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &FoldersLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3081,6 +3139,8 @@ type FoldersLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) Get(name string) *FoldersLocationsRecommendersRecommendationsGetCall {
 	c := &FoldersLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3227,6 +3287,20 @@ type FoldersLocationsRecommendersRecommendationsListCall struct {
 
 // List: Lists recommendations for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c := &FoldersLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3445,6 +3519,8 @@ type FoldersLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // recommendations in CLAIMED, SUCCEEDED, FAILED, or ACTIVE state.
 // Requires the recommender.*.update IAM permission for the specified
 // recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1markrecommendationclaimedrequest *GoogleCloudRecommenderV1MarkRecommendationClaimedRequest) *FoldersLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &FoldersLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3593,6 +3669,8 @@ type FoldersLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1markrecommendationfailedrequest *GoogleCloudRecommenderV1MarkRecommendationFailedRequest) *FoldersLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &FoldersLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3741,6 +3819,8 @@ type FoldersLocationsRecommendersRecommendationsMarkSucceededCall struct {
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1markrecommendationsucceededrequest *GoogleCloudRecommenderV1MarkRecommendationSucceededRequest) *FoldersLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &FoldersLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3883,6 +3963,8 @@ type OrganizationsLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *OrganizationsLocationsInsightTypesInsightsService) Get(name string) *OrganizationsLocationsInsightTypesInsightsGetCall {
 	c := &OrganizationsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4028,6 +4110,20 @@ type OrganizationsLocationsInsightTypesInsightsListCall struct {
 
 // List: Lists insights for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c := &OrganizationsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4243,6 +4339,8 @@ type OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *OrganizationsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1markinsightacceptedrequest *GoogleCloudRecommenderV1MarkInsightAcceptedRequest) *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4384,6 +4482,8 @@ type OrganizationsLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) Get(name string) *OrganizationsLocationsRecommendersRecommendationsGetCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4530,6 +4630,20 @@ type OrganizationsLocationsRecommendersRecommendationsListCall struct {
 
 // List: Lists recommendations for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4748,6 +4862,8 @@ type OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // recommendations in CLAIMED, SUCCEEDED, FAILED, or ACTIVE state.
 // Requires the recommender.*.update IAM permission for the specified
 // recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1markrecommendationclaimedrequest *GoogleCloudRecommenderV1MarkRecommendationClaimedRequest) *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4896,6 +5012,8 @@ type OrganizationsLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1markrecommendationfailedrequest *GoogleCloudRecommenderV1MarkRecommendationFailedRequest) *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5044,6 +5162,8 @@ type OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall struct {
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1markrecommendationsucceededrequest *GoogleCloudRecommenderV1MarkRecommendationSucceededRequest) *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5186,6 +5306,8 @@ type ProjectsLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *ProjectsLocationsInsightTypesInsightsService) Get(name string) *ProjectsLocationsInsightTypesInsightsGetCall {
 	c := &ProjectsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5331,6 +5453,20 @@ type ProjectsLocationsInsightTypesInsightsListCall struct {
 
 // List: Lists insights for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c := &ProjectsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5546,6 +5682,8 @@ type ProjectsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *ProjectsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1markinsightacceptedrequest *GoogleCloudRecommenderV1MarkInsightAcceptedRequest) *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &ProjectsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5687,6 +5825,8 @@ type ProjectsLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) Get(name string) *ProjectsLocationsRecommendersRecommendationsGetCall {
 	c := &ProjectsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5833,6 +5973,20 @@ type ProjectsLocationsRecommendersRecommendationsListCall struct {
 
 // List: Lists recommendations for a Cloud project. Requires the
 // recommender.*.list IAM permission for the specified recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c := &ProjectsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6051,6 +6205,8 @@ type ProjectsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // recommendations in CLAIMED, SUCCEEDED, FAILED, or ACTIVE state.
 // Requires the recommender.*.update IAM permission for the specified
 // recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1markrecommendationclaimedrequest *GoogleCloudRecommenderV1MarkRecommendationClaimedRequest) *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6199,6 +6355,8 @@ type ProjectsLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1markrecommendationfailedrequest *GoogleCloudRecommenderV1MarkRecommendationFailedRequest) *ProjectsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6347,6 +6505,8 @@ type ProjectsLocationsRecommendersRecommendationsMarkSucceededCall struct {
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1markrecommendationsucceededrequest *GoogleCloudRecommenderV1MarkRecommendationSucceededRequest) *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

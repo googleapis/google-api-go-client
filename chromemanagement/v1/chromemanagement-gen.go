@@ -468,6 +468,9 @@ type CustomersReportsCountChromeVersionsCall struct {
 }
 
 // CountChromeVersions: Generate report of installed Chrome versions.
+//
+// - customer: Customer id or "my_customer" to use the customer
+//   associated to the account making the request.
 func (r *CustomersReportsService) CountChromeVersions(customer string) *CustomersReportsCountChromeVersionsCall {
 	c := &CustomersReportsCountChromeVersionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -686,6 +689,9 @@ type CustomersReportsCountInstalledAppsCall struct {
 }
 
 // CountInstalledApps: Generate report of app installations.
+//
+// - customer: Customer id or "my_customer" to use the customer
+//   associated to the account making the request.
 func (r *CustomersReportsService) CountInstalledApps(customer string) *CustomersReportsCountInstalledAppsCall {
 	c := &CustomersReportsCountInstalledAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -919,6 +925,9 @@ type CustomersReportsFindInstalledAppDevicesCall struct {
 
 // FindInstalledAppDevices: Generate report of devices that have a
 // specified app installed.
+//
+// - customer: Customer id or "my_customer" to use the customer
+//   associated to the account making the request.
 func (r *CustomersReportsService) FindInstalledAppDevices(customer string) *CustomersReportsFindInstalledAppDevicesCall {
 	c := &CustomersReportsFindInstalledAppDevicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer

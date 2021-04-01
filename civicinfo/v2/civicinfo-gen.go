@@ -1572,6 +1572,8 @@ type ElectionsVoterInfoQueryCall struct {
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
 // voter's registered address.
+//
+// - address: The registered address of the voter to look up.
 func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQueryCall {
 	c := &ElectionsVoterInfoQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("address", address)
@@ -2013,6 +2015,9 @@ type RepresentativesRepresentativeInfoByDivisionCall struct {
 
 // RepresentativeInfoByDivision: Looks up representative information for
 // a single geographic division.
+//
+// - ocdId: The Open Civic Data division identifier of the division to
+//   look up.
 func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ocdId = ocdId

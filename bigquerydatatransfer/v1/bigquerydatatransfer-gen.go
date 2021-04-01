@@ -1384,6 +1384,11 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 // end user. This API just checks whether we have OAuth token for the
 // particular user, which is a pre-requisite before user can create a
 // transfer config.
+//
+// - name: The data source in the form:
+//   `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsDataSourcesCheckValidCredsCall {
 	c := &ProjectsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1528,6 +1533,11 @@ type ProjectsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings,
 // which can be used for UI rendering.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsDataSourcesService) Get(name string) *ProjectsDataSourcesGetCall {
 	c := &ProjectsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1676,6 +1686,10 @@ type ProjectsDataSourcesListCall struct {
 
 // List: Lists supported data sources and returns their settings, which
 // can be used for UI rendering.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned. Must be in the form: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}.
 func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesListCall {
 	c := &ProjectsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1873,6 +1887,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2021,6 +2037,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2234,6 +2253,11 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 // end user. This API just checks whether we have OAuth token for the
 // particular user, which is a pre-requisite before user can create a
 // transfer config.
+//
+// - name: The data source in the form:
+//   `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsLocationsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsLocationsDataSourcesCheckValidCredsCall {
 	c := &ProjectsLocationsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2378,6 +2402,11 @@ type ProjectsLocationsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings,
 // which can be used for UI rendering.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsLocationsDataSourcesService) Get(name string) *ProjectsLocationsDataSourcesGetCall {
 	c := &ProjectsLocationsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2526,6 +2555,10 @@ type ProjectsLocationsDataSourcesListCall struct {
 
 // List: Lists supported data sources and returns their settings, which
 // can be used for UI rendering.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned. Must be in the form: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}.
 func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocationsDataSourcesListCall {
 	c := &ProjectsLocationsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2723,6 +2756,12 @@ type ProjectsLocationsTransferConfigsCreateCall struct {
 }
 
 // Create: Creates a new data transfer configuration.
+//
+// - parent: The BigQuery project id where the transfer configuration
+//   should be created. Must be in the format
+//   projects/{project_id}/locations/{location_id} or
+//   projects/{project_id}. If specified location and location of the
+//   destination bigquery dataset do not match - the request will fail.
 func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsCreateCall {
 	c := &ProjectsLocationsTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2921,6 +2960,11 @@ type ProjectsLocationsTransferConfigsDeleteCall struct {
 
 // Delete: Deletes a data transfer configuration, including any
 // associated transfer runs and logs.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Delete(name string) *ProjectsLocationsTransferConfigsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3053,6 +3097,11 @@ type ProjectsLocationsTransferConfigsGetCall struct {
 }
 
 // Get: Returns information about a data transfer config.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Get(name string) *ProjectsLocationsTransferConfigsGetCall {
 	c := &ProjectsLocationsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3200,6 +3249,10 @@ type ProjectsLocationsTransferConfigsListCall struct {
 }
 
 // List: Returns information about all data transfers in the project.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsLocationsTransferConfigsListCall {
 	c := &ProjectsLocationsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3412,6 +3465,13 @@ type ProjectsLocationsTransferConfigsPatchCall struct {
 
 // Patch: Updates a data transfer configuration. All fields must be set,
 // even if they are not updated.
+//
+// - name: The resource name of the transfer config. Transfer config
+//   names have the form
+//   `projects/{project_id}/locations/{region}/transferConfigs/{config_id
+//   }`. Where `config_id` is usually a uuid, even though it is not
+//   guaranteed or required. The name is ignored when creating a
+//   transfer config.
 func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsPatchCall {
 	c := &ProjectsLocationsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3628,6 +3688,11 @@ type ProjectsLocationsTransferConfigsScheduleRunsCall struct {
 // supports - in the range, one transfer run is created. Note that runs
 // are created per UTC time in the time range. DEPRECATED: use
 // StartManualTransferRuns instead.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c := &ProjectsLocationsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3772,6 +3837,11 @@ type ProjectsLocationsTransferConfigsStartManualRunsCall struct {
 // schedule_time equal to current time. The transfer runs can be created
 // for a time range where the run_time is between start_time (inclusive)
 // and end_time (exclusive), or for a specific run_time.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c := &ProjectsLocationsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3912,6 +3982,13 @@ type ProjectsLocationsTransferConfigsRunsDeleteCall struct {
 }
 
 // Delete: Deletes the specified transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Delete(name string) *ProjectsLocationsTransferConfigsRunsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4044,6 +4121,13 @@ type ProjectsLocationsTransferConfigsRunsGetCall struct {
 }
 
 // Get: Returns information about the particular transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Get(name string) *ProjectsLocationsTransferConfigsRunsGetCall {
 	c := &ProjectsLocationsTransferConfigsRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4191,6 +4275,12 @@ type ProjectsLocationsTransferConfigsRunsListCall struct {
 }
 
 // List: Returns information about running and completed jobs.
+//
+// - parent: Name of transfer configuration for which transfer runs
+//   should be retrieved. Format of transfer configuration resource name
+//   is: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) List(parent string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4450,6 +4540,12 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 }
 
 // List: Returns user facing log messages for the data transfer run.
+//
+// - parent: Transfer run name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsTransferLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4679,6 +4775,12 @@ type ProjectsTransferConfigsCreateCall struct {
 }
 
 // Create: Creates a new data transfer configuration.
+//
+// - parent: The BigQuery project id where the transfer configuration
+//   should be created. Must be in the format
+//   projects/{project_id}/locations/{location_id} or
+//   projects/{project_id}. If specified location and location of the
+//   destination bigquery dataset do not match - the request will fail.
 func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *TransferConfig) *ProjectsTransferConfigsCreateCall {
 	c := &ProjectsTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4877,6 +4979,11 @@ type ProjectsTransferConfigsDeleteCall struct {
 
 // Delete: Deletes a data transfer configuration, including any
 // associated transfer runs and logs.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) Delete(name string) *ProjectsTransferConfigsDeleteCall {
 	c := &ProjectsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5009,6 +5116,11 @@ type ProjectsTransferConfigsGetCall struct {
 }
 
 // Get: Returns information about a data transfer config.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) Get(name string) *ProjectsTransferConfigsGetCall {
 	c := &ProjectsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5156,6 +5268,10 @@ type ProjectsTransferConfigsListCall struct {
 }
 
 // List: Returns information about all data transfers in the project.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferConfigsListCall {
 	c := &ProjectsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5368,6 +5484,13 @@ type ProjectsTransferConfigsPatchCall struct {
 
 // Patch: Updates a data transfer configuration. All fields must be set,
 // even if they are not updated.
+//
+// - name: The resource name of the transfer config. Transfer config
+//   names have the form
+//   `projects/{project_id}/locations/{region}/transferConfigs/{config_id
+//   }`. Where `config_id` is usually a uuid, even though it is not
+//   guaranteed or required. The name is ignored when creating a
+//   transfer config.
 func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsTransferConfigsPatchCall {
 	c := &ProjectsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5584,6 +5707,11 @@ type ProjectsTransferConfigsScheduleRunsCall struct {
 // supports - in the range, one transfer run is created. Note that runs
 // are created per UTC time in the time range. DEPRECATED: use
 // StartManualTransferRuns instead.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsTransferConfigsScheduleRunsCall {
 	c := &ProjectsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5728,6 +5856,11 @@ type ProjectsTransferConfigsStartManualRunsCall struct {
 // schedule_time equal to current time. The transfer runs can be created
 // for a time range where the run_time is between start_time (inclusive)
 // and end_time (exclusive), or for a specific run_time.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsTransferConfigsStartManualRunsCall {
 	c := &ProjectsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5868,6 +6001,13 @@ type ProjectsTransferConfigsRunsDeleteCall struct {
 }
 
 // Delete: Deletes the specified transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Delete(name string) *ProjectsTransferConfigsRunsDeleteCall {
 	c := &ProjectsTransferConfigsRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6000,6 +6140,13 @@ type ProjectsTransferConfigsRunsGetCall struct {
 }
 
 // Get: Returns information about the particular transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Get(name string) *ProjectsTransferConfigsRunsGetCall {
 	c := &ProjectsTransferConfigsRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6147,6 +6294,12 @@ type ProjectsTransferConfigsRunsListCall struct {
 }
 
 // List: Returns information about running and completed jobs.
+//
+// - parent: Name of transfer configuration for which transfer runs
+//   should be retrieved. Format of transfer configuration resource name
+//   is: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsRunsService) List(parent string) *ProjectsTransferConfigsRunsListCall {
 	c := &ProjectsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6406,6 +6559,12 @@ type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 }
 
 // List: Returns user facing log messages for the data transfer run.
+//
+// - parent: Transfer run name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c := &ProjectsTransferConfigsRunsTransferLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

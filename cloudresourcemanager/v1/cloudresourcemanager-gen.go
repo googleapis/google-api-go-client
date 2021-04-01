@@ -2418,6 +2418,8 @@ type FoldersClearOrgPolicyCall struct {
 }
 
 // ClearOrgPolicy: Clears a `Policy` from a resource.
+//
+// - resource: Name of the resource for the `Policy` to clear.
 func (r *FoldersService) ClearOrgPolicy(resource string, clearorgpolicyrequest *ClearOrgPolicyRequest) *FoldersClearOrgPolicyCall {
 	c := &FoldersClearOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2562,6 +2564,9 @@ type FoldersGetEffectiveOrgPolicyCall struct {
 // The returned `Policy` will not have an `etag`set because it is a
 // computed `Policy` across multiple resources. Subtrees of Resource
 // Manager resource hierarchy with 'under:' prefix will not be expanded.
+//
+// - resource: The name of the resource to start computing the effective
+//   `Policy`.
 func (r *FoldersService) GetEffectiveOrgPolicy(resource string, geteffectiveorgpolicyrequest *GetEffectiveOrgPolicyRequest) *FoldersGetEffectiveOrgPolicyCall {
 	c := &FoldersGetEffectiveOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2707,6 +2712,8 @@ type FoldersGetOrgPolicyCall struct {
 // `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The `etag` value
 // can be used with `SetOrgPolicy()` to create or update a `Policy`
 // during read-modify-write.
+//
+// - resource: Name of the resource the `Policy` is set on.
 func (r *FoldersService) GetOrgPolicy(resource string, getorgpolicyrequest *GetOrgPolicyRequest) *FoldersGetOrgPolicyCall {
 	c := &FoldersGetOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2849,6 +2856,8 @@ type FoldersListAvailableOrgPolicyConstraintsCall struct {
 
 // ListAvailableOrgPolicyConstraints: Lists `Constraints` that could be
 // applied on the specified resource.
+//
+// - resource: Name of the resource to list `Constraints` for.
 func (r *FoldersService) ListAvailableOrgPolicyConstraints(resource string, listavailableorgpolicyconstraintsrequest *ListAvailableOrgPolicyConstraintsRequest) *FoldersListAvailableOrgPolicyConstraintsCall {
 	c := &FoldersListAvailableOrgPolicyConstraintsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3014,6 +3023,8 @@ type FoldersListOrgPoliciesCall struct {
 
 // ListOrgPolicies: Lists all the `Policies` set for a particular
 // resource.
+//
+// - resource: Name of the resource to list Policies for.
 func (r *FoldersService) ListOrgPolicies(resource string, listorgpoliciesrequest *ListOrgPoliciesRequest) *FoldersListOrgPoliciesCall {
 	c := &FoldersListOrgPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3179,6 +3190,8 @@ type FoldersSetOrgPolicyCall struct {
 // a new `Policy` for that `Constraint` on the resource if one does not
 // exist. Not supplying an `etag` on the request `Policy` results in an
 // unconditional write of the `Policy`.
+//
+// - resource: Resource name of the resource to attach the `Policy`.
 func (r *FoldersService) SetOrgPolicy(resource string, setorgpolicyrequest *SetOrgPolicyRequest) *FoldersSetOrgPolicyCall {
 	c := &FoldersSetOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3451,6 +3464,8 @@ type LiensDeleteCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.updateLiens`.
+//
+// - name: The name/identifier of the Lien to delete.
 func (r *LiensService) Delete(nameid string) *LiensDeleteCall {
 	c := &LiensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3586,6 +3601,8 @@ type LiensGetCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.get`
+//
+// - name: The name/identifier of the Lien.
 func (r *LiensService) Get(nameid string) *LiensGetCall {
 	c := &LiensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3929,6 +3946,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4074,6 +4093,8 @@ type OrganizationsClearOrgPolicyCall struct {
 }
 
 // ClearOrgPolicy: Clears a `Policy` from a resource.
+//
+// - resource: Name of the resource for the `Policy` to clear.
 func (r *OrganizationsService) ClearOrgPolicy(resource string, clearorgpolicyrequest *ClearOrgPolicyRequest) *OrganizationsClearOrgPolicyCall {
 	c := &OrganizationsClearOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4215,6 +4236,11 @@ type OrganizationsGetCall struct {
 
 // Get: Fetches an Organization resource identified by the specified
 // resource name.
+//
+// - name: The resource name of the Organization to fetch. This is the
+//   organization's relative path in the API, formatted as
+//   "organizations/[organizationId]". For example,
+//   "organizations/1234".
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4364,6 +4390,9 @@ type OrganizationsGetEffectiveOrgPolicyCall struct {
 // The returned `Policy` will not have an `etag`set because it is a
 // computed `Policy` across multiple resources. Subtrees of Resource
 // Manager resource hierarchy with 'under:' prefix will not be expanded.
+//
+// - resource: The name of the resource to start computing the effective
+//   `Policy`.
 func (r *OrganizationsService) GetEffectiveOrgPolicy(resource string, geteffectiveorgpolicyrequest *GetEffectiveOrgPolicyRequest) *OrganizationsGetEffectiveOrgPolicyCall {
 	c := &OrganizationsGetEffectiveOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4510,6 +4539,10 @@ type OrganizationsGetIamPolicyCall struct {
 // "organizations/123". Authorization requires the Google IAM permission
 // `resourcemanager.organizations.getIamPolicy` on the specified
 // organization
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4655,6 +4688,8 @@ type OrganizationsGetOrgPolicyCall struct {
 // `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The `etag` value
 // can be used with `SetOrgPolicy()` to create or update a `Policy`
 // during read-modify-write.
+//
+// - resource: Name of the resource the `Policy` is set on.
 func (r *OrganizationsService) GetOrgPolicy(resource string, getorgpolicyrequest *GetOrgPolicyRequest) *OrganizationsGetOrgPolicyCall {
 	c := &OrganizationsGetOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4797,6 +4832,8 @@ type OrganizationsListAvailableOrgPolicyConstraintsCall struct {
 
 // ListAvailableOrgPolicyConstraints: Lists `Constraints` that could be
 // applied on the specified resource.
+//
+// - resource: Name of the resource to list `Constraints` for.
 func (r *OrganizationsService) ListAvailableOrgPolicyConstraints(resource string, listavailableorgpolicyconstraintsrequest *ListAvailableOrgPolicyConstraintsRequest) *OrganizationsListAvailableOrgPolicyConstraintsCall {
 	c := &OrganizationsListAvailableOrgPolicyConstraintsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4962,6 +4999,8 @@ type OrganizationsListOrgPoliciesCall struct {
 
 // ListOrgPolicies: Lists all the `Policies` set for a particular
 // resource.
+//
+// - resource: Name of the resource to list Policies for.
 func (r *OrganizationsService) ListOrgPolicies(resource string, listorgpoliciesrequest *ListOrgPoliciesRequest) *OrganizationsListOrgPoliciesCall {
 	c := &OrganizationsListOrgPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5280,6 +5319,10 @@ type OrganizationsSetIamPolicyCall struct {
 // Authorization requires the Google IAM permission
 // `resourcemanager.organizations.setIamPolicy` on the specified
 // organization
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5423,6 +5466,8 @@ type OrganizationsSetOrgPolicyCall struct {
 // a new `Policy` for that `Constraint` on the resource if one does not
 // exist. Not supplying an `etag` on the request `Policy` results in an
 // unconditional write of the `Policy`.
+//
+// - resource: Resource name of the resource to attach the `Policy`.
 func (r *OrganizationsService) SetOrgPolicy(resource string, setorgpolicyrequest *SetOrgPolicyRequest) *OrganizationsSetOrgPolicyCall {
 	c := &OrganizationsSetOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5566,6 +5611,10 @@ type OrganizationsTestIamPermissionsCall struct {
 // specified Organization. The `resource` field should be the
 // organization's resource name, e.g. "organizations/123". There are no
 // permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5707,6 +5756,8 @@ type ProjectsClearOrgPolicyCall struct {
 }
 
 // ClearOrgPolicy: Clears a `Policy` from a resource.
+//
+// - resource: Name of the resource for the `Policy` to clear.
 func (r *ProjectsService) ClearOrgPolicy(resource string, clearorgpolicyrequest *ClearOrgPolicyRequest) *ProjectsClearOrgPolicyCall {
 	c := &ProjectsClearOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5993,6 +6044,8 @@ type ProjectsDeleteCall struct {
 // deletion completes, the Project is not retrievable by the GetProject
 // and ListProjects methods. The caller must have delete permissions for
 // this Project.
+//
+// - projectId: The Project ID (for example, `foo-bar-123`).
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6125,6 +6178,8 @@ type ProjectsGetCall struct {
 // Get: Retrieves the Project identified by the specified `project_id`
 // (for example, `my-project-123`). The caller must have read
 // permissions for this Project.
+//
+// - projectId: The Project ID (for example, `my-project-123`).
 func (r *ProjectsService) Get(projectId string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6272,6 +6327,8 @@ type ProjectsGetAncestryCall struct {
 // the Project identified by the specified `project_id` (for example,
 // `my-project-123`). The caller must have read permissions for this
 // Project.
+//
+// - projectId: The Project ID (for example, `my-project-123`).
 func (r *ProjectsService) GetAncestry(projectId string, getancestryrequest *GetAncestryRequest) *ProjectsGetAncestryCall {
 	c := &ProjectsGetAncestryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -6416,6 +6473,9 @@ type ProjectsGetEffectiveOrgPolicyCall struct {
 // The returned `Policy` will not have an `etag`set because it is a
 // computed `Policy` across multiple resources. Subtrees of Resource
 // Manager resource hierarchy with 'under:' prefix will not be expanded.
+//
+// - resource: The name of the resource to start computing the effective
+//   `Policy`.
 func (r *ProjectsService) GetEffectiveOrgPolicy(resource string, geteffectiveorgpolicyrequest *GetEffectiveOrgPolicyRequest) *ProjectsGetEffectiveOrgPolicyCall {
 	c := &ProjectsGetEffectiveOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6563,6 +6623,10 @@ type ProjectsGetIamPolicyCall struct {
 // additional information about `resource` (e.g. my-project-id)
 // structure and identification, see Resource Names
 // (https://cloud.google.com/apis/design/resource_names).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6707,6 +6771,8 @@ type ProjectsGetOrgPolicyCall struct {
 // `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The `etag` value
 // can be used with `SetOrgPolicy()` to create or update a `Policy`
 // during read-modify-write.
+//
+// - resource: Name of the resource the `Policy` is set on.
 func (r *ProjectsService) GetOrgPolicy(resource string, getorgpolicyrequest *GetOrgPolicyRequest) *ProjectsGetOrgPolicyCall {
 	c := &ProjectsGetOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7077,6 +7143,8 @@ type ProjectsListAvailableOrgPolicyConstraintsCall struct {
 
 // ListAvailableOrgPolicyConstraints: Lists `Constraints` that could be
 // applied on the specified resource.
+//
+// - resource: Name of the resource to list `Constraints` for.
 func (r *ProjectsService) ListAvailableOrgPolicyConstraints(resource string, listavailableorgpolicyconstraintsrequest *ListAvailableOrgPolicyConstraintsRequest) *ProjectsListAvailableOrgPolicyConstraintsCall {
 	c := &ProjectsListAvailableOrgPolicyConstraintsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7242,6 +7310,8 @@ type ProjectsListOrgPoliciesCall struct {
 
 // ListOrgPolicies: Lists all the `Policies` set for a particular
 // resource.
+//
+// - resource: Name of the resource to list Policies for.
 func (r *ProjectsService) ListOrgPolicies(resource string, listorgpoliciesrequest *ListOrgPoliciesRequest) *ProjectsListOrgPoliciesCall {
 	c := &ProjectsListOrgPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7440,6 +7510,10 @@ type ProjectsSetIamPolicyCall struct {
 // lack of a ToS-accepting owner is rectified. Authorization requires
 // the Google IAM permission `resourcemanager.projects.setIamPolicy` on
 // the project
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7582,6 +7656,8 @@ type ProjectsSetOrgPolicyCall struct {
 // a new `Policy` for that `Constraint` on the resource if one does not
 // exist. Not supplying an `etag` on the request `Policy` results in an
 // unconditional write of the `Policy`.
+//
+// - resource: Resource name of the resource to attach the `Policy`.
 func (r *ProjectsService) SetOrgPolicy(resource string, setorgpolicyrequest *SetOrgPolicyRequest) *ProjectsSetOrgPolicyCall {
 	c := &ProjectsSetOrgPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7726,6 +7802,10 @@ type ProjectsTestIamPermissionsCall struct {
 // my-project-id) structure and identification, see Resource Names
 // (https://cloud.google.com/apis/design/resource_names). There are no
 // permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7870,6 +7950,8 @@ type ProjectsUndeleteCall struct {
 // method for a Project that has a lifecycle state of DELETE_REQUESTED.
 // After deletion starts, the Project cannot be restored. The caller
 // must have undelete permissions for this Project.
+//
+// - projectId: The project ID (for example, `foo-bar-123`).
 func (r *ProjectsService) Undelete(projectId string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8011,6 +8093,8 @@ type ProjectsUpdateCall struct {
 // Update: Updates the attributes of the Project identified by the
 // specified `project_id` (for example, `my-project-123`). The caller
 // must have modify permissions for this Project.
+//
+// - projectId: The project ID (for example, `my-project-123`).
 func (r *ProjectsService) Update(projectId string, project *Project) *ProjectsUpdateCall {
 	c := &ProjectsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

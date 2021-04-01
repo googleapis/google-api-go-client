@@ -4653,6 +4653,9 @@ type NamespacesAuthorizeddomainsListCall struct {
 }
 
 // List: RPC to list authorized domains.
+//
+// - parent: Name of the parent Application resource. Example:
+//   `apps/myapp`.
 func (r *NamespacesAuthorizeddomainsService) List(parent string) *NamespacesAuthorizeddomainsListCall {
 	c := &NamespacesAuthorizeddomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4843,6 +4846,9 @@ type NamespacesConfigurationsGetCall struct {
 }
 
 // Get: Rpc to get information about a configuration.
+//
+// - name: The name of the configuration being retrieved. If needed,
+//   replace {namespace_id} with the project ID.
 func (r *NamespacesConfigurationsService) Get(name string) *NamespacesConfigurationsGetCall {
 	c := &NamespacesConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4987,6 +4993,9 @@ type NamespacesConfigurationsListCall struct {
 }
 
 // List: Rpc to list configurations.
+//
+// - parent: The project ID or project number from which the
+//   configurations should be listed.
 func (r *NamespacesConfigurationsService) List(parent string) *NamespacesConfigurationsListCall {
 	c := &NamespacesConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5221,6 +5230,9 @@ type NamespacesDomainmappingsCreateCall struct {
 }
 
 // Create: Creates a new domain mapping.
+//
+// - parent: The project ID or project number in which this domain
+//   mapping should be created.
 func (r *NamespacesDomainmappingsService) Create(parent string, domainmapping *DomainMapping) *NamespacesDomainmappingsCreateCall {
 	c := &NamespacesDomainmappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5360,6 +5372,9 @@ type NamespacesDomainmappingsDeleteCall struct {
 }
 
 // Delete: Rpc to delete a domain mapping.
+//
+// - name: The name of the domain mapping being deleted. If needed,
+//   replace {namespace_id} with the project ID.
 func (r *NamespacesDomainmappingsService) Delete(name string) *NamespacesDomainmappingsDeleteCall {
 	c := &NamespacesDomainmappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5545,6 +5560,9 @@ type NamespacesDomainmappingsGetCall struct {
 }
 
 // Get: Rpc to get information about a domain mapping.
+//
+// - name: The name of the domain mapping being retrieved. If needed,
+//   replace {namespace_id} with the project ID.
 func (r *NamespacesDomainmappingsService) Get(name string) *NamespacesDomainmappingsGetCall {
 	c := &NamespacesDomainmappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5689,6 +5707,9 @@ type NamespacesDomainmappingsListCall struct {
 }
 
 // List: Rpc to list domain mappings.
+//
+// - parent: The project ID or project number from which the domain
+//   mappings should be listed.
 func (r *NamespacesDomainmappingsService) List(parent string) *NamespacesDomainmappingsListCall {
 	c := &NamespacesDomainmappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5923,6 +5944,9 @@ type NamespacesJobsCreateCall struct {
 }
 
 // Create: Create a job.
+//
+// - parent: The namespace in which the job should be created. Replace
+//   {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) Create(parent string, job *Job) *NamespacesJobsCreateCall {
 	c := &NamespacesJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6062,6 +6086,9 @@ type NamespacesJobsDeleteCall struct {
 }
 
 // Delete: Delete a job.
+//
+// - name: The name of the job to delete. For Cloud Run (fully managed),
+//   replace {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) Delete(name string) *NamespacesJobsDeleteCall {
 	c := &NamespacesJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6232,6 +6259,9 @@ type NamespacesJobsGetCall struct {
 }
 
 // Get: Get information about a job.
+//
+// - name: The name of the job to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) Get(name string) *NamespacesJobsGetCall {
 	c := &NamespacesJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6376,6 +6406,9 @@ type NamespacesJobsListCall struct {
 }
 
 // List: List jobs.
+//
+// - parent: The namespace from which the jobs should be listed. Replace
+//   {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) List(parent string) *NamespacesJobsListCall {
 	c := &NamespacesJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6609,6 +6642,9 @@ type NamespacesRevisionsDeleteCall struct {
 }
 
 // Delete: Rpc to delete a revision.
+//
+// - name: The name of the revision being deleted. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *NamespacesRevisionsService) Delete(name string) *NamespacesRevisionsDeleteCall {
 	c := &NamespacesRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6794,6 +6830,9 @@ type NamespacesRevisionsGetCall struct {
 }
 
 // Get: Rpc to get information about a revision.
+//
+// - name: The name of the revision being retrieved. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *NamespacesRevisionsService) Get(name string) *NamespacesRevisionsGetCall {
 	c := &NamespacesRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6938,6 +6977,9 @@ type NamespacesRevisionsListCall struct {
 }
 
 // List: Rpc to list revisions.
+//
+// - parent: The project ID or project number from which the revisions
+//   should be listed.
 func (r *NamespacesRevisionsService) List(parent string) *NamespacesRevisionsListCall {
 	c := &NamespacesRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7172,6 +7214,9 @@ type NamespacesRoutesGetCall struct {
 }
 
 // Get: Rpc to get information about a route.
+//
+// - name: The name of the route being retrieved. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *NamespacesRoutesService) Get(name string) *NamespacesRoutesGetCall {
 	c := &NamespacesRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7316,6 +7361,9 @@ type NamespacesRoutesListCall struct {
 }
 
 // List: Rpc to list routes.
+//
+// - parent: The project ID or project number from which the routes
+//   should be listed.
 func (r *NamespacesRoutesService) List(parent string) *NamespacesRoutesListCall {
 	c := &NamespacesRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7550,6 +7598,9 @@ type NamespacesServicesCreateCall struct {
 }
 
 // Create: Rpc to create a service.
+//
+// - parent: The project ID or project number in which this service
+//   should be created.
 func (r *NamespacesServicesService) Create(parent string, service *Service) *NamespacesServicesCreateCall {
 	c := &NamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7691,6 +7742,9 @@ type NamespacesServicesDeleteCall struct {
 // Delete: Rpc to delete a service. This will cause the Service to stop
 // serving traffic and will delete the child entities like Routes,
 // Configurations and Revisions.
+//
+// - name: The name of the service being deleted. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *NamespacesServicesService) Delete(name string) *NamespacesServicesDeleteCall {
 	c := &NamespacesServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7876,6 +7930,9 @@ type NamespacesServicesGetCall struct {
 }
 
 // Get: Rpc to get information about a service.
+//
+// - name: The name of the service being retrieved. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *NamespacesServicesService) Get(name string) *NamespacesServicesGetCall {
 	c := &NamespacesServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8020,6 +8077,9 @@ type NamespacesServicesListCall struct {
 }
 
 // List: Rpc to list services.
+//
+// - parent: The project ID or project number from which the services
+//   should be listed.
 func (r *NamespacesServicesService) List(parent string) *NamespacesServicesListCall {
 	c := &NamespacesServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8258,6 +8318,9 @@ type NamespacesServicesReplaceServiceCall struct {
 // Cloud Run will work to make the 'status' match the requested 'spec'.
 // May provide metadata.resourceVersion to enforce update from last read
 // for optimistic concurrency control.
+//
+// - name: The name of the service being replaced. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *NamespacesServicesService) ReplaceService(name string, service *Service) *NamespacesServicesReplaceServiceCall {
 	c := &NamespacesServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8399,6 +8462,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8604,6 +8670,9 @@ type ProjectsLocationsAuthorizeddomainsListCall struct {
 }
 
 // List: RPC to list authorized domains.
+//
+// - parent: Name of the parent Application resource. Example:
+//   `apps/myapp`.
 func (r *ProjectsLocationsAuthorizeddomainsService) List(parent string) *ProjectsLocationsAuthorizeddomainsListCall {
 	c := &ProjectsLocationsAuthorizeddomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8794,6 +8863,9 @@ type ProjectsLocationsConfigurationsGetCall struct {
 }
 
 // Get: Rpc to get information about a configuration.
+//
+// - name: The name of the configuration being retrieved. If needed,
+//   replace {namespace_id} with the project ID.
 func (r *ProjectsLocationsConfigurationsService) Get(name string) *ProjectsLocationsConfigurationsGetCall {
 	c := &ProjectsLocationsConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8938,6 +9010,9 @@ type ProjectsLocationsConfigurationsListCall struct {
 }
 
 // List: Rpc to list configurations.
+//
+// - parent: The project ID or project number from which the
+//   configurations should be listed.
 func (r *ProjectsLocationsConfigurationsService) List(parent string) *ProjectsLocationsConfigurationsListCall {
 	c := &ProjectsLocationsConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9172,6 +9247,9 @@ type ProjectsLocationsDomainmappingsCreateCall struct {
 }
 
 // Create: Creates a new domain mapping.
+//
+// - parent: The project ID or project number in which this domain
+//   mapping should be created.
 func (r *ProjectsLocationsDomainmappingsService) Create(parent string, domainmapping *DomainMapping) *ProjectsLocationsDomainmappingsCreateCall {
 	c := &ProjectsLocationsDomainmappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9311,6 +9389,9 @@ type ProjectsLocationsDomainmappingsDeleteCall struct {
 }
 
 // Delete: Rpc to delete a domain mapping.
+//
+// - name: The name of the domain mapping being deleted. If needed,
+//   replace {namespace_id} with the project ID.
 func (r *ProjectsLocationsDomainmappingsService) Delete(name string) *ProjectsLocationsDomainmappingsDeleteCall {
 	c := &ProjectsLocationsDomainmappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9496,6 +9577,9 @@ type ProjectsLocationsDomainmappingsGetCall struct {
 }
 
 // Get: Rpc to get information about a domain mapping.
+//
+// - name: The name of the domain mapping being retrieved. If needed,
+//   replace {namespace_id} with the project ID.
 func (r *ProjectsLocationsDomainmappingsService) Get(name string) *ProjectsLocationsDomainmappingsGetCall {
 	c := &ProjectsLocationsDomainmappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9640,6 +9724,9 @@ type ProjectsLocationsDomainmappingsListCall struct {
 }
 
 // List: Rpc to list domain mappings.
+//
+// - parent: The project ID or project number from which the domain
+//   mappings should be listed.
 func (r *ProjectsLocationsDomainmappingsService) List(parent string) *ProjectsLocationsDomainmappingsListCall {
 	c := &ProjectsLocationsDomainmappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9873,6 +9960,9 @@ type ProjectsLocationsRevisionsDeleteCall struct {
 }
 
 // Delete: Rpc to delete a revision.
+//
+// - name: The name of the revision being deleted. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *ProjectsLocationsRevisionsService) Delete(name string) *ProjectsLocationsRevisionsDeleteCall {
 	c := &ProjectsLocationsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10058,6 +10148,9 @@ type ProjectsLocationsRevisionsGetCall struct {
 }
 
 // Get: Rpc to get information about a revision.
+//
+// - name: The name of the revision being retrieved. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *ProjectsLocationsRevisionsService) Get(name string) *ProjectsLocationsRevisionsGetCall {
 	c := &ProjectsLocationsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10202,6 +10295,9 @@ type ProjectsLocationsRevisionsListCall struct {
 }
 
 // List: Rpc to list revisions.
+//
+// - parent: The project ID or project number from which the revisions
+//   should be listed.
 func (r *ProjectsLocationsRevisionsService) List(parent string) *ProjectsLocationsRevisionsListCall {
 	c := &ProjectsLocationsRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10436,6 +10532,9 @@ type ProjectsLocationsRoutesGetCall struct {
 }
 
 // Get: Rpc to get information about a route.
+//
+// - name: The name of the route being retrieved. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *ProjectsLocationsRoutesService) Get(name string) *ProjectsLocationsRoutesGetCall {
 	c := &ProjectsLocationsRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10580,6 +10679,9 @@ type ProjectsLocationsRoutesListCall struct {
 }
 
 // List: Rpc to list routes.
+//
+// - parent: The project ID or project number from which the routes
+//   should be listed.
 func (r *ProjectsLocationsRoutesService) List(parent string) *ProjectsLocationsRoutesListCall {
 	c := &ProjectsLocationsRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10814,6 +10916,9 @@ type ProjectsLocationsServicesCreateCall struct {
 }
 
 // Create: Rpc to create a service.
+//
+// - parent: The project ID or project number in which this service
+//   should be created.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10955,6 +11060,9 @@ type ProjectsLocationsServicesDeleteCall struct {
 // Delete: Rpc to delete a service. This will cause the Service to stop
 // serving traffic and will delete the child entities like Routes,
 // Configurations and Revisions.
+//
+// - name: The name of the service being deleted. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11140,6 +11248,9 @@ type ProjectsLocationsServicesGetCall struct {
 }
 
 // Get: Rpc to get information about a service.
+//
+// - name: The name of the service being retrieved. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11286,6 +11397,10 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // GetIamPolicy: Get the IAM Access Control policy currently in effect
 // for the given Cloud Run service. This result does not include any
 // inherited policies.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11450,6 +11565,9 @@ type ProjectsLocationsServicesListCall struct {
 }
 
 // List: Rpc to list services.
+//
+// - parent: The project ID or project number from which the services
+//   should be listed.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11688,6 +11806,9 @@ type ProjectsLocationsServicesReplaceServiceCall struct {
 // Cloud Run will work to make the 'status' match the requested 'spec'.
 // May provide metadata.resourceVersion to enforce update from last read
 // for optimistic concurrency control.
+//
+// - name: The name of the service being replaced. If needed, replace
+//   {namespace_id} with the project ID.
 func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *Service) *ProjectsLocationsServicesReplaceServiceCall {
 	c := &ProjectsLocationsServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11829,6 +11950,10 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM Access control policy for the specified
 // Service. Overwrites any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11971,6 +12096,10 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified Project. There are no permissions required for making this
 // API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

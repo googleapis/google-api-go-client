@@ -259,6 +259,9 @@ type BiddersBiddingFunctionsCreateCall struct {
 }
 
 // Create: Creates a new bidding function.
+//
+// - parent: The name of the bidder for which to create the bidding
+//   function. Format: `bidders/{bidderAccountId}`.
 func (r *BiddersBiddingFunctionsService) Create(parent string, biddingfunction *BiddingFunction) *BiddersBiddingFunctionsCreateCall {
 	c := &BiddersBiddingFunctionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -400,6 +403,9 @@ type BiddersBiddingFunctionsListCall struct {
 
 // List: Lists the bidding functions that a bidder currently has
 // registered.
+//
+// - parent: Name of the bidder whose bidding functions will be listed.
+//   Format: `bidders/{bidder_account_id}`.
 func (r *BiddersBiddingFunctionsService) List(parent string) *BiddersBiddingFunctionsListCall {
 	c := &BiddersBiddingFunctionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

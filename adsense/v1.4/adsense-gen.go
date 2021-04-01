@@ -1775,6 +1775,8 @@ type AccountsGetCall struct {
 }
 
 // Get: Get information about the selected AdSense account.
+//
+// - accountId: Account to get information about.
 func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2110,6 +2112,9 @@ type AccountsAdclientsGetAdCodeCall struct {
 }
 
 // GetAdCode: Get Auto ad code for a given ad client.
+//
+// - accountId: Account which contains the ad client.
+// - adClientId: Ad client to get the code for.
 func (r *AccountsAdclientsService) GetAdCode(accountId string, adClientId string) *AccountsAdclientsGetAdCodeCall {
 	c := &AccountsAdclientsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2274,6 +2279,8 @@ type AccountsAdclientsListCall struct {
 }
 
 // List: List all ad clients in the specified account.
+//
+// - accountId: Account for which to list ad clients.
 func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsListCall {
 	c := &AccountsAdclientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2470,6 +2477,10 @@ type AccountsAdunitsGetCall struct {
 
 // Get: Gets the specified ad unit in the specified ad client for the
 // specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to get the ad unit.
+// - adUnitId: Ad unit to retrieve.
 func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetCall {
 	c := &AccountsAdunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2633,6 +2644,10 @@ type AccountsAdunitsGetAdCodeCall struct {
 }
 
 // GetAdCode: Get ad code for the specified ad unit.
+//
+// - accountId: Account which contains the ad client.
+// - adClientId: Ad client with contains the ad unit.
+// - adUnitId: Ad unit to get the code for.
 func (r *AccountsAdunitsService) GetAdCode(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetAdCodeCall {
 	c := &AccountsAdunitsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2796,6 +2811,9 @@ type AccountsAdunitsListCall struct {
 
 // List: List all ad units in the specified ad client for the specified
 // account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to list ad units.
 func (r *AccountsAdunitsService) List(accountId string, adClientId string) *AccountsAdunitsListCall {
 	c := &AccountsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3013,6 +3031,10 @@ type AccountsAdunitsCustomchannelsListCall struct {
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client which contains the ad unit.
+// - adUnitId: Ad unit for which to list custom channels.
 func (r *AccountsAdunitsCustomchannelsService) List(accountId string, adClientId string, adUnitId string) *AccountsAdunitsCustomchannelsListCall {
 	c := &AccountsAdunitsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3226,6 +3248,9 @@ type AccountsAlertsDeleteCall struct {
 
 // Delete: Dismiss (delete) the specified alert from the specified
 // publisher AdSense account.
+//
+// - accountId: Account which contains the ad unit.
+// - alertId: Alert to delete.
 func (r *AccountsAlertsService) Delete(accountId string, alertId string) *AccountsAlertsDeleteCall {
 	c := &AccountsAlertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3336,6 +3361,8 @@ type AccountsAlertsListCall struct {
 }
 
 // List: List the alerts for the specified AdSense account.
+//
+// - accountId: Account for which to retrieve the alerts.
 func (r *AccountsAlertsService) List(accountId string) *AccountsAlertsListCall {
 	c := &AccountsAlertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3496,6 +3523,10 @@ type AccountsCustomchannelsGetCall struct {
 
 // Get: Get the specified custom channel from the specified ad client
 // for the specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel to retrieve.
 func (r *AccountsCustomchannelsService) Get(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsGetCall {
 	c := &AccountsCustomchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3659,6 +3690,9 @@ type AccountsCustomchannelsListCall struct {
 
 // List: List all custom channels in the specified ad client for the
 // specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to list custom channels.
 func (r *AccountsCustomchannelsService) List(accountId string, adClientId string) *AccountsCustomchannelsListCall {
 	c := &AccountsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3864,6 +3898,10 @@ type AccountsCustomchannelsAdunitsListCall struct {
 }
 
 // List: List all ad units in the specified custom channel.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel for which to list ad units.
 func (r *AccountsCustomchannelsAdunitsService) List(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsAdunitsListCall {
 	c := &AccountsCustomchannelsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4087,6 +4125,8 @@ type AccountsPaymentsListCall struct {
 }
 
 // List: List the payments for the specified AdSense account.
+//
+// - accountId: Account for which to retrieve the payments.
 func (r *AccountsPaymentsService) List(accountId string) *AccountsPaymentsListCall {
 	c := &AccountsPaymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4232,6 +4272,12 @@ type AccountsReportsGenerateCall struct {
 // Generate: Generate an AdSense report based on the report request sent
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
+//
+// - accountId: Account upon which to report.
+// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//   inclusive.
+// - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//   format, inclusive.
 func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4542,6 +4588,9 @@ type AccountsReportsSavedGenerateCall struct {
 
 // Generate: Generate an AdSense report based on the saved report ID
 // sent in the query parameters.
+//
+// - accountId: Account to which the saved reports belong.
+// - savedReportId: The saved report to retrieve.
 func (r *AccountsReportsSavedService) Generate(accountId string, savedReportId string) *AccountsReportsSavedGenerateCall {
 	c := &AccountsReportsSavedGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4738,6 +4787,8 @@ type AccountsReportsSavedListCall struct {
 }
 
 // List: List all saved reports in the specified AdSense account.
+//
+// - accountId: Account to which the saved reports belong.
 func (r *AccountsReportsSavedService) List(accountId string) *AccountsReportsSavedListCall {
 	c := &AccountsReportsSavedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4932,6 +4983,9 @@ type AccountsSavedadstylesGetCall struct {
 }
 
 // Get: List a specific saved ad style for the specified account.
+//
+// - accountId: Account for which to get the saved ad style.
+// - savedAdStyleId: Saved ad style to retrieve.
 func (r *AccountsSavedadstylesService) Get(accountId string, savedAdStyleId string) *AccountsSavedadstylesGetCall {
 	c := &AccountsSavedadstylesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5084,6 +5138,8 @@ type AccountsSavedadstylesListCall struct {
 }
 
 // List: List all saved ad styles in the specified account.
+//
+// - accountId: Account for which to list saved ad styles.
 func (r *AccountsSavedadstylesService) List(accountId string) *AccountsSavedadstylesListCall {
 	c := &AccountsSavedadstylesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5280,6 +5336,9 @@ type AccountsUrlchannelsListCall struct {
 
 // List: List all URL channels in the specified ad client for the
 // specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to list URL channels.
 func (r *AccountsUrlchannelsService) List(accountId string, adClientId string) *AccountsUrlchannelsListCall {
 	c := &AccountsUrlchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5662,6 +5721,9 @@ type AdunitsGetCall struct {
 }
 
 // Get: Gets the specified ad unit in the specified ad client.
+//
+// - adClientId: Ad client for which to get the ad unit.
+// - adUnitId: Ad unit to retrieve.
 func (r *AdunitsService) Get(adClientId string, adUnitId string) *AdunitsGetCall {
 	c := &AdunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -5815,6 +5877,9 @@ type AdunitsGetAdCodeCall struct {
 }
 
 // GetAdCode: Get ad code for the specified ad unit.
+//
+// - adClientId: Ad client with contains the ad unit.
+// - adUnitId: Ad unit to get the code for.
 func (r *AdunitsService) GetAdCode(adClientId string, adUnitId string) *AdunitsGetAdCodeCall {
 	c := &AdunitsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -5968,6 +6033,8 @@ type AdunitsListCall struct {
 
 // List: List all ad units in the specified ad client for this AdSense
 // account.
+//
+// - adClientId: Ad client for which to list ad units.
 func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 	c := &AdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6175,6 +6242,9 @@ type AdunitsCustomchannelsListCall struct {
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
+//
+// - adClientId: Ad client which contains the ad unit.
+// - adUnitId: Ad unit for which to list custom channels.
 func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) *AdunitsCustomchannelsListCall {
 	c := &AdunitsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6378,6 +6448,8 @@ type AlertsDeleteCall struct {
 
 // Delete: Dismiss (delete) the specified alert from the publisher's
 // AdSense account.
+//
+// - alertId: Alert to delete.
 func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 	c := &AlertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -6623,6 +6695,9 @@ type CustomchannelsGetCall struct {
 }
 
 // Get: Get the specified custom channel from the specified ad client.
+//
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel to retrieve.
 func (r *CustomchannelsService) Get(adClientId string, customChannelId string) *CustomchannelsGetCall {
 	c := &CustomchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6776,6 +6851,8 @@ type CustomchannelsListCall struct {
 
 // List: List all custom channels in the specified ad client for this
 // AdSense account.
+//
+// - adClientId: Ad client for which to list custom channels.
 func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall {
 	c := &CustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6971,6 +7048,9 @@ type CustomchannelsAdunitsListCall struct {
 }
 
 // List: List all ad units in the specified custom channel.
+//
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel for which to list ad units.
 func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId string) *CustomchannelsAdunitsListCall {
 	c := &CustomchannelsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -7569,6 +7649,11 @@ type ReportsGenerateCall struct {
 // Generate: Generate an AdSense report based on the report request sent
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
+//
+// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//   inclusive.
+// - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//   format, inclusive.
 func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGenerateCall {
 	c := &ReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("startDate", startDate)
@@ -7880,6 +7965,8 @@ type ReportsSavedGenerateCall struct {
 
 // Generate: Generate an AdSense report based on the saved report ID
 // sent in the query parameters.
+//
+// - savedReportId: The saved report to retrieve.
 func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenerateCall {
 	c := &ReportsSavedGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.savedReportId = savedReportId
@@ -8246,6 +8333,8 @@ type SavedadstylesGetCall struct {
 }
 
 // Get: Get a specific saved ad style from the user's account.
+//
+// - savedAdStyleId: Saved ad style to retrieve.
 func (r *SavedadstylesService) Get(savedAdStyleId string) *SavedadstylesGetCall {
 	c := &SavedadstylesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.savedAdStyleId = savedAdStyleId
@@ -8570,6 +8659,8 @@ type UrlchannelsListCall struct {
 
 // List: List all URL channels in the specified ad client for this
 // AdSense account.
+//
+// - adClientId: Ad client for which to list URL channels.
 func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 	c := &UrlchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId

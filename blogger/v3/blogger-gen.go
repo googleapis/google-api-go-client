@@ -1664,6 +1664,9 @@ type BlogUserInfosGetCall struct {
 }
 
 // Get: Gets one blog and user info pair by blog id and user id.
+//
+// - blogId: .
+// - userId: .
 func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosGetCall {
 	c := &BlogUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1826,6 +1829,8 @@ type BlogsGetCall struct {
 }
 
 // Get: Gets a blog by id.
+//
+// - blogId: .
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2007,6 +2012,8 @@ type BlogsGetByUrlCall struct {
 }
 
 // GetByUrl: Gets a blog by url.
+//
+// - url: .
 func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 	c := &BlogsGetByUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("url", url)
@@ -2175,6 +2182,8 @@ type BlogsListByUserCall struct {
 }
 
 // ListByUser: Lists blogs by user.
+//
+// - userId: .
 func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 	c := &BlogsListByUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2413,6 +2422,10 @@ type CommentsApproveCall struct {
 
 // Approve: Marks a comment as not spam by blog id, post id and comment
 // id.
+//
+// - blogId: .
+// - commentId: .
+// - postId: .
 func (r *CommentsService) Approve(blogId string, postId string, commentId string) *CommentsApproveCall {
 	c := &CommentsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2559,6 +2572,10 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Deletes a comment by blog id, post id and comment id.
+//
+// - blogId: .
+// - commentId: .
+// - postId: .
 func (r *CommentsService) Delete(blogId string, postId string, commentId string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2678,6 +2695,10 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets a comment by id.
+//
+// - blogId: .
+// - commentId: .
+// - postId: .
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2866,6 +2887,9 @@ type CommentsListCall struct {
 }
 
 // List: Lists comments.
+//
+// - blogId: .
+// - postId: .
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3145,6 +3169,8 @@ type CommentsListByBlogCall struct {
 }
 
 // ListByBlog: Lists comments by blog.
+//
+// - blogId: .
 func (r *CommentsService) ListByBlog(blogId string) *CommentsListByBlogCall {
 	c := &CommentsListByBlogCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3391,6 +3417,10 @@ type CommentsMarkAsSpamCall struct {
 
 // MarkAsSpam: Marks a comment as spam by blog id, post id and comment
 // id.
+//
+// - blogId: .
+// - commentId: .
+// - postId: .
 func (r *CommentsService) MarkAsSpam(blogId string, postId string, commentId string) *CommentsMarkAsSpamCall {
 	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3538,6 +3568,10 @@ type CommentsRemoveContentCall struct {
 
 // RemoveContent: Removes the content of a comment by blog id, post id
 // and comment id.
+//
+// - blogId: .
+// - commentId: .
+// - postId: .
 func (r *CommentsService) RemoveContent(blogId string, postId string, commentId string) *CommentsRemoveContentCall {
 	c := &CommentsRemoveContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3683,6 +3717,8 @@ type PageViewsGetCall struct {
 }
 
 // Get: Gets page views by blog id.
+//
+// - blogId: .
 func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 	c := &PageViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3851,6 +3887,9 @@ type PagesDeleteCall struct {
 }
 
 // Delete: Deletes a page by blog id and page id.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
 	c := &PagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3961,6 +4000,9 @@ type PagesGetCall struct {
 }
 
 // Get: Gets a page by blog id and page id.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4140,6 +4182,8 @@ type PagesInsertCall struct {
 }
 
 // Insert: Inserts a page.
+//
+// - blogId: .
 func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 	c := &PagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4288,6 +4332,8 @@ type PagesListCall struct {
 }
 
 // List: Lists pages.
+//
+// - blogId: .
 func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4535,6 +4581,9 @@ type PagesPatchCall struct {
 }
 
 // Patch: Patches a page.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPatchCall {
 	c := &PagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4701,6 +4750,9 @@ type PagesPublishCall struct {
 }
 
 // Publish: Publishes a page.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Publish(blogId string, pageId string) *PagesPublishCall {
 	c := &PagesPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4838,6 +4890,9 @@ type PagesRevertCall struct {
 }
 
 // Revert: Reverts a published or scheduled page to draft state.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Revert(blogId string, pageId string) *PagesRevertCall {
 	c := &PagesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4976,6 +5031,9 @@ type PagesUpdateCall struct {
 }
 
 // Update: Updates a page by blog id and page id.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUpdateCall {
 	c := &PagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5144,6 +5202,10 @@ type PostUserInfosGetCall struct {
 }
 
 // Get: Gets one post and user info pair, by post_id and user_id.
+//
+// - blogId: .
+// - postId: .
+// - userId: .
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
 	c := &PostUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5315,6 +5377,9 @@ type PostUserInfosListCall struct {
 }
 
 // List: Lists post and user info pairs.
+//
+// - blogId: .
+// - userId: .
 func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
 	c := &PostUserInfosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5629,6 +5694,9 @@ type PostsDeleteCall struct {
 }
 
 // Delete: Deletes a post by blog id and post id.
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
 	c := &PostsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5739,6 +5807,9 @@ type PostsGetCall struct {
 }
 
 // Get: Gets a post by blog id and post id
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5950,6 +6021,9 @@ type PostsGetByPathCall struct {
 }
 
 // GetByPath: Gets a post by path.
+//
+// - blogId: .
+// - path: .
 func (r *PostsService) GetByPath(blogId string, path string) *PostsGetByPathCall {
 	c := &PostsGetByPathCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6139,6 +6213,8 @@ type PostsInsertCall struct {
 }
 
 // Insert: Inserts a post.
+//
+// - blogId: .
 func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 	c := &PostsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6308,6 +6384,8 @@ type PostsListCall struct {
 }
 
 // List: Lists posts.
+//
+// - blogId: .
 func (r *PostsService) List(blogId string) *PostsListCall {
 	c := &PostsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6625,6 +6703,9 @@ type PostsPatchCall struct {
 }
 
 // Patch: Patches a post.
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPatchCall {
 	c := &PostsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6823,6 +6904,9 @@ type PostsPublishCall struct {
 }
 
 // Publish: Publishes a post.
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
 	c := &PostsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6970,6 +7054,9 @@ type PostsRevertCall struct {
 }
 
 // Revert: Reverts a published or scheduled post to draft state.
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
 	c := &PostsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -7108,6 +7195,9 @@ type PostsSearchCall struct {
 
 // Search: Searches for posts matching given query terms in the
 // specified blog.
+//
+// - blogId: .
+// - q: .
 func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 	c := &PostsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -7296,6 +7386,9 @@ type PostsUpdateCall struct {
 }
 
 // Update: Updates a post by blog id and post id.
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUpdateCall {
 	c := &PostsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -7494,6 +7587,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets one user by user_id.
+//
+// - userId: .
 func (r *UsersService) Get(userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId

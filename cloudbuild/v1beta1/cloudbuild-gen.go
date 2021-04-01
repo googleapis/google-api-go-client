@@ -1985,6 +1985,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2127,6 +2129,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2273,6 +2277,9 @@ type ProjectsLocationsWorkerPoolsCreateCall struct {
 // Create: Creates a `WorkerPool` to run the builds, and returns the new
 // worker pool. NOTE: As of now, this method returns an `Operation` that
 // is always complete.
+//
+// - parent: The parent resource where this worker pool will be created.
+//   Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsWorkerPoolsService) Create(parent string, workerpool *WorkerPool) *ProjectsLocationsWorkerPoolsCreateCall {
 	c := &ProjectsLocationsWorkerPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2427,6 +2434,10 @@ type ProjectsLocationsWorkerPoolsDeleteCall struct {
 
 // Delete: Deletes a `WorkerPool`. NOTE: As of now, this method returns
 // an `Operation` that is always complete.
+//
+// - name: The name of the `WorkerPool` to delete. Format:
+//   `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`
+//   .
 func (r *ProjectsLocationsWorkerPoolsService) Delete(name string) *ProjectsLocationsWorkerPoolsDeleteCall {
 	c := &ProjectsLocationsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2558,6 +2569,9 @@ type ProjectsLocationsWorkerPoolsGetCall struct {
 }
 
 // Get: Returns details of a `WorkerPool`.
+//
+// - name: The name of the `WorkerPool` to retrieve. Format:
+//   `projects/{project}/locations/{location}/workerPools/{workerPool}`.
 func (r *ProjectsLocationsWorkerPoolsService) Get(name string) *ProjectsLocationsWorkerPoolsGetCall {
 	c := &ProjectsLocationsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2702,6 +2716,9 @@ type ProjectsLocationsWorkerPoolsListCall struct {
 }
 
 // List: Lists `WorkerPool`s in the given project.
+//
+// - parent: The parent of the collection of `WorkerPools`. Format:
+//   `projects/{project}/locations/location`.
 func (r *ProjectsLocationsWorkerPoolsService) List(parent string) *ProjectsLocationsWorkerPoolsListCall {
 	c := &ProjectsLocationsWorkerPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2847,6 +2864,13 @@ type ProjectsLocationsWorkerPoolsPatchCall struct {
 
 // Patch: Updates a `WorkerPool`. NOTE: As of now, this method returns
 // an `Operation` that is always complete.
+//
+// - name: Output only. The resource name of the `WorkerPool`, with
+//   format
+//   `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+//    The value of `{worker_pool}` is provided by `worker_pool_id` in
+//   `CreateWorkerPool` request and the value of `{location}` is
+//   determined by the endpoint accessed.
 func (r *ProjectsLocationsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) *ProjectsLocationsWorkerPoolsPatchCall {
 	c := &ProjectsLocationsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

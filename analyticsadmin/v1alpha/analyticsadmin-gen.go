@@ -2362,6 +2362,9 @@ type AccountsDeleteCall struct {
 // UserLinks) will be permanently purged.
 // https://support.google.com/analytics/answer/6154772 Returns an error
 // if the target is not found.
+//
+// - name: The name of the Account to soft-delete. Format:
+//   accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2493,6 +2496,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Lookup for a single Account.
+//
+// - name: The name of the account to lookup. Format: accounts/{account}
+//   Example: "accounts/100".
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2640,6 +2646,10 @@ type AccountsGetDataSharingSettingsCall struct {
 
 // GetDataSharingSettings: Get data sharing settings on an account. Data
 // sharing settings are singletons.
+//
+// - name: The name of the settings to lookup. Format:
+//   accounts/{account}/dataSharingSettings Example:
+//   "accounts/1000/dataSharingSettings".
 func (r *AccountsService) GetDataSharingSettings(name string) *AccountsGetDataSharingSettingsCall {
 	c := &AccountsGetDataSharingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2989,6 +2999,9 @@ type AccountsPatchCall struct {
 }
 
 // Patch: Updates an account.
+//
+// - name: Output only. Resource name of this account. Format:
+//   accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount *GoogleAnalyticsAdminV1alphaAccount) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3275,6 +3288,9 @@ type AccountsSearchChangeHistoryEventsCall struct {
 
 // SearchChangeHistoryEvents: Searches through all changes to an account
 // or its children given the specified set of filters.
+//
+// - account: The account resource for which to return change history
+//   resources.
 func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyticsadminv1alphasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest) *AccountsSearchChangeHistoryEventsCall {
 	c := &AccountsSearchChangeHistoryEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -3445,6 +3461,8 @@ type AccountsUserLinksAuditCall struct {
 // property directly with the DeleteUserLink command. They have to be
 // removed from the group/etc that gives them permissions, which is
 // currently only usable/discoverable in the GA or GMP UIs.
+//
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) Audit(parent string, googleanalyticsadminv1alphaaudituserlinksrequest *GoogleAnalyticsAdminV1alphaAuditUserLinksRequest) *AccountsUserLinksAuditCall {
 	c := &AccountsUserLinksAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3611,6 +3629,11 @@ type AccountsUserLinksBatchCreateCall struct {
 // BatchCreate: Creates information about multiple users' links to an
 // account or property. This method is transactional. If any UserLink
 // cannot be created, none of the UserLinks will be created.
+//
+// - parent: The account or property that all user links in the request
+//   are for. This field is required. The parent field in the
+//   CreateUserLinkRequest messages must either be empty or match this
+//   field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchCreate(parent string, googleanalyticsadminv1alphabatchcreateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest) *AccountsUserLinksBatchCreateCall {
 	c := &AccountsUserLinksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3755,6 +3778,10 @@ type AccountsUserLinksBatchDeleteCall struct {
 
 // BatchDelete: Deletes information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all values for user link names to delete
+//   must match this field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchDelete(parent string, googleanalyticsadminv1alphabatchdeleteuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest) *AccountsUserLinksBatchDeleteCall {
 	c := &AccountsUserLinksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3896,6 +3923,10 @@ type AccountsUserLinksBatchGetCall struct {
 
 // BatchGet: Gets information about multiple users' links to an account
 // or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all provided values for the 'names' field
+//   must match this field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchGet(parent string) *AccountsUserLinksBatchGetCall {
 	c := &AccountsUserLinksBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4058,6 +4089,11 @@ type AccountsUserLinksBatchUpdateCall struct {
 
 // BatchUpdate: Updates information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent field in the UpdateUserLinkRequest messages
+//   must either be empty or match this field. Example format:
+//   accounts/1234.
 func (r *AccountsUserLinksService) BatchUpdate(parent string, googleanalyticsadminv1alphabatchupdateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest) *AccountsUserLinksBatchUpdateCall {
 	c := &AccountsUserLinksBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4204,6 +4240,8 @@ type AccountsUserLinksCreateCall struct {
 // with the specified email already has permissions on the account or
 // property, then the user's existing permissions will be unioned with
 // the permissions specified in the new UserLink.
+//
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) Create(parent string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *AccountsUserLinksCreateCall {
 	c := &AccountsUserLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4357,6 +4395,8 @@ type AccountsUserLinksDeleteCall struct {
 }
 
 // Delete: Deletes a user link on an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Delete(name string) *AccountsUserLinksDeleteCall {
 	c := &AccountsUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4488,6 +4528,8 @@ type AccountsUserLinksGetCall struct {
 }
 
 // Get: Gets information about a user's link to an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Get(name string) *AccountsUserLinksGetCall {
 	c := &AccountsUserLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4634,6 +4676,8 @@ type AccountsUserLinksListCall struct {
 }
 
 // List: Lists all user links on an account or property.
+//
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) List(parent string) *AccountsUserLinksListCall {
 	c := &AccountsUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4832,6 +4876,8 @@ type AccountsUserLinksPatchCall struct {
 }
 
 // Patch: Updates a user link on an account or property.
+//
+// - name: Example format: properties/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Patch(name string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *AccountsUserLinksPatchCall {
 	c := &AccountsUserLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5106,6 +5152,9 @@ type PropertiesDeleteCall struct {
 // UserLinks) will be permanently purged.
 // https://support.google.com/analytics/answer/6154772 Returns an error
 // if the target is not found, or is not an GA4 Property.
+//
+// - name: The name of the Property to soft-delete. Format:
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Delete(name string) *PropertiesDeleteCall {
 	c := &PropertiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5237,6 +5286,9 @@ type PropertiesGetCall struct {
 }
 
 // Get: Lookup for a single "GA4" Property.
+//
+// - name: The name of the property to lookup. Format:
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Get(name string) *PropertiesGetCall {
 	c := &PropertiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5606,6 +5658,9 @@ type PropertiesPatchCall struct {
 }
 
 // Patch: Updates a property.
+//
+// - name: Output only. Resource name of this property. Format:
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Patch(name string, googleanalyticsadminv1alphaproperty *GoogleAnalyticsAdminV1alphaProperty) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5768,6 +5823,9 @@ type PropertiesAndroidAppDataStreamsCreateCall struct {
 // sure your property is linked to a Firebase project. Then, use the
 // Firebase API to create a Firebase app, which will also create an
 // appropriate data stream in Analytics (may take up to 24 hours).
+//
+// - parent: The parent resource where this android app data stream will
+//   be created. Format: properties/123.
 func (r *PropertiesAndroidAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsCreateCall {
 	c := &PropertiesAndroidAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5909,6 +5967,10 @@ type PropertiesAndroidAppDataStreamsDeleteCall struct {
 }
 
 // Delete: Deletes an android app stream on a property.
+//
+// - name: The name of the android app data stream to delete. Format:
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/123/androidAppDataStreams/456".
 func (r *PropertiesAndroidAppDataStreamsService) Delete(name string) *PropertiesAndroidAppDataStreamsDeleteCall {
 	c := &PropertiesAndroidAppDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6040,6 +6102,10 @@ type PropertiesAndroidAppDataStreamsGetCall struct {
 }
 
 // Get: Lookup for a single AndroidAppDataStream
+//
+// - name: The name of the android app data stream to lookup. Format:
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/123/androidAppDataStreams/456".
 func (r *PropertiesAndroidAppDataStreamsService) Get(name string) *PropertiesAndroidAppDataStreamsGetCall {
 	c := &PropertiesAndroidAppDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6190,6 +6256,10 @@ type PropertiesAndroidAppDataStreamsListCall struct {
 // property. Android app streams will be excluded if the caller does not
 // have access. Returns an empty list if no relevant android app streams
 // are found.
+//
+// - parent: The name of the parent property. For example, to limit
+//   results to app streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesAndroidAppDataStreamsService) List(parent string) *PropertiesAndroidAppDataStreamsListCall {
 	c := &PropertiesAndroidAppDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6389,6 +6459,10 @@ type PropertiesAndroidAppDataStreamsPatchCall struct {
 }
 
 // Patch: Updates an android app stream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/1000/androidAppDataStreams/2000".
 func (r *PropertiesAndroidAppDataStreamsService) Patch(name string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsPatchCall {
 	c := &PropertiesAndroidAppDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6548,6 +6622,8 @@ type PropertiesFirebaseLinksCreateCall struct {
 
 // Create: Creates a FirebaseLink. Properties can have at most one
 // FirebaseLink.
+//
+// - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) Create(parent string, googleanalyticsadminv1alphafirebaselink *GoogleAnalyticsAdminV1alphaFirebaseLink) *PropertiesFirebaseLinksCreateCall {
 	c := &PropertiesFirebaseLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6688,6 +6764,10 @@ type PropertiesFirebaseLinksDeleteCall struct {
 }
 
 // Delete: Deletes a FirebaseLink on a property
+//
+// - name: Format:
+//   properties/{property_id}/firebaseLinks/{firebase_link_id} Example:
+//   properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Delete(name string) *PropertiesFirebaseLinksDeleteCall {
 	c := &PropertiesFirebaseLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6820,6 +6900,8 @@ type PropertiesFirebaseLinksListCall struct {
 
 // List: Lists FirebaseLinks on a property. Properties can have at most
 // one FirebaseLink.
+//
+// - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) List(parent string) *PropertiesFirebaseLinksListCall {
 	c := &PropertiesFirebaseLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7019,6 +7101,9 @@ type PropertiesFirebaseLinksPatchCall struct {
 }
 
 // Patch: Updates a FirebaseLink on a property
+//
+// - name: Output only. Example format:
+//   properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Patch(name string, googleanalyticsadminv1alphafirebaselink *GoogleAnalyticsAdminV1alphaFirebaseLink) *PropertiesFirebaseLinksPatchCall {
 	c := &PropertiesFirebaseLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7176,6 +7261,8 @@ type PropertiesGoogleAdsLinksCreateCall struct {
 }
 
 // Create: Creates a GoogleAdsLink.
+//
+// - parent: Example format: properties/1234.
 func (r *PropertiesGoogleAdsLinksService) Create(parent string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksCreateCall {
 	c := &PropertiesGoogleAdsLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7317,6 +7404,8 @@ type PropertiesGoogleAdsLinksDeleteCall struct {
 }
 
 // Delete: Deletes a GoogleAdsLink on a property
+//
+// - name: Example format: properties/1234/googleAdsLinks/5678.
 func (r *PropertiesGoogleAdsLinksService) Delete(name string) *PropertiesGoogleAdsLinksDeleteCall {
 	c := &PropertiesGoogleAdsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7448,6 +7537,8 @@ type PropertiesGoogleAdsLinksListCall struct {
 }
 
 // List: Lists GoogleAdsLinks on a property.
+//
+// - parent: Example format: properties/1234.
 func (r *PropertiesGoogleAdsLinksService) List(parent string) *PropertiesGoogleAdsLinksListCall {
 	c := &PropertiesGoogleAdsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7646,6 +7737,10 @@ type PropertiesGoogleAdsLinksPatchCall struct {
 }
 
 // Patch: Updates a GoogleAdsLink on a property
+//
+// - name: Output only. Format:
+//   properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
+//   googleAdsLinkId is not the Google Ads customer ID.
 func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksPatchCall {
 	c := &PropertiesGoogleAdsLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7809,6 +7904,9 @@ type PropertiesIosAppDataStreamsCreateCall struct {
 // your property is linked to a Firebase project. Then, use the Firebase
 // API to create a Firebase app, which will also create an appropriate
 // data stream in Analytics (may take up to 24 hours).
+//
+// - parent: The parent resource where this ios app data stream will be
+//   created. Format: properties/123.
 func (r *PropertiesIosAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsCreateCall {
 	c := &PropertiesIosAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7950,6 +8048,10 @@ type PropertiesIosAppDataStreamsDeleteCall struct {
 }
 
 // Delete: Deletes an iOS app stream on a property.
+//
+// - name: The name of the iOS app data stream to delete. Format:
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/123/iosAppDataStreams/456".
 func (r *PropertiesIosAppDataStreamsService) Delete(name string) *PropertiesIosAppDataStreamsDeleteCall {
 	c := &PropertiesIosAppDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8081,6 +8183,10 @@ type PropertiesIosAppDataStreamsGetCall struct {
 }
 
 // Get: Lookup for a single IosAppDataStream
+//
+// - name: The name of the iOS app data stream to lookup. Format:
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/123/iosAppDataStreams/456".
 func (r *PropertiesIosAppDataStreamsService) Get(name string) *PropertiesIosAppDataStreamsGetCall {
 	c := &PropertiesIosAppDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8231,6 +8337,10 @@ type PropertiesIosAppDataStreamsListCall struct {
 // property. iOS app data streams will be excluded if the caller does
 // not have access. Returns an empty list if no relevant iOS app data
 // streams are found.
+//
+// - parent: The name of the parent property. For example, to list
+//   results of app streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesIosAppDataStreamsService) List(parent string) *PropertiesIosAppDataStreamsListCall {
 	c := &PropertiesIosAppDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8430,6 +8540,10 @@ type PropertiesIosAppDataStreamsPatchCall struct {
 }
 
 // Patch: Updates an iOS app stream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/1000/iosAppDataStreams/2000".
 func (r *PropertiesIosAppDataStreamsService) Patch(name string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsPatchCall {
 	c := &PropertiesIosAppDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8594,6 +8708,8 @@ type PropertiesUserLinksAuditCall struct {
 // property directly with the DeleteUserLink command. They have to be
 // removed from the group/etc that gives them permissions, which is
 // currently only usable/discoverable in the GA or GMP UIs.
+//
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) Audit(parent string, googleanalyticsadminv1alphaaudituserlinksrequest *GoogleAnalyticsAdminV1alphaAuditUserLinksRequest) *PropertiesUserLinksAuditCall {
 	c := &PropertiesUserLinksAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8760,6 +8876,11 @@ type PropertiesUserLinksBatchCreateCall struct {
 // BatchCreate: Creates information about multiple users' links to an
 // account or property. This method is transactional. If any UserLink
 // cannot be created, none of the UserLinks will be created.
+//
+// - parent: The account or property that all user links in the request
+//   are for. This field is required. The parent field in the
+//   CreateUserLinkRequest messages must either be empty or match this
+//   field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchCreate(parent string, googleanalyticsadminv1alphabatchcreateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest) *PropertiesUserLinksBatchCreateCall {
 	c := &PropertiesUserLinksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8904,6 +9025,10 @@ type PropertiesUserLinksBatchDeleteCall struct {
 
 // BatchDelete: Deletes information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all values for user link names to delete
+//   must match this field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchDelete(parent string, googleanalyticsadminv1alphabatchdeleteuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest) *PropertiesUserLinksBatchDeleteCall {
 	c := &PropertiesUserLinksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9045,6 +9170,10 @@ type PropertiesUserLinksBatchGetCall struct {
 
 // BatchGet: Gets information about multiple users' links to an account
 // or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all provided values for the 'names' field
+//   must match this field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchGet(parent string) *PropertiesUserLinksBatchGetCall {
 	c := &PropertiesUserLinksBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9207,6 +9336,11 @@ type PropertiesUserLinksBatchUpdateCall struct {
 
 // BatchUpdate: Updates information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent field in the UpdateUserLinkRequest messages
+//   must either be empty or match this field. Example format:
+//   accounts/1234.
 func (r *PropertiesUserLinksService) BatchUpdate(parent string, googleanalyticsadminv1alphabatchupdateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest) *PropertiesUserLinksBatchUpdateCall {
 	c := &PropertiesUserLinksBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9353,6 +9487,8 @@ type PropertiesUserLinksCreateCall struct {
 // with the specified email already has permissions on the account or
 // property, then the user's existing permissions will be unioned with
 // the permissions specified in the new UserLink.
+//
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) Create(parent string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *PropertiesUserLinksCreateCall {
 	c := &PropertiesUserLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9506,6 +9642,8 @@ type PropertiesUserLinksDeleteCall struct {
 }
 
 // Delete: Deletes a user link on an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Delete(name string) *PropertiesUserLinksDeleteCall {
 	c := &PropertiesUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9637,6 +9775,8 @@ type PropertiesUserLinksGetCall struct {
 }
 
 // Get: Gets information about a user's link to an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Get(name string) *PropertiesUserLinksGetCall {
 	c := &PropertiesUserLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9783,6 +9923,8 @@ type PropertiesUserLinksListCall struct {
 }
 
 // List: Lists all user links on an account or property.
+//
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) List(parent string) *PropertiesUserLinksListCall {
 	c := &PropertiesUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9981,6 +10123,8 @@ type PropertiesUserLinksPatchCall struct {
 }
 
 // Patch: Updates a user link on an account or property.
+//
+// - name: Example format: properties/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Patch(name string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *PropertiesUserLinksPatchCall {
 	c := &PropertiesUserLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10123,6 +10267,9 @@ type PropertiesWebDataStreamsCreateCall struct {
 
 // Create: Creates a web stream with the specified location and
 // attributes.
+//
+// - parent: The parent resource where this web data stream will be
+//   created. Format: properties/123.
 func (r *PropertiesWebDataStreamsService) Create(parent string, googleanalyticsadminv1alphawebdatastream *GoogleAnalyticsAdminV1alphaWebDataStream) *PropertiesWebDataStreamsCreateCall {
 	c := &PropertiesWebDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10264,6 +10411,10 @@ type PropertiesWebDataStreamsDeleteCall struct {
 }
 
 // Delete: Deletes a web stream on a property.
+//
+// - name: The name of the web data stream to delete. Format:
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/123/webDataStreams/456".
 func (r *PropertiesWebDataStreamsService) Delete(name string) *PropertiesWebDataStreamsDeleteCall {
 	c := &PropertiesWebDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10395,6 +10546,10 @@ type PropertiesWebDataStreamsGetCall struct {
 }
 
 // Get: Lookup for a single WebDataStream
+//
+// - name: The name of the web data stream to lookup. Format:
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/123/webDataStreams/456".
 func (r *PropertiesWebDataStreamsService) Get(name string) *PropertiesWebDataStreamsGetCall {
 	c := &PropertiesWebDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10544,6 +10699,11 @@ type PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall struct {
 // GetEnhancedMeasurementSettings: Returns the singleton enhanced
 // measurement settings for this web stream. Note that the stream must
 // enable enhanced measurement for these settings to take effect.
+//
+// - name: The name of the settings to lookup. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
+//   entSettings Example:
+//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
 func (r *PropertiesWebDataStreamsService) GetEnhancedMeasurementSettings(name string) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
 	c := &PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10693,6 +10853,11 @@ type PropertiesWebDataStreamsGetGlobalSiteTagCall struct {
 
 // GetGlobalSiteTag: Returns the Site Tag for the specified web stream.
 // Site Tags are immutable singletons.
+//
+// - name: The name of the site tag to lookup. Note that site tags are
+//   singletons and do not have unique IDs. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/globalSiteTag
+//   Example: "properties/123/webDataStreams/456/globalSiteTag".
 func (r *PropertiesWebDataStreamsService) GetGlobalSiteTag(name string) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
 	c := &PropertiesWebDataStreamsGetGlobalSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10843,6 +11008,10 @@ type PropertiesWebDataStreamsListCall struct {
 // property. Web data streams will be excluded if the caller does not
 // have access. Returns an empty list if no relevant web data streams
 // are found.
+//
+// - parent: The name of the parent property. For example, to list
+//   results of web streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesWebDataStreamsService) List(parent string) *PropertiesWebDataStreamsListCall {
 	c := &PropertiesWebDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11041,6 +11210,10 @@ type PropertiesWebDataStreamsPatchCall struct {
 }
 
 // Patch: Updates a web stream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/1000/webDataStreams/2000".
 func (r *PropertiesWebDataStreamsService) Patch(name string, googleanalyticsadminv1alphawebdatastream *GoogleAnalyticsAdminV1alphaWebDataStream) *PropertiesWebDataStreamsPatchCall {
 	c := &PropertiesWebDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11201,6 +11374,11 @@ type PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall struct {
 // UpdateEnhancedMeasurementSettings: Updates the singleton enhanced
 // measurement settings for this web stream. Note that the stream must
 // enable enhanced measurement for these settings to take effect.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
+//   entSettings Example:
+//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
 func (r *PropertiesWebDataStreamsService) UpdateEnhancedMeasurementSettings(name string, googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
 	c := &PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -987,6 +987,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1132,6 +1134,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1334,6 +1339,8 @@ type ProjectsLocationsAcceleratorTypesGetCall struct {
 }
 
 // Get: Gets AcceleratorType.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsAcceleratorTypesService) Get(name string) *ProjectsLocationsAcceleratorTypesGetCall {
 	c := &ProjectsLocationsAcceleratorTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1478,6 +1485,8 @@ type ProjectsLocationsAcceleratorTypesListCall struct {
 }
 
 // List: Lists accelerator types supported by this API.
+//
+// - parent: The parent resource name.
 func (r *ProjectsLocationsAcceleratorTypesService) List(parent string) *ProjectsLocationsAcceleratorTypesListCall {
 	c := &ProjectsLocationsAcceleratorTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1690,6 +1699,8 @@ type ProjectsLocationsNodesCreateCall struct {
 }
 
 // Create: Creates a node.
+//
+// - parent: The parent resource name.
 func (r *ProjectsLocationsNodesService) Create(parent string, node *Node) *ProjectsLocationsNodesCreateCall {
 	c := &ProjectsLocationsNodesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1841,6 +1852,8 @@ type ProjectsLocationsNodesDeleteCall struct {
 }
 
 // Delete: Deletes a node.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsNodesService) Delete(name string) *ProjectsLocationsNodesDeleteCall {
 	c := &ProjectsLocationsNodesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1972,6 +1985,8 @@ type ProjectsLocationsNodesGetCall struct {
 }
 
 // Get: Gets the details of a node.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsNodesService) Get(name string) *ProjectsLocationsNodesGetCall {
 	c := &ProjectsLocationsNodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2116,6 +2131,8 @@ type ProjectsLocationsNodesListCall struct {
 }
 
 // List: Lists nodes.
+//
+// - parent: The parent resource name.
 func (r *ProjectsLocationsNodesService) List(parent string) *ProjectsLocationsNodesListCall {
 	c := &ProjectsLocationsNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2306,6 +2323,8 @@ type ProjectsLocationsNodesReimageCall struct {
 }
 
 // Reimage: Reimages a node's OS.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsNodesService) Reimage(name string, reimagenoderequest *ReimageNodeRequest) *ProjectsLocationsNodesReimageCall {
 	c := &ProjectsLocationsNodesReimageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2446,6 +2465,8 @@ type ProjectsLocationsNodesStartCall struct {
 }
 
 // Start: Starts a node.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsNodesService) Start(name string, startnoderequest *StartNodeRequest) *ProjectsLocationsNodesStartCall {
 	c := &ProjectsLocationsNodesStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2586,6 +2607,8 @@ type ProjectsLocationsNodesStopCall struct {
 }
 
 // Stop: Stops a node.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsNodesService) Stop(name string, stopnoderequest *StopNodeRequest) *ProjectsLocationsNodesStopCall {
 	c := &ProjectsLocationsNodesStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2734,6 +2757,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2867,6 +2892,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3000,6 +3027,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3153,6 +3182,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3355,6 +3386,8 @@ type ProjectsLocationsTensorflowVersionsGetCall struct {
 }
 
 // Get: Gets TensorFlow Version.
+//
+// - name: The resource name.
 func (r *ProjectsLocationsTensorflowVersionsService) Get(name string) *ProjectsLocationsTensorflowVersionsGetCall {
 	c := &ProjectsLocationsTensorflowVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3499,6 +3532,8 @@ type ProjectsLocationsTensorflowVersionsListCall struct {
 }
 
 // List: List TensorFlow versions supported by this API.
+//
+// - parent: The parent resource name.
 func (r *ProjectsLocationsTensorflowVersionsService) List(parent string) *ProjectsLocationsTensorflowVersionsListCall {
 	c := &ProjectsLocationsTensorflowVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

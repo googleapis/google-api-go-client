@@ -617,6 +617,10 @@ type DomainsGetCall struct {
 
 // Get: Gets a specific domain registered by the client. Returns
 // NOT_FOUND if the domain does not exist.
+//
+// - name: The resource name of the domain. It should have the form
+//   `domains/{domain_name}`, where domain_name is the fully qualified
+//   domain name.
 func (r *DomainsService) Get(name string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -945,6 +949,9 @@ type DomainsTrafficStatsGetCall struct {
 // Get: Get traffic statistics for a domain on a specific date. Returns
 // PERMISSION_DENIED if user does not have permission to access
 // TrafficStats for the domain.
+//
+// - name: The resource name of the traffic statistics to get. E.g.,
+//   domains/mymail.mydomain.com/trafficStats/20160807.
 func (r *DomainsTrafficStatsService) Get(name string) *DomainsTrafficStatsGetCall {
 	c := &DomainsTrafficStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1091,6 +1098,10 @@ type DomainsTrafficStatsListCall struct {
 // List: List traffic statistics for all available days. Returns
 // PERMISSION_DENIED if user does not have permission to access
 // TrafficStats for the domain.
+//
+// - parent: The resource name of the domain whose traffic statistics
+//   we'd like to list. It should have the form `domains/{domain_name}`,
+//   where domain_name is the fully qualified domain name.
 func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsListCall {
 	c := &DomainsTrafficStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

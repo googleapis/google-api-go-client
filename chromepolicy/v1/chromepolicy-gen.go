@@ -1100,6 +1100,9 @@ type CustomersPoliciesResolveCall struct {
 
 // Resolve: Gets the resolved policy values for a list of policies that
 // match a search query.
+//
+// - customer: ID of the G Suite account or literal "my_customer" for
+//   the customer associated to the request.
 func (r *CustomersPoliciesService) Resolve(customer string, googlechromepolicyv1resolverequest *GoogleChromePolicyV1ResolveRequest) *CustomersPoliciesResolveCall {
 	c := &CustomersPoliciesResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1269,6 +1272,9 @@ type CustomersPoliciesOrgunitsBatchInheritCall struct {
 // have the same keys specified in `additionalTargetKeyNames`. On
 // failure the request will return the error details as part of the
 // google.rpc.Status.
+//
+// - customer: ID of the G Suite account or literal "my_customer" for
+//   the customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchInherit(customer string, googlechromepolicyv1batchinheritorgunitpoliciesrequest *GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchInheritCall {
 	c := &CustomersPoliciesOrgunitsBatchInheritCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1414,6 +1420,9 @@ type CustomersPoliciesOrgunitsBatchModifyCall struct {
 // have the same keys specified in `additionalTargetKeyNames`. On
 // failure the request will return the error details as part of the
 // google.rpc.Status.
+//
+// - customer: ID of the G Suite account or literal "my_customer" for
+//   the customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchModify(customer string, googlechromepolicyv1batchmodifyorgunitpoliciesrequest *GoogleChromePolicyV1BatchModifyOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchModifyCall {
 	c := &CustomersPoliciesOrgunitsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1555,6 +1564,8 @@ type CustomersPolicySchemasGetCall struct {
 
 // Get: Get a specific policy schema for a customer by its resource
 // name.
+//
+// - name: The policy schema resource name to query.
 func (r *CustomersPolicySchemasService) Get(name string) *CustomersPolicySchemasGetCall {
 	c := &CustomersPolicySchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1701,6 +1712,8 @@ type CustomersPolicySchemasListCall struct {
 
 // List: Gets a list of policy schemas that match a specified filter
 // value for a given customer.
+//
+// - parent: The customer for which the listing request will apply.
 func (r *CustomersPolicySchemasService) List(parent string) *CustomersPolicySchemasListCall {
 	c := &CustomersPolicySchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -3116,6 +3116,11 @@ type ProjectsLocationsCatalogsListCall struct {
 }
 
 // List: Lists all the Catalogs associated with the project.
+//
+// - parent: The account resource name with an associated location. If
+//   the caller does not have permission to list Catalogs under this
+//   location, regardless of whether or not this location exists, a
+//   PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocationsCatalogsListCall {
 	c := &ProjectsLocationsCatalogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3314,6 +3319,8 @@ type ProjectsLocationsCatalogsPatchCall struct {
 }
 
 // Patch: Updates the Catalogs.
+//
+// - name: Immutable. The fully qualified resource name of the catalog.
 func (r *ProjectsLocationsCatalogsService) Patch(name string, googlecloudretailv2betacatalog *GoogleCloudRetailV2betaCatalog) *ProjectsLocationsCatalogsPatchCall {
 	c := &ProjectsLocationsCatalogsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3472,6 +3479,8 @@ type ProjectsLocationsCatalogsBranchesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsBranchesOperationsService) Get(name string) *ProjectsLocationsCatalogsBranchesOperationsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3616,6 +3625,10 @@ type ProjectsLocationsCatalogsBranchesProductsCreateCall struct {
 }
 
 // Create: Creates a Product.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch`.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Create(parent string, googlecloudretailv2betaproduct *GoogleCloudRetailV2betaProduct) *ProjectsLocationsCatalogsBranchesProductsCreateCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3773,6 +3786,17 @@ type ProjectsLocationsCatalogsBranchesProductsDeleteCall struct {
 }
 
 // Delete: Deletes a Product.
+//
+// - name: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to delete the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned. If the Product to
+//   delete does not exist, a NOT_FOUND error is returned. The Product
+//   to delete can neither be a Product.Type.COLLECTION Product member
+//   nor a Product.Type.PRIMARY Product with more than one variants.
+//   Otherwise, an INVALID_ARGUMENT error is returned. All inventory
+//   information for the named Product will be deleted.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Delete(name string) *ProjectsLocationsCatalogsBranchesProductsDeleteCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3904,6 +3928,13 @@ type ProjectsLocationsCatalogsBranchesProductsGetCall struct {
 }
 
 // Get: Gets a Product.
+//
+// - name: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned. If the requested
+//   Product does not exist, a NOT_FOUND error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Get(name string) *ProjectsLocationsCatalogsBranchesProductsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4051,6 +4082,12 @@ type ProjectsLocationsCatalogsBranchesProductsImportCall struct {
 // synchronous. No partial updating is supported. Non-existing items are
 // created. Note that it is possible for a subset of the Products to be
 // successfully updated.
+//
+// - parent:
+//   `projects/1234/locations/global/catalogs/default_catalog/branches/de
+//   fault_branch` If no updateMask is specified, requires
+//   products.create permission. If updateMask is specified, requires
+//   products.update permission.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Import(parent string, googlecloudretailv2betaimportproductsrequest *GoogleCloudRetailV2betaImportProductsRequest) *ProjectsLocationsCatalogsBranchesProductsImportCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4191,6 +4228,11 @@ type ProjectsLocationsCatalogsBranchesProductsPatchCall struct {
 }
 
 // Patch: Updates a Product.
+//
+// - name: Immutable. Full resource name of the product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/product_id`. The branch ID must be
+//   "default_branch".
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Patch(name string, googlecloudretailv2betaproduct *GoogleCloudRetailV2betaProduct) *ProjectsLocationsCatalogsBranchesProductsPatchCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4363,6 +4405,8 @@ type ProjectsLocationsCatalogsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsOperationsService) Get(name string) *ProjectsLocationsCatalogsOperationsGetCall {
 	c := &ProjectsLocationsCatalogsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4516,6 +4560,8 @@ type ProjectsLocationsCatalogsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsOperationsService) List(name string) *ProjectsLocationsCatalogsOperationsListCall {
 	c := &ProjectsLocationsCatalogsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4719,6 +4765,15 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 }
 
 // Predict: Makes a recommendation prediction.
+//
+// - placement: Full resource name of the format:
+//   {name=projects/*/locations/global/catalogs/default_catalog/placement
+//   s/*} The ID of the Recommendations AI placement. Before you can
+//   request predictions from your model, you must create at least one
+//   placement for it. For more information, see Managing placements
+//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
+//   The full list of available placements can be seen at
+//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2betapredictrequest *GoogleCloudRetailV2betaPredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -4863,6 +4918,9 @@ type ProjectsLocationsCatalogsUserEventsCollectCall struct {
 // request to due to browser restriction of POST-ing to a 3rd party
 // domain. This method is used only by the Retail API JavaScript pixel
 // and Google Tag Manager. Users should not call this method directly.
+//
+// - parent: The parent catalog name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5052,6 +5110,8 @@ type ProjectsLocationsCatalogsUserEventsImportCall struct {
 // ImportResponse. Note that it is possible for a subset of the items to
 // be successfully inserted. Operation.metadata is of type
 // ImportMetadata.
+//
+// - parent: `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Import(parent string, googlecloudretailv2betaimportusereventsrequest *GoogleCloudRetailV2betaImportUserEventsRequest) *ProjectsLocationsCatalogsUserEventsImportCall {
 	c := &ProjectsLocationsCatalogsUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5195,6 +5255,10 @@ type ProjectsLocationsCatalogsUserEventsPurgeCall struct {
 // provided. Depending on the number of events specified by the filter,
 // this operation could take hours or days to complete. To test a
 // filter, use the list command first.
+//
+// - parent: The resource name of the catalog under which the events are
+//   created. The format is
+//   `projects/${projectId}/locations/global/catalogs/${catalogId}`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Purge(parent string, googlecloudretailv2betapurgeusereventsrequest *GoogleCloudRetailV2betaPurgeUserEventsRequest) *ProjectsLocationsCatalogsUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5342,6 +5406,9 @@ type ProjectsLocationsCatalogsUserEventsRejoinCall struct {
 // used to trigger a 'join' operation on specified events with latest
 // version of product catalog. It can also be used to correct events
 // joined with wrong product catalog.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Rejoin(parent string, googlecloudretailv2betarejoinusereventsrequest *GoogleCloudRetailV2betaRejoinUserEventsRequest) *ProjectsLocationsCatalogsUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5482,6 +5549,9 @@ type ProjectsLocationsCatalogsUserEventsWriteCall struct {
 }
 
 // Write: Writes a single user event.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Write(parent string, googlecloudretailv2betauserevent *GoogleCloudRetailV2betaUserEvent) *ProjectsLocationsCatalogsUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5624,6 +5694,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5777,6 +5849,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

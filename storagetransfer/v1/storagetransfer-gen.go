@@ -1598,6 +1598,9 @@ type GoogleServiceAccountsGetCall struct {
 // access to Storage Transfer Service. This service account is created
 // and owned by Storage Transfer Service and can only be used by Storage
 // Transfer Service.
+//
+// - projectId: The ID of the Google Cloud Platform Console project that
+//   the Google service account is associated with.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
 	c := &GoogleServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1866,6 +1869,10 @@ type TransferJobsGetCall struct {
 }
 
 // Get: Gets a transfer job.
+//
+// - jobName: " The job to get.
+// - projectId: The ID of the Google Cloud Platform Console project that
+//   owns the job.
 func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
 	c := &TransferJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2017,6 +2024,15 @@ type TransferJobsListCall struct {
 }
 
 // List: Lists transfer jobs.
+//
+// - filter: A list of query parameters specified as JSON text in the
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "jobStatuses":["status1","status2",...]}` Since `jobNames` and
+//   `jobStatuses` support multiple values, their values must be
+//   specified with array notation. `projectId` is required. `jobNames`
+//   and `jobStatuses` are optional. The valid values for `jobStatuses`
+//   are case-insensitive: ENABLED, DISABLED, and DELETED.
 func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("filter", filter)
@@ -2206,6 +2222,8 @@ type TransferJobsPatchCall struct {
 // not affect transfer operations that are running already. **Note:**
 // The job's status field can be modified using this RPC (for example,
 // to set a job's status to DELETED, DISABLED, or ENABLED).
+//
+// - jobName: The name of job to update.
 func (r *TransferJobsService) Patch(jobName string, updatetransferjobrequest *UpdateTransferJobRequest) *TransferJobsPatchCall {
 	c := &TransferJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2349,6 +2367,8 @@ type TransferJobsRunCall struct {
 // TransferJob. A TransferJob has a maximum of one active
 // TransferOperation. If this method is called while a TransferOperation
 // is active, an error wil be returned.
+//
+// - jobName: The name of the transfer job.
 func (r *TransferJobsService) Run(jobName string, runtransferjobrequest *RunTransferJobRequest) *TransferJobsRunCall {
 	c := &TransferJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2507,6 +2527,8 @@ type TransferOperationsCancelCall struct {
 // transferred five files before you canceled the job, tomorrow's
 // transfer operation will compute a new delta with the five files that
 // were not copied today plus any new files discovered tomorrow.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *TransferOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *TransferOperationsCancelCall {
 	c := &TransferOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2649,6 +2671,8 @@ type TransferOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *TransferOperationsService) Get(name string) *TransferOperationsGetCall {
 	c := &TransferOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2794,6 +2818,19 @@ type TransferOperationsListCall struct {
 
 // List: Lists transfer operations. Operations are ordered by their
 // creation time in reverse chronological order.
+//
+// - filter: A list of query parameters specified as JSON text in the
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "operationNames":["opid1","opid2",...],
+//   "transferStatuses":["status1","status2",...]}` Since `jobNames`,
+//   `operationNames`, and `transferStatuses` support multiple values,
+//   they must be specified with array notation. `projectId` is
+//   required. `jobNames`, `operationNames`, and `transferStatuses` are
+//   optional. The valid values for `transferStatuses` are
+//   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
+//   ABORTED.
+// - name: Not used.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2992,6 +3029,8 @@ type TransferOperationsPauseCall struct {
 }
 
 // Pause: Pauses a transfer operation.
+//
+// - name: The name of the transfer operation.
 func (r *TransferOperationsService) Pause(name string, pausetransferoperationrequest *PauseTransferOperationRequest) *TransferOperationsPauseCall {
 	c := &TransferOperationsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3132,6 +3171,8 @@ type TransferOperationsResumeCall struct {
 }
 
 // Resume: Resumes a transfer operation that is paused.
+//
+// - name: The name of the transfer operation.
 func (r *TransferOperationsService) Resume(name string, resumetransferoperationrequest *ResumeTransferOperationRequest) *TransferOperationsResumeCall {
 	c := &TransferOperationsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

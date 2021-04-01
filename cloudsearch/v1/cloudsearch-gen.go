@@ -6492,6 +6492,8 @@ type DebugDatasourcesItemsCheckAccessCall struct {
 
 // CheckAccess: Checks whether an item is accessible by specified
 // principal. **Note:** This API requires an admin account to execute.
+//
+// - name: Item name, format: datasources/{source_id}/items/{item_id}.
 func (r *DebugDatasourcesItemsService) CheckAccess(name string, principal *Principal) *DebugDatasourcesItemsCheckAccessCall {
 	c := &DebugDatasourcesItemsCheckAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6648,6 +6650,8 @@ type DebugDatasourcesItemsSearchByViewUrlCall struct {
 // SearchByViewUrl: Fetches the item whose viewUrl exactly matches that
 // of the URL provided in the request. **Note:** This API requires an
 // admin account to execute.
+//
+// - name: Source name, format: datasources/{source_id}.
 func (r *DebugDatasourcesItemsService) SearchByViewUrl(name string, searchitemsbyviewurlrequest *SearchItemsByViewUrlRequest) *DebugDatasourcesItemsSearchByViewUrlCall {
 	c := &DebugDatasourcesItemsSearchByViewUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6811,6 +6815,9 @@ type DebugDatasourcesItemsUnmappedidsListCall struct {
 
 // List: List all unmapped identities for a specific item. **Note:**
 // This API requires an admin account to execute.
+//
+// - parent: The name of the item, in the following format:
+//   datasources/{source_id}/items/{ID}.
 func (r *DebugDatasourcesItemsUnmappedidsService) List(parent string) *DebugDatasourcesItemsUnmappedidsListCall {
 	c := &DebugDatasourcesItemsUnmappedidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7017,6 +7024,9 @@ type DebugIdentitysourcesItemsListForunmappedidentityCall struct {
 // ListForunmappedidentity: Lists names of items associated with an
 // unmapped identity. **Note:** This API requires an admin account to
 // execute.
+//
+// - parent: The name of the identity source, in the following format:
+//   identitysources/{source_id}}.
 func (r *DebugIdentitysourcesItemsService) ListForunmappedidentity(parent string) *DebugIdentitysourcesItemsListForunmappedidentityCall {
 	c := &DebugIdentitysourcesItemsListForunmappedidentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7244,6 +7254,9 @@ type DebugIdentitysourcesUnmappedidsListCall struct {
 
 // List: Lists unmapped user identities for an identity source.
 // **Note:** This API requires an admin account to execute.
+//
+// - parent: The name of the identity source, in the following format:
+//   identitysources/{source_id}.
 func (r *DebugIdentitysourcesUnmappedidsService) List(parent string) *DebugIdentitysourcesUnmappedidsListCall {
 	c := &DebugIdentitysourcesUnmappedidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7490,6 +7503,9 @@ type IndexingDatasourcesDeleteSchemaCall struct {
 
 // DeleteSchema: Deletes the schema of a data source. **Note:** This API
 // requires an admin or service account to execute.
+//
+// - name: Name of the data source to delete Schema. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesService) DeleteSchema(name string) *IndexingDatasourcesDeleteSchemaCall {
 	c := &IndexingDatasourcesDeleteSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7637,6 +7653,9 @@ type IndexingDatasourcesGetSchemaCall struct {
 
 // GetSchema: Gets the schema of a data source. **Note:** This API
 // requires an admin or service account to execute.
+//
+// - name: Name of the data source to get Schema. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesService) GetSchema(name string) *IndexingDatasourcesGetSchemaCall {
 	c := &IndexingDatasourcesGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7799,6 +7818,9 @@ type IndexingDatasourcesUpdateSchemaCall struct {
 // not perform incremental updates to the schema. Instead, this method
 // updates the schema by overwriting the entire schema. **Note:** This
 // API requires an admin or service account to execute.
+//
+// - name: Name of the data source to update Schema. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesService) UpdateSchema(name string, updateschemarequest *UpdateSchemaRequest) *IndexingDatasourcesUpdateSchemaCall {
 	c := &IndexingDatasourcesUpdateSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7942,6 +7964,9 @@ type IndexingDatasourcesItemsDeleteCall struct {
 // Delete: Deletes Item resource for the specified resource name. This
 // API requires an admin or service account to execute. The service
 // account used is the one whitelisted in the corresponding data source.
+//
+// - name: Name of the item to delete. Format:
+//   datasources/{source_id}/items/{item_id}.
 func (r *IndexingDatasourcesItemsService) Delete(name string) *IndexingDatasourcesItemsDeleteCall {
 	c := &IndexingDatasourcesItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8151,6 +8176,9 @@ type IndexingDatasourcesItemsDeleteQueueItemsCall struct {
 // for deleting stale items. This API requires an admin or service
 // account to execute. The service account used is the one whitelisted
 // in the corresponding data source.
+//
+// - name: Name of the Data Source to delete items in a queue. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) DeleteQueueItems(name string, deletequeueitemsrequest *DeleteQueueItemsRequest) *IndexingDatasourcesItemsDeleteQueueItemsCall {
 	c := &IndexingDatasourcesItemsDeleteQueueItemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8294,6 +8322,9 @@ type IndexingDatasourcesItemsGetCall struct {
 // Get: Gets Item resource by item name. This API requires an admin or
 // service account to execute. The service account used is the one
 // whitelisted in the corresponding data source.
+//
+// - name: Name of the item to get info. Format:
+//   datasources/{source_id}/items/{item_id}.
 func (r *IndexingDatasourcesItemsService) Get(name string) *IndexingDatasourcesItemsGetCall {
 	c := &IndexingDatasourcesItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8470,6 +8501,10 @@ type IndexingDatasourcesItemsIndexCall struct {
 // Search index. This API requires an admin or service account to
 // execute. The service account used is the one whitelisted in the
 // corresponding data source.
+//
+// - name: Name of the Item. Format:
+//   datasources/{source_id}/items/{item_id} This is a required field.
+//   The maximum length is 1536 characters.
 func (r *IndexingDatasourcesItemsService) Index(name string, indexitemrequest *IndexItemRequest) *IndexingDatasourcesItemsIndexCall {
 	c := &IndexingDatasourcesItemsIndexCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8613,6 +8648,9 @@ type IndexingDatasourcesItemsListCall struct {
 // List: Lists all or a subset of Item resources. This API requires an
 // admin or service account to execute. The service account used is the
 // one whitelisted in the corresponding data source.
+//
+// - name: Name of the Data Source to list Items. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) List(name string) *IndexingDatasourcesItemsListCall {
 	c := &IndexingDatasourcesItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8860,6 +8898,9 @@ type IndexingDatasourcesItemsPollCall struct {
 // called. This API requires an admin or service account to execute. The
 // service account used is the one whitelisted in the corresponding data
 // source.
+//
+// - name: Name of the Data Source to poll items. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) Poll(name string, pollitemsrequest *PollItemsRequest) *IndexingDatasourcesItemsPollCall {
 	c := &IndexingDatasourcesItemsPollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9003,6 +9044,10 @@ type IndexingDatasourcesItemsPushCall struct {
 // Push: Pushes an item onto a queue for later polling and updating.
 // This API requires an admin or service account to execute. The service
 // account used is the one whitelisted in the corresponding data source.
+//
+// - name: Name of the item to push into the indexing queue. Format:
+//   datasources/{source_id}/items/{ID} This is a required field. The
+//   maximum length is 1536 characters.
 func (r *IndexingDatasourcesItemsService) Push(name string, pushitemrequest *PushItemRequest) *IndexingDatasourcesItemsPushCall {
 	c := &IndexingDatasourcesItemsPushCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9148,6 +9193,9 @@ type IndexingDatasourcesItemsUnreserveCall struct {
 // indexing queue after a connector has been restarted. This API
 // requires an admin or service account to execute. The service account
 // used is the one whitelisted in the corresponding data source.
+//
+// - name: Name of the Data Source to unreserve all items. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) Unreserve(name string, unreserveitemsrequest *UnreserveItemsRequest) *IndexingDatasourcesItemsUnreserveCall {
 	c := &IndexingDatasourcesItemsUnreserveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9293,6 +9341,10 @@ type IndexingDatasourcesItemsUploadCall struct {
 // within an index request. This API requires an admin or service
 // account to execute. The service account used is the one whitelisted
 // in the corresponding data source.
+//
+// - name: Name of the Item to start a resumable upload. Format:
+//   datasources/{source_id}/items/{item_id}. The maximum length is 1536
+//   bytes.
 func (r *IndexingDatasourcesItemsService) Upload(name string, startuploaditemrequest *StartUploadItemRequest) *IndexingDatasourcesItemsUploadCall {
 	c := &IndexingDatasourcesItemsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9449,6 +9501,9 @@ type MediaUploadCall struct {
 // information, see Create a content connector using the REST API
 // (https://developers.google.com/cloud-search/docs/guides/content-connector#rest).
 // **Note:** This API requires a service account to execute.
+//
+// - resourceName: Name of the media that is being downloaded. See
+//   ReadRequest.resource_name.
 func (r *MediaService) Upload(resourceName string, media *Media) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -9671,6 +9726,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9829,6 +9886,8 @@ type OperationsLroListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsLroService) List(name string) *OperationsLroListCall {
 	c := &OperationsLroListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10665,6 +10724,8 @@ type SettingsDatasourcesDeleteCall struct {
 
 // Delete: Deletes a datasource. **Note:** This API requires an admin
 // account to execute.
+//
+// - name: Name of the datasource. Format: datasources/{source_id}.
 func (r *SettingsDatasourcesService) Delete(name string) *SettingsDatasourcesDeleteCall {
 	c := &SettingsDatasourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10812,6 +10873,9 @@ type SettingsDatasourcesGetCall struct {
 
 // Get: Gets a datasource. **Note:** This API requires an admin account
 // to execute.
+//
+// - name: Name of the datasource resource. Format:
+//   datasources/{source_id}.
 func (r *SettingsDatasourcesService) Get(name string) *SettingsDatasourcesGetCall {
 	c := &SettingsDatasourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11165,6 +11229,10 @@ type SettingsDatasourcesUpdateCall struct {
 
 // Update: Updates a datasource. **Note:** This API requires an admin
 // account to execute.
+//
+// - name: Name of the datasource resource. Format:
+//   datasources/{source_id}. The name is ignored when creating a
+//   datasource.
 func (r *SettingsDatasourcesService) Update(name string, updatedatasourcerequest *UpdateDataSourceRequest) *SettingsDatasourcesUpdateCall {
 	c := &SettingsDatasourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11435,6 +11503,9 @@ type SettingsSearchapplicationsDeleteCall struct {
 
 // Delete: Deletes a search application. **Note:** This API requires an
 // admin account to execute.
+//
+// - name: The name of the search application to be deleted. Format:
+//   applications/{application_id}.
 func (r *SettingsSearchapplicationsService) Delete(name string) *SettingsSearchapplicationsDeleteCall {
 	c := &SettingsSearchapplicationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11582,6 +11653,9 @@ type SettingsSearchapplicationsGetCall struct {
 
 // Get: Gets the specified search application. **Note:** This API
 // requires an admin account to execute.
+//
+// - name: Name of the search application. Format:
+//   searchapplications/{application_id}.
 func (r *SettingsSearchapplicationsService) Get(name string) *SettingsSearchapplicationsGetCall {
 	c := &SettingsSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11936,6 +12010,9 @@ type SettingsSearchapplicationsResetCall struct {
 // Reset: Resets a search application to default settings. This will
 // return an empty response. **Note:** This API requires an admin
 // account to execute.
+//
+// - name: The name of the search application to be reset. Format:
+//   applications/{application_id}.
 func (r *SettingsSearchapplicationsService) Reset(name string, resetsearchapplicationrequest *ResetSearchApplicationRequest) *SettingsSearchapplicationsResetCall {
 	c := &SettingsSearchapplicationsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12079,6 +12156,9 @@ type SettingsSearchapplicationsUpdateCall struct {
 
 // Update: Updates a search application. **Note:** This API requires an
 // admin account to execute.
+//
+// - name: Name of the Search Application. Format:
+//   searchapplications/{application_id}.
 func (r *SettingsSearchapplicationsService) Update(name string, searchapplication *SearchApplication) *SettingsSearchapplicationsUpdateCall {
 	c := &SettingsSearchapplicationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13069,6 +13149,9 @@ type StatsIndexDatasourcesGetCall struct {
 
 // Get: Gets indexed item statistics for a single data source. **Note:**
 // This API requires a standard end user account to execute.
+//
+// - name: The resource id of the data source to retrieve statistics
+//   for, in the following format: "datasources/{source_id}".
 func (r *StatsIndexDatasourcesService) Get(name string) *StatsIndexDatasourcesGetCall {
 	c := &StatsIndexDatasourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13294,6 +13377,9 @@ type StatsQuerySearchapplicationsGetCall struct {
 
 // Get: Get the query statistics for search application. **Note:** This
 // API requires a standard end user account to execute.
+//
+// - name: The resource id of the search application query stats, in the
+//   following format: searchapplications/{application_id}.
 func (r *StatsQuerySearchapplicationsService) Get(name string) *StatsQuerySearchapplicationsGetCall {
 	c := &StatsQuerySearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13521,6 +13607,9 @@ type StatsSessionSearchapplicationsGetCall struct {
 // Get: Get the # of search sessions, % of successful sessions with a
 // click query statistics for search application. **Note:** This API
 // requires a standard end user account to execute.
+//
+// - name: The resource id of the search application session stats, in
+//   the following format: searchapplications/{application_id}.
 func (r *StatsSessionSearchapplicationsService) Get(name string) *StatsSessionSearchapplicationsGetCall {
 	c := &StatsSessionSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13748,6 +13837,9 @@ type StatsUserSearchapplicationsGetCall struct {
 
 // Get: Get the users statistics for search application. **Note:** This
 // API requires a standard end user account to execute.
+//
+// - name: The resource id of the search application session stats, in
+//   the following format: searchapplications/{application_id}.
 func (r *StatsUserSearchapplicationsService) Get(name string) *StatsUserSearchapplicationsGetCall {
 	c := &StatsUserSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

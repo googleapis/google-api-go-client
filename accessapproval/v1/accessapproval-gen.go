@@ -682,6 +682,8 @@ type FoldersDeleteAccessApprovalSettingsCall struct {
 // Access Approval is enabled at a higher level of the hierarchy, then
 // Access Approval will still be enabled at this level as the settings
 // are inherited.
+//
+// - name: Name of the AccessApprovalSettings to delete.
 func (r *FoldersService) DeleteAccessApprovalSettings(name string) *FoldersDeleteAccessApprovalSettingsCall {
 	c := &FoldersDeleteAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -814,6 +816,8 @@ type FoldersGetAccessApprovalSettingsCall struct {
 
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
+//
+// - name: Name of the AccessApprovalSettings to retrieve.
 func (r *FoldersService) GetAccessApprovalSettings(name string) *FoldersGetAccessApprovalSettingsCall {
 	c := &FoldersGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -960,6 +964,11 @@ type FoldersUpdateAccessApprovalSettingsCall struct {
 // UpdateAccessApprovalSettings: Updates the settings associated with a
 // project, folder, or organization. Settings to update are determined
 // by the value of field_mask.
+//
+// - name: The resource name of the settings. Format is one of: *
+//   "projects/{project}/accessApprovalSettings" *
+//   "folders/{folder}/accessApprovalSettings" *
+//   "organizations/{organization}/accessApprovalSettings".
 func (r *FoldersService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *FoldersUpdateAccessApprovalSettingsCall {
 	c := &FoldersUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1123,6 +1132,8 @@ type FoldersApprovalRequestsApproveCall struct {
 // Returns NOT_FOUND if the request does not exist. Returns
 // FAILED_PRECONDITION if the request exists but is not in a pending
 // state.
+//
+// - name: Name of the approval request to approve.
 func (r *FoldersApprovalRequestsService) Approve(name string, approveapprovalrequestmessage *ApproveApprovalRequestMessage) *FoldersApprovalRequestsApproveCall {
 	c := &FoldersApprovalRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1268,6 +1279,8 @@ type FoldersApprovalRequestsDismissCall struct {
 // the request altogether. Returns NOT_FOUND if the request does not
 // exist. Returns FAILED_PRECONDITION if the request exists but is not
 // in a pending state.
+//
+// - name: Name of the ApprovalRequest to dismiss.
 func (r *FoldersApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *FoldersApprovalRequestsDismissCall {
 	c := &FoldersApprovalRequestsDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1409,6 +1422,8 @@ type FoldersApprovalRequestsGetCall struct {
 
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
+//
+// - name: Name of the approval request to retrieve.
 func (r *FoldersApprovalRequestsService) Get(name string) *FoldersApprovalRequestsGetCall {
 	c := &FoldersApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1555,6 +1570,9 @@ type FoldersApprovalRequestsListCall struct {
 // List: Lists approval requests associated with a project, folder, or
 // organization. Approval requests can be filtered by state (pending,
 // active, dismissed). The order is reverse chronological.
+//
+// - parent: The parent resource. This may be "projects/{project}",
+//   "folders/{folder}", or "organizations/{organization}".
 func (r *FoldersApprovalRequestsService) List(parent string) *FoldersApprovalRequestsListCall {
 	c := &FoldersApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1768,6 +1786,8 @@ type OrganizationsDeleteAccessApprovalSettingsCall struct {
 // Access Approval is enabled at a higher level of the hierarchy, then
 // Access Approval will still be enabled at this level as the settings
 // are inherited.
+//
+// - name: Name of the AccessApprovalSettings to delete.
 func (r *OrganizationsService) DeleteAccessApprovalSettings(name string) *OrganizationsDeleteAccessApprovalSettingsCall {
 	c := &OrganizationsDeleteAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1900,6 +1920,8 @@ type OrganizationsGetAccessApprovalSettingsCall struct {
 
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
+//
+// - name: Name of the AccessApprovalSettings to retrieve.
 func (r *OrganizationsService) GetAccessApprovalSettings(name string) *OrganizationsGetAccessApprovalSettingsCall {
 	c := &OrganizationsGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2046,6 +2068,11 @@ type OrganizationsUpdateAccessApprovalSettingsCall struct {
 // UpdateAccessApprovalSettings: Updates the settings associated with a
 // project, folder, or organization. Settings to update are determined
 // by the value of field_mask.
+//
+// - name: The resource name of the settings. Format is one of: *
+//   "projects/{project}/accessApprovalSettings" *
+//   "folders/{folder}/accessApprovalSettings" *
+//   "organizations/{organization}/accessApprovalSettings".
 func (r *OrganizationsService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *OrganizationsUpdateAccessApprovalSettingsCall {
 	c := &OrganizationsUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2209,6 +2236,8 @@ type OrganizationsApprovalRequestsApproveCall struct {
 // Returns NOT_FOUND if the request does not exist. Returns
 // FAILED_PRECONDITION if the request exists but is not in a pending
 // state.
+//
+// - name: Name of the approval request to approve.
 func (r *OrganizationsApprovalRequestsService) Approve(name string, approveapprovalrequestmessage *ApproveApprovalRequestMessage) *OrganizationsApprovalRequestsApproveCall {
 	c := &OrganizationsApprovalRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2354,6 +2383,8 @@ type OrganizationsApprovalRequestsDismissCall struct {
 // the request altogether. Returns NOT_FOUND if the request does not
 // exist. Returns FAILED_PRECONDITION if the request exists but is not
 // in a pending state.
+//
+// - name: Name of the ApprovalRequest to dismiss.
 func (r *OrganizationsApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *OrganizationsApprovalRequestsDismissCall {
 	c := &OrganizationsApprovalRequestsDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2495,6 +2526,8 @@ type OrganizationsApprovalRequestsGetCall struct {
 
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
+//
+// - name: Name of the approval request to retrieve.
 func (r *OrganizationsApprovalRequestsService) Get(name string) *OrganizationsApprovalRequestsGetCall {
 	c := &OrganizationsApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2641,6 +2674,9 @@ type OrganizationsApprovalRequestsListCall struct {
 // List: Lists approval requests associated with a project, folder, or
 // organization. Approval requests can be filtered by state (pending,
 // active, dismissed). The order is reverse chronological.
+//
+// - parent: The parent resource. This may be "projects/{project}",
+//   "folders/{folder}", or "organizations/{organization}".
 func (r *OrganizationsApprovalRequestsService) List(parent string) *OrganizationsApprovalRequestsListCall {
 	c := &OrganizationsApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2854,6 +2890,8 @@ type ProjectsDeleteAccessApprovalSettingsCall struct {
 // Access Approval is enabled at a higher level of the hierarchy, then
 // Access Approval will still be enabled at this level as the settings
 // are inherited.
+//
+// - name: Name of the AccessApprovalSettings to delete.
 func (r *ProjectsService) DeleteAccessApprovalSettings(name string) *ProjectsDeleteAccessApprovalSettingsCall {
 	c := &ProjectsDeleteAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2986,6 +3024,8 @@ type ProjectsGetAccessApprovalSettingsCall struct {
 
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
+//
+// - name: Name of the AccessApprovalSettings to retrieve.
 func (r *ProjectsService) GetAccessApprovalSettings(name string) *ProjectsGetAccessApprovalSettingsCall {
 	c := &ProjectsGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3132,6 +3172,11 @@ type ProjectsUpdateAccessApprovalSettingsCall struct {
 // UpdateAccessApprovalSettings: Updates the settings associated with a
 // project, folder, or organization. Settings to update are determined
 // by the value of field_mask.
+//
+// - name: The resource name of the settings. Format is one of: *
+//   "projects/{project}/accessApprovalSettings" *
+//   "folders/{folder}/accessApprovalSettings" *
+//   "organizations/{organization}/accessApprovalSettings".
 func (r *ProjectsService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *ProjectsUpdateAccessApprovalSettingsCall {
 	c := &ProjectsUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3295,6 +3340,8 @@ type ProjectsApprovalRequestsApproveCall struct {
 // Returns NOT_FOUND if the request does not exist. Returns
 // FAILED_PRECONDITION if the request exists but is not in a pending
 // state.
+//
+// - name: Name of the approval request to approve.
 func (r *ProjectsApprovalRequestsService) Approve(name string, approveapprovalrequestmessage *ApproveApprovalRequestMessage) *ProjectsApprovalRequestsApproveCall {
 	c := &ProjectsApprovalRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3440,6 +3487,8 @@ type ProjectsApprovalRequestsDismissCall struct {
 // the request altogether. Returns NOT_FOUND if the request does not
 // exist. Returns FAILED_PRECONDITION if the request exists but is not
 // in a pending state.
+//
+// - name: Name of the ApprovalRequest to dismiss.
 func (r *ProjectsApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *ProjectsApprovalRequestsDismissCall {
 	c := &ProjectsApprovalRequestsDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3581,6 +3630,8 @@ type ProjectsApprovalRequestsGetCall struct {
 
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
+//
+// - name: Name of the approval request to retrieve.
 func (r *ProjectsApprovalRequestsService) Get(name string) *ProjectsApprovalRequestsGetCall {
 	c := &ProjectsApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3727,6 +3778,9 @@ type ProjectsApprovalRequestsListCall struct {
 // List: Lists approval requests associated with a project, folder, or
 // organization. Approval requests can be filtered by state (pending,
 // active, dismissed). The order is reverse chronological.
+//
+// - parent: The parent resource. This may be "projects/{project}",
+//   "folders/{folder}", or "organizations/{organization}".
 func (r *ProjectsApprovalRequestsService) List(parent string) *ProjectsApprovalRequestsListCall {
 	c := &ProjectsApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -1130,6 +1130,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1275,6 +1277,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1481,6 +1486,9 @@ type ProjectsSecretsAddVersionCall struct {
 
 // AddVersion: Creates a new SecretVersion containing secret data and
 // attaches it to an existing Secret.
+//
+// - parent: The resource name of the Secret to associate with the
+//   SecretVersion in the format `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) AddVersion(parent string, addsecretversionrequest *AddSecretVersionRequest) *ProjectsSecretsAddVersionCall {
 	c := &ProjectsSecretsAddVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1621,6 +1629,9 @@ type ProjectsSecretsCreateCall struct {
 }
 
 // Create: Creates a new Secret containing no SecretVersions.
+//
+// - parent: The resource name of the project to associate with the
+//   Secret, in the format `projects/*`.
 func (r *ProjectsSecretsService) Create(parent string, secret *Secret) *ProjectsSecretsCreateCall {
 	c := &ProjectsSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1775,6 +1786,9 @@ type ProjectsSecretsDeleteCall struct {
 }
 
 // Delete: Deletes a Secret.
+//
+// - name: The resource name of the Secret to delete in the format
+//   `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Delete(name string) *ProjectsSecretsDeleteCall {
 	c := &ProjectsSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1906,6 +1920,9 @@ type ProjectsSecretsGetCall struct {
 }
 
 // Get: Gets metadata for a given Secret.
+//
+// - name: The resource name of the Secret, in the format
+//   `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Get(name string) *ProjectsSecretsGetCall {
 	c := &ProjectsSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2051,6 +2068,10 @@ type ProjectsSecretsGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the access control policy for a secret. Returns
 // empty policy if the secret exists and does not have a policy set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSecretsService) GetIamPolicy(resource string) *ProjectsSecretsGetIamPolicyCall {
 	c := &ProjectsSecretsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2215,6 +2236,9 @@ type ProjectsSecretsListCall struct {
 }
 
 // List: Lists Secrets.
+//
+// - parent: The resource name of the project associated with the
+//   Secrets, in the format `projects/*`.
 func (r *ProjectsSecretsService) List(parent string) *ProjectsSecretsListCall {
 	c := &ProjectsSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2407,6 +2431,9 @@ type ProjectsSecretsPatchCall struct {
 }
 
 // Patch: Updates metadata of an existing Secret.
+//
+// - name: Output only. The resource name of the Secret in the format
+//   `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Patch(name string, secret *Secret) *ProjectsSecretsPatchCall {
 	c := &ProjectsSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2562,6 +2589,10 @@ type ProjectsSecretsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified secret.
 // Replaces any existing policy. Permissions on SecretVersions are
 // enforced according to the policy set on the associated Secret.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSecretsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSecretsSetIamPolicyCall {
 	c := &ProjectsSecretsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2707,6 +2738,10 @@ type ProjectsSecretsTestIamPermissionsCall struct {
 // is designed to be used for building permission-aware UIs and
 // command-line tools, not for authorization checking. This operation
 // may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsSecretsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSecretsTestIamPermissionsCall {
 	c := &ProjectsSecretsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2849,6 +2884,9 @@ type ProjectsSecretsVersionsAccessCall struct {
 // Access: Accesses a SecretVersion. This call returns the secret data.
 // `projects/*/secrets/*/versions/latest` is an alias to the `latest`
 // SecretVersion.
+//
+// - name: The resource name of the SecretVersion in the format
+//   `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Access(name string) *ProjectsSecretsVersionsAccessCall {
 	c := &ProjectsSecretsVersionsAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2994,6 +3032,9 @@ type ProjectsSecretsVersionsDestroyCall struct {
 
 // Destroy: Destroys a SecretVersion. Sets the state of the
 // SecretVersion to DESTROYED and irrevocably destroys the secret data.
+//
+// - name: The resource name of the SecretVersion to destroy in the
+//   format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Destroy(name string, destroysecretversionrequest *DestroySecretVersionRequest) *ProjectsSecretsVersionsDestroyCall {
 	c := &ProjectsSecretsVersionsDestroyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3135,6 +3176,9 @@ type ProjectsSecretsVersionsDisableCall struct {
 
 // Disable: Disables a SecretVersion. Sets the state of the
 // SecretVersion to DISABLED.
+//
+// - name: The resource name of the SecretVersion to disable in the
+//   format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Disable(name string, disablesecretversionrequest *DisableSecretVersionRequest) *ProjectsSecretsVersionsDisableCall {
 	c := &ProjectsSecretsVersionsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3276,6 +3320,9 @@ type ProjectsSecretsVersionsEnableCall struct {
 
 // Enable: Enables a SecretVersion. Sets the state of the SecretVersion
 // to ENABLED.
+//
+// - name: The resource name of the SecretVersion to enable in the
+//   format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Enable(name string, enablesecretversionrequest *EnableSecretVersionRequest) *ProjectsSecretsVersionsEnableCall {
 	c := &ProjectsSecretsVersionsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3418,6 +3465,11 @@ type ProjectsSecretsVersionsGetCall struct {
 // Get: Gets metadata for a SecretVersion.
 // `projects/*/secrets/*/versions/latest` is an alias to the `latest`
 // SecretVersion.
+//
+// - name: The resource name of the SecretVersion in the format
+//   `projects/*/secrets/*/versions/*`.
+//   `projects/*/secrets/*/versions/latest` is an alias to the `latest`
+//   SecretVersion.
 func (r *ProjectsSecretsVersionsService) Get(name string) *ProjectsSecretsVersionsGetCall {
 	c := &ProjectsSecretsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3562,6 +3614,9 @@ type ProjectsSecretsVersionsListCall struct {
 }
 
 // List: Lists SecretVersions. This call does not return secret data.
+//
+// - parent: The resource name of the Secret associated with the
+//   SecretVersions to list, in the format `projects/*/secrets/*`.
 func (r *ProjectsSecretsVersionsService) List(parent string) *ProjectsSecretsVersionsListCall {
 	c := &ProjectsSecretsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

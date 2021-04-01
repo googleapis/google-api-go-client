@@ -1821,6 +1821,8 @@ type OperationsCancelCall struct {
 // or the operation completed despite cancellation. Authorization
 // requires the following Google IAM (https://cloud.google.com/iam)
 // permission: * `genomics.operations.cancel`
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1966,6 +1968,8 @@ type OperationsGetCall struct {
 // recommended by the API service. Authorization requires the following
 // Google IAM (https://cloud.google.com/iam) permission: *
 // `genomics.operations.get`
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2114,6 +2118,8 @@ type OperationsListCall struct {
 // request. Authorization requires the following Google IAM
 // (https://cloud.google.com/iam) permission: *
 // `genomics.operations.list`
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2466,6 +2472,9 @@ type PipelinesDeleteCall struct {
 
 // Delete: Deletes a pipeline based on ID. Caller must have WRITE
 // permission to the project.
+//
+// - pipelineId: Caller must have WRITE access to the project in which
+//   this pipeline is defined.
 func (r *PipelinesService) Delete(pipelineId string) *PipelinesDeleteCall {
 	c := &PipelinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pipelineId = pipelineId
@@ -2598,6 +2607,9 @@ type PipelinesGetCall struct {
 
 // Get: Retrieves a pipeline based on ID. Caller must have READ
 // permission to the project.
+//
+// - pipelineId: Caller must have READ access to the project in which
+//   this pipeline is defined.
 func (r *PipelinesService) Get(pipelineId string) *PipelinesGetCall {
 	c := &PipelinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pipelineId = pipelineId

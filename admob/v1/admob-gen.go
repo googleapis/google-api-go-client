@@ -1438,6 +1438,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets information about the specified AdMob publisher account.
+//
+// - name: Resource name of the publisher account to retrieve. Example:
+//   accounts/pub-9876543210987654.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1768,6 +1771,9 @@ type AccountsMediationReportGenerateCall struct {
 // Generate: Generates an AdMob Mediation report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
+//
+// - parent: Resource name of the account to generate the report for.
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1912,6 +1918,9 @@ type AccountsNetworkReportGenerateCall struct {
 // Generate: Generates an AdMob Network report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
+//
+// - parent: Resource name of the account to generate the report for.
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

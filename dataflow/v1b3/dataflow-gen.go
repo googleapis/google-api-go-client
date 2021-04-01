@@ -7942,6 +7942,9 @@ type ProjectsDeleteSnapshotsCall struct {
 }
 
 // DeleteSnapshots: Deletes a snapshot.
+//
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
 func (r *ProjectsService) DeleteSnapshots(projectId string) *ProjectsDeleteSnapshotsCall {
 	c := &ProjectsDeleteSnapshotsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8099,6 +8102,8 @@ type ProjectsWorkerMessagesCall struct {
 }
 
 // WorkerMessages: Send a worker_message to the service.
+//
+// - projectId: The project to send the WorkerMessages to.
 func (r *ProjectsService) WorkerMessages(projectId string, sendworkermessagesrequest *SendWorkerMessagesRequest) *ProjectsWorkerMessagesCall {
 	c := &ProjectsWorkerMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8241,6 +8246,8 @@ type ProjectsJobsAggregatedCall struct {
 }
 
 // Aggregated: List the jobs of a project across all regions.
+//
+// - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) Aggregated(projectId string) *ProjectsJobsAggregatedCall {
 	c := &ProjectsJobsAggregatedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8525,6 +8532,9 @@ type ProjectsJobsCreateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.create` is not recommended, as your job will
 // always start in `us-central1`.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8734,6 +8744,10 @@ type ProjectsJobsGetCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.get` is not recommended, as you can only get the
 // state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8944,6 +8958,9 @@ type ProjectsJobsGetMetricsCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.getMetrics` is not recommended, as you can only
 // request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get metrics for.
+// - projectId: A project id.
 func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *ProjectsJobsGetMetricsCall {
 	c := &ProjectsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9134,6 +9151,8 @@ type ProjectsJobsListCall struct {
 // `projects.jobs.aggregated`. Using `projects.jobs.list` is not
 // recommended, as you can only get the list of jobs that are running in
 // `us-central1`.
+//
+// - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9415,6 +9434,9 @@ type ProjectsJobsSnapshotCall struct {
 }
 
 // Snapshot: Snapshot the state of a streaming job.
+//
+// - jobId: The job to be snapshotted.
+// - projectId: The project which owns the job to be snapshotted.
 func (r *ProjectsJobsService) Snapshot(projectId string, jobId string, snapshotjobrequest *SnapshotJobRequest) *ProjectsJobsSnapshotCall {
 	c := &ProjectsJobsSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9572,6 +9594,10 @@ type ProjectsJobsUpdateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.update` is not recommended, as you can only
 // update the state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *ProjectsJobsUpdateCall {
 	c := &ProjectsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9739,6 +9765,9 @@ type ProjectsJobsDebugGetConfigCall struct {
 
 // GetConfig: Get encoded debug configuration for component. Not
 // cacheable.
+//
+// - jobId: The job id.
+// - projectId: The project id.
 func (r *ProjectsJobsDebugService) GetConfig(projectId string, jobId string, getdebugconfigrequest *GetDebugConfigRequest) *ProjectsJobsDebugGetConfigCall {
 	c := &ProjectsJobsDebugGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9891,6 +9920,9 @@ type ProjectsJobsDebugSendCaptureCall struct {
 }
 
 // SendCapture: Send encoded debug capture data for component.
+//
+// - jobId: The job id.
+// - projectId: The project id.
 func (r *ProjectsJobsDebugService) SendCapture(projectId string, jobId string, senddebugcapturerequest *SendDebugCaptureRequest) *ProjectsJobsDebugSendCaptureCall {
 	c := &ProjectsJobsDebugSendCaptureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10048,6 +10080,9 @@ type ProjectsJobsMessagesListCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.messages.list` is not recommended, as you can
 // only request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get messages about.
+// - projectId: A project id.
 func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *ProjectsJobsMessagesListCall {
 	c := &ProjectsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10351,6 +10386,9 @@ type ProjectsJobsWorkItemsLeaseCall struct {
 }
 
 // Lease: Leases a dataflow WorkItem to run.
+//
+// - jobId: Identifies the workflow job this worker belongs to.
+// - projectId: Identifies the project this worker belongs to.
 func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *ProjectsJobsWorkItemsLeaseCall {
 	c := &ProjectsJobsWorkItemsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10504,6 +10542,9 @@ type ProjectsJobsWorkItemsReportStatusCall struct {
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
 // worker.
+//
+// - jobId: The job which the WorkItem is part of.
+// - projectId: The project which owns the WorkItem's job.
 func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *ProjectsJobsWorkItemsReportStatusCall {
 	c := &ProjectsJobsWorkItemsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10656,6 +10697,11 @@ type ProjectsLocationsWorkerMessagesCall struct {
 }
 
 // WorkerMessages: Send a worker_message to the service.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job.
+// - projectId: The project to send the WorkerMessages to.
 func (r *ProjectsLocationsService) WorkerMessages(projectId string, location string, sendworkermessagesrequest *SendWorkerMessagesRequest) *ProjectsLocationsWorkerMessagesCall {
 	c := &ProjectsLocationsWorkerMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10808,6 +10854,12 @@ type ProjectsLocationsFlexTemplatesLaunchCall struct {
 }
 
 // Launch: Launch a job with a FlexTemplate.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request. E.g., us-central1, us-west1.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsFlexTemplatesService) Launch(projectId string, location string, launchflextemplaterequest *LaunchFlexTemplateRequest) *ProjectsLocationsFlexTemplatesLaunchCall {
 	c := &ProjectsLocationsFlexTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10964,6 +11016,12 @@ type ProjectsLocationsJobsCreateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.create` is not recommended, as your job will
 // always start in `us-central1`.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsJobsService) Create(projectId string, location string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11169,6 +11227,13 @@ type ProjectsLocationsJobsGetCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.get` is not recommended, as you can only get the
 // state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jobId string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11372,6 +11437,12 @@ type ProjectsLocationsJobsGetExecutionDetailsCall struct {
 // GetExecutionDetails: Request detailed information about the execution
 // status of the job. EXPERIMENTAL. This API is subject to change or
 // removal without notice.
+//
+// - jobId: The job to get execution details for.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
 func (r *ProjectsLocationsJobsService) GetExecutionDetails(projectId string, location string, jobId string) *ProjectsLocationsJobsGetExecutionDetailsCall {
 	c := &ProjectsLocationsJobsGetExecutionDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11592,6 +11663,12 @@ type ProjectsLocationsJobsGetMetricsCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.getMetrics` is not recommended, as you can only
 // request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get metrics for.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
 func (r *ProjectsLocationsJobsService) GetMetrics(projectId string, location string, jobId string) *ProjectsLocationsJobsGetMetricsCall {
 	c := &ProjectsLocationsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11778,6 +11855,11 @@ type ProjectsLocationsJobsListCall struct {
 // `projects.jobs.aggregated`. Using `projects.jobs.list` is not
 // recommended, as you can only get the list of jobs that are running in
 // `us-central1`.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The project which owns the jobs.
 func (r *ProjectsLocationsJobsService) List(projectId string, location string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12055,6 +12137,10 @@ type ProjectsLocationsJobsSnapshotCall struct {
 }
 
 // Snapshot: Snapshot the state of a streaming job.
+//
+// - jobId: The job to be snapshotted.
+// - location: The location that contains this job.
+// - projectId: The project which owns the job to be snapshotted.
 func (r *ProjectsLocationsJobsService) Snapshot(projectId string, location string, jobId string, snapshotjobrequest *SnapshotJobRequest) *ProjectsLocationsJobsSnapshotCall {
 	c := &ProjectsLocationsJobsSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12222,6 +12308,13 @@ type ProjectsLocationsJobsUpdateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.update` is not recommended, as you can only
 // update the state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsJobsService) Update(projectId string, location string, jobId string, job *Job) *ProjectsLocationsJobsUpdateCall {
 	c := &ProjectsLocationsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12385,6 +12478,12 @@ type ProjectsLocationsJobsDebugGetConfigCall struct {
 
 // GetConfig: Get encoded debug configuration for component. Not
 // cacheable.
+//
+// - jobId: The job id.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: The project id.
 func (r *ProjectsLocationsJobsDebugService) GetConfig(projectId string, location string, jobId string, getdebugconfigrequest *GetDebugConfigRequest) *ProjectsLocationsJobsDebugGetConfigCall {
 	c := &ProjectsLocationsJobsDebugGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12547,6 +12646,12 @@ type ProjectsLocationsJobsDebugSendCaptureCall struct {
 }
 
 // SendCapture: Send encoded debug capture data for component.
+//
+// - jobId: The job id.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: The project id.
 func (r *ProjectsLocationsJobsDebugService) SendCapture(projectId string, location string, jobId string, senddebugcapturerequest *SendDebugCaptureRequest) *ProjectsLocationsJobsDebugSendCaptureCall {
 	c := &ProjectsLocationsJobsDebugSendCaptureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12714,6 +12819,12 @@ type ProjectsLocationsJobsMessagesListCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.messages.list` is not recommended, as you can
 // only request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get messages about.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
 func (r *ProjectsLocationsJobsMessagesService) List(projectId string, location string, jobId string) *ProjectsLocationsJobsMessagesListCall {
 	c := &ProjectsLocationsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13013,6 +13124,10 @@ type ProjectsLocationsJobsSnapshotsListCall struct {
 }
 
 // List: Lists snapshots.
+//
+// - jobId: If specified, list snapshots created from this job.
+// - location: The location to list snapshots in.
+// - projectId: The project ID to list snapshots for.
 func (r *ProjectsLocationsJobsSnapshotsService) List(projectId string, location string, jobId string) *ProjectsLocationsJobsSnapshotsListCall {
 	c := &ProjectsLocationsJobsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13182,6 +13297,13 @@ type ProjectsLocationsJobsStagesGetExecutionDetailsCall struct {
 // GetExecutionDetails: Request detailed information about the execution
 // status of a stage of the job. EXPERIMENTAL. This API is subject to
 // change or removal without notice.
+//
+// - jobId: The job to get execution details for.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
+// - stageId: The stage for which to fetch information.
 func (r *ProjectsLocationsJobsStagesService) GetExecutionDetails(projectId string, location string, jobId string, stageId string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
 	c := &ProjectsLocationsJobsStagesGetExecutionDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13432,6 +13554,12 @@ type ProjectsLocationsJobsWorkItemsLeaseCall struct {
 }
 
 // Lease: Leases a dataflow WorkItem to run.
+//
+// - jobId: Identifies the workflow job this worker belongs to.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the WorkItem's job.
+// - projectId: Identifies the project this worker belongs to.
 func (r *ProjectsLocationsJobsWorkItemsService) Lease(projectId string, location string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *ProjectsLocationsJobsWorkItemsLeaseCall {
 	c := &ProjectsLocationsJobsWorkItemsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13595,6 +13723,12 @@ type ProjectsLocationsJobsWorkItemsReportStatusCall struct {
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
 // worker.
+//
+// - jobId: The job which the WorkItem is part of.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the WorkItem's job.
+// - projectId: The project which owns the WorkItem's job.
 func (r *ProjectsLocationsJobsWorkItemsService) ReportStatus(projectId string, location string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *ProjectsLocationsJobsWorkItemsReportStatusCall {
 	c := &ProjectsLocationsJobsWorkItemsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13756,6 +13890,11 @@ type ProjectsLocationsSnapshotsDeleteCall struct {
 }
 
 // Delete: Deletes a snapshot.
+//
+// - location: The location that contains this snapshot.
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
+// - snapshotId: The ID of the snapshot.
 func (r *ProjectsLocationsSnapshotsService) Delete(projectId string, location string, snapshotId string) *ProjectsLocationsSnapshotsDeleteCall {
 	c := &ProjectsLocationsSnapshotsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13909,6 +14048,11 @@ type ProjectsLocationsSnapshotsGetCall struct {
 }
 
 // Get: Gets information about a snapshot.
+//
+// - location: The location that contains this snapshot.
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
+// - snapshotId: The ID of the snapshot.
 func (r *ProjectsLocationsSnapshotsService) Get(projectId string, location string, snapshotId string) *ProjectsLocationsSnapshotsGetCall {
 	c := &ProjectsLocationsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14074,6 +14218,9 @@ type ProjectsLocationsSnapshotsListCall struct {
 }
 
 // List: Lists snapshots.
+//
+// - location: The location to list snapshots in.
+// - projectId: The project ID to list snapshots for.
 func (r *ProjectsLocationsSnapshotsService) List(projectId string, location string) *ProjectsLocationsSnapshotsListCall {
 	c := &ProjectsLocationsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14245,6 +14392,12 @@ type ProjectsLocationsSqlValidateCall struct {
 // always confirm the given query parses correctly, and if able to look
 // up schema information from DataCatalog, will validate that the query
 // analyzes properly as well.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsSqlService) Validate(projectId string, location string) *ProjectsLocationsSqlValidateCall {
 	c := &ProjectsLocationsSqlValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14410,6 +14563,12 @@ type ProjectsLocationsTemplatesCreateCall struct {
 }
 
 // Create: Creates a Cloud Dataflow job from a template.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsTemplatesService) Create(projectId string, location string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsLocationsTemplatesCreateCall {
 	c := &ProjectsLocationsTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14562,6 +14721,12 @@ type ProjectsLocationsTemplatesGetCall struct {
 }
 
 // Get: Get the template associated with a template.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsTemplatesService) Get(projectId string, location string) *ProjectsLocationsTemplatesGetCall {
 	c := &ProjectsLocationsTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14753,6 +14918,12 @@ type ProjectsLocationsTemplatesLaunchCall struct {
 }
 
 // Launch: Launch a template.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsLocationsTemplatesLaunchCall {
 	c := &ProjectsLocationsTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14958,6 +15129,10 @@ type ProjectsSnapshotsGetCall struct {
 }
 
 // Get: Gets information about a snapshot.
+//
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
+// - snapshotId: The ID of the snapshot.
 func (r *ProjectsSnapshotsService) Get(projectId string, snapshotId string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15125,6 +15300,8 @@ type ProjectsSnapshotsListCall struct {
 }
 
 // List: Lists snapshots.
+//
+// - projectId: The project ID to list snapshots for.
 func (r *ProjectsSnapshotsService) List(projectId string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15295,6 +15472,9 @@ type ProjectsTemplatesCreateCall struct {
 }
 
 // Create: Creates a Cloud Dataflow job from a template.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsTemplatesService) Create(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesCreateCall {
 	c := &ProjectsTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15437,6 +15617,9 @@ type ProjectsTemplatesGetCall struct {
 }
 
 // Get: Get the template associated with a template.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCall {
 	c := &ProjectsTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15632,6 +15815,9 @@ type ProjectsTemplatesLaunchCall struct {
 }
 
 // Launch: Launch a template.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsTemplatesLaunchCall {
 	c := &ProjectsTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

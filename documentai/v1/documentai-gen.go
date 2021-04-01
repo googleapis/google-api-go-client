@@ -7707,6 +7707,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7849,6 +7851,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7989,6 +7993,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8192,6 +8198,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8337,6 +8345,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8546,6 +8557,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8691,6 +8704,11 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1batchprocessrequest *GoogleCloudDocumentaiV1BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8831,6 +8849,13 @@ type ProjectsLocationsProcessorsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1processrequest *GoogleCloudDocumentaiV1ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8973,6 +8998,9 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 
 // ReviewDocument: Send a document for Human Review. The input document
 // should be processed by the specified processor.
+//
+// - humanReviewConfig: The resource name of the HumanReviewConfig that
+//   the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1reviewdocumentrequest *GoogleCloudDocumentaiV1ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -9114,6 +9142,11 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1batchprocessrequest *GoogleCloudDocumentaiV1BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9254,6 +9287,13 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1processrequest *GoogleCloudDocumentaiV1ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9397,6 +9437,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9541,6 +9583,8 @@ type Uiv1beta3ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *Uiv1beta3ProjectsLocationsService) Get(name string) *Uiv1beta3ProjectsLocationsGetCall {
 	c := &Uiv1beta3ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9686,6 +9730,9 @@ type Uiv1beta3ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *Uiv1beta3ProjectsLocationsService) List(name string) *Uiv1beta3ProjectsLocationsListCall {
 	c := &Uiv1beta3ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9895,6 +9942,8 @@ type Uiv1beta3ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *Uiv1beta3ProjectsLocationsOperationsService) Get(name string) *Uiv1beta3ProjectsLocationsOperationsGetCall {
 	c := &Uiv1beta3ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

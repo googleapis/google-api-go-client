@@ -1096,6 +1096,10 @@ type ProjectsConfigsCreateCall struct {
 
 // Create: Creates a new RuntimeConfig resource. The configuration name
 // must be unique within project.
+//
+// - parent: The project ID
+//   (https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)
+//   for this request, in the format `projects/[PROJECT_ID]`.
 func (r *ProjectsConfigsService) Create(parent string, runtimeconfig *RuntimeConfig) *ProjectsConfigsCreateCall {
 	c := &ProjectsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1253,6 +1257,9 @@ type ProjectsConfigsDeleteCall struct {
 }
 
 // Delete: Deletes a RuntimeConfig resource.
+//
+// - name: The RuntimeConfig resource to delete, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsService) Delete(name string) *ProjectsConfigsDeleteCall {
 	c := &ProjectsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1385,6 +1392,9 @@ type ProjectsConfigsGetCall struct {
 }
 
 // Get: Gets information about a RuntimeConfig resource.
+//
+// - name: The name of the RuntimeConfig resource to retrieve, in the
+//   format: `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsService) Get(name string) *ProjectsConfigsGetCall {
 	c := &ProjectsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1532,6 +1542,10 @@ type ProjectsConfigsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsConfigsService) GetIamPolicy(resource string) *ProjectsConfigsGetIamPolicyCall {
 	c := &ProjectsConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1697,6 +1711,10 @@ type ProjectsConfigsListCall struct {
 }
 
 // List: Lists all the RuntimeConfig resources within project.
+//
+// - parent: The project ID
+//   (https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)
+//   for this request, in the format `projects/[PROJECT_ID]`.
 func (r *ProjectsConfigsService) List(parent string) *ProjectsConfigsListCall {
 	c := &ProjectsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1892,6 +1910,10 @@ type ProjectsConfigsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsConfigsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsConfigsSetIamPolicyCall {
 	c := &ProjectsConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2038,6 +2060,10 @@ type ProjectsConfigsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsConfigsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsTestIamPermissionsCall {
 	c := &ProjectsConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2180,6 +2206,9 @@ type ProjectsConfigsUpdateCall struct {
 
 // Update: Updates a RuntimeConfig resource. The configuration must
 // exist beforehand.
+//
+// - name: The name of the RuntimeConfig resource to update, in the
+//   format: `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsService) Update(name string, runtimeconfig *RuntimeConfig) *ProjectsConfigsUpdateCall {
 	c := &ProjectsConfigsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2323,6 +2352,8 @@ type ProjectsConfigsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsConfigsOperationsService) Get(name string) *ProjectsConfigsOperationsGetCall {
 	c := &ProjectsConfigsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2473,6 +2504,10 @@ type ProjectsConfigsOperationsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsConfigsOperationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsOperationsTestIamPermissionsCall {
 	c := &ProjectsConfigsOperationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2620,6 +2655,11 @@ type ProjectsConfigsVariablesCreateCall struct {
 // Getting Data
 // (/deployment-manager/runtime-configurator/set-and-get-variables)
 // documentation.
+//
+// - parent: The path to the RutimeConfig resource that this variable
+//   should belong to. The configuration must exist beforehand; the path
+//   must be in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsVariablesService) Create(parent string, variable *Variable) *ProjectsConfigsVariablesCreateCall {
 	c := &ProjectsConfigsVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2781,6 +2821,10 @@ type ProjectsConfigsVariablesDeleteCall struct {
 // and `recursive` is true, then all variables with that prefix are
 // deleted. You must set a `recursive` to true if you delete variables
 // by prefix.
+//
+// - name: The name of the variable to delete, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAM
+//   E]`.
 func (r *ProjectsConfigsVariablesService) Delete(name string) *ProjectsConfigsVariablesDeleteCall {
 	c := &ProjectsConfigsVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2925,6 +2969,10 @@ type ProjectsConfigsVariablesGetCall struct {
 }
 
 // Get: Gets information about a single variable.
+//
+// - name: The name of the variable to return, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIBLE_NAME
+//   ]`.
 func (r *ProjectsConfigsVariablesService) Get(name string) *ProjectsConfigsVariablesGetCall {
 	c := &ProjectsConfigsVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3073,6 +3121,11 @@ type ProjectsConfigsVariablesListCall struct {
 // provided filters. This only lists variable names, not the values,
 // unless `return_values` is true, in which case only variables that
 // user has IAM permission to GetVariable will be returned.
+//
+// - parent: The path to the RuntimeConfig resource for which you want
+//   to list variables. The configuration must exist beforehand; the
+//   path must be in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsVariablesService) List(parent string) *ProjectsConfigsVariablesListCall {
 	c := &ProjectsConfigsVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3299,6 +3352,10 @@ type ProjectsConfigsVariablesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsConfigsVariablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsVariablesTestIamPermissionsCall {
 	c := &ProjectsConfigsVariablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3440,6 +3497,10 @@ type ProjectsConfigsVariablesUpdateCall struct {
 }
 
 // Update: Updates an existing variable with a new value.
+//
+// - name: The name of the variable to update, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAM
+//   E]`.
 func (r *ProjectsConfigsVariablesService) Update(name string, variable *Variable) *ProjectsConfigsVariablesUpdateCall {
 	c := &ProjectsConfigsVariablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3591,6 +3652,9 @@ type ProjectsConfigsVariablesWatchCall struct {
 // read the Watching a Variable for Changes
 // (/deployment-manager/runtime-configurator/watching-a-variable)
 // documentation.
+//
+// - name: The name of the variable to watch, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsVariablesService) Watch(name string, watchvariablerequest *WatchVariableRequest) *ProjectsConfigsVariablesWatchCall {
 	c := &ProjectsConfigsVariablesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3737,6 +3801,10 @@ type ProjectsConfigsWaitersCreateCall struct {
 // retrieved) prior to the operation completing. If the operation fails,
 // the failed Waiter resource will still exist and must be deleted prior
 // to subsequent creation attempts.
+//
+// - parent: The path to the configuration that will own the waiter. The
+//   configuration must exist beforehand; the path must be in the
+//   format: `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsWaitersService) Create(parent string, waiter *Waiter) *ProjectsConfigsWaitersCreateCall {
 	c := &ProjectsConfigsWaitersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3894,6 +3962,9 @@ type ProjectsConfigsWaitersDeleteCall struct {
 }
 
 // Delete: Deletes the waiter with the specified name.
+//
+// - name: The Waiter resource to delete, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`.
 func (r *ProjectsConfigsWaitersService) Delete(name string) *ProjectsConfigsWaitersDeleteCall {
 	c := &ProjectsConfigsWaitersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4026,6 +4097,10 @@ type ProjectsConfigsWaitersGetCall struct {
 }
 
 // Get: Gets information about a single waiter.
+//
+// - name: The fully-qualified name of the Waiter resource object to
+//   retrieve, in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]/waiters/[WAITER_NAME]`.
 func (r *ProjectsConfigsWaitersService) Get(name string) *ProjectsConfigsWaitersGetCall {
 	c := &ProjectsConfigsWaitersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4171,6 +4246,11 @@ type ProjectsConfigsWaitersListCall struct {
 }
 
 // List: List waiters within the given configuration.
+//
+// - parent: The path to the configuration for which you want to get a
+//   list of waiters. The configuration must exist beforehand; the path
+//   must be in the format:
+//   `projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.
 func (r *ProjectsConfigsWaitersService) List(parent string) *ProjectsConfigsWaitersListCall {
 	c := &ProjectsConfigsWaitersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4369,6 +4449,10 @@ type ProjectsConfigsWaitersTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsConfigsWaitersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsConfigsWaitersTestIamPermissionsCall {
 	c := &ProjectsConfigsWaitersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

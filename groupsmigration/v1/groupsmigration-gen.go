@@ -191,6 +191,8 @@ type ArchiveInsertCall struct {
 }
 
 // Insert: Inserts a new mail into the archive of the Google group.
+//
+// - groupId: The group ID.
 func (r *ArchiveService) Insert(groupId string) *ArchiveInsertCall {
 	c := &ArchiveInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupId = groupId

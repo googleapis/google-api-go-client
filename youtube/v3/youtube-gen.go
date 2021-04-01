@@ -10103,6 +10103,10 @@ type AbuseReportsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *AbuseReportsService) Insert(part []string, abusereport *AbuseReport) *AbuseReportsInsertCall {
 	c := &AbuseReportsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10240,6 +10244,15 @@ type ActivitiesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more activity resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in an activity resource, the snippet property contains
+//   other properties that identify the type of activity, a display
+//   title for the activity, and so forth. If you set *part=snippet*,
+//   the API response will also contain all of those nested properties.
 func (r *ActivitiesService) List(part []string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10495,6 +10508,8 @@ type CaptionsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *CaptionsService) Delete(id string) *CaptionsDeleteCall {
 	c := &CaptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -10629,6 +10644,9 @@ type CaptionsDownloadCall struct {
 }
 
 // Download: Downloads a caption track.
+//
+// - id: The ID of the caption track to download, required for One
+//   Platform.
 func (r *CaptionsService) Download(id string) *CaptionsDownloadCall {
 	c := &CaptionsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -10822,6 +10840,10 @@ type CaptionsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter specifies the caption resource parts
+//   that the API response will include. Set the parameter value to
+//   snippet.
 func (r *CaptionsService) Insert(part []string, caption *Caption) *CaptionsInsertCall {
 	c := &CaptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -11092,6 +11114,12 @@ type CaptionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more caption resource parts that the API response will include.
+//   The part names that you can include in the parameter value are id
+//   and snippet.
+// - videoId: Returns the captions for the specified video.
 func (r *CaptionsService) List(part []string, videoId string) *CaptionsListCall {
 	c := &CaptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -11290,6 +11318,11 @@ type CaptionsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more caption resource parts that the API response will include.
+//   The part names that you can include in the parameter value are id
+//   and snippet.
 func (r *CaptionsService) Update(part []string, caption *Caption) *CaptionsUpdateCall {
 	c := &CaptionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -11838,6 +11871,8 @@ type ChannelSectionsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *ChannelSectionsService) Delete(id string) *ChannelSectionsDeleteCall {
 	c := &ChannelSectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -11959,6 +11994,12 @@ type ChannelSectionsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   names that you can include in the parameter value are snippet and
+//   contentDetails.
 func (r *ChannelSectionsService) Insert(part []string, channelsection *ChannelSection) *ChannelSectionsInsertCall {
 	c := &ChannelSectionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12148,6 +12189,17 @@ type ChannelSectionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more channelSection resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, and contentDetails. If the parameter
+//   identifies a property that contains child properties, the child
+//   properties will be included in the response. For example, in a
+//   channelSection resource, the snippet property contains other
+//   properties, such as a display title for the channelSection. If you
+//   set *part=snippet*, the API response will also contain all of those
+//   nested properties.
 func (r *ChannelSectionsService) List(part []string) *ChannelSectionsListCall {
 	c := &ChannelSectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12362,6 +12414,12 @@ type ChannelSectionsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   names that you can include in the parameter value are snippet and
+//   contentDetails.
 func (r *ChannelSectionsService) Update(part []string, channelsection *ChannelSection) *ChannelSectionsUpdateCall {
 	c := &ChannelSectionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12522,6 +12580,15 @@ type ChannelsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more channel resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a channel resource, the contentDetails property
+//   contains other properties, such as the uploads properties. As such,
+//   if you set *part=contentDetails*, the API response will also
+//   contain all of those nested properties.
 func (r *ChannelsService) List(part []string) *ChannelsListCall {
 	c := &ChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12829,6 +12896,15 @@ type ChannelsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The API
+//   currently only allows the parameter value to be set to either
+//   brandingSettings or invideoPromotion. (You cannot update both of
+//   those parts with a single request.) Note that this method overrides
+//   the existing values for all of the mutable properties that are
+//   contained in any parts that the parameter value specifies.
 func (r *ChannelsService) Update(part []string, channel *Channel) *ChannelsUpdateCall {
 	c := &ChannelsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12987,6 +13063,10 @@ type CommentThreadsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter identifies the properties that the API
+//   response will include. Set the parameter value to snippet. The
+//   snippet part has a quota cost of 2 units.
 func (r *CommentThreadsService) Insert(part []string, commentthread *CommentThread) *CommentThreadsInsertCall {
 	c := &CommentThreadsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13123,6 +13203,10 @@ type CommentThreadsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more commentThread resource properties that the API response
+//   will include.
 func (r *CommentThreadsService) List(part []string) *CommentThreadsListCall {
 	c := &CommentThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13468,6 +13552,12 @@ type CommentThreadsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter specifies a comma-separated list of
+//   commentThread resource properties that the API response will
+//   include. You must at least include the snippet part in the
+//   parameter value since that part contains all of the properties that
+//   the API request can update.
 func (r *CommentThreadsService) Update(part []string, commentthread *CommentThread) *CommentThreadsUpdateCall {
 	c := &CommentThreadsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13603,6 +13693,8 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *CommentsService) Delete(id string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -13700,6 +13792,10 @@ type CommentsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter identifies the properties that the API
+//   response will include. Set the parameter value to snippet. The
+//   snippet part has a quota cost of 2 units.
 func (r *CommentsService) Insert(part []string, comment *Comment) *CommentsInsertCall {
 	c := &CommentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13836,6 +13932,10 @@ type CommentsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more comment resource properties that the API response will
+//   include.
 func (r *CommentsService) List(part []string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14084,6 +14184,9 @@ type CommentsMarkAsSpamCall struct {
 
 // MarkAsSpam: Expresses the caller's opinion that one or more comments
 // should be flagged as spam.
+//
+// - id: Flags the comments with the given IDs as spam in the caller's
+//   opinion.
 func (r *CommentsService) MarkAsSpam(id []string) *CommentsMarkAsSpamCall {
 	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14183,6 +14286,14 @@ type CommentsSetModerationStatusCall struct {
 
 // SetModerationStatus: Sets the moderation status of one or more
 // comments.
+//
+// - id: Modifies the moderation status of the comments with the given
+//   IDs.
+// - moderationStatus: Specifies the requested moderation status. Note,
+//   comments can be in statuses, which are not available through this
+//   call. For example, this call does not allow to mark a comment as
+//   'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED,
+//   MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
 func (r *CommentsService) SetModerationStatus(id []string, moderationStatus string) *CommentsSetModerationStatusCall {
 	c := &CommentsSetModerationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14317,6 +14428,11 @@ type CommentsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter identifies the properties that the API
+//   response will include. You must at least include the snippet part
+//   in the parameter value since that part contains all of the
+//   properties that the API request can update.
 func (r *CommentsService) Update(part []string, comment *Comment) *CommentsUpdateCall {
 	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14453,6 +14569,10 @@ type I18nLanguagesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the i18nLanguage resource
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *I18nLanguagesService) List(part []string) *I18nLanguagesListCall {
 	c := &I18nLanguagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14607,6 +14727,10 @@ type I18nRegionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the i18nRegion resource
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *I18nRegionsService) List(part []string) *I18nRegionsListCall {
 	c := &I18nRegionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14760,6 +14884,12 @@ type LiveBroadcastsBindCall struct {
 }
 
 // Bind: Bind a broadcast to a stream.
+//
+// - id: Broadcast to bind to the stream.
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Bind(id string, part []string) *LiveBroadcastsBindCall {
 	c := &LiveBroadcastsBindCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -14958,6 +15088,8 @@ type LiveBroadcastsDeleteCall struct {
 }
 
 // Delete: Delete a given broadcast.
+//
+// - id: Broadcast to delete.
 func (r *LiveBroadcastsService) Delete(id string) *LiveBroadcastsDeleteCall {
 	c := &LiveBroadcastsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -15108,6 +15240,12 @@ type LiveBroadcastsInsertCall struct {
 }
 
 // Insert: Inserts a new stream for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Insert(part []string, livebroadcast *LiveBroadcast) *LiveBroadcastsInsertCall {
 	c := &LiveBroadcastsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -15297,6 +15435,11 @@ type LiveBroadcastsListCall struct {
 
 // List: Retrieve the list of broadcasts associated with the given
 // channel.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, status and statistics.
 func (r *LiveBroadcastsService) List(part []string) *LiveBroadcastsListCall {
 	c := &LiveBroadcastsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -15628,6 +15771,14 @@ type LiveBroadcastsTransitionCall struct {
 }
 
 // Transition: Transition a broadcast to a given status.
+//
+// - broadcastStatus: The status to which the broadcast is going to
+//   transition.
+// - id: Broadcast to transition.
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Transition(broadcastStatus string, id string, part []string) *LiveBroadcastsTransitionCall {
 	c := &LiveBroadcastsTransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("broadcastStatus", broadcastStatus)
@@ -15835,6 +15986,21 @@ type LiveBroadcastsUpdateCall struct {
 }
 
 // Update: Updates an existing broadcast for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, contentDetails, and status. Note that this method will
+//   override the existing values for all of the mutable properties that
+//   are contained in any parts that the parameter value specifies. For
+//   example, a broadcast's privacy status is defined in the status
+//   part. As such, if your request is updating a private or unlisted
+//   broadcast, and the request's part parameter value includes the
+//   status part, the broadcast's privacy setting will be updated to
+//   whatever value the request body specifies. If the request body does
+//   not specify a value, the existing privacy setting will be removed
+//   and the broadcast will revert to the default privacy setting.
 func (r *LiveBroadcastsService) Update(part []string, livebroadcast *LiveBroadcast) *LiveBroadcastsUpdateCall {
 	c := &LiveBroadcastsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16022,6 +16188,8 @@ type LiveChatBansDeleteCall struct {
 }
 
 // Delete: Deletes a chat ban.
+//
+// - id: .
 func (r *LiveChatBansService) Delete(id string) *LiveChatBansDeleteCall {
 	c := &LiveChatBansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16120,6 +16288,11 @@ type LiveChatBansInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response returns. Set the
+//   parameter value to snippet.
 func (r *LiveChatBansService) Insert(part []string, livechatban *LiveChatBan) *LiveChatBansInsertCall {
 	c := &LiveChatBansInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16256,6 +16429,8 @@ type LiveChatMessagesDeleteCall struct {
 }
 
 // Delete: Deletes a chat message.
+//
+// - id: .
 func (r *LiveChatMessagesService) Delete(id string) *LiveChatMessagesDeleteCall {
 	c := &LiveChatMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16354,6 +16529,11 @@ type LiveChatMessagesInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes. It identifies the
+//   properties that the write operation will set as well as the
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *LiveChatMessagesService) Insert(part []string, livechatmessage *LiveChatMessage) *LiveChatMessagesInsertCall {
 	c := &LiveChatMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16491,6 +16671,12 @@ type LiveChatMessagesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - liveChatId: The id of the live chat for which comments should be
+//   returned.
+// - part: The *part* parameter specifies the liveChatComment resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *LiveChatMessagesService) List(liveChatId string, part []string) *LiveChatMessagesListCall {
 	c := &LiveChatMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -16720,6 +16906,8 @@ type LiveChatModeratorsDeleteCall struct {
 }
 
 // Delete: Deletes a chat moderator.
+//
+// - id: .
 func (r *LiveChatModeratorsService) Delete(id string) *LiveChatModeratorsDeleteCall {
 	c := &LiveChatModeratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16818,6 +17006,11 @@ type LiveChatModeratorsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response returns. Set the
+//   parameter value to snippet.
 func (r *LiveChatModeratorsService) Insert(part []string, livechatmoderator *LiveChatModerator) *LiveChatModeratorsInsertCall {
 	c := &LiveChatModeratorsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16955,6 +17148,12 @@ type LiveChatModeratorsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - liveChatId: The id of the live chat for which moderators should be
+//   returned.
+// - part: The *part* parameter specifies the liveChatModerator resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *LiveChatModeratorsService) List(liveChatId string, part []string) *LiveChatModeratorsListCall {
 	c := &LiveChatModeratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -17156,6 +17355,8 @@ type LiveStreamsDeleteCall struct {
 }
 
 // Delete: Deletes an existing stream for the authenticated user.
+//
+// - id: .
 func (r *LiveStreamsService) Delete(id string) *LiveStreamsDeleteCall {
 	c := &LiveStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -17305,6 +17506,12 @@ type LiveStreamsInsertCall struct {
 }
 
 // Insert: Inserts a new stream for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, cdn, content_details, and status.
 func (r *LiveStreamsService) Insert(part []string, livestream *LiveStream) *LiveStreamsInsertCall {
 	c := &LiveStreamsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17494,6 +17701,11 @@ type LiveStreamsListCall struct {
 
 // List: Retrieve the list of streams associated with the given channel.
 // --
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveStream resource properties that the API response will
+//   include. The part names that you can include in the parameter value
+//   are id, snippet, cdn, and status.
 func (r *LiveStreamsService) List(part []string) *LiveStreamsListCall {
 	c := &LiveStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17762,6 +17974,16 @@ type LiveStreamsUpdateCall struct {
 }
 
 // Update: Updates an existing stream for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, cdn, and status. Note that this method will override the
+//   existing values for all of the mutable properties that are
+//   contained in any parts that the parameter value specifies. If the
+//   request body does not specify a value for a mutable property, the
+//   existing value for that property will be removed.
 func (r *LiveStreamsService) Update(part []string, livestream *LiveStream) *LiveStreamsUpdateCall {
 	c := &LiveStreamsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17951,6 +18173,9 @@ type MembersListCall struct {
 
 // List: Retrieves a list of members that match the request criteria for
 // a channel.
+//
+// - part: The *part* parameter specifies the member resource parts that
+//   the API response will include. Set the parameter value to snippet.
 func (r *MembersService) List(part []string) *MembersListCall {
 	c := &MembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18201,6 +18426,10 @@ type MembershipsLevelsListCall struct {
 
 // List: Retrieves a list of all pricing levels offered by a creator to
 // the fans.
+//
+// - part: The *part* parameter specifies the membershipsLevel resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *MembershipsLevelsService) List(part []string) *MembershipsLevelsListCall {
 	c := &MembershipsLevelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18340,6 +18569,8 @@ type PlaylistItemsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
 	c := &PlaylistItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -18461,6 +18692,10 @@ type PlaylistItemsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *PlaylistItemsService) Insert(part []string, playlistitem *PlaylistItem) *PlaylistItemsInsertCall {
 	c := &PlaylistItemsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18621,6 +18856,16 @@ type PlaylistItemsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more playlistItem resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a playlistItem resource, the snippet property
+//   contains numerous fields, including the title, description,
+//   position, and resourceId properties. As such, if you set
+//   *part=snippet*, the API response will contain all of those
+//   properties.
 func (r *PlaylistItemsService) List(part []string) *PlaylistItemsListCall {
 	c := &PlaylistItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18873,6 +19118,21 @@ type PlaylistItemsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for all of the
+//   mutable properties that are contained in any parts that the
+//   parameter value specifies. For example, a playlist item can specify
+//   a start time and end time, which identify the times portion of the
+//   video that should play when users watch the video in the playlist.
+//   If your request is updating a playlist item that sets these values,
+//   and the request's part parameter value includes the contentDetails
+//   part, the playlist item's start and end times will be updated to
+//   whatever value the request body specifies. If the request body does
+//   not specify values, the existing start and end times will be
+//   removed and replaced with the default settings.
 func (r *PlaylistItemsService) Update(part []string, playlistitem *PlaylistItem) *PlaylistItemsUpdateCall {
 	c := &PlaylistItemsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19032,6 +19292,8 @@ type PlaylistsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *PlaylistsService) Delete(id string) *PlaylistsDeleteCall {
 	c := &PlaylistsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -19153,6 +19415,10 @@ type PlaylistsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *PlaylistsService) Insert(part []string, playlist *Playlist) *PlaylistsInsertCall {
 	c := &PlaylistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19342,6 +19608,15 @@ type PlaylistsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more playlist resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a playlist resource, the snippet property contains
+//   properties like author, title, description, tags, and timeCreated.
+//   As such, if you set *part=snippet*, the API response will contain
+//   all of those properties.
 func (r *PlaylistsService) List(part []string) *PlaylistsListCall {
 	c := &PlaylistsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19637,6 +19912,16 @@ type PlaylistsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for mutable
+//   properties that are contained in any parts that the request body
+//   specifies. For example, a playlist's description is contained in
+//   the snippet part, which must be included in the request body. If
+//   the request does not specify a value for the snippet.description
+//   property, the playlist's existing description will be deleted.
 func (r *PlaylistsService) Update(part []string, playlist *Playlist) *PlaylistsUpdateCall {
 	c := &PlaylistsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19797,6 +20082,10 @@ type SearchListCall struct {
 }
 
 // List: Retrieves a list of search resources
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more search resource properties that the API response will
+//   include. Set the parameter value to snippet.
 func (r *SearchService) List(part []string) *SearchListCall {
 	c := &SearchListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -20570,6 +20859,8 @@ type SubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -20669,6 +20960,10 @@ type SubscriptionsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *SubscriptionsService) Insert(part []string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -20807,6 +21102,15 @@ type SubscriptionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more subscription resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a subscription resource, the snippet property
+//   contains other properties, such as a display title for the
+//   subscription. If you set *part=snippet*, the API response will also
+//   contain all of those nested properties.
 func (r *SubscriptionsService) List(part []string) *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21157,6 +21461,10 @@ type SuperChatEventsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the superChatEvent resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *SuperChatEventsService) List(part []string) *SuperChatEventsListCall {
 	c := &SuperChatEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21363,6 +21671,8 @@ type TestsInsertCall struct {
 }
 
 // Insert: POST method.
+//
+// - part: .
 func (r *TestsService) Insert(part []string, testitem *TestItem) *TestsInsertCall {
 	c := &TestsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21497,6 +21807,10 @@ type ThirdPartyLinksDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - linkingToken: Delete the partner links with the given linking
+//   token.
+// - type: Type of the link to be deleted.
 func (r *ThirdPartyLinksService) Delete(linkingToken string, type_ string) *ThirdPartyLinksDeleteCall {
 	c := &ThirdPartyLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("linkingToken", linkingToken)
@@ -21621,6 +21935,10 @@ type ThirdPartyLinksInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter specifies the thirdPartyLink resource
+//   parts that the API request and response will include. Supported
+//   values are linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) Insert(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksInsertCall {
 	c := &ThirdPartyLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21754,6 +22072,10 @@ type ThirdPartyLinksListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the thirdPartyLink resource
+//   parts that the API response will include. Supported values are
+//   linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) List(part []string) *ThirdPartyLinksListCall {
 	c := &ThirdPartyLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21929,6 +22251,10 @@ type ThirdPartyLinksUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter specifies the thirdPartyLink resource
+//   parts that the API request and response will include. Supported
+//   values are linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) Update(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksUpdateCall {
 	c := &ThirdPartyLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22064,6 +22390,9 @@ type ThumbnailsSetCall struct {
 // Set: As this is not an insert in a strict sense (it supports
 // uploading/setting of a thumbnail for multiple videos, which doesn't
 // result in creation of a single resource), I use a custom verb here.
+//
+// - videoId: Returns the Thumbnail with the given video IDs for Stubby
+//   or Apiary.
 func (r *ThumbnailsService) Set(videoId string) *ThumbnailsSetCall {
 	c := &ThumbnailsSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("videoId", videoId)
@@ -22302,6 +22631,10 @@ type VideoAbuseReportReasonsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the videoCategory resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *VideoAbuseReportReasonsService) List(part []string) *VideoAbuseReportReasonsListCall {
 	c := &VideoAbuseReportReasonsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22456,6 +22789,10 @@ type VideoCategoriesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the videoCategory resource
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *VideoCategoriesService) List(part []string) *VideoCategoriesListCall {
 	c := &VideoCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22632,6 +22969,8 @@ type VideosDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *VideosService) Delete(id string) *VideosDeleteCall {
 	c := &VideosDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -22755,6 +23094,8 @@ type VideosGetRatingCall struct {
 
 // GetRating: Retrieves the ratings that the authorized user gave to a
 // list of specified videos.
+//
+// - id: .
 func (r *VideosService) GetRating(id []string) *VideosGetRatingCall {
 	c := &VideosGetRatingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -22919,6 +23260,16 @@ type VideosInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that not all parts contain properties that can be set when
+//   inserting or updating a video. For example, the statistics object
+//   encapsulates statistics that YouTube calculates for a video and
+//   does not contain values that you can set or modify. If the
+//   parameter value specifies a part that does not contain mutable
+//   values, that part will still be included in the API response.
 func (r *VideosService) Insert(part []string, video *Video) *VideosInsertCall {
 	c := &VideosInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23232,6 +23583,15 @@ type VideosListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more video resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a video resource, the snippet property contains the
+//   channelId, title, description, tags, and categoryId properties. As
+//   such, if you set *part=snippet*, the API response will contain all
+//   of those properties.
 func (r *VideosService) List(part []string) *VideosListCall {
 	c := &VideosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23599,6 +23959,9 @@ type VideosRateCall struct {
 
 // Rate: Adds a like or dislike rating to a video or removes a rating
 // from a video.
+//
+// - id: .
+// - rating: .
 func (r *VideosService) Rate(id string, rating string) *VideosRateCall {
 	c := &VideosRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -23837,6 +24200,25 @@ type VideosUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for all of the
+//   mutable properties that are contained in any parts that the
+//   parameter value specifies. For example, a video's privacy setting
+//   is contained in the status part. As such, if your request is
+//   updating a private video, and the request's part parameter value
+//   includes the status part, the video's privacy setting will be
+//   updated to whatever value the request body specifies. If the
+//   request body does not specify a value, the existing privacy setting
+//   will be removed and the video will revert to the default privacy
+//   setting. In addition, not all parts contain properties that can be
+//   set when inserting or updating a video. For example, the statistics
+//   object encapsulates statistics that YouTube calculates for a video
+//   and does not contain values that you can set or modify. If the
+//   parameter value specifies a part that does not contain mutable
+//   values, that part will still be included in the API response.
 func (r *VideosService) Update(part []string, video *Video) *VideosUpdateCall {
 	c := &VideosUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23999,6 +24381,8 @@ type WatermarksSetCall struct {
 }
 
 // Set: Allows upload of watermark image and setting it for a channel.
+//
+// - channelId: .
 func (r *WatermarksService) Set(channelId string, invideobranding *InvideoBranding) *WatermarksSetCall {
 	c := &WatermarksSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("channelId", channelId)
@@ -24215,6 +24599,8 @@ type WatermarksUnsetCall struct {
 }
 
 // Unset: Allows removal of channel watermark.
+//
+// - channelId: .
 func (r *WatermarksService) Unset(channelId string) *WatermarksUnsetCall {
 	c := &WatermarksUnsetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("channelId", channelId)

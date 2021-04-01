@@ -4071,6 +4071,10 @@ type DevicesForceReportUploadCall struct {
 // call this method up to 3 times every 24 hours for a given device. If
 // you exceed the quota, then the Google Play EMM API returns HTTP 429
 // Too Many Requests.
+//
+// - deviceId: The ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *DevicesService) ForceReportUpload(enterpriseId string, userId string, deviceId string) *DevicesForceReportUploadCall {
 	c := &DevicesForceReportUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4193,6 +4197,10 @@ type DevicesGetCall struct {
 }
 
 // Get: Retrieves the details of a device.
+//
+// - deviceId: The ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *DevicesService) Get(enterpriseId string, userId string, deviceId string) *DevicesGetCall {
 	c := &DevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4361,6 +4369,10 @@ type DevicesGetStateCall struct {
 // Console. Otherwise, the device state is ignored and all devices are
 // allowed access to Google services. This is only supported for
 // Google-managed users.
+//
+// - deviceId: The ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *DevicesService) GetState(enterpriseId string, userId string, deviceId string) *DevicesGetStateCall {
 	c := &DevicesGetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4523,6 +4535,9 @@ type DevicesListCall struct {
 }
 
 // List: Retrieves the IDs of all of a user's devices.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *DevicesService) List(enterpriseId string, userId string) *DevicesListCall {
 	c := &DevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4682,6 +4697,10 @@ type DevicesSetStateCall struct {
 // Console. Otherwise, the device state is ignored and all devices are
 // allowed access to Google services. This is only supported for
 // Google-managed users.
+//
+// - deviceId: The ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *DevicesService) SetState(enterpriseId string, userId string, deviceId string, devicestate *DeviceState) *DevicesSetStateCall {
 	c := &DevicesSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4845,6 +4864,10 @@ type DevicesUpdateCall struct {
 // Google Play by setting the allowed_accounts in the managed
 // configuration for the Google Play package. See restrict accounts in
 // Google Play.
+//
+// - deviceId: The ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *DevicesService) Update(enterpriseId string, userId string, deviceId string, device *Device) *DevicesUpdateCall {
 	c := &DevicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5265,6 +5288,8 @@ type EnterprisesCreateWebTokenCall struct {
 // Play javascript API. Each token may only be used to start one UI
 // session. See the javascript API documentation for further
 // information.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) CreateWebToken(enterpriseId string, administratorwebtokenspec *AdministratorWebTokenSpec) *EnterprisesCreateWebTokenCall {
 	c := &EnterprisesCreateWebTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5403,6 +5428,8 @@ type EnterprisesEnrollCall struct {
 }
 
 // Enroll: Enrolls an enterprise with the calling EMM.
+//
+// - token: The token provided by the enterprise to register the EMM.
 func (r *EnterprisesService) Enroll(token string, enterprise *Enterprise) *EnterprisesEnrollCall {
 	c := &EnterprisesEnrollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("token", token)
@@ -5674,6 +5701,8 @@ type EnterprisesGetCall struct {
 }
 
 // Get: Retrieves the name and domain of an enterprise.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) Get(enterpriseId string) *EnterprisesGetCall {
 	c := &EnterprisesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5828,6 +5857,8 @@ type EnterprisesGetServiceAccountCall struct {
 // previously generated credentials. Once the service account is bound
 // to the enterprise, it can be managed using the serviceAccountKeys
 // resource.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) GetServiceAccount(enterpriseId string) *EnterprisesGetServiceAccountCall {
 	c := &EnterprisesGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6001,6 +6032,8 @@ type EnterprisesGetStoreLayoutCall struct {
 // GetStoreLayout: Returns the store layout for the enterprise. If the
 // store layout has not been set, returns "basic" as the store layout
 // type and no homepage.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) GetStoreLayout(enterpriseId string) *EnterprisesGetStoreLayoutCall {
 	c := &EnterprisesGetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6147,6 +6180,8 @@ type EnterprisesListCall struct {
 // Lookup of the id is not needed for enterprises created via the
 // EMM-initiated flow since the EMM learns the enterprise ID in the
 // callback specified in the Enterprises.generateSignupUrl call.
+//
+// - domain: The exact primary domain name of the enterprise to look up.
 func (r *EnterprisesService) List(domain string) *EnterprisesListCall {
 	c := &EnterprisesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("domain", domain)
@@ -6450,6 +6485,8 @@ type EnterprisesSendTestPushNotificationCall struct {
 // SendTestPushNotification: Sends a test notification to validate the
 // EMM integration with the Google Cloud Pub/Sub service for this
 // enterprise.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) SendTestPushNotification(enterpriseId string) *EnterprisesSendTestPushNotificationCall {
 	c := &EnterprisesSendTestPushNotificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6583,6 +6620,8 @@ type EnterprisesSetAccountCall struct {
 
 // SetAccount: Sets the account that will be used to authenticate to the
 // API as the enterprise.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) SetAccount(enterpriseId string, enterpriseaccount *EnterpriseAccount) *EnterprisesSetAccountCall {
 	c := &EnterprisesSetAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6729,6 +6768,8 @@ type EnterprisesSetStoreLayoutCall struct {
 // in order of their product ID value. If you create a custom store
 // layout (by setting storeLayoutType = "custom" and setting a
 // homepage), the basic store layout is disabled.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) SetStoreLayout(enterpriseId string, storelayout *StoreLayout) *EnterprisesSetStoreLayoutCall {
 	c := &EnterprisesSetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6867,6 +6908,8 @@ type EnterprisesUnenrollCall struct {
 }
 
 // Unenroll: Unenrolls an enterprise from the calling EMM.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *EnterprisesService) Unenroll(enterpriseId string) *EnterprisesUnenrollCall {
 	c := &EnterprisesUnenrollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6970,6 +7013,11 @@ type EntitlementsDeleteCall struct {
 }
 
 // Delete: Removes an entitlement to an app for a user.
+//
+// - enterpriseId: The ID of the enterprise.
+// - entitlementId: The ID of the entitlement (a product ID), e.g.
+//   "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *EntitlementsService) Delete(enterpriseId string, userId string, entitlementId string) *EntitlementsDeleteCall {
 	c := &EntitlementsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7092,6 +7140,11 @@ type EntitlementsGetCall struct {
 }
 
 // Get: Retrieves details of an entitlement.
+//
+// - enterpriseId: The ID of the enterprise.
+// - entitlementId: The ID of the entitlement (a product ID), e.g.
+//   "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *EntitlementsService) Get(enterpriseId string, userId string, entitlementId string) *EntitlementsGetCall {
 	c := &EntitlementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7255,6 +7308,9 @@ type EntitlementsListCall struct {
 
 // List: Lists all entitlements for the specified user. Only the ID is
 // set.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *EntitlementsService) List(enterpriseId string, userId string) *EntitlementsListCall {
 	c := &EntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7409,6 +7465,11 @@ type EntitlementsUpdateCall struct {
 }
 
 // Update: Adds or updates an entitlement to an app for a user.
+//
+// - enterpriseId: The ID of the enterprise.
+// - entitlementId: The ID of the entitlement (a product ID), e.g.
+//   "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *EntitlementsService) Update(enterpriseId string, userId string, entitlementId string, entitlement *Entitlement) *EntitlementsUpdateCall {
 	c := &EntitlementsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7583,6 +7644,10 @@ type GrouplicensesGetCall struct {
 
 // Get: Retrieves details of an enterprise's group license for a
 // product.
+//
+// - enterpriseId: The ID of the enterprise.
+// - groupLicenseId: The ID of the product the group license is for,
+//   e.g. "app:com.google.android.gm".
 func (r *GrouplicensesService) Get(enterpriseId string, groupLicenseId string) *GrouplicensesGetCall {
 	c := &GrouplicensesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7736,6 +7801,8 @@ type GrouplicensesListCall struct {
 
 // List: Retrieves IDs of all products for which the enterprise has a
 // group license.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *GrouplicensesService) List(enterpriseId string) *GrouplicensesListCall {
 	c := &GrouplicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7881,6 +7948,10 @@ type GrouplicenseusersListCall struct {
 
 // List: Retrieves the IDs of the users who have been granted
 // entitlements under the license.
+//
+// - enterpriseId: The ID of the enterprise.
+// - groupLicenseId: The ID of the product the group license is for,
+//   e.g. "app:com.google.android.gm".
 func (r *GrouplicenseusersService) List(enterpriseId string, groupLicenseId string) *GrouplicenseusersListCall {
 	c := &GrouplicenseusersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8037,6 +8108,12 @@ type InstallsDeleteCall struct {
 // Delete: Requests to remove an app from a device. A call to get or
 // list will still show the app as installed on the device until it is
 // actually removed.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - installId: The ID of the product represented by the install, e.g.
+//   "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *InstallsService) Delete(enterpriseId string, userId string, deviceId string, installId string) *InstallsDeleteCall {
 	c := &InstallsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8169,6 +8246,12 @@ type InstallsGetCall struct {
 }
 
 // Get: Retrieves details of an installation of an app on a device.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - installId: The ID of the product represented by the install, e.g.
+//   "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *InstallsService) Get(enterpriseId string, userId string, deviceId string, installId string) *InstallsGetCall {
 	c := &InstallsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8342,6 +8425,10 @@ type InstallsListCall struct {
 
 // List: Retrieves the details of all apps installed on the specified
 // device.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *InstallsService) List(enterpriseId string, userId string, deviceId string) *InstallsListCall {
 	c := &InstallsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8508,6 +8595,12 @@ type InstallsUpdateCall struct {
 // Update: Requests to install the latest version of an app to a device.
 // If the app is already installed, then it is updated to the latest
 // version if necessary.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - installId: The ID of the product represented by the install, e.g.
+//   "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *InstallsService) Update(enterpriseId string, userId string, deviceId string, installId string, install *Install) *InstallsUpdateCall {
 	c := &InstallsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8677,6 +8770,12 @@ type ManagedconfigurationsfordeviceDeleteCall struct {
 
 // Delete: Removes a per-device managed configuration for an app for the
 // specified device.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - managedConfigurationForDeviceId: The ID of the managed
+//   configuration (a product ID), e.g. "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsfordeviceService) Delete(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string) *ManagedconfigurationsfordeviceDeleteCall {
 	c := &ManagedconfigurationsfordeviceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8809,6 +8908,12 @@ type ManagedconfigurationsfordeviceGetCall struct {
 }
 
 // Get: Retrieves details of a per-device managed configuration.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - managedConfigurationForDeviceId: The ID of the managed
+//   configuration (a product ID), e.g. "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsfordeviceService) Get(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string) *ManagedconfigurationsfordeviceGetCall {
 	c := &ManagedconfigurationsfordeviceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8982,6 +9087,10 @@ type ManagedconfigurationsfordeviceListCall struct {
 
 // List: Lists all the per-device managed configurations for the
 // specified device. Only the ID is set.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsfordeviceService) List(enterpriseId string, userId string, deviceId string) *ManagedconfigurationsfordeviceListCall {
 	c := &ManagedconfigurationsfordeviceListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9149,6 +9258,12 @@ type ManagedconfigurationsfordeviceUpdateCall struct {
 
 // Update: Adds or updates a per-device managed configuration for an app
 // for the specified device.
+//
+// - deviceId: The Android ID of the device.
+// - enterpriseId: The ID of the enterprise.
+// - managedConfigurationForDeviceId: The ID of the managed
+//   configuration (a product ID), e.g. "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsfordeviceService) Update(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsfordeviceUpdateCall {
 	c := &ManagedconfigurationsfordeviceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9317,6 +9432,11 @@ type ManagedconfigurationsforuserDeleteCall struct {
 
 // Delete: Removes a per-user managed configuration for an app for the
 // specified user.
+//
+// - enterpriseId: The ID of the enterprise.
+// - managedConfigurationForUserId: The ID of the managed configuration
+//   (a product ID), e.g. "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsforuserService) Delete(enterpriseId string, userId string, managedConfigurationForUserId string) *ManagedconfigurationsforuserDeleteCall {
 	c := &ManagedconfigurationsforuserDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9440,6 +9560,11 @@ type ManagedconfigurationsforuserGetCall struct {
 
 // Get: Retrieves details of a per-user managed configuration for an app
 // for the specified user.
+//
+// - enterpriseId: The ID of the enterprise.
+// - managedConfigurationForUserId: The ID of the managed configuration
+//   (a product ID), e.g. "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsforuserService) Get(enterpriseId string, userId string, managedConfigurationForUserId string) *ManagedconfigurationsforuserGetCall {
 	c := &ManagedconfigurationsforuserGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9603,6 +9728,9 @@ type ManagedconfigurationsforuserListCall struct {
 
 // List: Lists all the per-user managed configurations for the specified
 // user. Only the ID is set.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsforuserService) List(enterpriseId string, userId string) *ManagedconfigurationsforuserListCall {
 	c := &ManagedconfigurationsforuserListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9764,6 +9892,11 @@ type ManagedconfigurationsforuserUpdateCall struct {
 // an mcmId and its associated configuration variables (if any) in the
 // request. Alternatively, all EMMs can apply managed configurations by
 // passing a list of managed properties.
+//
+// - enterpriseId: The ID of the enterprise.
+// - managedConfigurationForUserId: The ID of the managed configuration
+//   (a product ID), e.g. "app:com.google.android.gm".
+// - userId: The ID of the user.
 func (r *ManagedconfigurationsforuserService) Update(enterpriseId string, userId string, managedConfigurationForUserId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsforuserUpdateCall {
 	c := &ManagedconfigurationsforuserUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9923,6 +10056,10 @@ type ManagedconfigurationssettingsListCall struct {
 
 // List: Lists all the managed configurations settings for the specified
 // app.
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product for which the managed
+//   configurations settings applies to.
 func (r *ManagedconfigurationssettingsService) List(enterpriseId string, productId string) *ManagedconfigurationssettingsListCall {
 	c := &ManagedconfigurationssettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10078,6 +10215,8 @@ type PermissionsGetCall struct {
 
 // Get: Retrieves details of an Android app permission for display to an
 // enterprise admin.
+//
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Get(permissionId string) *PermissionsGetCall {
 	c := &PermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.permissionId = permissionId
@@ -10238,6 +10377,9 @@ type ProductsApproveCall struct {
 // approve per enterprise customer is 1,000. To learn how to use managed
 // Google Play to design and create a store layout to display approved
 // products to your users, see Store Layout Design.
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product.
 func (r *ProductsService) Approve(enterpriseId string, productId string, productsapproverequest *ProductsApproveRequest) *ProductsApproveCall {
 	c := &ProductsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10366,6 +10508,9 @@ type ProductsGenerateApprovalUrlCall struct {
 // the use of this URL as the approvalUrlInfo.approvalUrl property in a
 // Products.approve call to approve the product. This URL can only be
 // used to display permissions for up to 1 day.
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product.
 func (r *ProductsService) GenerateApprovalUrl(enterpriseId string, productId string) *ProductsGenerateApprovalUrlCall {
 	c := &ProductsGenerateApprovalUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10521,6 +10666,9 @@ type ProductsGetCall struct {
 
 // Get: Retrieves details of a product for display to an enterprise
 // admin.
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product, e.g. "app:com.google.android.gm".
 func (r *ProductsService) Get(enterpriseId string, productId string) *ProductsGetCall {
 	c := &ProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10692,6 +10840,9 @@ type ProductsGetAppRestrictionsSchemaCall struct {
 // admin to configure the product. To apply a managed configuration
 // based on the schema obtained using this API, see Managed
 // Configurations through Play.
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product.
 func (r *ProductsService) GetAppRestrictionsSchema(enterpriseId string, productId string) *ProductsGetAppRestrictionsSchemaCall {
 	c := &ProductsGetAppRestrictionsSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10858,6 +11009,9 @@ type ProductsGetPermissionsCall struct {
 
 // GetPermissions: Retrieves the Android app permissions required by
 // this app.
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product.
 func (r *ProductsService) GetPermissions(enterpriseId string, productId string) *ProductsGetPermissionsCall {
 	c := &ProductsGetPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11011,6 +11165,8 @@ type ProductsListCall struct {
 
 // List: Finds approved products that match a query, or all approved
 // products if there is no query.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11223,6 +11379,9 @@ type ProductsUnapproveCall struct {
 
 // Unapprove: Unapproves the specified product (and the relevant app
 // permissions, if any)
+//
+// - enterpriseId: The ID of the enterprise.
+// - productId: The ID of the product.
 func (r *ProductsService) Unapprove(enterpriseId string, productId string) *ProductsUnapproveCall {
 	c := &ProductsUnapproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11338,6 +11497,9 @@ type ServiceaccountkeysDeleteCall struct {
 // account must have been retrieved by calling
 // Enterprises.GetServiceAccount and must have been set as the
 // enterprise service account by calling Enterprises.SetAccount.
+//
+// - enterpriseId: The ID of the enterprise.
+// - keyId: The ID of the key.
 func (r *ServiceaccountkeysService) Delete(enterpriseId string, keyId string) *ServiceaccountkeysDeleteCall {
 	c := &ServiceaccountkeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11454,6 +11616,8 @@ type ServiceaccountkeysInsertCall struct {
 // set as the enterprise service account by calling
 // Enterprises.SetAccount. Only the type of the key should be populated
 // in the resource to be inserted.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *ServiceaccountkeysService) Insert(enterpriseId string, serviceaccountkey *ServiceAccountKey) *ServiceaccountkeysInsertCall {
 	c := &ServiceaccountkeysInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11597,6 +11761,8 @@ type ServiceaccountkeysListCall struct {
 // calling service account must have been retrieved by calling
 // Enterprises.GetServiceAccount and must have been set as the
 // enterprise service account by calling Enterprises.SetAccount.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *ServiceaccountkeysService) List(enterpriseId string) *ServiceaccountkeysListCall {
 	c := &ServiceaccountkeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11741,6 +11907,10 @@ type StorelayoutclustersDeleteCall struct {
 }
 
 // Delete: Deletes a cluster.
+//
+// - clusterId: The ID of the cluster.
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutclustersService) Delete(enterpriseId string, pageId string, clusterId string) *StorelayoutclustersDeleteCall {
 	c := &StorelayoutclustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11863,6 +12033,10 @@ type StorelayoutclustersGetCall struct {
 }
 
 // Get: Retrieves details of a cluster.
+//
+// - clusterId: The ID of the cluster.
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutclustersService) Get(enterpriseId string, pageId string, clusterId string) *StorelayoutclustersGetCall {
 	c := &StorelayoutclustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12025,6 +12199,9 @@ type StorelayoutclustersInsertCall struct {
 }
 
 // Insert: Inserts a new cluster in a page.
+//
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutclustersService) Insert(enterpriseId string, pageId string, storecluster *StoreCluster) *StorelayoutclustersInsertCall {
 	c := &StorelayoutclustersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12174,6 +12351,9 @@ type StorelayoutclustersListCall struct {
 }
 
 // List: Retrieves the details of all clusters on the specified page.
+//
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutclustersService) List(enterpriseId string, pageId string) *StorelayoutclustersListCall {
 	c := &StorelayoutclustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12328,6 +12508,10 @@ type StorelayoutclustersUpdateCall struct {
 }
 
 // Update: Updates a cluster.
+//
+// - clusterId: The ID of the cluster.
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutclustersService) Update(enterpriseId string, pageId string, clusterId string, storecluster *StoreCluster) *StorelayoutclustersUpdateCall {
 	c := &StorelayoutclustersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12485,6 +12669,9 @@ type StorelayoutpagesDeleteCall struct {
 }
 
 // Delete: Deletes a store page.
+//
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutpagesService) Delete(enterpriseId string, pageId string) *StorelayoutpagesDeleteCall {
 	c := &StorelayoutpagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12597,6 +12784,9 @@ type StorelayoutpagesGetCall struct {
 }
 
 // Get: Retrieves details of a store page.
+//
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutpagesService) Get(enterpriseId string, pageId string) *StorelayoutpagesGetCall {
 	c := &StorelayoutpagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12749,6 +12939,8 @@ type StorelayoutpagesInsertCall struct {
 }
 
 // Insert: Inserts a new store page.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *StorelayoutpagesService) Insert(enterpriseId string, storepage *StorePage) *StorelayoutpagesInsertCall {
 	c := &StorelayoutpagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -12888,6 +13080,8 @@ type StorelayoutpagesListCall struct {
 }
 
 // List: Retrieves the details of all pages in the store.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *StorelayoutpagesService) List(enterpriseId string) *StorelayoutpagesListCall {
 	c := &StorelayoutpagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13032,6 +13226,9 @@ type StorelayoutpagesUpdateCall struct {
 }
 
 // Update: Updates the content of a store page.
+//
+// - enterpriseId: The ID of the enterprise.
+// - pageId: The ID of the page.
 func (r *StorelayoutpagesService) Update(enterpriseId string, pageId string, storepage *StorePage) *StorelayoutpagesUpdateCall {
 	c := &StorelayoutpagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13180,6 +13377,9 @@ type UsersDeleteCall struct {
 }
 
 // Delete: Deleted an EMM-managed user.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) Delete(enterpriseId string, userId string) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13295,6 +13495,9 @@ type UsersGenerateAuthenticationTokenCall struct {
 // user account on a device. The generated token is single-use and
 // expires after a few minutes. You can provision a maximum of 10
 // devices per user. This call only works with EMM-managed accounts.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) GenerateAuthenticationToken(enterpriseId string, userId string) *UsersGenerateAuthenticationTokenCall {
 	c := &UsersGenerateAuthenticationTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13435,6 +13638,9 @@ type UsersGetCall struct {
 }
 
 // Get: Retrieves a user's details.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) Get(enterpriseId string, userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13589,6 +13795,9 @@ type UsersGetAvailableProductSetCall struct {
 
 // GetAvailableProductSet: Retrieves the set of products a user is
 // entitled to access.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) GetAvailableProductSet(enterpriseId string, userId string) *UsersGetAvailableProductSetCall {
 	c := &UsersGetAvailableProductSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13745,6 +13954,8 @@ type UsersInsertCall struct {
 // accountType. If a corresponding user already exists with the same
 // account identifier, the user will be updated with the resource. In
 // this case only the displayName field can be changed.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *UsersService) Insert(enterpriseId string, user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13887,6 +14098,9 @@ type UsersListCall struct {
 // supported for Google-managed users. Lookup of the id is not needed
 // for EMM-managed users because the id is already returned in the
 // result of the Users.insert call.
+//
+// - email: The exact primary email address of the user to look up.
+// - enterpriseId: The ID of the enterprise.
 func (r *UsersService) List(enterpriseId string, email string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14041,6 +14255,9 @@ type UsersRevokeDeviceAccessCall struct {
 // provisioned to the user. The user will no longer be able to use the
 // managed Play store on any of their managed devices. This call only
 // works with EMM-managed accounts.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) RevokeDeviceAccess(enterpriseId string, userId string) *UsersRevokeDeviceAccessCall {
 	c := &UsersRevokeDeviceAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14156,6 +14373,9 @@ type UsersSetAvailableProductSetCall struct {
 // entitled to access (referred to as *whitelisted* products). Only
 // products that are approved or products that were previously approved
 // (products with revoked approval) can be whitelisted.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) SetAvailableProductSet(enterpriseId string, userId string, productset *ProductSet) *UsersSetAvailableProductSetCall {
 	c := &UsersSetAvailableProductSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14309,6 +14529,9 @@ type UsersUpdateCall struct {
 // details in the Users resource in the request body. Only the
 // displayName field can be changed. Other fields must either be unset
 // or have the currently active value.
+//
+// - enterpriseId: The ID of the enterprise.
+// - userId: The ID of the user.
 func (r *UsersService) Update(enterpriseId string, userId string, user *User) *UsersUpdateCall {
 	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14457,6 +14680,9 @@ type WebappsDeleteCall struct {
 }
 
 // Delete: Deletes an existing web app.
+//
+// - enterpriseId: The ID of the enterprise.
+// - webAppId: The ID of the web app.
 func (r *WebappsService) Delete(enterpriseId string, webAppId string) *WebappsDeleteCall {
 	c := &WebappsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14569,6 +14795,9 @@ type WebappsGetCall struct {
 }
 
 // Get: Gets an existing web app.
+//
+// - enterpriseId: The ID of the enterprise.
+// - webAppId: The ID of the web app.
 func (r *WebappsService) Get(enterpriseId string, webAppId string) *WebappsGetCall {
 	c := &WebappsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14721,6 +14950,8 @@ type WebappsInsertCall struct {
 }
 
 // Insert: Creates a new web app for the enterprise.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *WebappsService) Insert(enterpriseId string, webapp *WebApp) *WebappsInsertCall {
 	c := &WebappsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14860,6 +15091,8 @@ type WebappsListCall struct {
 }
 
 // List: Retrieves the details of all web apps for a given enterprise.
+//
+// - enterpriseId: The ID of the enterprise.
 func (r *WebappsService) List(enterpriseId string) *WebappsListCall {
 	c := &WebappsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -15004,6 +15237,9 @@ type WebappsUpdateCall struct {
 }
 
 // Update: Updates an existing web app.
+//
+// - enterpriseId: The ID of the enterprise.
+// - webAppId: The ID of the web app.
 func (r *WebappsService) Update(enterpriseId string, webAppId string, webapp *WebApp) *WebappsUpdateCall {
 	c := &WebappsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId

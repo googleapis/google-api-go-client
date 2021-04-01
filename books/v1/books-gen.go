@@ -4922,6 +4922,9 @@ type BookshelvesGetCall struct {
 
 // Get: Retrieves metadata for a specific bookshelf for the specified
 // user.
+//
+// - shelf: ID of bookshelf to retrieve.
+// - userId: ID of user for whom to retrieve bookshelves.
 func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCall {
 	c := &BookshelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5086,6 +5089,8 @@ type BookshelvesListCall struct {
 }
 
 // List: Retrieves a list of public bookshelves for the specified user.
+//
+// - userId: ID of user for whom to retrieve bookshelves.
 func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
 	c := &BookshelvesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5243,6 +5248,9 @@ type BookshelvesVolumesListCall struct {
 
 // List: Retrieves volumes in a specific bookshelf for the specified
 // user.
+//
+// - shelf: ID of bookshelf to retrieve volumes.
+// - userId: ID of user for whom to retrieve bookshelf volumes.
 func (r *BookshelvesVolumesService) List(userId string, shelf string) *BookshelvesVolumesListCall {
 	c := &BookshelvesVolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5609,6 +5617,8 @@ type CloudloadingDeleteBookCall struct {
 }
 
 // DeleteBook: Remove the book and its contents
+//
+// - volumeId: The id of the book to be removed.
 func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBookCall {
 	c := &CloudloadingDeleteBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("volumeId", volumeId)
@@ -5861,6 +5871,8 @@ type DictionaryListOfflineMetadataCall struct {
 
 // ListOfflineMetadata: Returns a list of offline dictionary metadata
 // available
+//
+// - cpksver: The device/version ID from which to request the data.
 func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
 	c := &DictionaryListOfflineMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -6448,6 +6460,9 @@ type LayersGetCall struct {
 }
 
 // Get: Gets the layer summary for a volume.
+//
+// - summaryId: The ID for the layer to get the summary for.
+// - volumeId: The volume to retrieve layers for.
 func (r *LayersService) Get(volumeId string, summaryId string) *LayersGetCall {
 	c := &LayersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -6624,6 +6639,8 @@ type LayersListCall struct {
 }
 
 // List: List the layer summaries for a volume.
+//
+// - volumeId: The volume to retrieve layers for.
 func (r *LayersService) List(volumeId string) *LayersListCall {
 	c := &LayersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -6820,6 +6837,12 @@ type LayersAnnotationDataGetCall struct {
 }
 
 // Get: Gets the annotation data.
+//
+// - annotationDataId: The ID of the annotation data to retrieve.
+// - contentVersion: The content version for the volume you are trying
+//   to retrieve.
+// - layerId: The ID for the layer to get the annotations.
+// - volumeId: The volume to retrieve annotations for.
 func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
 	c := &LayersAnnotationDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -7068,6 +7091,10 @@ type LayersAnnotationDataListCall struct {
 }
 
 // List: Gets the annotation data for a volume and layer.
+//
+// - contentVersion: The content version for the requested volume.
+// - layerId: The ID for the layer to get the annotation data.
+// - volumeId: The volume to retrieve annotation data for.
 func (r *LayersAnnotationDataService) List(volumeId string, layerId string, contentVersion string) *LayersAnnotationDataListCall {
 	c := &LayersAnnotationDataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -7383,6 +7410,10 @@ type LayersVolumeAnnotationsGetCall struct {
 }
 
 // Get: Gets the volume annotation.
+//
+// - annotationId: The ID of the volume annotation to retrieve.
+// - layerId: The ID for the layer to get the annotations.
+// - volumeId: The volume to retrieve annotations for.
 func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, annotationId string) *LayersVolumeAnnotationsGetCall {
 	c := &LayersVolumeAnnotationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -7570,6 +7601,10 @@ type LayersVolumeAnnotationsListCall struct {
 }
 
 // List: Gets the volume annotations for a volume and layer.
+//
+// - contentVersion: The content version for the requested volume.
+// - layerId: The ID for the layer to get the annotations.
+// - volumeId: The volume to retrieve annotations for.
 func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string, contentVersion string) *LayersVolumeAnnotationsListCall {
 	c := &LayersVolumeAnnotationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -8043,6 +8078,10 @@ type MyconfigReleaseDownloadAccessCall struct {
 }
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
+//
+// - cpksver: The device/version ID from which to release the
+//   restriction.
+// - volumeIds: The volume(s) to release restrictions for.
 func (r *MyconfigService) ReleaseDownloadAccess(cpksver string, volumeIds []string) *MyconfigReleaseDownloadAccessCall {
 	c := &MyconfigReleaseDownloadAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -8201,6 +8240,13 @@ type MyconfigRequestAccessCall struct {
 }
 
 // RequestAccess: Request concurrent and download access restrictions.
+//
+// - cpksver: The device/version ID from which to request the
+//   restrictions.
+// - nonce: The client nonce value.
+// - source: String to identify the originator of this request.
+// - volumeId: The volume to request concurrent/download restrictions
+//   for.
 func (r *MyconfigService) RequestAccess(cpksver string, nonce string, source string, volumeId string) *MyconfigRequestAccessCall {
 	c := &MyconfigRequestAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -8393,6 +8439,11 @@ type MyconfigSyncVolumeLicensesCall struct {
 
 // SyncVolumeLicenses: Request downloaded content access for specified
 // volumes on the My eBooks shelf.
+//
+// - cpksver: The device/version ID from which to release the
+//   restriction.
+// - nonce: The client nonce value.
+// - source: String to identify the originator of this request.
 func (r *MyconfigService) SyncVolumeLicenses(cpksver string, nonce string, source string) *MyconfigSyncVolumeLicensesCall {
 	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -8737,6 +8788,8 @@ type MylibraryAnnotationsDeleteCall struct {
 }
 
 // Delete: Deletes an annotation.
+//
+// - annotationId: The ID for the annotation to delete.
 func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnnotationsDeleteCall {
 	c := &MylibraryAnnotationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.annotationId = annotationId
@@ -9330,6 +9383,9 @@ type MylibraryAnnotationsSummaryCall struct {
 }
 
 // Summary: Gets the summary of specified layers.
+//
+// - layerIds: Array of layer IDs to get the summary for.
+// - volumeId: Volume id to get the summary for.
 func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string) *MylibraryAnnotationsSummaryCall {
 	c := &MylibraryAnnotationsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
@@ -9466,6 +9522,8 @@ type MylibraryAnnotationsUpdateCall struct {
 }
 
 // Update: Updates an existing annotation.
+//
+// - annotationId: The ID for the annotation to update.
 func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *Annotation) *MylibraryAnnotationsUpdateCall {
 	c := &MylibraryAnnotationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.annotationId = annotationId
@@ -9616,6 +9674,9 @@ type MylibraryBookshelvesAddVolumeCall struct {
 }
 
 // AddVolume: Adds a volume to a bookshelf.
+//
+// - shelf: ID of bookshelf to which to add a volume.
+// - volumeId: ID of volume to add.
 func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *MylibraryBookshelvesAddVolumeCall {
 	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9795,6 +9856,8 @@ type MylibraryBookshelvesClearVolumesCall struct {
 }
 
 // ClearVolumes: Clears all volumes from a bookshelf.
+//
+// - shelf: ID of bookshelf from which to remove a volume.
 func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBookshelvesClearVolumesCall {
 	c := &MylibraryBookshelvesClearVolumesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9938,6 +10001,8 @@ type MylibraryBookshelvesGetCall struct {
 
 // Get: Retrieves metadata for a specific bookshelf belonging to the
 // authenticated user.
+//
+// - shelf: ID of bookshelf to retrieve.
 func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGetCall {
 	c := &MylibraryBookshelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10235,6 +10300,12 @@ type MylibraryBookshelvesMoveVolumeCall struct {
 }
 
 // MoveVolume: Moves a volume within a bookshelf.
+//
+// - shelf: ID of bookshelf with the volume.
+// - volumeId: ID of volume to move.
+// - volumePosition: Position on shelf to move the item (0 puts the item
+//   before the current first item, 1 puts it between the first and the
+//   second and so on.).
 func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
 	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10393,6 +10464,9 @@ type MylibraryBookshelvesRemoveVolumeCall struct {
 }
 
 // RemoveVolume: Removes a volume from a bookshelf.
+//
+// - shelf: ID of bookshelf from which to remove a volume.
+// - volumeId: ID of volume to remove.
 func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
 	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10567,6 +10641,8 @@ type MylibraryBookshelvesVolumesListCall struct {
 }
 
 // List: Gets volume information for volumes on a bookshelf.
+//
+// - shelf: The bookshelf ID or name retrieve volumes for.
 func (r *MylibraryBookshelvesVolumesService) List(shelf string) *MylibraryBookshelvesVolumesListCall {
 	c := &MylibraryBookshelvesVolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10813,6 +10889,8 @@ type MylibraryReadingpositionsGetCall struct {
 }
 
 // Get: Retrieves my reading position information for a volume.
+//
+// - volumeId: ID of volume for which to retrieve a reading position.
 func (r *MylibraryReadingpositionsService) Get(volumeId string) *MylibraryReadingpositionsGetCall {
 	c := &MylibraryReadingpositionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -10979,6 +11057,11 @@ type MylibraryReadingpositionsSetPositionCall struct {
 }
 
 // SetPosition: Sets my reading position information for a volume.
+//
+// - position: Position string for the new volume reading position.
+// - timestamp: RFC 3339 UTC format timestamp associated with this
+//   reading position.
+// - volumeId: ID of volume for which to update the reading position.
 func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, position string, timestamp string) *MylibraryReadingpositionsSetPositionCall {
 	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -11199,6 +11282,8 @@ type NotificationGetCall struct {
 }
 
 // Get: Returns notification details for a given notification id.
+//
+// - notificationId: String to identify the notification.
 func (r *NotificationService) Get(notificationId string) *NotificationGetCall {
 	c := &NotificationGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("notification_id", notificationId)
@@ -12516,6 +12601,8 @@ type SeriesGetCall struct {
 }
 
 // Get: Returns Series metadata for the given series ids.
+//
+// - seriesId: String that identifies the series.
 func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
 	c := &SeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("series_id", append([]string{}, seriesId...))
@@ -12656,6 +12743,8 @@ type SeriesMembershipGetCall struct {
 }
 
 // Get: Returns Series membership data given the series id.
+//
+// - seriesId: String that identifies the series.
 func (r *SeriesMembershipService) Get(seriesId string) *SeriesMembershipGetCall {
 	c := &SeriesMembershipGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("series_id", seriesId)
@@ -12821,6 +12910,8 @@ type VolumesGetCall struct {
 }
 
 // Get: Gets volume information for a single volume.
+//
+// - volumeId: ID of volume to retrieve.
 func (r *VolumesService) Get(volumeId string) *VolumesGetCall {
 	c := &VolumesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -13050,6 +13141,8 @@ type VolumesListCall struct {
 }
 
 // List: Performs a book search.
+//
+// - q: Full-text search query string.
 func (r *VolumesService) List(q string) *VolumesListCall {
 	c := &VolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("q", q)
@@ -13465,6 +13558,8 @@ type VolumesAssociatedListCall struct {
 }
 
 // List: Return a list of associated books.
+//
+// - volumeId: ID of the source volume.
 func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListCall {
 	c := &VolumesAssociatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -14148,6 +14243,9 @@ type VolumesRecommendedRateCall struct {
 }
 
 // Rate: Rate a recommended book for the current user.
+//
+// - rating: Rating to be given to the volume.
+// - volumeId: ID of the source volume.
 func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *VolumesRecommendedRateCall {
 	c := &VolumesRecommendedRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("rating", rating)

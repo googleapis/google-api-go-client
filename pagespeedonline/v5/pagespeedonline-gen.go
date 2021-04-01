@@ -1041,6 +1041,8 @@ type PagespeedapiRunpagespeedCall struct {
 // Runpagespeed: Runs PageSpeed analysis on the page at the specified
 // URL, and returns PageSpeed scores, a list of suggestions to make that
 // page faster, and other information.
+//
+// - url: The URL to fetch and analyze.
 func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeedCall {
 	c := &PagespeedapiRunpagespeedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("url", url)

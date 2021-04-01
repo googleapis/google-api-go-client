@@ -445,6 +445,10 @@ type ProjectsLocationsWorkflowsExecutionsCancelCall struct {
 }
 
 // Cancel: Cancels an execution of the given name.
+//
+// - name: Name of the execution to be cancelled. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Cancel(name string, cancelexecutionrequest *CancelExecutionRequest) *ProjectsLocationsWorkflowsExecutionsCancelCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -586,6 +590,11 @@ type ProjectsLocationsWorkflowsExecutionsCreateCall struct {
 
 // Create: Creates a new execution using the latest revision of the
 // given workflow.
+//
+// - parent: Name of the workflow for which an execution should be
+//   created. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow} The
+//   latest revision of the workflow will be used.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Create(parent string, execution *Execution) *ProjectsLocationsWorkflowsExecutionsCreateCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -726,6 +735,10 @@ type ProjectsLocationsWorkflowsExecutionsGetCall struct {
 }
 
 // Get: Returns an execution of the given name.
+//
+// - name: Name of the execution to be retrieved. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *ProjectsLocationsWorkflowsExecutionsGetCall {
 	c := &ProjectsLocationsWorkflowsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -903,6 +916,10 @@ type ProjectsLocationsWorkflowsExecutionsListCall struct {
 // the given name. The method returns executions of all workflow
 // revisions. Returned executions are ordered by their start time
 // (newest first).
+//
+// - parent: Name of the workflow for which the executions should be
+//   listed. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c := &ProjectsLocationsWorkflowsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

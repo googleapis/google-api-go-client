@@ -750,6 +750,8 @@ type AchievementsResetCall struct {
 // Reset: Resets the achievement with the given ID for the currently
 // authenticated player. This method is only accessible to whitelisted
 // tester accounts for your application.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) Reset(achievementId string) *AchievementsResetCall {
 	c := &AchievementsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -1087,6 +1089,8 @@ type AchievementsResetForAllPlayersCall struct {
 // ResetForAllPlayers: Resets the achievement with the given ID for all
 // players. This method is only available to user accounts for your
 // developer console. Only draft achievements can be reset.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) ResetForAllPlayers(achievementId string) *AchievementsResetForAllPlayersCall {
 	c := &AchievementsResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -1290,6 +1294,9 @@ type ApplicationsListHiddenCall struct {
 // ListHidden: Get the list of players hidden from the given
 // application. This method is only available to user accounts for your
 // developer console.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsListHiddenCall {
 	c := &ApplicationsListHiddenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1482,6 +1489,8 @@ type EventsResetCall struct {
 // Reset: Resets all player progress on the event with the given ID for
 // the currently authenticated player. This method is only accessible to
 // whitelisted tester accounts for your application.
+//
+// - eventId: The ID of the event.
 func (r *EventsService) Reset(eventId string) *EventsResetCall {
 	c := &EventsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventId = eventId
@@ -1762,6 +1771,8 @@ type EventsResetForAllPlayersCall struct {
 // ResetForAllPlayers: Resets the event with the given ID for all
 // players. This method is only available to user accounts for your
 // developer console. Only draft events can be reset.
+//
+// - eventId: The ID of the event.
 func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPlayersCall {
 	c := &EventsResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventId = eventId
@@ -1965,6 +1976,11 @@ type PlayersHideCall struct {
 // Hide: Hide the given player's leaderboard scores from the given
 // application. This method is only available to user accounts for your
 // developer console.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *PlayersService) Hide(applicationId string, playerId string) *PlayersHideCall {
 	c := &PlayersHideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2078,6 +2094,11 @@ type PlayersUnhideCall struct {
 // Unhide: Unhide the given player's leaderboard scores from the given
 // application. This method is only available to user accounts for your
 // developer console.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *PlayersService) Unhide(applicationId string, playerId string) *PlayersUnhideCall {
 	c := &PlayersUnhideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2190,6 +2211,8 @@ type ScoresResetCall struct {
 // Reset: Resets scores for the leaderboard with the given ID for the
 // currently authenticated player. This method is only accessible to
 // whitelisted tester accounts for your application.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
 	c := &ScoresResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -2527,6 +2550,8 @@ type ScoresResetForAllPlayersCall struct {
 // ResetForAllPlayers: Resets scores for the leaderboard with the given
 // ID for all players. This method is only available to user accounts
 // for your developer console. Only draft leaderboards can be reset.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetForAllPlayersCall {
 	c := &ScoresResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId

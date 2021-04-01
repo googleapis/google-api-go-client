@@ -2262,6 +2262,9 @@ type UsersGetProfileCall struct {
 }
 
 // GetProfile: Gets the current user's Gmail profile.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersService) GetProfile(userId string) *UsersGetProfileCall {
 	c := &UsersGetProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2409,6 +2412,9 @@ type UsersStopCall struct {
 }
 
 // Stop: Stop receiving push notifications for the given user mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersService) Stop(userId string) *UsersStopCall {
 	c := &UsersStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2516,6 +2522,9 @@ type UsersWatchCall struct {
 
 // Watch: Set up or update a push notification watch on the given user
 // mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWatchCall {
 	c := &UsersWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2660,6 +2669,9 @@ type UsersDraftsCreateCall struct {
 }
 
 // Create: Creates a new draft with the `DRAFT` label.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Create(userId string, draft *Draft) *UsersDraftsCreateCall {
 	c := &UsersDraftsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2888,6 +2900,10 @@ type UsersDraftsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified draft. Does
 // not simply trash it.
+//
+// - id: The ID of the draft to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Delete(userId string, id string) *UsersDraftsDeleteCall {
 	c := &UsersDraftsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3004,6 +3020,10 @@ type UsersDraftsGetCall struct {
 }
 
 // Get: Gets the specified draft.
+//
+// - id: The ID of the draft to retrieve.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Get(userId string, id string) *UsersDraftsGetCall {
 	c := &UsersDraftsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3199,6 +3219,9 @@ type UsersDraftsListCall struct {
 }
 
 // List: Lists the drafts in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
 	c := &UsersDraftsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3422,6 +3445,9 @@ type UsersDraftsSendCall struct {
 
 // Send: Sends the specified, existing draft to the recipients in the
 // `To`, `Cc`, and `Bcc` headers.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Send(userId string, draft *Draft) *UsersDraftsSendCall {
 	c := &UsersDraftsSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3651,6 +3677,10 @@ type UsersDraftsUpdateCall struct {
 }
 
 // Update: Replaces a draft's content.
+//
+// - id: The ID of the draft to update.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Update(userId string, id string, draft *Draft) *UsersDraftsUpdateCall {
 	c := &UsersDraftsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3888,6 +3918,9 @@ type UsersHistoryListCall struct {
 
 // List: Lists the history of all changes to the given mailbox. History
 // results are returned in chronological order (increasing `historyId`).
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersHistoryService) List(userId string) *UsersHistoryListCall {
 	c := &UsersHistoryListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4149,6 +4182,9 @@ type UsersLabelsCreateCall struct {
 }
 
 // Create: Creates a new label.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Create(userId string, label *Label) *UsersLabelsCreateCall {
 	c := &UsersLabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4292,6 +4328,10 @@ type UsersLabelsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified label and
 // removes it from any messages and threads that it is applied to.
+//
+// - id: The ID of the label to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Delete(userId string, id string) *UsersLabelsDeleteCall {
 	c := &UsersLabelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4407,6 +4447,10 @@ type UsersLabelsGetCall struct {
 }
 
 // Get: Gets the specified label.
+//
+// - id: The ID of the label to retrieve.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Get(userId string, id string) *UsersLabelsGetCall {
 	c := &UsersLabelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4564,6 +4608,9 @@ type UsersLabelsListCall struct {
 }
 
 // List: Lists all labels in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) List(userId string) *UsersLabelsListCall {
 	c := &UsersLabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4713,6 +4760,10 @@ type UsersLabelsPatchCall struct {
 }
 
 // Patch: Patch the specified label.
+//
+// - id: The ID of the label to update.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Patch(userId string, id string, label *Label) *UsersLabelsPatchCall {
 	c := &UsersLabelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4865,6 +4916,10 @@ type UsersLabelsUpdateCall struct {
 }
 
 // Update: Updates the specified label.
+//
+// - id: The ID of the label to update.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Update(userId string, id string, label *Label) *UsersLabelsUpdateCall {
 	c := &UsersLabelsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5018,6 +5073,9 @@ type UsersMessagesBatchDeleteCall struct {
 // BatchDelete: Deletes many messages by message ID. Provides no
 // guarantees that messages were not already deleted or even existed at
 // all.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) BatchDelete(userId string, batchdeletemessagesrequest *BatchDeleteMessagesRequest) *UsersMessagesBatchDeleteCall {
 	c := &UsersMessagesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5130,6 +5188,9 @@ type UsersMessagesBatchModifyCall struct {
 }
 
 // BatchModify: Modifies the labels on the specified messages.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) BatchModify(userId string, batchmodifymessagesrequest *BatchModifyMessagesRequest) *UsersMessagesBatchModifyCall {
 	c := &UsersMessagesBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5244,6 +5305,10 @@ type UsersMessagesDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified message.
 // This operation cannot be undone. Prefer `messages.trash` instead.
+//
+// - id: The ID of the message to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Delete(userId string, id string) *UsersMessagesDeleteCall {
 	c := &UsersMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5357,6 +5422,13 @@ type UsersMessagesGetCall struct {
 }
 
 // Get: Gets the specified message.
+//
+// - id: The ID of the message to retrieve. This ID is usually retrieved
+//   using `messages.list`. The ID is also contained in the result when
+//   a message is inserted (`messages.insert`) or imported
+//   (`messages.import`).
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Get(userId string, id string) *UsersMessagesGetCall {
 	c := &UsersMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5572,6 +5644,9 @@ type UsersMessagesImportCall struct {
 // standard email delivery scanning and classification similar to
 // receiving via SMTP. Does not send a message. Note: This function
 // doesn't trigger forwarding rules or filters set up by the user.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMessagesImportCall {
 	c := &UsersMessagesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5870,6 +5945,9 @@ type UsersMessagesInsertCall struct {
 // Insert: Directly inserts a message into only this user's mailbox
 // similar to `IMAP APPEND`, bypassing most scanning and classification.
 // Does not send a message.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMessagesInsertCall {
 	c := &UsersMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6137,6 +6215,9 @@ type UsersMessagesListCall struct {
 }
 
 // List: Lists the messages in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) List(userId string) *UsersMessagesListCall {
 	c := &UsersMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6373,6 +6454,10 @@ type UsersMessagesModifyCall struct {
 }
 
 // Modify: Modifies the labels on the specified message.
+//
+// - id: The ID of the message to modify.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Modify(userId string, id string, modifymessagerequest *ModifyMessageRequest) *UsersMessagesModifyCall {
 	c := &UsersMessagesModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6525,6 +6610,9 @@ type UsersMessagesSendCall struct {
 
 // Send: Sends the specified message to the recipients in the `To`,
 // `Cc`, and `Bcc` headers.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Send(userId string, message *Message) *UsersMessagesSendCall {
 	c := &UsersMessagesSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6753,6 +6841,10 @@ type UsersMessagesTrashCall struct {
 }
 
 // Trash: Moves the specified message to the trash.
+//
+// - id: The ID of the message to Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Trash(userId string, id string) *UsersMessagesTrashCall {
 	c := &UsersMessagesTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6894,6 +6986,10 @@ type UsersMessagesUntrashCall struct {
 }
 
 // Untrash: Removes the specified message from the trash.
+//
+// - id: The ID of the message to remove from Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Untrash(userId string, id string) *UsersMessagesUntrashCall {
 	c := &UsersMessagesUntrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7037,6 +7133,11 @@ type UsersMessagesAttachmentsGetCall struct {
 }
 
 // Get: Gets the specified message attachment.
+//
+// - id: The ID of the attachment.
+// - messageId: The ID of the message containing the attachment.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesAttachmentsService) Get(userId string, messageId string, id string) *UsersMessagesAttachmentsGetCall {
 	c := &UsersMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7204,6 +7305,9 @@ type UsersSettingsGetAutoForwardingCall struct {
 
 // GetAutoForwarding: Gets the auto-forwarding setting for the specified
 // account.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetAutoForwarding(userId string) *UsersSettingsGetAutoForwardingCall {
 	c := &UsersSettingsGetAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7351,6 +7455,9 @@ type UsersSettingsGetImapCall struct {
 }
 
 // GetImap: Gets IMAP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetImap(userId string) *UsersSettingsGetImapCall {
 	c := &UsersSettingsGetImapCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7498,6 +7605,9 @@ type UsersSettingsGetLanguageCall struct {
 }
 
 // GetLanguage: Gets language settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetLanguage(userId string) *UsersSettingsGetLanguageCall {
 	c := &UsersSettingsGetLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7645,6 +7755,9 @@ type UsersSettingsGetPopCall struct {
 }
 
 // GetPop: Gets POP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetPop(userId string) *UsersSettingsGetPopCall {
 	c := &UsersSettingsGetPopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7792,6 +7905,9 @@ type UsersSettingsGetVacationCall struct {
 }
 
 // GetVacation: Gets vacation responder settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetVacation(userId string) *UsersSettingsGetVacationCall {
 	c := &UsersSettingsGetVacationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7943,6 +8059,9 @@ type UsersSettingsUpdateAutoForwardingCall struct {
 // when auto-forwarding is enabled. This method is only available to
 // service account clients that have been delegated domain-wide
 // authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateAutoForwarding(userId string, autoforwarding *AutoForwarding) *UsersSettingsUpdateAutoForwardingCall {
 	c := &UsersSettingsUpdateAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8083,6 +8202,9 @@ type UsersSettingsUpdateImapCall struct {
 }
 
 // UpdateImap: Updates IMAP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateImap(userId string, imapsettings *ImapSettings) *UsersSettingsUpdateImapCall {
 	c := &UsersSettingsUpdateImapCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8228,6 +8350,9 @@ type UsersSettingsUpdateLanguageCall struct {
 // because the requested `displayLanguage` may not be directly supported
 // by Gmail but have a close variant that is, and so the variant may be
 // chosen and saved instead.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateLanguage(userId string, languagesettings *LanguageSettings) *UsersSettingsUpdateLanguageCall {
 	c := &UsersSettingsUpdateLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8368,6 +8493,9 @@ type UsersSettingsUpdatePopCall struct {
 }
 
 // UpdatePop: Updates POP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdatePop(userId string, popsettings *PopSettings) *UsersSettingsUpdatePopCall {
 	c := &UsersSettingsUpdatePopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8508,6 +8636,9 @@ type UsersSettingsUpdateVacationCall struct {
 }
 
 // UpdateVacation: Updates vacation responder settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateVacation(userId string, vacationsettings *VacationSettings) *UsersSettingsUpdateVacationCall {
 	c := &UsersSettingsUpdateVacationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8659,6 +8790,9 @@ type UsersSettingsDelegatesCreateCall struct {
 // to a one minute delay before the new delegate is available for use.
 // This method is only available to service account clients that have
 // been delegated domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Create(userId string, delegate *Delegate) *UsersSettingsDelegatesCreateCall {
 	c := &UsersSettingsDelegatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8804,6 +8938,11 @@ type UsersSettingsDelegatesDeleteCall struct {
 // by their primary email address, and not an email alias. This method
 // is only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - delegateEmail: The email address of the user to be removed as a
+//   delegate.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Delete(userId string, delegateEmail string) *UsersSettingsDelegatesDeleteCall {
 	c := &UsersSettingsDelegatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8920,6 +9059,11 @@ type UsersSettingsDelegatesGetCall struct {
 // referred to by their primary email address, and not an email alias.
 // This method is only available to service account clients that have
 // been delegated domain-wide authority.
+//
+// - delegateEmail: The email address of the user whose delegate
+//   relationship is to be retrieved.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Get(userId string, delegateEmail string) *UsersSettingsDelegatesGetCall {
 	c := &UsersSettingsDelegatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9078,6 +9222,9 @@ type UsersSettingsDelegatesListCall struct {
 // List: Lists the delegates for the specified account. This method is
 // only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) List(userId string) *UsersSettingsDelegatesListCall {
 	c := &UsersSettingsDelegatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9226,6 +9373,9 @@ type UsersSettingsFiltersCreateCall struct {
 
 // Create: Creates a filter. Note: you can only create a maximum of
 // 1,000 filters.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Create(userId string, filter *Filter) *UsersSettingsFiltersCreateCall {
 	c := &UsersSettingsFiltersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9366,6 +9516,10 @@ type UsersSettingsFiltersDeleteCall struct {
 }
 
 // Delete: Deletes a filter.
+//
+// - id: The ID of the filter to be deleted.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Delete(userId string, id string) *UsersSettingsFiltersDeleteCall {
 	c := &UsersSettingsFiltersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9479,6 +9633,10 @@ type UsersSettingsFiltersGetCall struct {
 }
 
 // Get: Gets a filter.
+//
+// - id: The ID of the filter to be fetched.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Get(userId string, id string) *UsersSettingsFiltersGetCall {
 	c := &UsersSettingsFiltersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9635,6 +9793,9 @@ type UsersSettingsFiltersListCall struct {
 }
 
 // List: Lists the message filters of a Gmail user.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) List(userId string) *UsersSettingsFiltersListCall {
 	c := &UsersSettingsFiltersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9787,6 +9948,9 @@ type UsersSettingsForwardingAddressesCreateCall struct {
 // will be created with verification status set to `accepted`. This
 // method is only available to service account clients that have been
 // delegated domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Create(userId string, forwardingaddress *ForwardingAddress) *UsersSettingsForwardingAddressesCreateCall {
 	c := &UsersSettingsForwardingAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9930,6 +10094,10 @@ type UsersSettingsForwardingAddressesDeleteCall struct {
 // verification that may have been required. This method is only
 // available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - forwardingEmail: The forwarding address to be deleted.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Delete(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesDeleteCall {
 	c := &UsersSettingsForwardingAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10043,6 +10211,10 @@ type UsersSettingsForwardingAddressesGetCall struct {
 }
 
 // Get: Gets the specified forwarding address.
+//
+// - forwardingEmail: The forwarding address to be retrieved.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Get(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesGetCall {
 	c := &UsersSettingsForwardingAddressesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10199,6 +10371,9 @@ type UsersSettingsForwardingAddressesListCall struct {
 }
 
 // List: Lists the forwarding addresses for the specified account.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) List(userId string) *UsersSettingsForwardingAddressesListCall {
 	c := &UsersSettingsForwardingAddressesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10355,6 +10530,9 @@ type UsersSettingsSendAsCreateCall struct {
 // sanitize the HTML before saving it with the alias. This method is
 // only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Create(userId string, sendas *SendAs) *UsersSettingsSendAsCreateCall {
 	c := &UsersSettingsSendAsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10498,6 +10676,10 @@ type UsersSettingsSendAsDeleteCall struct {
 // that may have been required for using it. This method is only
 // available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - sendAsEmail: The send-as alias to be deleted.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Delete(userId string, sendAsEmail string) *UsersSettingsSendAsDeleteCall {
 	c := &UsersSettingsSendAsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10612,6 +10794,10 @@ type UsersSettingsSendAsGetCall struct {
 
 // Get: Gets the specified send-as alias. Fails with an HTTP 404 error
 // if the specified address is not a member of the collection.
+//
+// - sendAsEmail: The send-as alias to be retrieved.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Get(userId string, sendAsEmail string) *UsersSettingsSendAsGetCall {
 	c := &UsersSettingsSendAsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10770,6 +10956,9 @@ type UsersSettingsSendAsListCall struct {
 // List: Lists the send-as aliases for the specified account. The result
 // includes the primary send-as address associated with the account as
 // well as any custom "from" aliases.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) List(userId string) *UsersSettingsSendAsListCall {
 	c := &UsersSettingsSendAsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10918,6 +11107,10 @@ type UsersSettingsSendAsPatchCall struct {
 }
 
 // Patch: Patch the specified send-as alias.
+//
+// - sendAsEmail: The send-as alias to be updated.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Patch(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsPatchCall {
 	c := &UsersSettingsSendAsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11073,6 +11266,10 @@ type UsersSettingsSendAsUpdateCall struct {
 // other than the primary address for the account can only be updated by
 // service account clients that have been delegated domain-wide
 // authority.
+//
+// - sendAsEmail: The send-as alias to be updated.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Update(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsUpdateCall {
 	c := &UsersSettingsSendAsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11226,6 +11423,10 @@ type UsersSettingsSendAsVerifyCall struct {
 // address. The verification status must be `pending`. This method is
 // only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - sendAsEmail: The send-as alias to be verified.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Verify(userId string, sendAsEmail string) *UsersSettingsSendAsVerifyCall {
 	c := &UsersSettingsSendAsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11340,6 +11541,12 @@ type UsersSettingsSendAsSmimeInfoDeleteCall struct {
 
 // Delete: Deletes the specified S/MIME config for the specified send-as
 // alias.
+//
+// - id: The immutable ID for the SmimeInfo.
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Delete(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoDeleteCall {
 	c := &UsersSettingsSendAsSmimeInfoDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11465,6 +11672,12 @@ type UsersSettingsSendAsSmimeInfoGetCall struct {
 
 // Get: Gets the specified S/MIME config for the specified send-as
 // alias.
+//
+// - id: The immutable ID for the SmimeInfo.
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Get(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoGetCall {
 	c := &UsersSettingsSendAsSmimeInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11633,6 +11846,11 @@ type UsersSettingsSendAsSmimeInfoInsertCall struct {
 
 // Insert: Insert (upload) the given S/MIME config for the specified
 // send-as alias. Note that pkcs12 format is required for the key.
+//
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Insert(userId string, sendAsEmail string, smimeinfo *SmimeInfo) *UsersSettingsSendAsSmimeInfoInsertCall {
 	c := &UsersSettingsSendAsSmimeInfoInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11784,6 +12002,11 @@ type UsersSettingsSendAsSmimeInfoListCall struct {
 }
 
 // List: Lists S/MIME configs for the specified send-as alias.
+//
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) List(userId string, sendAsEmail string) *UsersSettingsSendAsSmimeInfoListCall {
 	c := &UsersSettingsSendAsSmimeInfoListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11943,6 +12166,12 @@ type UsersSettingsSendAsSmimeInfoSetDefaultCall struct {
 
 // SetDefault: Sets the default S/MIME config for the specified send-as
 // alias.
+//
+// - id: The immutable ID for the SmimeInfo.
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) SetDefault(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoSetDefaultCall {
 	c := &UsersSettingsSendAsSmimeInfoSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12066,6 +12295,10 @@ type UsersThreadsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified thread.
 // This operation cannot be undone. Prefer `threads.trash` instead.
+//
+// - id: ID of the Thread to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Delete(userId string, id string) *UsersThreadsDeleteCall {
 	c := &UsersThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12179,6 +12412,10 @@ type UsersThreadsGetCall struct {
 }
 
 // Get: Gets the specified thread.
+//
+// - id: The ID of the thread to retrieve.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall {
 	c := &UsersThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12384,6 +12621,9 @@ type UsersThreadsListCall struct {
 }
 
 // List: Lists the threads in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) List(userId string) *UsersThreadsListCall {
 	c := &UsersThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12621,6 +12861,10 @@ type UsersThreadsModifyCall struct {
 
 // Modify: Modifies the labels applied to the thread. This applies to
 // all messages in the thread.
+//
+// - id: The ID of the thread to modify.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Modify(userId string, id string, modifythreadrequest *ModifyThreadRequest) *UsersThreadsModifyCall {
 	c := &UsersThreadsModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12771,6 +13015,10 @@ type UsersThreadsTrashCall struct {
 }
 
 // Trash: Moves the specified thread to the trash.
+//
+// - id: The ID of the thread to Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Trash(userId string, id string) *UsersThreadsTrashCall {
 	c := &UsersThreadsTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12912,6 +13160,10 @@ type UsersThreadsUntrashCall struct {
 }
 
 // Untrash: Removes the specified thread from the trash.
+//
+// - id: The ID of the thread to remove from Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Untrash(userId string, id string) *UsersThreadsUntrashCall {
 	c := &UsersThreadsUntrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId

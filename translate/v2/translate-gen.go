@@ -659,6 +659,10 @@ type DetectionsListCall struct {
 }
 
 // List: Detects the language of text within a request.
+//
+// - q: The input text upon which to perform language detection. Repeat
+//   this
+//   parameter to perform language detection on multiple text inputs.
 func (r *DetectionsService) List(q []string) *DetectionsListCall {
 	c := &DetectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("q", append([]string{}, q...))
@@ -957,6 +961,13 @@ type TranslationsListCall struct {
 }
 
 // List: Translates input text, returning translated text.
+//
+// - q: The input text to translate. Repeat this parameter to perform
+//   translation
+// operations on multiple text inputs.
+// - target: The language to use for translation of the input text, set
+//   to one of the
+// language codes listed in Language Support.
 func (r *TranslationsService) List(q []string, target string) *TranslationsListCall {
 	c := &TranslationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("q", append([]string{}, q...))

@@ -896,6 +896,9 @@ type ProjectsLocationsConnectionsCreateCall struct {
 }
 
 // Create: Creates a new connection.
+//
+// - parent: Parent resource name. Must be in the format
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectionsService) Create(parent string, connection *Connection) *ProjectsLocationsConnectionsCreateCall {
 	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1048,6 +1051,10 @@ type ProjectsLocationsConnectionsDeleteCall struct {
 }
 
 // Delete: Deletes connection and associated credential.
+//
+// - name: Name of the deleted connection, for example:
+//   `projects/{project_id}/locations/{location_id}/connections/{connecti
+//   on_id}`.
 func (r *ProjectsLocationsConnectionsService) Delete(name string) *ProjectsLocationsConnectionsDeleteCall {
 	c := &ProjectsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1180,6 +1187,10 @@ type ProjectsLocationsConnectionsGetCall struct {
 }
 
 // Get: Returns specified connection.
+//
+// - name: Name of the requested connection, for example:
+//   `projects/{project_id}/locations/{location_id}/connections/{connecti
+//   on_id}`.
 func (r *ProjectsLocationsConnectionsService) Get(name string) *ProjectsLocationsConnectionsGetCall {
 	c := &ProjectsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1327,6 +1338,10 @@ type ProjectsLocationsConnectionsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsConnectionsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1468,6 +1483,9 @@ type ProjectsLocationsConnectionsListCall struct {
 }
 
 // List: Returns a list of connections in the given project.
+//
+// - parent: Parent resource name. Must be in the form:
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
 	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1660,6 +1678,10 @@ type ProjectsLocationsConnectionsPatchCall struct {
 // Patch: Updates the specified connection. For security reasons, also
 // resets credential if connection properties are in the update field
 // mask.
+//
+// - name: Name of the connection to update, for example:
+//   `projects/{project_id}/locations/{location_id}/connections/{connecti
+//   on_id}`.
 func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Connection) *ProjectsLocationsConnectionsPatchCall {
 	c := &ProjectsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1816,6 +1838,10 @@ type ProjectsLocationsConnectionsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1962,6 +1988,10 @@ type ProjectsLocationsConnectionsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2103,6 +2133,10 @@ type ProjectsLocationsConnectionsUpdateCredentialCall struct {
 }
 
 // UpdateCredential: Sets the credential for the specified connection.
+//
+// - name: Name of the connection, for example:
+//   `projects/{project_id}/locations/{location_id}/connections/{connecti
+//   on_id}/credential`.
 func (r *ProjectsLocationsConnectionsService) UpdateCredential(name string, connectioncredential *ConnectionCredential) *ProjectsLocationsConnectionsUpdateCredentialCall {
 	c := &ProjectsLocationsConnectionsUpdateCredentialCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

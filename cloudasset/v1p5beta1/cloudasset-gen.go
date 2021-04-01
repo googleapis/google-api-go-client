@@ -2195,6 +2195,12 @@ type AssetsListCall struct {
 
 // List: Lists assets with time and resource types and returns paged
 // results in response.
+//
+// - parent: Name of the organization or project the assets belong to.
+//   Format: "organizations/[organization-number]" (such as
+//   "organizations/123"), "projects/[project-number]" (such as
+//   "projects/my-project-id"), or "projects/[project-id]" (such as
+//   "projects/12345").
 func (r *AssetsService) List(parent string) *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

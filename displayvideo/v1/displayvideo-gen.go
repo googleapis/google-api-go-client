@@ -13523,6 +13523,8 @@ type AdvertisersAuditCall struct {
 // resource type under the advertiser provided. Used entities count
 // towards their respective resource limit. See
 // https://support.google.com/displayvideo/answer/6071450.
+//
+// - advertiserId: The ID of the advertiser to audit.
 func (r *AdvertisersService) Audit(advertiserId int64) *AdvertisersAuditCall {
 	c := &AdvertisersAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13690,6 +13692,8 @@ type AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall struct {
 // BulkEditAdvertiserAssignedTargetingOptionsRequest.delete_requests and
 // then create the assigned targeting options provided in
 // BulkEditAdvertiserAssignedTargetingOptionsRequest.create_requests .
+//
+// - advertiserId: The ID of the advertiser.
 func (r *AdvertisersService) BulkEditAdvertiserAssignedTargetingOptions(advertiserId int64, bulkeditadvertiserassignedtargetingoptionsrequest *BulkEditAdvertiserAssignedTargetingOptionsRequest) *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall {
 	c := &AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13834,6 +13838,8 @@ type AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall struct {
 
 // BulkListAdvertiserAssignedTargetingOptions: Lists assigned targeting
 // options of an advertiser across targeting types.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
 func (r *AdvertisersService) BulkListAdvertiserAssignedTargetingOptions(advertiserId int64) *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall {
 	c := &AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14194,6 +14200,8 @@ type AdvertisersDeleteCall struct {
 // Delete: Deletes an advertiser. Deleting an advertiser will delete all
 // of its child resources, for example, campaigns, insertion orders and
 // line items. A deleted advertiser cannot be recovered.
+//
+// - advertiserId: The ID of the advertiser we need to delete.
 func (r *AdvertisersService) Delete(advertiserId int64) *AdvertisersDeleteCall {
 	c := &AdvertisersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14326,6 +14334,8 @@ type AdvertisersGetCall struct {
 }
 
 // Get: Gets an advertiser.
+//
+// - advertiserId: The ID of the advertiser to fetch.
 func (r *AdvertisersService) Get(advertiserId int64) *AdvertisersGetCall {
 	c := &AdvertisersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14709,6 +14719,9 @@ type AdvertisersPatchCall struct {
 
 // Patch: Updates an existing advertiser. Returns the updated advertiser
 // if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser.
+//   Assigned by the system.
 func (r *AdvertisersService) Patch(advertiserId int64, advertiser *Advertiser) *AdvertisersPatchCall {
 	c := &AdvertisersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14866,6 +14879,8 @@ type AdvertisersAssetsUploadCall struct {
 // Upload: Uploads an asset. Returns the ID of the newly uploaded asset
 // if successful. The asset file size should be no more than 10 MB for
 // images, 200 MB for ZIP files, and 1 GB for videos.
+//
+// - advertiserId: The ID of the advertiser this asset belongs to.
 func (r *AdvertisersAssetsService) Upload(advertiserId int64, createassetrequest *CreateAssetRequest) *AdvertisersAssetsUploadCall {
 	c := &AdvertisersAssetsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15088,6 +15103,10 @@ type AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall struct {
 
 // BulkListCampaignAssignedTargetingOptions: Lists assigned targeting
 // options of a campaign across targeting types.
+//
+// - advertiserId: The ID of the advertiser the campaign belongs to.
+// - campaignId: The ID of the campaign to list assigned targeting
+//   options for.
 func (r *AdvertisersCampaignsService) BulkListCampaignAssignedTargetingOptions(advertiserId int64, campaignId int64) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
 	c := &AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15336,6 +15355,9 @@ type AdvertisersCampaignsCreateCall struct {
 
 // Create: Creates a new campaign. Returns the newly created campaign if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   campaign belongs to.
 func (r *AdvertisersCampaignsService) Create(advertiserId int64, campaign *Campaign) *AdvertisersCampaignsCreateCall {
 	c := &AdvertisersCampaignsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15480,6 +15502,9 @@ type AdvertisersCampaignsDeleteCall struct {
 // Delete: Permanently deletes a campaign. A deleted campaign cannot be
 // recovered. The campaign should be archived first, i.e. set
 // entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.
+//
+// - advertiserId: The ID of the advertiser this campaign belongs to.
+// - campaignId: The ID of the campaign we need to delete.
 func (r *AdvertisersCampaignsService) Delete(advertiserId int64, campaignId int64) *AdvertisersCampaignsDeleteCall {
 	c := &AdvertisersCampaignsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15625,6 +15650,9 @@ type AdvertisersCampaignsGetCall struct {
 }
 
 // Get: Gets a campaign.
+//
+// - advertiserId: The ID of the advertiser this campaign belongs to.
+// - campaignId: The ID of the campaign to fetch.
 func (r *AdvertisersCampaignsService) Get(advertiserId int64, campaignId int64) *AdvertisersCampaignsGetCall {
 	c := &AdvertisersCampaignsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15785,6 +15813,8 @@ type AdvertisersCampaignsListCall struct {
 // order_by parameter. If a filter by entity_status is not specified,
 // campaigns with `ENTITY_STATUS_ARCHIVED` will not be included in the
 // results.
+//
+// - advertiserId: The ID of the advertiser to list campaigns for.
 func (r *AdvertisersCampaignsService) List(advertiserId int64) *AdvertisersCampaignsListCall {
 	c := &AdvertisersCampaignsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16025,6 +16055,11 @@ type AdvertisersCampaignsPatchCall struct {
 
 // Patch: Updates an existing campaign. Returns the updated campaign if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   campaign belongs to.
+// - campaignId: Output only. The unique ID of the campaign. Assigned by
+//   the system.
 func (r *AdvertisersCampaignsService) Patch(advertiserId int64, campaignId int64, campaign *Campaign) *AdvertisersCampaignsPatchCall {
 	c := &AdvertisersCampaignsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16194,6 +16229,30 @@ type AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to a campaign.
+//
+// - advertiserId: The ID of the advertiser the campaign belongs to.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this campaign that identifies the assigned targeting option
+//   being requested.
+// - campaignId: The ID of the campaign the assigned targeting option
+//   belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//   `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//   `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//   `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//   `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//   `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_LANGUAGE`
+//   * `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//   `TARGETING_TYPE_PARENTAL_STATUS` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//   `TARGETING_TYPE_SUB_EXCHANGE` *
+//   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
+//   `TARGETING_TYPE_VIEWABILITY`.
 func (r *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, campaignId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16453,6 +16512,27 @@ type AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall struct {
 
 // List: Lists the targeting options assigned to a campaign for a
 // specified targeting type.
+//
+// - advertiserId: The ID of the advertiser the campaign belongs to.
+// - campaignId: The ID of the campaign to list assigned targeting
+//   options for.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//   `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//   `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//   `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//   `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//   `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_LANGUAGE`
+//   * `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//   `TARGETING_TYPE_PARENTAL_STATUS` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//   `TARGETING_TYPE_SUB_EXCHANGE` *
+//   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
+//   `TARGETING_TYPE_VIEWABILITY`.
 func (r *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, campaignId int64, targetingType string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16790,6 +16870,9 @@ type AdvertisersChannelsCreateCall struct {
 
 // Create: Creates a new channel. Returns the newly created channel if
 // successful.
+//
+// - advertiserId: The ID of the advertiser that owns the created
+//   channel.
 func (r *AdvertisersChannelsService) Create(advertiserId int64, channel *Channel) *AdvertisersChannelsCreateCall {
 	c := &AdvertisersChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16945,6 +17028,10 @@ type AdvertisersChannelsGetCall struct {
 }
 
 // Get: Gets a channel for a partner or advertiser.
+//
+// - advertiserId: The ID of the advertiser that owns the fetched
+//   channel.
+// - channelId: The ID of the channel to fetch.
 func (r *AdvertisersChannelsService) Get(advertiserId int64, channelId int64) *AdvertisersChannelsGetCall {
 	c := &AdvertisersChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17114,6 +17201,8 @@ type AdvertisersChannelsListCall struct {
 }
 
 // List: Lists channels for a partner or advertiser.
+//
+// - advertiserId: The ID of the advertiser that owns the channels.
 func (r *AdvertisersChannelsService) List(advertiserId int64) *AdvertisersChannelsListCall {
 	c := &AdvertisersChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17357,6 +17446,11 @@ type AdvertisersChannelsPatchCall struct {
 }
 
 // Patch: Updates a channel. Returns the updated channel if successful.
+//
+// - advertiserId: The ID of the advertiser that owns the created
+//   channel.
+// - channelId: Output only. The unique ID of the channel. Assigned by
+//   the system.
 func (r *AdvertisersChannelsService) Patch(advertiserId int64, channelId int64, channel *Channel) *AdvertisersChannelsPatchCall {
 	c := &AdvertisersChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17537,6 +17631,10 @@ type AdvertisersChannelsSitesBulkEditCall struct {
 // BulkEdit: Bulk edits sites under a single channel. The operation will
 // delete the sites provided in BulkEditSitesRequest.deleted_sites and
 // then create the sites provided in BulkEditSitesRequest.created_sites.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel to which the sites belong.
 func (r *AdvertisersChannelsSitesService) BulkEdit(advertiserId int64, channelId int64, bulkeditsitesrequest *BulkEditSitesRequest) *AdvertisersChannelsSitesBulkEditCall {
 	c := &AdvertisersChannelsSitesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17689,6 +17787,11 @@ type AdvertisersChannelsSitesCreateCall struct {
 }
 
 // Create: Creates a site in a channel.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel in which the site will be
+//   created.
 func (r *AdvertisersChannelsSitesService) Create(advertiserId int64, channelId int64, site *Site) *AdvertisersChannelsSitesCreateCall {
 	c := &AdvertisersChannelsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17854,6 +17957,11 @@ type AdvertisersChannelsSitesDeleteCall struct {
 }
 
 // Delete: Deletes a site from a channel.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel to which the site belongs.
+// - urlOrAppId: The URL or app ID of the site to delete.
 func (r *AdvertisersChannelsSitesService) Delete(advertiserId int64, channelId int64, urlOrAppId string) *AdvertisersChannelsSitesDeleteCall {
 	c := &AdvertisersChannelsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18020,6 +18128,11 @@ type AdvertisersChannelsSitesListCall struct {
 }
 
 // List: Lists sites in a channel.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel to which the requested
+//   sites belong.
 func (r *AdvertisersChannelsSitesService) List(advertiserId int64, channelId int64) *AdvertisersChannelsSitesListCall {
 	c := &AdvertisersChannelsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18274,6 +18387,11 @@ type AdvertisersChannelsSitesReplaceCall struct {
 // Replace: Replaces all of the sites under a single channel. The
 // operation will replace the sites under a channel with the sites
 // provided in ReplaceSitesRequest.new_sites.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel whose sites will be
+//   replaced.
 func (r *AdvertisersChannelsSitesService) Replace(advertiserId int64, channelId int64, replacesitesrequest *ReplaceSitesRequest) *AdvertisersChannelsSitesReplaceCall {
 	c := &AdvertisersChannelsSitesReplaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18426,6 +18544,9 @@ type AdvertisersCreativesCreateCall struct {
 
 // Create: Creates a new creative. Returns the newly created creative if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   creative belongs to.
 func (r *AdvertisersCreativesService) Create(advertiserId int64, creative *Creative) *AdvertisersCreativesCreateCall {
 	c := &AdvertisersCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18570,6 +18691,9 @@ type AdvertisersCreativesDeleteCall struct {
 // creative does not exist. The creative should be archived first, i.e.
 // set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be
 // deleted.
+//
+// - advertiserId: The ID of the advertiser this creative belongs to.
+// - creativeId: The ID of the creative to be deleted.
 func (r *AdvertisersCreativesService) Delete(advertiserId int64, creativeId int64) *AdvertisersCreativesDeleteCall {
 	c := &AdvertisersCreativesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18714,6 +18838,9 @@ type AdvertisersCreativesGetCall struct {
 }
 
 // Get: Gets a creative.
+//
+// - advertiserId: The ID of the advertiser this creative belongs to.
+// - creativeId: The ID of the creative to fetch.
 func (r *AdvertisersCreativesService) Get(advertiserId int64, creativeId int64) *AdvertisersCreativesGetCall {
 	c := &AdvertisersCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18873,6 +19000,8 @@ type AdvertisersCreativesListCall struct {
 // order_by parameter. If a filter by entity_status is not specified,
 // creatives with `ENTITY_STATUS_ARCHIVED` will not be included in the
 // results.
+//
+// - advertiserId: The ID of the advertiser to list creatives for.
 func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreativesListCall {
 	c := &AdvertisersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19133,6 +19262,11 @@ type AdvertisersCreativesPatchCall struct {
 
 // Patch: Updates an existing creative. Returns the updated creative if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   creative belongs to.
+// - creativeId: Output only. The unique ID of the creative. Assigned by
+//   the system.
 func (r *AdvertisersCreativesService) Patch(advertiserId int64, creativeId int64, creative *Creative) *AdvertisersCreativesPatchCall {
 	c := &AdvertisersCreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19300,6 +19434,11 @@ type AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCal
 
 // BulkListInsertionOrderAssignedTargetingOptions: Lists assigned
 // targeting options of an insertion order across targeting types.
+//
+// - advertiserId: The ID of the advertiser the insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order to list assigned
+//   targeting options for.
 func (r *AdvertisersInsertionOrdersService) BulkListInsertionOrderAssignedTargetingOptions(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
 	c := &AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19549,6 +19688,9 @@ type AdvertisersInsertionOrdersCreateCall struct {
 
 // Create: Creates a new insertion order. Returns the newly created
 // insertion order if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   insertion order belongs to.
 func (r *AdvertisersInsertionOrdersService) Create(advertiserId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersCreateCall {
 	c := &AdvertisersInsertionOrdersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19693,6 +19835,10 @@ type AdvertisersInsertionOrdersDeleteCall struct {
 // the insertion order does not exist. The insertion order should be
 // archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`,
 // to be able to delete it.
+//
+// - advertiserId: The ID of the advertiser this insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order we need to delete.
 func (r *AdvertisersInsertionOrdersService) Delete(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersDeleteCall {
 	c := &AdvertisersInsertionOrdersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19838,6 +19984,10 @@ type AdvertisersInsertionOrdersGetCall struct {
 
 // Get: Gets an insertion order. Returns error code `NOT_FOUND` if the
 // insertion order does not exist.
+//
+// - advertiserId: The ID of the advertiser this insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order to fetch.
 func (r *AdvertisersInsertionOrdersService) Get(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersGetCall {
 	c := &AdvertisersInsertionOrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19997,6 +20147,9 @@ type AdvertisersInsertionOrdersListCall struct {
 // by the order_by parameter. If a filter by entity_status is not
 // specified, insertion orders with `ENTITY_STATUS_ARCHIVED` will not be
 // included in the results.
+//
+// - advertiserId: The ID of the advertiser to list insertion orders
+//   for.
 func (r *AdvertisersInsertionOrdersService) List(advertiserId int64) *AdvertisersInsertionOrdersListCall {
 	c := &AdvertisersInsertionOrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20246,6 +20399,11 @@ type AdvertisersInsertionOrdersPatchCall struct {
 
 // Patch: Updates an existing insertion order. Returns the updated
 // insertion order if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   insertion order belongs to.
+// - insertionOrderId: Output only. The unique ID of the insertion
+//   order. Assigned by the system.
 func (r *AdvertisersInsertionOrdersService) Patch(advertiserId int64, insertionOrderId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersPatchCall {
 	c := &AdvertisersInsertionOrdersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20414,6 +20572,16 @@ type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall str
 }
 
 // Get: Gets a single targeting option assigned to an insertion order.
+//
+// - advertiserId: The ID of the advertiser the insertion order belongs
+//   to.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this insertion order that identifies the assigned targeting
+//   option being requested.
+// - insertionOrderId: The ID of the insertion order the assigned
+//   targeting option belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, insertionOrderId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20672,6 +20840,13 @@ type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall st
 }
 
 // List: Lists the targeting options assigned to an insertion order.
+//
+// - advertiserId: The ID of the advertiser the insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order to list assigned
+//   targeting options for.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list.
 func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, insertionOrderId int64, targetingType string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21014,6 +21189,10 @@ type AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall struct {
 // BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and
 // then create the assigned targeting options provided in
 // BulkEditLineItemAssignedTargetingOptionsRequest.create_requests .
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   will belong to.
 func (r *AdvertisersLineItemsService) BulkEditLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64, bulkeditlineitemassignedtargetingoptionsrequest *BulkEditLineItemAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall {
 	c := &AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21170,6 +21349,10 @@ type AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall struct {
 
 // BulkListLineItemAssignedTargetingOptions: Lists assigned targeting
 // options of a line item across targeting types.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item to list assigned targeting
+//   options for.
 func (r *AdvertisersLineItemsService) BulkListLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
 	c := &AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21418,6 +21601,9 @@ type AdvertisersLineItemsCreateCall struct {
 
 // Create: Creates a new line item. Returns the newly created line item
 // if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the line
+//   item belongs to.
 func (r *AdvertisersLineItemsService) Create(advertiserId int64, lineitem *LineItem) *AdvertisersLineItemsCreateCall {
 	c := &AdvertisersLineItemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21562,6 +21748,9 @@ type AdvertisersLineItemsDeleteCall struct {
 // line item does not exist. The line item should be archived first,
 // i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to
 // delete it.
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
+// - lineItemId: The ID of the line item we need to fetch.
 func (r *AdvertisersLineItemsService) Delete(advertiserId int64, lineItemId int64) *AdvertisersLineItemsDeleteCall {
 	c := &AdvertisersLineItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21710,6 +21899,8 @@ type AdvertisersLineItemsGenerateDefaultCall struct {
 // the three fields: * The insertion order's InsertionOrderType * The
 // insertion order's InsertionOrderAutomationType * The given
 // line_item_type
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
 func (r *AdvertisersLineItemsService) GenerateDefault(advertiserId int64, generatedefaultlineitemrequest *GenerateDefaultLineItemRequest) *AdvertisersLineItemsGenerateDefaultCall {
 	c := &AdvertisersLineItemsGenerateDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21852,6 +22043,9 @@ type AdvertisersLineItemsGetCall struct {
 }
 
 // Get: Gets a line item.
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
+// - lineItemId: The ID of the line item to fetch.
 func (r *AdvertisersLineItemsService) Get(advertiserId int64, lineItemId int64) *AdvertisersLineItemsGetCall {
 	c := &AdvertisersLineItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22011,6 +22205,8 @@ type AdvertisersLineItemsListCall struct {
 // order_by parameter. If a filter by entity_status is not specified,
 // line items with `ENTITY_STATUS_ARCHIVED` will not be included in the
 // results.
+//
+// - advertiserId: The ID of the advertiser to list line items for.
 func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineItemsListCall {
 	c := &AdvertisersLineItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22265,6 +22461,11 @@ type AdvertisersLineItemsPatchCall struct {
 
 // Patch: Updates an existing line item. Returns the updated line item
 // if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the line
+//   item belongs to.
+// - lineItemId: Output only. The unique ID of the line item. Assigned
+//   by the system.
 func (r *AdvertisersLineItemsService) Patch(advertiserId int64, lineItemId int64, lineitem *LineItem) *AdvertisersLineItemsPatchCall {
 	c := &AdvertisersLineItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22433,6 +22634,12 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 
 // Create: Assigns a targeting option to a line item. Returns the
 // assigned targeting option if successful.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   will belong to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, lineItemId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22677,6 +22884,14 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 }
 
 // Delete: Deletes an assigned targeting option from a line item.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - assignedTargetingOptionId: The ID of the assigned targeting option
+//   to delete.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22923,6 +23138,15 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to a line item.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this line item that identifies the assigned targeting
+//   option being requested.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23181,6 +23405,12 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 }
 
 // List: Lists the targeting options assigned to a line item.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item to list assigned targeting
+//   options for.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23518,6 +23748,9 @@ type AdvertisersLocationListsCreateCall struct {
 
 // Create: Creates a new location list. Returns the newly created
 // location list if successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
 func (r *AdvertisersLocationListsService) Create(advertiserId int64, locationlist *LocationList) *AdvertisersLocationListsCreateCall {
 	c := &AdvertisersLocationListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23660,6 +23893,10 @@ type AdvertisersLocationListsGetCall struct {
 }
 
 // Get: Gets a location list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   location list belongs.
+// - locationListId: The ID of the location list to fetch.
 func (r *AdvertisersLocationListsService) Get(advertiserId int64, locationListId int64) *AdvertisersLocationListsGetCall {
 	c := &AdvertisersLocationListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23816,6 +24053,9 @@ type AdvertisersLocationListsListCall struct {
 }
 
 // List: Lists location lists based on a given advertiser id.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   location lists belong.
 func (r *AdvertisersLocationListsService) List(advertiserId int64) *AdvertisersLocationListsListCall {
 	c := &AdvertisersLocationListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24047,6 +24287,11 @@ type AdvertisersLocationListsPatchCall struct {
 
 // Patch: Updates a location list. Returns the updated location list if
 // successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   lists belongs.
+// - locationListId: Output only. The unique ID of the location list.
+//   Assigned by the system.
 func (r *AdvertisersLocationListsService) Patch(advertiserId int64, locationListId int64, locationlist *LocationList) *AdvertisersLocationListsPatchCall {
 	c := &AdvertisersLocationListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24217,6 +24462,11 @@ type AdvertisersLocationListsAssignedLocationsBulkEditCall struct {
 // BulkEditAssignedLocationsRequest.deleted_assigned_locations and then
 // create the assigned locations provided in
 // BulkEditAssignedLocationsRequest.created_assigned_locations.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - locationListId: The ID of the location list to which these
+//   assignments are assigned.
 func (r *AdvertisersLocationListsAssignedLocationsService) BulkEdit(advertiserId int64, locationListId int64, bulkeditassignedlocationsrequest *BulkEditAssignedLocationsRequest) *AdvertisersLocationListsAssignedLocationsBulkEditCall {
 	c := &AdvertisersLocationListsAssignedLocationsBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24370,6 +24620,11 @@ type AdvertisersLocationListsAssignedLocationsCreateCall struct {
 }
 
 // Create: Creates an assignment between a location and a location list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - locationListId: The ID of the location list for which the
+//   assignment will be created.
 func (r *AdvertisersLocationListsAssignedLocationsService) Create(advertiserId int64, locationListId int64, assignedlocation *AssignedLocation) *AdvertisersLocationListsAssignedLocationsCreateCall {
 	c := &AdvertisersLocationListsAssignedLocationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24522,6 +24777,12 @@ type AdvertisersLocationListsAssignedLocationsDeleteCall struct {
 
 // Delete: Deletes the assignment between a location and a location
 // list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - assignedLocationId: The ID of the assigned location to delete.
+// - locationListId: The ID of the location list to which this
+//   assignment is assigned.
 func (r *AdvertisersLocationListsAssignedLocationsService) Delete(advertiserId int64, locationListId int64, assignedLocationId int64) *AdvertisersLocationListsAssignedLocationsDeleteCall {
 	c := &AdvertisersLocationListsAssignedLocationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24675,6 +24936,11 @@ type AdvertisersLocationListsAssignedLocationsListCall struct {
 }
 
 // List: Lists locations assigned to a location list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - locationListId: The ID of the location list to which these
+//   assignments are assigned.
 func (r *AdvertisersLocationListsAssignedLocationsService) List(advertiserId int64, locationListId int64) *AdvertisersLocationListsAssignedLocationsListCall {
 	c := &AdvertisersLocationListsAssignedLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24915,6 +25181,10 @@ type AdvertisersManualTriggersActivateCall struct {
 // Activate: Activates a manual trigger. Each activation of the manual
 // trigger must be at least 5 minutes apart, otherwise an error will be
 // returned.
+//
+// - advertiserId: The ID of the advertiser that the manual trigger
+//   belongs.
+// - triggerId: The ID of the manual trigger to activate.
 func (r *AdvertisersManualTriggersService) Activate(advertiserId int64, triggerId int64, activatemanualtriggerrequest *ActivateManualTriggerRequest) *AdvertisersManualTriggersActivateCall {
 	c := &AdvertisersManualTriggersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25068,6 +25338,9 @@ type AdvertisersManualTriggersCreateCall struct {
 
 // Create: Creates a new manual trigger. Returns the newly created
 // manual trigger if successful.
+//
+// - advertiserId: Immutable. The unique ID of the advertiser that the
+//   manual trigger belongs to.
 func (r *AdvertisersManualTriggersService) Create(advertiserId int64, manualtrigger *ManualTrigger) *AdvertisersManualTriggersCreateCall {
 	c := &AdvertisersManualTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25210,6 +25483,10 @@ type AdvertisersManualTriggersDeactivateCall struct {
 }
 
 // Deactivate: Deactivates a manual trigger.
+//
+// - advertiserId: The ID of the advertiser that the manual trigger
+//   belongs.
+// - triggerId: The ID of the manual trigger to deactivate.
 func (r *AdvertisersManualTriggersService) Deactivate(advertiserId int64, triggerId int64, deactivatemanualtriggerrequest *DeactivateManualTriggerRequest) *AdvertisersManualTriggersDeactivateCall {
 	c := &AdvertisersManualTriggersDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25363,6 +25640,10 @@ type AdvertisersManualTriggersGetCall struct {
 }
 
 // Get: Gets a manual trigger.
+//
+// - advertiserId: The ID of the advertiser this manual trigger belongs
+//   to.
+// - triggerId: The ID of the manual trigger to fetch.
 func (r *AdvertisersManualTriggersService) Get(advertiserId int64, triggerId int64) *AdvertisersManualTriggersGetCall {
 	c := &AdvertisersManualTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25521,6 +25802,9 @@ type AdvertisersManualTriggersListCall struct {
 // List: Lists manual triggers that are accessible to the current user
 // for a given advertiser ID. The order is defined by the order_by
 // parameter. A single advertiser_id is required.
+//
+// - advertiserId: The ID of the advertiser that the fetched manual
+//   triggers belong to.
 func (r *AdvertisersManualTriggersService) List(advertiserId int64) *AdvertisersManualTriggersListCall {
 	c := &AdvertisersManualTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25751,6 +26035,10 @@ type AdvertisersManualTriggersPatchCall struct {
 
 // Patch: Updates a manual trigger. Returns the updated manual trigger
 // if successful.
+//
+// - advertiserId: Immutable. The unique ID of the advertiser that the
+//   manual trigger belongs to.
+// - triggerId: Output only. The unique ID of the manual trigger.
 func (r *AdvertisersManualTriggersService) Patch(advertiserId int64, triggerId int64, manualtrigger *ManualTrigger) *AdvertisersManualTriggersPatchCall {
 	c := &AdvertisersManualTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25917,6 +26205,9 @@ type AdvertisersNegativeKeywordListsCreateCall struct {
 
 // Create: Creates a new negative keyword list. Returns the newly
 // created negative keyword list if successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the negative
+//   keyword list will belong.
 func (r *AdvertisersNegativeKeywordListsService) Create(advertiserId int64, negativekeywordlist *NegativeKeywordList) *AdvertisersNegativeKeywordListsCreateCall {
 	c := &AdvertisersNegativeKeywordListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26059,6 +26350,11 @@ type AdvertisersNegativeKeywordListsDeleteCall struct {
 
 // Delete: Deletes a negative keyword list given an advertiser ID and a
 // negative keyword list ID.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the negative
+//   keyword list belongs.
+// - negativeKeywordListId: The ID of the negative keyword list to
+//   delete.
 func (r *AdvertisersNegativeKeywordListsService) Delete(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsDeleteCall {
 	c := &AdvertisersNegativeKeywordListsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26204,6 +26500,11 @@ type AdvertisersNegativeKeywordListsGetCall struct {
 
 // Get: Gets a negative keyword list given an advertiser ID and a
 // negative keyword list ID.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the negative keyword list to
+//   fetch.
 func (r *AdvertisersNegativeKeywordListsService) Get(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsGetCall {
 	c := &AdvertisersNegativeKeywordListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26360,6 +26661,9 @@ type AdvertisersNegativeKeywordListsListCall struct {
 }
 
 // List: Lists negative keyword lists based on a given advertiser id.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   negative keyword lists belong.
 func (r *AdvertisersNegativeKeywordListsService) List(advertiserId int64) *AdvertisersNegativeKeywordListsListCall {
 	c := &AdvertisersNegativeKeywordListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26557,6 +26861,11 @@ type AdvertisersNegativeKeywordListsPatchCall struct {
 
 // Patch: Updates a negative keyword list. Returns the updated negative
 // keyword list if successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the negative
+//   keyword list belongs.
+// - negativeKeywordListId: Output only. The unique ID of the negative
+//   keyword list. Assigned by the system.
 func (r *AdvertisersNegativeKeywordListsService) Patch(advertiserId int64, negativeKeywordListId int64, negativekeywordlist *NegativeKeywordList) *AdvertisersNegativeKeywordListsPatchCall {
 	c := &AdvertisersNegativeKeywordListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26728,6 +27037,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall struct {
 // BulkEditNegativeKeywordsRequest.created_negative_keywords. This
 // operation is guaranteed to be atomic and will never result in a
 // partial success or partial failure.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the negative keywords belong.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) BulkEdit(advertiserId int64, negativeKeywordListId int64, bulkeditnegativekeywordsrequest *BulkEditNegativeKeywordsRequest) *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26880,6 +27194,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall struct {
 }
 
 // Create: Creates a negative keyword in a negative keyword list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   in which the negative keyword will be created.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) Create(advertiserId int64, negativeKeywordListId int64, negativekeyword *NegativeKeyword) *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27032,6 +27351,12 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall struct {
 }
 
 // Delete: Deletes a negative keyword from a negative keyword list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - keywordValue: The keyword value of the negative keyword to delete.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the negative keyword belongs.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) Delete(advertiserId int64, negativeKeywordListId int64, keywordValue string) *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27185,6 +27510,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsListCall struct {
 }
 
 // List: Lists negative keywords in a negative keyword list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the requested negative keywords belong.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) List(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27428,6 +27758,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall struct {
 // list. The operation will replace the keywords in a negative keywords
 // with keywords provided in
 // ReplaceNegativeKeywordsRequest.new_negative_keywords.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the negative keywords belong.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) Replace(advertiserId int64, negativeKeywordListId int64, replacenegativekeywordsrequest *ReplaceNegativeKeywordsRequest) *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27581,6 +27916,12 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 
 // Create: Assigns a targeting option to an advertiser. Returns the
 // assigned targeting option if successful.
+//
+// - advertiserId: The ID of the advertiser.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27813,6 +28154,14 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 }
 
 // Delete: Deletes an assigned targeting option from an advertiser.
+//
+// - advertiserId: The ID of the advertiser.
+// - assignedTargetingOptionId: The ID of the assigned targeting option
+//   to delete.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -28047,6 +28396,15 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to an advertiser.
+//
+// - advertiserId: The ID of the advertiser.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this advertiser that identifies the assigned targeting
+//   option being requested.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -28293,6 +28651,12 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 }
 
 // List: Lists the targeting options assigned to an advertiser.
+//
+// - advertiserId: The ID of the advertiser.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -28615,6 +28979,8 @@ type CombinedAudiencesGetCall struct {
 }
 
 // Get: Gets a combined audience.
+//
+// - combinedAudienceId: The ID of the combined audience to fetch.
 func (r *CombinedAudiencesService) Get(combinedAudienceId int64) *CombinedAudiencesGetCall {
 	c := &CombinedAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.combinedAudienceId = combinedAudienceId
@@ -29027,6 +29393,9 @@ type CustomBiddingAlgorithmsGetCall struct {
 }
 
 // Get: Gets a custom bidding algorithm.
+//
+// - customBiddingAlgorithmId: The ID of the custom bidding algorithm to
+//   fetch.
 func (r *CustomBiddingAlgorithmsService) Get(customBiddingAlgorithmId int64) *CustomBiddingAlgorithmsGetCall {
 	c := &CustomBiddingAlgorithmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customBiddingAlgorithmId = customBiddingAlgorithmId
@@ -29451,6 +29820,8 @@ type CustomListsGetCall struct {
 }
 
 // Get: Gets a custom list.
+//
+// - customListId: The ID of the custom list to fetch.
 func (r *CustomListsService) Get(customListId int64) *CustomListsGetCall {
 	c := &CustomListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customListId = customListId
@@ -29837,6 +30208,9 @@ type FirstAndThirdPartyAudiencesGetCall struct {
 }
 
 // Get: Gets a first and third party audience.
+//
+// - firstAndThirdPartyAudienceId: The ID of the first and third party
+//   audience to fetch.
 func (r *FirstAndThirdPartyAudiencesService) Get(firstAndThirdPartyAudienceId int64) *FirstAndThirdPartyAudiencesGetCall {
 	c := &FirstAndThirdPartyAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.firstAndThirdPartyAudienceId = firstAndThirdPartyAudienceId
@@ -30255,6 +30629,8 @@ type FloodlightGroupsGetCall struct {
 }
 
 // Get: Gets a Floodlight group.
+//
+// - floodlightGroupId: The ID of the Floodlight group to fetch.
 func (r *FloodlightGroupsService) Get(floodlightGroupId int64) *FloodlightGroupsGetCall {
 	c := &FloodlightGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.floodlightGroupId = floodlightGroupId
@@ -30414,6 +30790,9 @@ type FloodlightGroupsPatchCall struct {
 
 // Patch: Updates an existing Floodlight group. Returns the updated
 // Floodlight group if successful.
+//
+// - floodlightGroupId: Output only. The unique ID of the Floodlight
+//   group. Assigned by the system.
 func (r *FloodlightGroupsService) Patch(floodlightGroupId int64, floodlightgroup *FloodlightGroup) *FloodlightGroupsPatchCall {
 	c := &FloodlightGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.floodlightGroupId = floodlightGroupId
@@ -30580,6 +30959,8 @@ type GoogleAudiencesGetCall struct {
 }
 
 // Get: Gets a Google audience.
+//
+// - googleAudienceId: The ID of the Google audience to fetch.
 func (r *GoogleAudiencesService) Get(googleAudienceId int64) *GoogleAudiencesGetCall {
 	c := &GoogleAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleAudienceId = googleAudienceId
@@ -31147,6 +31528,9 @@ type InventorySourceGroupsDeleteCall struct {
 }
 
 // Delete: Deletes an inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   delete.
 func (r *InventorySourceGroupsService) Delete(inventorySourceGroupId int64) *InventorySourceGroupsDeleteCall {
 	c := &InventorySourceGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -31307,6 +31691,9 @@ type InventorySourceGroupsGetCall struct {
 }
 
 // Get: Gets an inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   fetch.
 func (r *InventorySourceGroupsService) Get(inventorySourceGroupId int64) *InventorySourceGroupsGetCall {
 	c := &InventorySourceGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -31724,6 +32111,9 @@ type InventorySourceGroupsPatchCall struct {
 
 // Patch: Updates an inventory source group. Returns the updated
 // inventory source group if successful.
+//
+// - inventorySourceGroupId: Output only. The unique ID of the inventory
+//   source group. Assigned by the system.
 func (r *InventorySourceGroupsService) Patch(inventorySourceGroupId int64, inventorysourcegroup *InventorySourceGroup) *InventorySourceGroupsPatchCall {
 	c := &InventorySourceGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -31911,6 +32301,9 @@ type InventorySourceGroupsAssignedInventorySourcesBulkEditCall struct {
 // rces and then create the assigned inventory sources provided in
 // BulkEditAssignedInventorySourcesRequest.created_assigned_inventory_sou
 // rces.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which the assignments are assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) BulkEdit(inventorySourceGroupId int64, bulkeditassignedinventorysourcesrequest *BulkEditAssignedInventorySourcesRequest) *InventorySourceGroupsAssignedInventorySourcesBulkEditCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -32055,6 +32448,9 @@ type InventorySourceGroupsAssignedInventorySourcesCreateCall struct {
 
 // Create: Creates an assignment between an inventory source and an
 // inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which the assignment will be assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) Create(inventorySourceGroupId int64, assignedinventorysource *AssignedInventorySource) *InventorySourceGroupsAssignedInventorySourcesCreateCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -32226,6 +32622,11 @@ type InventorySourceGroupsAssignedInventorySourcesDeleteCall struct {
 
 // Delete: Deletes the assignment between an inventory source and an
 // inventory source group.
+//
+// - assignedInventorySourceId: The ID of the assigned inventory source
+//   to delete.
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which this assignment is assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) Delete(inventorySourceGroupId int64, assignedInventorySourceId int64) *InventorySourceGroupsAssignedInventorySourcesDeleteCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -32398,6 +32799,9 @@ type InventorySourceGroupsAssignedInventorySourcesListCall struct {
 }
 
 // List: Lists inventory sources assigned to an inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which these assignments are assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) List(inventorySourceGroupId int64) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -32658,6 +33062,8 @@ type InventorySourcesGetCall struct {
 }
 
 // Get: Gets an inventory source.
+//
+// - inventorySourceId: The ID of the inventory source to fetch.
 func (r *InventorySourcesService) Get(inventorySourceId int64) *InventorySourcesGetCall {
 	c := &InventorySourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceId = inventorySourceId
@@ -33066,6 +33472,9 @@ type MediaDownloadCall struct {
 // Download: Downloads media. Download is supported on the URI
 // `/download/{resource_name=**}?alt=media.` **Note**: Download requests
 // will not be successful without including `alt=media` query string.
+//
+// - resourceName: Name of the media that is being downloaded. See
+//   ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -33233,6 +33642,8 @@ type PartnersBulkEditPartnerAssignedTargetingOptionsCall struct {
 // BulkEditPartnerAssignedTargetingOptionsRequest.deleteRequests and
 // then create the assigned targeting options provided in
 // BulkEditPartnerAssignedTargetingOptionsRequest.createRequests .
+//
+// - partnerId: The ID of the partner.
 func (r *PartnersService) BulkEditPartnerAssignedTargetingOptions(partnerId int64, bulkeditpartnerassignedtargetingoptionsrequest *BulkEditPartnerAssignedTargetingOptionsRequest) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
 	c := &PartnersBulkEditPartnerAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -33376,6 +33787,8 @@ type PartnersGetCall struct {
 }
 
 // Get: Gets a partner.
+//
+// - partnerId: The ID of the partner to fetch.
 func (r *PartnersService) Get(partnerId int64) *PartnersGetCall {
 	c := &PartnersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -33736,6 +34149,8 @@ type PartnersChannelsCreateCall struct {
 
 // Create: Creates a new channel. Returns the newly created channel if
 // successful.
+//
+// - partnerId: The ID of the partner that owns the created channel.
 func (r *PartnersChannelsService) Create(partnerId int64, channel *Channel) *PartnersChannelsCreateCall {
 	c := &PartnersChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -33891,6 +34306,9 @@ type PartnersChannelsGetCall struct {
 }
 
 // Get: Gets a channel for a partner or advertiser.
+//
+// - channelId: The ID of the channel to fetch.
+// - partnerId: The ID of the partner that owns the fetched channel.
 func (r *PartnersChannelsService) Get(partnerId int64, channelId int64) *PartnersChannelsGetCall {
 	c := &PartnersChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -34060,6 +34478,8 @@ type PartnersChannelsListCall struct {
 }
 
 // List: Lists channels for a partner or advertiser.
+//
+// - partnerId: The ID of the partner that owns the channels.
 func (r *PartnersChannelsService) List(partnerId int64) *PartnersChannelsListCall {
 	c := &PartnersChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -34303,6 +34723,10 @@ type PartnersChannelsPatchCall struct {
 }
 
 // Patch: Updates a channel. Returns the updated channel if successful.
+//
+// - channelId: Output only. The unique ID of the channel. Assigned by
+//   the system.
+// - partnerId: The ID of the partner that owns the created channel.
 func (r *PartnersChannelsService) Patch(partnerId int64, channelId int64, channel *Channel) *PartnersChannelsPatchCall {
 	c := &PartnersChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -34483,6 +34907,9 @@ type PartnersChannelsSitesBulkEditCall struct {
 // BulkEdit: Bulk edits sites under a single channel. The operation will
 // delete the sites provided in BulkEditSitesRequest.deleted_sites and
 // then create the sites provided in BulkEditSitesRequest.created_sites.
+//
+// - channelId: The ID of the parent channel to which the sites belong.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) BulkEdit(partnerId int64, channelId int64, bulkeditsitesrequest *BulkEditSitesRequest) *PartnersChannelsSitesBulkEditCall {
 	c := &PartnersChannelsSitesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -34635,6 +35062,10 @@ type PartnersChannelsSitesCreateCall struct {
 }
 
 // Create: Creates a site in a channel.
+//
+// - channelId: The ID of the parent channel in which the site will be
+//   created.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) Create(partnerId int64, channelId int64, site *Site) *PartnersChannelsSitesCreateCall {
 	c := &PartnersChannelsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -34800,6 +35231,10 @@ type PartnersChannelsSitesDeleteCall struct {
 }
 
 // Delete: Deletes a site from a channel.
+//
+// - channelId: The ID of the parent channel to which the site belongs.
+// - partnerId: The ID of the partner that owns the parent channel.
+// - urlOrAppId: The URL or app ID of the site to delete.
 func (r *PartnersChannelsSitesService) Delete(partnerId int64, channelId int64, urlOrAppId string) *PartnersChannelsSitesDeleteCall {
 	c := &PartnersChannelsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -34966,6 +35401,10 @@ type PartnersChannelsSitesListCall struct {
 }
 
 // List: Lists sites in a channel.
+//
+// - channelId: The ID of the parent channel to which the requested
+//   sites belong.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) List(partnerId int64, channelId int64) *PartnersChannelsSitesListCall {
 	c := &PartnersChannelsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -35220,6 +35659,10 @@ type PartnersChannelsSitesReplaceCall struct {
 // Replace: Replaces all of the sites under a single channel. The
 // operation will replace the sites under a channel with the sites
 // provided in ReplaceSitesRequest.new_sites.
+//
+// - channelId: The ID of the parent channel whose sites will be
+//   replaced.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) Replace(partnerId int64, channelId int64, replacesitesrequest *ReplaceSitesRequest) *PartnersChannelsSitesReplaceCall {
 	c := &PartnersChannelsSitesReplaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -35373,6 +35816,10 @@ type PartnersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 
 // Create: Assigns a targeting option to a partner. Returns the assigned
 // targeting option if successful.
+//
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Create(partnerId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -35605,6 +36052,12 @@ type PartnersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 }
 
 // Delete: Deletes an assigned targeting option from a partner.
+//
+// - assignedTargetingOptionId: The ID of the assigned targeting option
+//   to delete.
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Delete(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -35839,6 +36292,13 @@ type PartnersTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to a partner.
+//
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this partner that identifies the assigned targeting option
+//   being requested.
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Get(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -36085,6 +36545,10 @@ type PartnersTargetingTypesAssignedTargetingOptionsListCall struct {
 }
 
 // List: Lists the targeting options assigned to a partner.
+//
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) List(partnerId int64, targetingType string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -36542,6 +37006,8 @@ type SdfdownloadtasksOperationsGetCall struct {
 // Get: Gets the latest state of an asynchronous SDF download task
 // operation. Clients should poll this method at intervals of 30
 // seconds.
+//
+// - name: The name of the operation resource.
 func (r *SdfdownloadtasksOperationsService) Get(name string) *SdfdownloadtasksOperationsGetCall {
 	c := &SdfdownloadtasksOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36688,6 +37154,9 @@ type TargetingTypesTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option.
+//
+// - targetingOptionId: The ID of the of targeting option to retrieve.
+// - targetingType: The type of targeting option to retrieve.
 func (r *TargetingTypesTargetingOptionsService) Get(targetingType string, targetingOptionId string) *TargetingTypesTargetingOptionsGetCall {
 	c := &TargetingTypesTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.targetingType = targetingType
@@ -36935,6 +37404,8 @@ type TargetingTypesTargetingOptionsListCall struct {
 }
 
 // List: Lists targeting options of a given type.
+//
+// - targetingType: The type of targeting option to be listed.
 func (r *TargetingTypesTargetingOptionsService) List(targetingType string) *TargetingTypesTargetingOptionsListCall {
 	c := &TargetingTypesTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.targetingType = targetingType
@@ -37264,6 +37735,9 @@ type TargetingTypesTargetingOptionsSearchCall struct {
 
 // Search: Searches for targeting options of a given type based on the
 // given search terms.
+//
+// - targetingType: The type of targeting options to retrieve. Accepted
+//   values are: * `TARGETING_TYPE_GEO_REGION`.
 func (r *TargetingTypesTargetingOptionsService) Search(targetingType string, searchtargetingoptionsrequest *SearchTargetingOptionsRequest) *TargetingTypesTargetingOptionsSearchCall {
 	c := &TargetingTypesTargetingOptionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.targetingType = targetingType
@@ -37509,6 +37983,8 @@ type UsersBulkEditAssignedUserRolesCall struct {
 // BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then
 // assign the user roles provided in
 // BulkEditAssignedUserRolesRequest.createdAssignedUserRoles.
+//
+// - userId: The ID of the user to which the assigned user roles belong.
 func (r *UsersService) BulkEditAssignedUserRoles(userId int64, bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest) *UsersBulkEditAssignedUserRolesCall {
 	c := &UsersBulkEditAssignedUserRolesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -37776,6 +38252,8 @@ type UsersDeleteCall struct {
 }
 
 // Delete: Deletes a user.
+//
+// - userId: The ID of the user to delete.
 func (r *UsersService) Delete(userId int64) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -37908,6 +38386,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets a user.
+//
+// - userId: The ID of the user to fetch.
 func (r *UsersService) Get(userId int64) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -38285,6 +38765,9 @@ type UsersPatchCall struct {
 
 // Patch: Updates an existing user. Returns the updated user if
 // successful.
+//
+// - userId: Output only. The unique ID of the user. Assigned by the
+//   system.
 func (r *UsersService) Patch(userId int64, user *User) *UsersPatchCall {
 	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId

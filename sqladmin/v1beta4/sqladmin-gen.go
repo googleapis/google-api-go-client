@@ -3841,6 +3841,12 @@ type BackupRunsDeleteCall struct {
 }
 
 // Delete: Deletes the backup taken by a backup run.
+//
+// - id: The ID of the Backup Run to delete. To find a Backup Run ID,
+//   use the list method.
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) Delete(project string, instance string, id int64) *BackupRunsDeleteCall {
 	c := &BackupRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3993,6 +3999,11 @@ type BackupRunsGetCall struct {
 }
 
 // Get: Retrieves a resource containing information about a backup run.
+//
+// - id: The ID of this Backup Run.
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) Get(project string, instance string, id int64) *BackupRunsGetCall {
 	c := &BackupRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4158,6 +4169,10 @@ type BackupRunsInsertCall struct {
 
 // Insert: Creates a new backup run on demand. This method is applicable
 // only to Second Generation instances.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) Insert(project string, instance string, backuprun *BackupRun) *BackupRunsInsertCall {
 	c := &BackupRunsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4310,6 +4325,10 @@ type BackupRunsListCall struct {
 // List: Lists all backup runs associated with a given instance and
 // configuration in the reverse chronological order of the backup
 // initiation time.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) List(project string, instance string) *BackupRunsListCall {
 	c := &BackupRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4511,6 +4530,11 @@ type DatabasesDeleteCall struct {
 }
 
 // Delete: Deletes a database from a Cloud SQL instance.
+//
+// - database: Name of the database to be deleted in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Delete(project string, instance string, database string) *DatabasesDeleteCall {
 	c := &DatabasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4663,6 +4687,11 @@ type DatabasesGetCall struct {
 
 // Get: Retrieves a resource containing information about a database
 // inside a Cloud SQL instance.
+//
+// - database: Name of the database in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Get(project string, instance string, database string) *DatabasesGetCall {
 	c := &DatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4827,6 +4856,10 @@ type DatabasesInsertCall struct {
 
 // Insert: Inserts a resource containing information about a database
 // inside a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Insert(project string, instance string, database *Database) *DatabasesInsertCall {
 	c := &DatabasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4977,6 +5010,10 @@ type DatabasesListCall struct {
 }
 
 // List: Lists databases in the specified Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) List(project string, instance string) *DatabasesListCall {
 	c := &DatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5134,6 +5171,11 @@ type DatabasesPatchCall struct {
 // Patch: Partially updates a resource containing information about a
 // database inside a Cloud SQL instance. This method supports patch
 // semantics.
+//
+// - database: Name of the database to be updated in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Patch(project string, instance string, database string, database2 *Database) *DatabasesPatchCall {
 	c := &DatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5295,6 +5337,11 @@ type DatabasesUpdateCall struct {
 
 // Update: Updates a resource containing information about a database
 // inside a Cloud SQL instance.
+//
+// - database: Name of the database to be updated in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Update(project string, instance string, database string, database2 *Database) *DatabasesUpdateCall {
 	c := &DatabasesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5601,6 +5648,10 @@ type InstancesAddServerCaCall struct {
 // rotation. If a CA version was previously added but never used in a
 // certificate rotation, this operation replaces that version. There
 // cannot be more than one CA version waiting to be rotated in.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) AddServerCa(project string, instance string) *InstancesAddServerCaCall {
 	c := &InstancesAddServerCaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5743,6 +5794,11 @@ type InstancesCloneCall struct {
 
 // Clone: Creates a Cloud SQL instance as a clone of the source
 // instance. Using this operation might cause your instance to restart.
+//
+// - instance: The ID of the Cloud SQL instance to be cloned (source).
+//   This does not include the project ID.
+// - project: Project ID of the source as well as the clone Cloud SQL
+//   instance.
 func (r *InstancesService) Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5892,6 +5948,11 @@ type InstancesDeleteCall struct {
 }
 
 // Delete: Deletes a Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance to be
+//   deleted.
 func (r *InstancesService) Delete(project string, instance string) *InstancesDeleteCall {
 	c := &InstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6034,6 +6095,9 @@ type InstancesDemoteMasterCall struct {
 
 // DemoteMaster: Demotes the stand-alone instance to be a Cloud SQL read
 // replica for an external database server.
+//
+// - instance: Cloud SQL instance name.
+// - project: ID of the project that contains the instance.
 func (r *InstancesService) DemoteMaster(project string, instance string, instancesdemotemasterrequest *InstancesDemoteMasterRequest) *InstancesDemoteMasterCall {
 	c := &InstancesDemoteMasterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6185,6 +6249,11 @@ type InstancesExportCall struct {
 
 // Export: Exports data from a Cloud SQL instance to a Cloud Storage
 // bucket as a SQL dump or CSV file.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance to be
+//   exported.
 func (r *InstancesService) Export(project string, instance string, instancesexportrequest *InstancesExportRequest) *InstancesExportCall {
 	c := &InstancesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6335,6 +6404,10 @@ type InstancesFailoverCall struct {
 
 // Failover: Failover the instance to its failover replica instance.
 // Using this operation might cause your instance to restart.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) Failover(project string, instance string, instancesfailoverrequest *InstancesFailoverRequest) *InstancesFailoverCall {
 	c := &InstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6486,6 +6559,10 @@ type InstancesGetCall struct {
 
 // Get: Retrieves a resource containing information about a Cloud SQL
 // instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Get(project string, instance string) *InstancesGetCall {
 	c := &InstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6641,6 +6718,10 @@ type InstancesImportCall struct {
 
 // Import: Imports data into a Cloud SQL instance from a SQL dump or CSV
 // file in Cloud Storage.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Import(project string, instance string, instancesimportrequest *InstancesImportRequest) *InstancesImportCall {
 	c := &InstancesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6789,6 +6870,9 @@ type InstancesInsertCall struct {
 }
 
 // Insert: Creates a new Cloud SQL instance.
+//
+// - project: Project ID of the project to which the newly created Cloud
+//   SQL instances should belong.
 func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInstance) *InstancesInsertCall {
 	c := &InstancesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6929,6 +7013,9 @@ type InstancesListCall struct {
 }
 
 // List: Lists instances under a given project.
+//
+// - project: Project ID of the project for which to list Cloud SQL
+//   instances.
 func (r *InstancesService) List(project string) *InstancesListCall {
 	c := &InstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7144,6 +7231,10 @@ type InstancesListServerCasCall struct {
 // CA that was used to sign the certificate that is currently in use, a
 // CA that has been added but not yet used to sign a certificate, and a
 // CA used to sign a certificate that has previously rotated out.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) ListServerCas(project string, instance string) *InstancesListServerCasCall {
 	c := &InstancesListServerCasCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7299,6 +7390,10 @@ type InstancesPatchCall struct {
 
 // Patch: Updates settings of a Cloud SQL instance. This method supports
 // patch semantics.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Patch(project string, instance string, databaseinstance *DatabaseInstance) *InstancesPatchCall {
 	c := &InstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7450,6 +7545,9 @@ type InstancesPromoteReplicaCall struct {
 // PromoteReplica: Promotes the read replica instance to be a
 // stand-alone Cloud SQL instance. Using this operation might cause your
 // instance to restart.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) PromoteReplica(project string, instance string) *InstancesPromoteReplicaCall {
 	c := &InstancesPromoteReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7591,6 +7689,10 @@ type InstancesResetSslConfigCall struct {
 
 // ResetSslConfig: Deletes all client certificates and generates a new
 // server SSL certificate for the instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) ResetSslConfig(project string, instance string) *InstancesResetSslConfigCall {
 	c := &InstancesResetSslConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7731,6 +7833,11 @@ type InstancesRestartCall struct {
 }
 
 // Restart: Restarts a Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance to be
+//   restarted.
 func (r *InstancesService) Restart(project string, instance string) *InstancesRestartCall {
 	c := &InstancesRestartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7873,6 +7980,10 @@ type InstancesRestoreBackupCall struct {
 
 // RestoreBackup: Restores a backup of a Cloud SQL instance. Using this
 // operation might cause your instance to restart.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) RestoreBackup(project string, instance string, instancesrestorebackuprequest *InstancesRestoreBackupRequest) *InstancesRestoreBackupCall {
 	c := &InstancesRestoreBackupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8025,6 +8136,10 @@ type InstancesRotateServerCaCall struct {
 // RotateServerCa: Rotates the server certificate to one signed by the
 // Certificate Authority (CA) version previously added with the
 // addServerCA method.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) RotateServerCa(project string, instance string, instancesrotateservercarequest *InstancesRotateServerCaRequest) *InstancesRotateServerCaCall {
 	c := &InstancesRotateServerCaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8174,6 +8289,9 @@ type InstancesStartReplicaCall struct {
 }
 
 // StartReplica: Starts the replication in the read replica instance.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) StartReplica(project string, instance string) *InstancesStartReplicaCall {
 	c := &InstancesStartReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8314,6 +8432,9 @@ type InstancesStopReplicaCall struct {
 }
 
 // StopReplica: Stops the replication in the read replica instance.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) StopReplica(project string, instance string) *InstancesStopReplicaCall {
 	c := &InstancesStopReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8456,6 +8577,10 @@ type InstancesTruncateLogCall struct {
 
 // TruncateLog: Truncate MySQL general and slow query log tables MySQL
 // only.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the Cloud SQL project.
 func (r *InstancesService) TruncateLog(project string, instance string, instancestruncatelogrequest *InstancesTruncateLogRequest) *InstancesTruncateLogCall {
 	c := &InstancesTruncateLogCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8607,6 +8732,10 @@ type InstancesUpdateCall struct {
 
 // Update: Updates settings of a Cloud SQL instance. Using this
 // operation might cause your instance to restart.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Update(project string, instance string, databaseinstance *DatabaseInstance) *InstancesUpdateCall {
 	c := &InstancesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8758,6 +8887,9 @@ type OperationsGetCall struct {
 
 // Get: Retrieves an instance operation that has been performed on an
 // instance.
+//
+// - operation: Instance operation ID.
+// - project: Project ID of the project that contains the instance.
 func (r *OperationsService) Get(project string, operation string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8913,6 +9045,8 @@ type OperationsListCall struct {
 // List: Lists all instance operations that have been performed on the
 // given Cloud SQL instance in the reverse chronological order of the
 // start time.
+//
+// - project: Project ID of the project that contains the instance.
 func (r *OperationsService) List(project string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9118,6 +9252,10 @@ type ProjectsInstancesRescheduleMaintenanceCall struct {
 
 // RescheduleMaintenance: Reschedules the maintenance on the given
 // instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: ID of the project that contains the instance.
 func (r *ProjectsInstancesService) RescheduleMaintenance(project string, instance string, sqlinstancesreschedulemaintenancerequestbody *SqlInstancesRescheduleMaintenanceRequestBody) *ProjectsInstancesRescheduleMaintenanceCall {
 	c := &ProjectsInstancesRescheduleMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9267,6 +9405,10 @@ type ProjectsInstancesStartExternalSyncCall struct {
 }
 
 // StartExternalSync: Start External primary instance migration.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: ID of the project that contains the instance.
 func (r *ProjectsInstancesService) StartExternalSync(project string, instance string) *ProjectsInstancesStartExternalSyncCall {
 	c := &ProjectsInstancesStartExternalSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9449,6 +9591,10 @@ type ProjectsInstancesVerifyExternalSyncSettingsCall struct {
 
 // VerifyExternalSyncSettings: Verify External primary instance external
 // sync settings.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *ProjectsInstancesService) VerifyExternalSyncSettings(project string, instance string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
 	c := &ProjectsInstancesVerifyExternalSyncSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9636,6 +9782,10 @@ type SslCertsCreateEphemeralCall struct {
 // the provided public key and signed by a private key specific to the
 // target instance. Users may use the certificate to authenticate as
 // themselves when connecting to the database.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the Cloud SQL project.
 func (r *SslCertsService) CreateEphemeral(project string, instance string, sslcertscreateephemeralrequest *SslCertsCreateEphemeralRequest) *SslCertsCreateEphemeralCall {
 	c := &SslCertsCreateEphemeralCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9787,6 +9937,11 @@ type SslCertsDeleteCall struct {
 
 // Delete: Deletes the SSL certificate. For First Generation instances,
 // the certificate remains valid until the instance is restarted.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
+// - sha1Fingerprint: Sha1 FingerPrint.
 func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprint string) *SslCertsDeleteCall {
 	c := &SslCertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9940,6 +10095,11 @@ type SslCertsGetCall struct {
 // Get: Retrieves a particular SSL certificate. Does not include the
 // private key (required for usage). The private key must be saved from
 // the response to initial creation.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
+// - sha1Fingerprint: Sha1 FingerPrint.
 func (r *SslCertsService) Get(project string, instance string, sha1Fingerprint string) *SslCertsGetCall {
 	c := &SslCertsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10105,6 +10265,10 @@ type SslCertsInsertCall struct {
 // Insert: Creates an SSL certificate and returns it along with the
 // private key and server certificate authority. The new certificate
 // will not be usable until the instance is restarted.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *SslCertsService) Insert(project string, instance string, sslcertsinsertrequest *SslCertsInsertRequest) *SslCertsInsertCall {
 	c := &SslCertsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10255,6 +10419,10 @@ type SslCertsListCall struct {
 }
 
 // List: Lists all of the current SSL certificates for the instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *SslCertsService) List(project string, instance string) *SslCertsListCall {
 	c := &SslCertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10409,6 +10577,8 @@ type TiersListCall struct {
 
 // List: Lists all available machine types (tiers) for Cloud SQL, for
 // example, db-custom-1-3840. For related information, see Pricing.
+//
+// - project: Project ID of the project for which to list tiers.
 func (r *TiersService) List(project string) *TiersListCall {
 	c := &TiersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10553,6 +10723,10 @@ type UsersDeleteCall struct {
 }
 
 // Delete: Deletes a user from a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) Delete(project string, instance string) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10718,6 +10892,10 @@ type UsersInsertCall struct {
 }
 
 // Insert: Creates a new user in a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) Insert(project string, instance string, user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10868,6 +11046,10 @@ type UsersListCall struct {
 }
 
 // List: Lists users in the specified Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) List(project string, instance string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -11022,6 +11204,10 @@ type UsersUpdateCall struct {
 }
 
 // Update: Updates an existing user in a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) Update(project string, instance string, user *User) *UsersUpdateCall {
 	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

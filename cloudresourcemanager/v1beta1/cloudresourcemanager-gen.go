@@ -1482,6 +1482,11 @@ type OrganizationsGetCall struct {
 
 // Get: Fetches an Organization resource identified by the specified
 // resource name.
+//
+// - name: The resource name of the Organization to fetch. This is the
+//   organization's relative path in the API, formatted as
+//   "organizations/[organizationId]". For example,
+//   "organizations/1234".
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1643,6 +1648,10 @@ type OrganizationsGetIamPolicyCall struct {
 // resource. May be empty if no such policy or resource exists. The
 // `resource` field should be the organization's resource name, e.g.
 // "organizations/123".
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1986,6 +1995,10 @@ type OrganizationsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on an Organization
 // resource. Replaces any existing policy. The `resource` field should
 // be the organization's resource name, e.g. "organizations/123".
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2128,6 +2141,10 @@ type OrganizationsTestIamPermissionsCall struct {
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified Organization. The `resource` field should be the
 // organization's resource name, e.g. "organizations/123".
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2270,6 +2287,11 @@ type OrganizationsUpdateCall struct {
 
 // Update: Updates an Organization resource identified by the specified
 // resource name.
+//
+// - name: Output only. The resource name of the organization. This is
+//   the organization's relative path in the API. Its format is
+//   "organizations/[organization_id]". For example,
+//   "organizations/1234".
 func (r *OrganizationsService) Update(name string, organization *Organization) *OrganizationsUpdateCall {
 	c := &OrganizationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2567,6 +2589,8 @@ type ProjectsDeleteCall struct {
 // deletion completes, the Project is not retrievable by the GetProject
 // and ListProjects methods. The caller must have delete permissions for
 // this Project.
+//
+// - projectId: The Project ID (for example, `foo-bar-123`).
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2699,6 +2723,8 @@ type ProjectsGetCall struct {
 // Get: Retrieves the Project identified by the specified `project_id`
 // (for example, `my-project-123`). The caller must have read
 // permissions for this Project.
+//
+// - projectId: The Project ID (for example, `my-project-123`).
 func (r *ProjectsService) Get(projectId string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2846,6 +2872,8 @@ type ProjectsGetAncestryCall struct {
 // the Project identified by the specified `project_id` (for example,
 // `my-project-123`). The caller must have read permissions for this
 // Project.
+//
+// - projectId: The Project ID (for example, `my-project-123`).
 func (r *ProjectsService) GetAncestry(projectId string, getancestryrequest *GetAncestryRequest) *ProjectsGetAncestryCall {
 	c := &ProjectsGetAncestryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2989,6 +3017,10 @@ type ProjectsGetIamPolicyCall struct {
 // Project. Permission is denied if the policy or the resource does not
 // exist. For additional information about resource structure and
 // identification, see Resource Names (/apis/design/resource_names).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3385,6 +3417,10 @@ type ProjectsSetIamPolicyCall struct {
 // policies will be rejected until the lack of a ToS-accepting owner is
 // rectified. Authorization requires the Google IAM permission
 // `resourcemanager.projects.setIamPolicy` on the project
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3525,6 +3561,10 @@ type ProjectsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified Project.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3669,6 +3709,8 @@ type ProjectsUndeleteCall struct {
 // method for a Project that has a lifecycle state of DELETE_REQUESTED.
 // After deletion starts, the Project cannot be restored. The caller
 // must have undelete permissions for this Project.
+//
+// - projectId: The project ID (for example, `foo-bar-123`).
 func (r *ProjectsService) Undelete(projectId string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3810,6 +3852,8 @@ type ProjectsUpdateCall struct {
 // Update: Updates the attributes of the Project identified by the
 // specified `project_id` (for example, `my-project-123`). The caller
 // must have modify permissions for this Project.
+//
+// - projectId: The project ID (for example, `my-project-123`).
 func (r *ProjectsService) Update(projectId string, project *Project) *ProjectsUpdateCall {
 	c := &ProjectsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

@@ -4440,6 +4440,9 @@ type ProjectsInstanceConfigsGetCall struct {
 }
 
 // Get: Gets information about a particular instance configuration.
+//
+// - name: The name of the requested instance configuration. Values are
+//   of the form `projects//instanceConfigs/`.
 func (r *ProjectsInstanceConfigsService) Get(name string) *ProjectsInstanceConfigsGetCall {
 	c := &ProjectsInstanceConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4586,6 +4589,10 @@ type ProjectsInstanceConfigsListCall struct {
 
 // List: Lists the supported instance configurations for a given
 // project.
+//
+// - parent: The name of the project for which a list of supported
+//   instance configurations is requested. Values are of the form
+//   `projects/`.
 func (r *ProjectsInstanceConfigsService) List(parent string) *ProjectsInstanceConfigsListCall {
 	c := &ProjectsInstanceConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4797,6 +4804,9 @@ type ProjectsInstancesCreateCall struct {
 // and can be used to track creation of the instance. The metadata field
 // type is CreateInstanceMetadata. The response field type is Instance,
 // if successful.
+//
+// - parent: The name of the project in which to create the instance.
+//   Values are of the form `projects/`.
 func (r *ProjectsInstancesService) Create(parent string, createinstancerequest *CreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4941,6 +4951,9 @@ type ProjectsInstancesDeleteCall struct {
 // resources. Soon afterward: * The instance and *all of its databases*
 // immediately and irrevocably disappear from the API. All data in the
 // databases is permanently deleted.
+//
+// - name: The name of the instance to be deleted. Values are of the
+//   form `projects//instances/`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5073,6 +5086,9 @@ type ProjectsInstancesGetCall struct {
 }
 
 // Get: Gets information about a particular instance.
+//
+// - name: The name of the requested instance. Values are of the form
+//   `projects//instances/`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5235,6 +5251,11 @@ type ProjectsInstancesGetIamPolicyCall struct {
 // resource. Returns an empty policy if an instance exists but does not
 // have a policy set. Authorization requires
 // `spanner.instances.getIamPolicy` on resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being retrieved. The format is `projects//instances/` for
+//   instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesGetIamPolicyCall {
 	c := &ProjectsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5376,6 +5397,9 @@ type ProjectsInstancesListCall struct {
 }
 
 // List: Lists all instances in the given project.
+//
+// - parent: The name of the project for which a list of instances is
+//   requested. Values are of the form `projects/`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5628,6 +5652,11 @@ type ProjectsInstancesPatchCall struct {
 // UpdateInstanceMetadata. The response field type is Instance, if
 // successful. Authorization requires `spanner.instances.update`
 // permission on resource name.
+//
+// - name: A unique identifier for the instance, which cannot be changed
+//   after the instance is created. Values are of the form
+//   `projects//instances/a-z*[a-z0-9]`. The final segment of the name
+//   must be between 2 and 64 characters in length.
 func (r *ProjectsInstancesService) Patch(nameid string, updateinstancerequest *UpdateInstanceRequest) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5771,6 +5800,11 @@ type ProjectsInstancesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on an instance resource.
 // Replaces any existing policy. Authorization requires
 // `spanner.instances.setIamPolicy` on resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being set. The format is `projects//instances/` for instance
+//   resources and `projects//instances//databases/` for databases
+//   resources.
 func (r *ProjectsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesSetIamPolicyCall {
 	c := &ProjectsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5916,6 +5950,11 @@ type ProjectsInstancesTestIamPermissionsCall struct {
 // Cloud Spanner instance resource will result in a NOT_FOUND error if
 // the user has `spanner.instances.list` permission on the containing
 // Google Cloud Project. Otherwise returns an empty set of permissions.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which
+//   permissions are being tested. The format is `projects//instances/`
+//   for instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTestIamPermissionsCall {
 	c := &ProjectsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6065,6 +6104,9 @@ type ProjectsInstancesBackupOperationsListCall struct {
 // operations. Operations returned are ordered by
 // `operation.metadata.value.progress.start_time` in descending order
 // starting from the most recently started operation.
+//
+// - parent: The instance of the backup operations. Values are of the
+//   form `projects//instances/`.
 func (r *ProjectsInstancesBackupOperationsService) List(parent string) *ProjectsInstancesBackupOperationsListCall {
 	c := &ProjectsInstancesBackupOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6305,6 +6347,12 @@ type ProjectsInstancesBackupsCreateCall struct {
 // and delete the backup. There can be only one pending backup creation
 // per database. Backup creation of different databases can run
 // concurrently.
+//
+// - parent: The name of the instance in which the backup will be
+//   created. This must be the same instance that contains the database
+//   the backup will be created from. The backup will be stored in the
+//   location(s) specified in the instance configuration of this
+//   instance. Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
 	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6509,6 +6557,9 @@ type ProjectsInstancesBackupsDeleteCall struct {
 }
 
 // Delete: Deletes a pending or completed Backup.
+//
+// - name: Name of the backup to delete. Values are of the form
+//   `projects//instances//backups/`.
 func (r *ProjectsInstancesBackupsService) Delete(name string) *ProjectsInstancesBackupsDeleteCall {
 	c := &ProjectsInstancesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6641,6 +6692,9 @@ type ProjectsInstancesBackupsGetCall struct {
 }
 
 // Get: Gets metadata on a pending or completed Backup.
+//
+// - name: Name of the backup. Values are of the form
+//   `projects//instances//backups/`.
 func (r *ProjectsInstancesBackupsService) Get(name string) *ProjectsInstancesBackupsGetCall {
 	c := &ProjectsInstancesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6791,6 +6845,11 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being retrieved. The format is `projects//instances/` for
+//   instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6934,6 +6993,9 @@ type ProjectsInstancesBackupsListCall struct {
 // List: Lists completed and pending backups. Backups returned are
 // ordered by `create_time` in descending order, starting from the most
 // recent `create_time`.
+//
+// - parent: The instance to list backups from. Values are of the form
+//   `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstancesBackupsListCall {
 	c := &ProjectsInstancesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7161,6 +7223,15 @@ type ProjectsInstancesBackupsPatchCall struct {
 }
 
 // Patch: Updates a pending or completed Backup.
+//
+// - name: Output only for the CreateBackup operation. Required for the
+//   UpdateBackup operation. A globally unique identifier for the backup
+//   which cannot be changed. Values are of the form
+//   `projects//instances//backups/a-z*[a-z0-9]` The final segment of
+//   the name must be between 2 and 60 characters in length. The backup
+//   is stored in the location(s) specified in the instance
+//   configuration of the instance containing the backup, identified by
+//   the prefix of the backup name of the form `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesBackupsPatchCall {
 	c := &ProjectsInstancesBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7323,6 +7394,11 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being set. The format is `projects//instances/` for instance
+//   resources and `projects//instances//databases/` for databases
+//   resources.
 func (r *ProjectsInstancesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7471,6 +7547,11 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 // permissions. Calling this method on a backup that does not exist will
 // result in a NOT_FOUND error if the user has `spanner.backups.list`
 // permission on the containing instance.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which
+//   permissions are being tested. The format is `projects//instances/`
+//   for instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7620,6 +7701,8 @@ type ProjectsInstancesBackupsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsInstancesBackupsOperationsService) Cancel(name string) *ProjectsInstancesBackupsOperationsCancelCall {
 	c := &ProjectsInstancesBackupsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7754,6 +7837,8 @@ type ProjectsInstancesBackupsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsInstancesBackupsOperationsService) Delete(name string) *ProjectsInstancesBackupsOperationsDeleteCall {
 	c := &ProjectsInstancesBackupsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7888,6 +7973,8 @@ type ProjectsInstancesBackupsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsInstancesBackupsOperationsService) Get(name string) *ProjectsInstancesBackupsOperationsGetCall {
 	c := &ProjectsInstancesBackupsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8042,6 +8129,8 @@ type ProjectsInstancesBackupsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesBackupsOperationsService) List(name string) *ProjectsInstancesBackupsOperationsListCall {
 	c := &ProjectsInstancesBackupsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8250,6 +8339,9 @@ type ProjectsInstancesDatabaseOperationsListCall struct {
 // describes the type of the metadata. Operations returned include those
 // that have completed/failed/canceled within the last 7 days, and
 // pending operations.
+//
+// - parent: The instance of the database operations. Values are of the
+//   form `projects//instances/`.
 func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *ProjectsInstancesDatabaseOperationsListCall {
 	c := &ProjectsInstancesDatabaseOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8487,6 +8579,9 @@ type ProjectsInstancesDatabasesCreateCall struct {
 // the format `/operations/` and can be used to track preparation of the
 // database. The metadata field type is CreateDatabaseMetadata. The
 // response field type is Database, if successful.
+//
+// - parent: The name of the instance that will serve the new database.
+//   Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) Create(parent string, createdatabaserequest *CreateDatabaseRequest) *ProjectsInstancesDatabasesCreateCall {
 	c := &ProjectsInstancesDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8629,6 +8724,8 @@ type ProjectsInstancesDatabasesDropDatabaseCall struct {
 // DropDatabase: Drops (aka deletes) a Cloud Spanner database. Completed
 // backups for the database will be retained according to their
 // `expire_time`.
+//
+// - database: The database to be dropped.
 func (r *ProjectsInstancesDatabasesService) DropDatabase(database string) *ProjectsInstancesDatabasesDropDatabaseCall {
 	c := &ProjectsInstancesDatabasesDropDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -8761,6 +8858,9 @@ type ProjectsInstancesDatabasesGetCall struct {
 }
 
 // Get: Gets the state of a Cloud Spanner database.
+//
+// - name: The name of the requested database. Values are of the form
+//   `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) Get(name string) *ProjectsInstancesDatabasesGetCall {
 	c := &ProjectsInstancesDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8908,6 +9008,9 @@ type ProjectsInstancesDatabasesGetDdlCall struct {
 // GetDdl: Returns the schema of a Cloud Spanner database as a list of
 // formatted DDL statements. This method does not show pending schema
 // updates, those may be queried using the Operations API.
+//
+// - database: The database whose schema we wish to get. Values are of
+//   the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) GetDdl(database string) *ProjectsInstancesDatabasesGetDdlCall {
 	c := &ProjectsInstancesDatabasesGetDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -9058,6 +9161,11 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being retrieved. The format is `projects//instances/` for
+//   instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesDatabasesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesGetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9199,6 +9307,9 @@ type ProjectsInstancesDatabasesListCall struct {
 }
 
 // List: Lists Cloud Spanner databases.
+//
+// - parent: The instance whose databases should be listed. Values are
+//   of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) List(parent string) *ProjectsInstancesDatabasesListCall {
 	c := &ProjectsInstancesDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9404,6 +9515,11 @@ type ProjectsInstancesDatabasesRestoreCall struct {
 // completes, a new restore operation can be initiated, without waiting
 // for the optimize operation associated with the first restore to
 // complete.
+//
+// - parent: The name of the instance in which to create the restored
+//   database. This instance must be in the same project and have the
+//   same instance configuration as the instance containing the source
+//   backup. Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) Restore(parent string, restoredatabaserequest *RestoreDatabaseRequest) *ProjectsInstancesDatabasesRestoreCall {
 	c := &ProjectsInstancesDatabasesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9549,6 +9665,11 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being set. The format is `projects//instances/` for instance
+//   resources and `projects//instances//databases/` for databases
+//   resources.
 func (r *ProjectsInstancesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesSetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9697,6 +9818,11 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 // permissions. Calling this method on a backup that does not exist will
 // result in a NOT_FOUND error if the user has `spanner.backups.list`
 // permission on the containing instance.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which
+//   permissions are being tested. The format is `projects//instances/`
+//   for instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesTestIamPermissionsCall {
 	c := &ProjectsInstancesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9843,6 +9969,8 @@ type ProjectsInstancesDatabasesUpdateDdlCall struct {
 // `/operations/` and can be used to track execution of the schema
 // change(s). The metadata field type is UpdateDatabaseDdlMetadata. The
 // operation has no response.
+//
+// - database: The database to update.
 func (r *ProjectsInstancesDatabasesService) UpdateDdl(database string, updatedatabaseddlrequest *UpdateDatabaseDdlRequest) *ProjectsInstancesDatabasesUpdateDdlCall {
 	c := &ProjectsInstancesDatabasesUpdateDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -9992,6 +10120,8 @@ type ProjectsInstancesDatabasesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsInstancesDatabasesOperationsService) Cancel(name string) *ProjectsInstancesDatabasesOperationsCancelCall {
 	c := &ProjectsInstancesDatabasesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10126,6 +10256,8 @@ type ProjectsInstancesDatabasesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsInstancesDatabasesOperationsService) Delete(name string) *ProjectsInstancesDatabasesOperationsDeleteCall {
 	c := &ProjectsInstancesDatabasesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10260,6 +10392,8 @@ type ProjectsInstancesDatabasesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsInstancesDatabasesOperationsService) Get(name string) *ProjectsInstancesDatabasesOperationsGetCall {
 	c := &ProjectsInstancesDatabasesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10414,6 +10548,8 @@ type ProjectsInstancesDatabasesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesDatabasesOperationsService) List(name string) *ProjectsInstancesDatabasesOperationsListCall {
 	c := &ProjectsInstancesDatabasesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10619,6 +10755,8 @@ type ProjectsInstancesDatabasesSessionsBatchCreateCall struct {
 // BatchCreate: Creates multiple new sessions. This API can be used to
 // initialize a session cache on the clients. See https://goo.gl/TgSFN2
 // for best practices on session cache management.
+//
+// - database: The database in which the new sessions are created.
 func (r *ProjectsInstancesDatabasesSessionsService) BatchCreate(database string, batchcreatesessionsrequest *BatchCreateSessionsRequest) *ProjectsInstancesDatabasesSessionsBatchCreateCall {
 	c := &ProjectsInstancesDatabasesSessionsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -10762,6 +10900,8 @@ type ProjectsInstancesDatabasesSessionsBeginTransactionCall struct {
 // BeginTransaction: Begins a new transaction. This step can often be
 // skipped: Read, ExecuteSql and Commit can begin a new transaction as a
 // side-effect.
+//
+// - session: The session in which the transaction runs.
 func (r *ProjectsInstancesDatabasesSessionsService) BeginTransaction(session string, begintransactionrequest *BeginTransactionRequest) *ProjectsInstancesDatabasesSessionsBeginTransactionCall {
 	c := &ProjectsInstancesDatabasesSessionsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -10914,6 +11054,9 @@ type ProjectsInstancesDatabasesSessionsCommitCall struct {
 // Spanner has lost track of the transaction outcome and we recommend
 // that you perform another read from the database to see the state of
 // things as they are now.
+//
+// - session: The session in which the transaction to be committed is
+//   running.
 func (r *ProjectsInstancesDatabasesSessionsService) Commit(session string, commitrequest *CommitRequest) *ProjectsInstancesDatabasesSessionsCommitCall {
 	c := &ProjectsInstancesDatabasesSessionsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11067,6 +11210,8 @@ type ProjectsInstancesDatabasesSessionsCreateCall struct {
 // for more than an hour. If a session is deleted, requests to it return
 // `NOT_FOUND`. Idle sessions can be kept alive by sending a trivial SQL
 // query periodically, e.g., "SELECT 1".
+//
+// - database: The database in which the new session is created.
 func (r *ProjectsInstancesDatabasesSessionsService) Create(database string, createsessionrequest *CreateSessionRequest) *ProjectsInstancesDatabasesSessionsCreateCall {
 	c := &ProjectsInstancesDatabasesSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -11209,6 +11354,8 @@ type ProjectsInstancesDatabasesSessionsDeleteCall struct {
 // Delete: Ends a session, releasing server resources associated with
 // it. This will asynchronously trigger cancellation of any operations
 // that are running with this session.
+//
+// - name: The name of the session to delete.
 func (r *ProjectsInstancesDatabasesSessionsService) Delete(name string) *ProjectsInstancesDatabasesSessionsDeleteCall {
 	c := &ProjectsInstancesDatabasesSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11349,6 +11496,9 @@ type ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall struct {
 // this field to determine whether an error occurred. Execution stops
 // after the first failed statement; the remaining statements are not
 // executed.
+//
+// - session: The session in which the DML statements should be
+//   performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteBatchDml(session string, executebatchdmlrequest *ExecuteBatchDmlRequest) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11497,6 +11647,8 @@ type ProjectsInstancesDatabasesSessionsExecuteSqlCall struct {
 // application should restart the transaction from the beginning. See
 // Transaction for more details. Larger result sets can be fetched in
 // streaming fashion by calling ExecuteStreamingSql instead.
+//
+// - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteSqlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11641,6 +11793,8 @@ type ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall struct {
 // as a stream. Unlike ExecuteSql, there is no limit on the size of the
 // returned result set. However, no individual row in the result set can
 // exceed 100 MiB, and no column value can exceed 10 MiB.
+//
+// - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteStreamingSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11784,6 +11938,8 @@ type ProjectsInstancesDatabasesSessionsGetCall struct {
 // Get: Gets a session. Returns `NOT_FOUND` if the session does not
 // exist. This is mainly useful for determining whether a session is
 // still alive.
+//
+// - name: The name of the session to retrieve.
 func (r *ProjectsInstancesDatabasesSessionsService) Get(name string) *ProjectsInstancesDatabasesSessionsGetCall {
 	c := &ProjectsInstancesDatabasesSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11929,6 +12085,8 @@ type ProjectsInstancesDatabasesSessionsListCall struct {
 }
 
 // List: Lists all sessions in a given database.
+//
+// - database: The database in which to list sessions.
 func (r *ProjectsInstancesDatabasesSessionsService) List(database string) *ProjectsInstancesDatabasesSessionsListCall {
 	c := &ProjectsInstancesDatabasesSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -12149,6 +12307,8 @@ type ProjectsInstancesDatabasesSessionsPartitionQueryCall struct {
 // becomes too old. When any of these happen, it is not possible to
 // resume the query, and the whole operation must be restarted from the
 // beginning.
+//
+// - session: The session used to create the partitions.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionQuery(session string, partitionqueryrequest *PartitionQueryRequest) *ProjectsInstancesDatabasesSessionsPartitionQueryCall {
 	c := &ProjectsInstancesDatabasesSessionsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12302,6 +12462,8 @@ type ProjectsInstancesDatabasesSessionsPartitionReadCall struct {
 // transaction, or becomes too old. When any of these happen, it is not
 // possible to resume the read, and the whole operation must be
 // restarted from the beginning.
+//
+// - session: The session used to create the partitions.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionRead(session string, partitionreadrequest *PartitionReadRequest) *ProjectsInstancesDatabasesSessionsPartitionReadCall {
 	c := &ProjectsInstancesDatabasesSessionsPartitionReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12451,6 +12613,8 @@ type ProjectsInstancesDatabasesSessionsReadCall struct {
 // restart the transaction from the beginning. See Transaction for more
 // details. Larger result sets can be yielded in streaming fashion by
 // calling StreamingRead instead.
+//
+// - session: The session in which the read should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) Read(session string, readrequest *ReadRequest) *ProjectsInstancesDatabasesSessionsReadCall {
 	c := &ProjectsInstancesDatabasesSessionsReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12597,6 +12761,9 @@ type ProjectsInstancesDatabasesSessionsRollbackCall struct {
 // commit. `Rollback` returns `OK` if it successfully aborts the
 // transaction, the transaction was already aborted, or the transaction
 // is not found. `Rollback` never returns `ABORTED`.
+//
+// - session: The session in which the transaction to roll back is
+//   running.
 func (r *ProjectsInstancesDatabasesSessionsService) Rollback(session string, rollbackrequest *RollbackRequest) *ProjectsInstancesDatabasesSessionsRollbackCall {
 	c := &ProjectsInstancesDatabasesSessionsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12741,6 +12908,8 @@ type ProjectsInstancesDatabasesSessionsStreamingReadCall struct {
 // Unlike Read, there is no limit on the size of the returned result
 // set. However, no individual row in the result set can exceed 100 MiB,
 // and no column value can exceed 10 MiB.
+//
+// - session: The session in which the read should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) StreamingRead(session string, readrequest *ReadRequest) *ProjectsInstancesDatabasesSessionsStreamingReadCall {
 	c := &ProjectsInstancesDatabasesSessionsStreamingReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12890,6 +13059,8 @@ type ProjectsInstancesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsInstancesOperationsService) Cancel(name string) *ProjectsInstancesOperationsCancelCall {
 	c := &ProjectsInstancesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13024,6 +13195,8 @@ type ProjectsInstancesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsInstancesOperationsService) Delete(name string) *ProjectsInstancesOperationsDeleteCall {
 	c := &ProjectsInstancesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13158,6 +13331,8 @@ type ProjectsInstancesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsInstancesOperationsService) Get(name string) *ProjectsInstancesOperationsGetCall {
 	c := &ProjectsInstancesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13312,6 +13487,8 @@ type ProjectsInstancesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesOperationsService) List(name string) *ProjectsInstancesOperationsListCall {
 	c := &ProjectsInstancesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -1907,6 +1907,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2052,6 +2054,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2259,6 +2264,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns google.rpc.Code.UNIMPLEMENTED.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2392,6 +2399,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2545,6 +2554,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2747,6 +2758,10 @@ type ProjectsLocationsServicesCreateCall struct {
 }
 
 // Create: Creates a metastore service in a project and location.
+//
+// - parent: The relative resource name of the location in which to
+//   create a metastore service, in the following
+//   form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2921,6 +2936,11 @@ type ProjectsLocationsServicesDeleteCall struct {
 }
 
 // Delete: Deletes a single service.
+//
+// - name: The relative resource name of the metastore service to
+//   delete, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3072,6 +3092,11 @@ type ProjectsLocationsServicesExportMetadataCall struct {
 }
 
 // ExportMetadata: Exports metadata from a service.
+//
+// - service: The relative resource name of the metastore service to run
+//   export, in the following
+//   form:projects/{project_id}/locations/{location_id}/services/{service
+//   _id}.
 func (r *ProjectsLocationsServicesService) ExportMetadata(service string, exportmetadatarequest *ExportMetadataRequest) *ProjectsLocationsServicesExportMetadataCall {
 	c := &ProjectsLocationsServicesExportMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -3212,6 +3237,11 @@ type ProjectsLocationsServicesGetCall struct {
 }
 
 // Get: Gets the details of a single service.
+//
+// - name: The relative resource name of the metastore service to
+//   retrieve, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3358,6 +3388,10 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3522,6 +3556,10 @@ type ProjectsLocationsServicesListCall struct {
 }
 
 // List: Lists services in a project and location.
+//
+// - parent: The relative resource name of the location of metastore
+//   services to list, in the following
+//   form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3744,6 +3782,11 @@ type ProjectsLocationsServicesPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single service.
+//
+// - name: Immutable. The relative resource name of the metastore
+//   service, of the
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3920,6 +3963,11 @@ type ProjectsLocationsServicesRestoreCall struct {
 }
 
 // Restore: Restores a service from a backup.
+//
+// - service: The relative resource name of the metastore service to run
+//   restore, in the following
+//   form:projects/{project_id}/locations/{location_id}/services/{service
+//   _id}.
 func (r *ProjectsLocationsServicesService) Restore(service string, restoreservicerequest *RestoreServiceRequest) *ProjectsLocationsServicesRestoreCall {
 	c := &ProjectsLocationsServicesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -4062,6 +4110,10 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4207,6 +4259,10 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4347,6 +4403,11 @@ type ProjectsLocationsServicesBackupsCreateCall struct {
 }
 
 // Create: Creates a new Backup in a given project and location.
+//
+// - parent: The relative resource name of the service in which to
+//   create a backup of the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsServicesBackupsCreateCall {
 	c := &ProjectsLocationsServicesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4521,6 +4582,11 @@ type ProjectsLocationsServicesBackupsDeleteCall struct {
 }
 
 // Delete: Deletes a single backup.
+//
+// - name: The relative resource name of the backup to delete, in the
+//   following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Delete(name string) *ProjectsLocationsServicesBackupsDeleteCall {
 	c := &ProjectsLocationsServicesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4672,6 +4738,11 @@ type ProjectsLocationsServicesBackupsGetCall struct {
 }
 
 // Get: Gets details of a single backup.
+//
+// - name: The relative resource name of the backup to retrieve, in the
+//   following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Get(name string) *ProjectsLocationsServicesBackupsGetCall {
 	c := &ProjectsLocationsServicesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4816,6 +4887,11 @@ type ProjectsLocationsServicesBackupsListCall struct {
 }
 
 // List: Lists backups in a service.
+//
+// - parent: The relative resource name of the service whose backups to
+//   list, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/backups.
 func (r *ProjectsLocationsServicesBackupsService) List(parent string) *ProjectsLocationsServicesBackupsListCall {
 	c := &ProjectsLocationsServicesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5038,6 +5114,11 @@ type ProjectsLocationsServicesMetadataImportsCreateCall struct {
 }
 
 // Create: Creates a new MetadataImport in a given project and location.
+//
+// - parent: The relative resource name of the service in which to
+//   create a metastore import, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Create(parent string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c := &ProjectsLocationsServicesMetadataImportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5213,6 +5294,11 @@ type ProjectsLocationsServicesMetadataImportsGetCall struct {
 }
 
 // Get: Gets details of a single import.
+//
+// - name: The relative resource name of the metadata import to
+//   retrieve, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/metadataImports/{import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Get(name string) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c := &ProjectsLocationsServicesMetadataImportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5357,6 +5443,11 @@ type ProjectsLocationsServicesMetadataImportsListCall struct {
 }
 
 // List: Lists imports in a service.
+//
+// - parent: The relative resource name of the service whose metadata
+//   imports to list, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/metadataImports.
 func (r *ProjectsLocationsServicesMetadataImportsService) List(parent string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c := &ProjectsLocationsServicesMetadataImportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5580,6 +5671,11 @@ type ProjectsLocationsServicesMetadataImportsPatchCall struct {
 
 // Patch: Updates a single import. Only the description field of
 // MetadataImport is supported to be updated.
+//
+// - name: Immutable. The relative resource name of the metadata import,
+//   of the
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/metadataImports/{metadata_import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Patch(name string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c := &ProjectsLocationsServicesMetadataImportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

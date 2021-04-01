@@ -3677,6 +3677,8 @@ type ContactGroupsDeleteCall struct {
 
 // Delete: Delete an existing contact group owned by the authenticated
 // user by specifying a contact group resource name.
+//
+// - resourceName: The resource name of the contact group to delete.
 func (r *ContactGroupsService) Delete(resourceName string) *ContactGroupsDeleteCall {
 	c := &ContactGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3821,6 +3823,8 @@ type ContactGroupsGetCall struct {
 
 // Get: Get a specific contact group owned by the authenticated user by
 // specifying a contact group resource name.
+//
+// - resourceName: The resource name of the contact group to get.
 func (r *ContactGroupsService) Get(resourceName string) *ContactGroupsGetCall {
 	c := &ContactGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4207,6 +4211,10 @@ type ContactGroupsUpdateCall struct {
 
 // Update: Update the name of an existing contact group owned by the
 // authenticated user.
+//
+// - resourceName: The resource name for the contact group, assigned by
+//   the server. An ASCII string, in the form of
+//   `contactGroups/{contact_group_id}`.
 func (r *ContactGroupsService) Update(resourceName string, updatecontactgrouprequest *UpdateContactGroupRequest) *ContactGroupsUpdateCall {
 	c := &ContactGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4351,6 +4359,8 @@ type ContactGroupsMembersModifyCall struct {
 // members added are `contactGroups/myContacts` and
 // `contactGroups/starred`. Other system contact groups are deprecated
 // and can only have contacts removed.
+//
+// - resourceName: The resource name of the contact group to modify.
 func (r *ContactGroupsMembersService) Modify(resourceName string, modifycontactgroupmembersrequest *ModifyContactGroupMembersRequest) *ContactGroupsMembersModifyCall {
 	c := &ContactGroupsMembersModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4493,6 +4503,8 @@ type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 
 // CopyOtherContactToMyContactsGroup: Copies an "Other contact" to a new
 // contact in the user's "myContacts" group
+//
+// - resourceName: The resource name of the "Other contact" to copy.
 func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
 	c := &OtherContactsCopyOtherContactToMyContactsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5602,6 +5614,8 @@ type PeopleDeleteContactCall struct {
 
 // DeleteContact: Delete a contact person. Any non-contact data will not
 // be deleted.
+//
+// - resourceName: The resource name of the contact to delete.
 func (r *PeopleService) DeleteContact(resourceName string) *PeopleDeleteContactCall {
 	c := &PeopleDeleteContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5732,6 +5746,9 @@ type PeopleDeleteContactPhotoCall struct {
 }
 
 // DeleteContactPhoto: Delete a contact's photo.
+//
+// - resourceName: The resource name of the contact whose photo will be
+//   deleted.
 func (r *PeopleService) DeleteContactPhoto(resourceName string) *PeopleDeleteContactPhotoCall {
 	c := &PeopleDeleteContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5920,6 +5937,14 @@ type PeopleGetCall struct {
 // Get: Provides information about a person by specifying a resource
 // name. Use `people/me` to indicate the authenticated user. The request
 // returns a 400 error if 'personFields' is not specified.
+//
+// - resourceName: The resource name of the person to provide
+//   information about. - To get information about the authenticated
+//   user, specify `people/me`. - To get information about a google
+//   account, specify `people/{account_id}`. - To get information about
+//   a contact, specify the resource name that identifies the contact as
+//   returned by `people.connections.list`
+//   (/people/api/rest/v1/people.connections/list).
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7128,6 +7153,10 @@ type PeopleUpdateContactCall struct {
 // the person. The server returns a 400 error if more than one field is
 // specified on a field that is a singleton for contact sources: *
 // biographies * birthdays * genders * names
+//
+// - resourceName: The resource name for the person, assigned by the
+//   server. An ASCII string with a max length of 27 characters, in the
+//   form of `people/{person_id}`.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7343,6 +7372,8 @@ type PeopleUpdateContactPhotoCall struct {
 }
 
 // UpdateContactPhoto: Update a contact's photo.
+//
+// - resourceName: Person resource name.
 func (r *PeopleService) UpdateContactPhoto(resourceName string, updatecontactphotorequest *UpdateContactPhotoRequest) *PeopleUpdateContactPhotoCall {
 	c := &PeopleUpdateContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7488,6 +7519,9 @@ type PeopleConnectionsListCall struct {
 // expired. Sync tokens expire after 7 days to prevent data drift
 // between clients and the server. To handle a sync token expired error,
 // a request should be sent without `sync_token` to get all contacts.
+//
+// - resourceName: The resource name to return connections for. Only
+//   `people/me` is valid.
 func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsListCall {
 	c := &PeopleConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName

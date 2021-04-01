@@ -373,6 +373,8 @@ type WebResourceDeleteCall struct {
 }
 
 // Delete: Relinquish ownership of a website or domain.
+//
+// - id: The id of a verified site or domain.
 func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
 	c := &WebResourceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -474,6 +476,8 @@ type WebResourceGetCall struct {
 }
 
 // Get: Get the most current data for a website or domain.
+//
+// - id: The id of a verified site or domain.
 func (r *WebResourceService) Get(id string) *WebResourceGetCall {
 	c := &WebResourceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -742,6 +746,9 @@ type WebResourceInsertCall struct {
 }
 
 // Insert: Attempt verification of a website or domain.
+//
+// - verificationMethod: The method to use for verifying a site or
+//   domain.
 func (r *WebResourceService) Insert(verificationMethod string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceInsertCall {
 	c := &WebResourceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("verificationMethod", verificationMethod)
@@ -1007,6 +1014,8 @@ type WebResourcePatchCall struct {
 
 // Patch: Modify the list of owners for your website or domain. This
 // method supports patch semantics.
+//
+// - id: The id of a verified site or domain.
 func (r *WebResourceService) Patch(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourcePatchCall {
 	c := &WebResourcePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -1146,6 +1155,8 @@ type WebResourceUpdateCall struct {
 }
 
 // Update: Modify the list of owners for your website or domain.
+//
+// - id: The id of a verified site or domain.
 func (r *WebResourceService) Update(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceUpdateCall {
 	c := &WebResourceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id

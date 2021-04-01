@@ -385,6 +385,8 @@ type ProjectsPatchTracesCall struct {
 // overwritten by the provided values, and any new fields provided are
 // merged with the existing trace data. If the ID does not match, a new
 // trace is created.
+//
+// - projectId: ID of the Cloud project where the trace data is stored.
 func (r *ProjectsService) PatchTraces(projectId string, traces *Traces) *ProjectsPatchTracesCall {
 	c := &ProjectsPatchTracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -526,6 +528,9 @@ type ProjectsTracesGetCall struct {
 }
 
 // Get: Gets a single trace by its ID.
+//
+// - projectId: ID of the Cloud project where the trace data is stored.
+// - traceId: ID of the trace to return.
 func (r *ProjectsTracesService) Get(projectId string, traceId string) *ProjectsTracesGetCall {
 	c := &ProjectsTracesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -680,6 +685,8 @@ type ProjectsTracesListCall struct {
 
 // List: Returns of a list of traces that match the specified filter
 // conditions.
+//
+// - projectId: ID of the Cloud project where the trace data is stored.
 func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
 	c := &ProjectsTracesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

@@ -215,6 +215,9 @@ type MetricDescriptorsListCall struct {
 // metric descriptors will be paginated, use the nextPageToken returned
 // in the response to request subsequent pages of results by setting the
 // pageToken query parameter to the value of the nextPageToken.
+//
+// - project: The project id. The value can be the numeric project ID or
+//   string-based project name.
 func (r *MetricDescriptorsService) List(project string, listmetricrequest *ListMetricRequest) *MetricDescriptorsListCall {
 	c := &MetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

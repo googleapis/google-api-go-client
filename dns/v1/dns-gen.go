@@ -1837,6 +1837,10 @@ type ChangesCreateCall struct {
 }
 
 // Create: Atomically updates the ResourceRecordSet collection.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ChangesService) Create(project string, managedZone string, change *Change) *ChangesCreateCall {
 	c := &ChangesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2002,6 +2006,12 @@ type ChangesGetCall struct {
 }
 
 // Get: Fetches the representation of an existing Change.
+//
+// - changeId: The identifier of the requested change, from a previous
+//   ResourceRecordSetsChangeResponse.
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ChangesService) Get(project string, managedZone string, changeId string) *ChangesGetCall {
 	c := &ChangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2181,6 +2191,10 @@ type ChangesListCall struct {
 }
 
 // List: Enumerates Changes to a ResourceRecordSet collection.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ChangesService) List(project string, managedZone string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2420,6 +2434,11 @@ type DnsKeysGetCall struct {
 }
 
 // Get: Fetches the representation of an existing DnsKey.
+//
+// - dnsKeyId: The identifier of the requested DnsKey.
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *DnsKeysService) Get(project string, managedZone string, dnsKeyId string) *DnsKeysGetCall {
 	c := &DnsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2613,6 +2632,10 @@ type DnsKeysListCall struct {
 }
 
 // List: Enumerates DnsKeys to a ResourceRecordSet collection.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *DnsKeysService) List(project string, managedZone string) *DnsKeysListCall {
 	c := &DnsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2832,6 +2855,11 @@ type ManagedZoneOperationsGetCall struct {
 }
 
 // Get: Fetches the representation of an existing Operation.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+// - operation: Identifies the operation addressed by this request (ID
+//   of the operation).
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZoneOperationsService) Get(project string, managedZone string, operation string) *ManagedZoneOperationsGetCall {
 	c := &ManagedZoneOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3011,6 +3039,9 @@ type ManagedZoneOperationsListCall struct {
 }
 
 // List: Enumerates Operations for the given ManagedZone.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZoneOperationsService) List(project string, managedZone string) *ManagedZoneOperationsListCall {
 	c := &ManagedZoneOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3240,6 +3271,8 @@ type ManagedZonesCreateCall struct {
 }
 
 // Create: Creates a new ManagedZone.
+//
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Create(project string, managedzone *ManagedZone) *ManagedZonesCreateCall {
 	c := &ManagedZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3394,6 +3427,10 @@ type ManagedZonesDeleteCall struct {
 }
 
 // Delete: Deletes a previously created ManagedZone.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Delete(project string, managedZone string) *ManagedZonesDeleteCall {
 	c := &ManagedZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3521,6 +3558,10 @@ type ManagedZonesGetCall struct {
 }
 
 // Get: Fetches the representation of an existing ManagedZone.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Get(project string, managedZone string) *ManagedZonesGetCall {
 	c := &ManagedZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3691,6 +3732,8 @@ type ManagedZonesListCall struct {
 
 // List: Enumerates ManagedZones that have been created but not yet
 // deleted.
+//
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) List(project string) *ManagedZonesListCall {
 	c := &ManagedZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3898,6 +3941,10 @@ type ManagedZonesPatchCall struct {
 }
 
 // Patch: Applies a partial update to an existing ManagedZone.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Patch(project string, managedZone string, managedzone *ManagedZone) *ManagedZonesPatchCall {
 	c := &ManagedZonesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4062,6 +4109,10 @@ type ManagedZonesUpdateCall struct {
 }
 
 // Update: Updates an existing ManagedZone.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Update(project string, managedZone string, managedzone *ManagedZone) *ManagedZonesUpdateCall {
 	c := &ManagedZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4225,6 +4276,8 @@ type PoliciesCreateCall struct {
 }
 
 // Create: Creates a new Policy.
+//
+// - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Create(project string, policy *Policy) *PoliciesCreateCall {
 	c := &PoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4380,6 +4433,10 @@ type PoliciesDeleteCall struct {
 
 // Delete: Deletes a previously created Policy. Fails if the policy is
 // still being referenced by a network.
+//
+// - policy: User given friendly name of the policy addressed by this
+//   request.
+// - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Delete(project string, policy string) *PoliciesDeleteCall {
 	c := &PoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4507,6 +4564,10 @@ type PoliciesGetCall struct {
 }
 
 // Get: Fetches the representation of an existing Policy.
+//
+// - policy: User given friendly name of the policy addressed by this
+//   request.
+// - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Get(project string, policy string) *PoliciesGetCall {
 	c := &PoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4676,6 +4737,8 @@ type PoliciesListCall struct {
 }
 
 // List: Enumerates all Policies associated with a project.
+//
+// - project: Identifies the project addressed by this request.
 func (r *PoliciesService) List(project string) *PoliciesListCall {
 	c := &PoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4871,6 +4934,10 @@ type PoliciesPatchCall struct {
 }
 
 // Patch: Applies a partial update to an existing Policy.
+//
+// - policy: User given friendly name of the policy addressed by this
+//   request.
+// - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Patch(project string, policy string, policy2 *Policy) *PoliciesPatchCall {
 	c := &PoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5035,6 +5102,10 @@ type PoliciesUpdateCall struct {
 }
 
 // Update: Updates an existing Policy.
+//
+// - policy: User given friendly name of the policy addressed by this
+//   request.
+// - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Update(project string, policy string, policy2 *Policy) *PoliciesUpdateCall {
 	c := &PoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5198,6 +5269,8 @@ type ProjectsGetCall struct {
 }
 
 // Get: Fetches the representation of an existing Project.
+//
+// - project: Identifies the project addressed by this request.
 func (r *ProjectsService) Get(project string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5359,6 +5432,10 @@ type ProjectsManagedZonesRrsetsCreateCall struct {
 }
 
 // Create: Creates a new ResourceRecordSet.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ProjectsManagedZonesRrsetsService) Create(project string, managedZone string, resourcerecordset *ResourceRecordSet) *ProjectsManagedZonesRrsetsCreateCall {
 	c := &ProjectsManagedZonesRrsetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5524,6 +5601,12 @@ type ProjectsManagedZonesRrsetsDeleteCall struct {
 }
 
 // Delete: Deletes a previously created ResourceRecordSet.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - name: Fully qualified domain name.
+// - project: Identifies the project addressed by this request.
+// - type: RRSet type.
 func (r *ProjectsManagedZonesRrsetsService) Delete(project string, managedZone string, name string, type_ string) *ProjectsManagedZonesRrsetsDeleteCall {
 	c := &ProjectsManagedZonesRrsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5699,6 +5782,12 @@ type ProjectsManagedZonesRrsetsGetCall struct {
 }
 
 // Get: Fetches the representation of an existing ResourceRecordSet.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - name: Fully qualified domain name.
+// - project: Identifies the project addressed by this request.
+// - type: RRSet type.
 func (r *ProjectsManagedZonesRrsetsService) Get(project string, managedZone string, name string, type_ string) *ProjectsManagedZonesRrsetsGetCall {
 	c := &ProjectsManagedZonesRrsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5889,6 +5978,12 @@ type ProjectsManagedZonesRrsetsPatchCall struct {
 }
 
 // Patch: Applies a partial update to an existing ResourceRecordSet.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - name: Fully qualified domain name.
+// - project: Identifies the project addressed by this request.
+// - type: RRSet type.
 func (r *ProjectsManagedZonesRrsetsService) Patch(project string, managedZone string, name string, type_ string, resourcerecordset *ResourceRecordSet) *ProjectsManagedZonesRrsetsPatchCall {
 	c := &ProjectsManagedZonesRrsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6072,6 +6167,10 @@ type ResourceRecordSetsListCall struct {
 
 // List: Enumerates ResourceRecordSets that you have created but not yet
 // deleted.
+//
+// - managedZone: Identifies the managed zone addressed by this request.
+//   Can be the managed zone name or ID.
+// - project: Identifies the project addressed by this request.
 func (r *ResourceRecordSetsService) List(project string, managedZone string) *ResourceRecordSetsListCall {
 	c := &ResourceRecordSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

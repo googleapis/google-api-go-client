@@ -1468,6 +1468,9 @@ type UsersDataSourcesCreateCall struct {
 // when creating the data source is included. This developer project
 // number is obfuscated when read by any other developer reading public
 // data types.
+//
+// - userId: Create the data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Create(userId string, datasource *DataSource) *UsersDataSourcesCreateCall {
 	c := &UsersDataSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1618,6 +1621,10 @@ type UsersDataSourcesDeleteCall struct {
 
 // Delete: Deletes the specified data source. The request will fail if
 // the data source contains any data points.
+//
+// - dataSourceId: The data stream ID of the data source to delete.
+// - userId: Retrieve a data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Delete(userId string, dataSourceId string) *UsersDataSourcesDeleteCall {
 	c := &UsersDataSourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1768,6 +1775,10 @@ type UsersDataSourcesGetCall struct {
 }
 
 // Get: Returns the specified data source.
+//
+// - dataSourceId: The data stream ID of the data source to retrieve.
+// - userId: Retrieve a data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Get(userId string, dataSourceId string) *UsersDataSourcesGetCall {
 	c := &UsersDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1944,6 +1955,9 @@ type UsersDataSourcesListCall struct {
 // the OAuth scopes provided. The list is not exhaustive; the user may
 // have private data sources that are only visible to other developers,
 // or calls using other scopes.
+//
+// - userId: List data sources for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall {
 	c := &UsersDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2126,6 +2140,10 @@ type UsersDataSourcesUpdateCall struct {
 // dataType, type, dataStreamName, and device properties with the
 // exception of version, cannot be modified. Data sources are identified
 // by their dataStreamId.
+//
+// - dataSourceId: The data stream ID of the data source to update.
+// - userId: Update the data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Update(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesUpdateCall {
 	c := &UsersDataSourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2286,6 +2304,11 @@ type UsersDataSourcesDataPointChangesListCall struct {
 
 // List: Queries for user's data point changes for a particular data
 // source.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - userId: List data points for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDataPointChangesService) List(userId string, dataSourceId string) *UsersDataSourcesDataPointChangesListCall {
 	c := &UsersDataSourcesDataPointChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2514,6 +2537,16 @@ type UsersDataSourcesDatasetsDeleteCall struct {
 // value (such as com.google.activity.segment), and a data point
 // straddles either end point of the dataset, only the overlapping
 // portion of the data point will be deleted.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - datasetId: Dataset identifier that is a composite of the minimum
+//   data point start time and maximum data point end time represented
+//   as nanoseconds from the epoch. The ID is formatted like:
+//   "startTime-endTime" where startTime and endTime are 64 bit
+//   integers.
+// - userId: Delete a dataset for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsDeleteCall {
 	c := &UsersDataSourcesDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2650,6 +2683,16 @@ type UsersDataSourcesDatasetsGetCall struct {
 // time and maximum end time. Specifically, any data point whose start
 // time is less than or equal to the dataset end time and whose end time
 // is greater than or equal to the dataset start time.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - datasetId: Dataset identifier that is a composite of the minimum
+//   data point start time and maximum data point end time represented
+//   as nanoseconds from the epoch. The ID is formatted like:
+//   "startTime-endTime" where startTime and endTime are 64 bit
+//   integers.
+// - userId: Retrieve a dataset for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsGetCall {
 	c := &UsersDataSourcesDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2893,6 +2936,12 @@ type UsersDataSourcesDatasetsPatchCall struct {
 // can belong to more than one dataset. This method does not use patch
 // semantics: the data points provided are merely inserted, with no
 // existing data replaced.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - datasetId: This field is not used, and can be safely omitted.
+// - userId: Patch a dataset for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId string, datasetId string, dataset *Dataset) *UsersDataSourcesDatasetsPatchCall {
 	c := &UsersDataSourcesDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3084,6 +3133,9 @@ type UsersDatasetAggregateCall struct {
 // divided by a given type of boundary. Multiple data sets of multiple
 // types and from multiple sources can be aggregated into exactly one
 // bucket type per request.
+//
+// - userId: Aggregate data for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *AggregateRequest) *UsersDatasetAggregateCall {
 	c := &UsersDatasetAggregateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3244,6 +3296,10 @@ type UsersSessionsDeleteCall struct {
 }
 
 // Delete: Deletes a session specified by the given session ID.
+//
+// - sessionId: The ID of the session to be deleted.
+// - userId: Delete a session for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSessionsDeleteCall {
 	c := &UsersSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3356,6 +3412,9 @@ type UsersSessionsListCall struct {
 }
 
 // List: Lists sessions previously created.
+//
+// - userId: List sessions for the person identified. Use me to indicate
+//   the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) List(userId string) *UsersSessionsListCall {
 	c := &UsersSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3620,6 +3679,10 @@ type UsersSessionsUpdateCall struct {
 }
 
 // Update: Updates or insert a given session.
+//
+// - sessionId: The ID of the session to be created.
+// - userId: Create sessions for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) Update(userId string, sessionId string, session *Session) *UsersSessionsUpdateCall {
 	c := &UsersSessionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId

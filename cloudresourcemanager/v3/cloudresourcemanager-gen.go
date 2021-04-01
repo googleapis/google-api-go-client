@@ -2330,6 +2330,9 @@ type FoldersDeleteCall struct {
 // the ACTIVE state. If called on a folder in DELETE_REQUESTED state the
 // operation will result in a no-op success. The caller must have
 // `resourcemanager.folders.delete` permission on the identified folder.
+//
+// - name: The resource name of the folder to be deleted. Must be of the
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2464,6 +2467,9 @@ type FoldersGetCall struct {
 // Valid folder resource names have the format `folders/{folder_id}`
 // (for example, `folders/1234`). The caller must have
 // `resourcemanager.folders.get` permission on the identified folder.
+//
+// - name: The resource name of the folder to retrieve. Must be of the
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2614,6 +2620,10 @@ type FoldersGetIamPolicyCall struct {
 // example: "folders/1234". The caller must have
 // `resourcemanager.folders.getIamPolicy` permission on the identified
 // folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2982,6 +2992,9 @@ type FoldersMoveCall struct {
 // described in the CreateFolder documentation. The caller must have
 // `resourcemanager.folders.move` permission on the folder's current and
 // proposed new parent.
+//
+// - name: The resource name of the Folder to move. Must be of the form
+//   folders/{folder_id}.
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3133,6 +3146,9 @@ type FoldersPatchCall struct {
 // If the update fails due to the unique name constraint then a
 // `PreconditionFailure` explaining this violation will be returned in
 // the Status.details field.
+//
+// - name: Output only. The resource name of the folder. Its format is
+//   `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3503,6 +3519,10 @@ type FoldersSetIamPolicyCall struct {
 // resource name, for example: "folders/1234". The caller must have
 // `resourcemanager.folders.setIamPolicy` permission on the identified
 // folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3646,6 +3666,10 @@ type FoldersTestIamPermissionsCall struct {
 // specified folder. The `resource` field should be the folder's
 // resource name, for example: "folders/1234". There are no permissions
 // required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3794,6 +3818,9 @@ type FoldersUndeleteCall struct {
 // documentation. The caller must have
 // `resourcemanager.folders.undelete` permission on the identified
 // folder.
+//
+// - name: The resource name of the folder to undelete. Must be of the
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4066,6 +4093,8 @@ type LiensDeleteCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.updateLiens`.
+//
+// - name: The name/identifier of the Lien to delete.
 func (r *LiensService) Delete(nameid string) *LiensDeleteCall {
 	c := &LiensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4201,6 +4230,8 @@ type LiensGetCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.get`
+//
+// - name: The name/identifier of the Lien.
 func (r *LiensService) Get(nameid string) *LiensGetCall {
 	c := &LiensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4544,6 +4575,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4690,6 +4723,11 @@ type OrganizationsGetCall struct {
 
 // Get: Fetches an organization resource identified by the specified
 // resource name.
+//
+// - name: The resource name of the Organization to fetch. This is the
+//   organization's relative path in the API, formatted as
+//   "organizations/[organizationId]". For example,
+//   "organizations/1234".
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4840,6 +4878,10 @@ type OrganizationsGetIamPolicyCall struct {
 // name, for example: "organizations/123". Authorization requires the
 // IAM permission `resourcemanager.organizations.getIamPolicy` on the
 // specified organization.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5192,6 +5234,10 @@ type OrganizationsSetIamPolicyCall struct {
 // "organizations/123". Authorization requires the IAM permission
 // `resourcemanager.organizations.setIamPolicy` on the specified
 // organization.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5335,6 +5381,10 @@ type OrganizationsTestIamPermissionsCall struct {
 // specified organization. The `resource` field should be the
 // organization's resource name, for example: "organizations/123". There
 // are no permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5617,6 +5667,9 @@ type ProjectsDeleteCall struct {
 // idempotently, such that deleting a `DELETE_REQUESTED` project will
 // not cause an error, but also won't do anything. The caller must have
 // `resourcemanager.projects.delete` permissions for this project.
+//
+// - name: The name of the Project (for example,
+//   `projects/415104041262`).
 func (r *ProjectsService) Delete(name string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5750,6 +5803,9 @@ type ProjectsGetCall struct {
 // Get: Retrieves the project identified by the specified `name` (for
 // example, `projects/415104041262`). The caller must have
 // `resourcemanager.projects.get` permission for this project.
+//
+// - name: The name of the project (for example,
+//   `projects/415104041262`).
 func (r *ProjectsService) Get(name string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5897,6 +5953,10 @@ type ProjectsGetIamPolicyCall struct {
 // GetIamPolicy: Returns the IAM access control policy for the specified
 // project. Permission is denied if the policy or the resource do not
 // exist.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6256,6 +6316,8 @@ type ProjectsMoveCall struct {
 // The caller must have `resourcemanager.projects.update` permission on
 // the project and have `resourcemanager.projects.move` permission on
 // the project's current and proposed new parent.
+//
+// - name: The name of the project to move.
 func (r *ProjectsService) Move(name string, moveprojectrequest *MoveProjectRequest) *ProjectsMoveCall {
 	c := &ProjectsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6400,6 +6462,10 @@ type ProjectsPatchCall struct {
 // `projects/415104041262`). Deleting all labels requires an update mask
 // for labels field. The caller must have
 // `resourcemanager.projects.update` permission for this project.
+//
+// - name: Output only. The unique resource name of the project. It is
+//   an int64 generated number prefixed by "projects/". Example:
+//   `projects/415104041262`.
 func (r *ProjectsService) Patch(name string, project *Project) *ProjectsPatchCall {
 	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6804,6 +6870,10 @@ type ProjectsSetIamPolicyCall struct {
 // accepted the ToS. Edits to IAM policies will be rejected until the
 // lack of a ToS-accepting owner is rectified. + Calling this method
 // requires enabling the App Engine Admin API.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6945,6 +7015,10 @@ type ProjectsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified project.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7090,6 +7164,9 @@ type ProjectsUndeleteCall struct {
 // for a project that has a lifecycle state of DELETE_REQUESTED. After
 // deletion starts, the project cannot be restored. The caller must have
 // `resourcemanager.projects.undelete` permission for this project.
+//
+// - name: The name of the project (for example,
+//   `projects/415104041262`). Required.
 func (r *ProjectsService) Undelete(name string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7369,6 +7446,11 @@ type TagBindingsDeleteCall struct {
 }
 
 // Delete: Deletes a TagBinding.
+//
+// - name: The name of the TagBinding. This is a String of the form:
+//   `tagBindings/{id}` (e.g.
+//   `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F
+//   123/tagValues/456`).
 func (r *TagBindingsService) Delete(name string) *TagBindingsDeleteCall {
 	c := &TagBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7839,6 +7921,10 @@ type TagKeysDeleteCall struct {
 
 // Delete: Deletes a TagKey. The TagKey cannot be deleted if it has any
 // child TagValues.
+//
+// - name: The resource name of a TagKey to be deleted in the format
+//   `tagKeys/123`. The TagKey cannot be a parent of any existing
+//   TagValues or it will not be deleted successfully.
 func (r *TagKeysService) Delete(name string) *TagKeysDeleteCall {
 	c := &TagKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7998,6 +8084,9 @@ type TagKeysGetCall struct {
 // Get: Retrieves a TagKey. This method will return `PERMISSION_DENIED`
 // if the key does not exist or the user does not have permission to
 // view it.
+//
+// - name: A resource name in the format `tagKeys/{id}`, such as
+//   `tagKeys/123`.
 func (r *TagKeysService) Get(name string) *TagKeysGetCall {
 	c := &TagKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8148,6 +8237,10 @@ type TagKeysGetIamPolicyCall struct {
 // example, "tagKeys/1234". The caller must have
 // `cloudresourcemanager.googleapis.com/tagKeys.getIamPolicy` permission
 // on the specified TagKey.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagKeysService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagKeysGetIamPolicyCall {
 	c := &TagKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8482,6 +8575,10 @@ type TagKeysPatchCall struct {
 }
 
 // Patch: Updates the attributes of the TagKey resource.
+//
+// - name: Immutable. The resource name for a TagKey. Must be in the
+//   format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated
+//   numeric id for the TagKey.
 func (r *TagKeysService) Patch(name string, tagkey *TagKey) *TagKeysPatchCall {
 	c := &TagKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8654,6 +8751,10 @@ type TagKeysSetIamPolicyCall struct {
 // resource name. For example, "tagKeys/1234". The caller must have
 // `resourcemanager.tagKeys.setIamPolicy` permission on the identified
 // tagValue.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagKeysSetIamPolicyCall {
 	c := &TagKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8797,6 +8898,10 @@ type TagKeysTestIamPermissionsCall struct {
 // specified TagKey. The `resource` field should be the TagKey's
 // resource name. For example, "tagKeys/1234". There are no permissions
 // required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TagKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagKeysTestIamPermissionsCall {
 	c := &TagKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9079,6 +9184,9 @@ type TagValuesDeleteCall struct {
 
 // Delete: Deletes a TagValue. The TagValue cannot have any bindings
 // when it is deleted.
+//
+// - name: Resource name for TagValue to be deleted in the format
+//   tagValues/456.
 func (r *TagValuesService) Delete(name string) *TagValuesDeleteCall {
 	c := &TagValuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9238,6 +9346,9 @@ type TagValuesGetCall struct {
 // Get: Retrieves TagValue. If the TagValue or namespaced name does not
 // exist, or if the user does not have permission to view it, this
 // method will return `PERMISSION_DENIED`.
+//
+// - name: Resource name for TagValue to be fetched in the format
+//   `tagValues/456`.
 func (r *TagValuesService) Get(name string) *TagValuesGetCall {
 	c := &TagValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9389,6 +9500,10 @@ type TagValuesGetIamPolicyCall struct {
 // `cloudresourcemanager.googleapis.com/tagValues.getIamPolicy`
 // permission on the identified TagValue to get the access control
 // policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagValuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagValuesGetIamPolicyCall {
 	c := &TagValuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9723,6 +9838,9 @@ type TagValuesPatchCall struct {
 }
 
 // Patch: Updates the attributes of the TagValue resource.
+//
+// - name: Immutable. Resource name for TagValue in the format
+//   `tagValues/456`.
 func (r *TagValuesService) Patch(name string, tagvalue *TagValue) *TagValuesPatchCall {
 	c := &TagValuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9893,6 +10011,10 @@ type TagValuesSetIamPolicyCall struct {
 // resource name. For example: `tagValues/1234`. The caller must have
 // `resourcemanager.tagValues.setIamPolicy` permission on the identified
 // tagValue.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagValuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagValuesSetIamPolicyCall {
 	c := &TagValuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10036,6 +10158,10 @@ type TagValuesTestIamPermissionsCall struct {
 // specified TagValue. The `resource` field should be the TagValue's
 // resource name. For example: `tagValues/1234`. There are no
 // permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TagValuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagValuesTestIamPermissionsCall {
 	c := &TagValuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

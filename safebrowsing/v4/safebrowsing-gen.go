@@ -1512,6 +1512,8 @@ type EncodedFullHashesGetCall struct {
 }
 
 // Get:
+//
+// - encodedRequest: A serialized FindFullHashesRequest proto.
 func (r *EncodedFullHashesService) Get(encodedRequest string) *EncodedFullHashesGetCall {
 	c := &EncodedFullHashesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.encodedRequest = encodedRequest
@@ -1680,6 +1682,8 @@ type EncodedUpdatesGetCall struct {
 }
 
 // Get:
+//
+// - encodedRequest: A serialized FetchThreatListUpdatesRequest proto.
 func (r *EncodedUpdatesService) Get(encodedRequest string) *EncodedUpdatesGetCall {
 	c := &EncodedUpdatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.encodedRequest = encodedRequest

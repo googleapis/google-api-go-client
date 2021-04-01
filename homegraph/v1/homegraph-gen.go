@@ -908,6 +908,8 @@ type AgentUsersDeleteCall struct {
 // The third-party user's identity is passed in via the `agent_user_id`
 // (see DeleteAgentUserRequest). This request must be authorized using
 // service account credentials from your Actions console project.
+//
+// - agentUserId: Third-party user ID.
 func (r *AgentUsersService) Delete(agentUserId string) *AgentUsersDeleteCall {
 	c := &AgentUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agentUserId = agentUserId

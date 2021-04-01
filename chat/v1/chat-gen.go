@@ -1639,6 +1639,9 @@ type DmsMessagesCall struct {
 
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1796,6 +1799,9 @@ type DmsWebhooksCall struct {
 
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1953,6 +1959,9 @@ type DmsConversationsMessagesCall struct {
 
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2110,6 +2119,9 @@ type MediaDownloadCall struct {
 
 // Download: Downloads media. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
+//
+// - resourceName: Name of the media that is being downloaded. See
+//   ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -2269,6 +2281,9 @@ type RoomsMessagesCall struct {
 
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2426,6 +2441,9 @@ type RoomsWebhooksCall struct {
 
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2583,6 +2601,9 @@ type RoomsConversationsMessagesCall struct {
 
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2739,6 +2760,9 @@ type SpacesGetCall struct {
 }
 
 // Get: Returns a space.
+//
+// - name: Resource name of the space, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3055,6 +3079,9 @@ type SpacesWebhooksCall struct {
 
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3211,6 +3238,10 @@ type SpacesMembersGetCall struct {
 }
 
 // Get: Returns a membership.
+//
+// - name: Resource name of the membership to be retrieved, in the form
+//   "spaces/*/members/*". Example:
+//   spaces/AAAAMpdlehY/members/105115627578887013105.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3352,6 +3383,9 @@ type SpacesMembersListCall struct {
 }
 
 // List: Lists human memberships in a space.
+//
+// - parent: The resource name of the space for which membership list is
+//   to be fetched, in the form "spaces/*". Example: spaces/AAAAMpdlehY.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3540,6 +3574,9 @@ type SpacesMessagesCreateCall struct {
 }
 
 // Create: Creates a message.
+//
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAMpdlehY.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3695,6 +3732,10 @@ type SpacesMessagesDeleteCall struct {
 }
 
 // Delete: Deletes a message.
+//
+// - name: Resource name of the message to be deleted, in the form
+//   "spaces/*/messages/*" Example:
+//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3823,6 +3864,10 @@ type SpacesMessagesGetCall struct {
 }
 
 // Get: Returns a message.
+//
+// - name: Resource name of the message to be retrieved, in the form
+//   "spaces/*/messages/*". Example:
+//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3964,6 +4009,8 @@ type SpacesMessagesUpdateCall struct {
 }
 
 // Update: Updates a message.
+//
+// - name: .
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4115,6 +4162,9 @@ type SpacesMessagesAttachmentsGetCall struct {
 
 // Get: Gets the metadata of a message attachment. The attachment data
 // is fetched using the media API.
+//
+// - name: Resource name of the attachment, in the form
+//   "spaces/*/messages/*/attachments/*".
 func (r *SpacesMessagesAttachmentsService) Get(name string) *SpacesMessagesAttachmentsGetCall {
 	c := &SpacesMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -1836,6 +1836,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1981,6 +1983,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2193,6 +2198,11 @@ type ProjectsLocationsQueuesCreateCall struct {
 // your queues. Read Overview of Queue Management and queue.yaml
 // (https://cloud.google.com/tasks/docs/queue-yaml) before using this
 // method.
+//
+// - parent: The location name in which the queue will be created. For
+//   example: `projects/PROJECT_ID/locations/LOCATION_ID` The list of
+//   allowed locations can be obtained by calling Cloud Tasks'
+//   implementation of ListLocations.
 func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *ProjectsLocationsQueuesCreateCall {
 	c := &ProjectsLocationsQueuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2339,6 +2349,9 @@ type ProjectsLocationsQueuesDeleteCall struct {
 // of Queue Management and queue.yaml
 // (https://cloud.google.com/tasks/docs/queue-yaml) before using this
 // method.
+//
+// - name: The queue name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Delete(name string) *ProjectsLocationsQueuesDeleteCall {
 	c := &ProjectsLocationsQueuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2470,6 +2483,9 @@ type ProjectsLocationsQueuesGetCall struct {
 }
 
 // Get: Gets a queue.
+//
+// - name: The resource name of the queue. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Get(name string) *ProjectsLocationsQueuesGetCall {
 	c := &ProjectsLocationsQueuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2618,6 +2634,10 @@ type ProjectsLocationsQueuesGetIamPolicyCall struct {
 // Authorization requires the following Google IAM
 // (https://cloud.google.com/iam) permission on the specified resource
 // parent: * `cloudtasks.queues.getIamPolicy`
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsQueuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsQueuesGetIamPolicyCall {
 	c := &ProjectsLocationsQueuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2758,6 +2778,9 @@ type ProjectsLocationsQueuesListCall struct {
 }
 
 // List: Lists queues. Queues are returned in lexicographical order.
+//
+// - parent: The location name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID`.
 func (r *ProjectsLocationsQueuesService) List(parent string) *ProjectsLocationsQueuesListCall {
 	c := &ProjectsLocationsQueuesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2982,6 +3005,21 @@ type ProjectsLocationsQueuesPatchCall struct {
 // Management and queue.yaml
 // (https://cloud.google.com/tasks/docs/queue-yaml) before using this
 // method.
+//
+// - name: Caller-specified and required in CreateQueue, after which it
+//   becomes output only. The queue name. The queue name must have the
+//   following format:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
+//   `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
+//   hyphens (-), colons (:), or periods (.). For more information, see
+//   Identifying projects
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+//   * `LOCATION_ID` is the canonical ID for the queue's location. The
+//   list of available locations can be obtained by calling
+//   ListLocations. For more information, see
+//   https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
+//   letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
+//   length is 100 characters.
 func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *ProjectsLocationsQueuesPatchCall {
 	c := &ProjectsLocationsQueuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3139,6 +3177,9 @@ type ProjectsLocationsQueuesPauseCall struct {
 // stop dispatching tasks until the queue is resumed via ResumeQueue.
 // Tasks can still be added when the queue is paused. A queue is paused
 // if its state is PAUSED.
+//
+// - name: The queue name. For example:
+//   `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Pause(name string, pausequeuerequest *PauseQueueRequest) *ProjectsLocationsQueuesPauseCall {
 	c := &ProjectsLocationsQueuesPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3282,6 +3323,9 @@ type ProjectsLocationsQueuesPurgeCall struct {
 // before this method is called are permanently deleted. Purge
 // operations can take up to one minute to take effect. Tasks might be
 // dispatched before the purge takes effect. A purge is irreversible.
+//
+// - name: The queue name. For example:
+//   `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Purge(name string, purgequeuerequest *PurgeQueueRequest) *ProjectsLocationsQueuesPurgeCall {
 	c := &ProjectsLocationsQueuesPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3428,6 +3472,9 @@ type ProjectsLocationsQueuesResumeCall struct {
 // overloading. If you are resuming high-QPS queues, follow the 500/50/5
 // pattern described in Managing Cloud Tasks Scaling Risks
 // (https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+//
+// - name: The queue name. For example:
+//   `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Resume(name string, resumequeuerequest *ResumeQueueRequest) *ProjectsLocationsQueuesResumeCall {
 	c := &ProjectsLocationsQueuesResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3573,6 +3620,10 @@ type ProjectsLocationsQueuesSetIamPolicyCall struct {
 // required to use the Cloud Console. Authorization requires the
 // following Google IAM (https://cloud.google.com/iam) permission on the
 // specified resource parent: * `cloudtasks.queues.setIamPolicy`
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsQueuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsQueuesSetIamPolicyCall {
 	c := &ProjectsLocationsQueuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3718,6 +3769,10 @@ type ProjectsLocationsQueuesTestIamPermissionsCall struct {
 // to be used for building permission-aware UIs and command-line tools,
 // not for authorization checking. This operation may "fail open"
 // without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsQueuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsQueuesTestIamPermissionsCall {
 	c := &ProjectsLocationsQueuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3860,6 +3915,10 @@ type ProjectsLocationsQueuesTasksCreateCall struct {
 // Create: Creates a task and adds it to a queue. Tasks cannot be
 // updated after creation; there is no UpdateTask command. * The maximum
 // task size is 100KB.
+//
+// - parent: The queue name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
+//   queue must already exist.
 func (r *ProjectsLocationsQueuesTasksService) Create(parent string, createtaskrequest *CreateTaskRequest) *ProjectsLocationsQueuesTasksCreateCall {
 	c := &ProjectsLocationsQueuesTasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4001,6 +4060,10 @@ type ProjectsLocationsQueuesTasksDeleteCall struct {
 // Delete: Deletes a task. A task can be deleted if it is scheduled or
 // dispatched. A task cannot be deleted if it has executed successfully
 // or permanently failed.
+//
+// - name: The task name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
+//   K_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Delete(name string) *ProjectsLocationsQueuesTasksDeleteCall {
 	c := &ProjectsLocationsQueuesTasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4132,6 +4195,10 @@ type ProjectsLocationsQueuesTasksGetCall struct {
 }
 
 // Get: Gets a task.
+//
+// - name: The task name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
+//   K_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Get(name string) *ProjectsLocationsQueuesTasksGetCall {
 	c := &ProjectsLocationsQueuesTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4318,6 +4385,9 @@ type ProjectsLocationsQueuesTasksListCall struct {
 // retrieved due to performance considerations; response_view controls
 // the subset of information which is returned. The tasks may be
 // returned in any order. The ordering may change at any time.
+//
+// - parent: The queue name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocationsQueuesTasksListCall {
 	c := &ProjectsLocationsQueuesTasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4567,6 +4637,10 @@ type ProjectsLocationsQueuesTasksRunCall struct {
 // specified in the queue's RetryConfig. RunTask returns NOT_FOUND when
 // it is called on a task that has already succeeded or permanently
 // failed.
+//
+// - name: The task name. For example:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
+//   K_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Run(name string, runtaskrequest *RunTaskRequest) *ProjectsLocationsQueuesTasksRunCall {
 	c := &ProjectsLocationsQueuesTasksRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

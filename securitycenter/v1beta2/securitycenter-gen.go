@@ -1519,6 +1519,14 @@ type FoldersGetContainerThreatDetectionSettingsCall struct {
 
 // GetContainerThreatDetectionSettings: Get the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The name of the ContainerThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *FoldersService) GetContainerThreatDetectionSettings(name string) *FoldersGetContainerThreatDetectionSettingsCall {
 	c := &FoldersGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1664,6 +1672,12 @@ type FoldersGetEventThreatDetectionSettingsCall struct {
 
 // GetEventThreatDetectionSettings: Get the EventThreatDetectionSettings
 // resource.
+//
+// - name: The name of the EventThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *FoldersService) GetEventThreatDetectionSettings(name string) *FoldersGetEventThreatDetectionSettingsCall {
 	c := &FoldersGetEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1809,6 +1823,12 @@ type FoldersGetSecurityHealthAnalyticsSettingsCall struct {
 
 // GetSecurityHealthAnalyticsSettings: Get the
 // SecurityHealthAnalyticsSettings resource.
+//
+// - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *FoldersService) GetSecurityHealthAnalyticsSettings(name string) *FoldersGetSecurityHealthAnalyticsSettingsCall {
 	c := &FoldersGetSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1954,6 +1974,11 @@ type FoldersGetWebSecurityScannerSettingsCall struct {
 
 // GetWebSecurityScannerSettings: Get the WebSecurityScannerSettings
 // resource.
+//
+// - name: The name of the WebSecurityScannerSettings to retrieve.
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *FoldersService) GetWebSecurityScannerSettings(name string) *FoldersGetWebSecurityScannerSettingsCall {
 	c := &FoldersGetWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2099,6 +2124,14 @@ type FoldersUpdateContainerThreatDetectionSettingsCall struct {
 
 // UpdateContainerThreatDetectionSettings: Update the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The resource name of the ContainerThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *FoldersService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *FoldersUpdateContainerThreatDetectionSettingsCall {
 	c := &FoldersUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2253,6 +2286,12 @@ type FoldersUpdateEventThreatDetectionSettingsCall struct {
 
 // UpdateEventThreatDetectionSettings: Update the
 // EventThreatDetectionSettings resource.
+//
+// - name: The resource name of the EventThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *FoldersService) UpdateEventThreatDetectionSettings(name string, eventthreatdetectionsettings *EventThreatDetectionSettings) *FoldersUpdateEventThreatDetectionSettingsCall {
 	c := &FoldersUpdateEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2407,6 +2446,12 @@ type FoldersUpdateSecurityHealthAnalyticsSettingsCall struct {
 
 // UpdateSecurityHealthAnalyticsSettings: Update the
 // SecurityHealthAnalyticsSettings resource.
+//
+// - name: The resource name of the SecurityHealthAnalyticsSettings.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *FoldersService) UpdateSecurityHealthAnalyticsSettings(name string, securityhealthanalyticssettings *SecurityHealthAnalyticsSettings) *FoldersUpdateSecurityHealthAnalyticsSettingsCall {
 	c := &FoldersUpdateSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2561,6 +2606,11 @@ type FoldersUpdateWebSecurityScannerSettingsCall struct {
 
 // UpdateWebSecurityScannerSettings: Update the
 // WebSecurityScannerSettings resource.
+//
+// - name: The resource name of the WebSecurityScannerSettings. Formats:
+//   * organizations/{organization}/webSecurityScannerSettings *
+//   folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *FoldersService) UpdateWebSecurityScannerSettings(name string, websecurityscannersettings *WebSecurityScannerSettings) *FoldersUpdateWebSecurityScannerSettingsCall {
 	c := &FoldersUpdateWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2715,6 +2765,14 @@ type FoldersContainerThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the ContainerThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *FoldersContainerThreatDetectionSettingsService) Calculate(name string) *FoldersContainerThreatDetectionSettingsCalculateCall {
 	c := &FoldersContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2860,6 +2918,12 @@ type FoldersEventThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective EventThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the EventThreatDetectionSettings to calculate.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *FoldersEventThreatDetectionSettingsService) Calculate(name string) *FoldersEventThreatDetectionSettingsCalculateCall {
 	c := &FoldersEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3005,6 +3069,12 @@ type FoldersSecurityHealthAnalyticsSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective SecurityHealthAnalyticsSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the SecurityHealthAnalyticsSettings to calculate.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *FoldersSecurityHealthAnalyticsSettingsService) Calculate(name string) *FoldersSecurityHealthAnalyticsSettingsCalculateCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3150,6 +3220,11 @@ type FoldersWebSecurityScannerSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective WebSecurityScannerSettings based
 // on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the WebSecurityScannerSettings to calculate.
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *FoldersWebSecurityScannerSettingsService) Calculate(name string) *FoldersWebSecurityScannerSettingsCalculateCall {
 	c := &FoldersWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3295,6 +3370,14 @@ type OrganizationsGetContainerThreatDetectionSettingsCall struct {
 
 // GetContainerThreatDetectionSettings: Get the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The name of the ContainerThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *OrganizationsService) GetContainerThreatDetectionSettings(name string) *OrganizationsGetContainerThreatDetectionSettingsCall {
 	c := &OrganizationsGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3440,6 +3523,12 @@ type OrganizationsGetEventThreatDetectionSettingsCall struct {
 
 // GetEventThreatDetectionSettings: Get the EventThreatDetectionSettings
 // resource.
+//
+// - name: The name of the EventThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *OrganizationsService) GetEventThreatDetectionSettings(name string) *OrganizationsGetEventThreatDetectionSettingsCall {
 	c := &OrganizationsGetEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3584,6 +3673,9 @@ type OrganizationsGetSecurityCenterSettingsCall struct {
 }
 
 // GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
+//
+// - name: The name of the SecurityCenterSettings to retrieve. Format:
+//   organizations/{organization}/securityCenterSettings.
 func (r *OrganizationsService) GetSecurityCenterSettings(name string) *OrganizationsGetSecurityCenterSettingsCall {
 	c := &OrganizationsGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3729,6 +3821,12 @@ type OrganizationsGetSecurityHealthAnalyticsSettingsCall struct {
 
 // GetSecurityHealthAnalyticsSettings: Get the
 // SecurityHealthAnalyticsSettings resource.
+//
+// - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *OrganizationsService) GetSecurityHealthAnalyticsSettings(name string) *OrganizationsGetSecurityHealthAnalyticsSettingsCall {
 	c := &OrganizationsGetSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3873,6 +3971,9 @@ type OrganizationsGetSubscriptionCall struct {
 }
 
 // GetSubscription: Get the Subscription resource.
+//
+// - name: The name of the subscription to retrieve. Format:
+//   organizations/{organization}/subscription.
 func (r *OrganizationsService) GetSubscription(name string) *OrganizationsGetSubscriptionCall {
 	c := &OrganizationsGetSubscriptionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4018,6 +4119,11 @@ type OrganizationsGetWebSecurityScannerSettingsCall struct {
 
 // GetWebSecurityScannerSettings: Get the WebSecurityScannerSettings
 // resource.
+//
+// - name: The name of the WebSecurityScannerSettings to retrieve.
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *OrganizationsService) GetWebSecurityScannerSettings(name string) *OrganizationsGetWebSecurityScannerSettingsCall {
 	c := &OrganizationsGetWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4163,6 +4269,14 @@ type OrganizationsUpdateContainerThreatDetectionSettingsCall struct {
 
 // UpdateContainerThreatDetectionSettings: Update the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The resource name of the ContainerThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *OrganizationsService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *OrganizationsUpdateContainerThreatDetectionSettingsCall {
 	c := &OrganizationsUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4317,6 +4431,12 @@ type OrganizationsUpdateEventThreatDetectionSettingsCall struct {
 
 // UpdateEventThreatDetectionSettings: Update the
 // EventThreatDetectionSettings resource.
+//
+// - name: The resource name of the EventThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *OrganizationsService) UpdateEventThreatDetectionSettings(name string, eventthreatdetectionsettings *EventThreatDetectionSettings) *OrganizationsUpdateEventThreatDetectionSettingsCall {
 	c := &OrganizationsUpdateEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4471,6 +4591,12 @@ type OrganizationsUpdateSecurityHealthAnalyticsSettingsCall struct {
 
 // UpdateSecurityHealthAnalyticsSettings: Update the
 // SecurityHealthAnalyticsSettings resource.
+//
+// - name: The resource name of the SecurityHealthAnalyticsSettings.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *OrganizationsService) UpdateSecurityHealthAnalyticsSettings(name string, securityhealthanalyticssettings *SecurityHealthAnalyticsSettings) *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall {
 	c := &OrganizationsUpdateSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4625,6 +4751,11 @@ type OrganizationsUpdateWebSecurityScannerSettingsCall struct {
 
 // UpdateWebSecurityScannerSettings: Update the
 // WebSecurityScannerSettings resource.
+//
+// - name: The resource name of the WebSecurityScannerSettings. Formats:
+//   * organizations/{organization}/webSecurityScannerSettings *
+//   folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *OrganizationsService) UpdateWebSecurityScannerSettings(name string, websecurityscannersettings *WebSecurityScannerSettings) *OrganizationsUpdateWebSecurityScannerSettingsCall {
 	c := &OrganizationsUpdateWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4779,6 +4910,14 @@ type OrganizationsContainerThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the ContainerThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *OrganizationsContainerThreatDetectionSettingsService) Calculate(name string) *OrganizationsContainerThreatDetectionSettingsCalculateCall {
 	c := &OrganizationsContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4924,6 +5063,12 @@ type OrganizationsEventThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective EventThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the EventThreatDetectionSettings to calculate.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *OrganizationsEventThreatDetectionSettingsService) Calculate(name string) *OrganizationsEventThreatDetectionSettingsCalculateCall {
 	c := &OrganizationsEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5069,6 +5214,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective SecurityHealthAnalyticsSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the SecurityHealthAnalyticsSettings to calculate.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsService) Calculate(name string) *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5214,6 +5365,11 @@ type OrganizationsWebSecurityScannerSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective WebSecurityScannerSettings based
 // on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the WebSecurityScannerSettings to calculate.
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *OrganizationsWebSecurityScannerSettingsService) Calculate(name string) *OrganizationsWebSecurityScannerSettingsCalculateCall {
 	c := &OrganizationsWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5359,6 +5515,14 @@ type ProjectsGetContainerThreatDetectionSettingsCall struct {
 
 // GetContainerThreatDetectionSettings: Get the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The name of the ContainerThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsService) GetContainerThreatDetectionSettings(name string) *ProjectsGetContainerThreatDetectionSettingsCall {
 	c := &ProjectsGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5504,6 +5668,12 @@ type ProjectsGetEventThreatDetectionSettingsCall struct {
 
 // GetEventThreatDetectionSettings: Get the EventThreatDetectionSettings
 // resource.
+//
+// - name: The name of the EventThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *ProjectsService) GetEventThreatDetectionSettings(name string) *ProjectsGetEventThreatDetectionSettingsCall {
 	c := &ProjectsGetEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5649,6 +5819,12 @@ type ProjectsGetSecurityHealthAnalyticsSettingsCall struct {
 
 // GetSecurityHealthAnalyticsSettings: Get the
 // SecurityHealthAnalyticsSettings resource.
+//
+// - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *ProjectsService) GetSecurityHealthAnalyticsSettings(name string) *ProjectsGetSecurityHealthAnalyticsSettingsCall {
 	c := &ProjectsGetSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5794,6 +5970,11 @@ type ProjectsGetWebSecurityScannerSettingsCall struct {
 
 // GetWebSecurityScannerSettings: Get the WebSecurityScannerSettings
 // resource.
+//
+// - name: The name of the WebSecurityScannerSettings to retrieve.
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *ProjectsService) GetWebSecurityScannerSettings(name string) *ProjectsGetWebSecurityScannerSettingsCall {
 	c := &ProjectsGetWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5939,6 +6120,14 @@ type ProjectsUpdateContainerThreatDetectionSettingsCall struct {
 
 // UpdateContainerThreatDetectionSettings: Update the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The resource name of the ContainerThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *ProjectsUpdateContainerThreatDetectionSettingsCall {
 	c := &ProjectsUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6093,6 +6282,12 @@ type ProjectsUpdateEventThreatDetectionSettingsCall struct {
 
 // UpdateEventThreatDetectionSettings: Update the
 // EventThreatDetectionSettings resource.
+//
+// - name: The resource name of the EventThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *ProjectsService) UpdateEventThreatDetectionSettings(name string, eventthreatdetectionsettings *EventThreatDetectionSettings) *ProjectsUpdateEventThreatDetectionSettingsCall {
 	c := &ProjectsUpdateEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6247,6 +6442,12 @@ type ProjectsUpdateSecurityHealthAnalyticsSettingsCall struct {
 
 // UpdateSecurityHealthAnalyticsSettings: Update the
 // SecurityHealthAnalyticsSettings resource.
+//
+// - name: The resource name of the SecurityHealthAnalyticsSettings.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *ProjectsService) UpdateSecurityHealthAnalyticsSettings(name string, securityhealthanalyticssettings *SecurityHealthAnalyticsSettings) *ProjectsUpdateSecurityHealthAnalyticsSettingsCall {
 	c := &ProjectsUpdateSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6401,6 +6602,11 @@ type ProjectsUpdateWebSecurityScannerSettingsCall struct {
 
 // UpdateWebSecurityScannerSettings: Update the
 // WebSecurityScannerSettings resource.
+//
+// - name: The resource name of the WebSecurityScannerSettings. Formats:
+//   * organizations/{organization}/webSecurityScannerSettings *
+//   folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *ProjectsService) UpdateWebSecurityScannerSettings(name string, websecurityscannersettings *WebSecurityScannerSettings) *ProjectsUpdateWebSecurityScannerSettingsCall {
 	c := &ProjectsUpdateWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6555,6 +6761,14 @@ type ProjectsContainerThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the ContainerThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsContainerThreatDetectionSettingsService) Calculate(name string) *ProjectsContainerThreatDetectionSettingsCalculateCall {
 	c := &ProjectsContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6700,6 +6914,12 @@ type ProjectsEventThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective EventThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the EventThreatDetectionSettings to calculate.
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *ProjectsEventThreatDetectionSettingsService) Calculate(name string) *ProjectsEventThreatDetectionSettingsCalculateCall {
 	c := &ProjectsEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6845,6 +7065,14 @@ type ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall struct {
 
 // GetContainerThreatDetectionSettings: Get the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The name of the ContainerThreatDetectionSettings to retrieve.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsLocationsClustersService) GetContainerThreatDetectionSettings(name string) *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall {
 	c := &ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6990,6 +7218,14 @@ type ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall struct 
 
 // UpdateContainerThreatDetectionSettings: Update the
 // ContainerThreatDetectionSettings resource.
+//
+// - name: The resource name of the ContainerThreatDetectionSettings.
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsLocationsClustersService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall {
 	c := &ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7144,6 +7380,14 @@ type ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall stru
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the ContainerThreatDetectionSettings to
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsLocationsClustersContainerThreatDetectionSettingsService) Calculate(name string) *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall {
 	c := &ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7289,6 +7533,12 @@ type ProjectsSecurityHealthAnalyticsSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective SecurityHealthAnalyticsSettings
 // based on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the SecurityHealthAnalyticsSettings to calculate.
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *ProjectsSecurityHealthAnalyticsSettingsService) Calculate(name string) *ProjectsSecurityHealthAnalyticsSettingsCalculateCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7434,6 +7684,11 @@ type ProjectsWebSecurityScannerSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective WebSecurityScannerSettings based
 // on its level in the resource hierarchy and its settings.
+//
+// - name: The name of the WebSecurityScannerSettings to calculate.
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *ProjectsWebSecurityScannerSettingsService) Calculate(name string) *ProjectsWebSecurityScannerSettingsCalculateCall {
 	c := &ProjectsWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

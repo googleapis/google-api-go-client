@@ -849,6 +849,8 @@ type TablesGetCall struct {
 }
 
 // Get: Gets a table. Returns NOT_FOUND if the table does not exist.
+//
+// - name: The name of the table to retrieve. Format: tables/{table}.
 func (r *TablesService) Get(name string) *TablesGetCall {
 	c := &TablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1183,6 +1185,9 @@ type TablesRowsBatchCreateCall struct {
 }
 
 // BatchCreate: Creates multiple rows.
+//
+// - parent: The parent table where the rows will be created. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchCreate(parent string, batchcreaterowsrequest *BatchCreateRowsRequest) *TablesRowsBatchCreateCall {
 	c := &TablesRowsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1326,6 +1331,9 @@ type TablesRowsBatchDeleteCall struct {
 }
 
 // BatchDelete: Deletes multiple rows.
+//
+// - parent: The parent table shared by all rows being deleted. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchDelete(parent string, batchdeleterowsrequest *BatchDeleteRowsRequest) *TablesRowsBatchDeleteCall {
 	c := &TablesRowsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1469,6 +1477,9 @@ type TablesRowsBatchUpdateCall struct {
 }
 
 // BatchUpdate: Updates multiple rows.
+//
+// - parent: The parent table shared by all rows being updated. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchUpdate(parent string, batchupdaterowsrequest *BatchUpdateRowsRequest) *TablesRowsBatchUpdateCall {
 	c := &TablesRowsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1612,6 +1623,9 @@ type TablesRowsCreateCall struct {
 }
 
 // Create: Creates a row.
+//
+// - parent: The parent table where this row will be created. Format:
+//   tables/{table}.
 func (r *TablesRowsService) Create(parent string, row *Row) *TablesRowsCreateCall {
 	c := &TablesRowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1779,6 +1793,9 @@ type TablesRowsDeleteCall struct {
 }
 
 // Delete: Deletes a row.
+//
+// - name: The name of the row to delete. Format:
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Delete(name string) *TablesRowsDeleteCall {
 	c := &TablesRowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1914,6 +1931,9 @@ type TablesRowsGetCall struct {
 
 // Get: Gets a row. Returns NOT_FOUND if the row does not exist in the
 // table.
+//
+// - name: The name of the row to retrieve. Format:
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Get(name string) *TablesRowsGetCall {
 	c := &TablesRowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2089,6 +2109,8 @@ type TablesRowsListCall struct {
 
 // List: Lists rows in a table. Returns NOT_FOUND if the table does not
 // exist.
+//
+// - parent: The parent table. Format: tables/{table}.
 func (r *TablesRowsService) List(parent string) *TablesRowsListCall {
 	c := &TablesRowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2327,6 +2349,10 @@ type TablesRowsPatchCall struct {
 }
 
 // Patch: Updates a row.
+//
+// - name: The resource name of the row. Row names have the form
+//   `tables/{table}/rows/{row}`. The name is ignored when creating a
+//   row.
 func (r *TablesRowsService) Patch(name string, row *Row) *TablesRowsPatchCall {
 	c := &TablesRowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2509,6 +2535,9 @@ type WorkspacesGetCall struct {
 
 // Get: Gets a workspace. Returns NOT_FOUND if the workspace does not
 // exist.
+//
+// - name: The name of the workspace to retrieve. Format:
+//   workspaces/{workspace}.
 func (r *WorkspacesService) Get(name string) *WorkspacesGetCall {
 	c := &WorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

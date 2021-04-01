@@ -5629,6 +5629,10 @@ type FoldersTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
+//
+// - name: The project, organization or folder on which to execute the
+//   request. The format is: projects/[PROJECT_ID_OR_NUMBER]
+//   organizations/[ORGANIZATION_ID] folders/[FOLDER_ID].
 func (r *FoldersTimeSeriesService) List(name string) *FoldersTimeSeriesListCall {
 	c := &FoldersTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6582,6 +6586,10 @@ type OrganizationsTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
+//
+// - name: The project, organization or folder on which to execute the
+//   request. The format is: projects/[PROJECT_ID_OR_NUMBER]
+//   organizations/[ORGANIZATION_ID] folders/[FOLDER_ID].
 func (r *OrganizationsTimeSeriesService) List(name string) *OrganizationsTimeSeriesListCall {
 	c := &OrganizationsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7534,6 +7542,16 @@ type ProjectsAlertPoliciesCreateCall struct {
 }
 
 // Create: Creates a new alerting policy.
+//
+// - name: The project in which to create the alerting policy. The
+//   format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field
+//   names the parent container in which the alerting policy will be
+//   written, not the name of the created policy. |name| must be a host
+//   project of a workspace, otherwise INVALID_ARGUMENT error will
+//   return. The alerting policy that is returned will have a name that
+//   contains a normalized representation of this name as a prefix but
+//   adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID],
+//   identifying the policy in the container.
 func (r *ProjectsAlertPoliciesService) Create(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesCreateCall {
 	c := &ProjectsAlertPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7674,6 +7692,10 @@ type ProjectsAlertPoliciesDeleteCall struct {
 }
 
 // Delete: Deletes an alerting policy.
+//
+// - name: The alerting policy to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] For
+//   more information, see AlertPolicy.
 func (r *ProjectsAlertPoliciesService) Delete(name string) *ProjectsAlertPoliciesDeleteCall {
 	c := &ProjectsAlertPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7806,6 +7828,9 @@ type ProjectsAlertPoliciesGetCall struct {
 }
 
 // Get: Gets a single alerting policy.
+//
+// - name: The alerting policy to retrieve. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID].
 func (r *ProjectsAlertPoliciesService) Get(name string) *ProjectsAlertPoliciesGetCall {
 	c := &ProjectsAlertPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7952,6 +7977,12 @@ type ProjectsAlertPoliciesListCall struct {
 }
 
 // List: Lists the existing alerting policies for the workspace.
+//
+// - name: The project whose alert policies are to be listed. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+//   parent container in which the alerting policies to be listed are
+//   stored. To retrieve a single alerting policy by name, use the
+//   GetAlertPolicy operation, instead.
 func (r *ProjectsAlertPoliciesService) List(name string) *ProjectsAlertPoliciesListCall {
 	c := &ProjectsAlertPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8179,6 +8210,14 @@ type ProjectsAlertPoliciesPatchCall struct {
 // policy with a new one or replace only certain fields in the current
 // alerting policy by specifying the fields to be updated via
 // updateMask. Returns the updated alerting policy.
+//
+// - name: Required if the policy exists. The resource name for this
+//   policy. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+//   [ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the
+//   policy is created. When calling the alertPolicies.create method, do
+//   not include the name field in the alerting policy passed as part of
+//   the request.
 func (r *ProjectsAlertPoliciesService) Patch(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesPatchCall {
 	c := &ProjectsAlertPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8351,6 +8390,9 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 // Create: Stackdriver Monitoring Agent only: Creates a new time
 // series.This method is only for use by the Stackdriver Monitoring
 // Agent. Use projects.timeSeries.create instead.
+//
+// - name: The project in which to create the time series. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsCollectdTimeSeriesService) Create(name string, createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest) *ProjectsCollectdTimeSeriesCreateCall {
 	c := &ProjectsCollectdTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8493,6 +8535,9 @@ type ProjectsGroupsCreateCall struct {
 }
 
 // Create: Creates a new group.
+//
+// - name: The project in which to create the group. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) Create(name string, group *Group) *ProjectsGroupsCreateCall {
 	c := &ProjectsGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8645,6 +8690,9 @@ type ProjectsGroupsDeleteCall struct {
 }
 
 // Delete: Deletes an existing group.
+//
+// - name: The group to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsService) Delete(name string) *ProjectsGroupsDeleteCall {
 	c := &ProjectsGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8791,6 +8839,9 @@ type ProjectsGroupsGetCall struct {
 }
 
 // Get: Gets a single group.
+//
+// - name: The group to retrieve. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsService) Get(name string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8937,6 +8988,9 @@ type ProjectsGroupsListCall struct {
 }
 
 // List: Lists the existing groups.
+//
+// - name: The project whose groups are to be listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 	c := &ProjectsGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9180,6 +9234,12 @@ type ProjectsGroupsUpdateCall struct {
 
 // Update: Updates an existing group. You can change any group
 // attributes except name.
+//
+// - name: Output only. The name of this group. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a
+//   group, this field is ignored and a new name is created consisting
+//   of the project specified in the call to CreateGroup and a unique
+//   [GROUP_ID] that is generated automatically.
 func (r *ProjectsGroupsService) Update(name string, group *Group) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9333,6 +9393,9 @@ type ProjectsGroupsMembersListCall struct {
 }
 
 // List: Lists the monitored resources that are members of a group.
+//
+// - name: The group whose members are listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsMembersService) List(name string) *ProjectsGroupsMembersListCall {
 	c := &ProjectsGroupsMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9574,6 +9637,9 @@ type ProjectsMetricDescriptorsCreateCall struct {
 // Create: Creates a new metric descriptor. User-created metric
 // descriptors define custom metrics
 // (https://cloud.google.com/monitoring/custom-metrics).
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMetricDescriptorsService) Create(name string, metricdescriptor *MetricDescriptor) *ProjectsMetricDescriptorsCreateCall {
 	c := &ProjectsMetricDescriptorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9716,6 +9782,11 @@ type ProjectsMetricDescriptorsDeleteCall struct {
 
 // Delete: Deletes a metric descriptor. Only user-created custom metrics
 // (https://cloud.google.com/monitoring/custom-metrics) can be deleted.
+//
+// - name: The metric descriptor on which to execute the request. The
+//   format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
+//   example of [METRIC_ID] is: "custom.googleapis.com/my_test_metric".
 func (r *ProjectsMetricDescriptorsService) Delete(name string) *ProjectsMetricDescriptorsDeleteCall {
 	c := &ProjectsMetricDescriptorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9849,6 +9920,12 @@ type ProjectsMetricDescriptorsGetCall struct {
 
 // Get: Gets a single metric descriptor. This method does not require a
 // Workspace.
+//
+// - name: The metric descriptor on which to execute the request. The
+//   format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
+//   example value of [METRIC_ID] is
+//   "compute.googleapis.com/instance/disk/read_bytes_count".
 func (r *ProjectsMetricDescriptorsService) Get(name string) *ProjectsMetricDescriptorsGetCall {
 	c := &ProjectsMetricDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9997,6 +10074,9 @@ type ProjectsMetricDescriptorsListCall struct {
 
 // List: Lists metric descriptors that match a filter. This method does
 // not require a Workspace.
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDescriptorsListCall {
 	c := &ProjectsMetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10211,6 +10291,11 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 
 // Get: Gets a single monitored resource descriptor. This method does
 // not require a Workspace.
+//
+// - name: The monitored resource descriptor to get. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOUR
+//   CE_TYPE] The [RESOURCE_TYPE] is a predefined type, such as
+//   cloudsql_database.
 func (r *ProjectsMonitoredResourceDescriptorsService) Get(name string) *ProjectsMonitoredResourceDescriptorsGetCall {
 	c := &ProjectsMonitoredResourceDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10359,6 +10444,9 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 
 // List: Lists monitored resource descriptors that match a filter. This
 // method does not require a Workspace.
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *ProjectsMonitoredResourceDescriptorsListCall {
 	c := &ProjectsMonitoredResourceDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10574,6 +10662,11 @@ type ProjectsNotificationChannelDescriptorsGetCall struct {
 // Get: Gets a single channel descriptor. The descriptor indicates which
 // fields are expected / permitted for a notification channel of the
 // given type.
+//
+// - name: The channel type for which to execute the request. The format
+//   is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHAN
+//   NEL_TYPE].
 func (r *ProjectsNotificationChannelDescriptorsService) Get(name string) *ProjectsNotificationChannelDescriptorsGetCall {
 	c := &ProjectsNotificationChannelDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10722,6 +10815,13 @@ type ProjectsNotificationChannelDescriptorsListCall struct {
 // List: Lists the descriptors for supported channel types. The use of
 // descriptors makes it possible for new channel types to be dynamically
 // added.
+//
+// - name: The REST resource name of the parent from which to retrieve
+//   the notification channel descriptors. The expected syntax is:
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this names the parent
+//   container in which to look for the descriptors; to retrieve a
+//   single descriptor by name, use the GetNotificationChannelDescriptor
+//   operation, instead.
 func (r *ProjectsNotificationChannelDescriptorsService) List(name string) *ProjectsNotificationChannelDescriptorsListCall {
 	c := &ProjectsNotificationChannelDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10920,6 +11020,13 @@ type ProjectsNotificationChannelsCreateCall struct {
 // Create: Creates a new notification channel, representing a single
 // notification endpoint such as an email address, SMS number, or
 // PagerDuty service.
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] This names the container into which
+//   the channel will be written, this does not name the newly created
+//   channel. The resulting channel's name will have a normalized
+//   version of this field as a prefix, but will add
+//   /notificationChannels/[CHANNEL_ID] to identify the channel.
 func (r *ProjectsNotificationChannelsService) Create(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsCreateCall {
 	c := &ProjectsNotificationChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11060,6 +11167,9 @@ type ProjectsNotificationChannelsDeleteCall struct {
 }
 
 // Delete: Deletes a notification channel.
+//
+// - name: The channel for which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
 func (r *ProjectsNotificationChannelsService) Delete(name string) *ProjectsNotificationChannelsDeleteCall {
 	c := &ProjectsNotificationChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11212,6 +11322,9 @@ type ProjectsNotificationChannelsGetCall struct {
 // other private key matter and thus the response may not be 100%
 // identical to the information that was supplied in the call to the
 // create method.
+//
+// - name: The channel for which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
 func (r *ProjectsNotificationChannelsService) Get(name string) *ProjectsNotificationChannelsGetCall {
 	c := &ProjectsNotificationChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11378,6 +11491,11 @@ type ProjectsNotificationChannelsGetVerificationCodeCall struct {
 // have a shorter expiration (e.g. codes such as "G-123456") whereas
 // GetVerificationCode() will typically return a much longer, websafe
 // base 64 encoded string that has a longer expiration time.
+//
+// - name: The notification channel for which a verification code is to
+//   be generated and retrieved. This must name a channel that is
+//   already verified; if the specified channel is not verified, the
+//   request will fail.
 func (r *ProjectsNotificationChannelsService) GetVerificationCode(name string, getnotificationchannelverificationcoderequest *GetNotificationChannelVerificationCodeRequest) *ProjectsNotificationChannelsGetVerificationCodeCall {
 	c := &ProjectsNotificationChannelsGetVerificationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11522,6 +11640,12 @@ type ProjectsNotificationChannelsListCall struct {
 
 // List: Lists the notification channels that have been created for the
 // project.
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] This names the container in which
+//   to look for the notification channels; it does not name a specific
+//   channel. To query a specific channel by REST resource name, use the
+//   GetNotificationChannel operation.
 func (r *ProjectsNotificationChannelsService) List(name string) *ProjectsNotificationChannelsListCall {
 	c := &ProjectsNotificationChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11748,6 +11872,11 @@ type ProjectsNotificationChannelsPatchCall struct {
 
 // Patch: Updates a notification channel. Fields not specified in the
 // field mask remain unchanged.
+//
+// - name: The full REST resource name for this channel. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
+//   The [CHANNEL_ID] is automatically assigned by the server on
+//   creation.
 func (r *ProjectsNotificationChannelsService) Patch(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsPatchCall {
 	c := &ProjectsNotificationChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11904,6 +12033,9 @@ type ProjectsNotificationChannelsSendVerificationCodeCall struct {
 // SendVerificationCode: Causes a verification code to be delivered to
 // the channel. The code can then be supplied in
 // VerifyNotificationChannel to verify the channel.
+//
+// - name: The notification channel to which to send a verification
+//   code.
 func (r *ProjectsNotificationChannelsService) SendVerificationCode(name string, sendnotificationchannelverificationcoderequest *SendNotificationChannelVerificationCodeRequest) *ProjectsNotificationChannelsSendVerificationCodeCall {
 	c := &ProjectsNotificationChannelsSendVerificationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12047,6 +12179,8 @@ type ProjectsNotificationChannelsVerifyCall struct {
 // Verify: Verifies a NotificationChannel by proving receipt of the code
 // delivered to the channel as a result of calling
 // SendNotificationChannelVerificationCode.
+//
+// - name: The notification channel to verify.
 func (r *ProjectsNotificationChannelsService) Verify(name string, verifynotificationchannelrequest *VerifyNotificationChannelRequest) *ProjectsNotificationChannelsVerifyCall {
 	c := &ProjectsNotificationChannelsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12191,6 +12325,9 @@ type ProjectsTimeSeriesCreateCall struct {
 // is empty if all time series in the request were written. If any time
 // series could not be written, a corresponding failure message is
 // included in the error response.
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Create(name string, createtimeseriesrequest *CreateTimeSeriesRequest) *ProjectsTimeSeriesCreateCall {
 	c := &ProjectsTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12334,6 +12471,10 @@ type ProjectsTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
+//
+// - name: The project, organization or folder on which to execute the
+//   request. The format is: projects/[PROJECT_ID_OR_NUMBER]
+//   organizations/[ORGANIZATION_ID] folders/[FOLDER_ID].
 func (r *ProjectsTimeSeriesService) List(name string) *ProjectsTimeSeriesListCall {
 	c := &ProjectsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13287,6 +13428,9 @@ type ProjectsTimeSeriesQueryCall struct {
 
 // Query: Queries time series using Monitoring Query Language. This
 // method does not require a Workspace.
+//
+// - name: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Query(name string, querytimeseriesrequest *QueryTimeSeriesRequest) *ProjectsTimeSeriesQueryCall {
 	c := &ProjectsTimeSeriesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13450,6 +13594,9 @@ type ProjectsUptimeCheckConfigsCreateCall struct {
 }
 
 // Create: Creates a new Uptime check configuration.
+//
+// - parent: The project in which to create the Uptime check. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) Create(parent string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsCreateCall {
 	c := &ProjectsUptimeCheckConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13593,6 +13740,9 @@ type ProjectsUptimeCheckConfigsDeleteCall struct {
 // will fail if the Uptime check configuration is referenced by an alert
 // policy or other dependent configs that would be rendered invalid by
 // the deletion.
+//
+// - name: The Uptime check configuration to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
 func (r *ProjectsUptimeCheckConfigsService) Delete(name string) *ProjectsUptimeCheckConfigsDeleteCall {
 	c := &ProjectsUptimeCheckConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13725,6 +13875,9 @@ type ProjectsUptimeCheckConfigsGetCall struct {
 }
 
 // Get: Gets a single Uptime check configuration.
+//
+// - name: The Uptime check configuration to retrieve. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
 func (r *ProjectsUptimeCheckConfigsService) Get(name string) *ProjectsUptimeCheckConfigsGetCall {
 	c := &ProjectsUptimeCheckConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13872,6 +14025,9 @@ type ProjectsUptimeCheckConfigsListCall struct {
 
 // List: Lists the existing valid Uptime check configurations for the
 // project (leaving out any invalid configurations).
+//
+// - parent: The project whose Uptime check configurations are listed.
+//   The format is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeCheckConfigsListCall {
 	c := &ProjectsUptimeCheckConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14072,6 +14228,14 @@ type ProjectsUptimeCheckConfigsPatchCall struct {
 // the entire configuration with a new one or replace only certain
 // fields in the current configuration by specifying the fields to be
 // updated via updateMask. Returns the updated configuration.
+//
+// - name: A unique resource name for this Uptime check configuration.
+//   The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
+//    [PROJECT_ID_OR_NUMBER] is the Workspace host project associated
+//   with the Uptime check.This field should be omitted when creating
+//   the Uptime check configuration; on create, the resource name is
+//   assigned by the server and included in the response.
 func (r *ProjectsUptimeCheckConfigsService) Patch(name string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsPatchCall {
 	c := &ProjectsUptimeCheckConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14229,6 +14393,9 @@ type ServicesCreateCall struct {
 }
 
 // Create: Create a Service.
+//
+// - parent: Resource name of the parent workspace. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) Create(parent string, service *MService) *ServicesCreateCall {
 	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14382,6 +14549,9 @@ type ServicesDeleteCall struct {
 }
 
 // Delete: Soft delete this Service.
+//
+// - name: Resource name of the Service to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Delete(name string) *ServicesDeleteCall {
 	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14514,6 +14684,9 @@ type ServicesGetCall struct {
 }
 
 // Get: Get the named Service.
+//
+// - name: Resource name of the Service. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14660,6 +14833,11 @@ type ServicesListCall struct {
 }
 
 // List: List Services for this workspace.
+//
+// - parent: Resource name of the parent containing the listed services,
+//   either a project or a Monitoring Workspace. The formats are:
+//   projects/[PROJECT_ID_OR_NUMBER]
+//   workspaces/[HOST_PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14879,6 +15057,9 @@ type ServicesPatchCall struct {
 }
 
 // Patch: Update this Service.
+//
+// - name: Resource name for this Service. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Patch(name string, service *MService) *ServicesPatchCall {
 	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15033,6 +15214,9 @@ type ServicesServiceLevelObjectivesCreateCall struct {
 }
 
 // Create: Create a ServiceLevelObjective for the given Service.
+//
+// - parent: Resource name of the parent Service. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesCreateCall {
 	c := &ServicesServiceLevelObjectivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15187,6 +15371,11 @@ type ServicesServiceLevelObjectivesDeleteCall struct {
 }
 
 // Delete: Delete the given ServiceLevelObjective.
+//
+// - name: Resource name of the ServiceLevelObjective to delete. The
+//   format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//   jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Delete(name string) *ServicesServiceLevelObjectivesDeleteCall {
 	c := &ServicesServiceLevelObjectivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15319,6 +15508,11 @@ type ServicesServiceLevelObjectivesGetCall struct {
 }
 
 // Get: Get a ServiceLevelObjective by name.
+//
+// - name: Resource name of the ServiceLevelObjective to get. The format
+//   is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//   jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Get(name string) *ServicesServiceLevelObjectivesGetCall {
 	c := &ServicesServiceLevelObjectivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15501,6 +15695,11 @@ type ServicesServiceLevelObjectivesListCall struct {
 }
 
 // List: List the ServiceLevelObjectives for the given Service.
+//
+// - parent: Resource name of the parent containing the listed SLOs,
+//   either a project or a Monitoring Workspace. The formats are:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
+//   workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-.
 func (r *ServicesServiceLevelObjectivesService) List(parent string) *ServicesServiceLevelObjectivesListCall {
 	c := &ServicesServiceLevelObjectivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15745,6 +15944,10 @@ type ServicesServiceLevelObjectivesPatchCall struct {
 }
 
 // Patch: Update the given ServiceLevelObjective.
+//
+// - name: Resource name for this ServiceLevelObjective. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//   jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Patch(name string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesPatchCall {
 	c := &ServicesServiceLevelObjectivesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

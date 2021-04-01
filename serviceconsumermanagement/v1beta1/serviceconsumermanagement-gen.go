@@ -4189,6 +4189,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4334,6 +4336,11 @@ type ServicesConsumerQuotaMetricsGetCall struct {
 
 // Get: Retrieves a summary of quota information for a specific quota
 // metric.
+//
+// - name: The resource name of the quota metric, returned by a
+//   ListConsumerQuotaMetrics call. An example name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus`.
 func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumerQuotaMetricsGetCall {
 	c := &ServicesConsumerQuotaMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4514,6 +4521,9 @@ type ServicesConsumerQuotaMetricsImportProducerOverridesCall struct {
 // atomically, all on the same consumer, but on many different metrics
 // or limits. The name field in the quota override message should not be
 // set.
+//
+// - parent: The resource name of the consumer. An example name would
+//   be: `services/compute.googleapis.com/projects/123`.
 func (r *ServicesConsumerQuotaMetricsService) ImportProducerOverrides(parent string, v1beta1importproduceroverridesrequest *V1Beta1ImportProducerOverridesRequest) *ServicesConsumerQuotaMetricsImportProducerOverridesCall {
 	c := &ServicesConsumerQuotaMetricsImportProducerOverridesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4659,6 +4669,9 @@ type ServicesConsumerQuotaMetricsListCall struct {
 // all of its defined limits. Each limit includes the limit
 // configuration (quota unit, preciseness, default value), the current
 // effective limit value, and all of the overrides applied to the limit.
+//
+// - parent: Parent of the quotas resource. An example parent would be:
+//   `services/serviceconsumermanagement.googleapis.com/projects/123`.
 func (r *ServicesConsumerQuotaMetricsService) List(parent string) *ServicesConsumerQuotaMetricsListCall {
 	c := &ServicesConsumerQuotaMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4884,6 +4897,12 @@ type ServicesConsumerQuotaMetricsLimitsGetCall struct {
 
 // Get: Retrieves a summary of quota information for a specific quota
 // limit.
+//
+// - name: The resource name of the quota limit, returned by a
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsService) Get(name string) *ServicesConsumerQuotaMetricsLimitsGetCall {
 	c := &ServicesConsumerQuotaMetricsLimitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5068,6 +5087,12 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall struct {
 // this call will fail. To overwrite an existing override if one is
 // already present ("upsert" semantics), use ImportProducerOverrides
 // instead.
+//
+// - parent: The resource name of the parent quota limit, returned by a
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Create(parent string, v1beta1quotaoverride *V1Beta1QuotaOverride) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5256,6 +5281,12 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall struct {
 }
 
 // Delete: Deletes a producer override.
+//
+// - name: The resource name of the override to delete. An example name
+//   would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
+//   rides/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5436,6 +5467,12 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall struct {
 }
 
 // List: Lists all producer overrides on this limit.
+//
+// - parent: The resource name of the parent quota limit, returned by a
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5627,6 +5664,12 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall struct {
 }
 
 // Patch: Updates a producer override.
+//
+// - name: The resource name of the override to update. An example name
+//   would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
+//   rides/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Patch(name string, v1beta1quotaoverride *V1Beta1QuotaOverride) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

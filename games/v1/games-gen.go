@@ -3692,6 +3692,9 @@ type AchievementsIncrementCall struct {
 
 // Increment: Increments the steps of the achievement with the given ID
 // for the currently authenticated player.
+//
+// - achievementId: The ID of the achievement used by this method.
+// - stepsToIncrement: The number of steps to increment.
 func (r *AchievementsService) Increment(achievementId string, stepsToIncrement int64) *AchievementsIncrementCall {
 	c := &AchievementsIncrementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -3847,6 +3850,9 @@ type AchievementsListCall struct {
 
 // List: Lists the progress for all your application's achievements for
 // the currently authenticated player.
+//
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *AchievementsService) List(playerId string) *AchievementsListCall {
 	c := &AchievementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -4081,6 +4087,8 @@ type AchievementsRevealCall struct {
 
 // Reveal: Sets the state of the achievement with the given ID to
 // `REVEALED` for the currently authenticated player.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) Reveal(achievementId string) *AchievementsRevealCall {
 	c := &AchievementsRevealCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -4213,6 +4221,9 @@ type AchievementsSetStepsAtLeastCall struct {
 // player towards unlocking an achievement. If the steps parameter is
 // less than the current number of steps that the player already gained
 // for the achievement, the achievement is not modified.
+//
+// - achievementId: The ID of the achievement used by this method.
+// - steps: The minimum value to set the steps to.
 func (r *AchievementsService) SetStepsAtLeast(achievementId string, steps int64) *AchievementsSetStepsAtLeastCall {
 	c := &AchievementsSetStepsAtLeastCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -4353,6 +4364,8 @@ type AchievementsUnlockCall struct {
 
 // Unlock: Unlocks this achievement for the currently authenticated
 // player.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) Unlock(achievementId string) *AchievementsUnlockCall {
 	c := &AchievementsUnlockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -4613,6 +4626,9 @@ type ApplicationsGetCall struct {
 // the requested application is not available for the specified
 // `platformType`, the returned response will not include any instance
 // data.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) Get(applicationId string) *ApplicationsGetCall {
 	c := &ApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -5044,6 +5060,9 @@ type ApplicationsVerifyCall struct {
 // Verify: Verifies the auth token provided with this request is for the
 // application with the specified ID, and returns the ID of the player
 // it was granted for.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) Verify(applicationId string) *ApplicationsVerifyCall {
 	c := &ApplicationsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -5708,6 +5727,8 @@ type LeaderboardsGetCall struct {
 }
 
 // Get: Retrieves the metadata of the leaderboard with the given ID.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *LeaderboardsService) Get(leaderboardId string) *LeaderboardsGetCall {
 	c := &LeaderboardsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -6185,6 +6206,11 @@ type MetagameListCategoriesByPlayerCall struct {
 
 // ListCategoriesByPlayer: List play data aggregated per category for
 // the player corresponding to `playerId`.
+//
+// - collection: The collection of categories for which data will be
+//   returned.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *MetagameService) ListCategoriesByPlayer(playerId string, collection string) *MetagameListCategoriesByPlayerCall {
 	c := &MetagameListCategoriesByPlayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6406,6 +6432,9 @@ type PlayersGetCall struct {
 
 // Get: Retrieves the Player resource with the given ID. To retrieve the
 // player for the currently authenticated user, set `playerId` to `me`.
+//
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *PlayersService) Get(playerId string) *PlayersGetCall {
 	c := &PlayersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6562,6 +6591,8 @@ type PlayersListCall struct {
 
 // List: Get the collection of players for the currently authenticated
 // user.
+//
+// - collection: Collection of players being retrieved.
 func (r *PlayersService) List(collection string) *PlayersListCall {
 	c := &PlayersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.collection = collection
@@ -6774,6 +6805,12 @@ type RevisionsCheckCall struct {
 }
 
 // Check: Checks whether the games client is out of date.
+//
+// - clientRevision: The revision of the client SDK used by your
+//   application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible
+//   values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the
+//   Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` -
+//   Client is running as a Web App.
 func (r *RevisionsService) Check(clientRevision string) *RevisionsCheckCall {
 	c := &RevisionsCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("clientRevision", clientRevision)
@@ -6921,6 +6958,12 @@ type ScoresGetCall struct {
 // leaderboards in a given time span. `NOTE: You cannot ask for 'ALL'
 // leaderboards and 'ALL' timeSpans in the same request; only one
 // parameter may be set to 'ALL'.
+//
+// - leaderboardId: The ID of the leaderboard. Can be set to 'ALL' to
+//   retrieve data for all leaderboards for this application.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan string) *ScoresGetCall {
 	c := &ScoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -7194,6 +7237,10 @@ type ScoresListCall struct {
 }
 
 // List: Lists the scores in a leaderboard, starting from the top.
+//
+// - collection: The collection of scores you're requesting.
+// - leaderboardId: The ID of the leaderboard.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) List(leaderboardId string, collection string, timeSpan string) *ScoresListCall {
 	c := &ScoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -7440,6 +7487,10 @@ type ScoresListWindowCall struct {
 
 // ListWindow: Lists the scores in a leaderboard around (and including)
 // a player's score.
+//
+// - collection: The collection of scores you're requesting.
+// - leaderboardId: The ID of the leaderboard.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) ListWindow(leaderboardId string, collection string, timeSpan string) *ScoresListWindowCall {
 	c := &ScoresListWindowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -7712,6 +7763,15 @@ type ScoresSubmitCall struct {
 }
 
 // Submit: Submits a score to the specified leaderboard.
+//
+// - leaderboardId: The ID of the leaderboard.
+// - score: The score you're submitting. The submitted score is ignored
+//   if it is worse than a previously submitted score, where worse
+//   depends on the leaderboard sort order. The meaning of the score
+//   value depends on the leaderboard format type. For fixed-point, the
+//   score represents the raw value. For time, the score represents
+//   elapsed time in milliseconds. For currency, the score represents a
+//   value in micro units.
 func (r *ScoresService) Submit(leaderboardId string, score int64) *ScoresSubmitCall {
 	c := &ScoresSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -8016,6 +8076,8 @@ type SnapshotsGetCall struct {
 }
 
 // Get: Retrieves the metadata for a given snapshot ID.
+//
+// - snapshotId: The ID of the snapshot.
 func (r *SnapshotsService) Get(snapshotId string) *SnapshotsGetCall {
 	c := &SnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshotId = snapshotId
@@ -8173,6 +8235,9 @@ type SnapshotsListCall struct {
 
 // List: Retrieves a list of snapshots created by your application for
 // the player corresponding to the player ID.
+//
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *SnapshotsService) List(playerId string) *SnapshotsListCall {
 	c := &SnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -8379,6 +8444,8 @@ type SnapshotsExtendedResolveSnapshotHeadCall struct {
 // ResolveSnapshotHead: Resolves any potential conflicts according to
 // the resolution policy specified in the request and returns the
 // snapshot head after the resolution.
+//
+// - snapshotName: Name of the snapshot.
 func (r *SnapshotsExtendedService) ResolveSnapshotHead(snapshotName string, resolvesnapshotheadrequest *ResolveSnapshotHeadRequest) *SnapshotsExtendedResolveSnapshotHeadCall {
 	c := &SnapshotsExtendedResolveSnapshotHeadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshotName = snapshotName

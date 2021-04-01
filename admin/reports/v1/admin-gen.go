@@ -924,6 +924,13 @@ type ActivitiesListCall struct {
 // administrator and Google Drive activity reports. For more information
 // about the activity report's parameters, see the activity parameters
 // reference guides.
+//
+// - applicationName: Application name for which the events are to be
+//   retrieved.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1351,6 +1358,13 @@ type ActivitiesWatchCall struct {
 
 // Watch: Start receiving notifications for account activities. For more
 // information, see Receiving Push Notifications.
+//
+// - applicationName: Application name for which the events are to be
+//   retrieved.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1852,6 +1866,10 @@ type CustomerUsageReportsGetCall struct {
 // see the Customers Usage Report guide. For more information about the
 // customer report's parameters, see the Customers Usage parameters
 // reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -2078,6 +2096,13 @@ type EntityUsageReportsGetCall struct {
 // information, see the Entities Usage Report guide. For more
 // information about the entities report's parameters, see the Entities
 // Usage parameters reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
+// - entityKey: Represents the key of the object to filter the data
+//   with.
+// - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityType = entityType
@@ -2382,6 +2407,14 @@ type UserUsageReportGetCall struct {
 // statistics for a set of users with the account. For more information,
 // see the User Usage Report guide. For more information about the user
 // report's parameters, see the Users Usage parameters reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey

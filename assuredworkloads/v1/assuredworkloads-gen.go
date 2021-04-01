@@ -1059,7 +1059,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1235,7 +1235,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1376,7 +1376,7 @@ type OrganizationsLocationsWorkloadsCreateCall struct {
 // Create: Creates Assured Workload.
 //
 // - parent: The resource name of the new Workload's parent. Must be of
-// the form `organizations/{org_id}/locations/{location_id}`.
+//   the form `organizations/{org_id}/locations/{location_id}`.
 func (r *OrganizationsLocationsWorkloadsService) Create(parent string, googlecloudassuredworkloadsv1workload *GoogleCloudAssuredworkloadsV1Workload) *OrganizationsLocationsWorkloadsCreateCall {
 	c := &OrganizationsLocationsWorkloadsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1421,7 +1421,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1535,7 +1535,8 @@ type OrganizationsLocationsWorkloadsDeleteCall struct {
 // fail with a FAILED_PRECONDITION error.
 //
 // - name: The `name` field is used to identify the workload. Format:
-// organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
+//   organizations/{org_id}/locations/{location_id}/workloads/{workload_i
+//   d}.
 func (r *OrganizationsLocationsWorkloadsService) Delete(name string) *OrganizationsLocationsWorkloadsDeleteCall {
 	c := &OrganizationsLocationsWorkloadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1576,7 +1577,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1681,10 +1682,10 @@ type OrganizationsLocationsWorkloadsGetCall struct {
 // Get: Gets Assured Workload associated with a CRM Node
 //
 // - name: The resource name of the Workload to fetch. This is the
-// workloads's relative path in the API, formatted as
-// "organizations/{organization_id}/locations/{location_id}/workloads/{wo
-// rkload_id}". For example,
-// "organizations/123/locations/us-east1/workloads/assured-workload-1".
+//   workloads's relative path in the API, formatted as
+//   "organizations/{organization_id}/locations/{location_id}/workloads/{
+//   workload_id}". For example,
+//   "organizations/123/locations/us-east1/workloads/assured-workload-1".
 func (r *OrganizationsLocationsWorkloadsService) Get(name string) *OrganizationsLocationsWorkloadsGetCall {
 	c := &OrganizationsLocationsWorkloadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1728,7 +1729,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1832,7 +1833,7 @@ type OrganizationsLocationsWorkloadsListCall struct {
 // List: Lists Assured Workloads under a CRM Node.
 //
 // - parent: Parent Resource to list workloads from. Must be of the form
-// `organizations/{org_id}/locations/{location}`.
+//   `organizations/{org_id}/locations/{location}`.
 func (r *OrganizationsLocationsWorkloadsService) List(parent string) *OrganizationsLocationsWorkloadsListCall {
 	c := &OrganizationsLocationsWorkloadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1899,7 +1900,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2044,8 +2045,8 @@ type OrganizationsLocationsWorkloadsPatchCall struct {
 // in progress.
 //
 // - name: Optional. The resource name of the workload. Format:
-// organizations/{organization}/locations/{location}/workloads/{workload}
-//  Read-only.
+//   organizations/{organization}/locations/{location}/workloads/{workloa
+//   d} Read-only.
 func (r *OrganizationsLocationsWorkloadsService) Patch(name string, googlecloudassuredworkloadsv1workload *GoogleCloudAssuredworkloadsV1Workload) *OrganizationsLocationsWorkloadsPatchCall {
 	c := &OrganizationsLocationsWorkloadsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2087,7 +2088,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

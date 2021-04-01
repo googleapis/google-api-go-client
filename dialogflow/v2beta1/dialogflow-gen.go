@@ -17714,7 +17714,7 @@ type ProjectsDeleteAgentCall struct {
 // DeleteAgent: Deletes the specified agent.
 //
 // - parent: The project that the agent to delete is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsService) DeleteAgent(parent string) *ProjectsDeleteAgentCall {
 	c := &ProjectsDeleteAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17748,7 +17748,7 @@ func (c *ProjectsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17849,7 +17849,7 @@ type ProjectsGetAgentCall struct {
 // GetAgent: Retrieves the specified agent.
 //
 // - parent: The project that the agent to fetch is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsService) GetAgent(parent string) *ProjectsGetAgentCall {
 	c := &ProjectsGetAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17893,7 +17893,7 @@ func (c *ProjectsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17998,7 +17998,7 @@ type ProjectsSetAgentCall struct {
 // SetAgent: Creates/updates the specified agent.
 //
 // - parent: The project of this agent. Format: `projects/` or
-// `projects//locations/`
+//   `projects//locations/`.
 func (r *ProjectsService) SetAgent(parent string, googleclouddialogflowv2beta1agent *GoogleCloudDialogflowV2beta1Agent) *ProjectsSetAgentCall {
 	c := &ProjectsSetAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18040,7 +18040,7 @@ func (c *ProjectsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18156,7 +18156,7 @@ type ProjectsAgentExportCall struct {
 // Export: Exports the specified agent to a ZIP file. Operation
 //
 // - parent: The project that the agent to export is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsAgentService) Export(parent string, googleclouddialogflowv2beta1exportagentrequest *GoogleCloudDialogflowV2beta1ExportAgentRequest) *ProjectsAgentExportCall {
 	c := &ProjectsAgentExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18191,7 +18191,7 @@ func (c *ProjectsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18300,8 +18300,8 @@ type ProjectsAgentGetFulfillmentCall struct {
 // GetFulfillment: Retrieves the fulfillment.
 //
 // - name: The name of the fulfillment. Supported formats: -
-// `projects//agent/fulfillment` -
-// `projects//locations//agent/fulfillment`
+//   `projects//agent/fulfillment` -
+//   `projects//locations//agent/fulfillment`.
 func (r *ProjectsAgentService) GetFulfillment(name string) *ProjectsAgentGetFulfillmentCall {
 	c := &ProjectsAgentGetFulfillmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18345,7 +18345,7 @@ func (c *ProjectsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18452,7 +18452,7 @@ type ProjectsAgentGetValidationResultCall struct {
 // training is completed.
 //
 // - parent: The project that the agent is associated with. Format:
-// `projects/` or `projects//locations/`.
+//   `projects/` or `projects//locations/`.
 func (r *ProjectsAgentService) GetValidationResult(parent string) *ProjectsAgentGetValidationResultCall {
 	c := &ProjectsAgentGetValidationResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18507,7 +18507,7 @@ func (c *ProjectsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18627,7 +18627,7 @@ type ProjectsAgentImportCall struct {
 // agent is updated not when it is done training.
 //
 // - parent: The project that the agent to import is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsAgentService) Import(parent string, googleclouddialogflowv2beta1importagentrequest *GoogleCloudDialogflowV2beta1ImportAgentRequest) *ProjectsAgentImportCall {
 	c := &ProjectsAgentImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18662,7 +18662,7 @@ func (c *ProjectsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18779,7 +18779,7 @@ type ProjectsAgentRestoreCall struct {
 // when the draft agent is updated not when it is done training.
 //
 // - parent: The project that the agent to restore is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsAgentService) Restore(parent string, googleclouddialogflowv2beta1restoreagentrequest *GoogleCloudDialogflowV2beta1RestoreAgentRequest) *ProjectsAgentRestoreCall {
 	c := &ProjectsAgentRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18814,7 +18814,7 @@ func (c *ProjectsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18928,7 +18928,7 @@ type ProjectsAgentSearchCall struct {
 // (https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
 //
 // - parent: The project to list agents from. Format: `projects/` or
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsAgentService) Search(parent string) *ProjectsAgentSearchCall {
 	c := &ProjectsAgentSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18986,7 +18986,7 @@ func (c *ProjectsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19124,7 +19124,7 @@ type ProjectsAgentTrainCall struct {
 // Train: Trains the specified agent. Operation
 //
 // - parent: The project that the agent to train is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsAgentService) Train(parent string, googleclouddialogflowv2beta1trainagentrequest *GoogleCloudDialogflowV2beta1TrainAgentRequest) *ProjectsAgentTrainCall {
 	c := &ProjectsAgentTrainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19159,7 +19159,7 @@ func (c *ProjectsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19268,9 +19268,9 @@ type ProjectsAgentUpdateFulfillmentCall struct {
 // UpdateFulfillment: Updates the fulfillment.
 //
 // - name: The unique identifier of the fulfillment. Supported formats:
-// - `projects//agent/fulfillment` -
-// `projects//locations//agent/fulfillment` This field is not used for
-// Fulfillment in an Environment.
+//   - `projects//agent/fulfillment` -
+//   `projects//locations//agent/fulfillment` This field is not used for
+//   Fulfillment in an Environment.
 func (r *ProjectsAgentService) UpdateFulfillment(nameid string, googleclouddialogflowv2beta1fulfillment *GoogleCloudDialogflowV2beta1Fulfillment) *ProjectsAgentUpdateFulfillmentCall {
 	c := &ProjectsAgentUpdateFulfillmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -19313,7 +19313,7 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19429,8 +19429,8 @@ type ProjectsAgentEntityTypesBatchDeleteCall struct {
 // BatchDelete: Deletes entity types in the specified agent. Operation
 //
 // - parent: The name of the agent to delete all entities types for.
-// Supported formats: - `projects//agent`, -
-// `projects//locations//agent`.
+//   Supported formats: - `projects//agent`, -
+//   `projects//locations//agent`.
 func (r *ProjectsAgentEntityTypesService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteentitytypesrequest *GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest) *ProjectsAgentEntityTypesBatchDeleteCall {
 	c := &ProjectsAgentEntityTypesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19465,7 +19465,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19575,7 +19575,8 @@ type ProjectsAgentEntityTypesBatchUpdateCall struct {
 // agent. Operation
 //
 // - parent: The name of the agent to update or create entity types in.
-// Supported formats: - `projects//agent` - `projects//locations//agent`
+//   Supported formats: - `projects//agent` -
+//   `projects//locations//agent`.
 func (r *ProjectsAgentEntityTypesService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateentitytypesrequest *GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest) *ProjectsAgentEntityTypesBatchUpdateCall {
 	c := &ProjectsAgentEntityTypesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19610,7 +19611,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19719,7 +19720,7 @@ type ProjectsAgentEntityTypesCreateCall struct {
 // Create: Creates an entity type in the specified agent.
 //
 // - parent: The agent to create a entity type for. Supported formats: -
-// `projects//agent` - `projects//locations//agent`
+//   `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsAgentEntityTypesService) Create(parent string, googleclouddialogflowv2beta1entitytype *GoogleCloudDialogflowV2beta1EntityType) *ProjectsAgentEntityTypesCreateCall {
 	c := &ProjectsAgentEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19764,7 +19765,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19878,8 +19879,8 @@ type ProjectsAgentEntityTypesDeleteCall struct {
 // Delete: Deletes the specified entity type.
 //
 // - name: The name of the entity type to delete. Supported formats: -
-// `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsAgentEntityTypesService) Delete(name string) *ProjectsAgentEntityTypesDeleteCall {
 	c := &ProjectsAgentEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19913,7 +19914,7 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20014,8 +20015,8 @@ type ProjectsAgentEntityTypesGetCall struct {
 // Get: Retrieves the specified entity type.
 //
 // - name: The name of the entity type. Supported formats: -
-// `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsAgentEntityTypesService) Get(name string) *ProjectsAgentEntityTypesGetCall {
 	c := &ProjectsAgentEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20069,7 +20070,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20179,7 +20180,7 @@ type ProjectsAgentEntityTypesListCall struct {
 // List: Returns the list of all entity types in the specified agent.
 //
 // - parent: The agent to list all entity types from. Supported formats:
-// - `projects//agent` - `projects//locations//agent`
+//   - `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsAgentEntityTypesService) List(parent string) *ProjectsAgentEntityTypesListCall {
 	c := &ProjectsAgentEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20247,7 +20248,7 @@ func (c *ProjectsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20390,9 +20391,9 @@ type ProjectsAgentEntityTypesPatchCall struct {
 // Patch: Updates the specified entity type.
 //
 // - name: The unique identifier of the entity type. Required for
-// EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes
-// methods. Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes
+//   methods. Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsAgentEntityTypesService) Patch(nameid string, googleclouddialogflowv2beta1entitytype *GoogleCloudDialogflowV2beta1EntityType) *ProjectsAgentEntityTypesPatchCall {
 	c := &ProjectsAgentEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -20444,7 +20445,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20566,8 +20567,8 @@ type ProjectsAgentEntityTypesEntitiesBatchCreateCall struct {
 // type. Operation
 //
 // - parent: The name of the entity type to create entities in.
-// Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsAgentEntityTypesEntitiesService) BatchCreate(parent string, googleclouddialogflowv2beta1batchcreateentitiesrequest *GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) *ProjectsAgentEntityTypesEntitiesBatchCreateCall {
 	c := &ProjectsAgentEntityTypesEntitiesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20602,7 +20603,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20711,8 +20712,8 @@ type ProjectsAgentEntityTypesEntitiesBatchDeleteCall struct {
 // BatchDelete: Deletes entities in the specified entity type. Operation
 //
 // - parent: The name of the entity type to delete entries for.
-// Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsAgentEntityTypesEntitiesService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteentitiesrequest *GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest) *ProjectsAgentEntityTypesEntitiesBatchDeleteCall {
 	c := &ProjectsAgentEntityTypesEntitiesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20747,7 +20748,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20858,8 +20859,8 @@ type ProjectsAgentEntityTypesEntitiesBatchUpdateCall struct {
 // that aren't explicitly specified in the request. Operation
 //
 // - parent: The name of the entity type to update or create entities
-// in. Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   in. Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsAgentEntityTypesEntitiesService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateentitiesrequest *GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest) *ProjectsAgentEntityTypesEntitiesBatchUpdateCall {
 	c := &ProjectsAgentEntityTypesEntitiesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20894,7 +20895,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21004,7 +21005,7 @@ type ProjectsAgentEnvironmentsListCall struct {
 // agent.
 //
 // - parent: The agent to list all environments from. Format: -
-// `projects//agent` - `projects//locations//agent`
+//   `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsAgentEnvironmentsService) List(parent string) *ProjectsAgentEnvironmentsListCall {
 	c := &ProjectsAgentEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21062,7 +21063,7 @@ func (c *ProjectsAgentEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21200,7 +21201,7 @@ type ProjectsAgentEnvironmentsIntentsListCall struct {
 // List: Returns the list of all intents in the specified agent.
 //
 // - parent: The agent to list all intents from. Format:
-// `projects//agent`.
+//   `projects//agent`.
 func (r *ProjectsAgentEnvironmentsIntentsService) List(parent string) *ProjectsAgentEnvironmentsIntentsListCall {
 	c := &ProjectsAgentEnvironmentsIntentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21280,7 +21281,7 @@ func (c *ProjectsAgentEnvironmentsIntentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentEnvironmentsIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21435,14 +21436,14 @@ type ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall struct {
 // DeleteContexts: Deletes all active contexts in the specified session.
 //
 // - parent: The name of the session to delete all contexts from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsService) DeleteContexts(parent string) *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21476,7 +21477,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21583,23 +21584,23 @@ type ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall struct {
 // (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 //
 // - session: The name of the session this query is sent to. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment (`Environment ID` might be referred to as environment
-// name at some places). If `User ID` is not specified, we are using
-// "-". It's up to the API caller to choose an appropriate `Session ID`
-// and `User Id`. They can be a random number or some type of user and
-// session identifiers (preferably hashed). The length of the `Session
-// ID` and `User ID` must not exceed 36 characters. For more
-// information, see the API interactions guide
-// (https://cloud.google.com/dialogflow/docs/api-overview). Note: Always
-// use agent versions for production traffic. See Versions and
-// environments
-// (https://cloud.google.com/dialogflow/es/docs/agents-versions).
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment (`Environment ID` might be referred to as environment
+//   name at some places). If `User ID` is not specified, we are using
+//   "-". It's up to the API caller to choose an appropriate `Session
+//   ID` and `User Id`. They can be a random number or some type of user
+//   and session identifiers (preferably hashed). The length of the
+//   `Session ID` and `User ID` must not exceed 36 characters. For more
+//   information, see the API interactions guide
+//   (https://cloud.google.com/dialogflow/docs/api-overview). Note:
+//   Always use agent versions for production traffic. See Versions and
+//   environments
+//   (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 func (r *ProjectsAgentEnvironmentsUsersSessionsService) DetectIntent(sessionid string, googleclouddialogflowv2beta1detectintentrequest *GoogleCloudDialogflowV2beta1DetectIntentRequest) *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -21634,7 +21635,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21746,13 +21747,14 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall struct {
 // overrides the context.
 //
 // - parent: The session to create a context for. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsContextsService) Create(parent string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21787,7 +21789,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21896,14 +21898,14 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall struct {
 // Delete: Deletes the specified context.
 //
 // - name: The name of the context to delete. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsContextsService) Delete(name string) *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21937,7 +21939,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22038,14 +22040,14 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsGetCall struct {
 // Get: Retrieves the specified context.
 //
 // - name: The name of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsContextsService) Get(name string) *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsContextsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22089,7 +22091,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Header() http.He
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22194,13 +22196,14 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsListCall struct {
 // List: Returns the list of all contexts in the specified session.
 //
 // - parent: The session to list all contexts from. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsContextsService) List(parent string) *ProjectsAgentEnvironmentsUsersSessionsContextsListCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsContextsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22258,7 +22261,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22396,18 +22399,18 @@ type ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall struct {
 // Patch: Updates the specified context.
 //
 // - name: The unique identifier of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  The `Context ID` is always converted to lowercase, may only contain
-// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user. The following context names are reserved for internal use by
-// Dialogflow. You should not use these contexts or create contexts with
-// these names: * `__system_counters__` * `*_id_dialog_context` *
-// `*_dialog_params_size`
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, The `Context ID` is always converted to lowercase, may only
+//   contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//   long. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user. The following context names are reserved for
+//   internal use by Dialogflow. You should not use these contexts or
+//   create contexts with these names: * `__system_counters__` *
+//   `*_id_dialog_context` * `*_dialog_params_size`.
 func (r *ProjectsAgentEnvironmentsUsersSessionsContextsService) Patch(nameid string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -22449,7 +22452,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Header() http.
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22569,14 +22572,14 @@ type ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall struct {
 // Assistant integration.
 //
 // - parent: The session to create a session entity type for. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsEntityTypesService) Create(parent string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22611,7 +22614,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22724,14 +22727,14 @@ type ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall struct {
 // integration.
 //
 // - name: The name of the entity type to delete. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsEntityTypesService) Delete(name string) *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22765,7 +22768,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22868,14 +22871,14 @@ type ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The name of the session entity type. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsEntityTypesService) Get(name string) *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22919,7 +22922,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23028,14 +23031,14 @@ type ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall struct {
 // Google Assistant integration.
 //
 // - parent: The session to list all session entity types from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentEnvironmentsUsersSessionsEntityTypesService) List(parent string) *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23093,7 +23096,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Header() htt
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23234,16 +23237,16 @@ type ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The unique identifier of this session entity type. Supported
-// formats: - `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user. `` must be the display name of an
-// existing entity type in the same agent that will be overridden or
-// supplemented.
+//   formats: - `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user. `` must be the display
+//   name of an existing entity type in the same agent that will be
+//   overridden or supplemented.
 func (r *ProjectsAgentEnvironmentsUsersSessionsEntityTypesService) Patch(nameid string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall {
 	c := &ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -23285,7 +23288,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Header() ht
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23402,7 +23405,8 @@ type ProjectsAgentIntentsBatchDeleteCall struct {
 // BatchDelete: Deletes intents in the specified agent. Operation
 //
 // - parent: The name of the agent to delete all entities types for.
-// Supported formats: - `projects//agent` - `projects//locations//agent`
+//   Supported formats: - `projects//agent` -
+//   `projects//locations//agent`.
 func (r *ProjectsAgentIntentsService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteintentsrequest *GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest) *ProjectsAgentIntentsBatchDeleteCall {
 	c := &ProjectsAgentIntentsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23437,7 +23441,7 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23547,7 +23551,8 @@ type ProjectsAgentIntentsBatchUpdateCall struct {
 // Operation
 //
 // - parent: The name of the agent to update or create intents in.
-// Supported formats: - `projects//agent` - `projects//locations//agent`
+//   Supported formats: - `projects//agent` -
+//   `projects//locations//agent`.
 func (r *ProjectsAgentIntentsService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateintentsrequest *GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest) *ProjectsAgentIntentsBatchUpdateCall {
 	c := &ProjectsAgentIntentsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23582,7 +23587,7 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23691,7 +23696,7 @@ type ProjectsAgentIntentsCreateCall struct {
 // Create: Creates an intent in the specified agent.
 //
 // - parent: The agent to create a intent for. Supported formats: -
-// `projects//agent` - `projects//locations//agent`
+//   `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsAgentIntentsService) Create(parent string, googleclouddialogflowv2beta1intent *GoogleCloudDialogflowV2beta1Intent) *ProjectsAgentIntentsCreateCall {
 	c := &ProjectsAgentIntentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23748,7 +23753,7 @@ func (c *ProjectsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23876,8 +23881,9 @@ type ProjectsAgentIntentsDeleteCall struct {
 // followup intents.
 //
 // - name: The name of the intent to delete. If this intent has direct
-// or indirect followup intents, we also delete them. Supported formats:
-// - `projects//agent/intents/` - `projects//locations//agent/intents/`
+//   or indirect followup intents, we also delete them. Supported
+//   formats: - `projects//agent/intents/` -
+//   `projects//locations//agent/intents/`.
 func (r *ProjectsAgentIntentsService) Delete(name string) *ProjectsAgentIntentsDeleteCall {
 	c := &ProjectsAgentIntentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23911,7 +23917,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24012,7 +24018,7 @@ type ProjectsAgentIntentsGetCall struct {
 // Get: Retrieves the specified intent.
 //
 // - name: The name of the intent. Supported formats: -
-// `projects//agent/intents/` - `projects//locations//agent/intents/`
+//   `projects//agent/intents/` - `projects//locations//agent/intents/`.
 func (r *ProjectsAgentIntentsService) Get(name string) *ProjectsAgentIntentsGetCall {
 	c := &ProjectsAgentIntentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24078,7 +24084,7 @@ func (c *ProjectsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24201,7 +24207,7 @@ type ProjectsAgentIntentsListCall struct {
 // List: Returns the list of all intents in the specified agent.
 //
 // - parent: The agent to list all intents from. Format:
-// `projects//agent`.
+//   `projects//agent`.
 func (r *ProjectsAgentIntentsService) List(parent string) *ProjectsAgentIntentsListCall {
 	c := &ProjectsAgentIntentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24281,7 +24287,7 @@ func (c *ProjectsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24437,9 +24443,9 @@ type ProjectsAgentIntentsPatchCall struct {
 // Patch: Updates the specified intent.
 //
 // - name: Optional. The unique identifier of this intent. Required for
-// Intents.UpdateIntent and Intents.BatchUpdateIntents methods.
-// Supported formats: - `projects//agent/intents/` -
-// `projects//locations//agent/intents/`
+//   Intents.UpdateIntent and Intents.BatchUpdateIntents methods.
+//   Supported formats: - `projects//agent/intents/` -
+//   `projects//locations//agent/intents/`.
 func (r *ProjectsAgentIntentsService) Patch(nameid string, googleclouddialogflowv2beta1intent *GoogleCloudDialogflowV2beta1Intent) *ProjectsAgentIntentsPatchCall {
 	c := &ProjectsAgentIntentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -24503,7 +24509,7 @@ func (c *ProjectsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24639,7 +24645,7 @@ type ProjectsAgentKnowledgeBasesCreateCall struct {
 // `projects.knowledgeBases`.
 //
 // - parent: The project to create a knowledge base for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsAgentKnowledgeBasesService) Create(parent string, googleclouddialogflowv2beta1knowledgebase *GoogleCloudDialogflowV2beta1KnowledgeBase) *ProjectsAgentKnowledgeBasesCreateCall {
 	c := &ProjectsAgentKnowledgeBasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24674,7 +24680,7 @@ func (c *ProjectsAgentKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24786,7 +24792,7 @@ type ProjectsAgentKnowledgeBasesDeleteCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The name of the knowledge base to delete. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsAgentKnowledgeBasesService) Delete(name string) *ProjectsAgentKnowledgeBasesDeleteCall {
 	c := &ProjectsAgentKnowledgeBasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24828,7 +24834,7 @@ func (c *ProjectsAgentKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24936,7 +24942,7 @@ type ProjectsAgentKnowledgeBasesGetCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The name of the knowledge base to retrieve. Format
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsAgentKnowledgeBasesService) Get(name string) *ProjectsAgentKnowledgeBasesGetCall {
 	c := &ProjectsAgentKnowledgeBasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24980,7 +24986,7 @@ func (c *ProjectsAgentKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25088,7 +25094,7 @@ type ProjectsAgentKnowledgeBasesListCall struct {
 // only use `projects.knowledgeBases`.
 //
 // - parent: The project to list of knowledge bases for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsAgentKnowledgeBasesService) List(parent string) *ProjectsAgentKnowledgeBasesListCall {
 	c := &ProjectsAgentKnowledgeBasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25165,7 +25171,7 @@ func (c *ProjectsAgentKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25311,8 +25317,8 @@ type ProjectsAgentKnowledgeBasesPatchCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The knowledge base resource name. The name must be empty when
-// creating a knowledge base. Format:
-// `projects//locations//knowledgeBases/`.
+//   creating a knowledge base. Format:
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsAgentKnowledgeBasesService) Patch(name string, googleclouddialogflowv2beta1knowledgebase *GoogleCloudDialogflowV2beta1KnowledgeBase) *ProjectsAgentKnowledgeBasesPatchCall {
 	c := &ProjectsAgentKnowledgeBasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25356,7 +25362,7 @@ func (c *ProjectsAgentKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25475,7 +25481,7 @@ type ProjectsAgentKnowledgeBasesDocumentsCreateCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - parent: The knowledge base to create a document for. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsAgentKnowledgeBasesDocumentsService) Create(parent string, googleclouddialogflowv2beta1document *GoogleCloudDialogflowV2beta1Document) *ProjectsAgentKnowledgeBasesDocumentsCreateCall {
 	c := &ProjectsAgentKnowledgeBasesDocumentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25519,7 +25525,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25634,7 +25640,7 @@ type ProjectsAgentKnowledgeBasesDocumentsDeleteCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to delete. Format:
-// `projects//locations//knowledgeBases//documents/`.
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsAgentKnowledgeBasesDocumentsService) Delete(name string) *ProjectsAgentKnowledgeBasesDocumentsDeleteCall {
 	c := &ProjectsAgentKnowledgeBasesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25668,7 +25674,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25771,7 +25777,7 @@ type ProjectsAgentKnowledgeBasesDocumentsGetCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to retrieve. Format
-// `projects//locations//knowledgeBases//documents/`.
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsAgentKnowledgeBasesDocumentsService) Get(name string) *ProjectsAgentKnowledgeBasesDocumentsGetCall {
 	c := &ProjectsAgentKnowledgeBasesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25815,7 +25821,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25922,7 +25928,7 @@ type ProjectsAgentKnowledgeBasesDocumentsListCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - parent: The knowledge base to list all documents for. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsAgentKnowledgeBasesDocumentsService) List(parent string) *ProjectsAgentKnowledgeBasesDocumentsListCall {
 	c := &ProjectsAgentKnowledgeBasesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25996,7 +26002,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26141,8 +26147,8 @@ type ProjectsAgentKnowledgeBasesDocumentsPatchCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: Optional. The document resource name. The name must be empty
-// when creating a document. Format:
-// `projects//locations//knowledgeBases//documents/`.
+//   when creating a document. Format:
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsAgentKnowledgeBasesDocumentsService) Patch(name string, googleclouddialogflowv2beta1document *GoogleCloudDialogflowV2beta1Document) *ProjectsAgentKnowledgeBasesDocumentsPatchCall {
 	c := &ProjectsAgentKnowledgeBasesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26186,7 +26192,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26310,7 +26316,7 @@ type ProjectsAgentKnowledgeBasesDocumentsReloadCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to reload. Format:
-// `projects//locations//knowledgeBases//documents/`
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsAgentKnowledgeBasesDocumentsService) Reload(name string, googleclouddialogflowv2beta1reloaddocumentrequest *GoogleCloudDialogflowV2beta1ReloadDocumentRequest) *ProjectsAgentKnowledgeBasesDocumentsReloadCall {
 	c := &ProjectsAgentKnowledgeBasesDocumentsReloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26345,7 +26351,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26453,14 +26459,14 @@ type ProjectsAgentSessionsDeleteContextsCall struct {
 // DeleteContexts: Deletes all active contexts in the specified session.
 //
 // - parent: The name of the session to delete all contexts from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentSessionsService) DeleteContexts(parent string) *ProjectsAgentSessionsDeleteContextsCall {
 	c := &ProjectsAgentSessionsDeleteContextsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26494,7 +26500,7 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26601,23 +26607,23 @@ type ProjectsAgentSessionsDetectIntentCall struct {
 // (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 //
 // - session: The name of the session this query is sent to. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment (`Environment ID` might be referred to as environment
-// name at some places). If `User ID` is not specified, we are using
-// "-". It's up to the API caller to choose an appropriate `Session ID`
-// and `User Id`. They can be a random number or some type of user and
-// session identifiers (preferably hashed). The length of the `Session
-// ID` and `User ID` must not exceed 36 characters. For more
-// information, see the API interactions guide
-// (https://cloud.google.com/dialogflow/docs/api-overview). Note: Always
-// use agent versions for production traffic. See Versions and
-// environments
-// (https://cloud.google.com/dialogflow/es/docs/agents-versions).
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment (`Environment ID` might be referred to as environment
+//   name at some places). If `User ID` is not specified, we are using
+//   "-". It's up to the API caller to choose an appropriate `Session
+//   ID` and `User Id`. They can be a random number or some type of user
+//   and session identifiers (preferably hashed). The length of the
+//   `Session ID` and `User ID` must not exceed 36 characters. For more
+//   information, see the API interactions guide
+//   (https://cloud.google.com/dialogflow/docs/api-overview). Note:
+//   Always use agent versions for production traffic. See Versions and
+//   environments
+//   (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 func (r *ProjectsAgentSessionsService) DetectIntent(sessionid string, googleclouddialogflowv2beta1detectintentrequest *GoogleCloudDialogflowV2beta1DetectIntentRequest) *ProjectsAgentSessionsDetectIntentCall {
 	c := &ProjectsAgentSessionsDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -26652,7 +26658,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26764,13 +26770,14 @@ type ProjectsAgentSessionsContextsCreateCall struct {
 // overrides the context.
 //
 // - parent: The session to create a context for. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentSessionsContextsService) Create(parent string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsAgentSessionsContextsCreateCall {
 	c := &ProjectsAgentSessionsContextsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26805,7 +26812,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26914,14 +26921,14 @@ type ProjectsAgentSessionsContextsDeleteCall struct {
 // Delete: Deletes the specified context.
 //
 // - name: The name of the context to delete. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsAgentSessionsContextsService) Delete(name string) *ProjectsAgentSessionsContextsDeleteCall {
 	c := &ProjectsAgentSessionsContextsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26955,7 +26962,7 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27056,14 +27063,14 @@ type ProjectsAgentSessionsContextsGetCall struct {
 // Get: Retrieves the specified context.
 //
 // - name: The name of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsAgentSessionsContextsService) Get(name string) *ProjectsAgentSessionsContextsGetCall {
 	c := &ProjectsAgentSessionsContextsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27107,7 +27114,7 @@ func (c *ProjectsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27212,13 +27219,14 @@ type ProjectsAgentSessionsContextsListCall struct {
 // List: Returns the list of all contexts in the specified session.
 //
 // - parent: The session to list all contexts from. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentSessionsContextsService) List(parent string) *ProjectsAgentSessionsContextsListCall {
 	c := &ProjectsAgentSessionsContextsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27276,7 +27284,7 @@ func (c *ProjectsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27414,18 +27422,18 @@ type ProjectsAgentSessionsContextsPatchCall struct {
 // Patch: Updates the specified context.
 //
 // - name: The unique identifier of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  The `Context ID` is always converted to lowercase, may only contain
-// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user. The following context names are reserved for internal use by
-// Dialogflow. You should not use these contexts or create contexts with
-// these names: * `__system_counters__` * `*_id_dialog_context` *
-// `*_dialog_params_size`
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, The `Context ID` is always converted to lowercase, may only
+//   contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//   long. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user. The following context names are reserved for
+//   internal use by Dialogflow. You should not use these contexts or
+//   create contexts with these names: * `__system_counters__` *
+//   `*_id_dialog_context` * `*_dialog_params_size`.
 func (r *ProjectsAgentSessionsContextsService) Patch(nameid string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsAgentSessionsContextsPatchCall {
 	c := &ProjectsAgentSessionsContextsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -27467,7 +27475,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27587,14 +27595,14 @@ type ProjectsAgentSessionsEntityTypesCreateCall struct {
 // Assistant integration.
 //
 // - parent: The session to create a session entity type for. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentSessionsEntityTypesService) Create(parent string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsAgentSessionsEntityTypesCreateCall {
 	c := &ProjectsAgentSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27629,7 +27637,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27742,14 +27750,14 @@ type ProjectsAgentSessionsEntityTypesDeleteCall struct {
 // integration.
 //
 // - name: The name of the entity type to delete. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsAgentSessionsEntityTypesService) Delete(name string) *ProjectsAgentSessionsEntityTypesDeleteCall {
 	c := &ProjectsAgentSessionsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27783,7 +27791,7 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27886,14 +27894,14 @@ type ProjectsAgentSessionsEntityTypesGetCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The name of the session entity type. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsAgentSessionsEntityTypesService) Get(name string) *ProjectsAgentSessionsEntityTypesGetCall {
 	c := &ProjectsAgentSessionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27937,7 +27945,7 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28046,14 +28054,14 @@ type ProjectsAgentSessionsEntityTypesListCall struct {
 // Google Assistant integration.
 //
 // - parent: The session to list all session entity types from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsAgentSessionsEntityTypesService) List(parent string) *ProjectsAgentSessionsEntityTypesListCall {
 	c := &ProjectsAgentSessionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28111,7 +28119,7 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28252,16 +28260,16 @@ type ProjectsAgentSessionsEntityTypesPatchCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The unique identifier of this session entity type. Supported
-// formats: - `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user. `` must be the display name of an
-// existing entity type in the same agent that will be overridden or
-// supplemented.
+//   formats: - `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user. `` must be the display
+//   name of an existing entity type in the same agent that will be
+//   overridden or supplemented.
 func (r *ProjectsAgentSessionsEntityTypesService) Patch(nameid string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsAgentSessionsEntityTypesPatchCall {
 	c := &ProjectsAgentSessionsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -28303,7 +28311,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28420,7 +28428,7 @@ type ProjectsAnswerRecordsGetCall struct {
 // Get: Deprecated. Retrieves a specific answer record.
 //
 // - name: The name of the answer record to retrieve. Format:
-// `projects//locations//answerRecords/`.
+//   `projects//locations//answerRecords/`.
 func (r *ProjectsAnswerRecordsService) Get(name string) *ProjectsAnswerRecordsGetCall {
 	c := &ProjectsAnswerRecordsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28464,7 +28472,7 @@ func (c *ProjectsAnswerRecordsGetCall) Header() http.Header {
 
 func (c *ProjectsAnswerRecordsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28571,7 +28579,7 @@ type ProjectsAnswerRecordsListCall struct {
 // in reverse chronological order.
 //
 // - parent: The project to list all answer records for in reverse
-// chronological order. Format: `projects//locations/`.
+//   chronological order. Format: `projects//locations/`.
 func (r *ProjectsAnswerRecordsService) List(parent string) *ProjectsAnswerRecordsListCall {
 	c := &ProjectsAnswerRecordsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28631,7 +28639,7 @@ func (c *ProjectsAnswerRecordsListCall) Header() http.Header {
 
 func (c *ProjectsAnswerRecordsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28769,8 +28777,8 @@ type ProjectsAnswerRecordsPatchCall struct {
 // Patch: Updates the specified answer record.
 //
 // - name: The unique identifier of this answer record. Required for
-// AnswerRecords.UpdateAnswerRecord method. Format:
-// `projects//locations//answerRecords/`.
+//   AnswerRecords.UpdateAnswerRecord method. Format:
+//   `projects//locations//answerRecords/`.
 func (r *ProjectsAnswerRecordsService) Patch(nameid string, googleclouddialogflowv2beta1answerrecord *GoogleCloudDialogflowV2beta1AnswerRecord) *ProjectsAnswerRecordsPatchCall {
 	c := &ProjectsAnswerRecordsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -28812,7 +28820,7 @@ func (c *ProjectsAnswerRecordsPatchCall) Header() http.Header {
 
 func (c *ProjectsAnswerRecordsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28932,7 +28940,7 @@ type ProjectsConversationProfilesCreateCall struct {
 // GetConversationProfile API.
 //
 // - parent: The project to create a conversation profile for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsConversationProfilesService) Create(parent string, googleclouddialogflowv2beta1conversationprofile *GoogleCloudDialogflowV2beta1ConversationProfile) *ProjectsConversationProfilesCreateCall {
 	c := &ProjectsConversationProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28967,7 +28975,7 @@ func (c *ProjectsConversationProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsConversationProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29077,7 +29085,7 @@ type ProjectsConversationProfilesDeleteCall struct {
 // Delete: Deletes the specified conversation profile.
 //
 // - name: The name of the conversation profile to delete. Format:
-// `projects//locations//conversationProfiles/`.
+//   `projects//locations//conversationProfiles/`.
 func (r *ProjectsConversationProfilesService) Delete(name string) *ProjectsConversationProfilesDeleteCall {
 	c := &ProjectsConversationProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29111,7 +29119,7 @@ func (c *ProjectsConversationProfilesDeleteCall) Header() http.Header {
 
 func (c *ProjectsConversationProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29212,7 +29220,7 @@ type ProjectsConversationProfilesGetCall struct {
 // Get: Retrieves the specified conversation profile.
 //
 // - name: The resource name of the conversation profile. Format:
-// `projects//locations//conversationProfiles/`.
+//   `projects//locations//conversationProfiles/`.
 func (r *ProjectsConversationProfilesService) Get(name string) *ProjectsConversationProfilesGetCall {
 	c := &ProjectsConversationProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29256,7 +29264,7 @@ func (c *ProjectsConversationProfilesGetCall) Header() http.Header {
 
 func (c *ProjectsConversationProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29363,7 +29371,7 @@ type ProjectsConversationProfilesListCall struct {
 // project.
 //
 // - parent: The project to list all conversation profiles from. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsConversationProfilesService) List(parent string) *ProjectsConversationProfilesListCall {
 	c := &ProjectsConversationProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29421,7 +29429,7 @@ func (c *ProjectsConversationProfilesListCall) Header() http.Header {
 
 func (c *ProjectsConversationProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29563,7 +29571,7 @@ type ProjectsConversationProfilesPatchCall struct {
 // GetConversationProfile API.
 //
 // - name: The unique identifier of this conversation profile. Format:
-// `projects//locations//conversationProfiles/`.
+//   `projects//locations//conversationProfiles/`.
 func (r *ProjectsConversationProfilesService) Patch(nameid string, googleclouddialogflowv2beta1conversationprofile *GoogleCloudDialogflowV2beta1ConversationProfile) *ProjectsConversationProfilesPatchCall {
 	c := &ProjectsConversationProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -29605,7 +29613,7 @@ func (c *ProjectsConversationProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsConversationProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29723,7 +29731,7 @@ type ProjectsConversationsCompleteCall struct {
 // conversations are purged from the database after 30 days.
 //
 // - name: Resource identifier of the conversation to close. Format:
-// `projects//locations//conversations/`.
+//   `projects//locations//conversations/`.
 func (r *ProjectsConversationsService) Complete(nameid string, googleclouddialogflowv2beta1completeconversationrequest *GoogleCloudDialogflowV2beta1CompleteConversationRequest) *ProjectsConversationsCompleteCall {
 	c := &ProjectsConversationsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -29758,7 +29766,7 @@ func (c *ProjectsConversationsCompleteCall) Header() http.Header {
 
 func (c *ProjectsConversationsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29880,7 +29888,7 @@ type ProjectsConversationsCreateCall struct {
 // Assist Stage.
 //
 // - parent: Resource identifier of the project creating the
-// conversation. Format: `projects//locations/`.
+//   conversation. Format: `projects//locations/`.
 func (r *ProjectsConversationsService) Create(parentid string, googleclouddialogflowv2beta1conversation *GoogleCloudDialogflowV2beta1Conversation) *ProjectsConversationsCreateCall {
 	c := &ProjectsConversationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -29929,7 +29937,7 @@ func (c *ProjectsConversationsCreateCall) Header() http.Header {
 
 func (c *ProjectsConversationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30045,7 +30053,7 @@ type ProjectsConversationsGetCall struct {
 // Get: Retrieves the specific conversation.
 //
 // - name: The name of the conversation. Format:
-// `projects//locations//conversations/`.
+//   `projects//locations//conversations/`.
 func (r *ProjectsConversationsService) Get(name string) *ProjectsConversationsGetCall {
 	c := &ProjectsConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30089,7 +30097,7 @@ func (c *ProjectsConversationsGetCall) Header() http.Header {
 
 func (c *ProjectsConversationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30195,7 +30203,7 @@ type ProjectsConversationsListCall struct {
 // List: Returns the list of all conversations in the specified project.
 //
 // - parent: The project from which to list all conversation. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsConversationsService) List(parent string) *ProjectsConversationsListCall {
 	c := &ProjectsConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30270,7 +30278,7 @@ func (c *ProjectsConversationsListCall) Header() http.Header {
 
 func (c *ProjectsConversationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30414,7 +30422,7 @@ type ProjectsConversationsMessagesBatchCreateCall struct {
 // use this RPC to ingest historical messages to conversation.
 //
 // - parent: Resource identifier of the conversation to create message.
-// Format: `projects//locations//conversations/`.
+//   Format: `projects//locations//conversations/`.
 func (r *ProjectsConversationsMessagesService) BatchCreate(parentid string, googleclouddialogflowv2beta1batchcreatemessagesrequest *GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest) *ProjectsConversationsMessagesBatchCreateCall {
 	c := &ProjectsConversationsMessagesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -30449,7 +30457,7 @@ func (c *ProjectsConversationsMessagesBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsConversationsMessagesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30565,7 +30573,7 @@ type ProjectsConversationsMessagesListCall struct {
 // previous request]` and empty page_token.
 //
 // - parent: The name of the conversation to list messages for. Format:
-// `projects//locations//conversations/`
+//   `projects//locations//conversations/`.
 func (r *ProjectsConversationsMessagesService) List(parent string) *ProjectsConversationsMessagesListCall {
 	c := &ProjectsConversationsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30635,7 +30643,7 @@ func (c *ProjectsConversationsMessagesListCall) Header() http.Header {
 
 func (c *ProjectsConversationsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30782,7 +30790,7 @@ type ProjectsConversationsParticipantsAnalyzeContentCall struct {
 // (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 //
 // - participant: The name of the participant this text comes from.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsService) AnalyzeContent(participant string, googleclouddialogflowv2beta1analyzecontentrequest *GoogleCloudDialogflowV2beta1AnalyzeContentRequest) *ProjectsConversationsParticipantsAnalyzeContentCall {
 	c := &ProjectsConversationsParticipantsAnalyzeContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.participant = participant
@@ -30817,7 +30825,7 @@ func (c *ProjectsConversationsParticipantsAnalyzeContentCall) Header() http.Head
 
 func (c *ProjectsConversationsParticipantsAnalyzeContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30928,7 +30936,7 @@ type ProjectsConversationsParticipantsCreateCall struct {
 // Create: Creates a new participant in a conversation.
 //
 // - parent: Resource identifier of the conversation adding the
-// participant. Format: `projects//locations//conversations/`.
+//   participant. Format: `projects//locations//conversations/`.
 func (r *ProjectsConversationsParticipantsService) Create(parentid string, googleclouddialogflowv2beta1participant *GoogleCloudDialogflowV2beta1Participant) *ProjectsConversationsParticipantsCreateCall {
 	c := &ProjectsConversationsParticipantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -30963,7 +30971,7 @@ func (c *ProjectsConversationsParticipantsCreateCall) Header() http.Header {
 
 func (c *ProjectsConversationsParticipantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31073,7 +31081,7 @@ type ProjectsConversationsParticipantsGetCall struct {
 // Get: Retrieves a conversation participant.
 //
 // - name: The name of the participant. Format:
-// `projects//locations//conversations//participants/`.
+//   `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsService) Get(name string) *ProjectsConversationsParticipantsGetCall {
 	c := &ProjectsConversationsParticipantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31117,7 +31125,7 @@ func (c *ProjectsConversationsParticipantsGetCall) Header() http.Header {
 
 func (c *ProjectsConversationsParticipantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31223,7 +31231,7 @@ type ProjectsConversationsParticipantsListCall struct {
 // conversation.
 //
 // - parent: The conversation to list all participants from. Format:
-// `projects//locations//conversations/`.
+//   `projects//locations//conversations/`.
 func (r *ProjectsConversationsParticipantsService) List(parent string) *ProjectsConversationsParticipantsListCall {
 	c := &ProjectsConversationsParticipantsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31281,7 +31289,7 @@ func (c *ProjectsConversationsParticipantsListCall) Header() http.Header {
 
 func (c *ProjectsConversationsParticipantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31419,7 +31427,7 @@ type ProjectsConversationsParticipantsPatchCall struct {
 // Patch: Updates the specified participant.
 //
 // - name: Optional. The unique identifier of this participant. Format:
-// `projects//locations//conversations//participants/`.
+//   `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsService) Patch(nameid string, googleclouddialogflowv2beta1participant *GoogleCloudDialogflowV2beta1Participant) *ProjectsConversationsParticipantsPatchCall {
 	c := &ProjectsConversationsParticipantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -31461,7 +31469,7 @@ func (c *ProjectsConversationsParticipantsPatchCall) Header() http.Header {
 
 func (c *ProjectsConversationsParticipantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31582,7 +31590,7 @@ type ProjectsConversationsParticipantsSuggestionsCompileCall struct {
 // real time.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsSuggestionsService) Compile(parent string, googleclouddialogflowv2beta1compilesuggestionrequest *GoogleCloudDialogflowV2beta1CompileSuggestionRequest) *ProjectsConversationsParticipantsSuggestionsCompileCall {
 	c := &ProjectsConversationsParticipantsSuggestionsCompileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31617,7 +31625,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsCompileCall) Header() http.
 
 func (c *ProjectsConversationsParticipantsSuggestionsCompileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31741,7 +31749,7 @@ type ProjectsConversationsParticipantsSuggestionsListCall struct {
 // previous request]` and empty page_token.
 //
 // - parent: The name of the participant to fetch suggestions for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsSuggestionsService) List(parent string) *ProjectsConversationsParticipantsSuggestionsListCall {
 	c := &ProjectsConversationsParticipantsSuggestionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31812,7 +31820,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsListCall) Header() http.Hea
 
 func (c *ProjectsConversationsParticipantsSuggestionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31959,7 +31967,7 @@ type ProjectsConversationsParticipantsSuggestionsSuggestArticlesCall struct {
 // the real time.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsSuggestionsService) SuggestArticles(parent string, googleclouddialogflowv2beta1suggestarticlesrequest *GoogleCloudDialogflowV2beta1SuggestArticlesRequest) *ProjectsConversationsParticipantsSuggestionsSuggestArticlesCall {
 	c := &ProjectsConversationsParticipantsSuggestionsSuggestArticlesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31994,7 +32002,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestArticlesCall) Header
 
 func (c *ProjectsConversationsParticipantsSuggestionsSuggestArticlesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32106,7 +32114,7 @@ type ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall struct {
 // on specific historical messages.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsSuggestionsService) SuggestFaqAnswers(parent string, googleclouddialogflowv2beta1suggestfaqanswersrequest *GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest) *ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall {
 	c := &ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32141,7 +32149,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall) Head
 
 func (c *ProjectsConversationsParticipantsSuggestionsSuggestFaqAnswersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32253,7 +32261,7 @@ type ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall struct 
 // specific historical messages.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsConversationsParticipantsSuggestionsService) SuggestSmartReplies(parent string, googleclouddialogflowv2beta1suggestsmartrepliesrequest *GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest) *ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall {
 	c := &ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32288,7 +32296,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall) He
 
 func (c *ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32402,7 +32410,7 @@ type ProjectsKnowledgeBasesCreateCall struct {
 // `projects.knowledgeBases`.
 //
 // - parent: The project to create a knowledge base for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsKnowledgeBasesService) Create(parent string, googleclouddialogflowv2beta1knowledgebase *GoogleCloudDialogflowV2beta1KnowledgeBase) *ProjectsKnowledgeBasesCreateCall {
 	c := &ProjectsKnowledgeBasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32437,7 +32445,7 @@ func (c *ProjectsKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32549,7 +32557,7 @@ type ProjectsKnowledgeBasesDeleteCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The name of the knowledge base to delete. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsKnowledgeBasesService) Delete(name string) *ProjectsKnowledgeBasesDeleteCall {
 	c := &ProjectsKnowledgeBasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32591,7 +32599,7 @@ func (c *ProjectsKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32699,7 +32707,7 @@ type ProjectsKnowledgeBasesGetCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The name of the knowledge base to retrieve. Format
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsKnowledgeBasesService) Get(name string) *ProjectsKnowledgeBasesGetCall {
 	c := &ProjectsKnowledgeBasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32743,7 +32751,7 @@ func (c *ProjectsKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32851,7 +32859,7 @@ type ProjectsKnowledgeBasesListCall struct {
 // only use `projects.knowledgeBases`.
 //
 // - parent: The project to list of knowledge bases for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsKnowledgeBasesService) List(parent string) *ProjectsKnowledgeBasesListCall {
 	c := &ProjectsKnowledgeBasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32928,7 +32936,7 @@ func (c *ProjectsKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33074,8 +33082,8 @@ type ProjectsKnowledgeBasesPatchCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The knowledge base resource name. The name must be empty when
-// creating a knowledge base. Format:
-// `projects//locations//knowledgeBases/`.
+//   creating a knowledge base. Format:
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsKnowledgeBasesService) Patch(name string, googleclouddialogflowv2beta1knowledgebase *GoogleCloudDialogflowV2beta1KnowledgeBase) *ProjectsKnowledgeBasesPatchCall {
 	c := &ProjectsKnowledgeBasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33119,7 +33127,7 @@ func (c *ProjectsKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33238,7 +33246,7 @@ type ProjectsKnowledgeBasesDocumentsCreateCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - parent: The knowledge base to create a document for. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) Create(parent string, googleclouddialogflowv2beta1document *GoogleCloudDialogflowV2beta1Document) *ProjectsKnowledgeBasesDocumentsCreateCall {
 	c := &ProjectsKnowledgeBasesDocumentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33282,7 +33290,7 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33397,7 +33405,7 @@ type ProjectsKnowledgeBasesDocumentsDeleteCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to delete. Format:
-// `projects//locations//knowledgeBases//documents/`.
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) Delete(name string) *ProjectsKnowledgeBasesDocumentsDeleteCall {
 	c := &ProjectsKnowledgeBasesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33431,7 +33439,7 @@ func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33534,7 +33542,7 @@ type ProjectsKnowledgeBasesDocumentsGetCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to retrieve. Format
-// `projects//locations//knowledgeBases//documents/`.
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) Get(name string) *ProjectsKnowledgeBasesDocumentsGetCall {
 	c := &ProjectsKnowledgeBasesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33578,7 +33586,7 @@ func (c *ProjectsKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33683,7 +33691,7 @@ type ProjectsKnowledgeBasesDocumentsImportCall struct {
 // Import: Create documents by importing data from external sources.
 //
 // - parent: The knowledge base to import documents into. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) Import(parent string, googleclouddialogflowv2beta1importdocumentsrequest *GoogleCloudDialogflowV2beta1ImportDocumentsRequest) *ProjectsKnowledgeBasesDocumentsImportCall {
 	c := &ProjectsKnowledgeBasesDocumentsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33718,7 +33726,7 @@ func (c *ProjectsKnowledgeBasesDocumentsImportCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33829,7 +33837,7 @@ type ProjectsKnowledgeBasesDocumentsListCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - parent: The knowledge base to list all documents for. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) List(parent string) *ProjectsKnowledgeBasesDocumentsListCall {
 	c := &ProjectsKnowledgeBasesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33903,7 +33911,7 @@ func (c *ProjectsKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34048,8 +34056,8 @@ type ProjectsKnowledgeBasesDocumentsPatchCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: Optional. The document resource name. The name must be empty
-// when creating a document. Format:
-// `projects//locations//knowledgeBases//documents/`.
+//   when creating a document. Format:
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) Patch(name string, googleclouddialogflowv2beta1document *GoogleCloudDialogflowV2beta1Document) *ProjectsKnowledgeBasesDocumentsPatchCall {
 	c := &ProjectsKnowledgeBasesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34093,7 +34101,7 @@ func (c *ProjectsKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34217,7 +34225,7 @@ type ProjectsKnowledgeBasesDocumentsReloadCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to reload. Format:
-// `projects//locations//knowledgeBases//documents/`
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsKnowledgeBasesDocumentsService) Reload(name string, googleclouddialogflowv2beta1reloaddocumentrequest *GoogleCloudDialogflowV2beta1ReloadDocumentRequest) *ProjectsKnowledgeBasesDocumentsReloadCall {
 	c := &ProjectsKnowledgeBasesDocumentsReloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34252,7 +34260,7 @@ func (c *ProjectsKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34360,7 +34368,7 @@ type ProjectsLocationsDeleteAgentCall struct {
 // DeleteAgent: Deletes the specified agent.
 //
 // - parent: The project that the agent to delete is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsService) DeleteAgent(parent string) *ProjectsLocationsDeleteAgentCall {
 	c := &ProjectsLocationsDeleteAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34394,7 +34402,7 @@ func (c *ProjectsLocationsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34495,7 +34503,7 @@ type ProjectsLocationsGetAgentCall struct {
 // GetAgent: Retrieves the specified agent.
 //
 // - parent: The project that the agent to fetch is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsService) GetAgent(parent string) *ProjectsLocationsGetAgentCall {
 	c := &ProjectsLocationsGetAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34539,7 +34547,7 @@ func (c *ProjectsLocationsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34644,7 +34652,7 @@ type ProjectsLocationsSetAgentCall struct {
 // SetAgent: Creates/updates the specified agent.
 //
 // - parent: The project of this agent. Format: `projects/` or
-// `projects//locations/`
+//   `projects//locations/`.
 func (r *ProjectsLocationsService) SetAgent(parent string, googleclouddialogflowv2beta1agent *GoogleCloudDialogflowV2beta1Agent) *ProjectsLocationsSetAgentCall {
 	c := &ProjectsLocationsSetAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34686,7 +34694,7 @@ func (c *ProjectsLocationsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34802,7 +34810,7 @@ type ProjectsLocationsAgentExportCall struct {
 // Export: Exports the specified agent to a ZIP file. Operation
 //
 // - parent: The project that the agent to export is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsAgentService) Export(parent string, googleclouddialogflowv2beta1exportagentrequest *GoogleCloudDialogflowV2beta1ExportAgentRequest) *ProjectsLocationsAgentExportCall {
 	c := &ProjectsLocationsAgentExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34837,7 +34845,7 @@ func (c *ProjectsLocationsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34946,8 +34954,8 @@ type ProjectsLocationsAgentGetFulfillmentCall struct {
 // GetFulfillment: Retrieves the fulfillment.
 //
 // - name: The name of the fulfillment. Supported formats: -
-// `projects//agent/fulfillment` -
-// `projects//locations//agent/fulfillment`
+//   `projects//agent/fulfillment` -
+//   `projects//locations//agent/fulfillment`.
 func (r *ProjectsLocationsAgentService) GetFulfillment(name string) *ProjectsLocationsAgentGetFulfillmentCall {
 	c := &ProjectsLocationsAgentGetFulfillmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34991,7 +34999,7 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35098,7 +35106,7 @@ type ProjectsLocationsAgentGetValidationResultCall struct {
 // training is completed.
 //
 // - parent: The project that the agent is associated with. Format:
-// `projects/` or `projects//locations/`.
+//   `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsAgentService) GetValidationResult(parent string) *ProjectsLocationsAgentGetValidationResultCall {
 	c := &ProjectsLocationsAgentGetValidationResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35153,7 +35161,7 @@ func (c *ProjectsLocationsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35273,7 +35281,7 @@ type ProjectsLocationsAgentImportCall struct {
 // agent is updated not when it is done training.
 //
 // - parent: The project that the agent to import is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsAgentService) Import(parent string, googleclouddialogflowv2beta1importagentrequest *GoogleCloudDialogflowV2beta1ImportAgentRequest) *ProjectsLocationsAgentImportCall {
 	c := &ProjectsLocationsAgentImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35308,7 +35316,7 @@ func (c *ProjectsLocationsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35425,7 +35433,7 @@ type ProjectsLocationsAgentRestoreCall struct {
 // when the draft agent is updated not when it is done training.
 //
 // - parent: The project that the agent to restore is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsAgentService) Restore(parent string, googleclouddialogflowv2beta1restoreagentrequest *GoogleCloudDialogflowV2beta1RestoreAgentRequest) *ProjectsLocationsAgentRestoreCall {
 	c := &ProjectsLocationsAgentRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35460,7 +35468,7 @@ func (c *ProjectsLocationsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35574,7 +35582,7 @@ type ProjectsLocationsAgentSearchCall struct {
 // (https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
 //
 // - parent: The project to list agents from. Format: `projects/` or
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsLocationsAgentService) Search(parent string) *ProjectsLocationsAgentSearchCall {
 	c := &ProjectsLocationsAgentSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35632,7 +35640,7 @@ func (c *ProjectsLocationsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35770,7 +35778,7 @@ type ProjectsLocationsAgentTrainCall struct {
 // Train: Trains the specified agent. Operation
 //
 // - parent: The project that the agent to train is associated with.
-// Format: `projects/` or `projects//locations/`.
+//   Format: `projects/` or `projects//locations/`.
 func (r *ProjectsLocationsAgentService) Train(parent string, googleclouddialogflowv2beta1trainagentrequest *GoogleCloudDialogflowV2beta1TrainAgentRequest) *ProjectsLocationsAgentTrainCall {
 	c := &ProjectsLocationsAgentTrainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35805,7 +35813,7 @@ func (c *ProjectsLocationsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35914,9 +35922,9 @@ type ProjectsLocationsAgentUpdateFulfillmentCall struct {
 // UpdateFulfillment: Updates the fulfillment.
 //
 // - name: The unique identifier of the fulfillment. Supported formats:
-// - `projects//agent/fulfillment` -
-// `projects//locations//agent/fulfillment` This field is not used for
-// Fulfillment in an Environment.
+//   - `projects//agent/fulfillment` -
+//   `projects//locations//agent/fulfillment` This field is not used for
+//   Fulfillment in an Environment.
 func (r *ProjectsLocationsAgentService) UpdateFulfillment(nameid string, googleclouddialogflowv2beta1fulfillment *GoogleCloudDialogflowV2beta1Fulfillment) *ProjectsLocationsAgentUpdateFulfillmentCall {
 	c := &ProjectsLocationsAgentUpdateFulfillmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -35959,7 +35967,7 @@ func (c *ProjectsLocationsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36075,8 +36083,8 @@ type ProjectsLocationsAgentEntityTypesBatchDeleteCall struct {
 // BatchDelete: Deletes entity types in the specified agent. Operation
 //
 // - parent: The name of the agent to delete all entities types for.
-// Supported formats: - `projects//agent`, -
-// `projects//locations//agent`.
+//   Supported formats: - `projects//agent`, -
+//   `projects//locations//agent`.
 func (r *ProjectsLocationsAgentEntityTypesService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteentitytypesrequest *GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest) *ProjectsLocationsAgentEntityTypesBatchDeleteCall {
 	c := &ProjectsLocationsAgentEntityTypesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36111,7 +36119,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36221,7 +36229,8 @@ type ProjectsLocationsAgentEntityTypesBatchUpdateCall struct {
 // agent. Operation
 //
 // - parent: The name of the agent to update or create entity types in.
-// Supported formats: - `projects//agent` - `projects//locations//agent`
+//   Supported formats: - `projects//agent` -
+//   `projects//locations//agent`.
 func (r *ProjectsLocationsAgentEntityTypesService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateentitytypesrequest *GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest) *ProjectsLocationsAgentEntityTypesBatchUpdateCall {
 	c := &ProjectsLocationsAgentEntityTypesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36256,7 +36265,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36365,7 +36374,7 @@ type ProjectsLocationsAgentEntityTypesCreateCall struct {
 // Create: Creates an entity type in the specified agent.
 //
 // - parent: The agent to create a entity type for. Supported formats: -
-// `projects//agent` - `projects//locations//agent`
+//   `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsLocationsAgentEntityTypesService) Create(parent string, googleclouddialogflowv2beta1entitytype *GoogleCloudDialogflowV2beta1EntityType) *ProjectsLocationsAgentEntityTypesCreateCall {
 	c := &ProjectsLocationsAgentEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36410,7 +36419,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36524,8 +36533,8 @@ type ProjectsLocationsAgentEntityTypesDeleteCall struct {
 // Delete: Deletes the specified entity type.
 //
 // - name: The name of the entity type to delete. Supported formats: -
-// `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsLocationsAgentEntityTypesService) Delete(name string) *ProjectsLocationsAgentEntityTypesDeleteCall {
 	c := &ProjectsLocationsAgentEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36559,7 +36568,7 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36660,8 +36669,8 @@ type ProjectsLocationsAgentEntityTypesGetCall struct {
 // Get: Retrieves the specified entity type.
 //
 // - name: The name of the entity type. Supported formats: -
-// `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsLocationsAgentEntityTypesService) Get(name string) *ProjectsLocationsAgentEntityTypesGetCall {
 	c := &ProjectsLocationsAgentEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36715,7 +36724,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36825,7 +36834,7 @@ type ProjectsLocationsAgentEntityTypesListCall struct {
 // List: Returns the list of all entity types in the specified agent.
 //
 // - parent: The agent to list all entity types from. Supported formats:
-// - `projects//agent` - `projects//locations//agent`
+//   - `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsLocationsAgentEntityTypesService) List(parent string) *ProjectsLocationsAgentEntityTypesListCall {
 	c := &ProjectsLocationsAgentEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36893,7 +36902,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37036,9 +37045,9 @@ type ProjectsLocationsAgentEntityTypesPatchCall struct {
 // Patch: Updates the specified entity type.
 //
 // - name: The unique identifier of the entity type. Required for
-// EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes
-// methods. Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes
+//   methods. Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsLocationsAgentEntityTypesService) Patch(nameid string, googleclouddialogflowv2beta1entitytype *GoogleCloudDialogflowV2beta1EntityType) *ProjectsLocationsAgentEntityTypesPatchCall {
 	c := &ProjectsLocationsAgentEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -37090,7 +37099,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37212,8 +37221,8 @@ type ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall struct {
 // type. Operation
 //
 // - parent: The name of the entity type to create entities in.
-// Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsLocationsAgentEntityTypesEntitiesService) BatchCreate(parent string, googleclouddialogflowv2beta1batchcreateentitiesrequest *GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall {
 	c := &ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37248,7 +37257,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37357,8 +37366,8 @@ type ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall struct {
 // BatchDelete: Deletes entities in the specified entity type. Operation
 //
 // - parent: The name of the entity type to delete entries for.
-// Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsLocationsAgentEntityTypesEntitiesService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteentitiesrequest *GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest) *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall {
 	c := &ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37393,7 +37402,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37504,8 +37513,8 @@ type ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall struct {
 // that aren't explicitly specified in the request. Operation
 //
 // - parent: The name of the entity type to update or create entities
-// in. Supported formats: - `projects//agent/entityTypes/` -
-// `projects//locations//agent/entityTypes/`
+//   in. Supported formats: - `projects//agent/entityTypes/` -
+//   `projects//locations//agent/entityTypes/`.
 func (r *ProjectsLocationsAgentEntityTypesEntitiesService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateentitiesrequest *GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest) *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall {
 	c := &ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37540,7 +37549,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37650,7 +37659,7 @@ type ProjectsLocationsAgentEnvironmentsListCall struct {
 // agent.
 //
 // - parent: The agent to list all environments from. Format: -
-// `projects//agent` - `projects//locations//agent`
+//   `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsLocationsAgentEnvironmentsService) List(parent string) *ProjectsLocationsAgentEnvironmentsListCall {
 	c := &ProjectsLocationsAgentEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37708,7 +37717,7 @@ func (c *ProjectsLocationsAgentEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37845,14 +37854,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall struct {
 // DeleteContexts: Deletes all active contexts in the specified session.
 //
 // - parent: The name of the session to delete all contexts from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsService) DeleteContexts(parent string) *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37886,7 +37895,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37993,23 +38002,23 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall struct {
 // (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 //
 // - session: The name of the session this query is sent to. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment (`Environment ID` might be referred to as environment
-// name at some places). If `User ID` is not specified, we are using
-// "-". It's up to the API caller to choose an appropriate `Session ID`
-// and `User Id`. They can be a random number or some type of user and
-// session identifiers (preferably hashed). The length of the `Session
-// ID` and `User ID` must not exceed 36 characters. For more
-// information, see the API interactions guide
-// (https://cloud.google.com/dialogflow/docs/api-overview). Note: Always
-// use agent versions for production traffic. See Versions and
-// environments
-// (https://cloud.google.com/dialogflow/es/docs/agents-versions).
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment (`Environment ID` might be referred to as environment
+//   name at some places). If `User ID` is not specified, we are using
+//   "-". It's up to the API caller to choose an appropriate `Session
+//   ID` and `User Id`. They can be a random number or some type of user
+//   and session identifiers (preferably hashed). The length of the
+//   `Session ID` and `User ID` must not exceed 36 characters. For more
+//   information, see the API interactions guide
+//   (https://cloud.google.com/dialogflow/docs/api-overview). Note:
+//   Always use agent versions for production traffic. See Versions and
+//   environments
+//   (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsService) DetectIntent(sessionid string, googleclouddialogflowv2beta1detectintentrequest *GoogleCloudDialogflowV2beta1DetectIntentRequest) *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -38044,7 +38053,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38156,13 +38165,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall struct {
 // overrides the context.
 //
 // - parent: The session to create a context for. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsService) Create(parent string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38197,7 +38207,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38306,14 +38316,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall struct {
 // Delete: Deletes the specified context.
 //
 // - name: The name of the context to delete. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsService) Delete(name string) *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38347,7 +38357,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38448,14 +38458,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall struct {
 // Get: Retrieves the specified context.
 //
 // - name: The name of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsService) Get(name string) *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38499,7 +38509,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Header(
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38604,13 +38614,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall struct {
 // List: Returns the list of all contexts in the specified session.
 //
 // - parent: The session to list all contexts from. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsService) List(parent string) *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38668,7 +38679,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38806,18 +38817,18 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall struct {
 // Patch: Updates the specified context.
 //
 // - name: The unique identifier of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  The `Context ID` is always converted to lowercase, may only contain
-// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user. The following context names are reserved for internal use by
-// Dialogflow. You should not use these contexts or create contexts with
-// these names: * `__system_counters__` * `*_id_dialog_context` *
-// `*_dialog_params_size`
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, The `Context ID` is always converted to lowercase, may only
+//   contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//   long. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user. The following context names are reserved for
+//   internal use by Dialogflow. You should not use these contexts or
+//   create contexts with these names: * `__system_counters__` *
+//   `*_id_dialog_context` * `*_dialog_params_size`.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsService) Patch(nameid string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -38859,7 +38870,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Heade
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38979,14 +38990,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall struct
 // Assistant integration.
 //
 // - parent: The session to create a session entity type for. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesService) Create(parent string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39021,7 +39032,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39134,14 +39145,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall struct
 // integration.
 //
 // - name: The name of the entity type to delete. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesService) Delete(name string) *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39175,7 +39186,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39278,14 +39289,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The name of the session entity type. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesService) Get(name string) *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39329,7 +39340,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39438,14 +39449,14 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall struct {
 // Google Assistant integration.
 //
 // - parent: The session to list all session entity types from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesService) List(parent string) *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39503,7 +39514,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Hea
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39644,16 +39655,16 @@ type ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall struct 
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The unique identifier of this session entity type. Supported
-// formats: - `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user. `` must be the display name of an
-// existing entity type in the same agent that will be overridden or
-// supplemented.
+//   formats: - `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user. `` must be the display
+//   name of an existing entity type in the same agent that will be
+//   overridden or supplemented.
 func (r *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesService) Patch(nameid string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall {
 	c := &ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -39695,7 +39706,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) He
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39812,7 +39823,8 @@ type ProjectsLocationsAgentIntentsBatchDeleteCall struct {
 // BatchDelete: Deletes intents in the specified agent. Operation
 //
 // - parent: The name of the agent to delete all entities types for.
-// Supported formats: - `projects//agent` - `projects//locations//agent`
+//   Supported formats: - `projects//agent` -
+//   `projects//locations//agent`.
 func (r *ProjectsLocationsAgentIntentsService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteintentsrequest *GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest) *ProjectsLocationsAgentIntentsBatchDeleteCall {
 	c := &ProjectsLocationsAgentIntentsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39847,7 +39859,7 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39957,7 +39969,8 @@ type ProjectsLocationsAgentIntentsBatchUpdateCall struct {
 // Operation
 //
 // - parent: The name of the agent to update or create intents in.
-// Supported formats: - `projects//agent` - `projects//locations//agent`
+//   Supported formats: - `projects//agent` -
+//   `projects//locations//agent`.
 func (r *ProjectsLocationsAgentIntentsService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateintentsrequest *GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest) *ProjectsLocationsAgentIntentsBatchUpdateCall {
 	c := &ProjectsLocationsAgentIntentsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39992,7 +40005,7 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40101,7 +40114,7 @@ type ProjectsLocationsAgentIntentsCreateCall struct {
 // Create: Creates an intent in the specified agent.
 //
 // - parent: The agent to create a intent for. Supported formats: -
-// `projects//agent` - `projects//locations//agent`
+//   `projects//agent` - `projects//locations//agent`.
 func (r *ProjectsLocationsAgentIntentsService) Create(parent string, googleclouddialogflowv2beta1intent *GoogleCloudDialogflowV2beta1Intent) *ProjectsLocationsAgentIntentsCreateCall {
 	c := &ProjectsLocationsAgentIntentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -40158,7 +40171,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40286,8 +40299,9 @@ type ProjectsLocationsAgentIntentsDeleteCall struct {
 // followup intents.
 //
 // - name: The name of the intent to delete. If this intent has direct
-// or indirect followup intents, we also delete them. Supported formats:
-// - `projects//agent/intents/` - `projects//locations//agent/intents/`
+//   or indirect followup intents, we also delete them. Supported
+//   formats: - `projects//agent/intents/` -
+//   `projects//locations//agent/intents/`.
 func (r *ProjectsLocationsAgentIntentsService) Delete(name string) *ProjectsLocationsAgentIntentsDeleteCall {
 	c := &ProjectsLocationsAgentIntentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40321,7 +40335,7 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40422,7 +40436,7 @@ type ProjectsLocationsAgentIntentsGetCall struct {
 // Get: Retrieves the specified intent.
 //
 // - name: The name of the intent. Supported formats: -
-// `projects//agent/intents/` - `projects//locations//agent/intents/`
+//   `projects//agent/intents/` - `projects//locations//agent/intents/`.
 func (r *ProjectsLocationsAgentIntentsService) Get(name string) *ProjectsLocationsAgentIntentsGetCall {
 	c := &ProjectsLocationsAgentIntentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40488,7 +40502,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40611,7 +40625,7 @@ type ProjectsLocationsAgentIntentsListCall struct {
 // List: Returns the list of all intents in the specified agent.
 //
 // - parent: The agent to list all intents from. Format:
-// `projects//agent`.
+//   `projects//agent`.
 func (r *ProjectsLocationsAgentIntentsService) List(parent string) *ProjectsLocationsAgentIntentsListCall {
 	c := &ProjectsLocationsAgentIntentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -40691,7 +40705,7 @@ func (c *ProjectsLocationsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40847,9 +40861,9 @@ type ProjectsLocationsAgentIntentsPatchCall struct {
 // Patch: Updates the specified intent.
 //
 // - name: Optional. The unique identifier of this intent. Required for
-// Intents.UpdateIntent and Intents.BatchUpdateIntents methods.
-// Supported formats: - `projects//agent/intents/` -
-// `projects//locations//agent/intents/`
+//   Intents.UpdateIntent and Intents.BatchUpdateIntents methods.
+//   Supported formats: - `projects//agent/intents/` -
+//   `projects//locations//agent/intents/`.
 func (r *ProjectsLocationsAgentIntentsService) Patch(nameid string, googleclouddialogflowv2beta1intent *GoogleCloudDialogflowV2beta1Intent) *ProjectsLocationsAgentIntentsPatchCall {
 	c := &ProjectsLocationsAgentIntentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -40913,7 +40927,7 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41046,14 +41060,14 @@ type ProjectsLocationsAgentSessionsDeleteContextsCall struct {
 // DeleteContexts: Deletes all active contexts in the specified session.
 //
 // - parent: The name of the session to delete all contexts from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentSessionsService) DeleteContexts(parent string) *ProjectsLocationsAgentSessionsDeleteContextsCall {
 	c := &ProjectsLocationsAgentSessionsDeleteContextsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -41087,7 +41101,7 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41194,23 +41208,23 @@ type ProjectsLocationsAgentSessionsDetectIntentCall struct {
 // (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 //
 // - session: The name of the session this query is sent to. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment (`Environment ID` might be referred to as environment
-// name at some places). If `User ID` is not specified, we are using
-// "-". It's up to the API caller to choose an appropriate `Session ID`
-// and `User Id`. They can be a random number or some type of user and
-// session identifiers (preferably hashed). The length of the `Session
-// ID` and `User ID` must not exceed 36 characters. For more
-// information, see the API interactions guide
-// (https://cloud.google.com/dialogflow/docs/api-overview). Note: Always
-// use agent versions for production traffic. See Versions and
-// environments
-// (https://cloud.google.com/dialogflow/es/docs/agents-versions).
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment (`Environment ID` might be referred to as environment
+//   name at some places). If `User ID` is not specified, we are using
+//   "-". It's up to the API caller to choose an appropriate `Session
+//   ID` and `User Id`. They can be a random number or some type of user
+//   and session identifiers (preferably hashed). The length of the
+//   `Session ID` and `User ID` must not exceed 36 characters. For more
+//   information, see the API interactions guide
+//   (https://cloud.google.com/dialogflow/docs/api-overview). Note:
+//   Always use agent versions for production traffic. See Versions and
+//   environments
+//   (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 func (r *ProjectsLocationsAgentSessionsService) DetectIntent(sessionid string, googleclouddialogflowv2beta1detectintentrequest *GoogleCloudDialogflowV2beta1DetectIntentRequest) *ProjectsLocationsAgentSessionsDetectIntentCall {
 	c := &ProjectsLocationsAgentSessionsDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sessionid = sessionid
@@ -41245,7 +41259,7 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41357,13 +41371,14 @@ type ProjectsLocationsAgentSessionsContextsCreateCall struct {
 // overrides the context.
 //
 // - parent: The session to create a context for. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentSessionsContextsService) Create(parent string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsLocationsAgentSessionsContextsCreateCall {
 	c := &ProjectsLocationsAgentSessionsContextsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -41398,7 +41413,7 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41507,14 +41522,14 @@ type ProjectsLocationsAgentSessionsContextsDeleteCall struct {
 // Delete: Deletes the specified context.
 //
 // - name: The name of the context to delete. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsLocationsAgentSessionsContextsService) Delete(name string) *ProjectsLocationsAgentSessionsContextsDeleteCall {
 	c := &ProjectsLocationsAgentSessionsContextsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -41548,7 +41563,7 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41649,14 +41664,14 @@ type ProjectsLocationsAgentSessionsContextsGetCall struct {
 // Get: Retrieves the specified context.
 //
 // - name: The name of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  If `Location ID` is not specified we assume default 'us' location.
-// If `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, If `Location ID` is not specified we assume default 'us'
+//   location. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user.
 func (r *ProjectsLocationsAgentSessionsContextsService) Get(name string) *ProjectsLocationsAgentSessionsContextsGetCall {
 	c := &ProjectsLocationsAgentSessionsContextsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -41700,7 +41715,7 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41805,13 +41820,14 @@ type ProjectsLocationsAgentSessionsContextsListCall struct {
 // List: Returns the list of all contexts in the specified session.
 //
 // - parent: The session to list all contexts from. Supported formats: -
-// `projects//agent/sessions/, - `projects//locations//agent/sessions/`,
-// - `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentSessionsContextsService) List(parent string) *ProjectsLocationsAgentSessionsContextsListCall {
 	c := &ProjectsLocationsAgentSessionsContextsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -41869,7 +41885,7 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42007,18 +42023,18 @@ type ProjectsLocationsAgentSessionsContextsPatchCall struct {
 // Patch: Updates the specified context.
 //
 // - name: The unique identifier of the context. Supported formats: -
-// `projects//agent/sessions//contexts/`, -
-// `projects//locations//agent/sessions//contexts/`, -
-// `projects//agent/environments//users//sessions//contexts/`, -
-// `projects//locations//agent/environments//users//sessions//contexts/`,
-//  The `Context ID` is always converted to lowercase, may only contain
-// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user. The following context names are reserved for internal use by
-// Dialogflow. You should not use these contexts or create contexts with
-// these names: * `__system_counters__` * `*_id_dialog_context` *
-// `*_dialog_params_size`
+//   `projects//agent/sessions//contexts/`, -
+//   `projects//locations//agent/sessions//contexts/`, -
+//   `projects//agent/environments//users//sessions//contexts/`, -
+//   `projects//locations//agent/environments//users//sessions//contexts/
+//   `, The `Context ID` is always converted to lowercase, may only
+//   contain characters in a-zA-Z0-9_-% and may be at most 250 bytes
+//   long. If `Environment ID` is not specified, we assume default
+//   'draft' environment. If `User ID` is not specified, we assume
+//   default '-' user. The following context names are reserved for
+//   internal use by Dialogflow. You should not use these contexts or
+//   create contexts with these names: * `__system_counters__` *
+//   `*_id_dialog_context` * `*_dialog_params_size`.
 func (r *ProjectsLocationsAgentSessionsContextsService) Patch(nameid string, googleclouddialogflowv2beta1context *GoogleCloudDialogflowV2beta1Context) *ProjectsLocationsAgentSessionsContextsPatchCall {
 	c := &ProjectsLocationsAgentSessionsContextsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -42060,7 +42076,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42180,14 +42196,14 @@ type ProjectsLocationsAgentSessionsEntityTypesCreateCall struct {
 // Assistant integration.
 //
 // - parent: The session to create a session entity type for. Supported
-// formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentSessionsEntityTypesService) Create(parent string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsLocationsAgentSessionsEntityTypesCreateCall {
 	c := &ProjectsLocationsAgentSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -42222,7 +42238,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42335,14 +42351,14 @@ type ProjectsLocationsAgentSessionsEntityTypesDeleteCall struct {
 // integration.
 //
 // - name: The name of the entity type to delete. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsLocationsAgentSessionsEntityTypesService) Delete(name string) *ProjectsLocationsAgentSessionsEntityTypesDeleteCall {
 	c := &ProjectsLocationsAgentSessionsEntityTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -42376,7 +42392,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42479,14 +42495,14 @@ type ProjectsLocationsAgentSessionsEntityTypesGetCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The name of the session entity type. Supported formats: -
-// `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user.
+//   `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user.
 func (r *ProjectsLocationsAgentSessionsEntityTypesService) Get(name string) *ProjectsLocationsAgentSessionsEntityTypesGetCall {
 	c := &ProjectsLocationsAgentSessionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -42530,7 +42546,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42639,14 +42655,14 @@ type ProjectsLocationsAgentSessionsEntityTypesListCall struct {
 // Google Assistant integration.
 //
 // - parent: The session to list all session entity types from.
-// Supported formats: - `projects//agent/sessions/, -
-// `projects//locations//agent/sessions/`, -
-// `projects//agent/environments//users//sessions/`, -
-// `projects//locations//agent/environments//users//sessions/`, If
-// `Location ID` is not specified we assume default 'us' location. If
-// `Environment ID` is not specified, we assume default 'draft'
-// environment. If `User ID` is not specified, we assume default '-'
-// user.
+//   Supported formats: - `projects//agent/sessions/, -
+//   `projects//locations//agent/sessions/`, -
+//   `projects//agent/environments//users//sessions/`, -
+//   `projects//locations//agent/environments//users//sessions/`, If
+//   `Location ID` is not specified we assume default 'us' location. If
+//   `Environment ID` is not specified, we assume default 'draft'
+//   environment. If `User ID` is not specified, we assume default '-'
+//   user.
 func (r *ProjectsLocationsAgentSessionsEntityTypesService) List(parent string) *ProjectsLocationsAgentSessionsEntityTypesListCall {
 	c := &ProjectsLocationsAgentSessionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -42704,7 +42720,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Header() http.Header
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42845,16 +42861,16 @@ type ProjectsLocationsAgentSessionsEntityTypesPatchCall struct {
 // you need to use session entities with Google Assistant integration.
 //
 // - name: The unique identifier of this session entity type. Supported
-// formats: - `projects//agent/sessions//entityTypes/` -
-// `projects//locations//agent/sessions//entityTypes/` -
-// `projects//agent/environments//users//sessions//entityTypes/` -
-// `projects//locations//agent/environments/
-// /users//sessions//entityTypes/` If `Location ID` is not specified we
-// assume default 'us' location. If `Environment ID` is not specified,
-// we assume default 'draft' environment. If `User ID` is not specified,
-// we assume default '-' user. `` must be the display name of an
-// existing entity type in the same agent that will be overridden or
-// supplemented.
+//   formats: - `projects//agent/sessions//entityTypes/` -
+//   `projects//locations//agent/sessions//entityTypes/` -
+//   `projects//agent/environments//users//sessions//entityTypes/` -
+//   `projects//locations//agent/environments/
+//   /users//sessions//entityTypes/` If `Location ID` is not specified
+//   we assume default 'us' location. If `Environment ID` is not
+//   specified, we assume default 'draft' environment. If `User ID` is
+//   not specified, we assume default '-' user. `` must be the display
+//   name of an existing entity type in the same agent that will be
+//   overridden or supplemented.
 func (r *ProjectsLocationsAgentSessionsEntityTypesService) Patch(nameid string, googleclouddialogflowv2beta1sessionentitytype *GoogleCloudDialogflowV2beta1SessionEntityType) *ProjectsLocationsAgentSessionsEntityTypesPatchCall {
 	c := &ProjectsLocationsAgentSessionsEntityTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -42896,7 +42912,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43013,7 +43029,7 @@ type ProjectsLocationsAnswerRecordsGetCall struct {
 // Get: Deprecated. Retrieves a specific answer record.
 //
 // - name: The name of the answer record to retrieve. Format:
-// `projects//locations//answerRecords/`.
+//   `projects//locations//answerRecords/`.
 func (r *ProjectsLocationsAnswerRecordsService) Get(name string) *ProjectsLocationsAnswerRecordsGetCall {
 	c := &ProjectsLocationsAnswerRecordsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -43057,7 +43073,7 @@ func (c *ProjectsLocationsAnswerRecordsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAnswerRecordsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43164,7 +43180,7 @@ type ProjectsLocationsAnswerRecordsListCall struct {
 // in reverse chronological order.
 //
 // - parent: The project to list all answer records for in reverse
-// chronological order. Format: `projects//locations/`.
+//   chronological order. Format: `projects//locations/`.
 func (r *ProjectsLocationsAnswerRecordsService) List(parent string) *ProjectsLocationsAnswerRecordsListCall {
 	c := &ProjectsLocationsAnswerRecordsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -43224,7 +43240,7 @@ func (c *ProjectsLocationsAnswerRecordsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAnswerRecordsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43362,8 +43378,8 @@ type ProjectsLocationsAnswerRecordsPatchCall struct {
 // Patch: Updates the specified answer record.
 //
 // - name: The unique identifier of this answer record. Required for
-// AnswerRecords.UpdateAnswerRecord method. Format:
-// `projects//locations//answerRecords/`.
+//   AnswerRecords.UpdateAnswerRecord method. Format:
+//   `projects//locations//answerRecords/`.
 func (r *ProjectsLocationsAnswerRecordsService) Patch(nameid string, googleclouddialogflowv2beta1answerrecord *GoogleCloudDialogflowV2beta1AnswerRecord) *ProjectsLocationsAnswerRecordsPatchCall {
 	c := &ProjectsLocationsAnswerRecordsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -43405,7 +43421,7 @@ func (c *ProjectsLocationsAnswerRecordsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAnswerRecordsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43525,7 +43541,7 @@ type ProjectsLocationsConversationProfilesCreateCall struct {
 // GetConversationProfile API.
 //
 // - parent: The project to create a conversation profile for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsLocationsConversationProfilesService) Create(parent string, googleclouddialogflowv2beta1conversationprofile *GoogleCloudDialogflowV2beta1ConversationProfile) *ProjectsLocationsConversationProfilesCreateCall {
 	c := &ProjectsLocationsConversationProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -43560,7 +43576,7 @@ func (c *ProjectsLocationsConversationProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43670,7 +43686,7 @@ type ProjectsLocationsConversationProfilesDeleteCall struct {
 // Delete: Deletes the specified conversation profile.
 //
 // - name: The name of the conversation profile to delete. Format:
-// `projects//locations//conversationProfiles/`.
+//   `projects//locations//conversationProfiles/`.
 func (r *ProjectsLocationsConversationProfilesService) Delete(name string) *ProjectsLocationsConversationProfilesDeleteCall {
 	c := &ProjectsLocationsConversationProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -43704,7 +43720,7 @@ func (c *ProjectsLocationsConversationProfilesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43805,7 +43821,7 @@ type ProjectsLocationsConversationProfilesGetCall struct {
 // Get: Retrieves the specified conversation profile.
 //
 // - name: The resource name of the conversation profile. Format:
-// `projects//locations//conversationProfiles/`.
+//   `projects//locations//conversationProfiles/`.
 func (r *ProjectsLocationsConversationProfilesService) Get(name string) *ProjectsLocationsConversationProfilesGetCall {
 	c := &ProjectsLocationsConversationProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -43849,7 +43865,7 @@ func (c *ProjectsLocationsConversationProfilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43956,7 +43972,7 @@ type ProjectsLocationsConversationProfilesListCall struct {
 // project.
 //
 // - parent: The project to list all conversation profiles from. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsLocationsConversationProfilesService) List(parent string) *ProjectsLocationsConversationProfilesListCall {
 	c := &ProjectsLocationsConversationProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -44014,7 +44030,7 @@ func (c *ProjectsLocationsConversationProfilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44156,7 +44172,7 @@ type ProjectsLocationsConversationProfilesPatchCall struct {
 // GetConversationProfile API.
 //
 // - name: The unique identifier of this conversation profile. Format:
-// `projects//locations//conversationProfiles/`.
+//   `projects//locations//conversationProfiles/`.
 func (r *ProjectsLocationsConversationProfilesService) Patch(nameid string, googleclouddialogflowv2beta1conversationprofile *GoogleCloudDialogflowV2beta1ConversationProfile) *ProjectsLocationsConversationProfilesPatchCall {
 	c := &ProjectsLocationsConversationProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -44198,7 +44214,7 @@ func (c *ProjectsLocationsConversationProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44316,7 +44332,7 @@ type ProjectsLocationsConversationsCompleteCall struct {
 // conversations are purged from the database after 30 days.
 //
 // - name: Resource identifier of the conversation to close. Format:
-// `projects//locations//conversations/`.
+//   `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsService) Complete(nameid string, googleclouddialogflowv2beta1completeconversationrequest *GoogleCloudDialogflowV2beta1CompleteConversationRequest) *ProjectsLocationsConversationsCompleteCall {
 	c := &ProjectsLocationsConversationsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -44351,7 +44367,7 @@ func (c *ProjectsLocationsConversationsCompleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44473,7 +44489,7 @@ type ProjectsLocationsConversationsCreateCall struct {
 // Assist Stage.
 //
 // - parent: Resource identifier of the project creating the
-// conversation. Format: `projects//locations/`.
+//   conversation. Format: `projects//locations/`.
 func (r *ProjectsLocationsConversationsService) Create(parentid string, googleclouddialogflowv2beta1conversation *GoogleCloudDialogflowV2beta1Conversation) *ProjectsLocationsConversationsCreateCall {
 	c := &ProjectsLocationsConversationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -44522,7 +44538,7 @@ func (c *ProjectsLocationsConversationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44638,7 +44654,7 @@ type ProjectsLocationsConversationsGetCall struct {
 // Get: Retrieves the specific conversation.
 //
 // - name: The name of the conversation. Format:
-// `projects//locations//conversations/`.
+//   `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsService) Get(name string) *ProjectsLocationsConversationsGetCall {
 	c := &ProjectsLocationsConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -44682,7 +44698,7 @@ func (c *ProjectsLocationsConversationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44788,7 +44804,7 @@ type ProjectsLocationsConversationsListCall struct {
 // List: Returns the list of all conversations in the specified project.
 //
 // - parent: The project from which to list all conversation. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsLocationsConversationsService) List(parent string) *ProjectsLocationsConversationsListCall {
 	c := &ProjectsLocationsConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -44863,7 +44879,7 @@ func (c *ProjectsLocationsConversationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45007,7 +45023,7 @@ type ProjectsLocationsConversationsMessagesBatchCreateCall struct {
 // use this RPC to ingest historical messages to conversation.
 //
 // - parent: Resource identifier of the conversation to create message.
-// Format: `projects//locations//conversations/`.
+//   Format: `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsMessagesService) BatchCreate(parentid string, googleclouddialogflowv2beta1batchcreatemessagesrequest *GoogleCloudDialogflowV2beta1BatchCreateMessagesRequest) *ProjectsLocationsConversationsMessagesBatchCreateCall {
 	c := &ProjectsLocationsConversationsMessagesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -45042,7 +45058,7 @@ func (c *ProjectsLocationsConversationsMessagesBatchCreateCall) Header() http.He
 
 func (c *ProjectsLocationsConversationsMessagesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45158,7 +45174,7 @@ type ProjectsLocationsConversationsMessagesListCall struct {
 // previous request]` and empty page_token.
 //
 // - parent: The name of the conversation to list messages for. Format:
-// `projects//locations//conversations/`
+//   `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsMessagesService) List(parent string) *ProjectsLocationsConversationsMessagesListCall {
 	c := &ProjectsLocationsConversationsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -45228,7 +45244,7 @@ func (c *ProjectsLocationsConversationsMessagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConversationsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45375,7 +45391,7 @@ type ProjectsLocationsConversationsParticipantsAnalyzeContentCall struct {
 // (https://cloud.google.com/dialogflow/es/docs/agents-versions).
 //
 // - participant: The name of the participant this text comes from.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsLocationsConversationsParticipantsService) AnalyzeContent(participant string, googleclouddialogflowv2beta1analyzecontentrequest *GoogleCloudDialogflowV2beta1AnalyzeContentRequest) *ProjectsLocationsConversationsParticipantsAnalyzeContentCall {
 	c := &ProjectsLocationsConversationsParticipantsAnalyzeContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.participant = participant
@@ -45410,7 +45426,7 @@ func (c *ProjectsLocationsConversationsParticipantsAnalyzeContentCall) Header() 
 
 func (c *ProjectsLocationsConversationsParticipantsAnalyzeContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45521,7 +45537,7 @@ type ProjectsLocationsConversationsParticipantsCreateCall struct {
 // Create: Creates a new participant in a conversation.
 //
 // - parent: Resource identifier of the conversation adding the
-// participant. Format: `projects//locations//conversations/`.
+//   participant. Format: `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsParticipantsService) Create(parentid string, googleclouddialogflowv2beta1participant *GoogleCloudDialogflowV2beta1Participant) *ProjectsLocationsConversationsParticipantsCreateCall {
 	c := &ProjectsLocationsConversationsParticipantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -45556,7 +45572,7 @@ func (c *ProjectsLocationsConversationsParticipantsCreateCall) Header() http.Hea
 
 func (c *ProjectsLocationsConversationsParticipantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45666,7 +45682,7 @@ type ProjectsLocationsConversationsParticipantsGetCall struct {
 // Get: Retrieves a conversation participant.
 //
 // - name: The name of the participant. Format:
-// `projects//locations//conversations//participants/`.
+//   `projects//locations//conversations//participants/`.
 func (r *ProjectsLocationsConversationsParticipantsService) Get(name string) *ProjectsLocationsConversationsParticipantsGetCall {
 	c := &ProjectsLocationsConversationsParticipantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -45710,7 +45726,7 @@ func (c *ProjectsLocationsConversationsParticipantsGetCall) Header() http.Header
 
 func (c *ProjectsLocationsConversationsParticipantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45816,7 +45832,7 @@ type ProjectsLocationsConversationsParticipantsListCall struct {
 // conversation.
 //
 // - parent: The conversation to list all participants from. Format:
-// `projects//locations//conversations/`.
+//   `projects//locations//conversations/`.
 func (r *ProjectsLocationsConversationsParticipantsService) List(parent string) *ProjectsLocationsConversationsParticipantsListCall {
 	c := &ProjectsLocationsConversationsParticipantsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -45874,7 +45890,7 @@ func (c *ProjectsLocationsConversationsParticipantsListCall) Header() http.Heade
 
 func (c *ProjectsLocationsConversationsParticipantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46012,7 +46028,7 @@ type ProjectsLocationsConversationsParticipantsPatchCall struct {
 // Patch: Updates the specified participant.
 //
 // - name: Optional. The unique identifier of this participant. Format:
-// `projects//locations//conversations//participants/`.
+//   `projects//locations//conversations//participants/`.
 func (r *ProjectsLocationsConversationsParticipantsService) Patch(nameid string, googleclouddialogflowv2beta1participant *GoogleCloudDialogflowV2beta1Participant) *ProjectsLocationsConversationsParticipantsPatchCall {
 	c := &ProjectsLocationsConversationsParticipantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -46054,7 +46070,7 @@ func (c *ProjectsLocationsConversationsParticipantsPatchCall) Header() http.Head
 
 func (c *ProjectsLocationsConversationsParticipantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46174,7 +46190,7 @@ type ProjectsLocationsConversationsParticipantsSuggestionsSuggestArticlesCall st
 // the real time.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsLocationsConversationsParticipantsSuggestionsService) SuggestArticles(parent string, googleclouddialogflowv2beta1suggestarticlesrequest *GoogleCloudDialogflowV2beta1SuggestArticlesRequest) *ProjectsLocationsConversationsParticipantsSuggestionsSuggestArticlesCall {
 	c := &ProjectsLocationsConversationsParticipantsSuggestionsSuggestArticlesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -46209,7 +46225,7 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestArticlesCal
 
 func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestArticlesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46321,7 +46337,7 @@ type ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersCall 
 // on specific historical messages.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsLocationsConversationsParticipantsSuggestionsService) SuggestFaqAnswers(parent string, googleclouddialogflowv2beta1suggestfaqanswersrequest *GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest) *ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersCall {
 	c := &ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -46356,7 +46372,7 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersC
 
 func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestFaqAnswersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46468,7 +46484,7 @@ type ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartRepliesCal
 // specific historical messages.
 //
 // - parent: The name of the participant to fetch suggestion for.
-// Format: `projects//locations//conversations//participants/`.
+//   Format: `projects//locations//conversations//participants/`.
 func (r *ProjectsLocationsConversationsParticipantsSuggestionsService) SuggestSmartReplies(parent string, googleclouddialogflowv2beta1suggestsmartrepliesrequest *GoogleCloudDialogflowV2beta1SuggestSmartRepliesRequest) *ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartRepliesCall {
 	c := &ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartRepliesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -46503,7 +46519,7 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartReplie
 
 func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartRepliesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46617,7 +46633,7 @@ type ProjectsLocationsKnowledgeBasesCreateCall struct {
 // `projects.knowledgeBases`.
 //
 // - parent: The project to create a knowledge base for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsLocationsKnowledgeBasesService) Create(parent string, googleclouddialogflowv2beta1knowledgebase *GoogleCloudDialogflowV2beta1KnowledgeBase) *ProjectsLocationsKnowledgeBasesCreateCall {
 	c := &ProjectsLocationsKnowledgeBasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -46652,7 +46668,7 @@ func (c *ProjectsLocationsKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46764,7 +46780,7 @@ type ProjectsLocationsKnowledgeBasesDeleteCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The name of the knowledge base to delete. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsLocationsKnowledgeBasesService) Delete(name string) *ProjectsLocationsKnowledgeBasesDeleteCall {
 	c := &ProjectsLocationsKnowledgeBasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -46806,7 +46822,7 @@ func (c *ProjectsLocationsKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46914,7 +46930,7 @@ type ProjectsLocationsKnowledgeBasesGetCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The name of the knowledge base to retrieve. Format
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsLocationsKnowledgeBasesService) Get(name string) *ProjectsLocationsKnowledgeBasesGetCall {
 	c := &ProjectsLocationsKnowledgeBasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -46958,7 +46974,7 @@ func (c *ProjectsLocationsKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47066,7 +47082,7 @@ type ProjectsLocationsKnowledgeBasesListCall struct {
 // only use `projects.knowledgeBases`.
 //
 // - parent: The project to list of knowledge bases for. Format:
-// `projects//locations/`.
+//   `projects//locations/`.
 func (r *ProjectsLocationsKnowledgeBasesService) List(parent string) *ProjectsLocationsKnowledgeBasesListCall {
 	c := &ProjectsLocationsKnowledgeBasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -47143,7 +47159,7 @@ func (c *ProjectsLocationsKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47289,8 +47305,8 @@ type ProjectsLocationsKnowledgeBasesPatchCall struct {
 // `projects.knowledgeBases`.
 //
 // - name: The knowledge base resource name. The name must be empty when
-// creating a knowledge base. Format:
-// `projects//locations//knowledgeBases/`.
+//   creating a knowledge base. Format:
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsLocationsKnowledgeBasesService) Patch(name string, googleclouddialogflowv2beta1knowledgebase *GoogleCloudDialogflowV2beta1KnowledgeBase) *ProjectsLocationsKnowledgeBasesPatchCall {
 	c := &ProjectsLocationsKnowledgeBasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -47334,7 +47350,7 @@ func (c *ProjectsLocationsKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47453,7 +47469,7 @@ type ProjectsLocationsKnowledgeBasesDocumentsCreateCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - parent: The knowledge base to create a document for. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) Create(parent string, googleclouddialogflowv2beta1document *GoogleCloudDialogflowV2beta1Document) *ProjectsLocationsKnowledgeBasesDocumentsCreateCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -47497,7 +47513,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47612,7 +47628,7 @@ type ProjectsLocationsKnowledgeBasesDocumentsDeleteCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to delete. Format:
-// `projects//locations//knowledgeBases//documents/`.
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) Delete(name string) *ProjectsLocationsKnowledgeBasesDocumentsDeleteCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -47646,7 +47662,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47749,7 +47765,7 @@ type ProjectsLocationsKnowledgeBasesDocumentsGetCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to retrieve. Format
-// `projects//locations//knowledgeBases//documents/`.
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) Get(name string) *ProjectsLocationsKnowledgeBasesDocumentsGetCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -47793,7 +47809,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47898,7 +47914,7 @@ type ProjectsLocationsKnowledgeBasesDocumentsImportCall struct {
 // Import: Create documents by importing data from external sources.
 //
 // - parent: The knowledge base to import documents into. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) Import(parent string, googleclouddialogflowv2beta1importdocumentsrequest *GoogleCloudDialogflowV2beta1ImportDocumentsRequest) *ProjectsLocationsKnowledgeBasesDocumentsImportCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -47933,7 +47949,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsImportCall) Header() http.Heade
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48044,7 +48060,7 @@ type ProjectsLocationsKnowledgeBasesDocumentsListCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - parent: The knowledge base to list all documents for. Format:
-// `projects//locations//knowledgeBases/`.
+//   `projects//locations//knowledgeBases/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) List(parent string) *ProjectsLocationsKnowledgeBasesDocumentsListCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -48118,7 +48134,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48263,8 +48279,8 @@ type ProjectsLocationsKnowledgeBasesDocumentsPatchCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: Optional. The document resource name. The name must be empty
-// when creating a document. Format:
-// `projects//locations//knowledgeBases//documents/`.
+//   when creating a document. Format:
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) Patch(name string, googleclouddialogflowv2beta1document *GoogleCloudDialogflowV2beta1Document) *ProjectsLocationsKnowledgeBasesDocumentsPatchCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48308,7 +48324,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48432,7 +48448,7 @@ type ProjectsLocationsKnowledgeBasesDocumentsReloadCall struct {
 // only use `projects.knowledgeBases.documents`.
 //
 // - name: The name of the document to reload. Format:
-// `projects//locations//knowledgeBases//documents/`
+//   `projects//locations//knowledgeBases//documents/`.
 func (r *ProjectsLocationsKnowledgeBasesDocumentsService) Reload(name string, googleclouddialogflowv2beta1reloaddocumentrequest *GoogleCloudDialogflowV2beta1ReloadDocumentRequest) *ProjectsLocationsKnowledgeBasesDocumentsReloadCall {
 	c := &ProjectsLocationsKnowledgeBasesDocumentsReloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48467,7 +48483,7 @@ func (c *ProjectsLocationsKnowledgeBasesDocumentsReloadCall) Header() http.Heade
 
 func (c *ProjectsLocationsKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48617,7 +48633,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48763,7 +48779,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48940,7 +48956,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49123,7 +49139,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49269,7 +49285,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49446,7 +49462,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

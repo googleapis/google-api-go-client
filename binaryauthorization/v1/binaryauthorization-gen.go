@@ -1221,7 +1221,7 @@ type ProjectsGetPolicyCall struct {
 // project. Returns a default policy if the project does not have one.
 //
 // - name: The resource name of the policy to retrieve, in the format
-// `projects/*/policy`.
+//   `projects/*/policy`.
 func (r *ProjectsService) GetPolicy(name string) *ProjectsGetPolicyCall {
 	c := &ProjectsGetPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1265,7 +1265,7 @@ func (c *ProjectsGetPolicyCall) Header() http.Header {
 
 func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1372,7 +1372,7 @@ type ProjectsUpdatePolicyCall struct {
 // exist, INVALID_ARGUMENT if the request is malformed.
 //
 // - name: Output only. The resource name, in the format
-// `projects/*/policy`. There is at most one policy per project.
+//   `projects/*/policy`. There is at most one policy per project.
 func (r *ProjectsService) UpdatePolicy(name string, policy *Policy) *ProjectsUpdatePolicyCall {
 	c := &ProjectsUpdatePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1407,7 +1407,7 @@ func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 
 func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1559,7 +1559,7 @@ func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1672,7 +1672,7 @@ type ProjectsAttestorsDeleteCall struct {
 // not exist.
 //
 // - name: The name of the attestors to delete, in the format
-// `projects/*/attestors/*`.
+//   `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) Delete(name string) *ProjectsAttestorsDeleteCall {
 	c := &ProjectsAttestorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1706,7 +1706,7 @@ func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1807,7 +1807,7 @@ type ProjectsAttestorsGetCall struct {
 // exist.
 //
 // - name: The name of the attestor to retrieve, in the format
-// `projects/*/attestors/*`.
+//   `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) Get(name string) *ProjectsAttestorsGetCall {
 	c := &ProjectsAttestorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1851,7 +1851,7 @@ func (c *ProjectsAttestorsGetCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1956,8 +1956,8 @@ type ProjectsAttestorsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsAttestorsService) GetIamPolicy(resource string) *ProjectsAttestorsGetIamPolicyCall {
 	c := &ProjectsAttestorsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2015,7 +2015,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2125,7 +2125,7 @@ type ProjectsAttestorsListCall struct {
 // not exist.
 //
 // - parent: The resource name of the project associated with the
-// attestors, in the format `projects/*`.
+//   attestors, in the format `projects/*`.
 func (r *ProjectsAttestorsService) List(parent string) *ProjectsAttestorsListCall {
 	c := &ProjectsAttestorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2186,7 +2186,7 @@ func (c *ProjectsAttestorsListCall) Header() http.Header {
 
 func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2323,8 +2323,8 @@ type ProjectsAttestorsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsAttestorsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsAttestorsSetIamPolicyCall {
 	c := &ProjectsAttestorsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2359,7 +2359,7 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2472,8 +2472,8 @@ type ProjectsAttestorsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsAttestorsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsAttestorsTestIamPermissionsCall {
 	c := &ProjectsAttestorsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2508,7 +2508,7 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2617,7 +2617,7 @@ type ProjectsAttestorsUpdateCall struct {
 // not exist.
 //
 // - name: The resource name, in the format: `projects/*/attestors/*`.
-// This field may not be updated.
+//   This field may not be updated.
 func (r *ProjectsAttestorsService) Update(name string, attestor *Attestor) *ProjectsAttestorsUpdateCall {
 	c := &ProjectsAttestorsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2652,7 +2652,7 @@ func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2761,7 +2761,7 @@ type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
 // for the given image URI was signed by the given Attestor
 //
 // - attestor: The resource name of the Attestor of the occurrence, in
-// the format `projects/*/attestors/*`.
+//   the format `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) ValidateAttestationOccurrence(attestor string, validateattestationoccurrencerequest *ValidateAttestationOccurrenceRequest) *ProjectsAttestorsValidateAttestationOccurrenceCall {
 	c := &ProjectsAttestorsValidateAttestationOccurrenceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attestor = attestor
@@ -2796,7 +2796,7 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Header() http.Heade
 
 func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2907,8 +2907,8 @@ type ProjectsPolicyGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsPolicyService) GetIamPolicy(resource string) *ProjectsPolicyGetIamPolicyCall {
 	c := &ProjectsPolicyGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2966,7 +2966,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3077,8 +3077,8 @@ type ProjectsPolicySetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsPolicyService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsPolicySetIamPolicyCall {
 	c := &ProjectsPolicySetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3113,7 +3113,7 @@ func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3226,8 +3226,8 @@ type ProjectsPolicyTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsPolicyService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsPolicyTestIamPermissionsCall {
 	c := &ProjectsPolicyTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3262,7 +3262,7 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3370,7 +3370,7 @@ type SystempolicyGetPolicyCall struct {
 // GetPolicy: Gets the current system policy in the specified location.
 //
 // - name: The resource name, in the format `locations/*/policy`. Note
-// that the system policy is not associated with a project.
+//   that the system policy is not associated with a project.
 func (r *SystempolicyService) GetPolicy(name string) *SystempolicyGetPolicyCall {
 	c := &SystempolicyGetPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3414,7 +3414,7 @@ func (c *SystempolicyGetPolicyCall) Header() http.Header {
 
 func (c *SystempolicyGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

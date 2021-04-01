@@ -2264,7 +2264,7 @@ type UsersGetProfileCall struct {
 // GetProfile: Gets the current user's Gmail profile.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersService) GetProfile(userId string) *UsersGetProfileCall {
 	c := &UsersGetProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2308,7 +2308,7 @@ func (c *UsersGetProfileCall) Header() http.Header {
 
 func (c *UsersGetProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2414,7 +2414,7 @@ type UsersStopCall struct {
 // Stop: Stop receiving push notifications for the given user mailbox.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersService) Stop(userId string) *UsersStopCall {
 	c := &UsersStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2448,7 +2448,7 @@ func (c *UsersStopCall) Header() http.Header {
 
 func (c *UsersStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2524,7 +2524,7 @@ type UsersWatchCall struct {
 // mailbox.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWatchCall {
 	c := &UsersWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2559,7 +2559,7 @@ func (c *UsersWatchCall) Header() http.Header {
 
 func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2671,7 +2671,7 @@ type UsersDraftsCreateCall struct {
 // Create: Creates a new draft with the `DRAFT` label.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Create(userId string, draft *Draft) *UsersDraftsCreateCall {
 	c := &UsersDraftsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2745,7 +2745,7 @@ func (c *UsersDraftsCreateCall) Header() http.Header {
 
 func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2903,7 +2903,7 @@ type UsersDraftsDeleteCall struct {
 //
 // - id: The ID of the draft to delete.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Delete(userId string, id string) *UsersDraftsDeleteCall {
 	c := &UsersDraftsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2938,7 +2938,7 @@ func (c *UsersDraftsDeleteCall) Header() http.Header {
 
 func (c *UsersDraftsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3023,7 +3023,7 @@ type UsersDraftsGetCall struct {
 //
 // - id: The ID of the draft to retrieve.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Get(userId string, id string) *UsersDraftsGetCall {
 	c := &UsersDraftsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3089,7 +3089,7 @@ func (c *UsersDraftsGetCall) Header() http.Header {
 
 func (c *UsersDraftsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3221,7 +3221,7 @@ type UsersDraftsListCall struct {
 // List: Lists the drafts in the user's mailbox.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
 	c := &UsersDraftsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3295,7 +3295,7 @@ func (c *UsersDraftsListCall) Header() http.Header {
 
 func (c *UsersDraftsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3447,7 +3447,7 @@ type UsersDraftsSendCall struct {
 // `To`, `Cc`, and `Bcc` headers.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Send(userId string, draft *Draft) *UsersDraftsSendCall {
 	c := &UsersDraftsSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3521,7 +3521,7 @@ func (c *UsersDraftsSendCall) Header() http.Header {
 
 func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3680,7 +3680,7 @@ type UsersDraftsUpdateCall struct {
 //
 // - id: The ID of the draft to update.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Update(userId string, id string, draft *Draft) *UsersDraftsUpdateCall {
 	c := &UsersDraftsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3755,7 +3755,7 @@ func (c *UsersDraftsUpdateCall) Header() http.Header {
 
 func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3920,7 +3920,7 @@ type UsersHistoryListCall struct {
 // results are returned in chronological order (increasing `historyId`).
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersHistoryService) List(userId string) *UsersHistoryListCall {
 	c := &UsersHistoryListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4016,7 +4016,7 @@ func (c *UsersHistoryListCall) Header() http.Header {
 
 func (c *UsersHistoryListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4184,7 +4184,7 @@ type UsersLabelsCreateCall struct {
 // Create: Creates a new label.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Create(userId string, label *Label) *UsersLabelsCreateCall {
 	c := &UsersLabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4219,7 +4219,7 @@ func (c *UsersLabelsCreateCall) Header() http.Header {
 
 func (c *UsersLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4331,7 +4331,7 @@ type UsersLabelsDeleteCall struct {
 //
 // - id: The ID of the label to delete.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Delete(userId string, id string) *UsersLabelsDeleteCall {
 	c := &UsersLabelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4366,7 +4366,7 @@ func (c *UsersLabelsDeleteCall) Header() http.Header {
 
 func (c *UsersLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4450,7 +4450,7 @@ type UsersLabelsGetCall struct {
 //
 // - id: The ID of the label to retrieve.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Get(userId string, id string) *UsersLabelsGetCall {
 	c := &UsersLabelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4495,7 +4495,7 @@ func (c *UsersLabelsGetCall) Header() http.Header {
 
 func (c *UsersLabelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4610,7 +4610,7 @@ type UsersLabelsListCall struct {
 // List: Lists all labels in the user's mailbox.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) List(userId string) *UsersLabelsListCall {
 	c := &UsersLabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4654,7 +4654,7 @@ func (c *UsersLabelsListCall) Header() http.Header {
 
 func (c *UsersLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4763,7 +4763,7 @@ type UsersLabelsPatchCall struct {
 //
 // - id: The ID of the label to update.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Patch(userId string, id string, label *Label) *UsersLabelsPatchCall {
 	c := &UsersLabelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4799,7 +4799,7 @@ func (c *UsersLabelsPatchCall) Header() http.Header {
 
 func (c *UsersLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4919,7 +4919,7 @@ type UsersLabelsUpdateCall struct {
 //
 // - id: The ID of the label to update.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Update(userId string, id string, label *Label) *UsersLabelsUpdateCall {
 	c := &UsersLabelsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4955,7 +4955,7 @@ func (c *UsersLabelsUpdateCall) Header() http.Header {
 
 func (c *UsersLabelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5075,7 +5075,7 @@ type UsersMessagesBatchDeleteCall struct {
 // all.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) BatchDelete(userId string, batchdeletemessagesrequest *BatchDeleteMessagesRequest) *UsersMessagesBatchDeleteCall {
 	c := &UsersMessagesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5110,7 +5110,7 @@ func (c *UsersMessagesBatchDeleteCall) Header() http.Header {
 
 func (c *UsersMessagesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5190,7 +5190,7 @@ type UsersMessagesBatchModifyCall struct {
 // BatchModify: Modifies the labels on the specified messages.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) BatchModify(userId string, batchmodifymessagesrequest *BatchModifyMessagesRequest) *UsersMessagesBatchModifyCall {
 	c := &UsersMessagesBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5225,7 +5225,7 @@ func (c *UsersMessagesBatchModifyCall) Header() http.Header {
 
 func (c *UsersMessagesBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5308,7 +5308,7 @@ type UsersMessagesDeleteCall struct {
 //
 // - id: The ID of the message to delete.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Delete(userId string, id string) *UsersMessagesDeleteCall {
 	c := &UsersMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5343,7 +5343,7 @@ func (c *UsersMessagesDeleteCall) Header() http.Header {
 
 func (c *UsersMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5424,11 +5424,11 @@ type UsersMessagesGetCall struct {
 // Get: Gets the specified message.
 //
 // - id: The ID of the message to retrieve. This ID is usually retrieved
-// using `messages.list`. The ID is also contained in the result when a
-// message is inserted (`messages.insert`) or imported
-// (`messages.import`).
+//   using `messages.list`. The ID is also contained in the result when
+//   a message is inserted (`messages.insert`) or imported
+//   (`messages.import`).
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Get(userId string, id string) *UsersMessagesGetCall {
 	c := &UsersMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5501,7 +5501,7 @@ func (c *UsersMessagesGetCall) Header() http.Header {
 
 func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5646,7 +5646,7 @@ type UsersMessagesImportCall struct {
 // doesn't trigger forwarding rules or filters set up by the user.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMessagesImportCall {
 	c := &UsersMessagesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5757,7 +5757,7 @@ func (c *UsersMessagesImportCall) Header() http.Header {
 
 func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5947,7 +5947,7 @@ type UsersMessagesInsertCall struct {
 // Does not send a message.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMessagesInsertCall {
 	c := &UsersMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6042,7 +6042,7 @@ func (c *UsersMessagesInsertCall) Header() http.Header {
 
 func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6217,7 +6217,7 @@ type UsersMessagesListCall struct {
 // List: Lists the messages in the user's mailbox.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) List(userId string) *UsersMessagesListCall {
 	c := &UsersMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6299,7 +6299,7 @@ func (c *UsersMessagesListCall) Header() http.Header {
 
 func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6457,7 +6457,7 @@ type UsersMessagesModifyCall struct {
 //
 // - id: The ID of the message to modify.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Modify(userId string, id string, modifymessagerequest *ModifyMessageRequest) *UsersMessagesModifyCall {
 	c := &UsersMessagesModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6493,7 +6493,7 @@ func (c *UsersMessagesModifyCall) Header() http.Header {
 
 func (c *UsersMessagesModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6612,7 +6612,7 @@ type UsersMessagesSendCall struct {
 // `Cc`, and `Bcc` headers.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Send(userId string, message *Message) *UsersMessagesSendCall {
 	c := &UsersMessagesSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6686,7 +6686,7 @@ func (c *UsersMessagesSendCall) Header() http.Header {
 
 func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6844,7 +6844,7 @@ type UsersMessagesTrashCall struct {
 //
 // - id: The ID of the message to Trash.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Trash(userId string, id string) *UsersMessagesTrashCall {
 	c := &UsersMessagesTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6879,7 +6879,7 @@ func (c *UsersMessagesTrashCall) Header() http.Header {
 
 func (c *UsersMessagesTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6989,7 +6989,7 @@ type UsersMessagesUntrashCall struct {
 //
 // - id: The ID of the message to remove from Trash.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Untrash(userId string, id string) *UsersMessagesUntrashCall {
 	c := &UsersMessagesUntrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7024,7 +7024,7 @@ func (c *UsersMessagesUntrashCall) Header() http.Header {
 
 func (c *UsersMessagesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7137,7 +7137,7 @@ type UsersMessagesAttachmentsGetCall struct {
 // - id: The ID of the attachment.
 // - messageId: The ID of the message containing the attachment.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersMessagesAttachmentsService) Get(userId string, messageId string, id string) *UsersMessagesAttachmentsGetCall {
 	c := &UsersMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7183,7 +7183,7 @@ func (c *UsersMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7307,7 +7307,7 @@ type UsersSettingsGetAutoForwardingCall struct {
 // account.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetAutoForwarding(userId string) *UsersSettingsGetAutoForwardingCall {
 	c := &UsersSettingsGetAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7351,7 +7351,7 @@ func (c *UsersSettingsGetAutoForwardingCall) Header() http.Header {
 
 func (c *UsersSettingsGetAutoForwardingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7457,7 +7457,7 @@ type UsersSettingsGetImapCall struct {
 // GetImap: Gets IMAP settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetImap(userId string) *UsersSettingsGetImapCall {
 	c := &UsersSettingsGetImapCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7501,7 +7501,7 @@ func (c *UsersSettingsGetImapCall) Header() http.Header {
 
 func (c *UsersSettingsGetImapCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7607,7 +7607,7 @@ type UsersSettingsGetLanguageCall struct {
 // GetLanguage: Gets language settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetLanguage(userId string) *UsersSettingsGetLanguageCall {
 	c := &UsersSettingsGetLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7651,7 +7651,7 @@ func (c *UsersSettingsGetLanguageCall) Header() http.Header {
 
 func (c *UsersSettingsGetLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7757,7 +7757,7 @@ type UsersSettingsGetPopCall struct {
 // GetPop: Gets POP settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetPop(userId string) *UsersSettingsGetPopCall {
 	c := &UsersSettingsGetPopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7801,7 +7801,7 @@ func (c *UsersSettingsGetPopCall) Header() http.Header {
 
 func (c *UsersSettingsGetPopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7907,7 +7907,7 @@ type UsersSettingsGetVacationCall struct {
 // GetVacation: Gets vacation responder settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetVacation(userId string) *UsersSettingsGetVacationCall {
 	c := &UsersSettingsGetVacationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7951,7 +7951,7 @@ func (c *UsersSettingsGetVacationCall) Header() http.Header {
 
 func (c *UsersSettingsGetVacationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8061,7 +8061,7 @@ type UsersSettingsUpdateAutoForwardingCall struct {
 // authority.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateAutoForwarding(userId string, autoforwarding *AutoForwarding) *UsersSettingsUpdateAutoForwardingCall {
 	c := &UsersSettingsUpdateAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8096,7 +8096,7 @@ func (c *UsersSettingsUpdateAutoForwardingCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateAutoForwardingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8204,7 +8204,7 @@ type UsersSettingsUpdateImapCall struct {
 // UpdateImap: Updates IMAP settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateImap(userId string, imapsettings *ImapSettings) *UsersSettingsUpdateImapCall {
 	c := &UsersSettingsUpdateImapCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8239,7 +8239,7 @@ func (c *UsersSettingsUpdateImapCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateImapCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8352,7 +8352,7 @@ type UsersSettingsUpdateLanguageCall struct {
 // chosen and saved instead.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateLanguage(userId string, languagesettings *LanguageSettings) *UsersSettingsUpdateLanguageCall {
 	c := &UsersSettingsUpdateLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8387,7 +8387,7 @@ func (c *UsersSettingsUpdateLanguageCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8495,7 +8495,7 @@ type UsersSettingsUpdatePopCall struct {
 // UpdatePop: Updates POP settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdatePop(userId string, popsettings *PopSettings) *UsersSettingsUpdatePopCall {
 	c := &UsersSettingsUpdatePopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8530,7 +8530,7 @@ func (c *UsersSettingsUpdatePopCall) Header() http.Header {
 
 func (c *UsersSettingsUpdatePopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8638,7 +8638,7 @@ type UsersSettingsUpdateVacationCall struct {
 // UpdateVacation: Updates vacation responder settings.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateVacation(userId string, vacationsettings *VacationSettings) *UsersSettingsUpdateVacationCall {
 	c := &UsersSettingsUpdateVacationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8673,7 +8673,7 @@ func (c *UsersSettingsUpdateVacationCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateVacationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8792,7 +8792,7 @@ type UsersSettingsDelegatesCreateCall struct {
 // been delegated domain-wide authority.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Create(userId string, delegate *Delegate) *UsersSettingsDelegatesCreateCall {
 	c := &UsersSettingsDelegatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8827,7 +8827,7 @@ func (c *UsersSettingsDelegatesCreateCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8940,9 +8940,9 @@ type UsersSettingsDelegatesDeleteCall struct {
 // domain-wide authority.
 //
 // - delegateEmail: The email address of the user to be removed as a
-// delegate.
+//   delegate.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Delete(userId string, delegateEmail string) *UsersSettingsDelegatesDeleteCall {
 	c := &UsersSettingsDelegatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8977,7 +8977,7 @@ func (c *UsersSettingsDelegatesDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9061,9 +9061,9 @@ type UsersSettingsDelegatesGetCall struct {
 // been delegated domain-wide authority.
 //
 // - delegateEmail: The email address of the user whose delegate
-// relationship is to be retrieved.
+//   relationship is to be retrieved.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Get(userId string, delegateEmail string) *UsersSettingsDelegatesGetCall {
 	c := &UsersSettingsDelegatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9108,7 +9108,7 @@ func (c *UsersSettingsDelegatesGetCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9224,7 +9224,7 @@ type UsersSettingsDelegatesListCall struct {
 // domain-wide authority.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) List(userId string) *UsersSettingsDelegatesListCall {
 	c := &UsersSettingsDelegatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9268,7 +9268,7 @@ func (c *UsersSettingsDelegatesListCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9375,7 +9375,7 @@ type UsersSettingsFiltersCreateCall struct {
 // 1,000 filters.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Create(userId string, filter *Filter) *UsersSettingsFiltersCreateCall {
 	c := &UsersSettingsFiltersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9410,7 +9410,7 @@ func (c *UsersSettingsFiltersCreateCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9519,7 +9519,7 @@ type UsersSettingsFiltersDeleteCall struct {
 //
 // - id: The ID of the filter to be deleted.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Delete(userId string, id string) *UsersSettingsFiltersDeleteCall {
 	c := &UsersSettingsFiltersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9554,7 +9554,7 @@ func (c *UsersSettingsFiltersDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9636,7 +9636,7 @@ type UsersSettingsFiltersGetCall struct {
 //
 // - id: The ID of the filter to be fetched.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Get(userId string, id string) *UsersSettingsFiltersGetCall {
 	c := &UsersSettingsFiltersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9681,7 +9681,7 @@ func (c *UsersSettingsFiltersGetCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9795,7 +9795,7 @@ type UsersSettingsFiltersListCall struct {
 // List: Lists the message filters of a Gmail user.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) List(userId string) *UsersSettingsFiltersListCall {
 	c := &UsersSettingsFiltersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9839,7 +9839,7 @@ func (c *UsersSettingsFiltersListCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9950,7 +9950,7 @@ type UsersSettingsForwardingAddressesCreateCall struct {
 // delegated domain-wide authority.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Create(userId string, forwardingaddress *ForwardingAddress) *UsersSettingsForwardingAddressesCreateCall {
 	c := &UsersSettingsForwardingAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9985,7 +9985,7 @@ func (c *UsersSettingsForwardingAddressesCreateCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10097,7 +10097,7 @@ type UsersSettingsForwardingAddressesDeleteCall struct {
 //
 // - forwardingEmail: The forwarding address to be deleted.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Delete(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesDeleteCall {
 	c := &UsersSettingsForwardingAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10132,7 +10132,7 @@ func (c *UsersSettingsForwardingAddressesDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10214,7 +10214,7 @@ type UsersSettingsForwardingAddressesGetCall struct {
 //
 // - forwardingEmail: The forwarding address to be retrieved.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Get(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesGetCall {
 	c := &UsersSettingsForwardingAddressesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10259,7 +10259,7 @@ func (c *UsersSettingsForwardingAddressesGetCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10373,7 +10373,7 @@ type UsersSettingsForwardingAddressesListCall struct {
 // List: Lists the forwarding addresses for the specified account.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) List(userId string) *UsersSettingsForwardingAddressesListCall {
 	c := &UsersSettingsForwardingAddressesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10417,7 +10417,7 @@ func (c *UsersSettingsForwardingAddressesListCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10532,7 +10532,7 @@ type UsersSettingsSendAsCreateCall struct {
 // domain-wide authority.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Create(userId string, sendas *SendAs) *UsersSettingsSendAsCreateCall {
 	c := &UsersSettingsSendAsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10567,7 +10567,7 @@ func (c *UsersSettingsSendAsCreateCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10679,7 +10679,7 @@ type UsersSettingsSendAsDeleteCall struct {
 //
 // - sendAsEmail: The send-as alias to be deleted.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Delete(userId string, sendAsEmail string) *UsersSettingsSendAsDeleteCall {
 	c := &UsersSettingsSendAsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10714,7 +10714,7 @@ func (c *UsersSettingsSendAsDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10797,7 +10797,7 @@ type UsersSettingsSendAsGetCall struct {
 //
 // - sendAsEmail: The send-as alias to be retrieved.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Get(userId string, sendAsEmail string) *UsersSettingsSendAsGetCall {
 	c := &UsersSettingsSendAsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10842,7 +10842,7 @@ func (c *UsersSettingsSendAsGetCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10958,7 +10958,7 @@ type UsersSettingsSendAsListCall struct {
 // well as any custom "from" aliases.
 //
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) List(userId string) *UsersSettingsSendAsListCall {
 	c := &UsersSettingsSendAsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11002,7 +11002,7 @@ func (c *UsersSettingsSendAsListCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11110,7 +11110,7 @@ type UsersSettingsSendAsPatchCall struct {
 //
 // - sendAsEmail: The send-as alias to be updated.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Patch(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsPatchCall {
 	c := &UsersSettingsSendAsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11146,7 +11146,7 @@ func (c *UsersSettingsSendAsPatchCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11269,7 +11269,7 @@ type UsersSettingsSendAsUpdateCall struct {
 //
 // - sendAsEmail: The send-as alias to be updated.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Update(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsUpdateCall {
 	c := &UsersSettingsSendAsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11305,7 +11305,7 @@ func (c *UsersSettingsSendAsUpdateCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11426,7 +11426,7 @@ type UsersSettingsSendAsVerifyCall struct {
 //
 // - sendAsEmail: The send-as alias to be verified.
 // - userId: User's email address. The special value "me" can be used to
-// indicate the authenticated user.
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Verify(userId string, sendAsEmail string) *UsersSettingsSendAsVerifyCall {
 	c := &UsersSettingsSendAsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11461,7 +11461,7 @@ func (c *UsersSettingsSendAsVerifyCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11544,9 +11544,9 @@ type UsersSettingsSendAsSmimeInfoDeleteCall struct {
 //
 // - id: The immutable ID for the SmimeInfo.
 // - sendAsEmail: The email address that appears in the "From:" header
-// for mail sent using this alias.
+//   for mail sent using this alias.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Delete(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoDeleteCall {
 	c := &UsersSettingsSendAsSmimeInfoDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11582,7 +11582,7 @@ func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11675,9 +11675,9 @@ type UsersSettingsSendAsSmimeInfoGetCall struct {
 //
 // - id: The immutable ID for the SmimeInfo.
 // - sendAsEmail: The email address that appears in the "From:" header
-// for mail sent using this alias.
+//   for mail sent using this alias.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Get(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoGetCall {
 	c := &UsersSettingsSendAsSmimeInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11723,7 +11723,7 @@ func (c *UsersSettingsSendAsSmimeInfoGetCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11848,9 +11848,9 @@ type UsersSettingsSendAsSmimeInfoInsertCall struct {
 // send-as alias. Note that pkcs12 format is required for the key.
 //
 // - sendAsEmail: The email address that appears in the "From:" header
-// for mail sent using this alias.
+//   for mail sent using this alias.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Insert(userId string, sendAsEmail string, smimeinfo *SmimeInfo) *UsersSettingsSendAsSmimeInfoInsertCall {
 	c := &UsersSettingsSendAsSmimeInfoInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11886,7 +11886,7 @@ func (c *UsersSettingsSendAsSmimeInfoInsertCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12004,9 +12004,9 @@ type UsersSettingsSendAsSmimeInfoListCall struct {
 // List: Lists S/MIME configs for the specified send-as alias.
 //
 // - sendAsEmail: The email address that appears in the "From:" header
-// for mail sent using this alias.
+//   for mail sent using this alias.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) List(userId string, sendAsEmail string) *UsersSettingsSendAsSmimeInfoListCall {
 	c := &UsersSettingsSendAsSmimeInfoListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12051,7 +12051,7 @@ func (c *UsersSettingsSendAsSmimeInfoListCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12169,9 +12169,9 @@ type UsersSettingsSendAsSmimeInfoSetDefaultCall struct {
 //
 // - id: The immutable ID for the SmimeInfo.
 // - sendAsEmail: The email address that appears in the "From:" header
-// for mail sent using this alias.
+//   for mail sent using this alias.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) SetDefault(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoSetDefaultCall {
 	c := &UsersSettingsSendAsSmimeInfoSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12207,7 +12207,7 @@ func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12298,7 +12298,7 @@ type UsersThreadsDeleteCall struct {
 //
 // - id: ID of the Thread to delete.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Delete(userId string, id string) *UsersThreadsDeleteCall {
 	c := &UsersThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12333,7 +12333,7 @@ func (c *UsersThreadsDeleteCall) Header() http.Header {
 
 func (c *UsersThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12415,7 +12415,7 @@ type UsersThreadsGetCall struct {
 //
 // - id: The ID of the thread to retrieve.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall {
 	c := &UsersThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12484,7 +12484,7 @@ func (c *UsersThreadsGetCall) Header() http.Header {
 
 func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12623,7 +12623,7 @@ type UsersThreadsListCall struct {
 // List: Lists the threads in the user's mailbox.
 //
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) List(userId string) *UsersThreadsListCall {
 	c := &UsersThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12705,7 +12705,7 @@ func (c *UsersThreadsListCall) Header() http.Header {
 
 func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12864,7 +12864,7 @@ type UsersThreadsModifyCall struct {
 //
 // - id: The ID of the thread to modify.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Modify(userId string, id string, modifythreadrequest *ModifyThreadRequest) *UsersThreadsModifyCall {
 	c := &UsersThreadsModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12900,7 +12900,7 @@ func (c *UsersThreadsModifyCall) Header() http.Header {
 
 func (c *UsersThreadsModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13018,7 +13018,7 @@ type UsersThreadsTrashCall struct {
 //
 // - id: The ID of the thread to Trash.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Trash(userId string, id string) *UsersThreadsTrashCall {
 	c := &UsersThreadsTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -13053,7 +13053,7 @@ func (c *UsersThreadsTrashCall) Header() http.Header {
 
 func (c *UsersThreadsTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13163,7 +13163,7 @@ type UsersThreadsUntrashCall struct {
 //
 // - id: The ID of the thread to remove from Trash.
 // - userId: The user's email address. The special value `me` can be
-// used to indicate the authenticated user.
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Untrash(userId string, id string) *UsersThreadsUntrashCall {
 	c := &UsersThreadsUntrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -13198,7 +13198,7 @@ func (c *UsersThreadsUntrashCall) Header() http.Header {
 
 func (c *UsersThreadsUntrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3701,7 +3701,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3807,8 +3807,8 @@ type ProjectsTenantsCompleteQueryCall struct {
 // box.
 //
 // - tenant: Resource name of tenant the completion is performed within.
-// The format is "projects/{project_id}/tenants/{tenant_id}", for
-// example, "projects/foo/tenants/bar".
+//   The format is "projects/{project_id}/tenants/{tenant_id}", for
+//   example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) CompleteQuery(tenant string) *ProjectsTenantsCompleteQueryCall {
 	c := &ProjectsTenantsCompleteQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tenant = tenant
@@ -3920,7 +3920,7 @@ func (c *ProjectsTenantsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4078,8 +4078,8 @@ type ProjectsTenantsCreateCall struct {
 // Create: Creates a new tenant entity.
 //
 // - parent: Resource name of the project under which the tenant is
-// created. The format is "projects/{project_id}", for example,
-// "projects/foo".
+//   created. The format is "projects/{project_id}", for example,
+//   "projects/foo".
 func (r *ProjectsTenantsService) Create(parent string, tenant *Tenant) *ProjectsTenantsCreateCall {
 	c := &ProjectsTenantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4114,7 +4114,7 @@ func (c *ProjectsTenantsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4222,8 +4222,8 @@ type ProjectsTenantsDeleteCall struct {
 // Delete: Deletes specified tenant.
 //
 // - name: The resource name of the tenant to be deleted. The format is
-// "projects/{project_id}/tenants/{tenant_id}", for example,
-// "projects/foo/tenants/bar".
+//   "projects/{project_id}/tenants/{tenant_id}", for example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) Delete(name string) *ProjectsTenantsDeleteCall {
 	c := &ProjectsTenantsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4257,7 +4257,7 @@ func (c *ProjectsTenantsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4358,8 +4358,8 @@ type ProjectsTenantsGetCall struct {
 // Get: Retrieves specified tenant.
 //
 // - name: The resource name of the tenant to be retrieved. The format
-// is "projects/{project_id}/tenants/{tenant_id}", for example,
-// "projects/foo/tenants/bar".
+//   is "projects/{project_id}/tenants/{tenant_id}", for example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) Get(name string) *ProjectsTenantsGetCall {
 	c := &ProjectsTenantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4403,7 +4403,7 @@ func (c *ProjectsTenantsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4507,8 +4507,8 @@ type ProjectsTenantsListCall struct {
 // List: Lists all tenants associated with the project.
 //
 // - parent: Resource name of the project under which the tenant is
-// created. The format is "projects/{project_id}", for example,
-// "projects/foo".
+//   created. The format is "projects/{project_id}", for example,
+//   "projects/foo".
 func (r *ProjectsTenantsService) List(parent string) *ProjectsTenantsListCall {
 	c := &ProjectsTenantsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4567,7 +4567,7 @@ func (c *ProjectsTenantsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4703,9 +4703,9 @@ type ProjectsTenantsPatchCall struct {
 // Patch: Updates specified tenant.
 //
 // - name: Required during tenant update. The resource name for a
-// tenant. This is generated by the service when a tenant is created.
-// The format is "projects/{project_id}/tenants/{tenant_id}", for
-// example, "projects/foo/tenants/bar".
+//   tenant. This is generated by the service when a tenant is created.
+//   The format is "projects/{project_id}/tenants/{tenant_id}", for
+//   example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) Patch(name string, tenant *Tenant) *ProjectsTenantsPatchCall {
 	c := &ProjectsTenantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4750,7 +4750,7 @@ func (c *ProjectsTenantsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4870,8 +4870,8 @@ type ProjectsTenantsClientEventsCreateCall struct {
 // about self service tools.
 //
 // - parent: Resource name of the tenant under which the event is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}",
-// for example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}",
+//   for example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsClientEventsService) Create(parent string, clientevent *ClientEvent) *ProjectsTenantsClientEventsCreateCall {
 	c := &ProjectsTenantsClientEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4906,7 +4906,7 @@ func (c *ProjectsTenantsClientEventsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsClientEventsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5015,8 +5015,8 @@ type ProjectsTenantsCompaniesCreateCall struct {
 // Create: Creates a new company entity.
 //
 // - parent: Resource name of the tenant under which the company is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}",
-// for example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}",
+//   for example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsCompaniesService) Create(parent string, company *Company) *ProjectsTenantsCompaniesCreateCall {
 	c := &ProjectsTenantsCompaniesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5051,7 +5051,7 @@ func (c *ProjectsTenantsCompaniesCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5160,8 +5160,8 @@ type ProjectsTenantsCompaniesDeleteCall struct {
 // jobs associated with it.
 //
 // - name: The resource name of the company to be deleted. The format is
-// "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
-// for example, "projects/foo/tenants/bar/companies/baz".
+//   "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+//   for example, "projects/foo/tenants/bar/companies/baz".
 func (r *ProjectsTenantsCompaniesService) Delete(name string) *ProjectsTenantsCompaniesDeleteCall {
 	c := &ProjectsTenantsCompaniesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5195,7 +5195,7 @@ func (c *ProjectsTenantsCompaniesDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5296,9 +5296,9 @@ type ProjectsTenantsCompaniesGetCall struct {
 // Get: Retrieves specified company.
 //
 // - name: The resource name of the company to be retrieved. The format
-// is
-// "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
-// for example, "projects/api-test-project/tenants/foo/companies/bar".
+//   is
+//   "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+//   for example, "projects/api-test-project/tenants/foo/companies/bar".
 func (r *ProjectsTenantsCompaniesService) Get(name string) *ProjectsTenantsCompaniesGetCall {
 	c := &ProjectsTenantsCompaniesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5342,7 +5342,7 @@ func (c *ProjectsTenantsCompaniesGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5446,8 +5446,8 @@ type ProjectsTenantsCompaniesListCall struct {
 // List: Lists all companies associated with the project.
 //
 // - parent: Resource name of the tenant under which the company is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}",
-// for example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}",
+//   for example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsCompaniesService) List(parent string) *ProjectsTenantsCompaniesListCall {
 	c := &ProjectsTenantsCompaniesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5515,7 +5515,7 @@ func (c *ProjectsTenantsCompaniesListCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5656,10 +5656,10 @@ type ProjectsTenantsCompaniesPatchCall struct {
 // Patch: Updates specified company.
 //
 // - name: Required during company update. The resource name for a
-// company. This is generated by the service when a company is created.
-// The format is
-// "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
-// for example, "projects/foo/tenants/bar/companies/baz".
+//   company. This is generated by the service when a company is
+//   created. The format is
+//   "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+//   for example, "projects/foo/tenants/bar/companies/baz".
 func (r *ProjectsTenantsCompaniesService) Patch(name string, company *Company) *ProjectsTenantsCompaniesPatchCall {
 	c := &ProjectsTenantsCompaniesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5704,7 +5704,7 @@ func (c *ProjectsTenantsCompaniesPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5819,8 +5819,8 @@ type ProjectsTenantsJobsBatchCreateCall struct {
 // BatchCreate: Begins executing a batch create jobs operation.
 //
 // - parent: The resource name of the tenant under which the job is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}".
-// For example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) BatchCreate(parent string, batchcreatejobsrequest *BatchCreateJobsRequest) *ProjectsTenantsJobsBatchCreateCall {
 	c := &ProjectsTenantsJobsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5855,7 +5855,7 @@ func (c *ProjectsTenantsJobsBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5964,9 +5964,9 @@ type ProjectsTenantsJobsBatchDeleteCall struct {
 // BatchDelete: Begins executing a batch delete jobs operation.
 //
 // - parent: The resource name of the tenant under which the job is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}".
-// For example, "projects/foo/tenants/bar". The parent of all of the
-// jobs specified in `names` must match this field.
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar". The parent of all of the
+//   jobs specified in `names` must match this field.
 func (r *ProjectsTenantsJobsService) BatchDelete(parent string, batchdeletejobsrequest *BatchDeleteJobsRequest) *ProjectsTenantsJobsBatchDeleteCall {
 	c := &ProjectsTenantsJobsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6001,7 +6001,7 @@ func (c *ProjectsTenantsJobsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6110,8 +6110,8 @@ type ProjectsTenantsJobsBatchUpdateCall struct {
 // BatchUpdate: Begins executing a batch update jobs operation.
 //
 // - parent: The resource name of the tenant under which the job is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}".
-// For example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) BatchUpdate(parent string, batchupdatejobsrequest *BatchUpdateJobsRequest) *ProjectsTenantsJobsBatchUpdateCall {
 	c := &ProjectsTenantsJobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6146,7 +6146,7 @@ func (c *ProjectsTenantsJobsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6256,8 +6256,8 @@ type ProjectsTenantsJobsCreateCall struct {
 // within 10 seconds, but it may take up to 5 minutes.
 //
 // - parent: The resource name of the tenant under which the job is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}".
-// For example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) Create(parent string, job *Job) *ProjectsTenantsJobsCreateCall {
 	c := &ProjectsTenantsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6292,7 +6292,7 @@ func (c *ProjectsTenantsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6401,8 +6401,8 @@ type ProjectsTenantsJobsDeleteCall struct {
 // unsearchable within 10 seconds, but it may take up to 5 minutes.
 //
 // - name: The resource name of the job to be deleted. The format is
-// "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
-// example, "projects/foo/tenants/bar/jobs/baz".
+//   "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+//   example, "projects/foo/tenants/bar/jobs/baz".
 func (r *ProjectsTenantsJobsService) Delete(name string) *ProjectsTenantsJobsDeleteCall {
 	c := &ProjectsTenantsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6436,7 +6436,7 @@ func (c *ProjectsTenantsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6538,8 +6538,8 @@ type ProjectsTenantsJobsGetCall struct {
 // EXPIRED within the last 90 days.
 //
 // - name: The resource name of the job to retrieve. The format is
-// "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
-// example, "projects/foo/tenants/bar/jobs/baz".
+//   "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+//   example, "projects/foo/tenants/bar/jobs/baz".
 func (r *ProjectsTenantsJobsService) Get(name string) *ProjectsTenantsJobsGetCall {
 	c := &ProjectsTenantsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6583,7 +6583,7 @@ func (c *ProjectsTenantsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6687,8 +6687,8 @@ type ProjectsTenantsJobsListCall struct {
 // List: Lists jobs by filter.
 //
 // - parent: The resource name of the tenant under which the job is
-// created. The format is "projects/{project_id}/tenants/{tenant_id}".
-// For example, "projects/foo/tenants/bar".
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) List(parent string) *ProjectsTenantsJobsListCall {
 	c := &ProjectsTenantsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6785,7 +6785,7 @@ func (c *ProjectsTenantsJobsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6947,11 +6947,11 @@ type ProjectsTenantsJobsPatchCall struct {
 // minutes.
 //
 // - name: Required during job update. The resource name for the job.
-// This is generated by the service when a job is created. The format is
-// "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
-// example, "projects/foo/tenants/bar/jobs/baz". Use of this field in
-// job queries and API calls is preferred over the use of requisition_id
-// since this value is unique.
+//   This is generated by the service when a job is created. The format
+//   is "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+//   example, "projects/foo/tenants/bar/jobs/baz". Use of this field in
+//   job queries and API calls is preferred over the use of
+//   requisition_id since this value is unique.
 func (r *ProjectsTenantsJobsService) Patch(name string, job *Job) *ProjectsTenantsJobsPatchCall {
 	c := &ProjectsTenantsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6996,7 +6996,7 @@ func (c *ProjectsTenantsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7113,8 +7113,8 @@ type ProjectsTenantsJobsSearchCall struct {
 // only returns jobs that the caller has permission to search against.
 //
 // - parent: The resource name of the tenant to search within. The
-// format is "projects/{project_id}/tenants/{tenant_id}". For example,
-// "projects/foo/tenants/bar".
+//   format is "projects/{project_id}/tenants/{tenant_id}". For example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) Search(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsTenantsJobsSearchCall {
 	c := &ProjectsTenantsJobsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7149,7 +7149,7 @@ func (c *ProjectsTenantsJobsSearchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7286,8 +7286,8 @@ type ProjectsTenantsJobsSearchForAlertCall struct {
 // caller has permission to search against.
 //
 // - parent: The resource name of the tenant to search within. The
-// format is "projects/{project_id}/tenants/{tenant_id}". For example,
-// "projects/foo/tenants/bar".
+//   format is "projects/{project_id}/tenants/{tenant_id}". For example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) SearchForAlert(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsTenantsJobsSearchForAlertCall {
 	c := &ProjectsTenantsJobsSearchForAlertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7322,7 +7322,7 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchForAlertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

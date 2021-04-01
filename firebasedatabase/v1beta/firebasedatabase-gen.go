@@ -324,7 +324,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 // propagate to Firebase systems.
 //
 // - parent: The parent project for which to create a database instance,
-// in the form: `projects/{project-number}/locations/{location-id}`.
+//   in the form: `projects/{project-number}/locations/{location-id}`.
 func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstance *DatabaseInstance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -373,7 +373,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -495,9 +495,9 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // DISABLED state.
 //
 // - name: The fully qualified resource name of the database instance,
-// in the form:
-// `projects/{project-number}/locations/{location-id}/instances/{database
-// -id}`
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -531,7 +531,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -635,9 +635,9 @@ type ProjectsLocationsInstancesDisableCall struct {
 // Firebase console.
 //
 // - name: The fully qualified resource name of the database instance,
-// in the form:
-// `projects/{project-number}/locations/{location-id}/instances/{database
-// -id}`
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`.
 func (r *ProjectsLocationsInstancesService) Disable(name string, disabledatabaseinstancerequest *DisableDatabaseInstanceRequest) *ProjectsLocationsInstancesDisableCall {
 	c := &ProjectsLocationsInstancesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -672,7 +672,7 @@ func (c *ProjectsLocationsInstancesDisableCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -782,13 +782,13 @@ type ProjectsLocationsInstancesGetCall struct {
 // name.
 //
 // - name: The fully qualified resource name of the database instance,
-// in the form:
-// `projects/{project-number}/locations/{location-id}/instances/{database
-// -id}`. `database-id` is a globally unique identifier across all
-// parent collections. For convenience, this method allows you to supply
-// `-` as a wildcard character in place of specific collections under
-// `projects` and `locations`. The resulting wildcarding form of the
-// method is: `projects/-/locations/-/instances/{database-id}`.
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`. `database-id` is a globally unique identifier across all
+//   parent collections. For convenience, this method allows you to
+//   supply `-` as a wildcard character in place of specific collections
+//   under `projects` and `locations`. The resulting wildcarding form of
+//   the method is: `projects/-/locations/-/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Get(nameid string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -832,7 +832,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -943,9 +943,9 @@ type ProjectsLocationsInstancesListCall struct {
 // few seconds. Use GetDatabaseInstance for consistent reads.
 //
 // - parent: The parent project for which to list database instances, in
-// the form: `projects/{project-number}/locations/{location-id}` To list
-// across all locations, use a parent in the form:
-// `projects/{project-number}/locations/-`
+//   the form: `projects/{project-number}/locations/{location-id}` To
+//   list across all locations, use a parent in the form:
+//   `projects/{project-number}/locations/-`.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1007,7 +1007,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1147,9 +1147,9 @@ type ProjectsLocationsInstancesReenableCall struct {
 // successfully reenabled DatabaseInstance is ACTIVE.
 //
 // - name: The fully qualified resource name of the database instance,
-// in the form:
-// `projects/{project-number}/locations/{location-id}/instances/{database
-// -id}`
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`.
 func (r *ProjectsLocationsInstancesService) Reenable(name string, reenabledatabaseinstancerequest *ReenableDatabaseInstanceRequest) *ProjectsLocationsInstancesReenableCall {
 	c := &ProjectsLocationsInstancesReenableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1184,7 +1184,7 @@ func (c *ProjectsLocationsInstancesReenableCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesReenableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

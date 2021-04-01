@@ -2470,7 +2470,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2574,7 +2574,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2642,7 +2642,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2791,7 +2791,7 @@ type ProjectsLocationsGlobalConnectivityTestsCreateCall struct {
 // information, see the Connectivity Test documentation.
 //
 // - parent: The parent resource of the Connectivity Test to create:
-// `projects/{project_id}/locations/global`
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Create(parent string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsCreateCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2837,7 +2837,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +2949,7 @@ type ProjectsLocationsGlobalConnectivityTestsDeleteCall struct {
 // Delete: Deletes a specific `ConnectivityTest`.
 //
 // - name: Connectivity Test resource name using the form:
-// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
+//   `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Delete(name string) *ProjectsLocationsGlobalConnectivityTestsDeleteCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2983,7 +2983,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3083,7 +3083,7 @@ type ProjectsLocationsGlobalConnectivityTestsGetCall struct {
 // Get: Gets the details of a specific Connectivity Test.
 //
 // - name: `ConnectivityTest` resource name using the form:
-// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
+//   `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Get(name string) *ProjectsLocationsGlobalConnectivityTestsGetCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3127,7 +3127,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3232,8 +3232,8 @@ type ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3291,7 +3291,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3400,7 +3400,7 @@ type ProjectsLocationsGlobalConnectivityTestsListCall struct {
 // List: Lists all Connectivity Tests owned by a project.
 //
 // - parent: The parent resource of the Connectivity Tests:
-// `projects/{project_id}/locations/global`
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) List(parent string) *ProjectsLocationsGlobalConnectivityTestsListCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3482,7 +3482,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsGlobalConnectivityTestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3638,7 +3638,7 @@ type ProjectsLocationsGlobalConnectivityTestsPatchCall struct {
 // `ConnectivityTest` for for more details.
 //
 // - name: Unique name of the resource using the form:
-// `projects/{project_id}/locations/global/connectivityTests/{test}`
+//   `projects/{project_id}/locations/global/connectivityTests/{test}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Patch(name string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsPatchCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3681,7 +3681,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3803,7 +3803,7 @@ type ProjectsLocationsGlobalConnectivityTestsRerunCall struct {
 // then the reachability result returns a value of `UNKNOWN`.
 //
 // - name: Connectivity Test resource name using the form:
-// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
+//   `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Rerun(name string, rerunconnectivitytestrequest *RerunConnectivityTestRequest) *ProjectsLocationsGlobalConnectivityTestsRerunCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsRerunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3838,7 +3838,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3948,8 +3948,8 @@ type ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3984,7 +3984,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4097,8 +4097,8 @@ type ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4133,7 +4133,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4284,7 +4284,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4427,7 +4427,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4572,7 +4572,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4748,7 +4748,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

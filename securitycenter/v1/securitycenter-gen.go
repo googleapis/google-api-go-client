@@ -2818,8 +2818,8 @@ type FoldersAssetsGroupCall struct {
 // specified properties.
 //
 // - parent: Name of the organization to groupBy. Its format is
-// "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2854,7 +2854,7 @@ func (c *FoldersAssetsGroupCall) Header() http.Header {
 
 func (c *FoldersAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2983,8 +2983,8 @@ type FoldersAssetsListCall struct {
 // List: Lists an organization's assets.
 //
 // - parent: Name of the organization assets should belong to. Its
-// format is "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   format is "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3151,7 +3151,7 @@ func (c *FoldersAssetsListCall) Header() http.Header {
 
 func (c *FoldersAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3314,11 +3314,11 @@ type FoldersAssetsUpdateSecurityMarksCall struct {
 // UpdateSecurityMarks: Updates security marks.
 //
 // - name: The relative resource name of the SecurityMarks. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Examples:
-// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}/securityMarks".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *FoldersAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersAssetsUpdateSecurityMarksCall {
 	c := &FoldersAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3371,7 +3371,7 @@ func (c *FoldersAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *FoldersAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3491,8 +3491,8 @@ type FoldersSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 // - parent: Resource name of the parent of sources to list. Its format
-// should be "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   should be "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3553,7 +3553,7 @@ func (c *FoldersSourcesListCall) Header() http.Header {
 
 func (c *FoldersSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3693,12 +3693,12 @@ type FoldersSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 // - parent: Name of the source to groupBy. Its format is
-// "organizations/[organization_id]/sources/[source_id]",
-// folders/[folder_id]/sources/[source_id], or
-// projects/[project_id]/sources/[source_id]. To groupBy across all
-// sources provide a source_id of `-`. For example:
-// organizations/{organization_id}/sources/-,
-// folders/{folder_id}/sources/-, or projects/{project_id}/sources/-
+//   "organizations/[organization_id]/sources/[source_id]",
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]. To groupBy across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *FoldersSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *FoldersSourcesFindingsGroupCall {
 	c := &FoldersSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3733,7 +3733,7 @@ func (c *FoldersSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3864,12 +3864,12 @@ type FoldersSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 // - parent: Name of the source the findings belong to. Its format is
-// "organizations/[organization_id]/sources/[source_id],
-// folders/[folder_id]/sources/[source_id], or
-// projects/[project_id]/sources/[source_id]". To list across all
-// sources provide a source_id of `-`. For example:
-// organizations/{organization_id}/sources/-,
-// folders/{folder_id}/sources/- or projects/{projects_id}/sources/-
+//   "organizations/[organization_id]/sources/[source_id],
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]". To list across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *FoldersSourcesFindingsService) List(parent string) *FoldersSourcesFindingsListCall {
 	c := &FoldersSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4021,7 +4021,7 @@ func (c *FoldersSourcesFindingsListCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4185,10 +4185,10 @@ type FoldersSourcesFindingsPatchCall struct {
 // exist for a finding creation to succeed.
 //
 // - name: The relative resource name of this finding. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}"
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *FoldersSourcesFindingsService) Patch(name string, finding *Finding) *FoldersSourcesFindingsPatchCall {
 	c := &FoldersSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4234,7 +4234,7 @@ func (c *FoldersSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4348,10 +4348,10 @@ type FoldersSourcesFindingsSetStateCall struct {
 // SetState: Updates the state of a finding.
 //
 // - name: The relative resource name of the finding. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/sources/{source_id}/finding/{finding_
-// id}".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4386,7 +4386,7 @@ func (c *FoldersSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4494,11 +4494,11 @@ type FoldersSourcesFindingsUpdateSecurityMarksCall struct {
 // UpdateSecurityMarks: Updates security marks.
 //
 // - name: The relative resource name of the SecurityMarks. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Examples:
-// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}/securityMarks".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *FoldersSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersSourcesFindingsUpdateSecurityMarksCall {
 	c := &FoldersSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4551,7 +4551,7 @@ func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4671,7 +4671,8 @@ type OrganizationsGetOrganizationSettingsCall struct {
 // GetOrganizationSettings: Gets the settings for an organization.
 //
 // - name: Name of the organization to get organization settings for.
-// Its format is "organizations/[organization_id]/organizationSettings".
+//   Its format is
+//   "organizations/[organization_id]/organizationSettings".
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4715,7 +4716,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4818,8 +4819,8 @@ type OrganizationsUpdateOrganizationSettingsCall struct {
 // UpdateOrganizationSettings: Updates an organization's settings.
 //
 // - name: The relative resource name of the settings. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example: "organizations/{organization_id}/organizationSettings".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example: "organizations/{organization_id}/organizationSettings".
 func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizationsettings *OrganizationSettings) *OrganizationsUpdateOrganizationSettingsCall {
 	c := &OrganizationsUpdateOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4862,7 +4863,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4977,8 +4978,8 @@ type OrganizationsAssetsGroupCall struct {
 // specified properties.
 //
 // - parent: Name of the organization to groupBy. Its format is
-// "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5013,7 +5014,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5142,8 +5143,8 @@ type OrganizationsAssetsListCall struct {
 // List: Lists an organization's assets.
 //
 // - parent: Name of the organization assets should belong to. Its
-// format is "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   format is "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5310,7 +5311,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5476,7 +5477,7 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 // caller will receive a TOO_MANY_REQUESTS error.
 //
 // - parent: Name of the organization to run asset discovery for. Its
-// format is "organizations/[organization_id]".
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5511,7 +5512,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5619,11 +5620,11 @@ type OrganizationsAssetsUpdateSecurityMarksCall struct {
 // UpdateSecurityMarks: Updates security marks.
 //
 // - name: The relative resource name of the SecurityMarks. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Examples:
-// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}/securityMarks".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c := &OrganizationsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5676,7 +5677,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5796,7 +5797,7 @@ type OrganizationsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 // - parent: Resource name of the new notification config's parent. Its
-// format is "organizations/[organization_id]".
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5840,7 +5841,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5952,7 +5953,7 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 // - name: Name of the notification config to delete. Its format is
-// "organizations/[organization_id]/notificationConfigs/[config_id]".
+//   "organizations/[organization_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5986,7 +5987,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6086,7 +6087,7 @@ type OrganizationsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 // - name: Name of the notification config to get. Its format is
-// "organizations/[organization_id]/notificationConfigs/[config_id]".
+//   "organizations/[organization_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6130,7 +6131,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6233,7 +6234,7 @@ type OrganizationsNotificationConfigsListCall struct {
 // List: Lists notification configs.
 //
 // - parent: Name of the organization to list notification configs. Its
-// format is "organizations/[organization_id]".
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6294,7 +6295,7 @@ func (c *OrganizationsNotificationConfigsListCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6430,10 +6431,10 @@ type OrganizationsNotificationConfigsPatchCall struct {
 // are allowed: description, pubsub_topic, streaming_config.filter
 //
 // - name: The relative resource name of this notification config. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/notificationConfigs/notify_public_buc
-// ket".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/notificationConfigs/notify_public_b
+//   ucket".
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6476,7 +6477,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6631,7 +6632,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6766,7 +6767,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,7 +6912,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7087,7 +7088,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7227,7 +7228,7 @@ type OrganizationsSourcesCreateCall struct {
 // Create: Creates a source.
 //
 // - parent: Resource name of the new source's parent. Its format should
-// be "organizations/[organization_id]".
+//   be "organizations/[organization_id]".
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7262,7 +7263,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7370,7 +7371,7 @@ type OrganizationsSourcesGetCall struct {
 // Get: Gets a source.
 //
 // - name: Relative resource name of the source. Its format is
-// "organizations/[organization_id]/source/[source_id]".
+//   "organizations/[organization_id]/source/[source_id]".
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7414,7 +7415,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7517,8 +7518,8 @@ type OrganizationsSourcesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy on the specified Source.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsSourcesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsSourcesGetIamPolicyCall {
 	c := &OrganizationsSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7553,7 +7554,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7661,8 +7662,8 @@ type OrganizationsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 // - parent: Resource name of the parent of sources to list. Its format
-// should be "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   should be "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7723,7 +7724,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7858,8 +7859,8 @@ type OrganizationsSourcesPatchCall struct {
 // Patch: Updates a source.
 //
 // - name: The relative resource name of this source. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example: "organizations/{organization_id}/sources/{source_id}"
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example: "organizations/{organization_id}/sources/{source_id}".
 func (r *OrganizationsSourcesService) Patch(name string, source *Source) *OrganizationsSourcesPatchCall {
 	c := &OrganizationsSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7902,7 +7903,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8016,8 +8017,8 @@ type OrganizationsSourcesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified Source.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSourcesSetIamPolicyCall {
 	c := &OrganizationsSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8052,7 +8053,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8161,8 +8162,8 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 // specified source.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsSourcesTestIamPermissionsCall {
 	c := &OrganizationsSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8197,7 +8198,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8306,7 +8307,7 @@ type OrganizationsSourcesFindingsCreateCall struct {
 // finding creation to succeed.
 //
 // - parent: Resource name of the new finding's parent. Its format
-// should be "organizations/[organization_id]/sources/[source_id]".
+//   should be "organizations/[organization_id]/sources/[source_id]".
 func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8350,7 +8351,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8468,12 +8469,12 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 // - parent: Name of the source to groupBy. Its format is
-// "organizations/[organization_id]/sources/[source_id]",
-// folders/[folder_id]/sources/[source_id], or
-// projects/[project_id]/sources/[source_id]. To groupBy across all
-// sources provide a source_id of `-`. For example:
-// organizations/{organization_id}/sources/-,
-// folders/{folder_id}/sources/-, or projects/{project_id}/sources/-
+//   "organizations/[organization_id]/sources/[source_id]",
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]. To groupBy across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8508,7 +8509,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8639,12 +8640,12 @@ type OrganizationsSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 // - parent: Name of the source the findings belong to. Its format is
-// "organizations/[organization_id]/sources/[source_id],
-// folders/[folder_id]/sources/[source_id], or
-// projects/[project_id]/sources/[source_id]". To list across all
-// sources provide a source_id of `-`. For example:
-// organizations/{organization_id}/sources/-,
-// folders/{folder_id}/sources/- or projects/{projects_id}/sources/-
+//   "organizations/[organization_id]/sources/[source_id],
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]". To list across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8796,7 +8797,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8960,10 +8961,10 @@ type OrganizationsSourcesFindingsPatchCall struct {
 // exist for a finding creation to succeed.
 //
 // - name: The relative resource name of this finding. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}"
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9009,7 +9010,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9123,10 +9124,10 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 // SetState: Updates the state of a finding.
 //
 // - name: The relative resource name of the finding. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/sources/{source_id}/finding/{finding_
-// id}".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9161,7 +9162,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9269,11 +9270,11 @@ type OrganizationsSourcesFindingsUpdateSecurityMarksCall struct {
 // UpdateSecurityMarks: Updates security marks.
 //
 // - name: The relative resource name of the SecurityMarks. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Examples:
-// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}/securityMarks".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c := &OrganizationsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9326,7 +9327,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9447,8 +9448,8 @@ type ProjectsAssetsGroupCall struct {
 // specified properties.
 //
 // - parent: Name of the organization to groupBy. Its format is
-// "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9483,7 +9484,7 @@ func (c *ProjectsAssetsGroupCall) Header() http.Header {
 
 func (c *ProjectsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9612,8 +9613,8 @@ type ProjectsAssetsListCall struct {
 // List: Lists an organization's assets.
 //
 // - parent: Name of the organization assets should belong to. Its
-// format is "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   format is "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9780,7 +9781,7 @@ func (c *ProjectsAssetsListCall) Header() http.Header {
 
 func (c *ProjectsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9943,11 +9944,11 @@ type ProjectsAssetsUpdateSecurityMarksCall struct {
 // UpdateSecurityMarks: Updates security marks.
 //
 // - name: The relative resource name of the SecurityMarks. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Examples:
-// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}/securityMarks".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *ProjectsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsAssetsUpdateSecurityMarksCall {
 	c := &ProjectsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10000,7 +10001,7 @@ func (c *ProjectsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *ProjectsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10120,8 +10121,8 @@ type ProjectsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 // - parent: Resource name of the parent of sources to list. Its format
-// should be "organizations/[organization_id], folders/[folder_id], or
-// projects/[project_id]".
+//   should be "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10182,7 +10183,7 @@ func (c *ProjectsSourcesListCall) Header() http.Header {
 
 func (c *ProjectsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10322,12 +10323,12 @@ type ProjectsSourcesFindingsGroupCall struct {
 // /v1/projects/{project_id}/sources/-/findings
 //
 // - parent: Name of the source to groupBy. Its format is
-// "organizations/[organization_id]/sources/[source_id]",
-// folders/[folder_id]/sources/[source_id], or
-// projects/[project_id]/sources/[source_id]. To groupBy across all
-// sources provide a source_id of `-`. For example:
-// organizations/{organization_id}/sources/-,
-// folders/{folder_id}/sources/-, or projects/{project_id}/sources/-
+//   "organizations/[organization_id]/sources/[source_id]",
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]. To groupBy across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *ProjectsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *ProjectsSourcesFindingsGroupCall {
 	c := &ProjectsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10362,7 +10363,7 @@ func (c *ProjectsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10493,12 +10494,12 @@ type ProjectsSourcesFindingsListCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings
 //
 // - parent: Name of the source the findings belong to. Its format is
-// "organizations/[organization_id]/sources/[source_id],
-// folders/[folder_id]/sources/[source_id], or
-// projects/[project_id]/sources/[source_id]". To list across all
-// sources provide a source_id of `-`. For example:
-// organizations/{organization_id}/sources/-,
-// folders/{folder_id}/sources/- or projects/{projects_id}/sources/-
+//   "organizations/[organization_id]/sources/[source_id],
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]". To list across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *ProjectsSourcesFindingsService) List(parent string) *ProjectsSourcesFindingsListCall {
 	c := &ProjectsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10650,7 +10651,7 @@ func (c *ProjectsSourcesFindingsListCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10814,10 +10815,10 @@ type ProjectsSourcesFindingsPatchCall struct {
 // exist for a finding creation to succeed.
 //
 // - name: The relative resource name of this finding. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}"
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *ProjectsSourcesFindingsService) Patch(name string, finding *Finding) *ProjectsSourcesFindingsPatchCall {
 	c := &ProjectsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10863,7 +10864,7 @@ func (c *ProjectsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10977,10 +10978,10 @@ type ProjectsSourcesFindingsSetStateCall struct {
 // SetState: Updates the state of a finding.
 //
 // - name: The relative resource name of the finding. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Example:
-// "organizations/{organization_id}/sources/{source_id}/finding/{finding_
-// id}".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11015,7 +11016,7 @@ func (c *ProjectsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11123,11 +11124,11 @@ type ProjectsSourcesFindingsUpdateSecurityMarksCall struct {
 // UpdateSecurityMarks: Updates security marks.
 //
 // - name: The relative resource name of the SecurityMarks. See:
-// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-// Examples:
-// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}/securityMarks".
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *ProjectsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
 	c := &ProjectsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11180,7 +11181,7 @@ func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

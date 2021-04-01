@@ -4242,7 +4242,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4386,7 +4386,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4532,7 +4532,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4712,7 +4712,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4849,8 +4849,8 @@ type ServicesBatchEnableCall struct {
 // `EnableService` method instead.
 //
 // - parent: Parent to enable services on. An example name would be:
-// `projects/123` where `123` is the project number. The
-// `BatchEnableServices` method currently only supports projects.
+//   `projects/123` where `123` is the project number. The
+//   `BatchEnableServices` method currently only supports projects.
 func (r *ServicesService) BatchEnable(parent string, batchenableservicesrequest *BatchEnableServicesRequest) *ServicesBatchEnableCall {
 	c := &ServicesBatchEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4885,7 +4885,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4995,10 +4995,10 @@ type ServicesBatchGetCall struct {
 // given list of services.
 //
 // - parent: Parent to retrieve services from. If this is set, the
-// parent of all of the services specified in `names` must match this
-// field. An example name would be: `projects/123` where `123` is the
-// project number. The `BatchGetServices` method currently only supports
-// projects.
+//   parent of all of the services specified in `names` must match this
+//   field. An example name would be: `projects/123` where `123` is the
+//   project number. The `BatchGetServices` method currently only
+//   supports projects.
 func (r *ServicesService) BatchGet(parent string) *ServicesBatchGetCall {
 	c := &ServicesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5052,7 +5052,7 @@ func (c *ServicesBatchGetCall) Header() http.Header {
 
 func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5167,10 +5167,10 @@ type ServicesDisableCall struct {
 // not currently enabled.
 //
 // - name: Name of the consumer and service to disable the service on.
-// The enable and disable methods currently only support projects. An
-// example name would be:
-// `projects/123/services/serviceusage.googleapis.com` where `123` is
-// the project number.
+//   The enable and disable methods currently only support projects. An
+//   example name would be:
+//   `projects/123/services/serviceusage.googleapis.com` where `123` is
+//   the project number.
 func (r *ServicesService) Disable(name string, disableservicerequest *DisableServiceRequest) *ServicesDisableCall {
 	c := &ServicesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5205,7 +5205,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5314,11 +5314,11 @@ type ServicesEnableCall struct {
 // Enable: Enable a service so that it can be used with a project.
 //
 // - name: Name of the consumer and service to enable the service on.
-// The `EnableService` and `DisableService` methods currently only
-// support projects. Enabling a service requires that the service is
-// public or is shared with the user enabling the service. An example
-// name would be: `projects/123/services/serviceusage.googleapis.com`
-// where `123` is the project number.
+//   The `EnableService` and `DisableService` methods currently only
+//   support projects. Enabling a service requires that the service is
+//   public or is shared with the user enabling the service. An example
+//   name would be: `projects/123/services/serviceusage.googleapis.com`
+//   where `123` is the project number.
 func (r *ServicesService) Enable(name string, enableservicerequest *EnableServiceRequest) *ServicesEnableCall {
 	c := &ServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5353,7 +5353,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5463,9 +5463,9 @@ type ServicesGetCall struct {
 // service.
 //
 // - name: Name of the consumer and service to get the `ConsumerState`
-// for. An example name would be:
-// `projects/123/services/serviceusage.googleapis.com` where `123` is
-// the project number.
+//   for. An example name would be:
+//   `projects/123/services/serviceusage.googleapis.com` where `123` is
+//   the project number.
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5509,7 +5509,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5623,7 +5623,7 @@ type ServicesListCall struct {
 // higher throughput and richer filtering capability.
 //
 // - parent: Parent to search for services on. An example name would be:
-// `projects/123` where `123` is the project number.
+//   `projects/123` where `123` is the project number.
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5691,7 +5691,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1484,7 +1484,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1588,7 +1588,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1656,7 +1656,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1796,7 +1796,7 @@ type ProjectsLocationsApisCreateCall struct {
 // Create: Creates a new Api in a given project and location.
 //
 // - parent: Parent resource of the API, of the form:
-// `projects/*/locations/global`
+//   `projects/*/locations/global`.
 func (r *ProjectsLocationsApisService) Create(parent string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisCreateCall {
 	c := &ProjectsLocationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1839,7 +1839,7 @@ func (c *ProjectsLocationsApisCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1951,7 +1951,7 @@ type ProjectsLocationsApisDeleteCall struct {
 // Delete: Deletes a single Api.
 //
 // - name: Resource name of the form:
-// `projects/*/locations/global/apis/*`
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisService) Delete(name string) *ProjectsLocationsApisDeleteCall {
 	c := &ProjectsLocationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1985,7 +1985,7 @@ func (c *ProjectsLocationsApisDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2085,7 +2085,7 @@ type ProjectsLocationsApisGetCall struct {
 // Get: Gets details of a single Api.
 //
 // - name: Resource name of the form:
-// `projects/*/locations/global/apis/*`
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisService) Get(name string) *ProjectsLocationsApisGetCall {
 	c := &ProjectsLocationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2129,7 +2129,7 @@ func (c *ProjectsLocationsApisGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2234,8 +2234,8 @@ type ProjectsLocationsApisGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsApisService) GetIamPolicy(resource string) *ProjectsLocationsApisGetIamPolicyCall {
 	c := &ProjectsLocationsApisGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2293,7 +2293,7 @@ func (c *ProjectsLocationsApisGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2402,7 +2402,7 @@ type ProjectsLocationsApisListCall struct {
 // List: Lists Apis in a given project and location.
 //
 // - parent: Parent resource of the API, of the form:
-// `projects/*/locations/global`
+//   `projects/*/locations/global`.
 func (r *ProjectsLocationsApisService) List(parent string) *ProjectsLocationsApisListCall {
 	c := &ProjectsLocationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2470,7 +2470,7 @@ func (c *ProjectsLocationsApisListCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2615,7 +2615,7 @@ type ProjectsLocationsApisPatchCall struct {
 // Patch: Updates the parameters of a single Api.
 //
 // - name: Output only. Resource name of the API. Format:
-// projects/{project}/locations/global/apis/{api}
+//   projects/{project}/locations/global/apis/{api}.
 func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisPatchCall {
 	c := &ProjectsLocationsApisPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2661,7 +2661,7 @@ func (c *ProjectsLocationsApisPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2777,8 +2777,8 @@ type ProjectsLocationsApisSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsApisService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsApisSetIamPolicyCall {
 	c := &ProjectsLocationsApisSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2813,7 +2813,7 @@ func (c *ProjectsLocationsApisSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2926,8 +2926,8 @@ type ProjectsLocationsApisTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsApisTestIamPermissionsCall {
 	c := &ProjectsLocationsApisTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2962,7 +2962,7 @@ func (c *ProjectsLocationsApisTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3071,7 +3071,7 @@ type ProjectsLocationsApisConfigsCreateCall struct {
 // Create: Creates a new ApiConfig in a given project and location.
 //
 // - parent: Parent resource of the API Config, of the form:
-// `projects/*/locations/global/apis/*`
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisConfigsService) Create(parent string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsCreateCall {
 	c := &ProjectsLocationsApisConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3114,7 +3114,7 @@ func (c *ProjectsLocationsApisConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3226,7 +3226,7 @@ type ProjectsLocationsApisConfigsDeleteCall struct {
 // Delete: Deletes a single ApiConfig.
 //
 // - name: Resource name of the form:
-// `projects/*/locations/global/apis/*/configs/*`
+//   `projects/*/locations/global/apis/*/configs/*`.
 func (r *ProjectsLocationsApisConfigsService) Delete(name string) *ProjectsLocationsApisConfigsDeleteCall {
 	c := &ProjectsLocationsApisConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3260,7 +3260,7 @@ func (c *ProjectsLocationsApisConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3360,7 +3360,7 @@ type ProjectsLocationsApisConfigsGetCall struct {
 // Get: Gets details of a single ApiConfig.
 //
 // - name: Resource name of the form:
-// `projects/*/locations/global/apis/*/configs/*`
+//   `projects/*/locations/global/apis/*/configs/*`.
 func (r *ProjectsLocationsApisConfigsService) Get(name string) *ProjectsLocationsApisConfigsGetCall {
 	c := &ProjectsLocationsApisConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3417,7 +3417,7 @@ func (c *ProjectsLocationsApisConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3537,8 +3537,8 @@ type ProjectsLocationsApisConfigsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsApisConfigsService) GetIamPolicy(resource string) *ProjectsLocationsApisConfigsGetIamPolicyCall {
 	c := &ProjectsLocationsApisConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3596,7 +3596,7 @@ func (c *ProjectsLocationsApisConfigsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3705,7 +3705,7 @@ type ProjectsLocationsApisConfigsListCall struct {
 // List: Lists ApiConfigs in a given project and location.
 //
 // - parent: Parent resource of the API Config, of the form:
-// `projects/*/locations/global/apis/*`
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisConfigsService) List(parent string) *ProjectsLocationsApisConfigsListCall {
 	c := &ProjectsLocationsApisConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3773,7 +3773,7 @@ func (c *ProjectsLocationsApisConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3918,7 +3918,7 @@ type ProjectsLocationsApisConfigsPatchCall struct {
 // Patch: Updates the parameters of a single ApiConfig.
 //
 // - name: Output only. Resource name of the API Config. Format:
-// projects/{project}/locations/global/apis/{api}/configs/{api_config}
+//   projects/{project}/locations/global/apis/{api}/configs/{api_config}.
 func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsPatchCall {
 	c := &ProjectsLocationsApisConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3964,7 +3964,7 @@ func (c *ProjectsLocationsApisConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4080,8 +4080,8 @@ type ProjectsLocationsApisConfigsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsApisConfigsService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsApisConfigsSetIamPolicyCall {
 	c := &ProjectsLocationsApisConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4116,7 +4116,7 @@ func (c *ProjectsLocationsApisConfigsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsApisConfigsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4229,8 +4229,8 @@ type ProjectsLocationsApisConfigsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisConfigsService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsApisConfigsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4265,7 +4265,7 @@ func (c *ProjectsLocationsApisConfigsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsApisConfigsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4374,7 +4374,7 @@ type ProjectsLocationsGatewaysCreateCall struct {
 // Create: Creates a new Gateway in a given project and location.
 //
 // - parent: Parent resource of the Gateway, of the form:
-// `projects/*/locations/*`
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) Create(parent string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysCreateCall {
 	c := &ProjectsLocationsGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4417,7 +4417,7 @@ func (c *ProjectsLocationsGatewaysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4529,7 +4529,7 @@ type ProjectsLocationsGatewaysDeleteCall struct {
 // Delete: Deletes a single Gateway.
 //
 // - name: Resource name of the form:
-// `projects/*/locations/*/gateways/*`
+//   `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Delete(name string) *ProjectsLocationsGatewaysDeleteCall {
 	c := &ProjectsLocationsGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4563,7 +4563,7 @@ func (c *ProjectsLocationsGatewaysDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4663,7 +4663,7 @@ type ProjectsLocationsGatewaysGetCall struct {
 // Get: Gets details of a single Gateway.
 //
 // - name: Resource name of the form:
-// `projects/*/locations/*/gateways/*`
+//   `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Get(name string) *ProjectsLocationsGatewaysGetCall {
 	c := &ProjectsLocationsGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4707,7 +4707,7 @@ func (c *ProjectsLocationsGatewaysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4812,8 +4812,8 @@ type ProjectsLocationsGatewaysGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsGatewaysGetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4871,7 +4871,7 @@ func (c *ProjectsLocationsGatewaysGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4980,7 +4980,7 @@ type ProjectsLocationsGatewaysListCall struct {
 // List: Lists Gateways in a given project and location.
 //
 // - parent: Parent resource of the Gateway, of the form:
-// `projects/*/locations/*`
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) List(parent string) *ProjectsLocationsGatewaysListCall {
 	c := &ProjectsLocationsGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5048,7 +5048,7 @@ func (c *ProjectsLocationsGatewaysListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5193,7 +5193,7 @@ type ProjectsLocationsGatewaysPatchCall struct {
 // Patch: Updates the parameters of a single Gateway.
 //
 // - name: Output only. Resource name of the Gateway. Format:
-// projects/{project}/locations/{location}/gateways/{gateway}
+//   projects/{project}/locations/{location}/gateways/{gateway}.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5239,7 +5239,7 @@ func (c *ProjectsLocationsGatewaysPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5355,8 +5355,8 @@ type ProjectsLocationsGatewaysSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGatewaysService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsGatewaysSetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5391,7 +5391,7 @@ func (c *ProjectsLocationsGatewaysSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5504,8 +5504,8 @@ type ProjectsLocationsGatewaysTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsGatewaysTestIamPermissionsCall {
 	c := &ProjectsLocationsGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5540,7 +5540,7 @@ func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5692,7 +5692,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5835,7 +5835,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5980,7 +5980,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6156,7 +6156,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

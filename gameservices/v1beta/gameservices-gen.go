@@ -2871,7 +2871,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2975,7 +2975,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3051,7 +3051,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3197,7 +3197,7 @@ type ProjectsLocationsGameServerDeploymentsCreateCall struct {
 // location.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Create(parent string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3239,7 +3239,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3351,9 +3351,9 @@ type ProjectsLocationsGameServerDeploymentsDeleteCall struct {
 // Delete: Deletes a single game server deployment.
 //
 // - name: The name of the game server delpoyment to delete, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}`.
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3387,7 +3387,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3490,9 +3490,9 @@ type ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall struct {
 // game server deployment.
 //
 // - name: The name of the game server delpoyment, in the following
-// form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}`.
+//   form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) FetchDeploymentState(name string, fetchdeploymentstaterequest *FetchDeploymentStateRequest) *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall {
 	c := &ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3527,7 +3527,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Header(
 
 func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3635,9 +3635,9 @@ type ProjectsLocationsGameServerDeploymentsGetCall struct {
 // Get: Gets details of a single game server deployment.
 //
 // - name: The name of the game server delpoyment to retrieve, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}`.
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Get(name string) *ProjectsLocationsGameServerDeploymentsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3681,7 +3681,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3786,8 +3786,8 @@ type ProjectsLocationsGameServerDeploymentsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetIamPolicy(resource string) *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3845,7 +3845,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3954,9 +3954,9 @@ type ProjectsLocationsGameServerDeploymentsGetRolloutCall struct {
 // GetRollout: Gets details a single game server deployment rollout.
 //
 // - name: The name of the game server delpoyment to retrieve, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/rollout`.
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) GetRollout(name string) *ProjectsLocationsGameServerDeploymentsGetRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsGetRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4000,7 +4000,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4103,7 +4103,7 @@ type ProjectsLocationsGameServerDeploymentsListCall struct {
 // List: Lists game server deployments in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsGameServerDeploymentsService) List(parent string) *ProjectsLocationsGameServerDeploymentsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4179,7 +4179,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4325,11 +4325,11 @@ type ProjectsLocationsGameServerDeploymentsPatchCall struct {
 // Patch: Patches a game server deployment.
 //
 // - name: The resource name of the game server deployment, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}`. For example,
-// `projects/my-project/locations/global/gameServerDeployments/my-deploym
-// ent`.
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}`. For example,
+//   `projects/my-project/locations/global/gameServerDeployments/my-deplo
+//   yment`.
 func (r *ProjectsLocationsGameServerDeploymentsService) Patch(name string, gameserverdeployment *GameServerDeployment) *ProjectsLocationsGameServerDeploymentsPatchCall {
 	c := &ProjectsLocationsGameServerDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4373,7 +4373,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4488,11 +4488,11 @@ type ProjectsLocationsGameServerDeploymentsPreviewRolloutCall struct {
 // does not mutate the rollout resource.
 //
 // - name: The resource name of the game server deployment rollout, in
-// the following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/rollout`. For example,
-// `projects/my-project/locations/global/gameServerDeployments/my-deploym
-// ent/rollout`.
+//   the following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/rollout`. For example,
+//   `projects/my-project/locations/global/gameServerDeployments/my-deplo
+//   yment/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) PreviewRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsPreviewRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4544,7 +4544,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Header() http
 
 func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4668,8 +4668,8 @@ type ProjectsLocationsGameServerDeploymentsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall {
 	c := &ProjectsLocationsGameServerDeploymentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4704,7 +4704,7 @@ func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4817,8 +4817,8 @@ type ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGameServerDeploymentsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall {
 	c := &ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4853,7 +4853,7 @@ func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4967,11 +4967,11 @@ type ProjectsLocationsGameServerDeploymentsUpdateRolloutCall struct {
 // error.
 //
 // - name: The resource name of the game server deployment rollout, in
-// the following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/rollout`. For example,
-// `projects/my-project/locations/global/gameServerDeployments/my-deploym
-// ent/rollout`.
+//   the following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/rollout`. For example,
+//   `projects/my-project/locations/global/gameServerDeployments/my-deplo
+//   yment/rollout`.
 func (r *ProjectsLocationsGameServerDeploymentsService) UpdateRollout(name string, gameserverdeploymentrollout *GameServerDeploymentRollout) *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall {
 	c := &ProjectsLocationsGameServerDeploymentsUpdateRolloutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5015,7 +5015,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5132,8 +5132,8 @@ type ProjectsLocationsGameServerDeploymentsConfigsCreateCall struct {
 // deployment rollout resource.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/`.
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Create(parent string, gameserverconfig *GameServerConfig) *ProjectsLocationsGameServerDeploymentsConfigsCreateCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5175,7 +5175,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5289,9 +5289,9 @@ type ProjectsLocationsGameServerDeploymentsConfigsDeleteCall struct {
 // rollout.
 //
 // - name: The name of the game server config to delete, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/configs/{config}`.
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/configs/{config}`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Delete(name string) *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5325,7 +5325,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5425,9 +5425,9 @@ type ProjectsLocationsGameServerDeploymentsConfigsGetCall struct {
 // Get: Gets details of a single game server config.
 //
 // - name: The name of the game server config to retrieve, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/configs/{config}`.
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/configs/{config}`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) Get(name string) *ProjectsLocationsGameServerDeploymentsConfigsGetCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5471,7 +5471,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5575,8 +5575,8 @@ type ProjectsLocationsGameServerDeploymentsConfigsListCall struct {
 // game server deployment.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
-// ment}/configs/*`.
+//   `projects/{project}/locations/{location}/gameServerDeployments/{depl
+//   oyment}/configs/*`.
 func (r *ProjectsLocationsGameServerDeploymentsConfigsService) List(parent string) *ProjectsLocationsGameServerDeploymentsConfigsListCall {
 	c := &ProjectsLocationsGameServerDeploymentsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5652,7 +5652,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Header() http.He
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5840,7 +5840,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5983,7 +5983,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6128,7 +6128,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6304,7 +6304,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6444,7 +6444,7 @@ type ProjectsLocationsRealmsCreateCall struct {
 // Create: Creates a new realm in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsRealmsService) Create(parent string, realm *Realm) *ProjectsLocationsRealmsCreateCall {
 	c := &ProjectsLocationsRealmsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6486,7 +6486,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6598,7 +6598,7 @@ type ProjectsLocationsRealmsDeleteCall struct {
 // Delete: Deletes a single realm.
 //
 // - name: The name of the realm to delete, in the following form:
-// `projects/{project}/locations/{location}/realms/{realm}`.
+//   `projects/{project}/locations/{location}/realms/{realm}`.
 func (r *ProjectsLocationsRealmsService) Delete(name string) *ProjectsLocationsRealmsDeleteCall {
 	c := &ProjectsLocationsRealmsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6632,7 +6632,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6732,7 +6732,7 @@ type ProjectsLocationsRealmsGetCall struct {
 // Get: Gets details of a single realm.
 //
 // - name: The name of the realm to retrieve, in the following form:
-// `projects/{project}/locations/{location}/realms/{realm}`.
+//   `projects/{project}/locations/{location}/realms/{realm}`.
 func (r *ProjectsLocationsRealmsService) Get(name string) *ProjectsLocationsRealmsGetCall {
 	c := &ProjectsLocationsRealmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6776,7 +6776,7 @@ func (c *ProjectsLocationsRealmsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6879,7 +6879,7 @@ type ProjectsLocationsRealmsListCall struct {
 // List: Lists realms in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}`.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsRealmsService) List(parent string) *ProjectsLocationsRealmsListCall {
 	c := &ProjectsLocationsRealmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6955,7 +6955,7 @@ func (c *ProjectsLocationsRealmsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7100,8 +7100,9 @@ type ProjectsLocationsRealmsPatchCall struct {
 // Patch: Patches a single realm.
 //
 // - name: The resource name of the realm, in the following form:
-// `projects/{project}/locations/{location}/realms/{realm}`. For
-// example, `projects/my-project/locations/{location}/realms/my-realm`.
+//   `projects/{project}/locations/{location}/realms/{realm}`. For
+//   example,
+//   `projects/my-project/locations/{location}/realms/my-realm`.
 func (r *ProjectsLocationsRealmsService) Patch(name string, realm *Realm) *ProjectsLocationsRealmsPatchCall {
 	c := &ProjectsLocationsRealmsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7145,7 +7146,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7259,8 +7260,9 @@ type ProjectsLocationsRealmsPreviewUpdateCall struct {
 // PreviewUpdate: Previews patches to a single realm.
 //
 // - name: The resource name of the realm, in the following form:
-// `projects/{project}/locations/{location}/realms/{realm}`. For
-// example, `projects/my-project/locations/{location}/realms/my-realm`.
+//   `projects/{project}/locations/{location}/realms/{realm}`. For
+//   example,
+//   `projects/my-project/locations/{location}/realms/my-realm`.
 func (r *ProjectsLocationsRealmsService) PreviewUpdate(name string, realm *Realm) *ProjectsLocationsRealmsPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7311,7 +7313,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7432,7 +7434,7 @@ type ProjectsLocationsRealmsGameServerClustersCreateCall struct {
 // location.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}/realms/{realm-id}`.
+//   `projects/{project}/locations/{location}/realms/{realm-id}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Create(parent string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersCreateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7475,7 +7477,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7587,9 +7589,9 @@ type ProjectsLocationsRealmsGameServerClustersDeleteCall struct {
 // Delete: Deletes a single game server cluster.
 //
 // - name: The name of the game server cluster to delete, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerClusters/{cluster}`
-// .
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerClusters/{cluster
+//   }`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Delete(name string) *ProjectsLocationsRealmsGameServerClustersDeleteCall {
 	c := &ProjectsLocationsRealmsGameServerClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7623,7 +7625,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7723,9 +7725,9 @@ type ProjectsLocationsRealmsGameServerClustersGetCall struct {
 // Get: Gets details of a single game server cluster.
 //
 // - name: The name of the game server cluster to retrieve, in the
-// following form:
-// `projects/{project}/locations/{location}/realms/{realm-id}/gameServerC
-// lusters/{cluster}`.
+//   following form:
+//   `projects/{project}/locations/{location}/realms/{realm-id}/gameServe
+//   rClusters/{cluster}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Get(name string) *ProjectsLocationsRealmsGameServerClustersGetCall {
 	c := &ProjectsLocationsRealmsGameServerClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7769,7 +7771,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRealmsGameServerClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7872,7 +7874,7 @@ type ProjectsLocationsRealmsGameServerClustersListCall struct {
 // List: Lists game server clusters in a given project and location.
 //
 // - parent: The parent resource name, in the following form:
-// "projects/{project}/locations/{location}/realms/{realm}".
+//   "projects/{project}/locations/{location}/realms/{realm}".
 func (r *ProjectsLocationsRealmsGameServerClustersService) List(parent string) *ProjectsLocationsRealmsGameServerClustersListCall {
 	c := &ProjectsLocationsRealmsGameServerClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7948,7 +7950,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Header() http.Header
 
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8093,11 +8095,11 @@ type ProjectsLocationsRealmsGameServerClustersPatchCall struct {
 // Patch: Patches a single game server cluster.
 //
 // - name: The resource name of the game server cluster, in the
-// following form:
-// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
-// ters/{cluster}`. For example,
-// `projects/my-project/locations/{location}/realms/zanzibar/gameServerCl
-// usters/my-onprem-cluster`.
+//   following form:
+//   `projects/{project}/locations/{location}/realms/{realm}/gameServerCl
+//   usters/{cluster}`. For example,
+//   `projects/my-project/locations/{location}/realms/zanzibar/gameServer
+//   Clusters/my-onprem-cluster`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) Patch(name string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPatchCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8141,7 +8143,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8256,7 +8258,7 @@ type ProjectsLocationsRealmsGameServerClustersPreviewCreateCall struct {
 // given project and location.
 //
 // - parent: The parent resource name, in the following form:
-// `projects/{project}/locations/{location}/realms/{realm}`.
+//   `projects/{project}/locations/{location}/realms/{realm}`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewCreate(parent string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8306,7 +8308,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8425,9 +8427,9 @@ type ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall struct {
 // PreviewDelete: Previews deletion of a single game server cluster.
 //
 // - name: The name of the game server cluster to delete, in the
-// following form:
-// `projects/{project}/locations/{location}/gameServerClusters/{cluster}`
-// .
+//   following form:
+//   `projects/{project}/locations/{location}/gameServerClusters/{cluster
+//   }`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewDelete(name string) *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8468,7 +8470,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8575,11 +8577,11 @@ type ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall struct {
 // PreviewUpdate: Previews updating a GameServerCluster.
 //
 // - name: The resource name of the game server cluster, in the
-// following form:
-// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
-// ters/{cluster}`. For example,
-// `projects/my-project/locations/{location}/realms/zanzibar/gameServerCl
-// usters/my-onprem-cluster`.
+//   following form:
+//   `projects/{project}/locations/{location}/realms/{realm}/gameServerCl
+//   usters/{cluster}`. For example,
+//   `projects/my-project/locations/{location}/realms/zanzibar/gameServer
+//   Clusters/my-onprem-cluster`.
 func (r *ProjectsLocationsRealmsGameServerClustersService) PreviewUpdate(name string, gameservercluster *GameServerCluster) *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall {
 	c := &ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8630,7 +8632,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -723,7 +723,7 @@ func (c *AchievementConfigurationsDeleteCall) Header() http.Header {
 
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -838,7 +838,7 @@ func (c *AchievementConfigurationsGetCall) Header() http.Header {
 
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -940,7 +940,7 @@ type AchievementConfigurationsInsertCall struct {
 // Insert: Insert a new achievement configuration in this application.
 //
 // - applicationId: The application ID from the Google Play developer
-// console.
+//   console.
 func (r *AchievementConfigurationsService) Insert(applicationId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsInsertCall {
 	c := &AchievementConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -975,7 +975,7 @@ func (c *AchievementConfigurationsInsertCall) Header() http.Header {
 
 func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1083,7 +1083,7 @@ type AchievementConfigurationsListCall struct {
 // application.
 //
 // - applicationId: The application ID from the Google Play developer
-// console.
+//   console.
 func (r *AchievementConfigurationsService) List(applicationId string) *AchievementConfigurationsListCall {
 	c := &AchievementConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1143,7 +1143,7 @@ func (c *AchievementConfigurationsListCall) Header() http.Header {
 
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1313,7 +1313,7 @@ func (c *AchievementConfigurationsUpdateCall) Header() http.Header {
 
 func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1496,7 +1496,7 @@ func (c *ImageConfigurationsUploadCall) Header() http.Header {
 
 func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1686,7 +1686,7 @@ func (c *LeaderboardConfigurationsDeleteCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1801,7 +1801,7 @@ func (c *LeaderboardConfigurationsGetCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1903,7 +1903,7 @@ type LeaderboardConfigurationsInsertCall struct {
 // Insert: Insert a new leaderboard configuration in this application.
 //
 // - applicationId: The application ID from the Google Play developer
-// console.
+//   console.
 func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsInsertCall {
 	c := &LeaderboardConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1938,7 +1938,7 @@ func (c *LeaderboardConfigurationsInsertCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2046,7 +2046,7 @@ type LeaderboardConfigurationsListCall struct {
 // application.
 //
 // - applicationId: The application ID from the Google Play developer
-// console.
+//   console.
 func (r *LeaderboardConfigurationsService) List(applicationId string) *LeaderboardConfigurationsListCall {
 	c := &LeaderboardConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2106,7 +2106,7 @@ func (c *LeaderboardConfigurationsListCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2276,7 +2276,7 @@ func (c *LeaderboardConfigurationsUpdateCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

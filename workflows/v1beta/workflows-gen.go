@@ -646,7 +646,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -750,7 +750,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -818,7 +818,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -993,7 +993,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1138,7 +1138,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1314,7 +1314,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1456,7 +1456,7 @@ type ProjectsLocationsWorkflowsCreateCall struct {
 // running operation will return ALREADY_EXISTS error.
 //
 // - parent: Project and location in which the workflow should be
-// created. Format: projects/{project}/locations/{location}
+//   created. Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsWorkflowsService) Create(parent string, workflow *Workflow) *ProjectsLocationsWorkflowsCreateCall {
 	c := &ProjectsLocationsWorkflowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1502,7 +1502,7 @@ func (c *ProjectsLocationsWorkflowsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1615,7 +1615,7 @@ type ProjectsLocationsWorkflowsDeleteCall struct {
 // cancels and deletes all running executions of the workflow.
 //
 // - name: Name of the workflow to be deleted. Format:
-// projects/{project}/locations/{location}/workflows/{workflow}
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsService) Delete(name string) *ProjectsLocationsWorkflowsDeleteCall {
 	c := &ProjectsLocationsWorkflowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1649,7 +1649,7 @@ func (c *ProjectsLocationsWorkflowsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1749,7 +1749,8 @@ type ProjectsLocationsWorkflowsGetCall struct {
 // Get: Gets details of a single Workflow.
 //
 // - name: Name of the workflow which information should be retrieved.
-// Format: projects/{project}/locations/{location}/workflows/{workflow}
+//   Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsService) Get(name string) *ProjectsLocationsWorkflowsGetCall {
 	c := &ProjectsLocationsWorkflowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1793,7 +1794,7 @@ func (c *ProjectsLocationsWorkflowsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1897,7 +1898,7 @@ type ProjectsLocationsWorkflowsListCall struct {
 // order is not specified.
 //
 // - parent: Project and location from which the workflows should be
-// listed. Format: projects/{project}/locations/{location}
+//   listed. Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsWorkflowsService) List(parent string) *ProjectsLocationsWorkflowsListCall {
 	c := &ProjectsLocationsWorkflowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1978,7 +1979,7 @@ func (c *ProjectsLocationsWorkflowsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2127,7 +2128,7 @@ type ProjectsLocationsWorkflowsPatchCall struct {
 // executions.
 //
 // - name: The resource name of the workflow. Format:
-// projects/{project}/locations/{location}/workflows/{workflow}
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsService) Patch(name string, workflow *Workflow) *ProjectsLocationsWorkflowsPatchCall {
 	c := &ProjectsLocationsWorkflowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2169,7 +2170,7 @@ func (c *ProjectsLocationsWorkflowsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

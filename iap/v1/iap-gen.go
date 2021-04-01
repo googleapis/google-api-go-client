@@ -79,7 +79,7 @@ const mtlsBasePath = "https://iap.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -1212,7 +1212,7 @@ type ProjectsBrandsCreateCall struct {
 // support email is owned by the caller.
 //
 // - parent: GCP Project number/id under which the brand is to be
-// created. In the following format: projects/{project_number/id}.
+//   created. In the following format: projects/{project_number/id}.
 func (r *ProjectsBrandsService) Create(parent string, brand *Brand) *ProjectsBrandsCreateCall {
 	c := &ProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1247,7 +1247,7 @@ func (c *ProjectsBrandsCreateCall) Header() http.Header {
 
 func (c *ProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1355,7 +1355,7 @@ type ProjectsBrandsGetCall struct {
 // Get: Retrieves the OAuth brand of the project.
 //
 // - name: Name of the brand to be fetched. In the following format:
-// projects/{project_number/id}/brands/{brand}.
+//   projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsService) Get(name string) *ProjectsBrandsGetCall {
 	c := &ProjectsBrandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1399,7 +1399,7 @@ func (c *ProjectsBrandsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1502,7 +1502,7 @@ type ProjectsBrandsListCall struct {
 // List: Lists the existing brands for the project.
 //
 // - parent: GCP Project number/id. In the following format:
-// projects/{project_number/id}.
+//   projects/{project_number/id}.
 func (r *ProjectsBrandsService) List(parent string) *ProjectsBrandsListCall {
 	c := &ProjectsBrandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1546,7 +1546,7 @@ func (c *ProjectsBrandsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1651,8 +1651,8 @@ type ProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 // exists and that it is set for internal-only use.
 //
 // - parent: Path to create the client in. In the following format:
-// projects/{project_number/id}/brands/{brand}. The project must belong
-// to a G Suite account.
+//   projects/{project_number/id}/brands/{brand}. The project must
+//   belong to a G Suite account.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1687,7 +1687,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1797,9 +1797,9 @@ type ProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 // is owned by IAP.
 //
 // - name: Name of the Identity Aware Proxy client to be deleted. In the
-// following format:
-// projects/{project_number/id}/brands/{brand}/identityAwareProxyClients/
-// {client_id}.
+//   following format:
+//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//   s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1833,7 +1833,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1934,9 +1934,9 @@ type ProjectsBrandsIdentityAwareProxyClientsGetCall struct {
 // that the client is owned by IAP.
 //
 // - name: Name of the Identity Aware Proxy client to be fetched. In the
-// following format:
-// projects/{project_number/id}/brands/{brand}/identityAwareProxyClients/
-// {client_id}.
+//   following format:
+//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//   s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1980,7 +1980,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2083,7 +2083,7 @@ type ProjectsBrandsIdentityAwareProxyClientsListCall struct {
 // List: Lists the existing clients for the brand.
 //
 // - parent: Full brand path. In the following format:
-// projects/{project_number/id}/brands/{brand}.
+//   projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2146,7 +2146,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2284,9 +2284,9 @@ type ProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 // client is owned by IAP.
 //
 // - name: Name of the Identity Aware Proxy client to that will have its
-// secret reset. In the following format:
-// projects/{project_number/id}/brands/{brand}/identityAwareProxyClients/
-// {client_id}.
+//   secret reset. In the following format:
+//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//   s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2321,7 +2321,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.H
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2432,8 +2432,8 @@ type V1GetIamPolicyCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *V1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1GetIamPolicyCall {
 	c := &V1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2468,7 +2468,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2577,8 +2577,8 @@ type V1GetIapSettingsCall struct {
 // resource.
 //
 // - name: The resource name for which to retrieve the settings.
-// Authorization: Requires the `getSettings` permission for the
-// associated resource.
+//   Authorization: Requires the `getSettings` permission for the
+//   associated resource.
 func (r *V1Service) GetIapSettings(name string) *V1GetIapSettingsCall {
 	c := &V1GetIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2622,7 +2622,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2728,8 +2728,8 @@ type V1SetIamPolicyCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *V1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1SetIamPolicyCall {
 	c := &V1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2764,7 +2764,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2875,8 +2875,8 @@ type V1TestIamPermissionsCall struct {
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *V1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1TestIamPermissionsCall {
 	c := &V1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2911,7 +2911,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3064,7 +3064,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

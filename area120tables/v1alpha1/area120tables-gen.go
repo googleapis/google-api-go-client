@@ -850,7 +850,7 @@ type TablesGetCall struct {
 
 // Get: Gets a table. Returns NOT_FOUND if the table does not exist.
 //
-// - name: The name of the table to retrieve. Format: tables/{table}
+// - name: The name of the table to retrieve. Format: tables/{table}.
 func (r *TablesService) Get(name string) *TablesGetCall {
 	c := &TablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -894,7 +894,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1059,7 +1059,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1187,7 +1187,7 @@ type TablesRowsBatchCreateCall struct {
 // BatchCreate: Creates multiple rows.
 //
 // - parent: The parent table where the rows will be created. Format:
-// tables/{table}
+//   tables/{table}.
 func (r *TablesRowsService) BatchCreate(parent string, batchcreaterowsrequest *BatchCreateRowsRequest) *TablesRowsBatchCreateCall {
 	c := &TablesRowsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1222,7 +1222,7 @@ func (c *TablesRowsBatchCreateCall) Header() http.Header {
 
 func (c *TablesRowsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1333,7 +1333,7 @@ type TablesRowsBatchDeleteCall struct {
 // BatchDelete: Deletes multiple rows.
 //
 // - parent: The parent table shared by all rows being deleted. Format:
-// tables/{table}
+//   tables/{table}.
 func (r *TablesRowsService) BatchDelete(parent string, batchdeleterowsrequest *BatchDeleteRowsRequest) *TablesRowsBatchDeleteCall {
 	c := &TablesRowsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1368,7 +1368,7 @@ func (c *TablesRowsBatchDeleteCall) Header() http.Header {
 
 func (c *TablesRowsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1479,7 +1479,7 @@ type TablesRowsBatchUpdateCall struct {
 // BatchUpdate: Updates multiple rows.
 //
 // - parent: The parent table shared by all rows being updated. Format:
-// tables/{table}
+//   tables/{table}.
 func (r *TablesRowsService) BatchUpdate(parent string, batchupdaterowsrequest *BatchUpdateRowsRequest) *TablesRowsBatchUpdateCall {
 	c := &TablesRowsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1514,7 +1514,7 @@ func (c *TablesRowsBatchUpdateCall) Header() http.Header {
 
 func (c *TablesRowsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1625,7 +1625,7 @@ type TablesRowsCreateCall struct {
 // Create: Creates a row.
 //
 // - parent: The parent table where this row will be created. Format:
-// tables/{table}
+//   tables/{table}.
 func (r *TablesRowsService) Create(parent string, row *Row) *TablesRowsCreateCall {
 	c := &TablesRowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1672,7 +1672,7 @@ func (c *TablesRowsCreateCall) Header() http.Header {
 
 func (c *TablesRowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1795,7 +1795,7 @@ type TablesRowsDeleteCall struct {
 // Delete: Deletes a row.
 //
 // - name: The name of the row to delete. Format:
-// tables/{table}/rows/{row}
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Delete(name string) *TablesRowsDeleteCall {
 	c := &TablesRowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1829,7 +1829,7 @@ func (c *TablesRowsDeleteCall) Header() http.Header {
 
 func (c *TablesRowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1933,7 +1933,7 @@ type TablesRowsGetCall struct {
 // table.
 //
 // - name: The name of the row to retrieve. Format:
-// tables/{table}/rows/{row}
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Get(name string) *TablesRowsGetCall {
 	c := &TablesRowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1989,7 +1989,7 @@ func (c *TablesRowsGetCall) Header() http.Header {
 
 func (c *TablesRowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2110,7 +2110,7 @@ type TablesRowsListCall struct {
 // List: Lists rows in a table. Returns NOT_FOUND if the table does not
 // exist.
 //
-// - parent: The parent table. Format: tables/{table}
+// - parent: The parent table. Format: tables/{table}.
 func (r *TablesRowsService) List(parent string) *TablesRowsListCall {
 	c := &TablesRowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2193,7 +2193,7 @@ func (c *TablesRowsListCall) Header() http.Header {
 
 func (c *TablesRowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2351,7 +2351,8 @@ type TablesRowsPatchCall struct {
 // Patch: Updates a row.
 //
 // - name: The resource name of the row. Row names have the form
-// `tables/{table}/rows/{row}`. The name is ignored when creating a row.
+//   `tables/{table}/rows/{row}`. The name is ignored when creating a
+//   row.
 func (r *TablesRowsService) Patch(name string, row *Row) *TablesRowsPatchCall {
 	c := &TablesRowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2405,7 +2406,7 @@ func (c *TablesRowsPatchCall) Header() http.Header {
 
 func (c *TablesRowsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2536,7 +2537,7 @@ type WorkspacesGetCall struct {
 // exist.
 //
 // - name: The name of the workspace to retrieve. Format:
-// workspaces/{workspace}
+//   workspaces/{workspace}.
 func (r *WorkspacesService) Get(name string) *WorkspacesGetCall {
 	c := &WorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2580,7 +2581,7 @@ func (c *WorkspacesGetCall) Header() http.Header {
 
 func (c *WorkspacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2746,7 +2747,7 @@ func (c *WorkspacesListCall) Header() http.Header {
 
 func (c *WorkspacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

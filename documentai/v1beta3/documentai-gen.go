@@ -7714,7 +7714,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7818,7 +7818,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7886,7 +7886,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8073,7 +8073,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8177,9 +8177,9 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
 // - name: The resource name of Processor or ProcessorVersion. Format:
-// projects/{project}/locations/{location}/processors/{processor}, or
-// projects/{project}/locations/{location}/processors/{processor}/process
-// orVersions/{processorVersion}
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8214,7 +8214,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8322,11 +8322,11 @@ type ProjectsLocationsProcessorsProcessCall struct {
 // Process: Processes a single document.
 //
 // - name: The resource name of the Processor or ProcessorVersion to use
-// for processing. If a Processor is specified, the server will use its
-// default version. Format:
-// projects/{project}/locations/{location}/processors/{processor}, or
-// projects/{project}/locations/{location}/processors/{processor}/process
-// orVersions/{processorVersion}
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8361,7 +8361,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8472,7 +8472,7 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 // should be processed by the specified processor.
 //
 // - humanReviewConfig: The resource name of the HumanReviewConfig that
-// the document will be reviewed with.
+//   the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1beta3reviewdocumentrequest *GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -8507,7 +8507,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8616,9 +8616,9 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
 // - name: The resource name of Processor or ProcessorVersion. Format:
-// projects/{project}/locations/{location}/processors/{processor}, or
-// projects/{project}/locations/{location}/processors/{processor}/process
-// orVersions/{processorVersion}
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8653,7 +8653,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8761,11 +8761,11 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 // Process: Processes a single document.
 //
 // - name: The resource name of the Processor or ProcessorVersion to use
-// for processing. If a Processor is specified, the server will use its
-// default version. Format:
-// projects/{project}/locations/{location}/processors/{processor}, or
-// projects/{project}/locations/{location}/processors/{processor}/process
-// orVersions/{processorVersion}
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8800,7 +8800,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

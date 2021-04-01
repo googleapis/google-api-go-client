@@ -10105,8 +10105,8 @@ type AbuseReportsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *AbuseReportsService) Insert(part []string, abusereport *AbuseReport) *AbuseReportsInsertCall {
 	c := &AbuseReportsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10141,7 +10141,7 @@ func (c *AbuseReportsInsertCall) Header() http.Header {
 
 func (c *AbuseReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10246,13 +10246,13 @@ type ActivitiesListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more activity resource properties that the API response will
-// include. If the parameter identifies a property that contains child
-// properties, the child properties will be included in the response.
-// For example, in an activity resource, the snippet property contains
-// other properties that identify the type of activity, a display title
-// for the activity, and so forth. If you set *part=snippet*, the API
-// response will also contain all of those nested properties.
+//   or more activity resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in an activity resource, the snippet property contains
+//   other properties that identify the type of activity, a display
+//   title for the activity, and so forth. If you set *part=snippet*,
+//   the API response will also contain all of those nested properties.
 func (r *ActivitiesService) List(part []string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10349,7 +10349,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10509,7 +10509,7 @@ type CaptionsDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *CaptionsService) Delete(id string) *CaptionsDeleteCall {
 	c := &CaptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -10568,7 +10568,7 @@ func (c *CaptionsDeleteCall) Header() http.Header {
 
 func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10646,7 +10646,7 @@ type CaptionsDownloadCall struct {
 // Download: Downloads a caption track.
 //
 // - id: The ID of the caption track to download, required for One
-// Platform.
+//   Platform.
 func (r *CaptionsService) Download(id string) *CaptionsDownloadCall {
 	c := &CaptionsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -10729,7 +10729,7 @@ func (c *CaptionsDownloadCall) Header() http.Header {
 
 func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10842,8 +10842,8 @@ type CaptionsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter specifies the caption resource parts
-// that the API response will include. Set the parameter value to
-// snippet.
+//   that the API response will include. Set the parameter value to
+//   snippet.
 func (r *CaptionsService) Insert(part []string, caption *Caption) *CaptionsInsertCall {
 	c := &CaptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10949,7 +10949,7 @@ func (c *CaptionsInsertCall) Header() http.Header {
 
 func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11116,9 +11116,9 @@ type CaptionsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more caption resource parts that the API response will include.
-// The part names that you can include in the parameter value are id and
-// snippet.
+//   or more caption resource parts that the API response will include.
+//   The part names that you can include in the parameter value are id
+//   and snippet.
 // - videoId: Returns the captions for the specified video.
 func (r *CaptionsService) List(part []string, videoId string) *CaptionsListCall {
 	c := &CaptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11196,7 +11196,7 @@ func (c *CaptionsListCall) Header() http.Header {
 
 func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11320,9 +11320,9 @@ type CaptionsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more caption resource parts that the API response will include.
-// The part names that you can include in the parameter value are id and
-// snippet.
+//   or more caption resource parts that the API response will include.
+//   The part names that you can include in the parameter value are id
+//   and snippet.
 func (r *CaptionsService) Update(part []string, caption *Caption) *CaptionsUpdateCall {
 	c := &CaptionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -11428,7 +11428,7 @@ func (c *CaptionsUpdateCall) Header() http.Header {
 
 func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11715,7 +11715,7 @@ func (c *ChannelBannersInsertCall) Header() http.Header {
 
 func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11872,7 +11872,7 @@ type ChannelSectionsDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *ChannelSectionsService) Delete(id string) *ChannelSectionsDeleteCall {
 	c := &ChannelSectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -11923,7 +11923,7 @@ func (c *ChannelSectionsDeleteCall) Header() http.Header {
 
 func (c *ChannelSectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11996,10 +11996,10 @@ type ChannelSectionsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The part
-// names that you can include in the parameter value are snippet and
-// contentDetails.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   names that you can include in the parameter value are snippet and
+//   contentDetails.
 func (r *ChannelSectionsService) Insert(part []string, channelsection *ChannelSection) *ChannelSectionsInsertCall {
 	c := &ChannelSectionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12075,7 +12075,7 @@ func (c *ChannelSectionsInsertCall) Header() http.Header {
 
 func (c *ChannelSectionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12191,14 +12191,15 @@ type ChannelSectionsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more channelSection resource properties that the API response will
-// include. The part names that you can include in the parameter value
-// are id, snippet, and contentDetails. If the parameter identifies a
-// property that contains child properties, the child properties will be
-// included in the response. For example, in a channelSection resource,
-// the snippet property contains other properties, such as a display
-// title for the channelSection. If you set *part=snippet*, the API
-// response will also contain all of those nested properties.
+//   or more channelSection resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, and contentDetails. If the parameter
+//   identifies a property that contains child properties, the child
+//   properties will be included in the response. For example, in a
+//   channelSection resource, the snippet property contains other
+//   properties, such as a display title for the channelSection. If you
+//   set *part=snippet*, the API response will also contain all of those
+//   nested properties.
 func (r *ChannelSectionsService) List(part []string) *ChannelSectionsListCall {
 	c := &ChannelSectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12287,7 +12288,7 @@ func (c *ChannelSectionsListCall) Header() http.Header {
 
 func (c *ChannelSectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12415,10 +12416,10 @@ type ChannelSectionsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The part
-// names that you can include in the parameter value are snippet and
-// contentDetails.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   names that you can include in the parameter value are snippet and
+//   contentDetails.
 func (r *ChannelSectionsService) Update(part []string, channelsection *ChannelSection) *ChannelSectionsUpdateCall {
 	c := &ChannelSectionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12470,7 +12471,7 @@ func (c *ChannelSectionsUpdateCall) Header() http.Header {
 
 func (c *ChannelSectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12581,13 +12582,13 @@ type ChannelsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more channel resource properties that the API response will
-// include. If the parameter identifies a property that contains child
-// properties, the child properties will be included in the response.
-// For example, in a channel resource, the contentDetails property
-// contains other properties, such as the uploads properties. As such,
-// if you set *part=contentDetails*, the API response will also contain
-// all of those nested properties.
+//   or more channel resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a channel resource, the contentDetails property
+//   contains other properties, such as the uploads properties. As such,
+//   if you set *part=contentDetails*, the API response will also
+//   contain all of those nested properties.
 func (r *ChannelsService) List(part []string) *ChannelsListCall {
 	c := &ChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12718,7 +12719,7 @@ func (c *ChannelsListCall) Header() http.Header {
 
 func (c *ChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12897,13 +12898,13 @@ type ChannelsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The API
-// currently only allows the parameter value to be set to either
-// brandingSettings or invideoPromotion. (You cannot update both of
-// those parts with a single request.) Note that this method overrides
-// the existing values for all of the mutable properties that are
-// contained in any parts that the parameter value specifies.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The API
+//   currently only allows the parameter value to be set to either
+//   brandingSettings or invideoPromotion. (You cannot update both of
+//   those parts with a single request.) Note that this method overrides
+//   the existing values for all of the mutable properties that are
+//   contained in any parts that the parameter value specifies.
 func (r *ChannelsService) Update(part []string, channel *Channel) *ChannelsUpdateCall {
 	c := &ChannelsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12953,7 +12954,7 @@ func (c *ChannelsUpdateCall) Header() http.Header {
 
 func (c *ChannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13064,8 +13065,8 @@ type CommentThreadsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter identifies the properties that the API
-// response will include. Set the parameter value to snippet. The
-// snippet part has a quota cost of 2 units.
+//   response will include. Set the parameter value to snippet. The
+//   snippet part has a quota cost of 2 units.
 func (r *CommentThreadsService) Insert(part []string, commentthread *CommentThread) *CommentThreadsInsertCall {
 	c := &CommentThreadsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13100,7 +13101,7 @@ func (c *CommentThreadsInsertCall) Header() http.Header {
 
 func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13204,8 +13205,8 @@ type CommentThreadsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more commentThread resource properties that the API response will
-// include.
+//   or more commentThread resource properties that the API response
+//   will include.
 func (r *CommentThreadsService) List(part []string) *CommentThreadsListCall {
 	c := &CommentThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13344,7 +13345,7 @@ func (c *CommentThreadsListCall) Header() http.Header {
 
 func (c *CommentThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13553,10 +13554,10 @@ type CommentThreadsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter specifies a comma-separated list of
-// commentThread resource properties that the API response will include.
-// You must at least include the snippet part in the parameter value
-// since that part contains all of the properties that the API request
-// can update.
+//   commentThread resource properties that the API response will
+//   include. You must at least include the snippet part in the
+//   parameter value since that part contains all of the properties that
+//   the API request can update.
 func (r *CommentThreadsService) Update(part []string, commentthread *CommentThread) *CommentThreadsUpdateCall {
 	c := &CommentThreadsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13591,7 +13592,7 @@ func (c *CommentThreadsUpdateCall) Header() http.Header {
 
 func (c *CommentThreadsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13693,7 +13694,7 @@ type CommentsDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *CommentsService) Delete(id string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -13727,7 +13728,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13793,8 +13794,8 @@ type CommentsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter identifies the properties that the API
-// response will include. Set the parameter value to snippet. The
-// snippet part has a quota cost of 2 units.
+//   response will include. Set the parameter value to snippet. The
+//   snippet part has a quota cost of 2 units.
 func (r *CommentsService) Insert(part []string, comment *Comment) *CommentsInsertCall {
 	c := &CommentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13829,7 +13830,7 @@ func (c *CommentsInsertCall) Header() http.Header {
 
 func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13933,8 +13934,8 @@ type CommentsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more comment resource properties that the API response will
-// include.
+//   or more comment resource properties that the API response will
+//   include.
 func (r *CommentsService) List(part []string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14024,7 +14025,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14185,7 +14186,7 @@ type CommentsMarkAsSpamCall struct {
 // should be flagged as spam.
 //
 // - id: Flags the comments with the given IDs as spam in the caller's
-// opinion.
+//   opinion.
 func (r *CommentsService) MarkAsSpam(id []string) *CommentsMarkAsSpamCall {
 	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14219,7 +14220,7 @@ func (c *CommentsMarkAsSpamCall) Header() http.Header {
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14287,12 +14288,12 @@ type CommentsSetModerationStatusCall struct {
 // comments.
 //
 // - id: Modifies the moderation status of the comments with the given
-// IDs
+//   IDs.
 // - moderationStatus: Specifies the requested moderation status. Note,
-// comments can be in statuses, which are not available through this
-// call. For example, this call does not allow to mark a comment as
-// 'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED,
-// MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
+//   comments can be in statuses, which are not available through this
+//   call. For example, this call does not allow to mark a comment as
+//   'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED,
+//   MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
 func (r *CommentsService) SetModerationStatus(id []string, moderationStatus string) *CommentsSetModerationStatusCall {
 	c := &CommentsSetModerationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14336,7 +14337,7 @@ func (c *CommentsSetModerationStatusCall) Header() http.Header {
 
 func (c *CommentsSetModerationStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14429,9 +14430,9 @@ type CommentsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter identifies the properties that the API
-// response will include. You must at least include the snippet part in
-// the parameter value since that part contains all of the properties
-// that the API request can update.
+//   response will include. You must at least include the snippet part
+//   in the parameter value since that part contains all of the
+//   properties that the API request can update.
 func (r *CommentsService) Update(part []string, comment *Comment) *CommentsUpdateCall {
 	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14466,7 +14467,7 @@ func (c *CommentsUpdateCall) Header() http.Header {
 
 func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14570,8 +14571,8 @@ type I18nLanguagesListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies the i18nLanguage resource
-// properties that the API response will include. Set the parameter
-// value to snippet.
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *I18nLanguagesService) List(part []string) *I18nLanguagesListCall {
 	c := &I18nLanguagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14621,7 +14622,7 @@ func (c *I18nLanguagesListCall) Header() http.Header {
 
 func (c *I18nLanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14728,8 +14729,8 @@ type I18nRegionsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies the i18nRegion resource
-// properties that the API response will include. Set the parameter
-// value to snippet.
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *I18nRegionsService) List(part []string) *I18nRegionsListCall {
 	c := &I18nRegionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14779,7 +14780,7 @@ func (c *I18nRegionsListCall) Header() http.Header {
 
 func (c *I18nRegionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14884,11 +14885,11 @@ type LiveBroadcastsBindCall struct {
 
 // Bind: Bind a broadcast to a stream.
 //
-// - id: Broadcast to bind to the stream
+// - id: Broadcast to bind to the stream.
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more liveBroadcast resource properties that the API response will
-// include. The part names that you can include in the parameter value
-// are id, snippet, contentDetails, and status.
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Bind(id string, part []string) *LiveBroadcastsBindCall {
 	c := &LiveBroadcastsBindCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -14971,7 +14972,7 @@ func (c *LiveBroadcastsBindCall) Header() http.Header {
 
 func (c *LiveBroadcastsBindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15163,7 +15164,7 @@ func (c *LiveBroadcastsDeleteCall) Header() http.Header {
 
 func (c *LiveBroadcastsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15241,10 +15242,10 @@ type LiveBroadcastsInsertCall struct {
 // Insert: Inserts a new stream for the authenticated user.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The part
-// properties that you can include in the parameter value are id,
-// snippet, contentDetails, and status.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Insert(part []string, livebroadcast *LiveBroadcast) *LiveBroadcastsInsertCall {
 	c := &LiveBroadcastsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -15320,7 +15321,7 @@ func (c *LiveBroadcastsInsertCall) Header() http.Header {
 
 func (c *LiveBroadcastsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15436,9 +15437,9 @@ type LiveBroadcastsListCall struct {
 // channel.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more liveBroadcast resource properties that the API response will
-// include. The part names that you can include in the parameter value
-// are id, snippet, contentDetails, status and statistics.
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, status and statistics.
 func (r *LiveBroadcastsService) List(part []string) *LiveBroadcastsListCall {
 	c := &LiveBroadcastsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -15580,7 +15581,7 @@ func (c *LiveBroadcastsListCall) Header() http.Header {
 
 func (c *LiveBroadcastsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15772,12 +15773,12 @@ type LiveBroadcastsTransitionCall struct {
 // Transition: Transition a broadcast to a given status.
 //
 // - broadcastStatus: The status to which the broadcast is going to
-// transition.
+//   transition.
 // - id: Broadcast to transition.
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more liveBroadcast resource properties that the API response will
-// include. The part names that you can include in the parameter value
-// are id, snippet, contentDetails, and status.
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Transition(broadcastStatus string, id string, part []string) *LiveBroadcastsTransitionCall {
 	c := &LiveBroadcastsTransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("broadcastStatus", broadcastStatus)
@@ -15854,7 +15855,7 @@ func (c *LiveBroadcastsTransitionCall) Header() http.Header {
 
 func (c *LiveBroadcastsTransitionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15987,19 +15988,19 @@ type LiveBroadcastsUpdateCall struct {
 // Update: Updates an existing broadcast for the authenticated user.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The part
-// properties that you can include in the parameter value are id,
-// snippet, contentDetails, and status. Note that this method will
-// override the existing values for all of the mutable properties that
-// are contained in any parts that the parameter value specifies. For
-// example, a broadcast's privacy status is defined in the status part.
-// As such, if your request is updating a private or unlisted broadcast,
-// and the request's part parameter value includes the status part, the
-// broadcast's privacy setting will be updated to whatever value the
-// request body specifies. If the request body does not specify a value,
-// the existing privacy setting will be removed and the broadcast will
-// revert to the default privacy setting.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, contentDetails, and status. Note that this method will
+//   override the existing values for all of the mutable properties that
+//   are contained in any parts that the parameter value specifies. For
+//   example, a broadcast's privacy status is defined in the status
+//   part. As such, if your request is updating a private or unlisted
+//   broadcast, and the request's part parameter value includes the
+//   status part, the broadcast's privacy setting will be updated to
+//   whatever value the request body specifies. If the request body does
+//   not specify a value, the existing privacy setting will be removed
+//   and the broadcast will revert to the default privacy setting.
 func (r *LiveBroadcastsService) Update(part []string, livebroadcast *LiveBroadcast) *LiveBroadcastsUpdateCall {
 	c := &LiveBroadcastsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16075,7 +16076,7 @@ func (c *LiveBroadcastsUpdateCall) Header() http.Header {
 
 func (c *LiveBroadcastsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16188,7 +16189,7 @@ type LiveChatBansDeleteCall struct {
 
 // Delete: Deletes a chat ban.
 //
-// - id:
+// - id: .
 func (r *LiveChatBansService) Delete(id string) *LiveChatBansDeleteCall {
 	c := &LiveChatBansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16222,7 +16223,7 @@ func (c *LiveChatBansDeleteCall) Header() http.Header {
 
 func (c *LiveChatBansDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16289,9 +16290,9 @@ type LiveChatBansInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response returns. Set the
-// parameter value to snippet.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response returns. Set the
+//   parameter value to snippet.
 func (r *LiveChatBansService) Insert(part []string, livechatban *LiveChatBan) *LiveChatBansInsertCall {
 	c := &LiveChatBansInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16326,7 +16327,7 @@ func (c *LiveChatBansInsertCall) Header() http.Header {
 
 func (c *LiveChatBansInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16429,7 +16430,7 @@ type LiveChatMessagesDeleteCall struct {
 
 // Delete: Deletes a chat message.
 //
-// - id:
+// - id: .
 func (r *LiveChatMessagesService) Delete(id string) *LiveChatMessagesDeleteCall {
 	c := &LiveChatMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16463,7 +16464,7 @@ func (c *LiveChatMessagesDeleteCall) Header() http.Header {
 
 func (c *LiveChatMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16530,9 +16531,9 @@ type LiveChatMessagesInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes. It identifies the
-// properties that the write operation will set as well as the
-// properties that the API response will include. Set the parameter
-// value to snippet.
+//   properties that the write operation will set as well as the
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *LiveChatMessagesService) Insert(part []string, livechatmessage *LiveChatMessage) *LiveChatMessagesInsertCall {
 	c := &LiveChatMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16567,7 +16568,7 @@ func (c *LiveChatMessagesInsertCall) Header() http.Header {
 
 func (c *LiveChatMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16672,10 +16673,10 @@ type LiveChatMessagesListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - liveChatId: The id of the live chat for which comments should be
-// returned.
+//   returned.
 // - part: The *part* parameter specifies the liveChatComment resource
-// parts that the API response will include. Supported values are id and
-// snippet.
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *LiveChatMessagesService) List(liveChatId string, part []string) *LiveChatMessagesListCall {
 	c := &LiveChatMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -16752,7 +16753,7 @@ func (c *LiveChatMessagesListCall) Header() http.Header {
 
 func (c *LiveChatMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16906,7 +16907,7 @@ type LiveChatModeratorsDeleteCall struct {
 
 // Delete: Deletes a chat moderator.
 //
-// - id:
+// - id: .
 func (r *LiveChatModeratorsService) Delete(id string) *LiveChatModeratorsDeleteCall {
 	c := &LiveChatModeratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16940,7 +16941,7 @@ func (c *LiveChatModeratorsDeleteCall) Header() http.Header {
 
 func (c *LiveChatModeratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17007,9 +17008,9 @@ type LiveChatModeratorsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response returns. Set the
-// parameter value to snippet.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response returns. Set the
+//   parameter value to snippet.
 func (r *LiveChatModeratorsService) Insert(part []string, livechatmoderator *LiveChatModerator) *LiveChatModeratorsInsertCall {
 	c := &LiveChatModeratorsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17044,7 +17045,7 @@ func (c *LiveChatModeratorsInsertCall) Header() http.Header {
 
 func (c *LiveChatModeratorsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17149,10 +17150,10 @@ type LiveChatModeratorsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - liveChatId: The id of the live chat for which moderators should be
-// returned.
+//   returned.
 // - part: The *part* parameter specifies the liveChatModerator resource
-// parts that the API response will include. Supported values are id and
-// snippet.
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *LiveChatModeratorsService) List(liveChatId string, part []string) *LiveChatModeratorsListCall {
 	c := &LiveChatModeratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -17214,7 +17215,7 @@ func (c *LiveChatModeratorsListCall) Header() http.Header {
 
 func (c *LiveChatModeratorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17355,7 +17356,7 @@ type LiveStreamsDeleteCall struct {
 
 // Delete: Deletes an existing stream for the authenticated user.
 //
-// - id:
+// - id: .
 func (r *LiveStreamsService) Delete(id string) *LiveStreamsDeleteCall {
 	c := &LiveStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -17430,7 +17431,7 @@ func (c *LiveStreamsDeleteCall) Header() http.Header {
 
 func (c *LiveStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17507,10 +17508,10 @@ type LiveStreamsInsertCall struct {
 // Insert: Inserts a new stream for the authenticated user.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The part
-// properties that you can include in the parameter value are id,
-// snippet, cdn, content_details, and status.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, cdn, content_details, and status.
 func (r *LiveStreamsService) Insert(part []string, livestream *LiveStream) *LiveStreamsInsertCall {
 	c := &LiveStreamsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17586,7 +17587,7 @@ func (c *LiveStreamsInsertCall) Header() http.Header {
 
 func (c *LiveStreamsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17702,9 +17703,9 @@ type LiveStreamsListCall struct {
 // --
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more liveStream resource properties that the API response will
-// include. The part names that you can include in the parameter value
-// are id, snippet, cdn, and status.
+//   or more liveStream resource properties that the API response will
+//   include. The part names that you can include in the parameter value
+//   are id, snippet, cdn, and status.
 func (r *LiveStreamsService) List(part []string) *LiveStreamsListCall {
 	c := &LiveStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17819,7 +17820,7 @@ func (c *LiveStreamsListCall) Header() http.Header {
 
 func (c *LiveStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17975,14 +17976,14 @@ type LiveStreamsUpdateCall struct {
 // Update: Updates an existing stream for the authenticated user.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. The part
-// properties that you can include in the parameter value are id,
-// snippet, cdn, and status. Note that this method will override the
-// existing values for all of the mutable properties that are contained
-// in any parts that the parameter value specifies. If the request body
-// does not specify a value for a mutable property, the existing value
-// for that property will be removed.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, cdn, and status. Note that this method will override the
+//   existing values for all of the mutable properties that are
+//   contained in any parts that the parameter value specifies. If the
+//   request body does not specify a value for a mutable property, the
+//   existing value for that property will be removed.
 func (r *LiveStreamsService) Update(part []string, livestream *LiveStream) *LiveStreamsUpdateCall {
 	c := &LiveStreamsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18058,7 +18059,7 @@ func (c *LiveStreamsUpdateCall) Header() http.Header {
 
 func (c *LiveStreamsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18174,7 +18175,7 @@ type MembersListCall struct {
 // a channel.
 //
 // - part: The *part* parameter specifies the member resource parts that
-// the API response will include. Set the parameter value to snippet.
+//   the API response will include. Set the parameter value to snippet.
 func (r *MembersService) List(part []string) *MembersListCall {
 	c := &MembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18266,7 +18267,7 @@ func (c *MembersListCall) Header() http.Header {
 
 func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18427,8 +18428,8 @@ type MembershipsLevelsListCall struct {
 // the fans.
 //
 // - part: The *part* parameter specifies the membershipsLevel resource
-// parts that the API response will include. Supported values are id and
-// snippet.
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *MembershipsLevelsService) List(part []string) *MembershipsLevelsListCall {
 	c := &MembershipsLevelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18472,7 +18473,7 @@ func (c *MembershipsLevelsListCall) Header() http.Header {
 
 func (c *MembershipsLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18569,7 +18570,7 @@ type PlaylistItemsDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
 	c := &PlaylistItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -18620,7 +18621,7 @@ func (c *PlaylistItemsDeleteCall) Header() http.Header {
 
 func (c *PlaylistItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18693,8 +18694,8 @@ type PlaylistItemsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *PlaylistItemsService) Insert(part []string, playlistitem *PlaylistItem) *PlaylistItemsInsertCall {
 	c := &PlaylistItemsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18746,7 +18747,7 @@ func (c *PlaylistItemsInsertCall) Header() http.Header {
 
 func (c *PlaylistItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18857,13 +18858,14 @@ type PlaylistItemsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more playlistItem resource properties that the API response will
-// include. If the parameter identifies a property that contains child
-// properties, the child properties will be included in the response.
-// For example, in a playlistItem resource, the snippet property
-// contains numerous fields, including the title, description, position,
-// and resourceId properties. As such, if you set *part=snippet*, the
-// API response will contain all of those properties.
+//   or more playlistItem resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a playlistItem resource, the snippet property
+//   contains numerous fields, including the title, description,
+//   position, and resourceId properties. As such, if you set
+//   *part=snippet*, the API response will contain all of those
+//   properties.
 func (r *PlaylistItemsService) List(part []string) *PlaylistItemsListCall {
 	c := &PlaylistItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18961,7 +18963,7 @@ func (c *PlaylistItemsListCall) Header() http.Header {
 
 func (c *PlaylistItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19118,19 +19120,19 @@ type PlaylistItemsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. Note that
-// this method will override the existing values for all of the mutable
-// properties that are contained in any parts that the parameter value
-// specifies. For example, a playlist item can specify a start time and
-// end time, which identify the times portion of the video that should
-// play when users watch the video in the playlist. If your request is
-// updating a playlist item that sets these values, and the request's
-// part parameter value includes the contentDetails part, the playlist
-// item's start and end times will be updated to whatever value the
-// request body specifies. If the request body does not specify values,
-// the existing start and end times will be removed and replaced with
-// the default settings.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for all of the
+//   mutable properties that are contained in any parts that the
+//   parameter value specifies. For example, a playlist item can specify
+//   a start time and end time, which identify the times portion of the
+//   video that should play when users watch the video in the playlist.
+//   If your request is updating a playlist item that sets these values,
+//   and the request's part parameter value includes the contentDetails
+//   part, the playlist item's start and end times will be updated to
+//   whatever value the request body specifies. If the request body does
+//   not specify values, the existing start and end times will be
+//   removed and replaced with the default settings.
 func (r *PlaylistItemsService) Update(part []string, playlistitem *PlaylistItem) *PlaylistItemsUpdateCall {
 	c := &PlaylistItemsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19182,7 +19184,7 @@ func (c *PlaylistItemsUpdateCall) Header() http.Header {
 
 func (c *PlaylistItemsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19291,7 +19293,7 @@ type PlaylistsDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *PlaylistsService) Delete(id string) *PlaylistsDeleteCall {
 	c := &PlaylistsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -19342,7 +19344,7 @@ func (c *PlaylistsDeleteCall) Header() http.Header {
 
 func (c *PlaylistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19415,8 +19417,8 @@ type PlaylistsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *PlaylistsService) Insert(part []string, playlist *Playlist) *PlaylistsInsertCall {
 	c := &PlaylistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19492,7 +19494,7 @@ func (c *PlaylistsInsertCall) Header() http.Header {
 
 func (c *PlaylistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19608,13 +19610,13 @@ type PlaylistsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more playlist resource properties that the API response will
-// include. If the parameter identifies a property that contains child
-// properties, the child properties will be included in the response.
-// For example, in a playlist resource, the snippet property contains
-// properties like author, title, description, tags, and timeCreated. As
-// such, if you set *part=snippet*, the API response will contain all of
-// those properties.
+//   or more playlist resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a playlist resource, the snippet property contains
+//   properties like author, title, description, tags, and timeCreated.
+//   As such, if you set *part=snippet*, the API response will contain
+//   all of those properties.
 func (r *PlaylistsService) List(part []string) *PlaylistsListCall {
 	c := &PlaylistsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19744,7 +19746,7 @@ func (c *PlaylistsListCall) Header() http.Header {
 
 func (c *PlaylistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19912,14 +19914,14 @@ type PlaylistsUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. Note that
-// this method will override the existing values for mutable properties
-// that are contained in any parts that the request body specifies. For
-// example, a playlist's description is contained in the snippet part,
-// which must be included in the request body. If the request does not
-// specify a value for the snippet.description property, the playlist's
-// existing description will be deleted.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for mutable
+//   properties that are contained in any parts that the request body
+//   specifies. For example, a playlist's description is contained in
+//   the snippet part, which must be included in the request body. If
+//   the request does not specify a value for the snippet.description
+//   property, the playlist's existing description will be deleted.
 func (r *PlaylistsService) Update(part []string, playlist *Playlist) *PlaylistsUpdateCall {
 	c := &PlaylistsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19971,7 +19973,7 @@ func (c *PlaylistsUpdateCall) Header() http.Header {
 
 func (c *PlaylistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20082,8 +20084,8 @@ type SearchListCall struct {
 // List: Retrieves a list of search resources
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more search resource properties that the API response will
-// include. Set the parameter value to snippet.
+//   or more search resource properties that the API response will
+//   include. Set the parameter value to snippet.
 func (r *SearchService) List(part []string) *SearchListCall {
 	c := &SearchListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -20437,7 +20439,7 @@ func (c *SearchListCall) Header() http.Header {
 
 func (c *SearchListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20858,7 +20860,7 @@ type SubscriptionsDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -20892,7 +20894,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20960,8 +20962,8 @@ type SubscriptionsInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *SubscriptionsService) Insert(part []string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -20996,7 +20998,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21102,13 +21104,13 @@ type SubscriptionsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more subscription resource properties that the API response will
-// include. If the parameter identifies a property that contains child
-// properties, the child properties will be included in the response.
-// For example, in a subscription resource, the snippet property
-// contains other properties, such as a display title for the
-// subscription. If you set *part=snippet*, the API response will also
-// contain all of those nested properties.
+//   or more subscription resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a subscription resource, the snippet property
+//   contains other properties, such as a display title for the
+//   subscription. If you set *part=snippet*, the API response will also
+//   contain all of those nested properties.
 func (r *SubscriptionsService) List(part []string) *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21266,7 +21268,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21461,8 +21463,8 @@ type SuperChatEventsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies the superChatEvent resource
-// parts that the API response will include. Supported values are id and
-// snippet.
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *SuperChatEventsService) List(part []string) *SuperChatEventsListCall {
 	c := &SuperChatEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21530,7 +21532,7 @@ func (c *SuperChatEventsListCall) Header() http.Header {
 
 func (c *SuperChatEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21670,7 +21672,7 @@ type TestsInsertCall struct {
 
 // Insert: POST method.
 //
-// - part:
+// - part: .
 func (r *TestsService) Insert(part []string, testitem *TestItem) *TestsInsertCall {
 	c := &TestsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21705,7 +21707,7 @@ func (c *TestsInsertCall) Header() http.Header {
 
 func (c *TestsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21807,7 +21809,7 @@ type ThirdPartyLinksDeleteCall struct {
 // Delete: Deletes a resource.
 //
 // - linkingToken: Delete the partner links with the given linking
-// token.
+//   token.
 // - type: Type of the link to be deleted.
 func (r *ThirdPartyLinksService) Delete(linkingToken string, type_ string) *ThirdPartyLinksDeleteCall {
 	c := &ThirdPartyLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -21850,7 +21852,7 @@ func (c *ThirdPartyLinksDeleteCall) Header() http.Header {
 
 func (c *ThirdPartyLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21935,8 +21937,8 @@ type ThirdPartyLinksInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter specifies the thirdPartyLink resource
-// parts that the API request and response will include. Supported
-// values are linkingToken, status, and snippet.
+//   parts that the API request and response will include. Supported
+//   values are linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) Insert(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksInsertCall {
 	c := &ThirdPartyLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21971,7 +21973,7 @@ func (c *ThirdPartyLinksInsertCall) Header() http.Header {
 
 func (c *ThirdPartyLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22072,8 +22074,8 @@ type ThirdPartyLinksListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies the thirdPartyLink resource
-// parts that the API response will include. Supported values are
-// linkingToken, status, and snippet.
+//   parts that the API response will include. Supported values are
+//   linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) List(part []string) *ThirdPartyLinksListCall {
 	c := &ThirdPartyLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22137,7 +22139,7 @@ func (c *ThirdPartyLinksListCall) Header() http.Header {
 
 func (c *ThirdPartyLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22251,8 +22253,8 @@ type ThirdPartyLinksUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter specifies the thirdPartyLink resource
-// parts that the API request and response will include. Supported
-// values are linkingToken, status, and snippet.
+//   parts that the API request and response will include. Supported
+//   values are linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) Update(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksUpdateCall {
 	c := &ThirdPartyLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22287,7 +22289,7 @@ func (c *ThirdPartyLinksUpdateCall) Header() http.Header {
 
 func (c *ThirdPartyLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22390,7 +22392,7 @@ type ThumbnailsSetCall struct {
 // result in creation of a single resource), I use a custom verb here.
 //
 // - videoId: Returns the Thumbnail with the given video IDs for Stubby
-// or Apiary.
+//   or Apiary.
 func (r *ThumbnailsService) Set(videoId string) *ThumbnailsSetCall {
 	c := &ThumbnailsSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("videoId", videoId)
@@ -22481,7 +22483,7 @@ func (c *ThumbnailsSetCall) Header() http.Header {
 
 func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22631,8 +22633,8 @@ type VideoAbuseReportReasonsListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies the videoCategory resource
-// parts that the API response will include. Supported values are id and
-// snippet.
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *VideoAbuseReportReasonsService) List(part []string) *VideoAbuseReportReasonsListCall {
 	c := &VideoAbuseReportReasonsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22682,7 +22684,7 @@ func (c *VideoAbuseReportReasonsListCall) Header() http.Header {
 
 func (c *VideoAbuseReportReasonsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22789,8 +22791,8 @@ type VideoCategoriesListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies the videoCategory resource
-// properties that the API response will include. Set the parameter
-// value to snippet.
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *VideoCategoriesService) List(part []string) *VideoCategoriesListCall {
 	c := &VideoCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22853,7 +22855,7 @@ func (c *VideoCategoriesListCall) Header() http.Header {
 
 func (c *VideoCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22968,7 +22970,7 @@ type VideosDeleteCall struct {
 
 // Delete: Deletes a resource.
 //
-// - id:
+// - id: .
 func (r *VideosService) Delete(id string) *VideosDeleteCall {
 	c := &VideosDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -23020,7 +23022,7 @@ func (c *VideosDeleteCall) Header() http.Header {
 
 func (c *VideosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23093,7 +23095,7 @@ type VideosGetRatingCall struct {
 // GetRating: Retrieves the ratings that the authorized user gave to a
 // list of specified videos.
 //
-// - id:
+// - id: .
 func (r *VideosService) GetRating(id []string) *VideosGetRatingCall {
 	c := &VideosGetRatingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -23154,7 +23156,7 @@ func (c *VideosGetRatingCall) Header() http.Header {
 
 func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23260,14 +23262,14 @@ type VideosInsertCall struct {
 // Insert: Inserts a new resource into this collection.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. Note that
-// not all parts contain properties that can be set when inserting or
-// updating a video. For example, the statistics object encapsulates
-// statistics that YouTube calculates for a video and does not contain
-// values that you can set or modify. If the parameter value specifies a
-// part that does not contain mutable values, that part will still be
-// included in the API response.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that not all parts contain properties that can be set when
+//   inserting or updating a video. For example, the statistics object
+//   encapsulates statistics that YouTube calculates for a video and
+//   does not contain values that you can set or modify. If the
+//   parameter value specifies a part that does not contain mutable
+//   values, that part will still be included in the API response.
 func (r *VideosService) Insert(part []string, video *Video) *VideosInsertCall {
 	c := &VideosInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23404,7 +23406,7 @@ func (c *VideosInsertCall) Header() http.Header {
 
 func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23583,13 +23585,13 @@ type VideosListCall struct {
 // List: Retrieves a list of resources, possibly filtered.
 //
 // - part: The *part* parameter specifies a comma-separated list of one
-// or more video resource properties that the API response will include.
-// If the parameter identifies a property that contains child
-// properties, the child properties will be included in the response.
-// For example, in a video resource, the snippet property contains the
-// channelId, title, description, tags, and categoryId properties. As
-// such, if you set *part=snippet*, the API response will contain all of
-// those properties.
+//   or more video resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a video resource, the snippet property contains the
+//   channelId, title, description, tags, and categoryId properties. As
+//   such, if you set *part=snippet*, the API response will contain all
+//   of those properties.
 func (r *VideosService) List(part []string) *VideosListCall {
 	c := &VideosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23748,7 +23750,7 @@ func (c *VideosListCall) Header() http.Header {
 
 func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23958,8 +23960,8 @@ type VideosRateCall struct {
 // Rate: Adds a like or dislike rating to a video or removes a rating
 // from a video.
 //
-// - id:
-// - rating:
+// - id: .
+// - rating: .
 func (r *VideosService) Rate(id string, rating string) *VideosRateCall {
 	c := &VideosRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -23994,7 +23996,7 @@ func (c *VideosRateCall) Header() http.Header {
 
 func (c *VideosRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24126,7 +24128,7 @@ func (c *VideosReportAbuseCall) Header() http.Header {
 
 func (c *VideosReportAbuseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24200,23 +24202,23 @@ type VideosUpdateCall struct {
 // Update: Updates an existing resource.
 //
 // - part: The *part* parameter serves two purposes in this operation.
-// It identifies the properties that the write operation will set as
-// well as the properties that the API response will include. Note that
-// this method will override the existing values for all of the mutable
-// properties that are contained in any parts that the parameter value
-// specifies. For example, a video's privacy setting is contained in the
-// status part. As such, if your request is updating a private video,
-// and the request's part parameter value includes the status part, the
-// video's privacy setting will be updated to whatever value the request
-// body specifies. If the request body does not specify a value, the
-// existing privacy setting will be removed and the video will revert to
-// the default privacy setting. In addition, not all parts contain
-// properties that can be set when inserting or updating a video. For
-// example, the statistics object encapsulates statistics that YouTube
-// calculates for a video and does not contain values that you can set
-// or modify. If the parameter value specifies a part that does not
-// contain mutable values, that part will still be included in the API
-// response.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for all of the
+//   mutable properties that are contained in any parts that the
+//   parameter value specifies. For example, a video's privacy setting
+//   is contained in the status part. As such, if your request is
+//   updating a private video, and the request's part parameter value
+//   includes the status part, the video's privacy setting will be
+//   updated to whatever value the request body specifies. If the
+//   request body does not specify a value, the existing privacy setting
+//   will be removed and the video will revert to the default privacy
+//   setting. In addition, not all parts contain properties that can be
+//   set when inserting or updating a video. For example, the statistics
+//   object encapsulates statistics that YouTube calculates for a video
+//   and does not contain values that you can set or modify. If the
+//   parameter value specifies a part that does not contain mutable
+//   values, that part will still be included in the API response.
 func (r *VideosService) Update(part []string, video *Video) *VideosUpdateCall {
 	c := &VideosUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -24269,7 +24271,7 @@ func (c *VideosUpdateCall) Header() http.Header {
 
 func (c *VideosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24380,7 +24382,7 @@ type WatermarksSetCall struct {
 
 // Set: Allows upload of watermark image and setting it for a channel.
 //
-// - channelId:
+// - channelId: .
 func (r *WatermarksService) Set(channelId string, invideobranding *InvideoBranding) *WatermarksSetCall {
 	c := &WatermarksSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("channelId", channelId)
@@ -24471,7 +24473,7 @@ func (c *WatermarksSetCall) Header() http.Header {
 
 func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24598,7 +24600,7 @@ type WatermarksUnsetCall struct {
 
 // Unset: Allows removal of channel watermark.
 //
-// - channelId:
+// - channelId: .
 func (r *WatermarksService) Unset(channelId string) *WatermarksUnsetCall {
 	c := &WatermarksUnsetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("channelId", channelId)
@@ -24649,7 +24651,7 @@ func (c *WatermarksUnsetCall) Header() http.Header {
 
 func (c *WatermarksUnsetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

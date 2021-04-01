@@ -2884,8 +2884,8 @@ type ServicesAllocateQuotaCall struct {
 // the quota functionality.
 //
 // - serviceName: Name of the service as specified in the service
-// configuration. For example, "pubsub.googleapis.com". See
-// google.api.Service for the definition of a service name.
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service for the definition of a service name.
 func (r *ServicesService) AllocateQuota(serviceName string, allocatequotarequest *AllocateQuotaRequest) *ServicesAllocateQuotaCall {
 	c := &ServicesAllocateQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -2920,7 +2920,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3040,10 +3040,10 @@ type ServicesCheckCall struct {
 // (https://cloud.google.com/iam).
 //
 // - serviceName: The service name as specified in its service
-// configuration. For example, "pubsub.googleapis.com". See
-// google.api.Service
-// (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
-// for the definition of a service name.
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3078,7 +3078,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3196,10 +3196,10 @@ type ServicesReportCall struct {
 // (https://cloud.google.com/iam).
 //
 // - serviceName: The service name as specified in its service
-// configuration. For example, "pubsub.googleapis.com". See
-// google.api.Service
-// (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
-// for the definition of a service name.
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3234,7 +3234,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

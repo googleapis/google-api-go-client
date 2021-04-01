@@ -1068,7 +1068,7 @@ type ProjectsGetConfigCall struct {
 // project.
 //
 // - name: The name of the requested project. Values are of the form
-// `projects/`.
+//   `projects/`.
 func (r *ProjectsService) GetConfig(name string) *ProjectsGetConfigCall {
 	c := &ProjectsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1112,7 +1112,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1216,7 +1216,7 @@ type ProjectsUpdateConfigCall struct {
 // the project.
 //
 // - name: The name of the requested project. Values are of the form
-// `projects/`.
+//   `projects/`.
 func (r *ProjectsService) UpdateConfig(name string, updateprojectconfigrequest *UpdateProjectConfigRequest) *ProjectsUpdateConfigCall {
 	c := &ProjectsUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1251,7 +1251,7 @@ func (c *ProjectsUpdateConfigCall) Header() http.Header {
 
 func (c *ProjectsUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1361,7 +1361,7 @@ type ProjectsReposCreateCall struct {
 // `ALREADY_EXISTS`.
 //
 // - parent: The project in which to create the repo. Values are of the
-// form `projects/`.
+//   form `projects/`.
 func (r *ProjectsReposService) Create(parent string, repo *Repo) *ProjectsReposCreateCall {
 	c := &ProjectsReposCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1396,7 +1396,7 @@ func (c *ProjectsReposCreateCall) Header() http.Header {
 
 func (c *ProjectsReposCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1504,7 +1504,7 @@ type ProjectsReposDeleteCall struct {
 // Delete: Deletes a repo.
 //
 // - name: The name of the repo to delete. Values are of the form
-// `projects//repos/`.
+//   `projects//repos/`.
 func (r *ProjectsReposService) Delete(name string) *ProjectsReposDeleteCall {
 	c := &ProjectsReposDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1538,7 +1538,7 @@ func (c *ProjectsReposDeleteCall) Header() http.Header {
 
 func (c *ProjectsReposDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1639,7 +1639,7 @@ type ProjectsReposGetCall struct {
 // Get: Returns information about a repo.
 //
 // - name: The name of the requested repository. Values are of the form
-// `projects//repos/`.
+//   `projects//repos/`.
 func (r *ProjectsReposService) Get(name string) *ProjectsReposGetCall {
 	c := &ProjectsReposGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1683,7 +1683,7 @@ func (c *ProjectsReposGetCall) Header() http.Header {
 
 func (c *ProjectsReposGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1791,8 +1791,8 @@ type ProjectsReposGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsReposService) GetIamPolicy(resource string) *ProjectsReposGetIamPolicyCall {
 	c := &ProjectsReposGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1850,7 +1850,7 @@ func (c *ProjectsReposGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsReposGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1964,7 +1964,7 @@ type ProjectsReposListCall struct {
 // GetRepo.
 //
 // - name: The project ID whose repos should be listed. Values are of
-// the form `projects/`.
+//   the form `projects/`.
 func (r *ProjectsReposService) List(name string) *ProjectsReposListCall {
 	c := &ProjectsReposListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2025,7 +2025,7 @@ func (c *ProjectsReposListCall) Header() http.Header {
 
 func (c *ProjectsReposListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2163,7 +2163,7 @@ type ProjectsReposPatchCall struct {
 // Patch: Updates information about a repo.
 //
 // - name: The name of the requested repository. Values are of the form
-// `projects//repos/`.
+//   `projects//repos/`.
 func (r *ProjectsReposService) Patch(name string, updatereporequest *UpdateRepoRequest) *ProjectsReposPatchCall {
 	c := &ProjectsReposPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2198,7 +2198,7 @@ func (c *ProjectsReposPatchCall) Header() http.Header {
 
 func (c *ProjectsReposPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,8 +2307,8 @@ type ProjectsReposSetIamPolicyCall struct {
 // resource. Replaces any existing policy.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsReposService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsReposSetIamPolicyCall {
 	c := &ProjectsReposSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2343,7 +2343,7 @@ func (c *ProjectsReposSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsReposSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2453,7 +2453,7 @@ type ProjectsReposSyncCall struct {
 // SyncRepoMetadata in the metadata field.
 //
 // - name: The name of the repo to synchronize. Values are of the form
-// `projects//repos/`.
+//   `projects//repos/`.
 func (r *ProjectsReposService) Sync(name string, syncreporequest *SyncRepoRequest) *ProjectsReposSyncCall {
 	c := &ProjectsReposSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2488,7 +2488,7 @@ func (c *ProjectsReposSyncCall) Header() http.Header {
 
 func (c *ProjectsReposSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2598,8 +2598,8 @@ type ProjectsReposTestIamPermissionsCall struct {
 // an empty set of permissions, not a NOT_FOUND error.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsReposService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsReposTestIamPermissionsCall {
 	c := &ProjectsReposTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2634,7 +2634,7 @@ func (c *ProjectsReposTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsReposTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1322,7 +1322,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) Header() http.Head
 
 func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1426,18 +1426,18 @@ type BillingAccountsLocationsInsightTypesInsightsListCall struct {
 // recommender.*.list IAM permission for the specified insight type.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_
-// TYPE_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightType
-// s/[INSIGHT_TYPE_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
-// D]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[IN
-// SIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-// supported insight types:
-// https://cloud.google.com/recommender/docs/insights/insight-types.)
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1508,7 +1508,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Header() http.Hea
 
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1689,7 +1689,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) Header() 
 
 func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1841,7 +1841,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) Header() ht
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1946,18 +1946,18 @@ type BillingAccountsLocationsRecommendersRecommendationsListCall struct {
 // recommender.*.list IAM permission for the specified recommender.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMEN
-// DER_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommender
-// s/[RECOMMENDER_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
-// ]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RE
-// COMMENDER_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-// supported recommenders:
-// https://cloud.google.com/recommender/docs/recommenders.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2029,7 +2029,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Header() h
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2212,7 +2212,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) Hea
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2362,7 +2362,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) Head
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2512,7 +2512,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) H
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2665,7 +2665,7 @@ func (c *FoldersLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2769,18 +2769,18 @@ type FoldersLocationsInsightTypesInsightsListCall struct {
 // recommender.*.list IAM permission for the specified insight type.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_
-// TYPE_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightType
-// s/[INSIGHT_TYPE_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
-// D]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[IN
-// SIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-// supported insight types:
-// https://cloud.google.com/recommender/docs/insights/insight-types.)
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *FoldersLocationsInsightTypesInsightsListCall {
 	c := &FoldersLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2851,7 +2851,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *FoldersLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3032,7 +3032,7 @@ func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.Hea
 
 func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3184,7 +3184,7 @@ func (c *FoldersLocationsRecommendersRecommendationsGetCall) Header() http.Heade
 
 func (c *FoldersLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3289,18 +3289,18 @@ type FoldersLocationsRecommendersRecommendationsListCall struct {
 // recommender.*.list IAM permission for the specified recommender.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMEN
-// DER_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommender
-// s/[RECOMMENDER_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
-// ]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RE
-// COMMENDER_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-// supported recommenders:
-// https://cloud.google.com/recommender/docs/recommenders.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c := &FoldersLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3372,7 +3372,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Header() http.Head
 
 func (c *FoldersLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3555,7 +3555,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) Header() ht
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3705,7 +3705,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) Header() htt
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3855,7 +3855,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Header() 
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4008,7 +4008,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsGetCall) Header() http.Header
 
 func (c *OrganizationsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4112,18 +4112,18 @@ type OrganizationsLocationsInsightTypesInsightsListCall struct {
 // recommender.*.list IAM permission for the specified insight type.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_
-// TYPE_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightType
-// s/[INSIGHT_TYPE_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
-// D]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[IN
-// SIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-// supported insight types:
-// https://cloud.google.com/recommender/docs/insights/insight-types.)
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c := &OrganizationsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4194,7 +4194,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Header() http.Heade
 
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4375,7 +4375,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) Header() ht
 
 func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4527,7 +4527,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) Header() http
 
 func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4632,18 +4632,18 @@ type OrganizationsLocationsRecommendersRecommendationsListCall struct {
 // recommender.*.list IAM permission for the specified recommender.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMEN
-// DER_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommender
-// s/[RECOMMENDER_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
-// ]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RE
-// COMMENDER_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-// supported recommenders:
-// https://cloud.google.com/recommender/docs/recommenders.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4715,7 +4715,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Header() htt
 
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4898,7 +4898,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) Heade
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5048,7 +5048,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) Header
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5198,7 +5198,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) Hea
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5351,7 +5351,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5455,18 +5455,18 @@ type ProjectsLocationsInsightTypesInsightsListCall struct {
 // recommender.*.list IAM permission for the specified insight type.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_
-// TYPE_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightType
-// s/[INSIGHT_TYPE_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
-// D]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[IN
-// SIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-// supported insight types:
-// https://cloud.google.com/recommender/docs/insights/insight-types.)
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.).
 func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c := &ProjectsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5537,7 +5537,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5718,7 +5718,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.He
 
 func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5870,7 +5870,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5975,18 +5975,18 @@ type ProjectsLocationsRecommendersRecommendationsListCall struct {
 // recommender.*.list IAM permission for the specified recommender.
 //
 // - parent: The container resource on which to execute the request.
-// Acceptable formats: 1.
-// `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMEN
-// DER_ID]` 2.
-// `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommender
-// s/[RECOMMENDER_ID]` 3.
-// `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
-// ]` 4.
-// `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RE
-// COMMENDER_ID]` LOCATION here refers to GCP Locations:
-// https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-// supported recommenders:
-// https://cloud.google.com/recommender/docs/recommenders.
+//   Acceptable formats: 1.
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` 2.
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` 3.
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` 4.
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c := &ProjectsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6058,7 +6058,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6241,7 +6241,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6391,7 +6391,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6541,7 +6541,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

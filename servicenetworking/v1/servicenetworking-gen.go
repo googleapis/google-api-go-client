@@ -4919,7 +4919,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5063,7 +5063,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5209,7 +5209,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5386,7 +5386,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5535,13 +5535,13 @@ type ServicesAddSubnetworkCall struct {
 // needed.
 //
 // - parent: A tenant project in the service producer organization, in
-// the following format:
-// services/{service}/{collection-id}/{resource-id}. {collection-id} is
-// the cloud resource collection type that represents the tenant
-// project. Only `projects` are supported. {resource-id} is the tenant
-// project numeric id, such as `123456`. {service} the name of the
-// peering service, such as `service-peering.example.com`. This service
-// must already be enabled in the service consumer's project.
+//   the following format:
+//   services/{service}/{collection-id}/{resource-id}. {collection-id}
+//   is the cloud resource collection type that represents the tenant
+//   project. Only `projects` are supported. {resource-id} is the tenant
+//   project numeric id, such as `123456`. {service} the name of the
+//   peering service, such as `service-peering.example.com`. This
+//   service must already be enabled in the service consumer's project.
 func (r *ServicesService) AddSubnetwork(parent string, addsubnetworkrequest *AddSubnetworkRequest) *ServicesAddSubnetworkCall {
 	c := &ServicesAddSubnetworkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5576,7 +5576,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5686,9 +5686,9 @@ type ServicesDisableVpcServiceControlsCall struct {
 // connection.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesService) DisableVpcServiceControls(parent string, disablevpcservicecontrolsrequest *DisableVpcServiceControlsRequest) *ServicesDisableVpcServiceControlsCall {
 	c := &ServicesDisableVpcServiceControlsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5723,7 +5723,7 @@ func (c *ServicesDisableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5833,9 +5833,9 @@ type ServicesEnableVpcServiceControlsCall struct {
 // connection.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesService) EnableVpcServiceControls(parent string, enablevpcservicecontrolsrequest *EnableVpcServiceControlsRequest) *ServicesEnableVpcServiceControlsCall {
 	c := &ServicesEnableVpcServiceControlsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5870,7 +5870,7 @@ func (c *ServicesEnableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5984,8 +5984,8 @@ type ServicesSearchRangeCall struct {
 // leading bits of ipv4 network mask, as in CIDR range notation).
 //
 // - parent: This is in a form services/{service}. {service} the name of
-// the private access management service, for example
-// 'service-peering.example.com'.
+//   the private access management service, for example
+//   'service-peering.example.com'.
 func (r *ServicesService) SearchRange(parent string, searchrangerequest *SearchRangeRequest) *ServicesSearchRangeCall {
 	c := &ServicesSearchRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6020,7 +6020,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6133,8 +6133,8 @@ type ServicesValidateCall struct {
 // determine if user request is invalid.
 //
 // - parent: This is in a form services/{service} where {service} is the
-// name of the private access management service. For example
-// 'service-peering.example.com'.
+//   name of the private access management service. For example
+//   'service-peering.example.com'.
 func (r *ServicesService) Validate(parent string, validateconsumerconfigrequest *ValidateConsumerConfigRequest) *ServicesValidateCall {
 	c := &ServicesValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6169,7 +6169,7 @@ func (c *ServicesValidateCall) Header() http.Header {
 
 func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6285,9 +6285,9 @@ type ServicesConnectionsCreateCall struct {
 // be invoked once.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesConnectionsService) Create(parent string, connection *Connection) *ServicesConnectionsCreateCall {
 	c := &ServicesConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6322,7 +6322,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6432,11 +6432,11 @@ type ServicesConnectionsListCall struct {
 // consumer's VPC network.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`. If you specify
-// `services/-` as the parameter value, all configured peering services
-// are listed.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`. If you specify
+//   `services/-` as the parameter value, all configured peering
+//   services are listed.
 func (r *ServicesConnectionsService) List(parent string) *ServicesConnectionsListCall {
 	c := &ServicesConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6492,7 +6492,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6602,12 +6602,12 @@ type ServicesConnectionsPatchCall struct {
 // connection.
 //
 // - name: The private service connection that connects to a service
-// producer organization. The name includes both the private service
-// name and the VPC network peering name in the format of
-// `services/{peering_service_name}/connections/{vpc_peering_name}`. For
-// Google services that support this functionality, this is
-// `services/servicenetworking.googleapis.com/connections/servicenetworki
-// ng-googleapis-com`.
+//   producer organization. The name includes both the private service
+//   name and the VPC network peering name in the format of
+//   `services/{peering_service_name}/connections/{vpc_peering_name}`.
+//   For Google services that support this functionality, this is
+//   `services/servicenetworking.googleapis.com/connections/servicenetwor
+//   king-googleapis-com`.
 func (r *ServicesConnectionsService) Patch(name string, connection *Connection) *ServicesConnectionsPatchCall {
 	c := &ServicesConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6657,7 +6657,7 @@ func (c *ServicesConnectionsPatchCall) Header() http.Header {
 
 func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6778,9 +6778,9 @@ type ServicesDnsRecordSetsAddCall struct {
 // private DNS zones in the shared producer host project.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsRecordSetsService) Add(parent string, adddnsrecordsetrequest *AddDnsRecordSetRequest) *ServicesDnsRecordSetsAddCall {
 	c := &ServicesDnsRecordSetsAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6815,7 +6815,7 @@ func (c *ServicesDnsRecordSetsAddCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6925,9 +6925,9 @@ type ServicesDnsRecordSetsRemoveCall struct {
 // sets from private DNS zones in the shared producer host project.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsRecordSetsService) Remove(parent string, removednsrecordsetrequest *RemoveDnsRecordSetRequest) *ServicesDnsRecordSetsRemoveCall {
 	c := &ServicesDnsRecordSetsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6962,7 +6962,7 @@ func (c *ServicesDnsRecordSetsRemoveCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7072,9 +7072,9 @@ type ServicesDnsRecordSetsUpdateCall struct {
 // sets from private DNS zones in the shared producer host project.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsRecordSetsService) Update(parent string, updatednsrecordsetrequest *UpdateDnsRecordSetRequest) *ServicesDnsRecordSetsUpdateCall {
 	c := &ServicesDnsRecordSetsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7109,7 +7109,7 @@ func (c *ServicesDnsRecordSetsUpdateCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7220,9 +7220,9 @@ type ServicesDnsZonesAddCall struct {
 // consumer project.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsZonesService) Add(parent string, adddnszonerequest *AddDnsZoneRequest) *ServicesDnsZonesAddCall {
 	c := &ServicesDnsZonesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7257,7 +7257,7 @@ func (c *ServicesDnsZonesAddCall) Header() http.Header {
 
 func (c *ServicesDnsZonesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7368,9 +7368,9 @@ type ServicesDnsZonesRemoveCall struct {
 // in the consumer project.
 //
 // - parent: The service that is managing peering connectivity for a
-// service producer's organization. For Google services that support
-// this functionality, this value is
-// `services/servicenetworking.googleapis.com`.
+//   service producer's organization. For Google services that support
+//   this functionality, this value is
+//   `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsZonesService) Remove(parent string, removednszonerequest *RemoveDnsZoneRequest) *ServicesDnsZonesRemoveCall {
 	c := &ServicesDnsZonesRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7405,7 +7405,7 @@ func (c *ServicesDnsZonesRemoveCall) Header() http.Header {
 
 func (c *ServicesDnsZonesRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7516,13 +7516,13 @@ type ServicesProjectsGlobalNetworksGetCall struct {
 // subnetwork routes with public IP.
 //
 // - name: Name of the consumer config to retrieve in the format:
-// `services/{service}/projects/{project}/global/networks/{network}`.
-// {service} is the peering service that is managing connectivity for
-// the service producer's organization. For Google services that support
-// this functionality, this value is `servicenetworking.googleapis.com`.
-// {project} is a project number e.g. `12345` that contains the service
-// consumer's VPC network. {network} is the name of the service
-// consumer's VPC network.
+//   `services/{service}/projects/{project}/global/networks/{network}`.
+//   {service} is the peering service that is managing connectivity for
+//   the service producer's organization. For Google services that
+//   support this functionality, this value is
+//   `servicenetworking.googleapis.com`. {project} is a project number
+//   e.g. `12345` that contains the service consumer's VPC network.
+//   {network} is the name of the service consumer's VPC network.
 func (r *ServicesProjectsGlobalNetworksService) Get(name string) *ServicesProjectsGlobalNetworksGetCall {
 	c := &ServicesProjectsGlobalNetworksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7566,7 +7566,7 @@ func (c *ServicesProjectsGlobalNetworksGetCall) Header() http.Header {
 
 func (c *ServicesProjectsGlobalNetworksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7672,14 +7672,15 @@ type ServicesProjectsGlobalNetworksUpdateConsumerConfigCall struct {
 // custom routes and subnetwork routes with public IP.
 //
 // - parent: Parent resource identifying the connection for which the
-// consumer config is being updated in the format:
-// `services/{service}/projects/{project}/global/networks/{network}`
-// {service} is the peering service that is managing connectivity for
-// the service producer's organization. For Google services that support
-// this functionality, this value is `servicenetworking.googleapis.com`.
-// {project} is the number of the project that contains the service
-// consumer's VPC network e.g. `12345`. {network} is the name of the
-// service consumer's VPC network.
+//   consumer config is being updated in the format:
+//   `services/{service}/projects/{project}/global/networks/{network}`
+//   {service} is the peering service that is managing connectivity for
+//   the service producer's organization. For Google services that
+//   support this functionality, this value is
+//   `servicenetworking.googleapis.com`. {project} is the number of the
+//   project that contains the service consumer's VPC network e.g.
+//   `12345`. {network} is the name of the service consumer's VPC
+//   network.
 func (r *ServicesProjectsGlobalNetworksService) UpdateConsumerConfig(parent string, updateconsumerconfigrequest *UpdateConsumerConfigRequest) *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall {
 	c := &ServicesProjectsGlobalNetworksUpdateConsumerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7714,7 +7715,7 @@ func (c *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall) Header() http.H
 
 func (c *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7825,14 +7826,15 @@ type ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall struct {
 // the consumer VPC network to be resolved.
 //
 // - parent: Parent resource identifying the connection for which the
-// peered DNS domain will be created in the format:
-// `services/{service}/projects/{project}/global/networks/{network}`
-// {service} is the peering service that is managing connectivity for
-// the service producer's organization. For Google services that support
-// this functionality, this value is `servicenetworking.googleapis.com`.
-// {project} is the number of the project that contains the service
-// consumer's VPC network e.g. `12345`. {network} is the name of the
-// service consumer's VPC network.
+//   peered DNS domain will be created in the format:
+//   `services/{service}/projects/{project}/global/networks/{network}`
+//   {service} is the peering service that is managing connectivity for
+//   the service producer's organization. For Google services that
+//   support this functionality, this value is
+//   `servicenetworking.googleapis.com`. {project} is the number of the
+//   project that contains the service consumer's VPC network e.g.
+//   `12345`. {network} is the name of the service consumer's VPC
+//   network.
 func (r *ServicesProjectsGlobalNetworksPeeredDnsDomainsService) Create(parent string, peereddnsdomain *PeeredDnsDomain) *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall {
 	c := &ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7867,7 +7869,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) Header() http
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7975,14 +7977,14 @@ type ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall struct {
 // Delete: Deletes a peered DNS domain.
 //
 // - name: The name of the peered DNS domain to delete in the format:
-// `services/{service}/projects/{project}/global/networks/{network}/peere
-// dDnsDomains/{name}`. {service} is the peering service that is
-// managing connectivity for the service producer's organization. For
-// Google services that support this functionality, this value is
-// `servicenetworking.googleapis.com`. {project} is the number of the
-// project that contains the service consumer's VPC network e.g.
-// `12345`. {network} is the name of the service consumer's VPC network.
-// {name} is the name of the peered DNS domain.
+//   `services/{service}/projects/{project}/global/networks/{network}/pee
+//   redDnsDomains/{name}`. {service} is the peering service that is
+//   managing connectivity for the service producer's organization. For
+//   Google services that support this functionality, this value is
+//   `servicenetworking.googleapis.com`. {project} is the number of the
+//   project that contains the service consumer's VPC network e.g.
+//   `12345`. {network} is the name of the service consumer's VPC
+//   network. {name} is the name of the peered DNS domain.
 func (r *ServicesProjectsGlobalNetworksPeeredDnsDomainsService) Delete(name string) *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall {
 	c := &ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8016,7 +8018,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) Header() http
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8117,14 +8119,14 @@ type ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall struct {
 // List: Lists peered DNS domains for a connection.
 //
 // - parent: Parent resource identifying the connection which owns this
-// collection of peered DNS domains in the format:
-// `services/{service}/projects/{project}/global/networks/{network}`.
-// {service} is the peering service that is managing connectivity for
-// the service producer's organization. For Google services that support
-// this functionality, this value is `servicenetworking.googleapis.com`.
-// {project} is a project number e.g. `12345` that contains the service
-// consumer's VPC network. {network} is the name of the service
-// consumer's VPC network.
+//   collection of peered DNS domains in the format:
+//   `services/{service}/projects/{project}/global/networks/{network}`.
+//   {service} is the peering service that is managing connectivity for
+//   the service producer's organization. For Google services that
+//   support this functionality, this value is
+//   `servicenetworking.googleapis.com`. {project} is a project number
+//   e.g. `12345` that contains the service consumer's VPC network.
+//   {network} is the name of the service consumer's VPC network.
 func (r *ServicesProjectsGlobalNetworksPeeredDnsDomainsService) List(parent string) *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall {
 	c := &ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8168,7 +8170,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) Header() http.H
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8275,8 +8277,8 @@ type ServicesRolesAddCall struct {
 // role is applied at only the granularity specified in the allowlist.
 //
 // - parent: This is in a form services/{service} where {service} is the
-// name of the private access management service. For example
-// 'service-peering.example.com'.
+//   name of the private access management service. For example
+//   'service-peering.example.com'.
 func (r *ServicesRolesService) Add(parent string, addrolesrequest *AddRolesRequest) *ServicesRolesAddCall {
 	c := &ServicesRolesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8311,7 +8313,7 @@ func (c *ServicesRolesAddCall) Header() http.Header {
 
 func (c *ServicesRolesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

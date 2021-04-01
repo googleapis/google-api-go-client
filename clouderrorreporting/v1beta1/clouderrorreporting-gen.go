@@ -823,10 +823,10 @@ type ProjectsDeleteEventsCall struct {
 // DeleteEvents: Deletes all error events of a given project.
 //
 // - projectName: The resource name of the Google Cloud Platform
-// project. Written as `projects/{projectID}`, where `{projectID}` is
-// the Google Cloud Platform project ID
-// (https://support.google.com/cloud/answer/6158840). Example:
-// `projects/my-project-123`.
+//   project. Written as `projects/{projectID}`, where `{projectID}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example:
+//   `projects/my-project-123`.
 func (r *ProjectsService) DeleteEvents(projectName string) *ProjectsDeleteEventsCall {
 	c := &ProjectsDeleteEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -860,7 +860,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -960,10 +960,10 @@ type ProjectsEventsListCall struct {
 // List: Lists the specified events.
 //
 // - projectName: The resource name of the Google Cloud Platform
-// project. Written as `projects/{projectID}`, where `{projectID}` is
-// the Google Cloud Platform project ID
-// (https://support.google.com/cloud/answer/6158840). Example:
-// `projects/my-project-123`.
+//   project. Written as `projects/{projectID}`, where `{projectID}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example:
+//   `projects/my-project-123`.
 func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall {
 	c := &ProjectsEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1078,7 +1078,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1264,10 +1264,10 @@ type ProjectsEventsReportCall struct {
 // (/error-reporting/docs/regionalization).
 //
 // - projectName: The resource name of the Google Cloud Platform
-// project. Written as `projects/{projectId}`, where `{projectId}` is
-// the Google Cloud Platform project ID
-// (https://support.google.com/cloud/answer/6158840). Example: //
-// `projects/my-project-123`.
+//   project. Written as `projects/{projectId}`, where `{projectId}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example: //
+//   `projects/my-project-123`.
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1302,7 +1302,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1410,11 +1410,11 @@ type ProjectsGroupStatsListCall struct {
 // List: Lists the specified groups.
 //
 // - projectName: The resource name of the Google Cloud Platform
-// project. Written as `projects/{projectID}` or
-// `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}`
-// can be found in the Google Cloud Console
-// (https://support.google.com/cloud/answer/6158840). Examples:
-// `projects/my-project-123`, `projects/5551234`.
+//   project. Written as `projects/{projectID}` or
+//   `projects/{projectNumber}`, where `{projectID}` and
+//   `{projectNumber}` can be found in the Google Cloud Console
+//   (https://support.google.com/cloud/answer/6158840). Examples:
+//   `projects/my-project-123`, `projects/5551234`.
 func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStatsListCall {
 	c := &ProjectsGroupStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1586,7 +1586,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1809,10 +1809,10 @@ type ProjectsGroupsGetCall struct {
 // Get: Get the specified group.
 //
 // - groupName: The group resource name. Written as
-// `projects/{projectID}/groups/{group_name}`. Call `groupStats.list`
-// (https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list)
-// to return a list of groups belonging to this project. Example:
-// `projects/my-project-123/groups/my-group`
+//   `projects/{projectID}/groups/{group_name}`. Call `groupStats.list`
+//   (https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list)
+//   to return a list of groups belonging to this project. Example:
+//   `projects/my-project-123/groups/my-group`.
 func (r *ProjectsGroupsService) Get(groupName string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupName = groupName
@@ -1856,7 +1856,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1960,7 +1960,7 @@ type ProjectsGroupsUpdateCall struct {
 // does not exist.
 //
 // - name: The group resource name. Example:
-// projects/my-project-123/groups/CNSgkpnppqKCUw
+//   projects/my-project-123/groups/CNSgkpnppqKCUw.
 func (r *ProjectsGroupsService) Update(name string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1995,7 +1995,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

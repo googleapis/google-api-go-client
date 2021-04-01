@@ -1721,7 +1721,7 @@ type AccountsGetCall struct {
 // Get: Gets information about the specified AdMob publisher account.
 //
 // - name: Resource name of the publisher account to retrieve. Example:
-// accounts/pub-9876543210987654
+//   accounts/pub-9876543210987654.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1765,7 +1765,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1927,7 +1927,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2052,7 +2052,7 @@ type AccountsAdUnitsListCall struct {
 // List: List the ad units under the specified AdMob account.
 //
 // - parent: Resource name of the account to list ad units for. Example:
-// accounts/pub-9876543210987654
+//   accounts/pub-9876543210987654.
 func (r *AccountsAdUnitsService) List(parent string) *AccountsAdUnitsListCall {
 	c := &AccountsAdUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2114,7 +2114,7 @@ func (c *AccountsAdUnitsListCall) Header() http.Header {
 
 func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2250,7 +2250,7 @@ type AccountsAppsListCall struct {
 // List: List the apps under the specified AdMob account.
 //
 // - parent: Resource name of the account to list apps for. Example:
-// accounts/pub-9876543210987654
+//   accounts/pub-9876543210987654.
 func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
 	c := &AccountsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2312,7 +2312,7 @@ func (c *AccountsAppsListCall) Header() http.Header {
 
 func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2450,7 +2450,7 @@ type AccountsMediationReportGenerateCall struct {
 // The result is returned in a sequence of responses.
 //
 // - parent: Resource name of the account to generate the report for.
-// Example: accounts/pub-9876543210987654
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2485,7 +2485,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2597,7 +2597,7 @@ type AccountsNetworkReportGenerateCall struct {
 // The result is returned in a sequence of responses.
 //
 // - parent: Resource name of the account to generate the report for.
-// Example: accounts/pub-9876543210987654
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2632,7 +2632,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

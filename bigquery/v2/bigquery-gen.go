@@ -6018,9 +6018,7 @@ type Routine struct {
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
 	// ReturnTableType: Optional. Set only if Routine is a
-	// "TABLE_VALUED_FUNCTION". TODO(b/173344646) - Update return_type
-	// documentation to say it cannot be set for TABLE_VALUED_FUNCTION
-	// before preview launch.
+	// "TABLE_VALUED_FUNCTION".
 	ReturnTableType *StandardSqlTableType `json:"returnTableType,omitempty"`
 
 	// ReturnType: Optional if language = "SQL"; required otherwise. If
@@ -7075,8 +7073,9 @@ type TableFieldSchema struct {
 	// Type: [Required] The field data type. Possible values include STRING,
 	// BYTES, INTEGER, INT64 (same as INTEGER), FLOAT, FLOAT64 (same as
 	// FLOAT), NUMERIC, BIGNUMERIC, BOOLEAN, BOOL (same as BOOLEAN),
-	// TIMESTAMP, DATE, TIME, DATETIME, RECORD (where RECORD indicates that
-	// the field contains a nested schema) or STRUCT (same as RECORD).
+	// TIMESTAMP, DATE, TIME, DATETIME, INTERVAL, RECORD (where RECORD
+	// indicates that the field contains a nested schema) or STRUCT (same as
+	// RECORD).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
@@ -8029,8 +8028,8 @@ type DatasetsDeleteCall struct {
 // manually or by specifying deleteContents. Immediately after deletion,
 // you can create another dataset with the same name.
 //
-// - datasetId: Dataset ID of dataset being deleted
-// - projectId: Project ID of the dataset being deleted
+// - datasetId: Dataset ID of dataset being deleted.
+// - projectId: Project ID of the dataset being deleted.
 func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDeleteCall {
 	c := &DatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8073,7 +8072,7 @@ func (c *DatasetsDeleteCall) Header() http.Header {
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8157,8 +8156,8 @@ type DatasetsGetCall struct {
 
 // Get: Returns the dataset specified by datasetID.
 //
-// - datasetId: Dataset ID of the requested dataset
-// - projectId: Project ID of the requested dataset
+// - datasetId: Dataset ID of the requested dataset.
+// - projectId: Project ID of the requested dataset.
 func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCall {
 	c := &DatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8203,7 +8202,7 @@ func (c *DatasetsGetCall) Header() http.Header {
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8314,7 +8313,7 @@ type DatasetsInsertCall struct {
 
 // Insert: Creates a new empty dataset.
 //
-// - projectId: Project ID of the new dataset
+// - projectId: Project ID of the new dataset.
 func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsInsertCall {
 	c := &DatasetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8349,7 +8348,7 @@ func (c *DatasetsInsertCall) Header() http.Header {
 
 func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8456,7 +8455,7 @@ type DatasetsListCall struct {
 // List: Lists all datasets in the specified project to which you have
 // been granted the READER dataset role.
 //
-// - projectId: Project ID of the datasets to be listed
+// - projectId: Project ID of the datasets to be listed.
 func (r *DatasetsService) List(projectId string) *DatasetsListCall {
 	c := &DatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8531,7 +8530,7 @@ func (c *DatasetsListCall) Header() http.Header {
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8680,8 +8679,8 @@ type DatasetsPatchCall struct {
 // replaces fields that are provided in the submitted dataset resource.
 // This method supports patch semantics.
 //
-// - datasetId: Dataset ID of the dataset being updated
-// - projectId: Project ID of the dataset being updated
+// - datasetId: Dataset ID of the dataset being updated.
+// - projectId: Project ID of the dataset being updated.
 func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dataset) *DatasetsPatchCall {
 	c := &DatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8717,7 +8716,7 @@ func (c *DatasetsPatchCall) Header() http.Header {
 
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8834,8 +8833,8 @@ type DatasetsUpdateCall struct {
 // replaces the entire dataset resource, whereas the patch method only
 // replaces fields that are provided in the submitted dataset resource.
 //
-// - datasetId: Dataset ID of the dataset being updated
-// - projectId: Project ID of the dataset being updated
+// - datasetId: Dataset ID of the dataset being updated.
+// - projectId: Project ID of the dataset being updated.
 func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Dataset) *DatasetsUpdateCall {
 	c := &DatasetsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8871,7 +8870,7 @@ func (c *DatasetsUpdateCall) Header() http.Header {
 
 func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8988,8 +8987,8 @@ type JobsCancelCall struct {
 // see if the cancel completed successfully. Cancelled jobs may still
 // incur costs.
 //
-// - jobId: [Required] Job ID of the job to cancel
-// - projectId: [Required] Project ID of the job to cancel
+// - jobId: [Required] Job ID of the job to cancel.
+// - projectId: [Required] Project ID of the job to cancel.
 func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 	c := &JobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9032,7 +9031,7 @@ func (c *JobsCancelCall) Header() http.Header {
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9130,6 +9129,139 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 
 }
 
+// method id "bigquery.jobs.delete":
+
+type JobsDeleteCall struct {
+	s          *Service
+	projectId  string
+	jobId      string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Requests that a job is deleted. This call will return when
+// the job is deleted. This method is available in limited preview.
+//
+// - jobId: Job ID of the job to be deleted. If this is a parent job
+//   which has child jobs, all child jobs will be deleted as well.
+//   Deletion of child jobs directly is not allowed.
+// - projectId: Project ID of the job to be deleted.
+func (r *JobsService) Delete(projectId string, jobId string) *JobsDeleteCall {
+	c := &JobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.jobId = jobId
+	return c
+}
+
+// Location sets the optional parameter "location": The geographic
+// location of the job. Required. See details at:
+// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+func (c *JobsDeleteCall) Location(location string) *JobsDeleteCall {
+	c.urlParams_.Set("location", location)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsDeleteCall) Fields(s ...googleapi.Field) *JobsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *JobsDeleteCall) Context(ctx context.Context) *JobsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *JobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *JobsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/jobs/{+jobId}/delete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.jobs.delete" call.
+func (c *JobsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Requests that a job is deleted. This call will return when the job is deleted. This method is available in limited preview.",
+	//   "flatPath": "projects/{projectsId}/jobs/{jobsId}/delete",
+	//   "httpMethod": "DELETE",
+	//   "id": "bigquery.jobs.delete",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Required. Job ID of the job to be deleted. If this is a parent job which has child jobs, all child jobs will be deleted as well. Deletion of child jobs directly is not allowed.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "The geographic location of the job. Required. See details at: https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. Project ID of the job to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{+projectId}/jobs/{+jobId}/delete",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigquery.jobs.get":
 
 type JobsGetCall struct {
@@ -9146,8 +9278,8 @@ type JobsGetCall struct {
 // available for a six month period after creation. Requires that you're
 // the person who ran the job, or have the Is Owner project role.
 //
-// - jobId: [Required] Job ID of the requested job
-// - projectId: [Required] Project ID of the requested job
+// - jobId: [Required] Job ID of the requested job.
+// - projectId: [Required] Project ID of the requested job.
 func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9200,7 +9332,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9317,8 +9449,8 @@ type JobsGetQueryResultsCall struct {
 
 // GetQueryResults: Retrieves the results of a query job.
 //
-// - jobId: [Required] Job ID of the query job
-// - projectId: [Required] Project ID of the query job
+// - jobId: [Required] Job ID of the query job.
+// - projectId: [Required] Project ID of the query job.
 func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQueryResultsCall {
 	c := &JobsGetQueryResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9402,7 +9534,7 @@ func (c *JobsGetQueryResultsCall) Header() http.Header {
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9565,7 +9697,7 @@ type JobsInsertCall struct {
 // role.
 //
 // - projectId: Project ID of the project that will be billed for the
-// job
+//   job.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 	c := &JobsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9639,7 +9771,7 @@ func (c *JobsInsertCall) Header() http.Header {
 
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9796,7 +9928,7 @@ type JobsListCall struct {
 // time. Requires the Can View project role, or the Is Owner project
 // role if you set the allUsers property.
 //
-// - projectId: Project ID of the jobs to list
+// - projectId: Project ID of the jobs to list.
 func (r *JobsService) List(projectId string) *JobsListCall {
 	c := &JobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9908,7 +10040,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10095,7 +10227,7 @@ type JobsQueryCall struct {
 // Query: Runs a BigQuery SQL query synchronously and returns query
 // results if the query completes within a specified timeout.
 //
-// - projectId: Project ID of the project billed for the query
+// - projectId: Project ID of the project billed for the query.
 func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
 	c := &JobsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10130,7 +10262,7 @@ func (c *JobsQueryCall) Header() http.Header {
 
 func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10277,7 +10409,7 @@ func (c *ModelsDeleteCall) Header() http.Header {
 
 func (c *ModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10417,7 +10549,7 @@ func (c *ModelsGetCall) Header() http.Header {
 
 func (c *ModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10603,7 +10735,7 @@ func (c *ModelsListCall) Header() http.Header {
 
 func (c *ModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10790,7 +10922,7 @@ func (c *ModelsPatchCall) Header() http.Header {
 
 func (c *ModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10961,7 +11093,7 @@ func (c *ProjectsGetServiceAccountCall) Header() http.Header {
 
 func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11119,7 +11251,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11243,9 +11375,9 @@ type RoutinesDeleteCall struct {
 
 // Delete: Deletes the routine specified by routineId from the dataset.
 //
-// - datasetId: Dataset ID of the routine to delete
-// - projectId: Project ID of the routine to delete
-// - routineId: Routine ID of the routine to delete
+// - datasetId: Dataset ID of the routine to delete.
+// - projectId: Project ID of the routine to delete.
+// - routineId: Routine ID of the routine to delete.
 func (r *RoutinesService) Delete(projectId string, datasetId string, routineId string) *RoutinesDeleteCall {
 	c := &RoutinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11281,7 +11413,7 @@ func (c *RoutinesDeleteCall) Header() http.Header {
 
 func (c *RoutinesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11373,9 +11505,9 @@ type RoutinesGetCall struct {
 
 // Get: Gets the specified routine resource by routine ID.
 //
-// - datasetId: Dataset ID of the requested routine
-// - projectId: Project ID of the requested routine
-// - routineId: Routine ID of the requested routine
+// - datasetId: Dataset ID of the requested routine.
+// - projectId: Project ID of the requested routine.
+// - routineId: Routine ID of the requested routine.
 func (r *RoutinesService) Get(projectId string, datasetId string, routineId string) *RoutinesGetCall {
 	c := &RoutinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11429,7 +11561,7 @@ func (c *RoutinesGetCall) Header() http.Header {
 
 func (c *RoutinesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11559,8 +11691,8 @@ type RoutinesInsertCall struct {
 
 // Insert: Creates a new routine in the dataset.
 //
-// - datasetId: Dataset ID of the new routine
-// - projectId: Project ID of the new routine
+// - datasetId: Dataset ID of the new routine.
+// - projectId: Project ID of the new routine.
 func (r *RoutinesService) Insert(projectId string, datasetId string, routine *Routine) *RoutinesInsertCall {
 	c := &RoutinesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11596,7 +11728,7 @@ func (c *RoutinesInsertCall) Header() http.Header {
 
 func (c *RoutinesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11715,8 +11847,8 @@ type RoutinesListCall struct {
 // List: Lists all routines in the specified dataset. Requires the
 // READER dataset role.
 //
-// - datasetId: Dataset ID of the routines to list
-// - projectId: Project ID of the routines to list
+// - datasetId: Dataset ID of the routines to list.
+// - projectId: Project ID of the routines to list.
 func (r *RoutinesService) List(projectId string, datasetId string) *RoutinesListCall {
 	c := &RoutinesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11796,7 +11928,7 @@ func (c *RoutinesListCall) Header() http.Header {
 
 func (c *RoutinesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11956,9 +12088,9 @@ type RoutinesUpdateCall struct {
 // Update: Updates information in an existing routine. The update method
 // replaces the entire Routine resource.
 //
-// - datasetId: Dataset ID of the routine to update
-// - projectId: Project ID of the routine to update
-// - routineId: Routine ID of the routine to update
+// - datasetId: Dataset ID of the routine to update.
+// - projectId: Project ID of the routine to update.
+// - routineId: Routine ID of the routine to update.
 func (r *RoutinesService) Update(projectId string, datasetId string, routineId string, routine *Routine) *RoutinesUpdateCall {
 	c := &RoutinesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11995,7 +12127,7 @@ func (c *RoutinesUpdateCall) Header() http.Header {
 
 func (c *RoutinesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12124,8 +12256,8 @@ type RowAccessPoliciesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *RowAccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RowAccessPoliciesGetIamPolicyCall {
 	c := &RowAccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12160,7 +12292,7 @@ func (c *RowAccessPoliciesGetIamPolicyCall) Header() http.Header {
 
 func (c *RowAccessPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12335,7 +12467,7 @@ func (c *RowAccessPoliciesListCall) Header() http.Header {
 
 func (c *RowAccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12493,8 +12625,8 @@ type RowAccessPoliciesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *RowAccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RowAccessPoliciesSetIamPolicyCall {
 	c := &RowAccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12529,7 +12661,7 @@ func (c *RowAccessPoliciesSetIamPolicyCall) Header() http.Header {
 
 func (c *RowAccessPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12643,8 +12775,8 @@ type RowAccessPoliciesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *RowAccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RowAccessPoliciesTestIamPermissionsCall {
 	c := &RowAccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12679,7 +12811,7 @@ func (c *RowAccessPoliciesTestIamPermissionsCall) Header() http.Header {
 
 func (c *RowAccessPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12831,7 +12963,7 @@ func (c *TabledataInsertAllCall) Header() http.Header {
 
 func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12957,9 +13089,9 @@ type TabledataListCall struct {
 // List: Retrieves table data from a specified set of rows. Requires the
 // READER dataset role.
 //
-// - datasetId: Dataset ID of the table to read
-// - projectId: Project ID of the table to read
-// - tableId: Table ID of the table to read
+// - datasetId: Dataset ID of the table to read.
+// - projectId: Project ID of the table to read.
+// - tableId: Table ID of the table to read.
 func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
 	c := &TabledataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13034,7 +13166,7 @@ func (c *TabledataListCall) Header() http.Header {
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13198,9 +13330,9 @@ type TablesDeleteCall struct {
 // Delete: Deletes the table specified by tableId from the dataset. If
 // the table contains data, all the data will be deleted.
 //
-// - datasetId: Dataset ID of the table to delete
-// - projectId: Project ID of the table to delete
-// - tableId: Table ID of the table to delete
+// - datasetId: Dataset ID of the table to delete.
+// - projectId: Project ID of the table to delete.
+// - tableId: Table ID of the table to delete.
 func (r *TablesService) Delete(projectId string, datasetId string, tableId string) *TablesDeleteCall {
 	c := &TablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13236,7 +13368,7 @@ func (c *TablesDeleteCall) Header() http.Header {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13326,9 +13458,9 @@ type TablesGetCall struct {
 // not return the data in the table, it only returns the table resource,
 // which describes the structure of this table.
 //
-// - datasetId: Dataset ID of the requested table
-// - projectId: Project ID of the requested table
-// - tableId: Table ID of the requested table
+// - datasetId: Dataset ID of the requested table.
+// - projectId: Project ID of the requested table.
+// - tableId: Table ID of the requested table.
 func (r *TablesService) Get(projectId string, datasetId string, tableId string) *TablesGetCall {
 	c := &TablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13382,7 +13514,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13509,8 +13641,8 @@ type TablesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13545,7 +13677,7 @@ func (c *TablesGetIamPolicyCall) Header() http.Header {
 
 func (c *TablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13656,8 +13788,8 @@ type TablesInsertCall struct {
 
 // Insert: Creates a new, empty table in the dataset.
 //
-// - datasetId: Dataset ID of the new table
-// - projectId: Project ID of the new table
+// - datasetId: Dataset ID of the new table.
+// - projectId: Project ID of the new table.
 func (r *TablesService) Insert(projectId string, datasetId string, table *Table) *TablesInsertCall {
 	c := &TablesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13693,7 +13825,7 @@ func (c *TablesInsertCall) Header() http.Header {
 
 func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13809,8 +13941,8 @@ type TablesListCall struct {
 // List: Lists all tables in the specified dataset. Requires the READER
 // dataset role.
 //
-// - datasetId: Dataset ID of the tables to list
-// - projectId: Project ID of the tables to list
+// - datasetId: Dataset ID of the tables to list.
+// - projectId: Project ID of the tables to list.
 func (r *TablesService) List(projectId string, datasetId string) *TablesListCall {
 	c := &TablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13869,7 +14001,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14017,9 +14149,9 @@ type TablesPatchCall struct {
 // replaces fields that are provided in the submitted table resource.
 // This method supports patch semantics.
 //
-// - datasetId: Dataset ID of the table to update
-// - projectId: Project ID of the table to update
-// - tableId: Table ID of the table to update
+// - datasetId: Dataset ID of the table to update.
+// - projectId: Project ID of the table to update.
+// - tableId: Table ID of the table to update.
 func (r *TablesService) Patch(projectId string, datasetId string, tableId string, table *Table) *TablesPatchCall {
 	c := &TablesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14056,7 +14188,7 @@ func (c *TablesPatchCall) Header() http.Header {
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14181,8 +14313,8 @@ type TablesSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14217,7 +14349,7 @@ func (c *TablesSetIamPolicyCall) Header() http.Header {
 
 func (c *TablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14331,8 +14463,8 @@ type TablesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14367,7 +14499,7 @@ func (c *TablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *TablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14481,9 +14613,9 @@ type TablesUpdateCall struct {
 // replaces the entire table resource, whereas the patch method only
 // replaces fields that are provided in the submitted table resource.
 //
-// - datasetId: Dataset ID of the table to update
-// - projectId: Project ID of the table to update
-// - tableId: Table ID of the table to update
+// - datasetId: Dataset ID of the table to update.
+// - projectId: Project ID of the table to update.
+// - tableId: Table ID of the table to update.
 func (r *TablesService) Update(projectId string, datasetId string, tableId string, table *Table) *TablesUpdateCall {
 	c := &TablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14520,7 +14652,7 @@ func (c *TablesUpdateCall) Header() http.Header {
 
 func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

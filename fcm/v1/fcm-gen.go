@@ -996,10 +996,10 @@ type ProjectsMessagesSendCall struct {
 // or condition).
 //
 // - parent: It contains the Firebase project id (i.e. the unique
-// identifier for your Firebase project), in the format of
-// `projects/{project_id}`. For legacy support, the numeric project
-// number with no padding is also supported in the format of
-// `projects/{project_number}`.
+//   identifier for your Firebase project), in the format of
+//   `projects/{project_id}`. For legacy support, the numeric project
+//   number with no padding is also supported in the format of
+//   `projects/{project_number}`.
 func (r *ProjectsMessagesService) Send(parentid string, sendmessagerequest *SendMessageRequest) *ProjectsMessagesSendCall {
 	c := &ProjectsMessagesSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -1034,7 +1034,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

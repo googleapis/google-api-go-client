@@ -4652,10 +4652,10 @@ type FeedsCreateCall struct {
 // listen to its asset updates.
 //
 // - parent: The name of the project/folder/organization where this feed
-// should be created in. It can only be an organization number (such as
-// "organizations/123"), a folder number (such as "folders/123"), a
-// project ID (such as "projects/my-project-id")", or a project number
-// (such as "projects/12345").
+//   should be created in. It can only be an organization number (such
+//   as "organizations/123"), a folder number (such as "folders/123"), a
+//   project ID (such as "projects/my-project-id")", or a project number
+//   (such as "projects/12345").
 func (r *FeedsService) Create(parent string, createfeedrequest *CreateFeedRequest) *FeedsCreateCall {
 	c := &FeedsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4690,7 +4690,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4797,9 +4797,9 @@ type FeedsDeleteCall struct {
 // Delete: Deletes an asset feed.
 //
 // - name: The name of the feed and it must be in the format of:
-// projects/project_number/feeds/feed_id
-// folders/folder_number/feeds/feed_id
-// organizations/organization_number/feeds/feed_id
+//   projects/project_number/feeds/feed_id
+//   folders/folder_number/feeds/feed_id
+//   organizations/organization_number/feeds/feed_id.
 func (r *FeedsService) Delete(name string) *FeedsDeleteCall {
 	c := &FeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4833,7 +4833,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4933,9 +4933,9 @@ type FeedsGetCall struct {
 // Get: Gets details about an asset feed.
 //
 // - name: The name of the Feed and it must be in the format of:
-// projects/project_number/feeds/feed_id
-// folders/folder_number/feeds/feed_id
-// organizations/organization_number/feeds/feed_id
+//   projects/project_number/feeds/feed_id
+//   folders/folder_number/feeds/feed_id
+//   organizations/organization_number/feeds/feed_id.
 func (r *FeedsService) Get(name string) *FeedsGetCall {
 	c := &FeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4979,7 +4979,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5082,9 +5082,9 @@ type FeedsListCall struct {
 // List: Lists all asset feeds in a parent project/folder/organization.
 //
 // - parent: The parent project/folder/organization whose feeds are to
-// be listed. It can only be using project/folder/organization number
-// (such as "folders/12345")", or a project ID (such as
-// "projects/my-project-id").
+//   be listed. It can only be using project/folder/organization number
+//   (such as "folders/12345")", or a project ID (such as
+//   "projects/my-project-id").
 func (r *FeedsService) List(parent string) *FeedsListCall {
 	c := &FeedsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5128,7 +5128,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5231,11 +5231,12 @@ type FeedsPatchCall struct {
 // Patch: Updates an asset feed configuration.
 //
 // - name: The format will be
-// projects/{project_number}/feeds/{client-assigned_feed_identifier} or
-// folders/{folder_number}/feeds/{client-assigned_feed_identifier} or
-// organizations/{organization_number}/feeds/{client-assigned_feed_identi
-// fier} The client-assigned feed identifier must be unique within the
-// parent project/folder/organization.
+//   projects/{project_number}/feeds/{client-assigned_feed_identifier}
+//   or folders/{folder_number}/feeds/{client-assigned_feed_identifier}
+//   or
+//   organizations/{organization_number}/feeds/{client-assigned_feed_iden
+//   tifier} The client-assigned feed identifier must be unique within
+//   the parent project/folder/organization.
 func (r *FeedsService) Patch(nameid string, updatefeedrequest *UpdateFeedRequest) *FeedsPatchCall {
 	c := &FeedsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5270,7 +5271,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5423,7 +5424,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5527,14 +5528,14 @@ type V1AnalyzeIamPolicyCall struct {
 // have what accesses on which resources.
 //
 // - scope: The relative name of the root asset. Only resources and IAM
-// policies within the scope will be analyzed. This can only be an
-// organization number (such as "organizations/123"), a folder number
-// (such as "folders/123"), a project ID (such as
-// "projects/my-project-id"), or a project number (such as
-// "projects/12345"). To know how to get organization id, visit here
-// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-// To know how to get folder or project id, visit here
-// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
+//   policies within the scope will be analyzed. This can only be an
+//   organization number (such as "organizations/123"), a folder number
+//   (such as "folders/123"), a project ID (such as
+//   "projects/my-project-id"), or a project number (such as
+//   "projects/12345"). To know how to get organization id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+//   To know how to get folder or project id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicy(scope string) *V1AnalyzeIamPolicyCall {
 	c := &V1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -5723,7 +5724,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5893,14 +5894,14 @@ type V1AnalyzeIamPolicyLongrunningCall struct {
 // requests.
 //
 // - scope: The relative name of the root asset. Only resources and IAM
-// policies within the scope will be analyzed. This can only be an
-// organization number (such as "organizations/123"), a folder number
-// (such as "folders/123"), a project ID (such as
-// "projects/my-project-id"), or a project number (such as
-// "projects/12345"). To know how to get organization id, visit here
-// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-// To know how to get folder or project id, visit here
-// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
+//   policies within the scope will be analyzed. This can only be an
+//   organization number (such as "organizations/123"), a folder number
+//   (such as "folders/123"), a project ID (such as
+//   "projects/my-project-id"), or a project number (such as
+//   "projects/12345"). To know how to get organization id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+//   To know how to get folder or project id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicyLongrunning(scope string, analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest) *V1AnalyzeIamPolicyLongrunningCall {
 	c := &V1AnalyzeIamPolicyLongrunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -5935,7 +5936,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6049,9 +6050,9 @@ type V1BatchGetAssetsHistoryCall struct {
 // error.
 //
 // - parent: The relative name of the root asset. It can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id")", or a project number (such as
-// "projects/12345").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *V1Service) BatchGetAssetsHistory(parent string) *V1BatchGetAssetsHistoryCall {
 	c := &V1BatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6139,7 +6140,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6291,9 +6292,9 @@ type V1ExportAssetsCall struct {
 // within 5 minutes.
 //
 // - parent: The relative name of the root asset. This can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id"), or a project number (such as
-// "projects/12345"), or a folder number (such as "folders/123").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), or a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *V1Service) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *V1ExportAssetsCall {
 	c := &V1ExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6328,7 +6329,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6439,14 +6440,14 @@ type V1SearchAllIamPoliciesCall struct {
 // the desired scope, otherwise the request will be rejected.
 //
 // - scope: A scope can be a project, a folder, or an organization. The
-// search is limited to the IAM policies within the `scope`. The caller
-// must be granted the `cloudasset.assets.searchAllIamPolicies`
-// (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
-// permission on the desired scope. The allowed values are: *
-// projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
-// projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
-// folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
-// organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
+//   search is limited to the IAM policies within the `scope`. The
+//   caller must be granted the `cloudasset.assets.searchAllIamPolicies`
+//   (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
+//   permission on the desired scope. The allowed values are: *
+//   projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+//   projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
+//   folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
+//   organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456").
 func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCall {
 	c := &V1SearchAllIamPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -6549,7 +6550,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6692,14 +6693,14 @@ type V1SearchAllResourcesCall struct {
 // desired scope, otherwise the request will be rejected.
 //
 // - scope: A scope can be a project, a folder, or an organization. The
-// search is limited to the resources within the `scope`. The caller
-// must be granted the `cloudasset.assets.searchAllResources`
-// (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
-// permission on the desired scope. The allowed values are: *
-// projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
-// projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
-// folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
-// organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
+//   search is limited to the resources within the `scope`. The caller
+//   must be granted the `cloudasset.assets.searchAllResources`
+//   (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
+//   permission on the desired scope. The allowed values are: *
+//   projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+//   projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
+//   folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
+//   organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456").
 func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 	c := &V1SearchAllResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -6830,7 +6831,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

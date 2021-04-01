@@ -1881,7 +1881,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1985,7 +1985,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2053,7 +2053,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2200,9 +2200,9 @@ type ProjectsLocationsQueuesCreateCall struct {
 // method.
 //
 // - parent: The location name in which the queue will be created. For
-// example: `projects/PROJECT_ID/locations/LOCATION_ID` The list of
-// allowed locations can be obtained by calling Cloud Tasks'
-// implementation of ListLocations.
+//   example: `projects/PROJECT_ID/locations/LOCATION_ID` The list of
+//   allowed locations can be obtained by calling Cloud Tasks'
+//   implementation of ListLocations.
 func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *ProjectsLocationsQueuesCreateCall {
 	c := &ProjectsLocationsQueuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2237,7 +2237,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2351,7 +2351,7 @@ type ProjectsLocationsQueuesDeleteCall struct {
 // method.
 //
 // - name: The queue name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Delete(name string) *ProjectsLocationsQueuesDeleteCall {
 	c := &ProjectsLocationsQueuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2385,7 +2385,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2485,7 +2485,7 @@ type ProjectsLocationsQueuesGetCall struct {
 // Get: Gets a queue.
 //
 // - name: The resource name of the queue. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Get(name string) *ProjectsLocationsQueuesGetCall {
 	c := &ProjectsLocationsQueuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2529,7 +2529,7 @@ func (c *ProjectsLocationsQueuesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2636,8 +2636,8 @@ type ProjectsLocationsQueuesGetIamPolicyCall struct {
 // parent: * `cloudtasks.queues.getIamPolicy`
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsQueuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsQueuesGetIamPolicyCall {
 	c := &ProjectsLocationsQueuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2672,7 +2672,7 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2780,7 +2780,7 @@ type ProjectsLocationsQueuesListCall struct {
 // List: Lists queues. Queues are returned in lexicographical order.
 //
 // - parent: The location name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID`.
 func (r *ProjectsLocationsQueuesService) List(parent string) *ProjectsLocationsQueuesListCall {
 	c := &ProjectsLocationsQueuesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2858,7 +2858,7 @@ func (c *ProjectsLocationsQueuesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3007,18 +3007,19 @@ type ProjectsLocationsQueuesPatchCall struct {
 // method.
 //
 // - name: Caller-specified and required in CreateQueue, after which it
-// becomes output only. The queue name. The queue name must have the
-// following format:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
-// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
-// (-), colons (:), or periods (.). For more information, see
-// Identifying projects
-// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
-// * `LOCATION_ID` is the canonical ID for the queue's location. The
-// list of available locations can be obtained by calling ListLocations.
-// For more information, see https://cloud.google.com/about/locations/.
-// * `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
-// hyphens (-). The maximum length is 100 characters.
+//   becomes output only. The queue name. The queue name must have the
+//   following format:
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
+//   `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
+//   hyphens (-), colons (:), or periods (.). For more information, see
+//   Identifying projects
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+//   * `LOCATION_ID` is the canonical ID for the queue's location. The
+//   list of available locations can be obtained by calling
+//   ListLocations. For more information, see
+//   https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
+//   letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
+//   length is 100 characters.
 func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *ProjectsLocationsQueuesPatchCall {
 	c := &ProjectsLocationsQueuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3061,7 +3062,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3178,7 +3179,7 @@ type ProjectsLocationsQueuesPauseCall struct {
 // if its state is PAUSED.
 //
 // - name: The queue name. For example:
-// `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+//   `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Pause(name string, pausequeuerequest *PauseQueueRequest) *ProjectsLocationsQueuesPauseCall {
 	c := &ProjectsLocationsQueuesPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3213,7 +3214,7 @@ func (c *ProjectsLocationsQueuesPauseCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3324,7 +3325,7 @@ type ProjectsLocationsQueuesPurgeCall struct {
 // dispatched before the purge takes effect. A purge is irreversible.
 //
 // - name: The queue name. For example:
-// `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+//   `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Purge(name string, purgequeuerequest *PurgeQueueRequest) *ProjectsLocationsQueuesPurgeCall {
 	c := &ProjectsLocationsQueuesPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3359,7 +3360,7 @@ func (c *ProjectsLocationsQueuesPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3473,7 +3474,7 @@ type ProjectsLocationsQueuesResumeCall struct {
 // (https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
 //
 // - name: The queue name. For example:
-// `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`
+//   `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesService) Resume(name string, resumequeuerequest *ResumeQueueRequest) *ProjectsLocationsQueuesResumeCall {
 	c := &ProjectsLocationsQueuesResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3508,7 +3509,7 @@ func (c *ProjectsLocationsQueuesResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3621,8 +3622,8 @@ type ProjectsLocationsQueuesSetIamPolicyCall struct {
 // specified resource parent: * `cloudtasks.queues.setIamPolicy`
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsQueuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsQueuesSetIamPolicyCall {
 	c := &ProjectsLocationsQueuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3657,7 +3658,7 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3770,8 +3771,8 @@ type ProjectsLocationsQueuesTestIamPermissionsCall struct {
 // without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsQueuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsQueuesTestIamPermissionsCall {
 	c := &ProjectsLocationsQueuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3806,7 +3807,7 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3916,8 +3917,8 @@ type ProjectsLocationsQueuesTasksCreateCall struct {
 // task size is 100KB.
 //
 // - parent: The queue name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue
-// must already exist.
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
+//   queue must already exist.
 func (r *ProjectsLocationsQueuesTasksService) Create(parent string, createtaskrequest *CreateTaskRequest) *ProjectsLocationsQueuesTasksCreateCall {
 	c := &ProjectsLocationsQueuesTasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3952,7 +3953,7 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4061,8 +4062,8 @@ type ProjectsLocationsQueuesTasksDeleteCall struct {
 // or permanently failed.
 //
 // - name: The task name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
-// ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
+//   K_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Delete(name string) *ProjectsLocationsQueuesTasksDeleteCall {
 	c := &ProjectsLocationsQueuesTasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4096,7 +4097,7 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4196,8 +4197,8 @@ type ProjectsLocationsQueuesTasksGetCall struct {
 // Get: Gets a task.
 //
 // - name: The task name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
-// ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
+//   K_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Get(name string) *ProjectsLocationsQueuesTasksGetCall {
 	c := &ProjectsLocationsQueuesTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4265,7 +4266,7 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4386,7 +4387,7 @@ type ProjectsLocationsQueuesTasksListCall struct {
 // returned in any order. The ordering may change at any time.
 //
 // - parent: The queue name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
 func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocationsQueuesTasksListCall {
 	c := &ProjectsLocationsQueuesTasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4475,7 +4476,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4638,8 +4639,8 @@ type ProjectsLocationsQueuesTasksRunCall struct {
 // failed.
 //
 // - name: The task name. For example:
-// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
-// ID`
+//   `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
+//   K_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Run(name string, runtaskrequest *RunTaskRequest) *ProjectsLocationsQueuesTasksRunCall {
 	c := &ProjectsLocationsQueuesTasksRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4674,7 +4675,7 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

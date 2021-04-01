@@ -853,7 +853,7 @@ func (c *AccountsCreateCall) Header() http.Header {
 
 func (c *AccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -989,7 +989,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1168,7 +1168,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1299,7 +1299,7 @@ type AccountsPatchCall struct {
 // cannot be updated using this method.
 //
 // - name: Immutable. The resource name, in the format
-// `accounts/{account_id}`.
+//   `accounts/{account_id}`.
 func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1349,7 +1349,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1468,7 +1468,7 @@ type AccountsAdminsCreateCall struct {
 // programmatically accept an invitation.
 //
 // - parent: The resource name of the account this admin is created for.
-// `accounts/{account_id}`.
+//   `accounts/{account_id}`.
 func (r *AccountsAdminsService) Create(parent string, admin *Admin) *AccountsAdminsCreateCall {
 	c := &AccountsAdminsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1503,7 +1503,7 @@ func (c *AccountsAdminsCreateCall) Header() http.Header {
 
 func (c *AccountsAdminsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1607,7 +1607,7 @@ type AccountsAdminsDeleteCall struct {
 // Delete: Removes the specified admin from the specified account.
 //
 // - name: The resource name of the admin to remove from the account.
-// `accounts/{account_id}/admins/{admin_id}`.
+//   `accounts/{account_id}/admins/{admin_id}`.
 func (r *AccountsAdminsService) Delete(name string) *AccountsAdminsDeleteCall {
 	c := &AccountsAdminsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1641,7 +1641,7 @@ func (c *AccountsAdminsDeleteCall) Header() http.Header {
 
 func (c *AccountsAdminsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1738,7 +1738,7 @@ type AccountsAdminsListCall struct {
 // List: Lists the admins for the specified account.
 //
 // - parent: The name of the account from which to retrieve a list of
-// admins. `accounts/{account_id}/admins`.
+//   admins. `accounts/{account_id}/admins`.
 func (r *AccountsAdminsService) List(parent string) *AccountsAdminsListCall {
 	c := &AccountsAdminsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1782,7 +1782,7 @@ func (c *AccountsAdminsListCall) Header() http.Header {
 
 func (c *AccountsAdminsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1882,10 +1882,10 @@ type AccountsAdminsPatchCall struct {
 // Patch: Updates the Admin for the specified Account Admin.
 //
 // - name: Immutable. The resource name. For account admins, this is in
-// the form: `accounts/{account_id}/admins/{admin_id}` For location
-// admins, this is in the form:
-// `locations/{location_id}/admins/{admin_id}` This field will be
-// ignored if set during admin creation.
+//   the form: `accounts/{account_id}/admins/{admin_id}` For location
+//   admins, this is in the form:
+//   `locations/{location_id}/admins/{admin_id}` This field will be
+//   ignored if set during admin creation.
 func (r *AccountsAdminsService) Patch(name string, admin *Admin) *AccountsAdminsPatchCall {
 	c := &AccountsAdminsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1928,7 +1928,7 @@ func (c *AccountsAdminsPatchCall) Header() http.Header {
 
 func (c *AccountsAdminsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2039,7 +2039,7 @@ type AccountsInvitationsAcceptCall struct {
 // Accept: Accepts the specified invitation.
 //
 // - name: The name of the invitation that is being accepted.
-// `accounts/{account_id}/invitations/{invitation_id}`
+//   `accounts/{account_id}/invitations/{invitation_id}`.
 func (r *AccountsInvitationsService) Accept(name string, acceptinvitationrequest *AcceptInvitationRequest) *AccountsInvitationsAcceptCall {
 	c := &AccountsInvitationsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2074,7 +2074,7 @@ func (c *AccountsInvitationsAcceptCall) Header() http.Header {
 
 func (c *AccountsInvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2179,7 +2179,7 @@ type AccountsInvitationsDeclineCall struct {
 // Decline: Declines the specified invitation.
 //
 // - name: The name of the account invitation that is being declined.
-// `accounts/{account_id}/invitations/{invitation_id}`
+//   `accounts/{account_id}/invitations/{invitation_id}`.
 func (r *AccountsInvitationsService) Decline(name string, declineinvitationrequest *DeclineInvitationRequest) *AccountsInvitationsDeclineCall {
 	c := &AccountsInvitationsDeclineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2214,7 +2214,7 @@ func (c *AccountsInvitationsDeclineCall) Header() http.Header {
 
 func (c *AccountsInvitationsDeclineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2319,7 +2319,7 @@ type AccountsInvitationsListCall struct {
 // List: Lists pending invitations for the specified account.
 //
 // - parent: The name of the account from which the list of invitations
-// is being retrieved. `accounts/{account_id}/invitations`
+//   is being retrieved. `accounts/{account_id}/invitations`.
 func (r *AccountsInvitationsService) List(parent string) *AccountsInvitationsListCall {
 	c := &AccountsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2370,7 +2370,7 @@ func (c *AccountsInvitationsListCall) Header() http.Header {
 
 func (c *AccountsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2477,7 +2477,7 @@ type LocationsTransferLocationCall struct {
 // an owner of the account the location is currently associated with and
 // must also be at least a manager of the destination account.
 //
-// - locationsId:
+// - locationsId: .
 func (r *LocationsService) TransferLocation(locationsId string, transferlocationrequest *TransferLocationRequest) *LocationsTransferLocationCall {
 	c := &LocationsTransferLocationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.locationsId = locationsId
@@ -2512,7 +2512,7 @@ func (c *LocationsTransferLocationCall) Header() http.Header {
 
 func (c *LocationsTransferLocationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2618,7 +2618,7 @@ type LocationsAdminsCreateCall struct {
 // programmatically accept an invitation.
 //
 // - parent: The resource name of the location this admin is created
-// for. `locations/{location_id}/admins`.
+//   for. `locations/{location_id}/admins`.
 func (r *LocationsAdminsService) Create(parent string, admin *Admin) *LocationsAdminsCreateCall {
 	c := &LocationsAdminsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2653,7 +2653,7 @@ func (c *LocationsAdminsCreateCall) Header() http.Header {
 
 func (c *LocationsAdminsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2791,7 +2791,7 @@ func (c *LocationsAdminsDeleteCall) Header() http.Header {
 
 func (c *LocationsAdminsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2888,7 +2888,7 @@ type LocationsAdminsListCall struct {
 // List: Lists all of the admins for the specified location.
 //
 // - parent: The name of the location to list admins of.
-// `locations/{location_id}/admins`.
+//   `locations/{location_id}/admins`.
 func (r *LocationsAdminsService) List(parent string) *LocationsAdminsListCall {
 	c := &LocationsAdminsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2932,7 +2932,7 @@ func (c *LocationsAdminsListCall) Header() http.Header {
 
 func (c *LocationsAdminsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3033,10 +3033,10 @@ type LocationsAdminsPatchCall struct {
 // AdminRole of the Admin can be updated.
 //
 // - name: Immutable. The resource name. For account admins, this is in
-// the form: `accounts/{account_id}/admins/{admin_id}` For location
-// admins, this is in the form:
-// `locations/{location_id}/admins/{admin_id}` This field will be
-// ignored if set during admin creation.
+//   the form: `accounts/{account_id}/admins/{admin_id}` For location
+//   admins, this is in the form:
+//   `locations/{location_id}/admins/{admin_id}` This field will be
+//   ignored if set during admin creation.
 func (r *LocationsAdminsService) Patch(name string, admin *Admin) *LocationsAdminsPatchCall {
 	c := &LocationsAdminsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3079,7 +3079,7 @@ func (c *LocationsAdminsPatchCall) Header() http.Header {
 
 func (c *LocationsAdminsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

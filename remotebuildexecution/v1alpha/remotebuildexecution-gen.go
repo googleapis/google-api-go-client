@@ -3375,7 +3375,7 @@ type ProjectsInstancesCreateCall struct {
 // `GetInstance` returns an instance in state `CREATING`.
 //
 // - parent: Resource name of the project containing the instance.
-// Format: `projects/[PROJECT_ID]`.
+//   Format: `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateinstancerequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3410,7 +3410,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3520,7 +3520,7 @@ type ProjectsInstancesDeleteCall struct {
 // these worker pools.
 //
 // - name: Name of the instance to delete. Format:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3554,7 +3554,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3654,7 +3654,7 @@ type ProjectsInstancesGetCall struct {
 // Get: Returns the specified instance.
 //
 // - name: Name of the instance to retrieve. Format:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3698,7 +3698,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3804,7 +3804,7 @@ type ProjectsInstancesListCall struct {
 // List: Lists instances in a project.
 //
 // - parent: Resource name of the project. Format:
-// `projects/[PROJECT_ID]`.
+//   `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3848,7 +3848,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3956,9 +3956,9 @@ type ProjectsInstancesPatchCall struct {
 // completion.
 //
 // - name: Output only. Instance resource name formatted as:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be
-// populated when creating an instance since it is provided in the
-// `instance_id` field.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be
+//   populated when creating an instance since it is provided in the
+//   `instance_id` field.
 func (r *ProjectsInstancesService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphainstance *GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4021,7 +4021,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4149,7 +4149,8 @@ type ProjectsInstancesWorkerpoolsCreateCall struct {
 // `CREATING`.
 //
 // - parent: Resource name of the instance in which to create the new
-// worker pool. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   worker pool. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsCreateCall {
 	c := &ProjectsInstancesWorkerpoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4184,7 +4185,7 @@ func (c *ProjectsInstancesWorkerpoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4294,7 +4295,8 @@ type ProjectsInstancesWorkerpoolsDeleteCall struct {
 // to `GetWorkerPool` returns a worker pool in state `DELETING`.
 //
 // - name: Name of the worker pool to delete. Format:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//   `.
 func (r *ProjectsInstancesWorkerpoolsService) Delete(name string) *ProjectsInstancesWorkerpoolsDeleteCall {
 	c := &ProjectsInstancesWorkerpoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4328,7 +4330,7 @@ func (c *ProjectsInstancesWorkerpoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4428,7 +4430,8 @@ type ProjectsInstancesWorkerpoolsGetCall struct {
 // Get: Returns the specified worker pool.
 //
 // - name: Name of the worker pool to retrieve. Format:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//   `.
 func (r *ProjectsInstancesWorkerpoolsService) Get(name string) *ProjectsInstancesWorkerpoolsGetCall {
 	c := &ProjectsInstancesWorkerpoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4472,7 +4475,7 @@ func (c *ProjectsInstancesWorkerpoolsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4578,7 +4581,7 @@ type ProjectsInstancesWorkerpoolsListCall struct {
 // List: Lists worker pools in an instance.
 //
 // - parent: Resource name of the instance. Format:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInstancesWorkerpoolsListCall {
 	c := &ProjectsInstancesWorkerpoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4644,7 +4647,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4759,9 +4762,9 @@ type ProjectsInstancesWorkerpoolsPatchCall struct {
 // `UPDATING`.
 //
 // - name: WorkerPool resource name formatted as:
-// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
-//  name should not be populated when creating a worker pool since it is
-// provided in the `poolId` field.
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//   `. name should not be populated when creating a worker pool since
+//   it is provided in the `poolId` field.
 func (r *ProjectsInstancesWorkerpoolsService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphaupdateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsPatchCall {
 	c := &ProjectsInstancesWorkerpoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4796,7 +4799,7 @@ func (c *ProjectsInstancesWorkerpoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4949,7 +4952,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

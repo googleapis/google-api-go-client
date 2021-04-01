@@ -1839,7 +1839,7 @@ type ChangesCreateCall struct {
 // Create: Atomically updates the ResourceRecordSet collection.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ChangesService) Create(project string, managedZone string, change *Change) *ChangesCreateCall {
 	c := &ChangesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1885,7 +1885,7 @@ func (c *ChangesCreateCall) Header() http.Header {
 
 func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2008,9 +2008,9 @@ type ChangesGetCall struct {
 // Get: Fetches the representation of an existing Change.
 //
 // - changeId: The identifier of the requested change, from a previous
-// ResourceRecordSetsChangeResponse.
+//   ResourceRecordSetsChangeResponse.
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ChangesService) Get(project string, managedZone string, changeId string) *ChangesGetCall {
 	c := &ChangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2066,7 +2066,7 @@ func (c *ChangesGetCall) Header() http.Header {
 
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2193,7 +2193,7 @@ type ChangesListCall struct {
 // List: Enumerates Changes to a ResourceRecordSet collection.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ChangesService) List(project string, managedZone string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2272,7 +2272,7 @@ func (c *ChangesListCall) Header() http.Header {
 
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2437,7 +2437,7 @@ type DnsKeysGetCall struct {
 //
 // - dnsKeyId: The identifier of the requested DnsKey.
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *DnsKeysService) Get(project string, managedZone string, dnsKeyId string) *DnsKeysGetCall {
 	c := &DnsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2502,7 +2502,7 @@ func (c *DnsKeysGetCall) Header() http.Header {
 
 func (c *DnsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2634,7 +2634,7 @@ type DnsKeysListCall struct {
 // List: Enumerates DnsKeys to a ResourceRecordSet collection.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *DnsKeysService) List(project string, managedZone string) *DnsKeysListCall {
 	c := &DnsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2705,7 +2705,7 @@ func (c *DnsKeysListCall) Header() http.Header {
 
 func (c *DnsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2858,7 +2858,7 @@ type ManagedZoneOperationsGetCall struct {
 //
 // - managedZone: Identifies the managed zone addressed by this request.
 // - operation: Identifies the operation addressed by this request (ID
-// of the operation).
+//   of the operation).
 // - project: Identifies the project addressed by this request.
 func (r *ManagedZoneOperationsService) Get(project string, managedZone string, operation string) *ManagedZoneOperationsGetCall {
 	c := &ManagedZoneOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2914,7 +2914,7 @@ func (c *ManagedZoneOperationsGetCall) Header() http.Header {
 
 func (c *ManagedZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3113,7 +3113,7 @@ func (c *ManagedZoneOperationsListCall) Header() http.Header {
 
 func (c *ManagedZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3316,7 +3316,7 @@ func (c *ManagedZonesCreateCall) Header() http.Header {
 
 func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3429,7 +3429,7 @@ type ManagedZonesDeleteCall struct {
 // Delete: Deletes a previously created ManagedZone.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Delete(project string, managedZone string) *ManagedZonesDeleteCall {
 	c := &ManagedZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3474,7 +3474,7 @@ func (c *ManagedZonesDeleteCall) Header() http.Header {
 
 func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3560,7 +3560,7 @@ type ManagedZonesGetCall struct {
 // Get: Fetches the representation of an existing ManagedZone.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Get(project string, managedZone string) *ManagedZonesGetCall {
 	c := &ManagedZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3615,7 +3615,7 @@ func (c *ManagedZonesGetCall) Header() http.Header {
 
 func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3800,7 +3800,7 @@ func (c *ManagedZonesListCall) Header() http.Header {
 
 func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3943,7 +3943,7 @@ type ManagedZonesPatchCall struct {
 // Patch: Applies a partial update to an existing ManagedZone.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Patch(project string, managedZone string, managedzone *ManagedZone) *ManagedZonesPatchCall {
 	c := &ManagedZonesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3989,7 +3989,7 @@ func (c *ManagedZonesPatchCall) Header() http.Header {
 
 func (c *ManagedZonesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4111,7 +4111,7 @@ type ManagedZonesUpdateCall struct {
 // Update: Updates an existing ManagedZone.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Update(project string, managedZone string, managedzone *ManagedZone) *ManagedZonesUpdateCall {
 	c := &ManagedZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4157,7 +4157,7 @@ func (c *ManagedZonesUpdateCall) Header() http.Header {
 
 func (c *ManagedZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4321,7 +4321,7 @@ func (c *PoliciesCreateCall) Header() http.Header {
 
 func (c *PoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4435,7 +4435,7 @@ type PoliciesDeleteCall struct {
 // still being referenced by a network.
 //
 // - policy: User given friendly name of the policy addressed by this
-// request.
+//   request.
 // - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Delete(project string, policy string) *PoliciesDeleteCall {
 	c := &PoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4480,7 +4480,7 @@ func (c *PoliciesDeleteCall) Header() http.Header {
 
 func (c *PoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4566,7 +4566,7 @@ type PoliciesGetCall struct {
 // Get: Fetches the representation of an existing Policy.
 //
 // - policy: User given friendly name of the policy addressed by this
-// request.
+//   request.
 // - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Get(project string, policy string) *PoliciesGetCall {
 	c := &PoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4621,7 +4621,7 @@ func (c *PoliciesGetCall) Header() http.Header {
 
 func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4798,7 +4798,7 @@ func (c *PoliciesListCall) Header() http.Header {
 
 func (c *PoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4936,7 +4936,7 @@ type PoliciesPatchCall struct {
 // Patch: Applies a partial update to an existing Policy.
 //
 // - policy: User given friendly name of the policy addressed by this
-// request.
+//   request.
 // - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Patch(project string, policy string, policy2 *Policy) *PoliciesPatchCall {
 	c := &PoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4982,7 +4982,7 @@ func (c *PoliciesPatchCall) Header() http.Header {
 
 func (c *PoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5104,7 +5104,7 @@ type PoliciesUpdateCall struct {
 // Update: Updates an existing Policy.
 //
 // - policy: User given friendly name of the policy addressed by this
-// request.
+//   request.
 // - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Update(project string, policy string, policy2 *Policy) *PoliciesUpdateCall {
 	c := &PoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5150,7 +5150,7 @@ func (c *PoliciesUpdateCall) Header() http.Header {
 
 func (c *PoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5323,7 +5323,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5434,7 +5434,7 @@ type ProjectsManagedZonesRrsetsCreateCall struct {
 // Create: Creates a new ResourceRecordSet.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ProjectsManagedZonesRrsetsService) Create(project string, managedZone string, resourcerecordset *ResourceRecordSet) *ProjectsManagedZonesRrsetsCreateCall {
 	c := &ProjectsManagedZonesRrsetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5480,7 +5480,7 @@ func (c *ProjectsManagedZonesRrsetsCreateCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5603,7 +5603,7 @@ type ProjectsManagedZonesRrsetsDeleteCall struct {
 // Delete: Deletes a previously created ResourceRecordSet.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - name: Fully qualified domain name.
 // - project: Identifies the project addressed by this request.
 // - type: RRSet type.
@@ -5652,7 +5652,7 @@ func (c *ProjectsManagedZonesRrsetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5784,7 +5784,7 @@ type ProjectsManagedZonesRrsetsGetCall struct {
 // Get: Fetches the representation of an existing ResourceRecordSet.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - name: Fully qualified domain name.
 // - project: Identifies the project addressed by this request.
 // - type: RRSet type.
@@ -5843,7 +5843,7 @@ func (c *ProjectsManagedZonesRrsetsGetCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5980,7 +5980,7 @@ type ProjectsManagedZonesRrsetsPatchCall struct {
 // Patch: Applies a partial update to an existing ResourceRecordSet.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - name: Fully qualified domain name.
 // - project: Identifies the project addressed by this request.
 // - type: RRSet type.
@@ -6030,7 +6030,7 @@ func (c *ProjectsManagedZonesRrsetsPatchCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6169,7 +6169,7 @@ type ResourceRecordSetsListCall struct {
 // deleted.
 //
 // - managedZone: Identifies the managed zone addressed by this request.
-// Can be the managed zone name or ID.
+//   Can be the managed zone name or ID.
 // - project: Identifies the project addressed by this request.
 func (r *ResourceRecordSetsService) List(project string, managedZone string) *ResourceRecordSetsListCall {
 	c := &ResourceRecordSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6246,7 +6246,7 @@ func (c *ResourceRecordSetsListCall) Header() http.Header {
 
 func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

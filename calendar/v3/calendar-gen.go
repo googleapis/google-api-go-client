@@ -2404,8 +2404,9 @@ type AclDeleteCall struct {
 // Delete: Deletes an access control rule.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - ruleId: ACL rule identifier.
 func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
 	c := &AclDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2441,7 +2442,7 @@ func (c *AclDeleteCall) Header() http.Header {
 
 func (c *AclDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2520,8 +2521,9 @@ type AclGetCall struct {
 // Get: Returns an access control rule.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - ruleId: ACL rule identifier.
 func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
 	c := &AclGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2567,7 +2569,7 @@ func (c *AclGetCall) Header() http.Header {
 
 func (c *AclGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2677,8 +2679,9 @@ type AclInsertCall struct {
 // Insert: Creates an access control rule.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall {
 	c := &AclInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2721,7 +2724,7 @@ func (c *AclInsertCall) Header() http.Header {
 
 func (c *AclInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2832,8 +2835,9 @@ type AclListCall struct {
 // List: Returns the rules in the access control list for the calendar.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *AclService) List(calendarId string) *AclListCall {
 	c := &AclListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2917,7 +2921,7 @@ func (c *AclListCall) Header() http.Header {
 
 func (c *AclListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3064,8 +3068,9 @@ type AclPatchCall struct {
 // semantics.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - ruleId: ACL rule identifier.
 func (r *AclService) Patch(calendarId string, ruleId string, aclrule *AclRule) *AclPatchCall {
 	c := &AclPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3111,7 +3116,7 @@ func (c *AclPatchCall) Header() http.Header {
 
 func (c *AclPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3231,8 +3236,9 @@ type AclUpdateCall struct {
 // Update: Updates an access control rule.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - ruleId: ACL rule identifier.
 func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) *AclUpdateCall {
 	c := &AclUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3278,7 +3284,7 @@ func (c *AclUpdateCall) Header() http.Header {
 
 func (c *AclUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3397,8 +3403,9 @@ type AclWatchCall struct {
 // Watch: Watch for changes to ACL resources.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *AclService) Watch(calendarId string, channel *Channel) *AclWatchCall {
 	c := &AclWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3473,7 +3480,7 @@ func (c *AclWatchCall) Header() http.Header {
 
 func (c *AclWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3602,8 +3609,9 @@ type CalendarListDeleteCall struct {
 // Delete: Removes a calendar from the user's calendar list.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall {
 	c := &CalendarListDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3637,7 +3645,7 @@ func (c *CalendarListDeleteCall) Header() http.Header {
 
 func (c *CalendarListDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3707,8 +3715,9 @@ type CalendarListGetCall struct {
 // Get: Returns a calendar from the user's calendar list.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Get(calendarId string) *CalendarListGetCall {
 	c := &CalendarListGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3752,7 +3761,7 @@ func (c *CalendarListGetCall) Header() http.Header {
 
 func (c *CalendarListGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3894,7 +3903,7 @@ func (c *CalendarListInsertCall) Header() http.Header {
 
 func (c *CalendarListInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4097,7 +4106,7 @@ func (c *CalendarListListCall) Header() http.Header {
 
 func (c *CalendarListListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4254,8 +4263,9 @@ type CalendarListPatchCall struct {
 // method supports patch semantics.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Patch(calendarId string, calendarlistentry *CalendarListEntry) *CalendarListPatchCall {
 	c := &CalendarListPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4300,7 +4310,7 @@ func (c *CalendarListPatchCall) Header() http.Header {
 
 func (c *CalendarListPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4411,8 +4421,9 @@ type CalendarListUpdateCall struct {
 // Update: Updates an existing calendar on the user's calendar list.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Update(calendarId string, calendarlistentry *CalendarListEntry) *CalendarListUpdateCall {
 	c := &CalendarListUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4457,7 +4468,7 @@ func (c *CalendarListUpdateCall) Header() http.Header {
 
 func (c *CalendarListUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4663,7 +4674,7 @@ func (c *CalendarListWatchCall) Header() http.Header {
 
 func (c *CalendarListWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4804,8 +4815,9 @@ type CalendarsClearCall struct {
 // associated with the primary calendar of an account.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
 	c := &CalendarsClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4839,7 +4851,7 @@ func (c *CalendarsClearCall) Header() http.Header {
 
 func (c *CalendarsClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4909,8 +4921,9 @@ type CalendarsDeleteCall struct {
 // clearing all events on primary calendars.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
 	c := &CalendarsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4944,7 +4957,7 @@ func (c *CalendarsDeleteCall) Header() http.Header {
 
 func (c *CalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5014,8 +5027,9 @@ type CalendarsGetCall struct {
 // Get: Returns metadata for a calendar.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Get(calendarId string) *CalendarsGetCall {
 	c := &CalendarsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5059,7 +5073,7 @@ func (c *CalendarsGetCall) Header() http.Header {
 
 func (c *CalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5191,7 +5205,7 @@ func (c *CalendarsInsertCall) Header() http.Header {
 
 func (c *CalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5284,8 +5298,9 @@ type CalendarsPatchCall struct {
 // semantics.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *CalendarsPatchCall {
 	c := &CalendarsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5320,7 +5335,7 @@ func (c *CalendarsPatchCall) Header() http.Header {
 
 func (c *CalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5426,8 +5441,9 @@ type CalendarsUpdateCall struct {
 // Update: Updates metadata for a calendar.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Update(calendarId string, calendar *Calendar) *CalendarsUpdateCall {
 	c := &CalendarsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5462,7 +5478,7 @@ func (c *CalendarsUpdateCall) Header() http.Header {
 
 func (c *CalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5598,7 +5614,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5706,7 +5722,7 @@ func (c *ColorsGetCall) Header() http.Header {
 
 func (c *ColorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5794,8 +5810,9 @@ type EventsDeleteCall struct {
 // Delete: Deletes an event.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - eventId: Event identifier.
 func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteCall {
 	c := &EventsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5857,7 +5874,7 @@ func (c *EventsDeleteCall) Header() http.Header {
 
 func (c *EventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5957,8 +5974,9 @@ type EventsGetCall struct {
 // Get: Returns an event.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - eventId: Event identifier.
 func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
 	c := &EventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6030,7 +6048,7 @@ func (c *EventsGetCall) Header() http.Header {
 
 func (c *EventsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6160,8 +6178,9 @@ type EventsImportCall struct {
 // copy of an existing event to a calendar.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCall {
 	c := &EventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6216,7 +6235,7 @@ func (c *EventsImportCall) Header() http.Header {
 
 func (c *EventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6336,8 +6355,9 @@ type EventsInsertCall struct {
 // Insert: Creates an event.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCall {
 	c := &EventsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6428,7 +6448,7 @@ func (c *EventsInsertCall) Header() http.Header {
 
 func (c *EventsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6576,8 +6596,9 @@ type EventsInstancesCall struct {
 // Instances: Returns instances of the specified recurring event.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - eventId: Recurring event identifier.
 func (r *EventsService) Instances(calendarId string, eventId string) *EventsInstancesCall {
 	c := &EventsInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6698,7 +6719,7 @@ func (c *EventsInstancesCall) Header() http.Header {
 
 func (c *EventsInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6883,8 +6904,9 @@ type EventsListCall struct {
 // List: Returns events on the specified calendar.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) List(calendarId string) *EventsListCall {
 	c := &EventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7110,7 +7132,7 @@ func (c *EventsListCall) Header() http.Header {
 
 func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7340,9 +7362,9 @@ type EventsMoveCall struct {
 // organizer.
 //
 // - calendarId: Calendar identifier of the source calendar where the
-// event currently is on.
+//   event currently is on.
 // - destination: Calendar identifier of the target calendar where the
-// event is to be moved to.
+//   event is to be moved to.
 // - eventId: Event identifier.
 func (r *EventsService) Move(calendarId string, eventId string, destinationid string) *EventsMoveCall {
 	c := &EventsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7406,7 +7428,7 @@ func (c *EventsMoveCall) Header() http.Header {
 
 func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7541,8 +7563,9 @@ type EventsPatchCall struct {
 // Patch: Updates an event. This method supports patch semantics.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - eventId: Event identifier.
 func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *EventsPatchCall {
 	c := &EventsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7645,7 +7668,7 @@ func (c *EventsPatchCall) Header() http.Header {
 
 func (c *EventsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7804,8 +7827,9 @@ type EventsQuickAddCall struct {
 // QuickAdd: Creates an event based on a simple text string.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - text: The text describing the event to be created.
 func (r *EventsService) QuickAdd(calendarId string, text string) *EventsQuickAddCall {
 	c := &EventsQuickAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7867,7 +7891,7 @@ func (c *EventsQuickAddCall) Header() http.Header {
 
 func (c *EventsQuickAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7994,8 +8018,9 @@ type EventsUpdateCall struct {
 // Update: Updates an event.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 // - eventId: Event identifier.
 func (r *EventsService) Update(calendarId string, eventId string, event *Event) *EventsUpdateCall {
 	c := &EventsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8098,7 +8123,7 @@ func (c *EventsUpdateCall) Header() http.Header {
 
 func (c *EventsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8258,8 +8283,9 @@ type EventsWatchCall struct {
 // Watch: Watch for changes to Events resources.
 //
 // - calendarId: Calendar identifier. To retrieve calendar IDs call the
-// calendarList.list method. If you want to access the primary calendar
-// of the currently logged in user, use the "primary" keyword.
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchCall {
 	c := &EventsWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -8476,7 +8502,7 @@ func (c *EventsWatchCall) Header() http.Header {
 
 func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8720,7 +8746,7 @@ func (c *FreebusyQueryCall) Header() http.Header {
 
 func (c *FreebusyQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8856,7 +8882,7 @@ func (c *SettingsGetCall) Header() http.Header {
 
 func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9027,7 +9053,7 @@ func (c *SettingsListCall) Header() http.Header {
 
 func (c *SettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9216,7 +9242,7 @@ func (c *SettingsWatchCall) Header() http.Header {
 
 func (c *SettingsWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

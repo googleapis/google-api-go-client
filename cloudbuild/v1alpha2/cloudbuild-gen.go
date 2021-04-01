@@ -2011,7 +2011,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2164,7 +2164,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2268,7 +2268,7 @@ type ProjectsWorkerPoolsCreateCall struct {
 // worker pool.
 //
 // - parent: The parent resource where this book will be created.
-// Format: projects/{project}
+//   Format: projects/{project}.
 func (r *ProjectsWorkerPoolsService) Create(parent string, workerpool *WorkerPool) *ProjectsWorkerPoolsCreateCall {
 	c := &ProjectsWorkerPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2312,7 +2312,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2424,7 +2424,7 @@ type ProjectsWorkerPoolsDeleteCall struct {
 // Delete: Deletes a `WorkerPool`.
 //
 // - name: The name of the `WorkerPool` to delete. Format:
-// projects/{project}/workerPools/{workerPool}
+//   projects/{project}/workerPools/{workerPool}.
 func (r *ProjectsWorkerPoolsService) Delete(name string) *ProjectsWorkerPoolsDeleteCall {
 	c := &ProjectsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2458,7 +2458,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2558,7 +2558,7 @@ type ProjectsWorkerPoolsGetCall struct {
 // Get: Returns details of a `WorkerPool`.
 //
 // - name: The name of the `WorkerPool` to retrieve. Format:
-// projects/{project}/workerPools/{workerPool}
+//   projects/{project}/workerPools/{workerPool}.
 func (r *ProjectsWorkerPoolsService) Get(name string) *ProjectsWorkerPoolsGetCall {
 	c := &ProjectsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2602,7 +2602,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2705,7 +2705,7 @@ type ProjectsWorkerPoolsListCall struct {
 // List: Lists `WorkerPool`s by project.
 //
 // - parent: The parent, which owns this collection of `WorkerPools`.
-// Format: projects/{project}
+//   Format: projects/{project}.
 func (r *ProjectsWorkerPoolsService) List(parent string) *ProjectsWorkerPoolsListCall {
 	c := &ProjectsWorkerPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2749,7 +2749,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2852,9 +2852,9 @@ type ProjectsWorkerPoolsPatchCall struct {
 // Patch: Updates a `WorkerPool`.
 //
 // - name: Output only. The resource name of the `WorkerPool`. Format of
-// the name is `projects/{project_id}/workerPools/{worker_pool_id}`,
-// where the value of {worker_pool_id} is provided in the
-// CreateWorkerPool request.
+//   the name is `projects/{project_id}/workerPools/{worker_pool_id}`,
+//   where the value of {worker_pool_id} is provided in the
+//   CreateWorkerPool request.
 func (r *ProjectsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) *ProjectsWorkerPoolsPatchCall {
 	c := &ProjectsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2896,7 +2896,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

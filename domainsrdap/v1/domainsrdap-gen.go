@@ -407,7 +407,7 @@ type AutnumGetCall struct {
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
 //
-// - autnumId:
+// - autnumId: .
 func (r *AutnumService) Get(autnumId string) *AutnumGetCall {
 	c := &AutnumGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.autnumId = autnumId
@@ -451,7 +451,7 @@ func (c *AutnumGetCall) Header() http.Header {
 
 func (c *AutnumGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -548,7 +548,7 @@ type DomainGetCall struct {
 
 // Get: Look up RDAP information for a domain by name.
 //
-// - domainName: Full domain name to look up. Example: "example.com"
+// - domainName: Full domain name to look up. Example: "example.com".
 func (r *DomainService) Get(domainName string) *DomainGetCall {
 	c := &DomainGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.domainName = domainName
@@ -592,7 +592,7 @@ func (c *DomainGetCall) Header() http.Header {
 
 func (c *DomainGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -692,7 +692,7 @@ type EntityGetCall struct {
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
 //
-// - entityId:
+// - entityId: .
 func (r *EntityService) Get(entityId string) *EntityGetCall {
 	c := &EntityGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityId = entityId
@@ -736,7 +736,7 @@ func (c *EntityGetCall) Header() http.Header {
 
 func (c *EntityGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -835,8 +835,8 @@ type IpGetCall struct {
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
 //
-// - ipId:
-// - ipId1:
+// - ipId: .
+// - ipId1: .
 func (r *IpService) Get(ipId string, ipId1 string) *IpGetCall {
 	c := &IpGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ipId = ipId
@@ -881,7 +881,7 @@ func (c *IpGetCall) Header() http.Header {
 
 func (c *IpGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -986,7 +986,7 @@ type NameserverGetCall struct {
 // Get: The RDAP API recognizes this command from the RDAP specification
 // but does not support it. The response is a formatted 501 error.
 //
-// - nameserverId:
+// - nameserverId: .
 func (r *NameserverService) Get(nameserverId string) *NameserverGetCall {
 	c := &NameserverGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameserverId = nameserverId
@@ -1030,7 +1030,7 @@ func (c *NameserverGetCall) Header() http.Header {
 
 func (c *NameserverGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1169,7 +1169,7 @@ func (c *V1GetDomainsCall) Header() http.Header {
 
 func (c *V1GetDomainsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1297,7 +1297,7 @@ func (c *V1GetEntitiesCall) Header() http.Header {
 
 func (c *V1GetEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1424,7 +1424,7 @@ func (c *V1GetHelpCall) Header() http.Header {
 
 func (c *V1GetHelpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1552,7 +1552,7 @@ func (c *V1GetIpCall) Header() http.Header {
 
 func (c *V1GetIpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1680,7 +1680,7 @@ func (c *V1GetNameserversCall) Header() http.Header {
 
 func (c *V1GetNameserversCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

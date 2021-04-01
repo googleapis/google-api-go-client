@@ -4742,7 +4742,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4922,7 +4922,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5058,8 +5058,8 @@ type ServicesBatchEnableCall struct {
 // and no state changes occur. Operation
 //
 // - parent: Parent to enable services on. An example name would be:
-// `projects/123` where `123` is the project number (not project ID).
-// The `BatchEnableServices` method currently only supports projects.
+//   `projects/123` where `123` is the project number (not project ID).
+//   The `BatchEnableServices` method currently only supports projects.
 func (r *ServicesService) BatchEnable(parent string, batchenableservicesrequest *BatchEnableServicesRequest) *ServicesBatchEnableCall {
 	c := &ServicesBatchEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5094,7 +5094,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5208,10 +5208,10 @@ type ServicesDisableCall struct {
 // not currently enabled. Operation
 //
 // - name: Name of the consumer and service to disable the service on.
-// The enable and disable methods currently only support projects. An
-// example name would be:
-// `projects/123/services/serviceusage.googleapis.com` where `123` is
-// the project number (not project ID).
+//   The enable and disable methods currently only support projects. An
+//   example name would be:
+//   `projects/123/services/serviceusage.googleapis.com` where `123` is
+//   the project number (not project ID).
 func (r *ServicesService) Disable(name string, disableservicerequest *DisableServiceRequest) *ServicesDisableCall {
 	c := &ServicesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5246,7 +5246,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5356,11 +5356,11 @@ type ServicesEnableCall struct {
 // Operation
 //
 // - name: Name of the consumer and service to enable the service on.
-// The `EnableService` and `DisableService` methods currently only
-// support projects. Enabling a service requires that the service is
-// public or is shared with the user enabling the service. An example
-// name would be: `projects/123/services/serviceusage.googleapis.com`
-// where `123` is the project number (not project ID).
+//   The `EnableService` and `DisableService` methods currently only
+//   support projects. Enabling a service requires that the service is
+//   public or is shared with the user enabling the service. An example
+//   name would be: `projects/123/services/serviceusage.googleapis.com`
+//   where `123` is the project number (not project ID).
 func (r *ServicesService) Enable(name string, enableservicerequest *EnableServiceRequest) *ServicesEnableCall {
 	c := &ServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5395,7 +5395,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5503,10 +5503,10 @@ type ServicesGenerateServiceIdentityCall struct {
 // GenerateServiceIdentity: Generate service identity for service.
 //
 // - parent: Name of the consumer and service to generate an identity
-// for. The `GenerateServiceIdentity` methods currently only support
-// projects. An example name would be:
-// `projects/123/services/example.googleapis.com` where `123` is the
-// project number.
+//   for. The `GenerateServiceIdentity` methods currently only support
+//   projects. An example name would be:
+//   `projects/123/services/example.googleapis.com` where `123` is the
+//   project number.
 func (r *ServicesService) GenerateServiceIdentity(parent string) *ServicesGenerateServiceIdentityCall {
 	c := &ServicesGenerateServiceIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5540,7 +5540,7 @@ func (c *ServicesGenerateServiceIdentityCall) Header() http.Header {
 
 func (c *ServicesGenerateServiceIdentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5642,9 +5642,9 @@ type ServicesGetCall struct {
 // service.
 //
 // - name: Name of the consumer and service to get the `ConsumerState`
-// for. An example name would be:
-// `projects/123/services/serviceusage.googleapis.com` where `123` is
-// the project number (not project ID).
+//   for. An example name would be:
+//   `projects/123/services/serviceusage.googleapis.com` where `123` is
+//   the project number (not project ID).
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5688,7 +5688,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5798,7 +5798,7 @@ type ServicesListCall struct {
 // to only include services enabled on the project.
 //
 // - parent: Parent to search for services on. An example name would be:
-// `projects/123` where `123` is the project number (not project ID).
+//   `projects/123` where `123` is the project number (not project ID).
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5866,7 +5866,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6008,9 +6008,9 @@ type ServicesConsumerQuotaMetricsGetCall struct {
 // metric
 //
 // - name: The resource name of the quota limit. An example name would
-// be:
-// projects/123/services/serviceusage.googleapis.com/quotas/metrics/servi
-// ceusage.googleapis.com%2Fmutate_requests
+//   be:
+//   projects/123/services/serviceusage.googleapis.com/quotas/metrics/ser
+//   viceusage.googleapis.com%2Fmutate_requests.
 func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumerQuotaMetricsGetCall {
 	c := &ServicesConsumerQuotaMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6072,7 +6072,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6194,7 +6194,7 @@ type ServicesConsumerQuotaMetricsImportAdminOverridesCall struct {
 // set.
 //
 // - parent: The resource name of the consumer. An example name would
-// be: `projects/123/services/compute.googleapis.com`
+//   be: `projects/123/services/compute.googleapis.com`.
 func (r *ServicesConsumerQuotaMetricsService) ImportAdminOverrides(parent string, importadminoverridesrequest *ImportAdminOverridesRequest) *ServicesConsumerQuotaMetricsImportAdminOverridesCall {
 	c := &ServicesConsumerQuotaMetricsImportAdminOverridesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6229,7 +6229,7 @@ func (c *ServicesConsumerQuotaMetricsImportAdminOverridesCall) Header() http.Hea
 
 func (c *ServicesConsumerQuotaMetricsImportAdminOverridesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6341,7 +6341,7 @@ type ServicesConsumerQuotaMetricsImportConsumerOverridesCall struct {
 // set.
 //
 // - parent: The resource name of the consumer. An example name would
-// be: `projects/123/services/compute.googleapis.com`
+//   be: `projects/123/services/compute.googleapis.com`.
 func (r *ServicesConsumerQuotaMetricsService) ImportConsumerOverrides(parent string, importconsumeroverridesrequest *ImportConsumerOverridesRequest) *ServicesConsumerQuotaMetricsImportConsumerOverridesCall {
 	c := &ServicesConsumerQuotaMetricsImportConsumerOverridesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6376,7 +6376,7 @@ func (c *ServicesConsumerQuotaMetricsImportConsumerOverridesCall) Header() http.
 
 func (c *ServicesConsumerQuotaMetricsImportConsumerOverridesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6490,9 +6490,9 @@ type ServicesConsumerQuotaMetricsListCall struct {
 // the limit.
 //
 // - parent: Parent of the quotas resource. Some example names would be:
-// projects/123/services/serviceconsumermanagement.googleapis.com
-// folders/345/services/serviceconsumermanagement.googleapis.com
-// organizations/456/services/serviceconsumermanagement.googleapis.com
+//   projects/123/services/serviceconsumermanagement.googleapis.com
+//   folders/345/services/serviceconsumermanagement.googleapis.com
+//   organizations/456/services/serviceconsumermanagement.googleapis.com.
 func (r *ServicesConsumerQuotaMetricsService) List(parent string) *ServicesConsumerQuotaMetricsListCall {
 	c := &ServicesConsumerQuotaMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6568,7 +6568,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6720,8 +6720,8 @@ type ServicesConsumerQuotaMetricsLimitsGetCall struct {
 // limit.
 //
 // - name: The resource name of the quota limit. Use the quota limit
-// resource name returned by previous ListConsumerQuotaMetrics and
-// GetConsumerQuotaMetric API calls.
+//   resource name returned by previous ListConsumerQuotaMetrics and
+//   GetConsumerQuotaMetric API calls.
 func (r *ServicesConsumerQuotaMetricsLimitsService) Get(name string) *ServicesConsumerQuotaMetricsLimitsGetCall {
 	c := &ServicesConsumerQuotaMetricsLimitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6783,7 +6783,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6906,10 +6906,10 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall struct {
 // pool allocated to all children of the folder or organization.
 //
 // - parent: The resource name of the parent quota limit, returned by a
-// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-// name would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Create(parent string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6972,7 +6972,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) Header() ht
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7101,10 +7101,10 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall struct {
 // Delete: Deletes an admin override.
 //
 // - name: The resource name of the override to delete. An example name
-// would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4
-// a3f2c1d`
+//   would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrid
+//   es/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7166,7 +7166,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) Header() ht
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7288,10 +7288,10 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall struct {
 // List: Lists all admin overrides on this limit.
 //
 // - parent: The resource name of the parent quota limit, returned by a
-// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-// name would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7349,7 +7349,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) Header() http
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7485,10 +7485,10 @@ type ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall struct {
 // Patch: Updates an admin override.
 //
 // - name: The resource name of the override to update. An example name
-// would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4
-// a3f2c1d`
+//   would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrid
+//   es/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsAdminOverridesService) Patch(name string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall {
 	c := &ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7559,7 +7559,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) Header() htt
 
 func (c *ServicesConsumerQuotaMetricsLimitsAdminOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7699,10 +7699,10 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall struct {
 // of the service.
 //
 // - parent: The resource name of the parent quota limit, returned by a
-// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-// name would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Create(parent string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7765,7 +7765,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7894,10 +7894,10 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall struct {
 // Delete: Deletes a consumer override.
 //
 // - name: The resource name of the override to delete. An example name
-// would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverride
-// s/4a3f2c1d`
+//   would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOver
+//   rides/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7959,7 +7959,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8081,10 +8081,10 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall struct {
 // List: Lists all consumer overrides on this limit.
 //
 // - parent: The resource name of the parent quota limit, returned by a
-// ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-// name would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8142,7 +8142,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) Header() h
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8278,10 +8278,10 @@ type ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall struct {
 // Patch: Updates a consumer override.
 //
 // - name: The resource name of the override to update. An example name
-// would be:
-// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/com
-// pute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOverride
-// s/4a3f2c1d`
+//   would be:
+//   `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/consumerOver
+//   rides/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsConsumerOverridesService) Patch(name string, quotaoverride *QuotaOverride) *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall {
 	c := &ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8352,7 +8352,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) Header() 
 
 func (c *ServicesConsumerQuotaMetricsLimitsConsumerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1342,13 +1342,13 @@ type ProjectsDetectLanguageCall struct {
 // DetectLanguage: Detects the language of text within a request.
 //
 // - parent: Project or location to make a call. Must refer to a
-// caller's project. Format:
-// `projects/{project-number-or-id}/locations/{location-id}` or
-// `projects/{project-number-or-id}`. For global calls, use
-// `projects/{project-number-or-id}/locations/global` or
-// `projects/{project-number-or-id}`. Only models within the same region
-// (has same location-id) can be used. Otherwise an INVALID_ARGUMENT
-// (400) error is returned.
+//   caller's project. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}` or
+//   `projects/{project-number-or-id}`. For global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Only models within the same
+//   region (has same location-id) can be used. Otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsDetectLanguageCall {
 	c := &ProjectsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1383,7 +1383,7 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1493,13 +1493,14 @@ type ProjectsGetSupportedLanguagesCall struct {
 // translation.
 //
 // - parent: Project or location to make a call. Must refer to a
-// caller's project. Format: `projects/{project-number-or-id}` or
-// `projects/{project-number-or-id}/locations/{location-id}`. For global
-// calls, use `projects/{project-number-or-id}/locations/global` or
-// `projects/{project-number-or-id}`. Non-global location is required
-// for AutoML models. Only models within the same region (have same
-// location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
-// is returned.
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for AutoML models. Only models within the same region (have same
+//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//   is returned.
 func (r *ProjectsService) GetSupportedLanguages(parent string) *ProjectsGetSupportedLanguagesCall {
 	c := &ProjectsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1568,7 +1569,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1682,13 +1683,14 @@ type ProjectsTranslateTextCall struct {
 // TranslateText: Translates input text and returns translated text.
 //
 // - parent: Project or location to make a call. Must refer to a
-// caller's project. Format: `projects/{project-number-or-id}` or
-// `projects/{project-number-or-id}/locations/{location-id}`. For global
-// calls, use `projects/{project-number-or-id}/locations/global` or
-// `projects/{project-number-or-id}`. Non-global location is required
-// for requests using AutoML models or custom glossaries. Models and
-// glossaries must be within the same region (have same location-id),
-// otherwise an INVALID_ARGUMENT (400) error is returned.
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for requests using AutoML models or custom glossaries. Models and
+//   glossaries must be within the same region (have same location-id),
+//   otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsTranslateTextCall {
 	c := &ProjectsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1723,7 +1725,7 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1838,11 +1840,11 @@ type ProjectsLocationsBatchTranslateTextCall struct {
 // call.
 //
 // - parent: Location to make a call. Must refer to a caller's project.
-// Format: `projects/{project-number-or-id}/locations/{location-id}`.
-// The `global` location is not supported for batch translation. Only
-// AutoML Translation models or glossaries within the same region (have
-// the same location-id) can be used, otherwise an INVALID_ARGUMENT
-// (400) error is returned.
+//   Format: `projects/{project-number-or-id}/locations/{location-id}`.
+//   The `global` location is not supported for batch translation. Only
+//   AutoML Translation models or glossaries within the same region
+//   (have the same location-id) can be used, otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtranslatetextrequest *BatchTranslateTextRequest) *ProjectsLocationsBatchTranslateTextCall {
 	c := &ProjectsLocationsBatchTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1877,7 +1879,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1985,13 +1987,13 @@ type ProjectsLocationsDetectLanguageCall struct {
 // DetectLanguage: Detects the language of text within a request.
 //
 // - parent: Project or location to make a call. Must refer to a
-// caller's project. Format:
-// `projects/{project-number-or-id}/locations/{location-id}` or
-// `projects/{project-number-or-id}`. For global calls, use
-// `projects/{project-number-or-id}/locations/global` or
-// `projects/{project-number-or-id}`. Only models within the same region
-// (has same location-id) can be used. Otherwise an INVALID_ARGUMENT
-// (400) error is returned.
+//   caller's project. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}` or
+//   `projects/{project-number-or-id}`. For global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Only models within the same
+//   region (has same location-id) can be used. Otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsLocationsDetectLanguageCall {
 	c := &ProjectsLocationsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2026,7 +2028,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2178,7 +2180,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2283,13 +2285,14 @@ type ProjectsLocationsGetSupportedLanguagesCall struct {
 // translation.
 //
 // - parent: Project or location to make a call. Must refer to a
-// caller's project. Format: `projects/{project-number-or-id}` or
-// `projects/{project-number-or-id}/locations/{location-id}`. For global
-// calls, use `projects/{project-number-or-id}/locations/global` or
-// `projects/{project-number-or-id}`. Non-global location is required
-// for AutoML models. Only models within the same region (have same
-// location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
-// is returned.
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for AutoML models. Only models within the same region (have same
+//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//   is returned.
 func (r *ProjectsLocationsService) GetSupportedLanguages(parent string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c := &ProjectsLocationsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2358,7 +2361,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2473,7 +2476,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2541,7 +2544,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2682,13 +2685,14 @@ type ProjectsLocationsTranslateTextCall struct {
 // TranslateText: Translates input text and returns translated text.
 //
 // - parent: Project or location to make a call. Must refer to a
-// caller's project. Format: `projects/{project-number-or-id}` or
-// `projects/{project-number-or-id}/locations/{location-id}`. For global
-// calls, use `projects/{project-number-or-id}/locations/global` or
-// `projects/{project-number-or-id}`. Non-global location is required
-// for requests using AutoML models or custom glossaries. Models and
-// glossaries must be within the same region (have same location-id),
-// otherwise an INVALID_ARGUMENT (400) error is returned.
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for requests using AutoML models or custom glossaries. Models and
+//   glossaries must be within the same region (have same location-id),
+//   otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsLocationsTranslateTextCall {
 	c := &ProjectsLocationsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2723,7 +2727,7 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2867,7 +2871,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3009,7 +3013,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3154,7 +3158,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3259,7 +3263,7 @@ type ProjectsLocationsGlossariesListCall struct {
 // project doesn't exist.
 //
 // - parent: The name of the project from which to list all of the
-// glossaries.
+//   glossaries.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3342,7 +3346,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3526,7 +3530,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3670,7 +3674,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3816,7 +3820,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3993,7 +3997,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4177,7 +4181,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

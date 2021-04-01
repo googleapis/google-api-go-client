@@ -1952,7 +1952,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2056,7 +2056,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2124,7 +2124,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2299,7 +2299,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2444,7 +2444,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2620,7 +2620,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2760,8 +2760,8 @@ type ProjectsLocationsServicesCreateCall struct {
 // Create: Creates a metastore service in a project and location.
 //
 // - parent: The relative resource name of the location in which to
-// create a metastore service, in the following
-// form:projects/{project_number}/locations/{location_id}.
+//   create a metastore service, in the following
+//   form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2821,7 +2821,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2938,9 +2938,9 @@ type ProjectsLocationsServicesDeleteCall struct {
 // Delete: Deletes a single service.
 //
 // - name: The relative resource name of the metastore service to
-// delete, in the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}.
+//   delete, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2989,7 +2989,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3094,9 +3094,9 @@ type ProjectsLocationsServicesExportMetadataCall struct {
 // ExportMetadata: Exports metadata from a service.
 //
 // - service: The relative resource name of the metastore service to run
-// export, in the following
-// form:projects/{project_id}/locations/{location_id}/services/{service_i
-// d}.
+//   export, in the following
+//   form:projects/{project_id}/locations/{location_id}/services/{service
+//   _id}.
 func (r *ProjectsLocationsServicesService) ExportMetadata(service string, exportmetadatarequest *ExportMetadataRequest) *ProjectsLocationsServicesExportMetadataCall {
 	c := &ProjectsLocationsServicesExportMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -3131,7 +3131,7 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesExportMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3239,9 +3239,9 @@ type ProjectsLocationsServicesGetCall struct {
 // Get: Gets the details of a single service.
 //
 // - name: The relative resource name of the metastore service to
-// retrieve, in the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}.
+//   retrieve, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3285,7 +3285,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3390,8 +3390,8 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3449,7 +3449,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3558,8 +3558,8 @@ type ProjectsLocationsServicesListCall struct {
 // List: Lists services in a project and location.
 //
 // - parent: The relative resource name of the location of metastore
-// services to list, in the following
-// form:projects/{project_number}/locations/{location_id}.
+//   services to list, in the following
+//   form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3639,7 +3639,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3784,9 +3784,9 @@ type ProjectsLocationsServicesPatchCall struct {
 // Patch: Updates the parameters of a single service.
 //
 // - name: Immutable. The relative resource name of the metastore
-// service, of the
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}.
+//   service, of the
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3846,7 +3846,7 @@ func (c *ProjectsLocationsServicesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3965,9 +3965,9 @@ type ProjectsLocationsServicesRestoreCall struct {
 // Restore: Restores a service from a backup.
 //
 // - service: The relative resource name of the metastore service to run
-// restore, in the following
-// form:projects/{project_id}/locations/{location_id}/services/{service_i
-// d}.
+//   restore, in the following
+//   form:projects/{project_id}/locations/{location_id}/services/{service
+//   _id}.
 func (r *ProjectsLocationsServicesService) Restore(service string, restoreservicerequest *RestoreServiceRequest) *ProjectsLocationsServicesRestoreCall {
 	c := &ProjectsLocationsServicesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -4002,7 +4002,7 @@ func (c *ProjectsLocationsServicesRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4112,8 +4112,8 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4148,7 +4148,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4261,8 +4261,8 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4297,7 +4297,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4405,9 +4405,9 @@ type ProjectsLocationsServicesBackupsCreateCall struct {
 // Create: Creates a new Backup in a given project and location.
 //
 // - parent: The relative resource name of the service in which to
-// create a backup of the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}.
+//   create a backup of the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsServicesBackupsCreateCall {
 	c := &ProjectsLocationsServicesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4467,7 +4467,7 @@ func (c *ProjectsLocationsServicesBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4584,9 +4584,9 @@ type ProjectsLocationsServicesBackupsDeleteCall struct {
 // Delete: Deletes a single backup.
 //
 // - name: The relative resource name of the backup to delete, in the
-// following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}/backups/{backup_id}.
+//   following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Delete(name string) *ProjectsLocationsServicesBackupsDeleteCall {
 	c := &ProjectsLocationsServicesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4635,7 +4635,7 @@ func (c *ProjectsLocationsServicesBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4740,9 +4740,9 @@ type ProjectsLocationsServicesBackupsGetCall struct {
 // Get: Gets details of a single backup.
 //
 // - name: The relative resource name of the backup to retrieve, in the
-// following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}/backups/{backup_id}.
+//   following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Get(name string) *ProjectsLocationsServicesBackupsGetCall {
 	c := &ProjectsLocationsServicesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4786,7 +4786,7 @@ func (c *ProjectsLocationsServicesBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4889,9 +4889,9 @@ type ProjectsLocationsServicesBackupsListCall struct {
 // List: Lists backups in a service.
 //
 // - parent: The relative resource name of the service whose backups to
-// list, in the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}/backups.
+//   list, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/backups.
 func (r *ProjectsLocationsServicesBackupsService) List(parent string) *ProjectsLocationsServicesBackupsListCall {
 	c := &ProjectsLocationsServicesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4971,7 +4971,7 @@ func (c *ProjectsLocationsServicesBackupsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5116,9 +5116,9 @@ type ProjectsLocationsServicesMetadataImportsCreateCall struct {
 // Create: Creates a new MetadataImport in a given project and location.
 //
 // - parent: The relative resource name of the service in which to
-// create a metastore import, in the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}.
+//   create a metastore import, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Create(parent string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c := &ProjectsLocationsServicesMetadataImportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5178,7 +5178,7 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5296,9 +5296,9 @@ type ProjectsLocationsServicesMetadataImportsGetCall struct {
 // Get: Gets details of a single import.
 //
 // - name: The relative resource name of the metadata import to
-// retrieve, in the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}/metadataImports/{import_id}.
+//   retrieve, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/metadataImports/{import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Get(name string) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c := &ProjectsLocationsServicesMetadataImportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5342,7 +5342,7 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5445,9 +5445,9 @@ type ProjectsLocationsServicesMetadataImportsListCall struct {
 // List: Lists imports in a service.
 //
 // - parent: The relative resource name of the service whose metadata
-// imports to list, in the following
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}/metadataImports.
+//   imports to list, in the following
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/metadataImports.
 func (r *ProjectsLocationsServicesMetadataImportsService) List(parent string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c := &ProjectsLocationsServicesMetadataImportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5527,7 +5527,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsServicesMetadataImportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5673,9 +5673,9 @@ type ProjectsLocationsServicesMetadataImportsPatchCall struct {
 // MetadataImport is supported to be updated.
 //
 // - name: Immutable. The relative resource name of the metadata import,
-// of the
-// form:projects/{project_number}/locations/{location_id}/services/{servi
-// ce_id}/metadataImports/{metadata_import_id}.
+//   of the
+//   form:projects/{project_number}/locations/{location_id}/services/{ser
+//   vice_id}/metadataImports/{metadata_import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Patch(name string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c := &ProjectsLocationsServicesMetadataImportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5735,7 +5735,7 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

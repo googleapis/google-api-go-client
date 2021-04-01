@@ -2473,7 +2473,7 @@ func (c *CatalogSearchCall) Header() http.Header {
 
 func (c *CatalogSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2658,7 +2658,7 @@ func (c *EntriesLookupCall) Header() http.Header {
 
 func (c *EntriesLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2765,9 +2765,9 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 // for more information).
 //
 // - parent: The name of the project this entry group is in. Example: *
-// projects/{project_id}/locations/{location} Note that this EntryGroup
-// and its child resources may not actually be stored in the location in
-// this name.
+//   projects/{project_id}/locations/{location} Note that this
+//   EntryGroup and its child resources may not actually be stored in
+//   the location in this name.
 func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsCreateCall {
 	c := &ProjectsLocationsEntryGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2811,7 +2811,7 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2929,8 +2929,8 @@ type ProjectsLocationsEntryGroupsDeleteCall struct {
 // for more information).
 //
 // - name: The name of the entry group. For example,
-// `projects/{project_id}/locations/{location}/entryGroups/{entry_group_i
-// d}`.
+//   `projects/{project_id}/locations/{location}/entryGroups/{entry_group
+//   _id}`.
 func (r *ProjectsLocationsEntryGroupsService) Delete(name string) *ProjectsLocationsEntryGroupsDeleteCall {
 	c := &ProjectsLocationsEntryGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2971,7 +2971,7 @@ func (c *ProjectsLocationsEntryGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3076,8 +3076,8 @@ type ProjectsLocationsEntryGroupsGetCall struct {
 // Get: Gets an EntryGroup.
 //
 // - name: The name of the entry group. For example,
-// `projects/{project_id}/locations/{location}/entryGroups/{entry_group_i
-// d}`.
+//   `projects/{project_id}/locations/{location}/entryGroups/{entry_group
+//   _id}`.
 func (r *ProjectsLocationsEntryGroupsService) Get(name string) *ProjectsLocationsEntryGroupsGetCall {
 	c := &ProjectsLocationsEntryGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3128,7 +3128,7 @@ func (c *ProjectsLocationsEntryGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3248,8 +3248,8 @@ type ProjectsLocationsEntryGroupsGetIamPolicyCall struct {
 // get policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsEntryGroupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3284,7 +3284,7 @@ func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3392,8 +3392,8 @@ type ProjectsLocationsEntryGroupsListCall struct {
 // List: Lists entry groups.
 //
 // - parent: The name of the location that contains the entry groups,
-// which can be provided in URL format. Example: *
-// projects/{project_id}/locations/{location}
+//   which can be provided in URL format. Example: *
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsLocationsEntryGroupsService) List(parent string) *ProjectsLocationsEntryGroupsListCall {
 	c := &ProjectsLocationsEntryGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3453,7 +3453,7 @@ func (c *ProjectsLocationsEntryGroupsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3594,10 +3594,10 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 // for more information).
 //
 // - name: The resource name of the entry group in URL format. Example:
-// *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// } Note that this EntryGroup and its child resources may not actually
-// be stored in the location in this name.
+//   *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id} Note that this EntryGroup and its child resources may not
+//   actually be stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsService) Patch(name string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsPatchCall {
 	c := &ProjectsLocationsEntryGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3642,7 +3642,7 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3765,8 +3765,8 @@ type ProjectsLocationsEntryGroupsSetIamPolicyCall struct {
 // set policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsEntryGroupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEntryGroupsSetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3801,7 +3801,7 @@ func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3916,8 +3916,8 @@ type ProjectsLocationsEntryGroupsTestIamPermissionsCall struct {
 // request.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3952,7 +3952,7 @@ func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4066,9 +4066,9 @@ type ProjectsLocationsEntryGroupsEntriesCreateCall struct {
 // per entry group.
 //
 // - parent: The name of the entry group this entry is in. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// } Note that this Entry and its child resources may not actually be
-// stored in the location in this name.
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id} Note that this Entry and its child resources may not actually
+//   be stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Create(parent string, googleclouddatacatalogv1beta1entry *GoogleCloudDatacatalogV1beta1Entry) *ProjectsLocationsEntryGroupsEntriesCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4110,7 +4110,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4228,8 +4228,8 @@ type ProjectsLocationsEntryGroupsEntriesDeleteCall struct {
 // for more information).
 //
 // - name: The name of the entry. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id}
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id}.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Delete(name string) *ProjectsLocationsEntryGroupsEntriesDeleteCall {
 	c := &ProjectsLocationsEntryGroupsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4263,7 +4263,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4363,8 +4363,8 @@ type ProjectsLocationsEntryGroupsEntriesGetCall struct {
 // Get: Gets an entry.
 //
 // - name: The name of the entry. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id}
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id}.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Get(name string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c := &ProjectsLocationsEntryGroupsEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4408,7 +4408,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4522,8 +4522,8 @@ type ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall struct {
 // get policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsEntryGroupsEntriesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4558,7 +4558,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4666,9 +4666,9 @@ type ProjectsLocationsEntryGroupsEntriesListCall struct {
 // List: Lists entries.
 //
 // - parent: The name of the entry group that contains the entries,
-// which can be provided in URL format. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }
+//   which can be provided in URL format. Example: *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}.
 func (r *ProjectsLocationsEntryGroupsEntriesService) List(parent string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c := &ProjectsLocationsEntryGroupsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4737,7 +4737,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4884,10 +4884,10 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 // for more information).
 //
 // - name: Output only. The Data Catalog resource name of the entry in
-// URL format. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id} Note that this Entry and its child resources may
-// not actually be stored in the location in this name.
+//   URL format. Example: *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id} Note that this Entry and its child resources
+//   may not actually be stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googleclouddatacatalogv1beta1entry *GoogleCloudDatacatalogV1beta1Entry) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4938,7 +4938,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5060,8 +5060,8 @@ type ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall struct {
 // request.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsEntriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5096,7 +5096,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5209,10 +5209,10 @@ type ProjectsLocationsEntryGroupsEntriesTagsCreateCall struct {
 // used to create the tag must be from the same organization.
 //
 // - parent: The name of the resource to attach this tag to. Tags can be
-// attached to Entries. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id} Note that this Tag and its child resources may
-// not actually be stored in the location in this name.
+//   attached to Entries. Example: *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id} Note that this Tag and its child resources
+//   may not actually be stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsEntriesTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5247,7 +5247,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5354,8 +5354,8 @@ type ProjectsLocationsEntryGroupsEntriesTagsDeleteCall struct {
 // Delete: Deletes a tag.
 //
 // - name: The name of the tag to delete. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id}/tags/{tag_id}
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id}/tags/{tag_id}.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Delete(name string) *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5389,7 +5389,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5489,11 +5489,11 @@ type ProjectsLocationsEntryGroupsEntriesTagsListCall struct {
 // List: Lists the tags on an Entry.
 //
 // - parent: The name of the Data Catalog resource to list the tags of.
-// The resource could be an Entry or an EntryGroup. Examples: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// } *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id}
+//   The resource could be an Entry or an EntryGroup. Examples: *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id} *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id}.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) List(parent string) *ProjectsLocationsEntryGroupsEntriesTagsListCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5552,7 +5552,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5689,10 +5689,10 @@ type ProjectsLocationsEntryGroupsEntriesTagsPatchCall struct {
 // Patch: Updates an existing tag.
 //
 // - name: The resource name of the tag in URL format. Example: *
-// projects/{project_id}/locations/{location}/entrygroups/{entry_group_id
-// }/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
-// system-generated identifier. Note that this Tag may not actually be
-// stored in the location in this name.
+//   projects/{project_id}/locations/{location}/entrygroups/{entry_group_
+//   id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
+//   system-generated identifier. Note that this Tag may not actually be
+//   stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Patch(nameid string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsEntriesTagsPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5739,7 +5739,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5858,10 +5858,10 @@ type ProjectsLocationsEntryGroupsTagsCreateCall struct {
 // used to create the tag must be from the same organization.
 //
 // - parent: The name of the resource to attach this tag to. Tags can be
-// attached to Entries. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id} Note that this Tag and its child resources may
-// not actually be stored in the location in this name.
+//   attached to Entries. Example: *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id} Note that this Tag and its child resources
+//   may not actually be stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5896,7 +5896,7 @@ func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6003,8 +6003,8 @@ type ProjectsLocationsEntryGroupsTagsDeleteCall struct {
 // Delete: Deletes a tag.
 //
 // - name: The name of the tag to delete. Example: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id}/tags/{tag_id}
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id}/tags/{tag_id}.
 func (r *ProjectsLocationsEntryGroupsTagsService) Delete(name string) *ProjectsLocationsEntryGroupsTagsDeleteCall {
 	c := &ProjectsLocationsEntryGroupsTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6038,7 +6038,7 @@ func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6138,11 +6138,11 @@ type ProjectsLocationsEntryGroupsTagsListCall struct {
 // List: Lists the tags on an Entry.
 //
 // - parent: The name of the Data Catalog resource to list the tags of.
-// The resource could be an Entry or an EntryGroup. Examples: *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// } *
-// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-// }/entries/{entry_id}
+//   The resource could be an Entry or an EntryGroup. Examples: *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id} *
+//   projects/{project_id}/locations/{location}/entryGroups/{entry_group_
+//   id}/entries/{entry_id}.
 func (r *ProjectsLocationsEntryGroupsTagsService) List(parent string) *ProjectsLocationsEntryGroupsTagsListCall {
 	c := &ProjectsLocationsEntryGroupsTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6201,7 +6201,7 @@ func (c *ProjectsLocationsEntryGroupsTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6338,10 +6338,10 @@ type ProjectsLocationsEntryGroupsTagsPatchCall struct {
 // Patch: Updates an existing tag.
 //
 // - name: The resource name of the tag in URL format. Example: *
-// projects/{project_id}/locations/{location}/entrygroups/{entry_group_id
-// }/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
-// system-generated identifier. Note that this Tag may not actually be
-// stored in the location in this name.
+//   projects/{project_id}/locations/{location}/entrygroups/{entry_group_
+//   id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
+//   system-generated identifier. Note that this Tag may not actually be
+//   stored in the location in this name.
 func (r *ProjectsLocationsEntryGroupsTagsService) Patch(nameid string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsTagsPatchCall {
 	c := &ProjectsLocationsEntryGroupsTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6388,7 +6388,7 @@ func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6506,8 +6506,8 @@ type ProjectsLocationsTagTemplatesCreateCall struct {
 // for more information).
 //
 // - parent: The name of the project and the template location
-// [region](https://cloud.google.com/data-catalog/docs/concepts/regions.
-// Example: * projects/{project_id}/locations/us-central1
+//   [region](https://cloud.google.com/data-catalog/docs/concepts/regions
+//   . Example: * projects/{project_id}/locations/us-central1.
 func (r *ProjectsLocationsTagTemplatesService) Create(parent string, googleclouddatacatalogv1beta1tagtemplate *GoogleCloudDatacatalogV1beta1TagTemplate) *ProjectsLocationsTagTemplatesCreateCall {
 	c := &ProjectsLocationsTagTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6549,7 +6549,7 @@ func (c *ProjectsLocationsTagTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6667,8 +6667,8 @@ type ProjectsLocationsTagTemplatesDeleteCall struct {
 // for more information).
 //
 // - name: The name of the tag template to delete. Example: *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id}
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id}.
 func (r *ProjectsLocationsTagTemplatesService) Delete(name string) *ProjectsLocationsTagTemplatesDeleteCall {
 	c := &ProjectsLocationsTagTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6711,7 +6711,7 @@ func (c *ProjectsLocationsTagTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6816,8 +6816,8 @@ type ProjectsLocationsTagTemplatesGetCall struct {
 // Get: Gets a tag template.
 //
 // - name: The name of the tag template. Example: *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id}
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id}.
 func (r *ProjectsLocationsTagTemplatesService) Get(name string) *ProjectsLocationsTagTemplatesGetCall {
 	c := &ProjectsLocationsTagTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6861,7 +6861,7 @@ func (c *ProjectsLocationsTagTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6976,8 +6976,8 @@ type ProjectsLocationsTagTemplatesGetIamPolicyCall struct {
 // get policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsTagTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTagTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7012,7 +7012,7 @@ func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7127,10 +7127,10 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 // for more information).
 //
 // - name: The resource name of the tag template in URL format. Example:
-// *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id} Note that this TagTemplate and its child resources may not
-// actually be stored in the location in this name.
+//   *
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id} Note that this TagTemplate and its child resources may not
+//   actually be stored in the location in this name.
 func (r *ProjectsLocationsTagTemplatesService) Patch(name string, googleclouddatacatalogv1beta1tagtemplate *GoogleCloudDatacatalogV1beta1TagTemplate) *ProjectsLocationsTagTemplatesPatchCall {
 	c := &ProjectsLocationsTagTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7176,7 +7176,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7300,8 +7300,8 @@ type ProjectsLocationsTagTemplatesSetIamPolicyCall struct {
 // set policies on entry groups.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsTagTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTagTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7336,7 +7336,7 @@ func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7451,8 +7451,8 @@ type ProjectsLocationsTagTemplatesTestIamPermissionsCall struct {
 // request.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTagTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsTagTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7487,7 +7487,7 @@ func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7599,10 +7599,10 @@ type ProjectsLocationsTagTemplatesFieldsCreateCall struct {
 // for more information).
 //
 // - parent: The name of the project and the template location region
-// (https://cloud.google.com/data-catalog/docs/concepts/regions).
-// Example: *
-// projects/{project_id}/locations/us-central1/tagTemplates/{tag_template
-// _id}
+//   (https://cloud.google.com/data-catalog/docs/concepts/regions).
+//   Example: *
+//   projects/{project_id}/locations/us-central1/tagTemplates/{tag_templa
+//   te_id}.
 func (r *ProjectsLocationsTagTemplatesFieldsService) Create(parent string, googleclouddatacatalogv1beta1tagtemplatefield *GoogleCloudDatacatalogV1beta1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsCreateCall {
 	c := &ProjectsLocationsTagTemplatesFieldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7648,7 +7648,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7766,8 +7766,8 @@ type ProjectsLocationsTagTemplatesFieldsDeleteCall struct {
 // for more information).
 //
 // - name: The name of the tag template field to delete. Example: *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id}/fields/{tag_template_field_id}
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id}/fields/{tag_template_field_id}.
 func (r *ProjectsLocationsTagTemplatesFieldsService) Delete(name string) *ProjectsLocationsTagTemplatesFieldsDeleteCall {
 	c := &ProjectsLocationsTagTemplatesFieldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7810,7 +7810,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7920,8 +7920,8 @@ type ProjectsLocationsTagTemplatesFieldsPatchCall struct {
 // for more information).
 //
 // - name: The name of the tag template field. Example: *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id}/fields/{tag_template_field_id}
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id}/fields/{tag_template_field_id}.
 func (r *ProjectsLocationsTagTemplatesFieldsService) Patch(name string, googleclouddatacatalogv1beta1tagtemplatefield *GoogleCloudDatacatalogV1beta1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsPatchCall {
 	c := &ProjectsLocationsTagTemplatesFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7972,7 +7972,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8092,8 +8092,8 @@ type ProjectsLocationsTagTemplatesFieldsRenameCall struct {
 // for more information).
 //
 // - name: The name of the tag template. Example: *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id}/fields/{tag_template_field_id}
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id}/fields/{tag_template_field_id}.
 func (r *ProjectsLocationsTagTemplatesFieldsService) Rename(name string, googleclouddatacatalogv1beta1renametagtemplatefieldrequest *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest) *ProjectsLocationsTagTemplatesFieldsRenameCall {
 	c := &ProjectsLocationsTagTemplatesFieldsRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8128,7 +8128,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8241,9 +8241,9 @@ type ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall struct {
 // field.
 //
 // - name: The name of the enum field value. Example: *
-// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-// id}/fields/{tag_template_field_id}/enumValues/{enum_value_display_name
-// }
+//   projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
+//   e_id}/fields/{tag_template_field_id}/enumValues/{enum_value_display_
+//   name}.
 func (r *ProjectsLocationsTagTemplatesFieldsEnumValuesService) Rename(name string, googleclouddatacatalogv1beta1renametagtemplatefieldenumvaluerequest *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest) *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall {
 	c := &ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8278,7 +8278,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall) Header() http.
 
 func (c *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8388,7 +8388,7 @@ type ProjectsLocationsTaxonomiesCreateCall struct {
 // Create: Creates a taxonomy in the specified project.
 //
 // - parent: Resource name of the project that the taxonomy will belong
-// to.
+//   to.
 func (r *ProjectsLocationsTaxonomiesService) Create(parent string, googleclouddatacatalogv1beta1taxonomy *GoogleCloudDatacatalogV1beta1Taxonomy) *ProjectsLocationsTaxonomiesCreateCall {
 	c := &ProjectsLocationsTaxonomiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8423,7 +8423,7 @@ func (c *ProjectsLocationsTaxonomiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8532,7 +8532,7 @@ type ProjectsLocationsTaxonomiesDeleteCall struct {
 // policy tags in this taxonomy along with their associated policies.
 //
 // - name: Resource name of the taxonomy to be deleted. All policy tags
-// in this taxonomy will also be deleted.
+//   in this taxonomy will also be deleted.
 func (r *ProjectsLocationsTaxonomiesService) Delete(name string) *ProjectsLocationsTaxonomiesDeleteCall {
 	c := &ProjectsLocationsTaxonomiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8566,7 +8566,7 @@ func (c *ProjectsLocationsTaxonomiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8668,7 +8668,7 @@ type ProjectsLocationsTaxonomiesExportCall struct {
 // tags that can be used as an input for future ImportTaxonomies calls.
 //
 // - parent: Resource name of the project that taxonomies to be exported
-// will share.
+//   will share.
 func (r *ProjectsLocationsTaxonomiesService) Export(parent string) *ProjectsLocationsTaxonomiesExportCall {
 	c := &ProjectsLocationsTaxonomiesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8726,7 +8726,7 @@ func (c *ProjectsLocationsTaxonomiesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8885,7 +8885,7 @@ func (c *ProjectsLocationsTaxonomiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8989,8 +8989,8 @@ type ProjectsLocationsTaxonomiesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsTaxonomiesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTaxonomiesGetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9025,7 +9025,7 @@ func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9135,7 +9135,7 @@ type ProjectsLocationsTaxonomiesImportCall struct {
 // creation using nested proto structure.
 //
 // - parent: Resource name of project that the imported taxonomies will
-// belong to.
+//   belong to.
 func (r *ProjectsLocationsTaxonomiesService) Import(parent string, googleclouddatacatalogv1beta1importtaxonomiesrequest *GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest) *ProjectsLocationsTaxonomiesImportCall {
 	c := &ProjectsLocationsTaxonomiesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9170,7 +9170,7 @@ func (c *ProjectsLocationsTaxonomiesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9340,7 +9340,7 @@ func (c *ProjectsLocationsTaxonomiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9477,7 +9477,7 @@ type ProjectsLocationsTaxonomiesPatchCall struct {
 // Patch: Updates a taxonomy.
 //
 // - name: Output only. Resource name of this taxonomy, whose format is:
-// "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
+//   "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
 func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatacatalogv1beta1taxonomy *GoogleCloudDatacatalogV1beta1Taxonomy) *ProjectsLocationsTaxonomiesPatchCall {
 	c := &ProjectsLocationsTaxonomiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9521,7 +9521,7 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9636,8 +9636,8 @@ type ProjectsLocationsTaxonomiesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsTaxonomiesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTaxonomiesSetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9672,7 +9672,7 @@ func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9781,8 +9781,8 @@ type ProjectsLocationsTaxonomiesTestIamPermissionsCall struct {
 // specified taxonomy or policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9817,7 +9817,7 @@ func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) Header() http.Header
 
 func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9925,7 +9925,7 @@ type ProjectsLocationsTaxonomiesPolicyTagsCreateCall struct {
 // Create: Creates a policy tag in the specified taxonomy.
 //
 // - parent: Resource name of the taxonomy that the policy tag will
-// belong to.
+//   belong to.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Create(parent string, googleclouddatacatalogv1beta1policytag *GoogleCloudDatacatalogV1beta1PolicyTag) *ProjectsLocationsTaxonomiesPolicyTagsCreateCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9960,7 +9960,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10069,7 +10069,7 @@ type ProjectsLocationsTaxonomiesPolicyTagsDeleteCall struct {
 // policy tags.
 //
 // - name: Resource name of the policy tag to be deleted. All of its
-// descendant policy tags will also be deleted.
+//   descendant policy tags will also be deleted.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Delete(name string) *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10103,7 +10103,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10246,7 +10246,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10350,8 +10350,8 @@ type ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10386,7 +10386,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) Header() http.He
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10553,7 +10553,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10690,9 +10690,9 @@ type ProjectsLocationsTaxonomiesPolicyTagsPatchCall struct {
 // Patch: Updates a policy tag.
 //
 // - name: Output only. Resource name of this policy tag, whose format
-// is:
-// "projects/{project_number}/locations/{location_id}/taxonomies/{taxonom
-// y_id}/policyTags/{id}".
+//   is:
+//   "projects/{project_number}/locations/{location_id}/taxonomies/{taxon
+//   omy_id}/policyTags/{id}".
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Patch(name string, googleclouddatacatalogv1beta1policytag *GoogleCloudDatacatalogV1beta1PolicyTag) *ProjectsLocationsTaxonomiesPolicyTagsPatchCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10740,7 +10740,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10855,8 +10855,8 @@ type ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM policy for a taxonomy or a policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10891,7 +10891,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) Header() http.He
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11000,8 +11000,8 @@ type ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall struct {
 // specified taxonomy or policy tag.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11036,7 +11036,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) Header() h
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

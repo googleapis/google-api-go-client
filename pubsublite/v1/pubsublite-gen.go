@@ -970,7 +970,7 @@ type AdminProjectsLocationsSubscriptionsCreateCall struct {
 // Create: Creates a new subscription.
 //
 // - parent: The parent location in which to create the subscription.
-// Structured like `projects/{project_number}/locations/{location}`.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsSubscriptionsService) Create(parent string, subscription *Subscription) *AdminProjectsLocationsSubscriptionsCreateCall {
 	c := &AdminProjectsLocationsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1023,7 +1023,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1173,7 +1173,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1316,7 +1316,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1419,7 +1419,7 @@ type AdminProjectsLocationsSubscriptionsListCall struct {
 // List: Returns the list of subscriptions for the given project.
 //
 // - parent: The parent whose subscriptions are to be listed. Structured
-// like `projects/{project_number}/locations/{location}`.
+//   like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsSubscriptionsService) List(parent string) *AdminProjectsLocationsSubscriptionsListCall {
 	c := &AdminProjectsLocationsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1482,7 +1482,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1617,8 +1617,8 @@ type AdminProjectsLocationsSubscriptionsPatchCall struct {
 // Patch: Updates properties of the specified subscription.
 //
 // - name: The name of the subscription. Structured like:
-// projects/{project_number}/locations/{location}/subscriptions/{subscrip
-// tion_id}
+//   projects/{project_number}/locations/{location}/subscriptions/{subscr
+//   iption_id}.
 func (r *AdminProjectsLocationsSubscriptionsService) Patch(name string, subscription *Subscription) *AdminProjectsLocationsSubscriptionsPatchCall {
 	c := &AdminProjectsLocationsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1660,7 +1660,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1774,7 +1774,7 @@ type AdminProjectsLocationsTopicsCreateCall struct {
 // Create: Creates a new topic.
 //
 // - parent: The parent location in which to create the topic.
-// Structured like `projects/{project_number}/locations/{location}`.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsTopicsService) Create(parent string, topic *Topic) *AdminProjectsLocationsTopicsCreateCall {
 	c := &AdminProjectsLocationsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1817,7 +1817,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1962,7 +1962,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2105,7 +2105,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2252,7 +2252,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2355,7 +2355,7 @@ type AdminProjectsLocationsTopicsListCall struct {
 // List: Returns the list of topics for the given project.
 //
 // - parent: The parent whose topics are to be listed. Structured like
-// `projects/{project_number}/locations/{location}`.
+//   `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsTopicsService) List(parent string) *AdminProjectsLocationsTopicsListCall {
 	c := &AdminProjectsLocationsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2416,7 +2416,7 @@ func (c *AdminProjectsLocationsTopicsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2551,7 +2551,7 @@ type AdminProjectsLocationsTopicsPatchCall struct {
 // Patch: Updates properties of the specified topic.
 //
 // - name: The name of the topic. Structured like:
-// projects/{project_number}/locations/{location}/topics/{topic_id}
+//   projects/{project_number}/locations/{location}/topics/{topic_id}.
 func (r *AdminProjectsLocationsTopicsService) Patch(name string, topic *Topic) *AdminProjectsLocationsTopicsPatchCall {
 	c := &AdminProjectsLocationsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2593,7 +2593,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2769,7 +2769,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Header() http.Header
 
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2904,9 +2904,9 @@ type CursorProjectsLocationsSubscriptionsCursorsListCall struct {
 // List: Returns all committed cursor information for a subscription.
 //
 // - parent: The subscription for which to retrieve cursors. Structured
-// like
-// `projects/{project_number}/locations/{location}/subscriptions/{subscri
-// ption_id}`.
+//   like
+//   `projects/{project_number}/locations/{location}/subscriptions/{subsc
+//   ription_id}`.
 func (r *CursorProjectsLocationsSubscriptionsCursorsService) List(parent string) *CursorProjectsLocationsSubscriptionsCursorsListCall {
 	c := &CursorProjectsLocationsSubscriptionsCursorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2968,7 +2968,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Header() http.Head
 
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3142,7 +3142,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) Header() http.H
 
 func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3285,7 +3285,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Header() http
 
 func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

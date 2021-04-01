@@ -304,16 +304,16 @@ type LicenseAssignmentsDeleteCall struct {
 // Delete: Revoke a license.
 //
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
-// about available SKUs in this version of the API, see Products and
-// SKUs.
+//   about available SKUs in this version of the API, see Products and
+//   SKUs.
 // - userId: The user's current primary email address. If the user's
-// email address changes, use the new email address in your API
-// requests. Since a `userId` is subject to change, do not use a
-// `userId` value as a key for persistent data. This key could break if
-// the current user's email address changes. If the `userId` is
-// suspended, the license status changes.
+//   email address changes, use the new email address in your API
+//   requests. Since a `userId` is subject to change, do not use a
+//   `userId` value as a key for persistent data. This key could break
+//   if the current user's email address changes. If the `userId` is
+//   suspended, the license status changes.
 func (r *LicenseAssignmentsService) Delete(productId string, skuId string, userId string) *LicenseAssignmentsDeleteCall {
 	c := &LicenseAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -349,7 +349,7 @@ func (c *LicenseAssignmentsDeleteCall) Header() http.Header {
 
 func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -466,16 +466,16 @@ type LicenseAssignmentsGetCall struct {
 // Get: Get a specific user's license by product SKU.
 //
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
-// about available SKUs in this version of the API, see Products and
-// SKUs.
+//   about available SKUs in this version of the API, see Products and
+//   SKUs.
 // - userId: The user's current primary email address. If the user's
-// email address changes, use the new email address in your API
-// requests. Since a `userId` is subject to change, do not use a
-// `userId` value as a key for persistent data. This key could break if
-// the current user's email address changes. If the `userId` is
-// suspended, the license status changes.
+//   email address changes, use the new email address in your API
+//   requests. Since a `userId` is subject to change, do not use a
+//   `userId` value as a key for persistent data. This key could break
+//   if the current user's email address changes. If the `userId` is
+//   suspended, the license status changes.
 func (r *LicenseAssignmentsService) Get(productId string, skuId string, userId string) *LicenseAssignmentsGetCall {
 	c := &LicenseAssignmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -521,7 +521,7 @@ func (c *LicenseAssignmentsGetCall) Header() http.Header {
 
 func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -640,10 +640,10 @@ type LicenseAssignmentsInsertCall struct {
 // Insert: Assign a license.
 //
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
-// about available SKUs in this version of the API, see Products and
-// SKUs.
+//   about available SKUs in this version of the API, see Products and
+//   SKUs.
 func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licenseassignmentinsert *LicenseAssignmentInsert) *LicenseAssignmentsInsertCall {
 	c := &LicenseAssignmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -679,7 +679,7 @@ func (c *LicenseAssignmentsInsertCall) Header() http.Header {
 
 func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -795,10 +795,10 @@ type LicenseAssignmentsListForProductCall struct {
 // product SKU.
 //
 // - customerId: Customer's `customerId`. A previous version of this API
-// accepted the primary domain name as a value for this field. If the
-// customer is suspended, the server returns an error.
+//   accepted the primary domain name as a value for this field. If the
+//   customer is suspended, the server returns an error.
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId string) *LicenseAssignmentsListForProductCall {
 	c := &LicenseAssignmentsListForProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -862,7 +862,7 @@ func (c *LicenseAssignmentsListForProductCall) Header() http.Header {
 
 func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1009,13 +1009,13 @@ type LicenseAssignmentsListForProductAndSkuCall struct {
 // product SKU.
 //
 // - customerId: Customer's `customerId`. A previous version of this API
-// accepted the primary domain name as a value for this field. If the
-// customer is suspended, the server returns an error.
+//   accepted the primary domain name as a value for this field. If the
+//   customer is suspended, the server returns an error.
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
-// about available SKUs in this version of the API, see Products and
-// SKUs.
+//   about available SKUs in this version of the API, see Products and
+//   SKUs.
 func (r *LicenseAssignmentsService) ListForProductAndSku(productId string, skuId string, customerId string) *LicenseAssignmentsListForProductAndSkuCall {
 	c := &LicenseAssignmentsListForProductAndSkuCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -1080,7 +1080,7 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Header() http.Header {
 
 func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1236,16 +1236,16 @@ type LicenseAssignmentsPatchCall struct {
 // product. This method supports patch semantics.
 //
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
-// about available SKUs in this version of the API, see Products and
-// SKUs.
+//   about available SKUs in this version of the API, see Products and
+//   SKUs.
 // - userId: The user's current primary email address. If the user's
-// email address changes, use the new email address in your API
-// requests. Since a `userId` is subject to change, do not use a
-// `userId` value as a key for persistent data. This key could break if
-// the current user's email address changes. If the `userId` is
-// suspended, the license status changes.
+//   email address changes, use the new email address in your API
+//   requests. Since a `userId` is subject to change, do not use a
+//   `userId` value as a key for persistent data. This key could break
+//   if the current user's email address changes. If the `userId` is
+//   suspended, the license status changes.
 func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsPatchCall {
 	c := &LicenseAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -1282,7 +1282,7 @@ func (c *LicenseAssignmentsPatchCall) Header() http.Header {
 
 func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1408,16 +1408,16 @@ type LicenseAssignmentsUpdateCall struct {
 // same product.
 //
 // - productId: A product's unique identifier. For more information
-// about products in this version of the API, see Products and SKUs.
+//   about products in this version of the API, see Products and SKUs.
 // - skuId: A product SKU's unique identifier. For more information
-// about available SKUs in this version of the API, see Products and
-// SKUs.
+//   about available SKUs in this version of the API, see Products and
+//   SKUs.
 // - userId: The user's current primary email address. If the user's
-// email address changes, use the new email address in your API
-// requests. Since a `userId` is subject to change, do not use a
-// `userId` value as a key for persistent data. This key could break if
-// the current user's email address changes. If the `userId` is
-// suspended, the license status changes.
+//   email address changes, use the new email address in your API
+//   requests. Since a `userId` is subject to change, do not use a
+//   `userId` value as a key for persistent data. This key could break
+//   if the current user's email address changes. If the `userId` is
+//   suspended, the license status changes.
 func (r *LicenseAssignmentsService) Update(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsUpdateCall {
 	c := &LicenseAssignmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -1454,7 +1454,7 @@ func (c *LicenseAssignmentsUpdateCall) Header() http.Header {
 
 func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

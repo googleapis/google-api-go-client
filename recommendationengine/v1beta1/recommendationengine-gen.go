@@ -2652,7 +2652,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2833,7 +2833,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +2949,7 @@ type ProjectsLocationsCatalogsCatalogItemsCreateCall struct {
 // Create: Creates a catalog item.
 //
 // - parent: The parent catalog resource name, such as
-// "projects/*/locations/global/catalogs/default_catalog".
+//   "projects/*/locations/global/catalogs/default_catalog".
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Create(parent string, googlecloudrecommendationenginev1beta1catalogitem *GoogleCloudRecommendationengineV1beta1CatalogItem) *ProjectsLocationsCatalogsCatalogItemsCreateCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2984,7 +2984,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3093,8 +3093,8 @@ type ProjectsLocationsCatalogsCatalogItemsDeleteCall struct {
 // Delete: Deletes a catalog item.
 //
 // - name: Full resource name of catalog item, such as
-// "projects/*/locations/global/catalogs/default_catalog/catalogItems/som
-// e_catalog_item_id".
+//   "projects/*/locations/global/catalogs/default_catalog/catalogItems/s
+//   ome_catalog_item_id".
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Delete(name string) *ProjectsLocationsCatalogsCatalogItemsDeleteCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3128,7 +3128,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3228,8 +3228,8 @@ type ProjectsLocationsCatalogsCatalogItemsGetCall struct {
 // Get: Gets a specific catalog item.
 //
 // - name: Full resource name of catalog item, such as
-// "projects/*/locations/global/catalogs/default_catalog/catalogitems/som
-// e_catalog_item_id".
+//   "projects/*/locations/global/catalogs/default_catalog/catalogitems/s
+//   ome_catalog_item_id".
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Get(name string) *ProjectsLocationsCatalogsCatalogItemsGetCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3273,7 +3273,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3382,9 +3382,9 @@ type ProjectsLocationsCatalogsCatalogItemsImportCall struct {
 // updated.
 //
 // - parent: "projects/1234/locations/global/catalogs/default_catalog"
-// If no updateMask is specified, requires catalogItems.create
-// permission. If updateMask is specified, requires catalogItems.update
-// permission.
+//   If no updateMask is specified, requires catalogItems.create
+//   permission. If updateMask is specified, requires
+//   catalogItems.update permission.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Import(parent string, googlecloudrecommendationenginev1beta1importcatalogitemsrequest *GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest) *ProjectsLocationsCatalogsCatalogItemsImportCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3419,7 +3419,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3527,7 +3527,7 @@ type ProjectsLocationsCatalogsCatalogItemsListCall struct {
 // List: Gets a list of catalog items.
 //
 // - parent: The parent catalog resource name, such as
-// "projects/*/locations/global/catalogs/default_catalog".
+//   "projects/*/locations/global/catalogs/default_catalog".
 func (r *ProjectsLocationsCatalogsCatalogItemsService) List(parent string) *ProjectsLocationsCatalogsCatalogItemsListCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3593,7 +3593,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3737,8 +3737,8 @@ type ProjectsLocationsCatalogsCatalogItemsPatchCall struct {
 // Non-existing items will be created.
 //
 // - name: Full resource name of catalog item, such as
-// "projects/*/locations/global/catalogs/default_catalog/catalogItems/som
-// e_catalog_item_id".
+//   "projects/*/locations/global/catalogs/default_catalog/catalogItems/s
+//   ome_catalog_item_id".
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Patch(name string, googlecloudrecommendationenginev1beta1catalogitem *GoogleCloudRecommendationengineV1beta1CatalogItem) *ProjectsLocationsCatalogsCatalogItemsPatchCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3781,7 +3781,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3942,7 +3942,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Header() http.He
 
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4118,7 +4118,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Header() http.H
 
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4262,28 +4262,29 @@ type ProjectsLocationsCatalogsEventStoresPlacementsPredictCall struct {
 // (https://cloud.google.com/recommendations-ai/docs/setting-up#register-key).
 //
 // - name: Full resource name of the format:
-// {name=projects/*/locations/global/catalogs/default_catalog/eventStores
-// /default_event_store/placements/*} The id of the recommendation
-// engine placement. This id is used to identify the set of models that
-// will be used to make the prediction. We currently support three
-// placements with the following IDs by default: * `shopping_cart`:
-// Predicts items frequently bought together with one or more catalog
-// items in the same shopping session. Commonly displayed after
-// `add-to-cart` events, on product detail pages, or on the shopping
-// cart page. * `home_page`: Predicts the next product that a user will
-// most likely engage with or purchase based on the shopping or viewing
-// history of the specified `userId` or `visitorId`. For example -
-// Recommendations for you. * `product_detail`: Predicts the next
-// product that a user will most likely engage with or purchase. The
-// prediction is based on the shopping or viewing history of the
-// specified `userId` or `visitorId` and its relevance to a specified
-// `CatalogItem`. Typically used on product detail pages. For example -
-// More items like this. * `recently_viewed_default`: Returns up to 75
-// items recently viewed by the specified `userId` or `visitorId`, most
-// recent ones first. Returns nothing if neither of them has viewed any
-// items yet. For example - Recently viewed. The full list of available
-// placements can be seen at
-// https://console.cloud.google.com/recommendation/datafeeds/default_catalog/dashboard
+//   {name=projects/*/locations/global/catalogs/default_catalog/eventStor
+//   es/default_event_store/placements/*} The id of the recommendation
+//   engine placement. This id is used to identify the set of models
+//   that will be used to make the prediction. We currently support
+//   three placements with the following IDs by default: *
+//   `shopping_cart`: Predicts items frequently bought together with one
+//   or more catalog items in the same shopping session. Commonly
+//   displayed after `add-to-cart` events, on product detail pages, or
+//   on the shopping cart page. * `home_page`: Predicts the next product
+//   that a user will most likely engage with or purchase based on the
+//   shopping or viewing history of the specified `userId` or
+//   `visitorId`. For example - Recommendations for you. *
+//   `product_detail`: Predicts the next product that a user will most
+//   likely engage with or purchase. The prediction is based on the
+//   shopping or viewing history of the specified `userId` or
+//   `visitorId` and its relevance to a specified `CatalogItem`.
+//   Typically used on product detail pages. For example - More items
+//   like this. * `recently_viewed_default`: Returns up to 75 items
+//   recently viewed by the specified `userId` or `visitorId`, most
+//   recent ones first. Returns nothing if neither of them has viewed
+//   any items yet. For example - Recently viewed. The full list of
+//   available placements can be seen at
+//   https://console.cloud.google.com/recommendation/datafeeds/default_catalog/dashboard.
 func (r *ProjectsLocationsCatalogsEventStoresPlacementsService) Predict(name string, googlecloudrecommendationenginev1beta1predictrequest *GoogleCloudRecommendationengineV1beta1PredictRequest) *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsEventStoresPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4318,7 +4319,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Header() htt
 
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4449,8 +4450,8 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall
 // Create: Register an API key for use with predict method.
 //
 // - parent: The parent resource path.
-// "projects/*/locations/global/catalogs/default_catalog/eventStores/defa
-// ult_event_store".
+//   "projects/*/locations/global/catalogs/default_catalog/eventStores/de
+//   fault_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) Create(parent string, googlecloudrecommendationenginev1beta1createpredictionapikeyregistrationrequest *GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4485,7 +4486,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4595,8 +4596,8 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall
 // Delete: Unregister an apiKey from using for predict method.
 //
 // - name: The API key to unregister including full resource path.
-// "projects/*/locations/global/catalogs/default_catalog/eventStores/defa
-// ult_event_store/predictionApiKeyRegistrations/"
+//   "projects/*/locations/global/catalogs/default_catalog/eventStores/de
+//   fault_event_store/predictionApiKeyRegistrations/".
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) Delete(name string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4630,7 +4631,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4730,8 +4731,8 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall s
 // List: List the registered apiKeys for use with predict method.
 //
 // - parent: The parent placement resource name such as
-// "projects/1234/locations/global/catalogs/default_catalog/eventStores/d
-// efault_event_store"
+//   "projects/1234/locations/global/catalogs/default_catalog/eventStores
+//   /default_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) List(parent string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4790,7 +4791,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4931,8 +4932,8 @@ type ProjectsLocationsCatalogsEventStoresUserEventsCollectCall struct {
 // pixel. Users should not call this method directly.
 //
 // - parent: The parent eventStore name, such as
-// "projects/1234/locations/global/catalogs/default_catalog/eventStores/d
-// efault_event_store".
+//   "projects/1234/locations/global/catalogs/default_catalog/eventStores
+//   /default_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5001,7 +5002,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Header() htt
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5125,8 +5126,8 @@ type ProjectsLocationsCatalogsEventStoresUserEventsImportCall struct {
 // ImportMetadata.
 //
 // - parent:
-// "projects/1234/locations/global/catalogs/default_catalog/eventStores/d
-// efault_event_store"
+//   "projects/1234/locations/global/catalogs/default_catalog/eventStores
+//   /default_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Import(parent string, googlecloudrecommendationenginev1beta1importusereventsrequest *GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsImportCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5161,7 +5162,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Header() http
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5275,8 +5276,8 @@ type ProjectsLocationsCatalogsEventStoresUserEventsListCall struct {
 // degraded model quality. This is called an unjoined event.
 //
 // - parent: The parent eventStore resource name, such as
-// "projects/*/locations/*/catalogs/default_catalog/eventStores/default_e
-// vent_store".
+//   "projects/*/locations/*/catalogs/default_catalog/eventStores/default
+//   _event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) List(parent string) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5362,7 +5363,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Header() http.H
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5508,9 +5509,9 @@ type ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall struct {
 // filter, use the list command first.
 //
 // - parent: The resource name of the event_store under which the events
-// are created. The format is
-// "projects/${projectId}/locations/global/catalogs/${catalogId}/eventSto
-// res/${eventStoreId}"
+//   are created. The format is
+//   "projects/${projectId}/locations/global/catalogs/${catalogId}/eventS
+//   tores/${eventStoreId}".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Purge(parent string, googlecloudrecommendationenginev1beta1purgeusereventsrequest *GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5545,7 +5546,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Header() http.
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5660,8 +5661,8 @@ type ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall struct {
 // items.
 //
 // - parent: Full resource name of user event, such as
-// "projects/*/locations/*/catalogs/default_catalog/eventStores/default_e
-// vent_store".
+//   "projects/*/locations/*/catalogs/default_catalog/eventStores/default
+//   _event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Rejoin(parent string, googlecloudrecommendationenginev1beta1rejoinusereventsrequest *GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5696,7 +5697,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Header() http
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5804,8 +5805,8 @@ type ProjectsLocationsCatalogsEventStoresUserEventsWriteCall struct {
 // Write: Writes a single user event.
 //
 // - parent: The parent eventStore resource name, such as
-// "projects/1234/locations/global/catalogs/default_catalog/eventStores/d
-// efault_event_store".
+//   "projects/1234/locations/global/catalogs/default_catalog/eventStores
+//   /default_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Write(parent string, googlecloudrecommendationenginev1beta1userevent *GoogleCloudRecommendationengineV1beta1UserEvent) *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5840,7 +5841,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Header() http.
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5995,7 +5996,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6171,7 +6172,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1470,7 +1470,7 @@ type UsersDataSourcesCreateCall struct {
 // data types.
 //
 // - userId: Create the data source for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Create(userId string, datasource *DataSource) *UsersDataSourcesCreateCall {
 	c := &UsersDataSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1505,7 +1505,7 @@ func (c *UsersDataSourcesCreateCall) Header() http.Header {
 
 func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1624,7 +1624,7 @@ type UsersDataSourcesDeleteCall struct {
 //
 // - dataSourceId: The data stream ID of the data source to delete.
 // - userId: Retrieve a data source for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Delete(userId string, dataSourceId string) *UsersDataSourcesDeleteCall {
 	c := &UsersDataSourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1659,7 +1659,7 @@ func (c *UsersDataSourcesDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1778,7 +1778,7 @@ type UsersDataSourcesGetCall struct {
 //
 // - dataSourceId: The data stream ID of the data source to retrieve.
 // - userId: Retrieve a data source for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Get(userId string, dataSourceId string) *UsersDataSourcesGetCall {
 	c := &UsersDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1823,7 +1823,7 @@ func (c *UsersDataSourcesGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1957,7 +1957,7 @@ type UsersDataSourcesListCall struct {
 // or calls using other scopes.
 //
 // - userId: List data sources for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall {
 	c := &UsersDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2009,7 +2009,7 @@ func (c *UsersDataSourcesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2143,7 +2143,7 @@ type UsersDataSourcesUpdateCall struct {
 //
 // - dataSourceId: The data stream ID of the data source to update.
 // - userId: Update the data source for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Update(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesUpdateCall {
 	c := &UsersDataSourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2179,7 +2179,7 @@ func (c *UsersDataSourcesUpdateCall) Header() http.Header {
 
 func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2306,9 +2306,9 @@ type UsersDataSourcesDataPointChangesListCall struct {
 // source.
 //
 // - dataSourceId: The data stream ID of the data source that created
-// the dataset.
+//   the dataset.
 // - userId: List data points for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDataPointChangesService) List(userId string, dataSourceId string) *UsersDataSourcesDataPointChangesListCall {
 	c := &UsersDataSourcesDataPointChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2369,7 +2369,7 @@ func (c *UsersDataSourcesDataPointChangesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesDataPointChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2539,13 +2539,14 @@ type UsersDataSourcesDatasetsDeleteCall struct {
 // portion of the data point will be deleted.
 //
 // - dataSourceId: The data stream ID of the data source that created
-// the dataset.
+//   the dataset.
 // - datasetId: Dataset identifier that is a composite of the minimum
-// data point start time and maximum data point end time represented as
-// nanoseconds from the epoch. The ID is formatted like:
-// "startTime-endTime" where startTime and endTime are 64 bit integers.
+//   data point start time and maximum data point end time represented
+//   as nanoseconds from the epoch. The ID is formatted like:
+//   "startTime-endTime" where startTime and endTime are 64 bit
+//   integers.
 // - userId: Delete a dataset for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsDeleteCall {
 	c := &UsersDataSourcesDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2581,7 +2582,7 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2684,13 +2685,14 @@ type UsersDataSourcesDatasetsGetCall struct {
 // is greater than or equal to the dataset start time.
 //
 // - dataSourceId: The data stream ID of the data source that created
-// the dataset.
+//   the dataset.
 // - datasetId: Dataset identifier that is a composite of the minimum
-// data point start time and maximum data point end time represented as
-// nanoseconds from the epoch. The ID is formatted like:
-// "startTime-endTime" where startTime and endTime are 64 bit integers.
+//   data point start time and maximum data point end time represented
+//   as nanoseconds from the epoch. The ID is formatted like:
+//   "startTime-endTime" where startTime and endTime are 64 bit
+//   integers.
 // - userId: Retrieve a dataset for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsGetCall {
 	c := &UsersDataSourcesDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2758,7 +2760,7 @@ func (c *UsersDataSourcesDatasetsGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2936,10 +2938,10 @@ type UsersDataSourcesDatasetsPatchCall struct {
 // existing data replaced.
 //
 // - dataSourceId: The data stream ID of the data source that created
-// the dataset.
+//   the dataset.
 // - datasetId: This field is not used, and can be safely omitted.
 // - userId: Patch a dataset for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId string, datasetId string, dataset *Dataset) *UsersDataSourcesDatasetsPatchCall {
 	c := &UsersDataSourcesDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2976,7 +2978,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3133,7 +3135,7 @@ type UsersDatasetAggregateCall struct {
 // bucket type per request.
 //
 // - userId: Aggregate data for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *AggregateRequest) *UsersDatasetAggregateCall {
 	c := &UsersDatasetAggregateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3168,7 +3170,7 @@ func (c *UsersDatasetAggregateCall) Header() http.Header {
 
 func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3297,7 +3299,7 @@ type UsersSessionsDeleteCall struct {
 //
 // - sessionId: The ID of the session to be deleted.
 // - userId: Delete a session for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSessionsDeleteCall {
 	c := &UsersSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3332,7 +3334,7 @@ func (c *UsersSessionsDeleteCall) Header() http.Header {
 
 func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3412,7 +3414,7 @@ type UsersSessionsListCall struct {
 // List: Lists sessions previously created.
 //
 // - userId: List sessions for the person identified. Use me to indicate
-// the authenticated user. Only me is supported at this time.
+//   the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) List(userId string) *UsersSessionsListCall {
 	c := &UsersSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3507,7 +3509,7 @@ func (c *UsersSessionsListCall) Header() http.Header {
 
 func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3680,7 +3682,7 @@ type UsersSessionsUpdateCall struct {
 //
 // - sessionId: The ID of the session to be created.
 // - userId: Create sessions for the person identified. Use me to
-// indicate the authenticated user. Only me is supported at this time.
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) Update(userId string, sessionId string, session *Session) *UsersSessionsUpdateCall {
 	c := &UsersSessionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3716,7 +3718,7 @@ func (c *UsersSessionsUpdateCall) Header() http.Header {
 
 func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

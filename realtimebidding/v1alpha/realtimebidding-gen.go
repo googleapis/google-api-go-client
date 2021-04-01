@@ -261,7 +261,7 @@ type BiddersBiddingFunctionsCreateCall struct {
 // Create: Creates a new bidding function.
 //
 // - parent: The name of the bidder for which to create the bidding
-// function. Format: `bidders/{bidderAccountId}`
+//   function. Format: `bidders/{bidderAccountId}`.
 func (r *BiddersBiddingFunctionsService) Create(parent string, biddingfunction *BiddingFunction) *BiddersBiddingFunctionsCreateCall {
 	c := &BiddersBiddingFunctionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -296,7 +296,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -405,7 +405,7 @@ type BiddersBiddingFunctionsListCall struct {
 // registered.
 //
 // - parent: Name of the bidder whose bidding functions will be listed.
-// Format: `bidders/{bidder_account_id}`
+//   Format: `bidders/{bidder_account_id}`.
 func (r *BiddersBiddingFunctionsService) List(parent string) *BiddersBiddingFunctionsListCall {
 	c := &BiddersBiddingFunctionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -465,7 +465,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

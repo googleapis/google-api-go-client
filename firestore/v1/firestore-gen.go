@@ -3466,7 +3466,7 @@ type ProjectsDatabasesExportDocumentsCall struct {
 // https://cloud.google.com/firestore/docs/manage-data/export-import
 //
 // - name: Database to export. Should be of the form:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestoreadminv1exportdocumentsrequest *GoogleFirestoreAdminV1ExportDocumentsRequest) *ProjectsDatabasesExportDocumentsCall {
 	c := &ProjectsDatabasesExportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3501,7 +3501,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3615,7 +3615,7 @@ type ProjectsDatabasesImportDocumentsCall struct {
 // of the data has already been imported to Cloud Firestore.
 //
 // - name: Database to import into. Should be of the form:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestoreadminv1importdocumentsrequest *GoogleFirestoreAdminV1ImportDocumentsRequest) *ProjectsDatabasesImportDocumentsCall {
 	c := &ProjectsDatabasesImportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3650,7 +3650,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3759,8 +3759,8 @@ type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 // Get: Gets the metadata and configuration for a Field.
 //
 // - name: A name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/fields/{field_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/fields/{field_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3804,7 +3804,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3912,8 +3912,8 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 // `indexConfig.usesAncestorConfig:false`.
 //
 // - parent: A parent name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3982,7 +3982,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4136,25 +4136,26 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 // ult__/fields/*`.
 //
 // - name: A field name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/fields/{field_path}` A field path may be a simple field
-// name, e.g. `address` or a path to fields within map_value , e.g.
-// `address.city`, or a special field path. The only valid special field
-// is `*`, which represents any field. Field paths may be quoted using `
-// (backtick). The only character that needs to be escaped within a
-// quoted field path is the backtick character itself, escaped using a
-// backslash. Special characters in field paths that must be quoted
-// include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii
-// symbolic characters. Examples: (Note: Comments here are written in
-// markdown syntax, so there is an additional layer of backticks to
-// represent a code block) `\`address.city\`` represents a field named
-// `address.city`, not the map key `city` in the field `address`.
-// `\`*\`` represents a field named `*`, not any field. A special
-// `Field` contains the default indexing settings for all fields. This
-// field's resource name is:
-// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
-// ult__/fields/*` Indexes defined on this `Field` will be applied to
-// all fields which do not have their own `Field` index configuration.
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/fields/{field_path}` A field path may be a simple field
+//   name, e.g. `address` or a path to fields within map_value , e.g.
+//   `address.city`, or a special field path. The only valid special
+//   field is `*`, which represents any field. Field paths may be quoted
+//   using ` (backtick). The only character that needs to be escaped
+//   within a quoted field path is the backtick character itself,
+//   escaped using a backslash. Special characters in field paths that
+//   must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well
+//   as any ascii symbolic characters. Examples: (Note: Comments here
+//   are written in markdown syntax, so there is an additional layer of
+//   backticks to represent a code block) `\`address.city\`` represents
+//   a field named `address.city`, not the map key `city` in the field
+//   `address`. `\`*\`` represents a field named `*`, not any field. A
+//   special `Field` contains the default indexing settings for all
+//   fields. This field's resource name is:
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/__de
+//   fault__/fields/*` Indexes defined on this `Field` will be applied
+//   to all fields which do not have their own `Field` index
+//   configuration.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, googlefirestoreadminv1field *GoogleFirestoreAdminV1Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4197,7 +4198,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Header() http.Header 
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4315,8 +4316,8 @@ type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 // IndexOperationMetadata.
 //
 // - parent: A parent name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1index *GoogleFirestoreAdminV1Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4351,7 +4352,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Header() http.Heade
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4459,8 +4460,8 @@ type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 // Delete: Deletes a composite index.
 //
 // - name: A name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/indexes/{index_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4494,7 +4495,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Header() http.Heade
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4595,8 +4596,8 @@ type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 // Get: Gets a composite index.
 //
 // - name: A name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/indexes/{index_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4640,7 +4641,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4744,8 +4745,8 @@ type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 // List: Lists composite indexes.
 //
 // - parent: A parent name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4811,7 +4812,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Header() http.Header 
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4956,7 +4957,7 @@ type ProjectsDatabasesDocumentsBatchGetCall struct {
 // requested.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BatchGet(database string, batchgetdocumentsrequest *BatchGetDocumentsRequest) *ProjectsDatabasesDocumentsBatchGetCall {
 	c := &ProjectsDatabasesDocumentsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -4991,7 +4992,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5105,7 +5106,7 @@ type ProjectsDatabasesDocumentsBatchWriteCall struct {
 // require an atomically applied set of writes, use Commit instead.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BatchWrite(database string, batchwriterequest *BatchWriteRequest) *ProjectsDatabasesDocumentsBatchWriteCall {
 	c := &ProjectsDatabasesDocumentsBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5140,7 +5141,7 @@ func (c *ProjectsDatabasesDocumentsBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5249,7 +5250,7 @@ type ProjectsDatabasesDocumentsBeginTransactionCall struct {
 // BeginTransaction: Starts a new transaction.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BeginTransaction(database string, begintransactionrequest *BeginTransactionRequest) *ProjectsDatabasesDocumentsBeginTransactionCall {
 	c := &ProjectsDatabasesDocumentsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5284,7 +5285,7 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5393,7 +5394,7 @@ type ProjectsDatabasesDocumentsCommitCall struct {
 // Commit: Commits a transaction, while optionally updating documents.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Commit(database string, commitrequest *CommitRequest) *ProjectsDatabasesDocumentsCommitCall {
 	c := &ProjectsDatabasesDocumentsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5428,7 +5429,7 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5538,11 +5539,11 @@ type ProjectsDatabasesDocumentsCreateDocumentCall struct {
 // CreateDocument: Creates a new document.
 //
 // - collectionId: The collection ID, relative to `parent`, to list. For
-// example: `chatrooms`.
+//   example: `chatrooms`.
 // - parent: The parent resource. For example:
-// `projects/{project_id}/databases/{database_id}/documents` or
-// `projects/{project_id}/databases/{database_id}/documents/chatrooms/{ch
-// atroom_id}`
+//   `projects/{project_id}/databases/{database_id}/documents` or
+//   `projects/{project_id}/databases/{database_id}/documents/chatrooms/{
+//   chatroom_id}`.
 func (r *ProjectsDatabasesDocumentsService) CreateDocument(parent string, collectionId string, document *Document) *ProjectsDatabasesDocumentsCreateDocumentCall {
 	c := &ProjectsDatabasesDocumentsCreateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5594,7 +5595,7 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5721,8 +5722,8 @@ type ProjectsDatabasesDocumentsDeleteCall struct {
 // Delete: Deletes a document.
 //
 // - name: The resource name of the Document to delete. In the format:
-// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-// h}`.
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`.
 func (r *ProjectsDatabasesDocumentsService) Delete(name string) *ProjectsDatabasesDocumentsDeleteCall {
 	c := &ProjectsDatabasesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5772,7 +5773,7 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5884,8 +5885,8 @@ type ProjectsDatabasesDocumentsGetCall struct {
 // Get: Gets a single document.
 //
 // - name: The resource name of the Document to get. In the format:
-// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-// h}`.
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`.
 func (r *ProjectsDatabasesDocumentsService) Get(name string) *ProjectsDatabasesDocumentsGetCall {
 	c := &ProjectsDatabasesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5952,7 +5953,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6075,14 +6076,14 @@ type ProjectsDatabasesDocumentsListCall struct {
 // List: Lists documents.
 //
 // - collectionId: The collection ID, relative to `parent`, to list. For
-// example: `chatrooms` or `messages`.
+//   example: `chatrooms` or `messages`.
 // - parent: The parent resource name. In the format:
-// `projects/{project_id}/databases/{database_id}/documents` or
-// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-// h}`. For example:
-// `projects/my-project/databases/my-database/documents` or
-// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
-// room`
+//   `projects/{project_id}/databases/{database_id}/documents` or
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`. For example:
+//   `projects/my-project/databases/my-database/documents` or
+//   `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//   atroom`.
 func (r *ProjectsDatabasesDocumentsService) List(parent string, collectionId string) *ProjectsDatabasesDocumentsListCall {
 	c := &ProjectsDatabasesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6182,7 +6183,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6355,10 +6356,10 @@ type ProjectsDatabasesDocumentsListCollectionIdsCall struct {
 // document.
 //
 // - parent: The parent document. In the format:
-// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-// h}`. For example:
-// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
-// room`
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`. For example:
+//   `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//   atroom`.
 func (r *ProjectsDatabasesDocumentsService) ListCollectionIds(parent string, listcollectionidsrequest *ListCollectionIdsRequest) *ProjectsDatabasesDocumentsListCollectionIdsCall {
 	c := &ProjectsDatabasesDocumentsListCollectionIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6393,7 +6394,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6523,7 +6524,7 @@ type ProjectsDatabasesDocumentsListenCall struct {
 // Listen: Listens to changes.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Listen(database string, listenrequest *ListenRequest) *ProjectsDatabasesDocumentsListenCall {
 	c := &ProjectsDatabasesDocumentsListenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -6558,7 +6559,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6670,9 +6671,9 @@ type ProjectsDatabasesDocumentsPartitionQueryCall struct {
 // points for the query results.
 //
 // - parent: The parent resource name. In the format:
-// `projects/{project_id}/databases/{database_id}/documents`. Document
-// resource names are not supported; only database resource names can be
-// specified.
+//   `projects/{project_id}/databases/{database_id}/documents`. Document
+//   resource names are not supported; only database resource names can
+//   be specified.
 func (r *ProjectsDatabasesDocumentsService) PartitionQuery(parent string, partitionqueryrequest *PartitionQueryRequest) *ProjectsDatabasesDocumentsPartitionQueryCall {
 	c := &ProjectsDatabasesDocumentsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6707,7 +6708,7 @@ func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6837,8 +6838,8 @@ type ProjectsDatabasesDocumentsPatchCall struct {
 // Patch: Updates or inserts a document.
 //
 // - name: The resource name of the document, for example
-// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-// h}`.
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`.
 func (r *ProjectsDatabasesDocumentsService) Patch(name string, document *Document) *ProjectsDatabasesDocumentsPatchCall {
 	c := &ProjectsDatabasesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6905,7 +6906,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7037,7 +7038,7 @@ type ProjectsDatabasesDocumentsRollbackCall struct {
 // Rollback: Rolls back a transaction.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Rollback(database string, rollbackrequest *RollbackRequest) *ProjectsDatabasesDocumentsRollbackCall {
 	c := &ProjectsDatabasesDocumentsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -7072,7 +7073,7 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7181,12 +7182,12 @@ type ProjectsDatabasesDocumentsRunQueryCall struct {
 // RunQuery: Runs a query.
 //
 // - parent: The parent resource name. In the format:
-// `projects/{project_id}/databases/{database_id}/documents` or
-// `projects/{project_id}/databases/{database_id}/documents/{document_pat
-// h}`. For example:
-// `projects/my-project/databases/my-database/documents` or
-// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
-// room`
+//   `projects/{project_id}/databases/{database_id}/documents` or
+//   `projects/{project_id}/databases/{database_id}/documents/{document_p
+//   ath}`. For example:
+//   `projects/my-project/databases/my-database/documents` or
+//   `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//   atroom`.
 func (r *ProjectsDatabasesDocumentsService) RunQuery(parent string, runqueryrequest *RunQueryRequest) *ProjectsDatabasesDocumentsRunQueryCall {
 	c := &ProjectsDatabasesDocumentsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7221,7 +7222,7 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7330,8 +7331,8 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 // Write: Streams batches of document updates and deletes, in order.
 //
 // - database: The database name. In the format:
-// `projects/{project_id}/databases/{database_id}`. This is only
-// required in the first message.
+//   `projects/{project_id}/databases/{database_id}`. This is only
+//   required in the first message.
 func (r *ProjectsDatabasesDocumentsService) Write(database string, writerequest *WriteRequest) *ProjectsDatabasesDocumentsWriteCall {
 	c := &ProjectsDatabasesDocumentsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -7366,7 +7367,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7518,7 +7519,7 @@ func (c *ProjectsDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7662,7 +7663,7 @@ func (c *ProjectsDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7808,7 +7809,7 @@ func (c *ProjectsDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7985,7 +7986,7 @@ func (c *ProjectsDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8170,7 +8171,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8275,7 +8276,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8343,7 +8344,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

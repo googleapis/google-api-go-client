@@ -8005,7 +8005,7 @@ type ProjectsAnnotationSpecSetsCreateCall struct {
 // Create: Creates an annotation spec set by providing a set of labels.
 //
 // - parent: AnnotationSpecSet resource parent, format:
-// projects/{project_id}
+//   projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) Create(parent string, googleclouddatalabelingv1beta1createannotationspecsetrequest *GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) *ProjectsAnnotationSpecSetsCreateCall {
 	c := &ProjectsAnnotationSpecSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8040,7 +8040,7 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8149,7 +8149,7 @@ type ProjectsAnnotationSpecSetsDeleteCall struct {
 // Delete: Deletes an annotation spec set by resource name.
 //
 // - name: AnnotationSpec resource name, format:
-// `projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}`.
+//   `projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}`.
 func (r *ProjectsAnnotationSpecSetsService) Delete(name string) *ProjectsAnnotationSpecSetsDeleteCall {
 	c := &ProjectsAnnotationSpecSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8183,7 +8183,7 @@ func (c *ProjectsAnnotationSpecSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8283,7 +8283,7 @@ type ProjectsAnnotationSpecSetsGetCall struct {
 // Get: Gets an annotation spec set by resource name.
 //
 // - name: AnnotationSpecSet resource name, format:
-// projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}
+//   projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}.
 func (r *ProjectsAnnotationSpecSetsService) Get(name string) *ProjectsAnnotationSpecSetsGetCall {
 	c := &ProjectsAnnotationSpecSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8327,7 +8327,7 @@ func (c *ProjectsAnnotationSpecSetsGetCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8433,7 +8433,7 @@ type ProjectsAnnotationSpecSetsListCall struct {
 // supported.
 //
 // - parent: Parent of AnnotationSpecSet resource, format:
-// projects/{project_id}
+//   projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) List(parent string) *ProjectsAnnotationSpecSetsListCall {
 	c := &ProjectsAnnotationSpecSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8501,7 +8501,7 @@ func (c *ProjectsAnnotationSpecSetsListCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8643,7 +8643,7 @@ type ProjectsDatasetsCreateCall struct {
 
 // Create: Creates dataset. If success return a Dataset resource.
 //
-// - parent: Dataset resource parent, format: projects/{project_id}
+// - parent: Dataset resource parent, format: projects/{project_id}.
 func (r *ProjectsDatasetsService) Create(parent string, googleclouddatalabelingv1beta1createdatasetrequest *GoogleCloudDatalabelingV1beta1CreateDatasetRequest) *ProjectsDatasetsCreateCall {
 	c := &ProjectsDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8678,7 +8678,7 @@ func (c *ProjectsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8786,7 +8786,7 @@ type ProjectsDatasetsDeleteCall struct {
 // Delete: Deletes a dataset by resource name.
 //
 // - name: Dataset resource name, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) Delete(name string) *ProjectsDatasetsDeleteCall {
 	c := &ProjectsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8820,7 +8820,7 @@ func (c *ProjectsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8920,7 +8920,7 @@ type ProjectsDatasetsExportDataCall struct {
 // ExportData: Exports data and annotations from dataset.
 //
 // - name: Dataset resource name, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) ExportData(name string, googleclouddatalabelingv1beta1exportdatarequest *GoogleCloudDatalabelingV1beta1ExportDataRequest) *ProjectsDatasetsExportDataCall {
 	c := &ProjectsDatasetsExportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8955,7 +8955,7 @@ func (c *ProjectsDatasetsExportDataCall) Header() http.Header {
 
 func (c *ProjectsDatasetsExportDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9063,7 +9063,7 @@ type ProjectsDatasetsGetCall struct {
 // Get: Gets dataset by resource name.
 //
 // - name: Dataset resource name, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) Get(name string) *ProjectsDatasetsGetCall {
 	c := &ProjectsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9107,7 +9107,7 @@ func (c *ProjectsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9216,7 +9216,7 @@ type ProjectsDatasetsImportDataCall struct {
 // versa.
 //
 // - name: Dataset resource name, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) ImportData(name string, googleclouddatalabelingv1beta1importdatarequest *GoogleCloudDatalabelingV1beta1ImportDataRequest) *ProjectsDatasetsImportDataCall {
 	c := &ProjectsDatasetsImportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9251,7 +9251,7 @@ func (c *ProjectsDatasetsImportDataCall) Header() http.Header {
 
 func (c *ProjectsDatasetsImportDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9358,7 +9358,7 @@ type ProjectsDatasetsListCall struct {
 
 // List: Lists datasets under a project. Pagination is supported.
 //
-// - parent: Dataset resource parent, format: projects/{project_id}
+// - parent: Dataset resource parent, format: projects/{project_id}.
 func (r *ProjectsDatasetsService) List(parent string) *ProjectsDatasetsListCall {
 	c := &ProjectsDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9426,7 +9426,7 @@ func (c *ProjectsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9567,8 +9567,8 @@ type ProjectsDatasetsAnnotatedDatasetsDeleteCall struct {
 // Delete: Deletes an annotated dataset by resource name.
 //
 // - name: Name of the annotated dataset to delete, format:
-// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
-// {annotated_dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//   {annotated_dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9602,7 +9602,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9702,8 +9702,8 @@ type ProjectsDatasetsAnnotatedDatasetsGetCall struct {
 // Get: Gets an annotated dataset by resource name.
 //
 // - name: Name of the annotated dataset to get, format:
-// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
-// {annotated_dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//   {annotated_dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9747,7 +9747,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9853,7 +9853,7 @@ type ProjectsDatasetsAnnotatedDatasetsListCall struct {
 // supported.
 //
 // - parent: Name of the dataset to list annotated datasets, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9921,7 +9921,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10065,7 +10065,7 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall struct {
 // called after data are imported into dataset.
 //
 // - name: The name of the data item to get, format:
-// projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}
+//   projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10109,7 +10109,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Header() http.Header
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10214,7 +10214,7 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsListCall struct {
 // data are imported into dataset. Pagination is supported.
 //
 // - parent: Name of the dataset to list data items, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDataItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10281,7 +10281,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Header() http.Heade
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10424,8 +10424,8 @@ type ProjectsDatasetsAnnotatedDatasetsExamplesGetCall struct {
 // annotation.
 //
 // - name: Name of example, format:
-// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
-// {annotated_dataset_id}/examples/{example_id}
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//   {annotated_dataset_id}/examples/{example_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsExamplesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10477,7 +10477,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Header() http.Header 
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10655,7 +10655,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Header() http.Header
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10796,9 +10796,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall struct {
 // Delete: Delete a FeedbackThread.
 //
 // - name: Name of the FeedbackThread that is going to be deleted.
-// Format:
-// 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annota
-// ted_dataset_id}/feedbackThreads/{feedback_thread_id}'.
+//   Format:
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10832,7 +10832,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Header() ht
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10932,8 +10932,8 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall struct {
 // Get: Get a FeedbackThread object.
 //
 // - name: Name of the feedback. Format:
-// 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annota
-// ted_dataset_id}/feedbackThreads/{feedback_thread_id}'.
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10977,7 +10977,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Header() http.
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11082,8 +11082,8 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall struct {
 // List: List FeedbackThreads with pagination.
 //
 // - parent: FeedbackThread resource parent. Format:
-// "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annota
-// ted_dataset_id}"
+//   "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11144,7 +11144,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Header() http
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11282,8 +11282,8 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall 
 // Create: Create a FeedbackMessage object.
 //
 // - parent: FeedbackMessage resource parent, format:
-// projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotat
-// ed_dataset_id}/feedbackThreads/{feedback_thread_id}.
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annot
+//   ated_dataset_id}/feedbackThreads/{feedback_thread_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Create(parent string, googleclouddatalabelingv1beta1feedbackmessage *GoogleCloudDatalabelingV1beta1FeedbackMessage) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11318,7 +11318,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateC
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11425,10 +11425,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall 
 // Delete: Delete a FeedbackMessage.
 //
 // - name: Name of the FeedbackMessage that is going to be deleted.
-// Format:
-// 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annota
-// ted_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/
-// {feedback_message_id}'.
+//   Format:
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
+//   ges/{feedback_message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11462,7 +11462,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteC
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11562,9 +11562,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall str
 // Get: Get a FeedbackMessage object.
 //
 // - name: Name of the feedback. Format:
-// 'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annota
-// ted_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/
-// {feedback_message_id}'.
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
+//   ges/{feedback_message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11608,7 +11608,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11713,8 +11713,8 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall st
 // List: List FeedbackMessages with pagination.
 //
 // - parent: FeedbackMessage resource parent. Format:
-// "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annota
-// ted_dataset_id}/feedbackThreads/{feedback_thread_id}"
+//   "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11775,7 +11775,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11914,7 +11914,7 @@ type ProjectsDatasetsDataItemsGetCall struct {
 // called after data are imported into dataset.
 //
 // - name: The name of the data item to get, format:
-// projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}
+//   projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
 func (r *ProjectsDatasetsDataItemsService) Get(name string) *ProjectsDatasetsDataItemsGetCall {
 	c := &ProjectsDatasetsDataItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11958,7 +11958,7 @@ func (c *ProjectsDatasetsDataItemsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12063,7 +12063,7 @@ type ProjectsDatasetsDataItemsListCall struct {
 // data are imported into dataset. Pagination is supported.
 //
 // - parent: Name of the dataset to list data items, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsDataItemsService) List(parent string) *ProjectsDatasetsDataItemsListCall {
 	c := &ProjectsDatasetsDataItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12130,7 +12130,7 @@ func (c *ProjectsDatasetsDataItemsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12273,8 +12273,8 @@ type ProjectsDatasetsEvaluationsGetCall struct {
 // projects.evaluations.search).
 //
 // - name: Name of the evaluation. Format:
-// "projects/{project_id}/datasets/
-// {dataset_id}/evaluations/{evaluation_id}'
+//   "projects/{project_id}/datasets/
+//   {dataset_id}/evaluations/{evaluation_id}'.
 func (r *ProjectsDatasetsEvaluationsService) Get(name string) *ProjectsDatasetsEvaluationsGetCall {
 	c := &ProjectsDatasetsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12318,7 +12318,7 @@ func (c *ProjectsDatasetsEvaluationsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12426,9 +12426,9 @@ type ProjectsDatasetsEvaluationsExampleComparisonsSearchCall struct {
 // ID.
 //
 // - parent: Name of the Evaluation resource to search for example
-// comparisons from. Format:
-// "projects/{project_id}/datasets/{dataset_id}/evaluations/
-// {evaluation_id}"
+//   comparisons from. Format:
+//   "projects/{project_id}/datasets/{dataset_id}/evaluations/
+//   {evaluation_id}".
 func (r *ProjectsDatasetsEvaluationsExampleComparisonsService) Search(parent string, googleclouddatalabelingv1beta1searchexamplecomparisonsrequest *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall {
 	c := &ProjectsDatasetsEvaluationsExampleComparisonsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12463,7 +12463,7 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Header() http.
 
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12596,7 +12596,7 @@ type ProjectsDatasetsImageLabelCall struct {
 // task is configured by feature in the request.
 //
 // - parent: Name of the dataset to request labeling task, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsImageService) Label(parent string, googleclouddatalabelingv1beta1labelimagerequest *GoogleCloudDatalabelingV1beta1LabelImageRequest) *ProjectsDatasetsImageLabelCall {
 	c := &ProjectsDatasetsImageLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12631,7 +12631,7 @@ func (c *ProjectsDatasetsImageLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsImageLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12740,7 +12740,7 @@ type ProjectsDatasetsTextLabelCall struct {
 // task is configured by feature in the request.
 //
 // - parent: Name of the data set to request labeling task, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsTextService) Label(parent string, googleclouddatalabelingv1beta1labeltextrequest *GoogleCloudDatalabelingV1beta1LabelTextRequest) *ProjectsDatasetsTextLabelCall {
 	c := &ProjectsDatasetsTextLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12775,7 +12775,7 @@ func (c *ProjectsDatasetsTextLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsTextLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12884,7 +12884,7 @@ type ProjectsDatasetsVideoLabelCall struct {
 // task is configured by feature in the request.
 //
 // - parent: Name of the dataset to request labeling task, format:
-// projects/{project_id}/datasets/{dataset_id}
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsVideoService) Label(parent string, googleclouddatalabelingv1beta1labelvideorequest *GoogleCloudDatalabelingV1beta1LabelVideoRequest) *ProjectsDatasetsVideoLabelCall {
 	c := &ProjectsDatasetsVideoLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12919,7 +12919,7 @@ func (c *ProjectsDatasetsVideoLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsVideoLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13027,7 +13027,7 @@ type ProjectsEvaluationJobsCreateCall struct {
 // Create: Creates an evaluation job.
 //
 // - parent: Evaluation job resource parent. Format:
-// "projects/{project_id}"
+//   "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) Create(parent string, googleclouddatalabelingv1beta1createevaluationjobrequest *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) *ProjectsEvaluationJobsCreateCall {
 	c := &ProjectsEvaluationJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13062,7 +13062,7 @@ func (c *ProjectsEvaluationJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13171,7 +13171,7 @@ type ProjectsEvaluationJobsDeleteCall struct {
 // Delete: Stops and deletes an evaluation job.
 //
 // - name: Name of the evaluation job that is going to be deleted.
-// Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}"
+//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Delete(name string) *ProjectsEvaluationJobsDeleteCall {
 	c := &ProjectsEvaluationJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13205,7 +13205,7 @@ func (c *ProjectsEvaluationJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13305,7 +13305,7 @@ type ProjectsEvaluationJobsGetCall struct {
 // Get: Gets an evaluation job by resource name.
 //
 // - name: Name of the evaluation job. Format: "projects/{project_id}
-// /evaluationJobs/{evaluation_job_id}"
+//   /evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Get(name string) *ProjectsEvaluationJobsGetCall {
 	c := &ProjectsEvaluationJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13349,7 +13349,7 @@ func (c *ProjectsEvaluationJobsGetCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13455,7 +13455,7 @@ type ProjectsEvaluationJobsListCall struct {
 // filters. Pagination is supported.
 //
 // - parent: Evaluation job resource parent. Format:
-// "projects/{project_id}"
+//   "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) List(parent string) *ProjectsEvaluationJobsListCall {
 	c := &ProjectsEvaluationJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13527,7 +13527,7 @@ func (c *ProjectsEvaluationJobsListCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13674,8 +13674,8 @@ type ProjectsEvaluationJobsPatchCall struct {
 // the evaluation job, you must delete the job and create a new one.
 //
 // - name: Output only. After you create a job, Data Labeling Service
-// assigns a name to the job with the following format:
-// "projects/{project_id}/evaluationJobs/ {evaluation_job_id}"
+//   assigns a name to the job with the following format:
+//   "projects/{project_id}/evaluationJobs/ {evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Patch(name string, googleclouddatalabelingv1beta1evaluationjob *GoogleCloudDatalabelingV1beta1EvaluationJob) *ProjectsEvaluationJobsPatchCall {
 	c := &ProjectsEvaluationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13721,7 +13721,7 @@ func (c *ProjectsEvaluationJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13838,7 +13838,7 @@ type ProjectsEvaluationJobsPauseCall struct {
 // already in a `PAUSED` state is a no-op.
 //
 // - name: Name of the evaluation job that is going to be paused.
-// Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}"
+//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Pause(name string, googleclouddatalabelingv1beta1pauseevaluationjobrequest *GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest) *ProjectsEvaluationJobsPauseCall {
 	c := &ProjectsEvaluationJobsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13873,7 +13873,7 @@ func (c *ProjectsEvaluationJobsPauseCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13983,7 +13983,7 @@ type ProjectsEvaluationJobsResumeCall struct {
 // no-op.
 //
 // - name: Name of the evaluation job that is going to be resumed.
-// Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}"
+//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Resume(name string, googleclouddatalabelingv1beta1resumeevaluationjobrequest *GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest) *ProjectsEvaluationJobsResumeCall {
 	c := &ProjectsEvaluationJobsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14018,7 +14018,7 @@ func (c *ProjectsEvaluationJobsResumeCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14126,7 +14126,7 @@ type ProjectsEvaluationsSearchCall struct {
 // Search: Searches evaluations within a project.
 //
 // - parent: Evaluation search parent (project ID). Format: "projects/
-// {project_id}"
+//   {project_id}".
 func (r *ProjectsEvaluationsService) Search(parent string) *ProjectsEvaluationsSearchCall {
 	c := &ProjectsEvaluationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14210,7 +14210,7 @@ func (c *ProjectsEvaluationsSearchCall) Header() http.Header {
 
 func (c *ProjectsEvaluationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14352,7 +14352,7 @@ type ProjectsInstructionsCreateCall struct {
 
 // Create: Creates an instruction for how data should be labeled.
 //
-// - parent: Instruction resource parent, format: projects/{project_id}
+// - parent: Instruction resource parent, format: projects/{project_id}.
 func (r *ProjectsInstructionsService) Create(parent string, googleclouddatalabelingv1beta1createinstructionrequest *GoogleCloudDatalabelingV1beta1CreateInstructionRequest) *ProjectsInstructionsCreateCall {
 	c := &ProjectsInstructionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14387,7 +14387,7 @@ func (c *ProjectsInstructionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstructionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14494,7 +14494,7 @@ type ProjectsInstructionsDeleteCall struct {
 // Delete: Deletes an instruction object by resource name.
 //
 // - name: Instruction resource name, format:
-// projects/{project_id}/instructions/{instruction_id}
+//   projects/{project_id}/instructions/{instruction_id}.
 func (r *ProjectsInstructionsService) Delete(name string) *ProjectsInstructionsDeleteCall {
 	c := &ProjectsInstructionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14528,7 +14528,7 @@ func (c *ProjectsInstructionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstructionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14628,7 +14628,7 @@ type ProjectsInstructionsGetCall struct {
 // Get: Gets an instruction by resource name.
 //
 // - name: Instruction resource name, format:
-// projects/{project_id}/instructions/{instruction_id}
+//   projects/{project_id}/instructions/{instruction_id}.
 func (r *ProjectsInstructionsService) Get(name string) *ProjectsInstructionsGetCall {
 	c := &ProjectsInstructionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14672,7 +14672,7 @@ func (c *ProjectsInstructionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstructionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14776,7 +14776,7 @@ type ProjectsInstructionsListCall struct {
 
 // List: Lists instructions for a project. Pagination is supported.
 //
-// - parent: Instruction resource parent, format: projects/{project_id}
+// - parent: Instruction resource parent, format: projects/{project_id}.
 func (r *ProjectsInstructionsService) List(parent string) *ProjectsInstructionsListCall {
 	c := &ProjectsInstructionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14844,7 +14844,7 @@ func (c *ProjectsInstructionsListCall) Header() http.Header {
 
 func (c *ProjectsInstructionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15039,7 +15039,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15177,7 +15177,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15322,7 +15322,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15498,7 +15498,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

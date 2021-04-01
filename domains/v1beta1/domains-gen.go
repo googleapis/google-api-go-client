@@ -2063,7 +2063,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2167,7 +2167,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2232,7 +2232,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2417,7 +2417,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2593,7 +2593,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2735,8 +2735,8 @@ type ProjectsLocationsRegistrationsConfigureContactSettingsCall struct {
 // registrant contact .
 //
 // - registration: The name of the `Registration` whose contact settings
-// are being updated, in the format
-// `projects/*/locations/*/registrations/*`.
+//   are being updated, in the format
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureContactSettings(registration string, configurecontactsettingsrequest *ConfigureContactSettingsRequest) *ProjectsLocationsRegistrationsConfigureContactSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureContactSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -2771,7 +2771,7 @@ func (c *ProjectsLocationsRegistrationsConfigureContactSettingsCall) Header() ht
 
 func (c *ProjectsLocationsRegistrationsConfigureContactSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2879,8 +2879,8 @@ type ProjectsLocationsRegistrationsConfigureDnsSettingsCall struct {
 // ConfigureDnsSettings: Updates a `Registration`'s DNS settings.
 //
 // - registration: The name of the `Registration` whose DNS settings are
-// being updated, in the format
-// `projects/*/locations/*/registrations/*`.
+//   being updated, in the format
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureDnsSettings(registration string, configurednssettingsrequest *ConfigureDnsSettingsRequest) *ProjectsLocationsRegistrationsConfigureDnsSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureDnsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -2915,7 +2915,7 @@ func (c *ProjectsLocationsRegistrationsConfigureDnsSettingsCall) Header() http.H
 
 func (c *ProjectsLocationsRegistrationsConfigureDnsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3024,8 +3024,8 @@ type ProjectsLocationsRegistrationsConfigureManagementSettingsCall struct {
 // settings.
 //
 // - registration: The name of the `Registration` whose management
-// settings are being updated, in the format
-// `projects/*/locations/*/registrations/*`.
+//   settings are being updated, in the format
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureManagementSettings(registration string, configuremanagementsettingsrequest *ConfigureManagementSettingsRequest) *ProjectsLocationsRegistrationsConfigureManagementSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureManagementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3060,7 +3060,7 @@ func (c *ProjectsLocationsRegistrationsConfigureManagementSettingsCall) Header()
 
 func (c *ProjectsLocationsRegistrationsConfigureManagementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3169,7 +3169,7 @@ type ProjectsLocationsRegistrationsDeleteCall struct {
 // with `expire_time` in the past * `state` is `REGISTRATION_FAILED`
 //
 // - name: The name of the `Registration` to delete, in the format
-// `projects/*/locations/*/registrations/*`.
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Delete(name string) *ProjectsLocationsRegistrationsDeleteCall {
 	c := &ProjectsLocationsRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3203,7 +3203,7 @@ func (c *ProjectsLocationsRegistrationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3312,7 +3312,7 @@ type ProjectsLocationsRegistrationsExportCall struct {
 // Domains to renew the domain if needed.
 //
 // - name: The name of the `Registration` to export, in the format
-// `projects/*/locations/*/registrations/*`.
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Export(name string, exportregistrationrequest *ExportRegistrationRequest) *ProjectsLocationsRegistrationsExportCall {
 	c := &ProjectsLocationsRegistrationsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3347,7 +3347,7 @@ func (c *ProjectsLocationsRegistrationsExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3455,7 +3455,7 @@ type ProjectsLocationsRegistrationsGetCall struct {
 // Get: Gets the details of a `Registration` resource.
 //
 // - name: The name of the `Registration` to get, in the format
-// `projects/*/locations/*/registrations/*`.
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Get(name string) *ProjectsLocationsRegistrationsGetCall {
 	c := &ProjectsLocationsRegistrationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3499,7 +3499,7 @@ func (c *ProjectsLocationsRegistrationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3604,8 +3604,8 @@ type ProjectsLocationsRegistrationsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsRegistrationsService) GetIamPolicy(resource string) *ProjectsLocationsRegistrationsGetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3663,7 +3663,7 @@ func (c *ProjectsLocationsRegistrationsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3772,7 +3772,7 @@ type ProjectsLocationsRegistrationsListCall struct {
 // List: Lists the `Registration` resources in a project.
 //
 // - parent: The project and location from which to list
-// `Registration`s, specified in the format `projects/*/locations/*`.
+//   `Registration`s, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) List(parent string) *ProjectsLocationsRegistrationsListCall {
 	c := &ProjectsLocationsRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3850,7 +3850,7 @@ func (c *ProjectsLocationsRegistrationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3995,7 +3995,7 @@ type ProjectsLocationsRegistrationsPatchCall struct {
 // `ConfigureContactSettings`
 //
 // - name: Output only. Name of the `Registration` resource, in the
-// format `projects/*/locations/*/registrations/`.
+//   format `projects/*/locations/*/registrations/`.
 func (r *ProjectsLocationsRegistrationsService) Patch(name string, registration *Registration) *ProjectsLocationsRegistrationsPatchCall {
 	c := &ProjectsLocationsRegistrationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4039,7 +4039,7 @@ func (c *ProjectsLocationsRegistrationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4162,7 +4162,7 @@ type ProjectsLocationsRegistrationsRegisterCall struct {
 // delete the resource and retry registration.
 //
 // - parent: The parent resource of the `Registration`. Must be in the
-// format `projects/*/locations/*`.
+//   format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Register(parent string, registerdomainrequest *RegisterDomainRequest) *ProjectsLocationsRegistrationsRegisterCall {
 	c := &ProjectsLocationsRegistrationsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4197,7 +4197,7 @@ func (c *ProjectsLocationsRegistrationsRegisterCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4307,8 +4307,8 @@ type ProjectsLocationsRegistrationsResetAuthorizationCodeCall struct {
 // after 60 days have elapsed since the initial domain registration.
 //
 // - registration: The name of the `Registration` whose authorization
-// code is being reset, in the format
-// `projects/*/locations/*/registrations/*`.
+//   code is being reset, in the format
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ResetAuthorizationCode(registration string, resetauthorizationcoderequest *ResetAuthorizationCodeRequest) *ProjectsLocationsRegistrationsResetAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsResetAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4343,7 +4343,7 @@ func (c *ProjectsLocationsRegistrationsResetAuthorizationCodeCall) Header() http
 
 func (c *ProjectsLocationsRegistrationsResetAuthorizationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4454,8 +4454,8 @@ type ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall struct {
 // since the initial domain registration.
 //
 // - registration: The name of the `Registration` whose authorization
-// code is being retrieved, in the format
-// `projects/*/locations/*/registrations/*`.
+//   code is being retrieved, in the format
+//   `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveAuthorizationCode(registration string) *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4499,7 +4499,7 @@ func (c *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall) Header() h
 
 func (c *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4604,7 +4604,7 @@ type ProjectsLocationsRegistrationsRetrieveRegisterParametersCall struct {
 // returned values to call `RegisterDomain`.
 //
 // - location: The location. Must be in the format
-// `projects/*/locations/*`.
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveRegisterParameters(location string) *ProjectsLocationsRegistrationsRetrieveRegisterParametersCall {
 	c := &ProjectsLocationsRegistrationsRetrieveRegisterParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -4656,7 +4656,7 @@ func (c *ProjectsLocationsRegistrationsRetrieveRegisterParametersCall) Header() 
 
 func (c *ProjectsLocationsRegistrationsRetrieveRegisterParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4768,7 +4768,7 @@ type ProjectsLocationsRegistrationsSearchDomainsCall struct {
 // registering to confirm availability.
 //
 // - location: The location. Must be in the format
-// `projects/*/locations/*`.
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) SearchDomains(location string) *ProjectsLocationsRegistrationsSearchDomainsCall {
 	c := &ProjectsLocationsRegistrationsSearchDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -4819,7 +4819,7 @@ func (c *ProjectsLocationsRegistrationsSearchDomainsCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsSearchDomainsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4929,8 +4929,8 @@ type ProjectsLocationsRegistrationsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsRegistrationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistrationsSetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4965,7 +4965,7 @@ func (c *ProjectsLocationsRegistrationsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistrationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5078,8 +5078,8 @@ type ProjectsLocationsRegistrationsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistrationsTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistrationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5114,7 +5114,7 @@ func (c *ProjectsLocationsRegistrationsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsRegistrationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

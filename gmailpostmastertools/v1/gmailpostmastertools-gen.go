@@ -613,8 +613,8 @@ type DomainsGetCall struct {
 // NOT_FOUND if the domain does not exist.
 //
 // - name: The resource name of the domain. It should have the form
-// `domains/{domain_name}`, where domain_name is the fully qualified
-// domain name.
+//   `domains/{domain_name}`, where domain_name is the fully qualified
+//   domain name.
 func (r *DomainsService) Get(name string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -658,7 +658,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -820,7 +820,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -945,7 +945,7 @@ type DomainsTrafficStatsGetCall struct {
 // TrafficStats for the domain.
 //
 // - name: The resource name of the traffic statistics to get. E.g.,
-// domains/mymail.mydomain.com/trafficStats/20160807.
+//   domains/mymail.mydomain.com/trafficStats/20160807.
 func (r *DomainsTrafficStatsService) Get(name string) *DomainsTrafficStatsGetCall {
 	c := &DomainsTrafficStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -989,7 +989,7 @@ func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1094,8 +1094,8 @@ type DomainsTrafficStatsListCall struct {
 // TrafficStats for the domain.
 //
 // - parent: The resource name of the domain whose traffic statistics
-// we'd like to list. It should have the form `domains/{domain_name}`,
-// where domain_name is the fully qualified domain name.
+//   we'd like to list. It should have the form `domains/{domain_name}`,
+//   where domain_name is the fully qualified domain name.
 func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsListCall {
 	c := &DomainsTrafficStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1205,7 +1205,7 @@ func (c *DomainsTrafficStatsListCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -85,7 +85,7 @@ const mtlsBasePath = "https://pubsub.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage Pub/Sub topics and subscriptions
@@ -1660,8 +1660,9 @@ type Subscription struct {
 	// messages. If true, then messages are not expunged from the
 	// subscription's backlog, even if they are acknowledged, until they
 	// fall out of the `message_retention_duration` window. This must be
-	// true if you would like to [Seek to a timestamp]
-	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time).
+	// true if you would like to [`Seek` to a timestamp]
+	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time)
+	// in the past to replay previously-acknowledged messages.
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 
 	// RetryPolicy: A policy that specifies how Pub/Sub retries message
@@ -2034,7 +2035,7 @@ type ProjectsSchemasCreateCall struct {
 // Create: Creates a schema.
 //
 // - parent: The name of the project in which to create the schema.
-// Format is `projects/{project-id}`.
+//   Format is `projects/{project-id}`.
 func (r *ProjectsSchemasService) Create(parent string, schema *Schema) *ProjectsSchemasCreateCall {
 	c := &ProjectsSchemasCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2079,7 +2080,7 @@ func (c *ProjectsSchemasCreateCall) Header() http.Header {
 
 func (c *ProjectsSchemasCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2192,7 +2193,7 @@ type ProjectsSchemasDeleteCall struct {
 // Delete: Deletes a schema.
 //
 // - name: Name of the schema to delete. Format is
-// `projects/{project}/schemas/{schema}`.
+//   `projects/{project}/schemas/{schema}`.
 func (r *ProjectsSchemasService) Delete(name string) *ProjectsSchemasDeleteCall {
 	c := &ProjectsSchemasDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2226,7 +2227,7 @@ func (c *ProjectsSchemasDeleteCall) Header() http.Header {
 
 func (c *ProjectsSchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2327,7 +2328,7 @@ type ProjectsSchemasGetCall struct {
 // Get: Gets a schema.
 //
 // - name: The name of the schema to get. Format is
-// `projects/{project}/schemas/{schema}`.
+//   `projects/{project}/schemas/{schema}`.
 func (r *ProjectsSchemasService) Get(name string) *ProjectsSchemasGetCall {
 	c := &ProjectsSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2386,7 +2387,7 @@ func (c *ProjectsSchemasGetCall) Header() http.Header {
 
 func (c *ProjectsSchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2507,8 +2508,8 @@ type ProjectsSchemasGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSchemasService) GetIamPolicy(resource string) *ProjectsSchemasGetIamPolicyCall {
 	c := &ProjectsSchemasGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2566,7 +2567,7 @@ func (c *ProjectsSchemasGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSchemasGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2676,7 +2677,7 @@ type ProjectsSchemasListCall struct {
 // List: Lists schemas in a project.
 //
 // - parent: The name of the project in which to list schemas. Format is
-// `projects/{project-id}`.
+//   `projects/{project-id}`.
 func (r *ProjectsSchemasService) List(parent string) *ProjectsSchemasListCall {
 	c := &ProjectsSchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2751,7 +2752,7 @@ func (c *ProjectsSchemasListCall) Header() http.Header {
 
 func (c *ProjectsSchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2904,8 +2905,8 @@ type ProjectsSchemasSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSchemasService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSchemasSetIamPolicyCall {
 	c := &ProjectsSchemasSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2940,7 +2941,7 @@ func (c *ProjectsSchemasSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSchemasSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3054,8 +3055,8 @@ type ProjectsSchemasTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsSchemasService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSchemasTestIamPermissionsCall {
 	c := &ProjectsSchemasTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3090,7 +3091,7 @@ func (c *ProjectsSchemasTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSchemasTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3199,7 +3200,7 @@ type ProjectsSchemasValidateCall struct {
 // Validate: Validates a schema.
 //
 // - parent: The name of the project in which to validate schemas.
-// Format is `projects/{project-id}`.
+//   Format is `projects/{project-id}`.
 func (r *ProjectsSchemasService) Validate(parent string, validateschemarequest *ValidateSchemaRequest) *ProjectsSchemasValidateCall {
 	c := &ProjectsSchemasValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3234,7 +3235,7 @@ func (c *ProjectsSchemasValidateCall) Header() http.Header {
 
 func (c *ProjectsSchemasValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3343,7 +3344,7 @@ type ProjectsSchemasValidateMessageCall struct {
 // ValidateMessage: Validates a message against a schema.
 //
 // - parent: The name of the project in which to validate schemas.
-// Format is `projects/{project-id}`.
+//   Format is `projects/{project-id}`.
 func (r *ProjectsSchemasService) ValidateMessage(parent string, validatemessagerequest *ValidateMessageRequest) *ProjectsSchemasValidateMessageCall {
 	c := &ProjectsSchemasValidateMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3378,7 +3379,7 @@ func (c *ProjectsSchemasValidateMessageCall) Header() http.Header {
 
 func (c *ProjectsSchemasValidateMessageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3503,10 +3504,10 @@ type ProjectsSnapshotsCreateCall struct {
 // that for REST API requests, you must specify a name in the request.
 //
 // - name: User-provided name for this snapshot. If the name is not
-// provided in the request, the server will assign a random name for
-// this snapshot on the same project as the subscription. Note that for
-// REST API requests, you must specify a name. See the resource name
-// rules. Format is `projects/{project}/snapshots/{snap}`.
+//   provided in the request, the server will assign a random name for
+//   this snapshot on the same project as the subscription. Note that
+//   for REST API requests, you must specify a name. See the resource
+//   name rules. Format is `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Create(name string, createsnapshotrequest *CreateSnapshotRequest) *ProjectsSnapshotsCreateCall {
 	c := &ProjectsSnapshotsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3541,7 +3542,7 @@ func (c *ProjectsSnapshotsCreateCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3658,7 +3659,7 @@ type ProjectsSnapshotsDeleteCall struct {
 // specified.
 //
 // - snapshot: The name of the snapshot to delete. Format is
-// `projects/{project}/snapshots/{snap}`.
+//   `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Delete(snapshot string) *ProjectsSnapshotsDeleteCall {
 	c := &ProjectsSnapshotsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshot = snapshot
@@ -3692,7 +3693,7 @@ func (c *ProjectsSnapshotsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3796,7 +3797,7 @@ type ProjectsSnapshotsGetCall struct {
 // an existing subscription to the state captured by a snapshot.
 //
 // - snapshot: The name of the snapshot to get. Format is
-// `projects/{project}/snapshots/{snap}`.
+//   `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Get(snapshot string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshot = snapshot
@@ -3840,7 +3841,7 @@ func (c *ProjectsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3946,8 +3947,8 @@ type ProjectsSnapshotsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSnapshotsService) GetIamPolicy(resource string) *ProjectsSnapshotsGetIamPolicyCall {
 	c := &ProjectsSnapshotsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4005,7 +4006,7 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4119,7 +4120,7 @@ type ProjectsSnapshotsListCall struct {
 // subscription to the state captured by a snapshot.
 //
 // - project: The name of the project in which to list snapshots. Format
-// is `projects/{project-id}`.
+//   is `projects/{project-id}`.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4179,7 +4180,7 @@ func (c *ProjectsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4352,7 +4353,7 @@ func (c *ProjectsSnapshotsPatchCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4463,8 +4464,8 @@ type ProjectsSnapshotsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSnapshotsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSnapshotsSetIamPolicyCall {
 	c := &ProjectsSnapshotsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4499,7 +4500,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4613,8 +4614,8 @@ type ProjectsSnapshotsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsSnapshotsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSnapshotsTestIamPermissionsCall {
 	c := &ProjectsSnapshotsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4649,7 +4650,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4763,7 +4764,7 @@ type ProjectsSubscriptionsAcknowledgeCall struct {
 // result in an error.
 //
 // - subscription: The subscription whose message is being acknowledged.
-// Format is `projects/{project}/subscriptions/{sub}`.
+//   Format is `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Acknowledge(subscription string, acknowledgerequest *AcknowledgeRequest) *ProjectsSubscriptionsAcknowledgeCall {
 	c := &ProjectsSubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -4798,7 +4799,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4917,11 +4918,12 @@ type ProjectsSubscriptionsCreateCall struct {
 // that for REST API requests, you must specify a name in the request.
 //
 // - name: The name of the subscription. It must have the format
-// "projects/{project}/subscriptions/{subscription}". `{subscription}`
-// must start with a letter, and contain only letters (`[A-Za-z]`),
-// numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
-// tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3
-// and 255 characters in length, and it must not start with "goog".
+//   "projects/{project}/subscriptions/{subscription}".
+//   `{subscription}` must start with a letter, and contain only letters
+//   (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
+//   periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
+//   must be between 3 and 255 characters in length, and it must not
+//   start with "goog".
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
 	c := &ProjectsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4956,7 +4958,7 @@ func (c *ProjectsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5069,7 +5071,7 @@ type ProjectsSubscriptionsDeleteCall struct {
 // topic is specified.
 //
 // - subscription: The subscription to delete. Format is
-// `projects/{project}/subscriptions/{sub}`.
+//   `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Delete(subscription string) *ProjectsSubscriptionsDeleteCall {
 	c := &ProjectsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5103,7 +5105,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5207,7 +5209,7 @@ type ProjectsSubscriptionsDetachCall struct {
 // stop.
 //
 // - subscription: The subscription to detach. Format is
-// `projects/{project}/subscriptions/{subscription}`.
+//   `projects/{project}/subscriptions/{subscription}`.
 func (r *ProjectsSubscriptionsService) Detach(subscription string) *ProjectsSubscriptionsDetachCall {
 	c := &ProjectsSubscriptionsDetachCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5241,7 +5243,7 @@ func (c *ProjectsSubscriptionsDetachCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDetachCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5342,7 +5344,7 @@ type ProjectsSubscriptionsGetCall struct {
 // Get: Gets the configuration details of a subscription.
 //
 // - subscription: The name of the subscription to get. Format is
-// `projects/{project}/subscriptions/{sub}`.
+//   `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Get(subscription string) *ProjectsSubscriptionsGetCall {
 	c := &ProjectsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5386,7 +5388,7 @@ func (c *ProjectsSubscriptionsGetCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5492,8 +5494,8 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5551,7 +5553,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5661,7 +5663,7 @@ type ProjectsSubscriptionsListCall struct {
 // List: Lists matching subscriptions.
 //
 // - project: The name of the project in which to list subscriptions.
-// Format is `projects/{project-id}`.
+//   Format is `projects/{project-id}`.
 func (r *ProjectsSubscriptionsService) List(project string) *ProjectsSubscriptionsListCall {
 	c := &ProjectsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5721,7 +5723,7 @@ func (c *ProjectsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5862,7 +5864,7 @@ type ProjectsSubscriptionsModifyAckDeadlineCall struct {
 // subsequent messages.
 //
 // - subscription: The name of the subscription. Format is
-// `projects/{project}/subscriptions/{sub}`.
+//   `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) ModifyAckDeadline(subscription string, modifyackdeadlinerequest *ModifyAckDeadlineRequest) *ProjectsSubscriptionsModifyAckDeadlineCall {
 	c := &ProjectsSubscriptionsModifyAckDeadlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5897,7 +5899,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6011,7 +6013,7 @@ type ProjectsSubscriptionsModifyPushConfigCall struct {
 // regardless of changes to the `PushConfig`.
 //
 // - subscription: The name of the subscription. Format is
-// `projects/{project}/subscriptions/{sub}`.
+//   `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) ModifyPushConfig(subscription string, modifypushconfigrequest *ModifyPushConfigRequest) *ProjectsSubscriptionsModifyPushConfigCall {
 	c := &ProjectsSubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -6046,7 +6048,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6156,11 +6158,12 @@ type ProjectsSubscriptionsPatchCall struct {
 // of a subscription, such as its topic, are not modifiable.
 //
 // - name: The name of the subscription. It must have the format
-// "projects/{project}/subscriptions/{subscription}". `{subscription}`
-// must start with a letter, and contain only letters (`[A-Za-z]`),
-// numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
-// tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3
-// and 255 characters in length, and it must not start with "goog".
+//   "projects/{project}/subscriptions/{subscription}".
+//   `{subscription}` must start with a letter, and contain only letters
+//   (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
+//   periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
+//   must be between 3 and 255 characters in length, and it must not
+//   start with "goog".
 func (r *ProjectsSubscriptionsService) Patch(name string, updatesubscriptionrequest *UpdateSubscriptionRequest) *ProjectsSubscriptionsPatchCall {
 	c := &ProjectsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6195,7 +6198,7 @@ func (c *ProjectsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6306,7 +6309,7 @@ type ProjectsSubscriptionsPullCall struct {
 // for the given subscription.
 //
 // - subscription: The subscription from which messages should be
-// pulled. Format is `projects/{project}/subscriptions/{sub}`.
+//   pulled. Format is `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Pull(subscription string, pullrequest *PullRequest) *ProjectsSubscriptionsPullCall {
 	c := &ProjectsSubscriptionsPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -6341,7 +6344,7 @@ func (c *ProjectsSubscriptionsPullCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6490,7 +6493,7 @@ func (c *ProjectsSubscriptionsSeekCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSeekCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6601,8 +6604,8 @@ type ProjectsSubscriptionsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSubscriptionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSubscriptionsSetIamPolicyCall {
 	c := &ProjectsSubscriptionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6637,7 +6640,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6751,8 +6754,8 @@ type ProjectsSubscriptionsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsSubscriptionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSubscriptionsTestIamPermissionsCall {
 	c := &ProjectsSubscriptionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6787,7 +6790,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6898,11 +6901,11 @@ type ProjectsTopicsCreateCall struct {
 // (https://cloud.google.com/pubsub/docs/admin#resource_names).
 //
 // - name: The name of the topic. It must have the format
-// "projects/{project}/topics/{topic}". `{topic}` must start with a
-// letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
-// dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
-// (`+`) or percent signs (`%`). It must be between 3 and 255 characters
-// in length, and it must not start with "goog".
+//   "projects/{project}/topics/{topic}". `{topic}` must start with a
+//   letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+//   dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+//   (`+`) or percent signs (`%`). It must be between 3 and 255
+//   characters in length, and it must not start with "goog".
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6937,7 +6940,7 @@ func (c *ProjectsTopicsCreateCall) Header() http.Header {
 
 func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7050,7 +7053,7 @@ type ProjectsTopicsDeleteCall struct {
 // is set to `_deleted-topic_`.
 //
 // - topic: Name of the topic to delete. Format is
-// `projects/{project}/topics/{topic}`.
+//   `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Delete(topic string) *ProjectsTopicsDeleteCall {
 	c := &ProjectsTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7084,7 +7087,7 @@ func (c *ProjectsTopicsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7185,7 +7188,7 @@ type ProjectsTopicsGetCall struct {
 // Get: Gets the configuration of a topic.
 //
 // - topic: The name of the topic to get. Format is
-// `projects/{project}/topics/{topic}`.
+//   `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Get(topic string) *ProjectsTopicsGetCall {
 	c := &ProjectsTopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7229,7 +7232,7 @@ func (c *ProjectsTopicsGetCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7335,8 +7338,8 @@ type ProjectsTopicsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7394,7 +7397,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7504,7 +7507,7 @@ type ProjectsTopicsListCall struct {
 // List: Lists matching topics.
 //
 // - project: The name of the project in which to list topics. Format is
-// `projects/{project-id}`.
+//   `projects/{project-id}`.
 func (r *ProjectsTopicsService) List(project string) *ProjectsTopicsListCall {
 	c := &ProjectsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7564,7 +7567,7 @@ func (c *ProjectsTopicsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7701,11 +7704,11 @@ type ProjectsTopicsPatchCall struct {
 // topic are not modifiable.
 //
 // - name: The name of the topic. It must have the format
-// "projects/{project}/topics/{topic}". `{topic}` must start with a
-// letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
-// dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
-// (`+`) or percent signs (`%`). It must be between 3 and 255 characters
-// in length, and it must not start with "goog".
+//   "projects/{project}/topics/{topic}". `{topic}` must start with a
+//   letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+//   dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+//   (`+`) or percent signs (`%`). It must be between 3 and 255
+//   characters in length, and it must not start with "goog".
 func (r *ProjectsTopicsService) Patch(name string, updatetopicrequest *UpdateTopicRequest) *ProjectsTopicsPatchCall {
 	c := &ProjectsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7740,7 +7743,7 @@ func (c *ProjectsTopicsPatchCall) Header() http.Header {
 
 func (c *ProjectsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7850,7 +7853,7 @@ type ProjectsTopicsPublishCall struct {
 // if the topic does not exist.
 //
 // - topic: The messages in the request will be published on this topic.
-// Format is `projects/{project}/topics/{topic}`.
+//   Format is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7885,7 +7888,7 @@ func (c *ProjectsTopicsPublishCall) Header() http.Header {
 
 func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7996,8 +7999,8 @@ type ProjectsTopicsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsTopicsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsTopicsSetIamPolicyCall {
 	c := &ProjectsTopicsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8032,7 +8035,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8146,8 +8149,8 @@ type ProjectsTopicsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTopicsTestIamPermissionsCall {
 	c := &ProjectsTopicsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8182,7 +8185,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8295,7 +8298,7 @@ type ProjectsTopicsSnapshotsListCall struct {
 // existing subscription to the state captured by a snapshot.
 //
 // - topic: The name of the topic that snapshots are attached to. Format
-// is `projects/{project}/topics/{topic}`.
+//   is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsSnapshotsService) List(topic string) *ProjectsTopicsSnapshotsListCall {
 	c := &ProjectsTopicsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -8355,7 +8358,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8491,7 +8494,7 @@ type ProjectsTopicsSubscriptionsListCall struct {
 // List: Lists the names of the attached subscriptions on this topic.
 //
 // - topic: The name of the topic that subscriptions are attached to.
-// Format is `projects/{project}/topics/{topic}`.
+//   Format is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsSubscriptionsService) List(topic string) *ProjectsTopicsSubscriptionsListCall {
 	c := &ProjectsTopicsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -8551,7 +8554,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -6752,7 +6752,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6856,7 +6856,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6924,7 +6924,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7067,8 +7067,8 @@ type ProjectsLocationsDatasetsCreateCall struct {
 // type is OperationMetadata.
 //
 // - parent: The name of the project where the server creates the
-// dataset. For example,
-// `projects/{project_id}/locations/{location_id}`.
+//   dataset. For example,
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDatasetsService) Create(parent string, dataset *Dataset) *ProjectsLocationsDatasetsCreateCall {
 	c := &ProjectsLocationsDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7111,7 +7111,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7233,7 +7233,8 @@ type ProjectsLocationsDatasetsDeidentifyCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging).
 //
 // - sourceDataset: Source dataset resource name. For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Deidentify(sourceDataset string, deidentifydatasetrequest *DeidentifyDatasetRequest) *ProjectsLocationsDatasetsDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceDataset = sourceDataset
@@ -7268,7 +7269,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7377,7 +7378,8 @@ type ProjectsLocationsDatasetsDeleteCall struct {
 // which the dataset was imported (if any).
 //
 // - name: The name of the dataset to delete. For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Delete(name string) *ProjectsLocationsDatasetsDeleteCall {
 	c := &ProjectsLocationsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7411,7 +7413,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7511,7 +7513,8 @@ type ProjectsLocationsDatasetsGetCall struct {
 // Get: Gets any metadata associated with a dataset.
 //
 // - name: The name of the dataset to read. For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Get(name string) *ProjectsLocationsDatasetsGetCall {
 	c := &ProjectsLocationsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7555,7 +7558,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7660,8 +7663,8 @@ type ProjectsLocationsDatasetsGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7719,7 +7722,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7828,7 +7831,7 @@ type ProjectsLocationsDatasetsListCall struct {
 // List: Lists the health datasets in the current project.
 //
 // - parent: The name of the project whose datasets should be listed.
-// For example, `projects/{project_id}/locations/{location_id}`.
+//   For example, `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDatasetsService) List(parent string) *ProjectsLocationsDatasetsListCall {
 	c := &ProjectsLocationsDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7887,7 +7890,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8022,7 +8025,8 @@ type ProjectsLocationsDatasetsPatchCall struct {
 // Patch: Updates dataset metadata.
 //
 // - name: Resource name of the dataset, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Patch(name string, dataset *Dataset) *ProjectsLocationsDatasetsPatchCall {
 	c := &ProjectsLocationsDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8065,7 +8069,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8181,8 +8185,8 @@ type ProjectsLocationsDatasetsSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8217,7 +8221,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8330,8 +8334,8 @@ type ProjectsLocationsDatasetsTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8366,7 +8370,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8516,7 +8520,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8662,7 +8666,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8768,9 +8772,9 @@ type ProjectsLocationsDatasetsAnnotationStoresEvaluateCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 //
 // - name: The Annotation store to compare against `golden_store`, in
-// the format of
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
-// nnotationStores/{annotation_store_id}`.
+//   the format of
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /annotationStores/{annotation_store_id}`.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) Evaluate(name string, evaluateannotationstorerequest *EvaluateAnnotationStoreRequest) *ProjectsLocationsDatasetsAnnotationStoresEvaluateCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresEvaluateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8805,7 +8809,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresEvaluateCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresEvaluateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8918,9 +8922,9 @@ type ProjectsLocationsDatasetsAnnotationStoresExportCall struct {
 // Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 //
 // - name: The name of the Annotation store to export annotations to, in
-// the format of
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
-// nnotationStores/{annotation_store_id}`.
+//   the format of
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /annotationStores/{annotation_store_id}`.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) Export(name string, exportannotationsrequest *ExportAnnotationsRequest) *ProjectsLocationsDatasetsAnnotationStoresExportCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8955,7 +8959,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9107,7 +9111,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9212,8 +9216,8 @@ type ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9271,7 +9275,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9386,9 +9390,9 @@ type ProjectsLocationsDatasetsAnnotationStoresImportCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 //
 // - name: The name of the Annotation store to which the server imports
-// annotations, in the format
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
-// nnotationStores/{annotation_store_id}`.
+//   annotations, in the format
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /annotationStores/{annotation_store_id}`.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) Import(name string, importannotationsrequest *ImportAnnotationsRequest) *ProjectsLocationsDatasetsAnnotationStoresImportCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9423,7 +9427,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresImportCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9622,7 +9626,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresListCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9762,8 +9766,8 @@ type ProjectsLocationsDatasetsAnnotationStoresPatchCall struct {
 // Patch: Updates the specified Annotation store.
 //
 // - name: Resource name of the Annotation store, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
-// nnotationStores/{annotation_store_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /annotationStores/{annotation_store_id}`.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) Patch(name string, annotationstore *AnnotationStore) *ProjectsLocationsDatasetsAnnotationStoresPatchCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9806,7 +9810,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9922,8 +9926,8 @@ type ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9958,7 +9962,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10071,8 +10075,8 @@ type ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10107,7 +10111,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall) Header
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10217,9 +10221,9 @@ type ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall struct {
 // ID is assigned to each record by this service.
 //
 // - parent: The name of the Annotation store this annotation belongs
-// to. For example,
-// `projects/my-project/locations/us-central1/datasets/mydataset/annotati
-// onStores/myannotationstore`.
+//   to. For example,
+//   `projects/my-project/locations/us-central1/datasets/mydataset/annota
+//   tionStores/myannotationstore`.
 func (r *ProjectsLocationsDatasetsAnnotationStoresAnnotationsService) Create(parent string, annotation *Annotation) *ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10254,7 +10258,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall) Header(
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10395,7 +10399,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsDeleteCall) Header(
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10538,7 +10542,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsGetCall) Header() h
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10729,7 +10733,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsListCall) Header() 
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10884,8 +10888,9 @@ type ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall struct {
 // Patch: Updates the Annotation.
 //
 // - name: Resource name of the Annotation, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
-// nnotationStores/{annotation_store_id}/annotations/{annotation_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /annotationStores/{annotation_store_id}/annotations/{annotation_id}`
+//   .
 func (r *ProjectsLocationsDatasetsAnnotationStoresAnnotationsService) Patch(name string, annotation *Annotation) *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall {
 	c := &ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10928,7 +10933,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall) Header()
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11044,9 +11049,9 @@ type ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall struct {
 // use.
 //
 // - consentStore: Name of the consent store where the requested data_id
-// is stored, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}`.
+//   is stored, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}`.
 func (r *ProjectsLocationsDatasetsConsentStoresService) CheckDataAccess(consentStore string, checkdataaccessrequest *CheckDataAccessRequest) *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall {
 	c := &ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -11081,7 +11086,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11234,7 +11239,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11380,7 +11385,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11484,7 +11489,7 @@ type ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall struct {
 // EvaluateUserConsents results.
 //
 // - consentStore: Name of the consent store to retrieve User data
-// mappings from.
+//   mappings from.
 func (r *ProjectsLocationsDatasetsConsentStoresService) EvaluateUserConsents(consentStore string, evaluateuserconsentsrequest *EvaluateUserConsentsRequest) *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -11519,7 +11524,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11691,7 +11696,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11796,8 +11801,8 @@ type ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11855,7 +11860,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12053,7 +12058,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12193,8 +12198,9 @@ type ProjectsLocationsDatasetsConsentStoresPatchCall struct {
 // Patch: Updates the specified consent store.
 //
 // - name: Resource name of the consent store, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}`. Cannot be changed after creation.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}`. Cannot be changed after
+//   creation.
 func (r *ProjectsLocationsDatasetsConsentStoresService) Patch(name string, consentstore *ConsentStore) *ProjectsLocationsDatasetsConsentStoresPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12240,7 +12246,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12379,7 +12385,7 @@ type ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall struct {
 // ```
 //
 // - consentStore: Name of the consent store to retrieve User data
-// mappings from.
+//   mappings from.
 func (r *ProjectsLocationsDatasetsConsentStoresService) QueryAccessibleData(consentStore string, queryaccessibledatarequest *QueryAccessibleDataRequest) *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall {
 	c := &ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -12414,7 +12420,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12524,8 +12530,8 @@ type ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12560,7 +12566,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12673,8 +12679,8 @@ type ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12709,7 +12715,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12818,7 +12824,7 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall struct
 // store.
 //
 // - parent: The name of the consent store that this Attribute
-// definition belongs to.
+//   definition belongs to.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Create(parent string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12864,7 +12870,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) H
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12978,9 +12984,9 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall struct
 // latest revision of any Consent.
 //
 // - name: The resource name of the Attribute definition to delete. To
-// preserve referential integrity, Attribute definitions referenced by a
-// User data mapping or the latest revision of a Consent cannot be
-// deleted.
+//   preserve referential integrity, Attribute definitions referenced by
+//   a User data mapping or the latest revision of a Consent cannot be
+//   deleted.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13014,7 +13020,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13157,7 +13163,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Head
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13260,7 +13266,7 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall struct {
 // List: Lists the Attribute definitions in the specified consent store.
 //
 // - parent: Name of the consent store to retrieve Attribute definitions
-// from.
+//   from.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13350,7 +13356,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Hea
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13490,9 +13496,9 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall struct 
 // Patch: Updates the specified Attribute definition.
 //
 // - name: Resource name of the Attribute definition, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/attributeDefinitions/{attribute_defini
-// tion_id}`. Cannot be changed after creation.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/attributeDefinitions/{attribute_de
+//   finition_id}`. Cannot be changed after creation.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Patch(name string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13540,7 +13546,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) He
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13654,7 +13660,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall struct {
 // Create: Creates a new Consent artifact in the parent consent store.
 //
 // - parent: The name of the consent store this Consent artifact belongs
-// to.
+//   to.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Create(parent string, consentartifact *ConsentArtifact) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13689,7 +13695,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13797,8 +13803,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall struct {
 // is referenced by the latest revision of any Consent.
 //
 // - name: The resource name of the Consent artifact to delete. To
-// preserve referential integrity, Consent artifacts referenced by the
-// latest revision of a Consent cannot be deleted.
+//   preserve referential integrity, Consent artifacts referenced by the
+//   latest revision of a Consent cannot be deleted.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13832,7 +13838,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13975,7 +13981,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14078,7 +14084,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall struct {
 // List: Lists the Consent artifacts in the specified consent store.
 //
 // - parent: Name of the consent store to retrieve consent artifacts
-// from.
+//   from.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14171,7 +14177,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14316,10 +14322,10 @@ type ProjectsLocationsDatasetsConsentStoresConsentsActivateCall struct {
 // `REVOKED` state.
 //
 // - name: The resource name of the Consent to activate, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}`. An
-// INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-// name.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Activate(name string, activateconsentrequest *ActivateConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14354,7 +14360,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14496,7 +14502,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14606,10 +14612,10 @@ type ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall struct {
 // does not delete the related Consent artifact.
 //
 // - name: The resource name of the Consent to delete, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}`. An
-// INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-// name.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14643,7 +14649,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14744,11 +14750,11 @@ type ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall struct {
 // revision.
 //
 // - name: The resource name of the Consent revision to delete, of the
-// form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`.
-// An INVALID_ARGUMENT error occurs if `revision_id` is not specified in
-// the name.
+//   form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
+//   }`. An INVALID_ARGUMENT error occurs if `revision_id` is not
+//   specified in the name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) DeleteRevision(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14782,7 +14788,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14883,12 +14889,13 @@ type ProjectsLocationsDatasetsConsentStoresConsentsGetCall struct {
 // if `revision_id` is not specified in the resource name.
 //
 // - name: The resource name of the Consent to retrieve, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}`. In order to
-// retrieve a previous revision of the Consent, also provide the
-// revision ID:
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. In order
+//   to retrieve a previous revision of the Consent, also provide the
+//   revision ID:
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
+//   }`.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Get(name string) *ProjectsLocationsDatasetsConsentStoresConsentsGetCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14932,7 +14939,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15129,7 +15136,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15363,7 +15370,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Header
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15506,9 +15513,9 @@ type ProjectsLocationsDatasetsConsentStoresConsentsPatchCall struct {
 // the `REJECTED` or `REVOKED` state.
 //
 // - name: Resource name of the Consent, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
-// changed after creation.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
+//   changed after creation.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Patch(name string, consent *Consent) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15554,7 +15561,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15673,10 +15680,10 @@ type ProjectsLocationsDatasetsConsentStoresConsentsRejectCall struct {
 // `REVOKED` state.
 //
 // - name: The resource name of the Consent to reject, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}`. An
-// INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-// name.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Reject(name string, rejectconsentrequest *RejectConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15711,7 +15718,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15824,10 +15831,10 @@ type ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall struct {
 // state.
 //
 // - name: The resource name of the Consent to revoke, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/consents/{consent_id}`. An
-// INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-// name.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Revoke(name string, revokeconsentrequest *RevokeConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15862,7 +15869,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16004,7 +16011,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Head
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16146,7 +16153,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16286,7 +16293,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16429,7 +16436,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16532,7 +16539,7 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall struct {
 // List: Lists the User data mappings in the specified consent store.
 //
 // - parent: Name of the consent store to retrieve User data mappings
-// from.
+//   from.
 func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16623,7 +16630,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16763,9 +16770,9 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall struct {
 // Patch: Updates the specified User data mapping.
 //
 // - name: Resource name of the User data mapping, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-// onsentStores/{consent_store_id}/userDataMappings/{user_data_mapping_id
-// }`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/userDataMappings/{user_data_mappin
+//   g_id}`.
 func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Patch(name string, userdatamapping *UserDataMapping) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16811,7 +16818,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Header
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16967,7 +16974,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17089,8 +17096,8 @@ type ProjectsLocationsDatasetsDicomStoresDeidentifyCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging).
 //
 // - sourceStore: Source DICOM store resource name. For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Deidentify(sourceStore string, deidentifydicomstorerequest *DeidentifyDicomStoreRequest) *ProjectsLocationsDatasetsDicomStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -17125,7 +17132,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17266,7 +17273,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17370,9 +17377,9 @@ type ProjectsLocationsDatasetsDicomStoresExportCall struct {
 // metadata field type is OperationMetadata.
 //
 // - name: The DICOM store resource name from which to export the data.
-// For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Export(name string, exportdicomdatarequest *ExportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresExportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17407,7 +17414,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17558,7 +17565,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17663,8 +17670,8 @@ type ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -17722,7 +17729,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17835,9 +17842,9 @@ type ProjectsLocationsDatasetsDicomStoresImportCall struct {
 // metadata field type is OperationMetadata.
 //
 // - name: The name of the DICOM store resource into which the data is
-// imported. For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   imported. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Import(name string, importdicomdatarequest *ImportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresImportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17872,7 +17879,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18070,7 +18077,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18210,8 +18217,8 @@ type ProjectsLocationsDatasetsDicomStoresPatchCall struct {
 // Patch: Updates the specified DICOM store.
 //
 // - name: Resource name of the DICOM store, of the form
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Patch(name string, dicomstore *DicomStore) *ProjectsLocationsDatasetsDicomStoresPatchCall {
 	c := &ProjectsLocationsDatasetsDicomStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18254,7 +18261,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18378,12 +18385,12 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
 // - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
-// request. For example, `instances`, `series/{series_uid}/instances`,
-// or `studies/{study_uid}/instances`.
+//   request. For example, `instances`, `series/{series_uid}/instances`,
+//   or `studies/{study_uid}/instances`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18428,7 +18435,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18517,11 +18524,11 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
 // - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
-// example, `series` or `studies/{study_uid}/series`.
+//   example, `series` or `studies/{study_uid}/series`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18566,7 +18573,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18655,11 +18662,11 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
 // - dicomWebPath: The path of the SearchForStudies DICOMweb request.
-// For example, `studies`.
+//   For example, `studies`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForStudies(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18704,7 +18711,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Header() http
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18785,8 +18792,8 @@ type ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -18821,7 +18828,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18938,12 +18945,12 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
 //
 // - dicomWebPath: The path of the StoreInstances DICOMweb request. For
-// example, `studies/[{study_uid}]`. Note that the `study_uid` is
-// optional.
+//   example, `studies/[{study_uid}]`. Note that the `study_uid` is
+//   optional.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18979,7 +18986,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19062,8 +19069,8 @@ type ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -19098,7 +19105,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19214,8 +19221,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 //
 // - dicomWebPath: The path of the DeleteStudy request. For example,
-// `studies/{study_uid}`.
-// - parent:
+//   `studies/{study_uid}`.
+// - parent: .
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19250,7 +19257,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19368,11 +19375,11 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 //
 // - dicomWebPath: The path of the RetrieveStudyMetadata DICOMweb
-// request. For example, `studies/{study_uid}/metadata`.
+//   request. For example, `studies/{study_uid}/metadata`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19417,7 +19424,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Header
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19505,11 +19512,11 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 //
 // - dicomWebPath: The path of the RetrieveStudy DICOMweb request. For
-// example, `studies/{study_uid}`.
+//   example, `studies/{study_uid}`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveStudy(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19554,7 +19561,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Header() 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19643,12 +19650,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
 // - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
-// request. For example, `instances`, `series/{series_uid}/instances`,
-// or `studies/{study_uid}/instances`.
+//   request. For example, `instances`, `series/{series_uid}/instances`,
+//   or `studies/{study_uid}/instances`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19693,7 +19700,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Head
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19782,11 +19789,11 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
 // - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
-// example, `series` or `studies/{study_uid}/series`.
+//   example, `series` or `studies/{study_uid}/series`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19831,7 +19838,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Header(
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19919,12 +19926,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
 //
 // - dicomWebPath: The path of the StoreInstances DICOMweb request. For
-// example, `studies/[{study_uid}]`. Note that the `study_uid` is
-// optional.
+//   example, `studies/[{study_uid}]`. Note that the `study_uid` is
+//   optional.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19960,7 +19967,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Header()
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20046,11 +20053,11 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 //
 // - dicomWebPath: The path of the DeleteSeries request. For example,
-// `studies/{study_uid}/series/{series_uid}`.
+//   `studies/{study_uid}/series/{series_uid}`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20085,7 +20092,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Header() h
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20204,12 +20211,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 //
 // - dicomWebPath: The path of the RetrieveSeriesMetadata DICOMweb
-// request. For example,
-// `studies/{study_uid}/series/{series_uid}/metadata`.
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/metadata`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20254,7 +20261,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20342,11 +20349,11 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 //
 // - dicomWebPath: The path of the RetrieveSeries DICOMweb request. For
-// example, `studies/{study_uid}/series/{series_uid}`.
+//   example, `studies/{study_uid}/series/{series_uid}`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20391,7 +20398,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20480,12 +20487,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
 // - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
-// request. For example, `instances`, `series/{series_uid}/instances`,
-// or `studies/{study_uid}/instances`.
+//   request. For example, `instances`, `series/{series_uid}/instances`,
+//   or `studies/{study_uid}/instances`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20530,7 +20537,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20615,11 +20622,11 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall struct
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 //
 // - dicomWebPath: The path of the DeleteInstance request. For example,
-// `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20654,7 +20661,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20775,12 +20782,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).
 //
 // - dicomWebPath: The path of the RetrieveInstance DICOMweb request.
-// For example,
-// `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
+//   For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveInstance(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20825,7 +20832,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20915,13 +20922,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 //
 // - dicomWebPath: The path of the RetrieveInstanceMetadata DICOMweb
-// request. For example,
-// `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/meta
-// data`.
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/me
+//   tadata`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20966,7 +20973,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21056,13 +21063,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
 //
 // - dicomWebPath: The path of the RetrieveRenderedInstance DICOMweb
-// request. For example,
-// `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rend
-// ered`.
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/re
+//   ndered`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21107,7 +21114,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21195,13 +21202,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 //
 // - dicomWebPath: The path of the RetrieveFrames DICOMweb request. For
-// example,
-// `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fram
-// es/{frame_list}`.
+//   example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
+//   ames/{frame_list}`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveFrames(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21246,7 +21253,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21336,13 +21343,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
 //
 // - dicomWebPath: The path of the RetrieveRenderedFrames DICOMweb
-// request. For example,
-// `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fram
-// es/{frame_list}/rendered`.
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
+//   ames/{frame_list}/rendered`.
 // - parent: The name of the DICOM store that is being accessed. For
-// example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
-// icomStores/{dicom_store_id}`.
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21387,7 +21394,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21508,7 +21515,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21627,8 +21634,8 @@ type ProjectsLocationsDatasetsFhirStoresDeidentifyCall struct {
 // Logging (https://cloud.google.com/healthcare/docs/how-tos/logging).
 //
 // - sourceStore: Source FHIR store resource name. For example,
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
-// hirStores/{fhir_store_id}`.
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Deidentify(sourceStore string, deidentifyfhirstorerequest *DeidentifyFhirStoreRequest) *ProjectsLocationsDatasetsFhirStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -21663,7 +21670,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21804,7 +21811,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21912,9 +21919,9 @@ type ProjectsLocationsDatasetsFhirStoresExportCall struct {
 // metadata field type for this operation is OperationMetadata.
 //
 // - name: The name of the FHIR store to export resource from, in the
-// format of
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
-// hirStores/{fhir_store_id}`.
+//   format of
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Export(name string, exportresourcesrequest *ExportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresExportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21949,7 +21956,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22100,7 +22107,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22205,8 +22212,8 @@ type ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22264,7 +22271,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22433,9 +22440,9 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // metadata field type for this operation is OperationMetadata.
 //
 // - name: The name of the FHIR store to import FHIR resources to, in
-// the format of
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
-// hirStores/{fhir_store_id}`.
+//   the format of
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Import(name string, importresourcesrequest *ImportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresImportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22470,7 +22477,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22668,7 +22675,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22808,8 +22815,8 @@ type ProjectsLocationsDatasetsFhirStoresPatchCall struct {
 // Patch: Updates the configuration of the specified FHIR store.
 //
 // - name: Output only. Resource name of the FHIR store, of the form
-// `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id
-// }`.
+//   `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_
+//   id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Patch(name string, fhirstore *FhirStore) *ProjectsLocationsDatasetsFhirStoresPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22852,7 +22859,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22968,8 +22975,8 @@ type ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23004,7 +23011,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23117,8 +23124,8 @@ type ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23153,7 +23160,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23274,7 +23281,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall struct
 // generic GCP error might be returned instead.
 //
 // - parent: The name for the FHIR store containing the concept map(s)
-// to use for the translation.
+//   to use for the translation.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConceptMapSearchTranslate(parent string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23363,7 +23370,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) H
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23541,7 +23548,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Header(
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23695,7 +23702,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23791,7 +23798,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 // nt_resources).
 //
 // - name: Name of the `Patient` resource for which the information is
-// required.
+//   required.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) PatientEverything(name string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23888,7 +23895,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24028,7 +24035,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24146,14 +24153,15 @@ type ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall struct {
 // returned instead.
 //
 // - parent: The name of the FHIR store that holds the profiles being
-// used for validation.
+//   used for validation.
 // - type: The FHIR resource type of the resource being validated. For a
-// complete list, see the FHIR Resource Index (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-// STU3
-// (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), or
-// R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
-// Must match the resource type in the provided content.
+//   complete list, see the FHIR Resource Index (DSTU2
+//   (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   or R4
+//   (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Must match the resource type in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24196,7 +24204,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24337,7 +24345,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24427,11 +24435,13 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall struct {
 //
 // - parent: The name of the FHIR store this resource belongs to.
 // - type: The FHIR resource type to delete, such as Patient or
-// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-// STU3
-// (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-// (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4
+//   (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalDelete(parent string, type_ string) *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24466,7 +24476,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24602,11 +24612,13 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall struct {
 //
 // - parent: The name of the FHIR store this resource belongs to.
 // - type: The FHIR resource type to update, such as Patient or
-// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-// STU3
-// (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-// (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4
+//   (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalPatch(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24642,7 +24654,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24758,12 +24770,14 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall struct {
 //
 // - parent: The name of the FHIR store this resource belongs to.
 // - type: The FHIR resource type to update, such as Patient or
-// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-// STU3
-// (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-// (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
-// Must match the resource type in the provided content.
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4
+//   (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Must match the resource type in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalUpdate(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24799,7 +24813,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24904,12 +24918,14 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
 //
 // - parent: The name of the FHIR store this resource belongs to.
 // - type: The FHIR resource type to create, such as Patient or
-// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-// STU3
-// (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-// (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
-// Must match the resource type in the provided content.
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4
+//   (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Must match the resource type in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Create(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirCreateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24945,7 +24961,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25067,7 +25083,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25172,7 +25188,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall struct {
 // (/healthcare/docs/how-tos/fhir-bundles).
 //
 // - parent: Name of the FHIR store in which this bundle will be
-// executed.
+//   executed.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ExecuteBundle(parent string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25207,7 +25223,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25377,7 +25393,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25518,7 +25534,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25647,7 +25663,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25801,7 +25817,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25928,11 +25944,13 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 //
 // - parent: Name of the FHIR store to retrieve resources from.
 // - resourceType: The FHIR resource type to search, such as Patient or
-// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-// STU3
-// (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-// (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4
+//   (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchType(parent string, resourceType string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25968,7 +25986,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26109,7 +26127,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26235,7 +26253,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26347,7 +26365,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26493,7 +26511,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26600,8 +26618,8 @@ type ProjectsLocationsDatasetsHl7V2StoresExportCall struct {
 // metadata field type for this operation is OperationMetadata.
 //
 // - name: The name of the source HL7v2 store, in the format
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
-// l7v2Stores/{hl7v2_store_id}`
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7v2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Export(name string, exportmessagesrequest *ExportMessagesRequest) *ProjectsLocationsDatasetsHl7V2StoresExportCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26636,7 +26654,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26787,7 +26805,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26892,8 +26910,8 @@ type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
 // set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -26951,7 +26969,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27086,8 +27104,8 @@ type ProjectsLocationsDatasetsHl7V2StoresImportCall struct {
 // metadata field type for this operation is OperationMetadata.
 //
 // - name: The name of the target HL7v2 store, in the format
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
-// l7v2Stores/{hl7v2_store_id}`
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7v2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Import(name string, importmessagesrequest *ImportMessagesRequest) *ProjectsLocationsDatasetsHl7V2StoresImportCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27122,7 +27140,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27320,7 +27338,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27460,8 +27478,8 @@ type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
 // Patch: Updates the HL7v2 store.
 //
 // - name: Resource name of the HL7v2 store, of the form
-// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_
-// id}`.
+//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_stor
+//   e_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27504,7 +27522,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27620,8 +27638,8 @@ type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27656,7 +27674,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27769,8 +27787,8 @@ type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
 // operation may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -27805,7 +27823,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27913,9 +27931,9 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall struct {
 // BatchGet: Gets multiple messages in the given HL7v2 store.
 //
 // - parent: Name of the HL7v2 store to retrieve messages from, in the
-// format:
-// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
-// l7v2Stores/{hl7v2_store_id}`.
+//   format:
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /hl7v2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) BatchGet(parent string) *ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27989,7 +28007,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall) Header() http
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28158,7 +28176,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28298,7 +28316,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28461,7 +28479,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28628,7 +28646,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28877,7 +28895,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29048,8 +29066,8 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall struct {
 // updated.
 //
 // - name: Resource name of the Message, of the form
-// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store
-// _id}/messages/{message_id}`. Assigned by the server.
+//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_sto
+//   re_id}/messages/{message_id}`. Assigned by the server.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string, message *Message) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29092,7 +29110,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29249,7 +29267,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29402,7 +29420,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29578,7 +29596,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29720,7 +29738,7 @@ type ProjectsLocationsServicesNlpAnalyzeEntitiesCall struct {
 // them. AnalyzeEntities uses context aware models to detect entities.
 //
 // - nlpService: The resource name of the service of the form:
-// "projects/{project_id}/locations/{location_id}/services/nlp".
+//   "projects/{project_id}/locations/{location_id}/services/nlp".
 func (r *ProjectsLocationsServicesNlpService) AnalyzeEntities(nlpService string, analyzeentitiesrequest *AnalyzeEntitiesRequest) *ProjectsLocationsServicesNlpAnalyzeEntitiesCall {
 	c := &ProjectsLocationsServicesNlpAnalyzeEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nlpService = nlpService
@@ -29755,7 +29773,7 @@ func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

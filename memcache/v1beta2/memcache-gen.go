@@ -1935,7 +1935,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2039,7 +2039,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2107,7 +2107,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2249,7 +2249,7 @@ type ProjectsLocationsInstancesApplyParametersCall struct {
 // the Memcached Instance.
 //
 // - name: Resource name of the Memcached instance for which parameter
-// group updates should be applied.
+//   group updates should be applied.
 func (r *ProjectsLocationsInstancesService) ApplyParameters(name string, applyparametersrequest *ApplyParametersRequest) *ProjectsLocationsInstancesApplyParametersCall {
 	c := &ProjectsLocationsInstancesApplyParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2284,7 +2284,7 @@ func (c *ProjectsLocationsInstancesApplyParametersCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesApplyParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2393,7 +2393,7 @@ type ProjectsLocationsInstancesApplySoftwareUpdateCall struct {
 // Instance.
 //
 // - instance: Resource name of the Memcached instance for which
-// software update should be applied.
+//   software update should be applied.
 func (r *ProjectsLocationsInstancesService) ApplySoftwareUpdate(instance string, applysoftwareupdaterequest *ApplySoftwareUpdateRequest) *ProjectsLocationsInstancesApplySoftwareUpdateCall {
 	c := &ProjectsLocationsInstancesApplySoftwareUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instance = instance
@@ -2428,7 +2428,7 @@ func (c *ProjectsLocationsInstancesApplySoftwareUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsInstancesApplySoftwareUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2536,8 +2536,8 @@ type ProjectsLocationsInstancesCreateCall struct {
 // Create: Creates a new Instance in a given location.
 //
 // - parent: The resource name of the instance location using the form:
-// `projects/{project_id}/locations/{location_id}` where `location_id`
-// refers to a GCP region
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2584,7 +2584,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2696,8 +2696,8 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // Delete: Deletes a single Instance.
 //
 // - name: Memcached instance resource name in the format:
-// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
-// ` where `location_id` refers to a GCP region
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2731,7 +2731,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2831,8 +2831,8 @@ type ProjectsLocationsInstancesGetCall struct {
 // Get: Gets details of a single Instance.
 //
 // - name: Memcached instance resource name in the format:
-// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
-// ` where `location_id` refers to a GCP region
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2876,7 +2876,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2979,8 +2979,8 @@ type ProjectsLocationsInstancesListCall struct {
 // List: Lists Instances in a given location.
 //
 // - parent: The resource name of the instance location using the form:
-// `projects/{project_id}/locations/{location_id}` where `location_id`
-// refers to a GCP region
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3058,7 +3058,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3203,12 +3203,13 @@ type ProjectsLocationsInstancesPatchCall struct {
 // Patch: Updates an existing Instance in a given project and location.
 //
 // - name: Unique name of the resource in this scope including project
-// and location using the form:
-// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
-// ` Note: Memcached instances are managed and addressed at the regional
-// level so `location_id` here refers to a Google Cloud region; however,
-// users may choose which zones Memcached nodes should be provisioned in
-// within an instance. Refer to zones field for more details.
+//   and location using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` Note: Memcached instances are managed and addressed at the
+//   regional level so `location_id` here refers to a Google Cloud
+//   region; however, users may choose which zones Memcached nodes
+//   should be provisioned in within an instance. Refer to zones field
+//   for more details.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3250,7 +3251,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3367,7 +3368,7 @@ type ProjectsLocationsInstancesUpdateParametersCall struct {
 // Memcached instance.
 //
 // - name: Resource name of the Memcached instance for which the
-// parameters should be updated.
+//   parameters should be updated.
 func (r *ProjectsLocationsInstancesService) UpdateParameters(name string, updateparametersrequest *UpdateParametersRequest) *ProjectsLocationsInstancesUpdateParametersCall {
 	c := &ProjectsLocationsInstancesUpdateParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3402,7 +3403,7 @@ func (c *ProjectsLocationsInstancesUpdateParametersCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpdateParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3553,7 +3554,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3696,7 +3697,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3841,7 +3842,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4017,7 +4018,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

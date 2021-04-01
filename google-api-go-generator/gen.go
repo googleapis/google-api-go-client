@@ -1855,7 +1855,7 @@ func (meth *Method) generateCode() {
 		des := v.p.Description
 		des = strings.Replace(des, "Required.", "", 1)
 		des = strings.TrimSpace(des)
-		p("%s", asComment("", fmt.Sprintf("- %s: %s", depunct(v.p.Name, false), removeMarkdownLinks(des))))
+		p("%s", asFuncParmeterComment("", fmt.Sprintf("- %s: %s", depunct(v.p.Name, false), removeMarkdownLinks(des)), true))
 	}
 	if res != nil {
 		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.m.Name)]; url != "" {
@@ -2498,17 +2498,28 @@ func (a *arguments) String() string {
 var urlRE = regexp.MustCompile(`^\(?http\S+$`)
 
 func asComment(pfx, c string) string {
+	return asFuncParmeterComment(pfx, c, false)
+}
+
+func asFuncParmeterComment(pfx, c string, addPadding bool) string {
 	var buf bytes.Buffer
-	const maxLen = 70
+	var maxLen = 70
+	var padding string
 	r := strings.NewReplacer(
 		"\n", "\n"+pfx+"// ",
 		"`\"", `"`,
 		"\"`", `"`,
 	)
+	lineNum := 0
 	for len(c) > 0 {
+		// Adjust padding for the second line if needed.
+		if addPadding && lineNum == 1 {
+			padding = "  "
+			maxLen = 68
+		}
 		line := c
 		if len(line) < maxLen {
-			fmt.Fprintf(&buf, "%s// %s\n", pfx, r.Replace(line))
+			fmt.Fprintf(&buf, "%s// %s%s\n", pfx, padding, r.Replace(line))
 			break
 		}
 		// Don't break URLs.
@@ -2525,13 +2536,19 @@ func asComment(pfx, c string) string {
 		if si != -1 {
 			line = line[:si]
 		}
-		fmt.Fprintf(&buf, "%s// %s\n", pfx, r.Replace(line))
+		fmt.Fprintf(&buf, "%s// %s%s\n", pfx, padding, r.Replace(line))
 		c = c[len(line):]
 		if si != -1 {
 			c = c[1:]
 		}
+		lineNum++
 	}
-	return buf.String()
+	// Add a period at the end if there is not one.
+	str := buf.String()
+	if addPadding && len(str) > 1 && str[len(str)-2:] != ".\n" {
+		str = str[:len(str)-1] + ".\n"
+	}
+	return str
 }
 
 func simpleTypeConvert(apiType, format string) (gotype string, ok bool) {

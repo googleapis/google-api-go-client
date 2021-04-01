@@ -530,7 +530,7 @@ type EnterprisesDevicesExecuteCommandCall struct {
 // enterprise.
 //
 // - name: The name of the device requested. For example:
-// "enterprises/XYZ/devices/123"
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) ExecuteCommand(name string, googlehomeenterprisesdmv1executedevicecommandrequest *GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest) *EnterprisesDevicesExecuteCommandCall {
 	c := &EnterprisesDevicesExecuteCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -565,7 +565,7 @@ func (c *EnterprisesDevicesExecuteCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesExecuteCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -675,7 +675,7 @@ type EnterprisesDevicesGetCall struct {
 // Get: Gets a device managed by the enterprise.
 //
 // - name: The name of the device requested. For example:
-// "enterprises/XYZ/devices/123"
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -719,7 +719,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -822,7 +822,7 @@ type EnterprisesDevicesListCall struct {
 // List: Lists devices managed by the enterprise.
 //
 // - parent: The parent enterprise to list devices under. E.g.
-// "enterprises/XYZ".
+//   "enterprises/XYZ".
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -889,7 +889,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1031,7 +1031,7 @@ type EnterprisesStructuresGetCall struct {
 // Get: Gets a structure managed by the enterprise.
 //
 // - name: The name of the structure requested. For example:
-// "enterprises/XYZ/structures/ABC".
+//   "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresService) Get(name string) *EnterprisesStructuresGetCall {
 	c := &EnterprisesStructuresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1075,7 +1075,7 @@ func (c *EnterprisesStructuresGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1179,7 +1179,7 @@ type EnterprisesStructuresListCall struct {
 // List: Lists structures managed by the enterprise.
 //
 // - parent: The parent enterprise to list structures under. E.g.
-// "enterprises/XYZ".
+//   "enterprises/XYZ".
 func (r *EnterprisesStructuresService) List(parent string) *EnterprisesStructuresListCall {
 	c := &EnterprisesStructuresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1245,7 +1245,7 @@ func (c *EnterprisesStructuresListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1387,7 +1387,7 @@ type EnterprisesStructuresRoomsGetCall struct {
 // Get: Gets a room managed by the enterprise.
 //
 // - name: The name of the room requested. For example:
-// "enterprises/XYZ/structures/ABC/rooms/123".
+//   "enterprises/XYZ/structures/ABC/rooms/123".
 func (r *EnterprisesStructuresRoomsService) Get(name string) *EnterprisesStructuresRoomsGetCall {
 	c := &EnterprisesStructuresRoomsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1431,7 +1431,7 @@ func (c *EnterprisesStructuresRoomsGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1534,7 +1534,7 @@ type EnterprisesStructuresRoomsListCall struct {
 // List: Lists rooms managed by the enterprise.
 //
 // - parent: The parent resource name of the rooms requested. For
-// example: "enterprises/XYZ/structures/ABC".
+//   example: "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresRoomsService) List(parent string) *EnterprisesStructuresRoomsListCall {
 	c := &EnterprisesStructuresRoomsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1593,7 +1593,7 @@ func (c *EnterprisesStructuresRoomsListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

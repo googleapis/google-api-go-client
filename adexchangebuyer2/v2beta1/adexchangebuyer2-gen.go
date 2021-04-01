@@ -5693,8 +5693,8 @@ type AccountsClientsCreateCall struct {
 // Create: Creates a new client buyer.
 //
 // - accountId: Unique numerical account ID for the buyer of which the
-// client buyer is a customer; the sponsor buyer to create a client for.
-// (required)
+//   client buyer is a customer; the sponsor buyer to create a client
+//   for. (required).
 func (r *AccountsClientsService) Create(accountId int64, client *Client) *AccountsClientsCreateCall {
 	c := &AccountsClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5729,7 +5729,7 @@ func (c *AccountsClientsCreateCall) Header() http.Header {
 
 func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5838,9 +5838,9 @@ type AccountsClientsGetCall struct {
 // Get: Gets a client buyer with a given client account ID.
 //
 // - accountId: Numerical account ID of the client's sponsor buyer.
-// (required)
+//   (required).
 // - clientAccountId: Numerical account ID of the client buyer to
-// retrieve. (required)
+//   retrieve. (required).
 func (r *AccountsClientsService) Get(accountId int64, clientAccountId int64) *AccountsClientsGetCall {
 	c := &AccountsClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5885,7 +5885,7 @@ func (c *AccountsClientsGetCall) Header() http.Header {
 
 func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5997,7 +5997,7 @@ type AccountsClientsListCall struct {
 // List: Lists all the clients for the current sponsor buyer.
 //
 // - accountId: Unique numerical account ID of the sponsor buyer to list
-// the clients for.
+//   the clients for.
 func (r *AccountsClientsService) List(accountId int64) *AccountsClientsListCall {
 	c := &AccountsClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6067,7 +6067,7 @@ func (c *AccountsClientsListCall) Header() http.Header {
 
 func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6208,10 +6208,10 @@ type AccountsClientsUpdateCall struct {
 // Update: Updates an existing client buyer.
 //
 // - accountId: Unique numerical account ID for the buyer of which the
-// client buyer is a customer; the sponsor buyer to update a client for.
-// (required)
+//   client buyer is a customer; the sponsor buyer to update a client
+//   for. (required).
 // - clientAccountId: Unique numerical account ID of the client to
-// update. (required)
+//   update. (required).
 func (r *AccountsClientsService) Update(accountId int64, clientAccountId int64, client *Client) *AccountsClientsUpdateCall {
 	c := &AccountsClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6247,7 +6247,7 @@ func (c *AccountsClientsUpdateCall) Header() http.Header {
 
 func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6366,9 +6366,9 @@ type AccountsClientsInvitationsCreateCall struct {
 // Exchange client buyer account.
 //
 // - accountId: Numerical account ID of the client's sponsor buyer.
-// (required)
+//   (required).
 // - clientAccountId: Numerical account ID of the client buyer that the
-// user should be associated with. (required)
+//   user should be associated with. (required).
 func (r *AccountsClientsInvitationsService) Create(accountId int64, clientAccountId int64, clientuserinvitation *ClientUserInvitation) *AccountsClientsInvitationsCreateCall {
 	c := &AccountsClientsInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6404,7 +6404,7 @@ func (c *AccountsClientsInvitationsCreateCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6523,11 +6523,11 @@ type AccountsClientsInvitationsGetCall struct {
 // Get: Retrieves an existing client user invitation.
 //
 // - accountId: Numerical account ID of the client's sponsor buyer.
-// (required)
+//   (required).
 // - clientAccountId: Numerical account ID of the client buyer that the
-// user invitation to be retrieved is associated with. (required)
+//   user invitation to be retrieved is associated with. (required).
 // - invitationId: Numerical identifier of the user invitation to
-// retrieve. (required)
+//   retrieve. (required).
 func (r *AccountsClientsInvitationsService) Get(accountId int64, clientAccountId int64, invitationId int64) *AccountsClientsInvitationsGetCall {
 	c := &AccountsClientsInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6573,7 +6573,7 @@ func (c *AccountsClientsInvitationsGetCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6696,12 +6696,12 @@ type AccountsClientsInvitationsListCall struct {
 // given account ID.
 //
 // - accountId: Numerical account ID of the client's sponsor buyer.
-// (required)
+//   (required).
 // - clientAccountId: Numerical account ID of the client buyer to list
-// invitations for. (required) You must either specify a string
-// representation of a numerical account identifier or the `-` character
-// to list all the invitations for all the clients of a given sponsor
-// buyer.
+//   invitations for. (required) You must either specify a string
+//   representation of a numerical account identifier or the `-`
+//   character to list all the invitations for all the clients of a
+//   given sponsor buyer.
 func (r *AccountsClientsInvitationsService) List(accountId int64, clientAccountId string) *AccountsClientsInvitationsListCall {
 	c := &AccountsClientsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6764,7 +6764,7 @@ func (c *AccountsClientsInvitationsListCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6910,10 +6910,10 @@ type AccountsClientsUsersGetCall struct {
 // Get: Retrieves an existing client user.
 //
 // - accountId: Numerical account ID of the client's sponsor buyer.
-// (required)
+//   (required).
 // - clientAccountId: Numerical account ID of the client buyer that the
-// user to be retrieved is associated with. (required)
-// - userId: Numerical identifier of the user to retrieve. (required)
+//   user to be retrieved is associated with. (required).
+// - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Get(accountId int64, clientAccountId int64, userId int64) *AccountsClientsUsersGetCall {
 	c := &AccountsClientsUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6959,7 +6959,7 @@ func (c *AccountsClientsUsersGetCall) Header() http.Header {
 
 func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7082,11 +7082,11 @@ type AccountsClientsUsersListCall struct {
 // account ID.
 //
 // - accountId: Numerical account ID of the sponsor buyer of the client
-// to list users for. (required)
+//   to list users for. (required).
 // - clientAccountId: The account ID of the client buyer to list users
-// for. (required) You must specify either a string representation of a
-// numerical account identifier or the `-` character to list all the
-// client users for all the clients of a given sponsor buyer.
+//   for. (required) You must specify either a string representation of
+//   a numerical account identifier or the `-` character to list all the
+//   client users for all the clients of a given sponsor buyer.
 func (r *AccountsClientsUsersService) List(accountId int64, clientAccountId string) *AccountsClientsUsersListCall {
 	c := &AccountsClientsUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7148,7 +7148,7 @@ func (c *AccountsClientsUsersListCall) Header() http.Header {
 
 func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7294,10 +7294,10 @@ type AccountsClientsUsersUpdateCall struct {
 // changed on update.
 //
 // - accountId: Numerical account ID of the client's sponsor buyer.
-// (required)
+//   (required).
 // - clientAccountId: Numerical account ID of the client buyer that the
-// user to be retrieved is associated with. (required)
-// - userId: Numerical identifier of the user to retrieve. (required)
+//   user to be retrieved is associated with. (required).
+// - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Update(accountId int64, clientAccountId int64, userId int64, clientuser *ClientUser) *AccountsClientsUsersUpdateCall {
 	c := &AccountsClientsUsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7334,7 +7334,7 @@ func (c *AccountsClientsUsersUpdateCall) Header() http.Header {
 
 func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7460,7 +7460,7 @@ type AccountsCreativesCreateCall struct {
 // Create: Creates a creative.
 //
 // - accountId: The account that this creative belongs to. Can be used
-// to filter the response of the creatives.list method.
+//   to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Create(accountId string, creative *Creative) *AccountsCreativesCreateCall {
 	c := &AccountsCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7513,7 +7513,7 @@ func (c *AccountsCreativesCreateCall) Header() http.Header {
 
 func (c *AccountsCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7679,7 +7679,7 @@ func (c *AccountsCreativesGetCall) Header() http.Header {
 
 func (c *AccountsCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7789,7 +7789,7 @@ type AccountsCreativesListCall struct {
 // List: Lists creatives.
 //
 // - accountId: The account to list the creatives from. Specify "-" to
-// list all creatives the current user has access to.
+//   list all creatives the current user has access to.
 func (r *AccountsCreativesService) List(accountId string) *AccountsCreativesListCall {
 	c := &AccountsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7868,7 +7868,7 @@ func (c *AccountsCreativesListCall) Header() http.Header {
 
 func (c *AccountsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8010,7 +8010,7 @@ type AccountsCreativesStopWatchingCall struct {
 //
 // - accountId: The account of the creative to stop notifications for.
 // - creativeId: The creative ID of the creative to stop notifications
-// for. Specify "-" to specify stopping account level notifications.
+//   for. Specify "-" to specify stopping account level notifications.
 func (r *AccountsCreativesService) StopWatching(accountId string, creativeId string, stopwatchingcreativerequest *StopWatchingCreativeRequest) *AccountsCreativesStopWatchingCall {
 	c := &AccountsCreativesStopWatchingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8046,7 +8046,7 @@ func (c *AccountsCreativesStopWatchingCall) Header() http.Header {
 
 func (c *AccountsCreativesStopWatchingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8162,9 +8162,9 @@ type AccountsCreativesUpdateCall struct {
 // Update: Updates a creative.
 //
 // - accountId: The account that this creative belongs to. Can be used
-// to filter the response of the creatives.list method.
+//   to filter the response of the creatives.list method.
 // - creativeId: The buyer-defined creative ID of this creative. Can be
-// used to filter the response of the creatives.list method.
+//   used to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Update(accountId string, creativeId string, creative *Creative) *AccountsCreativesUpdateCall {
 	c := &AccountsCreativesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8200,7 +8200,7 @@ func (c *AccountsCreativesUpdateCall) Header() http.Header {
 
 func (c *AccountsCreativesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8318,10 +8318,10 @@ type AccountsCreativesWatchCall struct {
 //
 // - accountId: The account of the creative to watch.
 // - creativeId: The creative ID to watch for status changes. Specify
-// "-" to watch all creatives under the above account. If both
-// creative-level and account-level notifications are sent, only a
-// single notification will be sent to the creative-level notification
-// topic.
+//   "-" to watch all creatives under the above account. If both
+//   creative-level and account-level notifications are sent, only a
+//   single notification will be sent to the creative-level notification
+//   topic.
 func (r *AccountsCreativesService) Watch(accountId string, creativeId string, watchcreativerequest *WatchCreativeRequest) *AccountsCreativesWatchCall {
 	c := &AccountsCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8357,7 +8357,7 @@ func (c *AccountsCreativesWatchCall) Header() http.Header {
 
 func (c *AccountsCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8509,7 +8509,7 @@ func (c *AccountsCreativesDealAssociationsAddCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8625,9 +8625,9 @@ type AccountsCreativesDealAssociationsListCall struct {
 // List: List all creative-deal associations.
 //
 // - accountId: The account to list the associations from. Specify "-"
-// to list all creatives the current user has access to.
+//   to list all creatives the current user has access to.
 // - creativeId: The creative ID to list the associations from. Specify
-// "-" to list all creatives under the above account.
+//   "-" to list all creatives under the above account.
 func (r *AccountsCreativesDealAssociationsService) List(accountId string, creativeId string) *AccountsCreativesDealAssociationsListCall {
 	c := &AccountsCreativesDealAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8702,7 +8702,7 @@ func (c *AccountsCreativesDealAssociationsListCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8886,7 +8886,7 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9087,7 +9087,7 @@ func (c *AccountsFinalizedProposalsListCall) Header() http.Header {
 
 func (c *AccountsFinalizedProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9287,7 +9287,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9466,7 +9466,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9648,7 +9648,7 @@ func (c *AccountsProposalsAcceptCall) Header() http.Header {
 
 func (c *AccountsProposalsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9802,7 +9802,7 @@ func (c *AccountsProposalsAddNoteCall) Header() http.Header {
 
 func (c *AccountsProposalsAddNoteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9956,7 +9956,7 @@ func (c *AccountsProposalsCancelNegotiationCall) Header() http.Header {
 
 func (c *AccountsProposalsCancelNegotiationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10114,7 +10114,7 @@ func (c *AccountsProposalsCompleteSetupCall) Header() http.Header {
 
 func (c *AccountsProposalsCompleteSetupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10264,7 +10264,7 @@ func (c *AccountsProposalsCreateCall) Header() http.Header {
 
 func (c *AccountsProposalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10373,7 +10373,7 @@ type AccountsProposalsGetCall struct {
 // head revision.
 //
 // - accountId: Account ID of the buyer.
-// - proposalId: The unique ID of the proposal
+// - proposalId: The unique ID of the proposal.
 func (r *AccountsProposalsService) Get(accountId string, proposalId string) *AccountsProposalsGetCall {
 	c := &AccountsProposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10418,7 +10418,7 @@ func (c *AccountsProposalsGetCall) Header() http.Header {
 
 func (c *AccountsProposalsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10618,7 +10618,7 @@ func (c *AccountsProposalsListCall) Header() http.Header {
 
 func (c *AccountsProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10813,7 +10813,7 @@ func (c *AccountsProposalsPauseCall) Header() http.Header {
 
 func (c *AccountsProposalsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10971,7 +10971,7 @@ func (c *AccountsProposalsResumeCall) Header() http.Header {
 
 func (c *AccountsProposalsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11133,7 +11133,7 @@ func (c *AccountsProposalsUpdateCall) Header() http.Header {
 
 func (c *AccountsProposalsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11294,7 +11294,7 @@ func (c *AccountsPublisherProfilesGetCall) Header() http.Header {
 
 func (c *AccountsPublisherProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11461,7 +11461,7 @@ func (c *AccountsPublisherProfilesListCall) Header() http.Header {
 
 func (c *AccountsPublisherProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11596,11 +11596,11 @@ type BiddersAccountsFilterSetsCreateCall struct {
 // given account ID.
 //
 // - ownerName: Name of the owner (bidder or account) of the filter set
-// to be created. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123` - For an account-level filter set for the
-// buyer account representing bidder 123: `bidders/123/accounts/123` -
-// For an account-level filter set for the child seat buyer account 456
-// whose bidder is 123: `bidders/123/accounts/456`
+//   to be created. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersAccountsFilterSetsCreateCall {
 	c := &BiddersAccountsFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -11644,7 +11644,7 @@ func (c *BiddersAccountsFilterSetsCreateCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11757,11 +11757,12 @@ type BiddersAccountsFilterSetsDeleteCall struct {
 // given account ID.
 //
 // - name: Full name of the resource to delete. For example: - For a
-// bidder-level filter set for bidder 123: `bidders/123/filterSets/abc`
-// - For an account-level filter set for the buyer account representing
-// bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an
-// account-level filter set for the child seat buyer account 456 whose
-// bidder is 123: `bidders/123/accounts/456/filterSets/abc`
+//   bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Delete(name string) *BiddersAccountsFilterSetsDeleteCall {
 	c := &BiddersAccountsFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11795,7 +11796,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11896,12 +11897,12 @@ type BiddersAccountsFilterSetsGetCall struct {
 // given account ID.
 //
 // - name: Full name of the resource being requested. For example: - For
-// a bidder-level filter set for bidder 123:
-// `bidders/123/filterSets/abc` - For an account-level filter set for
-// the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   a bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Get(name string) *BiddersAccountsFilterSetsGetCall {
 	c := &BiddersAccountsFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11945,7 +11946,7 @@ func (c *BiddersAccountsFilterSetsGetCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12049,11 +12050,11 @@ type BiddersAccountsFilterSetsListCall struct {
 // ID.
 //
 // - ownerName: Name of the owner (bidder or account) of the filter sets
-// to be listed. For example: - For a bidder-level filter set for bidder
-// 123: `bidders/123` - For an account-level filter set for the buyer
-// account representing bidder 123: `bidders/123/accounts/123` - For an
-// account-level filter set for the child seat buyer account 456 whose
-// bidder is 123: `bidders/123/accounts/456`
+//   to be listed. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) List(ownerName string) *BiddersAccountsFilterSetsListCall {
 	c := &BiddersAccountsFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -12114,7 +12115,7 @@ func (c *BiddersAccountsFilterSetsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12249,12 +12250,12 @@ type BiddersAccountsFilterSetsBidMetricsListCall struct {
 // List: Lists all metrics that are measured in terms of number of bids.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsBidMetricsListCall {
 	c := &BiddersAccountsFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12315,7 +12316,7 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12451,12 +12452,12 @@ type BiddersAccountsFilterSetsBidResponseErrorsListCall struct {
 // of bid responses affected for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponseErrorsListCall {
 	c := &BiddersAccountsFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12517,7 +12518,7 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Header() http.Heade
 
 func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12654,12 +12655,12 @@ type BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall struct {
 // for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12721,7 +12722,7 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Header() http
 
 func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12859,12 +12860,12 @@ type BiddersAccountsFilterSetsFilteredBidRequestsListCall struct {
 // reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12926,7 +12927,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Header() http.Hea
 
 func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13062,12 +13063,12 @@ type BiddersAccountsFilterSetsFilteredBidsListCall struct {
 // of bids filtered for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13128,7 +13129,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13266,15 +13267,15 @@ type BiddersAccountsFilterSetsFilteredBidsCreativesListCall struct {
 // creative.
 //
 // - creativeStatusId: The ID of the creative status for which to
-// retrieve a breakdown by creative. See creative-status-codes
-// (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   retrieve a breakdown by creative. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13337,7 +13338,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Header() http.H
 
 func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13485,17 +13486,17 @@ type BiddersAccountsFilterSetsFilteredBidsDetailsListCall struct {
 // bids were filtered, with the number of bids filtered for each detail.
 //
 // - creativeStatusId: The ID of the creative status for which to
-// retrieve a breakdown by detail. See creative-status-codes
-// (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
-// Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
-// and 87.
+//   retrieve a breakdown by detail. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//   and 87.
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13558,7 +13559,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Header() http.Hea
 
 func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13705,12 +13706,12 @@ type BiddersAccountsFilterSetsImpressionMetricsListCall struct {
 // impressions.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsImpressionMetricsListCall {
 	c := &BiddersAccountsFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13771,7 +13772,7 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Header() http.Heade
 
 func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13907,12 +13908,12 @@ type BiddersAccountsFilterSetsLosingBidsListCall struct {
 // number of bids that lost for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsLosingBidsService) List(filterSetName string) *BiddersAccountsFilterSetsLosingBidsListCall {
 	c := &BiddersAccountsFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13973,7 +13974,7 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14109,12 +14110,12 @@ type BiddersAccountsFilterSetsNonBillableWinningBidsListCall struct {
 // the number of bids not billed for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersAccountsFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersAccountsFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14176,7 +14177,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Header() http.
 
 func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14313,11 +14314,11 @@ type BiddersFilterSetsCreateCall struct {
 // given account ID.
 //
 // - ownerName: Name of the owner (bidder or account) of the filter set
-// to be created. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123` - For an account-level filter set for the
-// buyer account representing bidder 123: `bidders/123/accounts/123` -
-// For an account-level filter set for the child seat buyer account 456
-// whose bidder is 123: `bidders/123/accounts/456`
+//   to be created. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersFilterSetsCreateCall {
 	c := &BiddersFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14361,7 +14362,7 @@ func (c *BiddersFilterSetsCreateCall) Header() http.Header {
 
 func (c *BiddersFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14474,11 +14475,12 @@ type BiddersFilterSetsDeleteCall struct {
 // given account ID.
 //
 // - name: Full name of the resource to delete. For example: - For a
-// bidder-level filter set for bidder 123: `bidders/123/filterSets/abc`
-// - For an account-level filter set for the buyer account representing
-// bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an
-// account-level filter set for the child seat buyer account 456 whose
-// bidder is 123: `bidders/123/accounts/456/filterSets/abc`
+//   bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Delete(name string) *BiddersFilterSetsDeleteCall {
 	c := &BiddersFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14512,7 +14514,7 @@ func (c *BiddersFilterSetsDeleteCall) Header() http.Header {
 
 func (c *BiddersFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14613,12 +14615,12 @@ type BiddersFilterSetsGetCall struct {
 // given account ID.
 //
 // - name: Full name of the resource being requested. For example: - For
-// a bidder-level filter set for bidder 123:
-// `bidders/123/filterSets/abc` - For an account-level filter set for
-// the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   a bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Get(name string) *BiddersFilterSetsGetCall {
 	c := &BiddersFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14662,7 +14664,7 @@ func (c *BiddersFilterSetsGetCall) Header() http.Header {
 
 func (c *BiddersFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14766,11 +14768,11 @@ type BiddersFilterSetsListCall struct {
 // ID.
 //
 // - ownerName: Name of the owner (bidder or account) of the filter sets
-// to be listed. For example: - For a bidder-level filter set for bidder
-// 123: `bidders/123` - For an account-level filter set for the buyer
-// account representing bidder 123: `bidders/123/accounts/123` - For an
-// account-level filter set for the child seat buyer account 456 whose
-// bidder is 123: `bidders/123/accounts/456`
+//   to be listed. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) List(ownerName string) *BiddersFilterSetsListCall {
 	c := &BiddersFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14831,7 +14833,7 @@ func (c *BiddersFilterSetsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14966,12 +14968,12 @@ type BiddersFilterSetsBidMetricsListCall struct {
 // List: Lists all metrics that are measured in terms of number of bids.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidMetricsService) List(filterSetName string) *BiddersFilterSetsBidMetricsListCall {
 	c := &BiddersFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15032,7 +15034,7 @@ func (c *BiddersFilterSetsBidMetricsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15168,12 +15170,12 @@ type BiddersFilterSetsBidResponseErrorsListCall struct {
 // of bid responses affected for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersFilterSetsBidResponseErrorsListCall {
 	c := &BiddersFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15234,7 +15236,7 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15371,12 +15373,12 @@ type BiddersFilterSetsBidResponsesWithoutBidsListCall struct {
 // for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15438,7 +15440,7 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Header() http.Header 
 
 func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15576,12 +15578,12 @@ type BiddersFilterSetsFilteredBidRequestsListCall struct {
 // reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15643,7 +15645,7 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15779,12 +15781,12 @@ type BiddersFilterSetsFilteredBidsListCall struct {
 // of bids filtered for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsService) List(filterSetName string) *BiddersFilterSetsFilteredBidsListCall {
 	c := &BiddersFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15845,7 +15847,7 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15983,15 +15985,15 @@ type BiddersFilterSetsFilteredBidsCreativesListCall struct {
 // creative.
 //
 // - creativeStatusId: The ID of the creative status for which to
-// retrieve a breakdown by creative. See creative-status-codes
-// (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   retrieve a breakdown by creative. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16054,7 +16056,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16202,17 +16204,17 @@ type BiddersFilterSetsFilteredBidsDetailsListCall struct {
 // bids were filtered, with the number of bids filtered for each detail.
 //
 // - creativeStatusId: The ID of the creative status for which to
-// retrieve a breakdown by detail. See creative-status-codes
-// (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
-// Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
-// and 87.
+//   retrieve a breakdown by detail. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//   and 87.
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16275,7 +16277,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16422,12 +16424,12 @@ type BiddersFilterSetsImpressionMetricsListCall struct {
 // impressions.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersFilterSetsImpressionMetricsListCall {
 	c := &BiddersFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16488,7 +16490,7 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16624,12 +16626,12 @@ type BiddersFilterSetsLosingBidsListCall struct {
 // number of bids that lost for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsLosingBidsService) List(filterSetName string) *BiddersFilterSetsLosingBidsListCall {
 	c := &BiddersFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16690,7 +16692,7 @@ func (c *BiddersFilterSetsLosingBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16826,12 +16828,12 @@ type BiddersFilterSetsNonBillableWinningBidsListCall struct {
 // the number of bids not billed for each reason.
 //
 // - filterSetName: Name of the filter set that should be applied to the
-// requested metrics. For example: - For a bidder-level filter set for
-// bidder 123: `bidders/123/filterSets/abc` - For an account-level
-// filter set for the buyer account representing bidder 123:
-// `bidders/123/accounts/123/filterSets/abc` - For an account-level
-// filter set for the child seat buyer account 456 whose bidder is 123:
-// `bidders/123/accounts/456/filterSets/abc`
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16893,7 +16895,7 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

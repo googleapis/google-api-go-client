@@ -693,7 +693,7 @@ type BillingAccountsBudgetsCreateCall struct {
 // limits of the number of budgets you can create.
 //
 // - parent: The name of the billing account to create the budget in.
-// Values are of the form `billingAccounts/{billingAccountId}`.
+//   Values are of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) Create(parent string, googlecloudbillingbudgetsv1budget *GoogleCloudBillingBudgetsV1Budget) *BillingAccountsBudgetsCreateCall {
 	c := &BillingAccountsBudgetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -728,7 +728,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -837,7 +837,7 @@ type BillingAccountsBudgetsDeleteCall struct {
 // Delete: Deletes a budget. Returns successfully if already deleted.
 //
 // - name: Name of the budget to delete. Values are of the form
-// `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
+//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Delete(name string) *BillingAccountsBudgetsDeleteCall {
 	c := &BillingAccountsBudgetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -871,7 +871,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -975,7 +975,7 @@ type BillingAccountsBudgetsGetCall struct {
 // though they may have been set in the Cloud Console.
 //
 // - name: Name of budget to get. Values are of the form
-// `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
+//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Get(name string) *BillingAccountsBudgetsGetCall {
 	c := &BillingAccountsBudgetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1019,7 +1019,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1128,7 +1128,7 @@ type BillingAccountsBudgetsListCall struct {
 // the Cloud Console.
 //
 // - parent: Name of billing account to list budgets under. Values are
-// of the form `billingAccounts/{billingAccountId}`.
+//   of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) List(parent string) *BillingAccountsBudgetsListCall {
 	c := &BillingAccountsBudgetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1188,7 +1188,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1329,8 +1329,8 @@ type BillingAccountsBudgetsPatchCall struct {
 // will not be changed by this method.
 //
 // - name: Output only. Resource name of the budget. The resource name
-// implies the scope of a budget. Values are of the form
-// `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
+//   implies the scope of a budget. Values are of the form
+//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Patch(name string, googlecloudbillingbudgetsv1budget *GoogleCloudBillingBudgetsV1Budget) *BillingAccountsBudgetsPatchCall {
 	c := &BillingAccountsBudgetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1376,7 +1376,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

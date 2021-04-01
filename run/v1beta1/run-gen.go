@@ -1279,7 +1279,7 @@ func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 
 func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1411,7 +1411,7 @@ type NamespacesCustomresourcedefinitionsGetCall struct {
 // Get: Rpc to get information about a CustomResourceDefinition.
 //
 // - name: The name of the CustomResourceDefinition being retrieved. If
-// needed, replace {namespace_id} with the project ID.
+//   needed, replace {namespace_id} with the project ID.
 func (r *NamespacesCustomresourcedefinitionsService) Get(name string) *NamespacesCustomresourcedefinitionsGetCall {
 	c := &NamespacesCustomresourcedefinitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1455,7 +1455,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 
 func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1558,7 +1558,7 @@ type ProjectsLocationsCustomresourcedefinitionsGetCall struct {
 // Get: Rpc to get information about a CustomResourceDefinition.
 //
 // - name: The name of the CustomResourceDefinition being retrieved. If
-// needed, replace {namespace_id} with the project ID.
+//   needed, replace {namespace_id} with the project ID.
 func (r *ProjectsLocationsCustomresourcedefinitionsService) Get(name string) *ProjectsLocationsCustomresourcedefinitionsGetCall {
 	c := &ProjectsLocationsCustomresourcedefinitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1602,7 +1602,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header
 
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1705,7 +1705,7 @@ type ProjectsLocationsCustomresourcedefinitionsListCall struct {
 // List: Rpc to list custom resource definitions.
 //
 // - parent: The project ID or project number from which the storages
-// should be listed.
+//   should be listed.
 func (r *ProjectsLocationsCustomresourcedefinitionsService) List(parent string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c := &ProjectsLocationsCustomresourcedefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1802,7 +1802,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Heade
 
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

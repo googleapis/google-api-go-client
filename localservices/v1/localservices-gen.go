@@ -158,7 +158,7 @@ type DetailedLeadReportsService struct {
 
 // GoogleAdsHomeservicesLocalservicesV1AccountReport: An Account Report
 // of a GLS account identified by their account id containing aggregate
-// data gathered from a particular date range.
+// data gathered from a particular date range. Next ID: 18
 type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 	// AccountId: Unique identifier of the GLS account.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -195,6 +195,10 @@ type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 	// CurrentPeriodTotalCost: Total cost of the account in current
 	// specified period in the account's specified currency.
 	CurrentPeriodTotalCost float64 `json:"currentPeriodTotalCost,omitempty"`
+
+	// ImpressionsLastTwoDays: Number of impressions that customers have had
+	// in the past 2 days.
+	ImpressionsLastTwoDays int64 `json:"impressionsLastTwoDays,omitempty,string"`
 
 	// PhoneLeadResponsiveness: Phone lead responsiveness of the account for
 	// the past 90 days from current date. This is computed by taking the
@@ -730,7 +734,7 @@ func (c *AccountReportsSearchCall) Header() http.Header {
 
 func (c *AccountReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1018,7 +1022,7 @@ func (c *DetailedLeadReportsSearchCall) Header() http.Header {
 
 func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

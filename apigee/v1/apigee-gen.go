@@ -8746,7 +8746,7 @@ func (c *HybridIssuersListCall) Header() http.Header {
 
 func (c *HybridIssuersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8892,7 +8892,7 @@ func (c *OrganizationsCreateCall) Header() http.Header {
 
 func (c *OrganizationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8993,7 +8993,7 @@ type OrganizationsDeleteCall struct {
 // SubscriptionType TRIAL.
 //
 // - name: Name of the organization. Use the following structure in your
-// request: `organizations/{org}`
+//   request: `organizations/{org}`.
 func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 	c := &OrganizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9027,7 +9027,7 @@ func (c *OrganizationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9129,7 +9129,7 @@ type OrganizationsGetCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
 //
 // - name: Apigee organization name in the following format:
-// `organizations/{org}`
+//   `organizations/{org}`.
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9173,7 +9173,7 @@ func (c *OrganizationsGetCall) Header() http.Header {
 
 func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9277,7 +9277,7 @@ type OrganizationsGetDeployedIngressConfigCall struct {
 // an organization.
 //
 // - name: Name of the deployed configuration for the organization in
-// the following format: 'organizations/{org}/deployedIngressConfig'.
+//   the following format: 'organizations/{org}/deployedIngressConfig'.
 func (r *OrganizationsService) GetDeployedIngressConfig(name string) *OrganizationsGetDeployedIngressConfigCall {
 	c := &OrganizationsGetDeployedIngressConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9339,7 +9339,7 @@ func (c *OrganizationsGetDeployedIngressConfigCall) Header() http.Header {
 
 func (c *OrganizationsGetDeployedIngressConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9467,7 +9467,7 @@ type OrganizationsGetSyncAuthorizationCall struct {
 // **Note**: Available to Apigee hybrid only.
 //
 // - name: Name of the Apigee organization. Use the following structure
-// in your request: `organizations/{org}`
+//   in your request: `organizations/{org}`.
 func (r *OrganizationsService) GetSyncAuthorization(name string, googlecloudapigeev1getsyncauthorizationrequest *GoogleCloudApigeeV1GetSyncAuthorizationRequest) *OrganizationsGetSyncAuthorizationCall {
 	c := &OrganizationsGetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9502,7 +9502,7 @@ func (c *OrganizationsGetSyncAuthorizationCall) Header() http.Header {
 
 func (c *OrganizationsGetSyncAuthorizationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9613,7 +9613,7 @@ type OrganizationsListCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
 //
 // - parent: Use the following structure in your request:
-// `organizations`
+//   `organizations`.
 func (r *OrganizationsService) List(parent string) *OrganizationsListCall {
 	c := &OrganizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9657,7 +9657,7 @@ func (c *OrganizationsListCall) Header() http.Header {
 
 func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9772,7 +9772,7 @@ type OrganizationsSetSyncAuthorizationCall struct {
 // **Note**: Available to Apigee hybrid only.
 //
 // - name: Name of the Apigee organization. Use the following structure
-// in your request: `organizations/{org}`
+//   in your request: `organizations/{org}`.
 func (r *OrganizationsService) SetSyncAuthorization(name string, googlecloudapigeev1syncauthorization *GoogleCloudApigeeV1SyncAuthorization) *OrganizationsSetSyncAuthorizationCall {
 	c := &OrganizationsSetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9807,7 +9807,7 @@ func (c *OrganizationsSetSyncAuthorizationCall) Header() http.Header {
 
 func (c *OrganizationsSetSyncAuthorizationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9917,7 +9917,7 @@ type OrganizationsUpdateCall struct {
 // fields in the organization profile will be updated.
 //
 // - name: Apigee organization name in the following format:
-// `organizations/{org}`
+//   `organizations/{org}`.
 func (r *OrganizationsService) Update(name string, googlecloudapigeev1organization *GoogleCloudApigeeV1Organization) *OrganizationsUpdateCall {
 	c := &OrganizationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9952,7 +9952,7 @@ func (c *OrganizationsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10060,7 +10060,7 @@ type OrganizationsAnalyticsDatastoresCreateCall struct {
 // Create: Create a Datastore for an org
 //
 // - parent: The parent organization name. Must be of the form
-// `organizations/{org}`.
+//   `organizations/{org}`.
 func (r *OrganizationsAnalyticsDatastoresService) Create(parent string, googlecloudapigeev1datastore *GoogleCloudApigeeV1Datastore) *OrganizationsAnalyticsDatastoresCreateCall {
 	c := &OrganizationsAnalyticsDatastoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10095,7 +10095,7 @@ func (c *OrganizationsAnalyticsDatastoresCreateCall) Header() http.Header {
 
 func (c *OrganizationsAnalyticsDatastoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10202,7 +10202,7 @@ type OrganizationsAnalyticsDatastoresDeleteCall struct {
 // Delete: Delete a Datastore from an org.
 //
 // - name: Resource name of the Datastore to be deleted. Must be of the
-// form `organizations/{org}/analytics/datastores/{datastoreId}`
+//   form `organizations/{org}/analytics/datastores/{datastoreId}`.
 func (r *OrganizationsAnalyticsDatastoresService) Delete(name string) *OrganizationsAnalyticsDatastoresDeleteCall {
 	c := &OrganizationsAnalyticsDatastoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10236,7 +10236,7 @@ func (c *OrganizationsAnalyticsDatastoresDeleteCall) Header() http.Header {
 
 func (c *OrganizationsAnalyticsDatastoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10336,7 +10336,7 @@ type OrganizationsAnalyticsDatastoresGetCall struct {
 // Get: Get a Datastore
 //
 // - name: Resource name of the Datastore to be get. Must be of the form
-// `organizations/{org}/analytics/datastores/{datastoreId}`
+//   `organizations/{org}/analytics/datastores/{datastoreId}`.
 func (r *OrganizationsAnalyticsDatastoresService) Get(name string) *OrganizationsAnalyticsDatastoresGetCall {
 	c := &OrganizationsAnalyticsDatastoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10380,7 +10380,7 @@ func (c *OrganizationsAnalyticsDatastoresGetCall) Header() http.Header {
 
 func (c *OrganizationsAnalyticsDatastoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10483,7 +10483,7 @@ type OrganizationsAnalyticsDatastoresListCall struct {
 // List: List Datastores
 //
 // - parent: The parent organization name. Must be of the form
-// `organizations/{org}`.
+//   `organizations/{org}`.
 func (r *OrganizationsAnalyticsDatastoresService) List(parent string) *OrganizationsAnalyticsDatastoresListCall {
 	c := &OrganizationsAnalyticsDatastoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10534,7 +10534,7 @@ func (c *OrganizationsAnalyticsDatastoresListCall) Header() http.Header {
 
 func (c *OrganizationsAnalyticsDatastoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10646,7 +10646,7 @@ type OrganizationsAnalyticsDatastoresTestCall struct {
 // permissions in target destination storage
 //
 // - parent: The parent organization name Must be of the form
-// `organizations/{org}`
+//   `organizations/{org}`.
 func (r *OrganizationsAnalyticsDatastoresService) Test(parent string, googlecloudapigeev1datastore *GoogleCloudApigeeV1Datastore) *OrganizationsAnalyticsDatastoresTestCall {
 	c := &OrganizationsAnalyticsDatastoresTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10681,7 +10681,7 @@ func (c *OrganizationsAnalyticsDatastoresTestCall) Header() http.Header {
 
 func (c *OrganizationsAnalyticsDatastoresTestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10791,7 +10791,7 @@ type OrganizationsAnalyticsDatastoresUpdateCall struct {
 // Update: Update a Datastore
 //
 // - name: The resource name of datastore to be updated. Must be of the
-// form `organizations/{org}/analytics/datastores/{datastoreId}`
+//   form `organizations/{org}/analytics/datastores/{datastoreId}`.
 func (r *OrganizationsAnalyticsDatastoresService) Update(name string, googlecloudapigeev1datastore *GoogleCloudApigeeV1Datastore) *OrganizationsAnalyticsDatastoresUpdateCall {
 	c := &OrganizationsAnalyticsDatastoresUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10826,7 +10826,7 @@ func (c *OrganizationsAnalyticsDatastoresUpdateCall) Header() http.Header {
 
 func (c *OrganizationsAnalyticsDatastoresUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10944,7 +10944,7 @@ type OrganizationsApiproductsAttributesCall struct {
 // access token in less than 180 seconds.
 //
 // - name: Name of the API product. Use the following structure in your
-// request: `organizations/{org}/apiproducts/{apiproduct}`
+//   request: `organizations/{org}/apiproducts/{apiproduct}`.
 func (r *OrganizationsApiproductsService) Attributes(name string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsApiproductsAttributesCall {
 	c := &OrganizationsApiproductsAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10979,7 +10979,7 @@ func (c *OrganizationsApiproductsAttributesCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11105,8 +11105,8 @@ type OrganizationsApiproductsCreateCall struct {
 // an API product?
 //
 // - parent: Name of the organization in which the API product will be
-// created. Use the following structure in your request:
-// `organizations/{org}`
+//   created. Use the following structure in your request:
+//   `organizations/{org}`.
 func (r *OrganizationsApiproductsService) Create(parent string, googlecloudapigeev1apiproduct *GoogleCloudApigeeV1ApiProduct) *OrganizationsApiproductsCreateCall {
 	c := &OrganizationsApiproductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11141,7 +11141,7 @@ func (c *OrganizationsApiproductsCreateCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11256,7 +11256,7 @@ type OrganizationsApiproductsDeleteCall struct {
 // products to verify the internal name.
 //
 // - name: Name of the API product. Use the following structure in your
-// request: `organizations/{org}/apiproducts/{apiproduct}`
+//   request: `organizations/{org}/apiproducts/{apiproduct}`.
 func (r *OrganizationsApiproductsService) Delete(name string) *OrganizationsApiproductsDeleteCall {
 	c := &OrganizationsApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11290,7 +11290,7 @@ func (c *OrganizationsApiproductsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11394,7 +11394,7 @@ type OrganizationsApiproductsGetCall struct {
 // list of API products to verify the internal name.
 //
 // - name: Name of the API product. Use the following structure in your
-// request: `organizations/{org}/apiproducts/{apiproduct}`
+//   request: `organizations/{org}/apiproducts/{apiproduct}`.
 func (r *OrganizationsApiproductsService) Get(name string) *OrganizationsApiproductsGetCall {
 	c := &OrganizationsApiproductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11438,7 +11438,7 @@ func (c *OrganizationsApiproductsGetCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11545,7 +11545,7 @@ type OrganizationsApiproductsListCall struct {
 // `count` query parameters.
 //
 // - parent: Name of the organization. Use the following structure in
-// your request: `organizations/{org}`
+//   your request: `organizations/{org}`.
 func (r *OrganizationsApiproductsService) List(parent string) *OrganizationsApiproductsListCall {
 	c := &OrganizationsApiproductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11629,7 +11629,7 @@ func (c *OrganizationsApiproductsListCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11766,7 +11766,7 @@ type OrganizationsApiproductsUpdateCall struct {
 // to identify their internal names.
 //
 // - name: Name of the API product. Use the following structure in your
-// request: `organizations/{org}/apiproducts/{apiproduct}`
+//   request: `organizations/{org}/apiproducts/{apiproduct}`.
 func (r *OrganizationsApiproductsService) Update(name string, googlecloudapigeev1apiproduct *GoogleCloudApigeeV1ApiProduct) *OrganizationsApiproductsUpdateCall {
 	c := &OrganizationsApiproductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11801,7 +11801,7 @@ func (c *OrganizationsApiproductsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11908,8 +11908,9 @@ type OrganizationsApiproductsAttributesDeleteCall struct {
 // Delete: Deletes an API product attribute.
 //
 // - name: Name of the API product attribute. Use the following
-// structure in your request:
-// `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}`
+//   structure in your request:
+//   `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}
+//   `.
 func (r *OrganizationsApiproductsAttributesService) Delete(name string) *OrganizationsApiproductsAttributesDeleteCall {
 	c := &OrganizationsApiproductsAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11943,7 +11944,7 @@ func (c *OrganizationsApiproductsAttributesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12043,8 +12044,9 @@ type OrganizationsApiproductsAttributesGetCall struct {
 // Get: Gets the value of an API product attribute.
 //
 // - name: Name of the API product attribute. Use the following
-// structure in your request:
-// `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}`
+//   structure in your request:
+//   `organizations/{org}/apiproducts/{apiproduct}/attributes/{attribute}
+//   `.
 func (r *OrganizationsApiproductsAttributesService) Get(name string) *OrganizationsApiproductsAttributesGetCall {
 	c := &OrganizationsApiproductsAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12088,7 +12090,7 @@ func (c *OrganizationsApiproductsAttributesGetCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12191,7 +12193,7 @@ type OrganizationsApiproductsAttributesListCall struct {
 // List: Lists all API product attributes.
 //
 // - parent: Name of the API product. Use the following structure in
-// your request: `organizations/{org}/apiproducts/{apiproduct}`
+//   your request: `organizations/{org}/apiproducts/{apiproduct}`.
 func (r *OrganizationsApiproductsAttributesService) List(parent string) *OrganizationsApiproductsAttributesListCall {
 	c := &OrganizationsApiproductsAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12235,7 +12237,7 @@ func (c *OrganizationsApiproductsAttributesListCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12345,7 +12347,7 @@ type OrganizationsApiproductsAttributesUpdateApiProductAttributeCall struct {
 // 180 seconds.
 //
 // - name: Name of the API product. Use the following structure in your
-// request: `organizations/{org}/apiproducts/{apiproduct}`
+//   request: `organizations/{org}/apiproducts/{apiproduct}`.
 func (r *OrganizationsApiproductsAttributesService) UpdateApiProductAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall {
 	c := &OrganizationsApiproductsAttributesUpdateApiProductAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12380,7 +12382,7 @@ func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) Header
 
 func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12503,7 +12505,7 @@ type OrganizationsApisCreateCall struct {
 // validation errors is returned to the client.
 //
 // - parent: Name of the organization in the following format:
-// `organizations/{org}`
+//   `organizations/{org}`.
 func (r *OrganizationsApisService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsApisCreateCall {
 	c := &OrganizationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12563,7 +12565,7 @@ func (c *OrganizationsApisCreateCall) Header() http.Header {
 
 func (c *OrganizationsApisCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12688,7 +12690,7 @@ type OrganizationsApisDeleteCall struct {
 // can delete it.
 //
 // - name: Name of the API proxy in the following format:
-// `organizations/{org}/apis/{api}`
+//   `organizations/{org}/apis/{api}`.
 func (r *OrganizationsApisService) Delete(name string) *OrganizationsApisDeleteCall {
 	c := &OrganizationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12722,7 +12724,7 @@ func (c *OrganizationsApisDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApisDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12822,7 +12824,7 @@ type OrganizationsApisGetCall struct {
 // Get: Gets an API proxy including a list of existing revisions.
 //
 // - name: Name of the API proxy in the following format:
-// `organizations/{org}/apis/{api}`
+//   `organizations/{org}/apis/{api}`.
 func (r *OrganizationsApisService) Get(name string) *OrganizationsApisGetCall {
 	c := &OrganizationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12866,7 +12868,7 @@ func (c *OrganizationsApisGetCall) Header() http.Header {
 
 func (c *OrganizationsApisGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12971,7 +12973,7 @@ type OrganizationsApisListCall struct {
 // files for each API proxy.
 //
 // - parent: Name of the organization in the following format:
-// `organizations/{org}`
+//   `organizations/{org}`.
 func (r *OrganizationsApisService) List(parent string) *OrganizationsApisListCall {
 	c := &OrganizationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13030,7 +13032,7 @@ func (c *OrganizationsApisListCall) Header() http.Header {
 
 func (c *OrganizationsApisListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13145,7 +13147,8 @@ type OrganizationsApisDeploymentsListCall struct {
 // List: Lists all deployments of an API proxy.
 //
 // - parent: Name of the API proxy for which to return deployment
-// information in the following format: `organizations/{org}/apis/{api}`
+//   information in the following format:
+//   `organizations/{org}/apis/{api}`.
 func (r *OrganizationsApisDeploymentsService) List(parent string) *OrganizationsApisDeploymentsListCall {
 	c := &OrganizationsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13189,7 +13192,7 @@ func (c *OrganizationsApisDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsApisDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13294,8 +13297,8 @@ type OrganizationsApisKeyvaluemapsCreateCall struct {
 // Create: Creates a key value map in an api proxy.
 //
 // - parent: The name of the environment in which to create the key
-// value map. Must be of the form
-// `organizations/{organization}/apis/{api}`.
+//   value map. Must be of the form
+//   `organizations/{organization}/apis/{api}`.
 func (r *OrganizationsApisKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsApisKeyvaluemapsCreateCall {
 	c := &OrganizationsApisKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13330,7 +13333,7 @@ func (c *OrganizationsApisKeyvaluemapsCreateCall) Header() http.Header {
 
 func (c *OrganizationsApisKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13437,7 +13440,8 @@ type OrganizationsApisKeyvaluemapsDeleteCall struct {
 // Delete: Delete a key value map in an api proxy.
 //
 // - name: The name of the key value map. Must be of the form
-// `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`.
+//   `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//   .
 func (r *OrganizationsApisKeyvaluemapsService) Delete(name string) *OrganizationsApisKeyvaluemapsDeleteCall {
 	c := &OrganizationsApisKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13471,7 +13475,7 @@ func (c *OrganizationsApisKeyvaluemapsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApisKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13572,7 +13576,7 @@ type OrganizationsApisRevisionsDeleteCall struct {
 // must be undeployed before you can delete it.
 //
 // - name: API proxy revision in the following format:
-// `organizations/{org}/apis/{api}/revisions/{rev}`
+//   `organizations/{org}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsApisRevisionsService) Delete(name string) *OrganizationsApisRevisionsDeleteCall {
 	c := &OrganizationsApisRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13606,7 +13610,7 @@ func (c *OrganizationsApisRevisionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApisRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13713,7 +13717,7 @@ type OrganizationsApisRevisionsGetCall struct {
 // described in updateApiProxyRevision (updateApiProxyRevision).
 //
 // - name: API proxy revision in the following format:
-// `organizations/{org}/apis/{api}/revisions/{rev}`
+//   `organizations/{org}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsApisRevisionsService) Get(name string) *OrganizationsApisRevisionsGetCall {
 	c := &OrganizationsApisRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13765,7 +13769,7 @@ func (c *OrganizationsApisRevisionsGetCall) Header() http.Header {
 
 func (c *OrganizationsApisRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13878,7 +13882,7 @@ type OrganizationsApisRevisionsUpdateApiProxyRevisionCall struct {
 // either `multipart/form-data` or `application/octet-stream`.
 //
 // - name: API proxy revision to update in the following format:
-// `organizations/{org}/apis/{api}/revisions/{rev}`
+//   `organizations/{org}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsApisRevisionsService) UpdateApiProxyRevision(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsApisRevisionsUpdateApiProxyRevisionCall {
 	c := &OrganizationsApisRevisionsUpdateApiProxyRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13921,7 +13925,7 @@ func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) Header() http.Hea
 
 func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14035,8 +14039,8 @@ type OrganizationsApisRevisionsDeploymentsListCall struct {
 // List: Lists all deployments of an API proxy revision.
 //
 // - parent: Name of the API proxy revision for which to return
-// deployment information in the following format:
-// `organizations/{org}/apis/{api}/revisions/{rev}`.
+//   deployment information in the following format:
+//   `organizations/{org}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsApisRevisionsDeploymentsService) List(parent string) *OrganizationsApisRevisionsDeploymentsListCall {
 	c := &OrganizationsApisRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14080,7 +14084,7 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsApisRevisionsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14185,7 +14189,7 @@ type OrganizationsAppsGetCall struct {
 // Get: Gets the app profile for the specified app ID.
 //
 // - name: App ID in the following format:
-// `organizations/{org}/apps/{app}`
+//   `organizations/{org}/apps/{app}`.
 func (r *OrganizationsAppsService) Get(name string) *OrganizationsAppsGetCall {
 	c := &OrganizationsAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14229,7 +14233,7 @@ func (c *OrganizationsAppsGetCall) Header() http.Header {
 
 func (c *OrganizationsAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14334,7 +14338,7 @@ type OrganizationsAppsListCall struct {
 // app type (developer or company).
 //
 // - parent: Resource path of the parent in the following format:
-// `organizations/{org}`
+//   `organizations/{org}`.
 func (r *OrganizationsAppsService) List(parent string) *OrganizationsAppsListCall {
 	c := &OrganizationsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14444,7 +14448,7 @@ func (c *OrganizationsAppsListCall) Header() http.Header {
 
 func (c *OrganizationsAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14594,7 +14598,7 @@ type OrganizationsDatacollectorsCreateCall struct {
 // Create: Creates a new data collector.
 //
 // - parent: Name of the organization in which to create the data
-// collector in the following format: `organizations/{org}`.
+//   collector in the following format: `organizations/{org}`.
 func (r *OrganizationsDatacollectorsService) Create(parent string, googlecloudapigeev1datacollector *GoogleCloudApigeeV1DataCollector) *OrganizationsDatacollectorsCreateCall {
 	c := &OrganizationsDatacollectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14637,7 +14641,7 @@ func (c *OrganizationsDatacollectorsCreateCall) Header() http.Header {
 
 func (c *OrganizationsDatacollectorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14749,7 +14753,7 @@ type OrganizationsDatacollectorsDeleteCall struct {
 // Delete: Deletes a data collector.
 //
 // - name: Name of the data collector in the following format:
-// `organizations/{org}/datacollectors/{data_collector_id}`.
+//   `organizations/{org}/datacollectors/{data_collector_id}`.
 func (r *OrganizationsDatacollectorsService) Delete(name string) *OrganizationsDatacollectorsDeleteCall {
 	c := &OrganizationsDatacollectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14783,7 +14787,7 @@ func (c *OrganizationsDatacollectorsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDatacollectorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14883,7 +14887,7 @@ type OrganizationsDatacollectorsGetCall struct {
 // Get: Gets a data collector.
 //
 // - name: Name of the data collector in the following format:
-// `organizations/{org}/datacollectors/{data_collector_id}`.
+//   `organizations/{org}/datacollectors/{data_collector_id}`.
 func (r *OrganizationsDatacollectorsService) Get(name string) *OrganizationsDatacollectorsGetCall {
 	c := &OrganizationsDatacollectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14927,7 +14931,7 @@ func (c *OrganizationsDatacollectorsGetCall) Header() http.Header {
 
 func (c *OrganizationsDatacollectorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15030,7 +15034,7 @@ type OrganizationsDatacollectorsListCall struct {
 // List: Lists all data collectors.
 //
 // - parent: Name of the organization for which to list data collectors
-// in the following format: `organizations/{org}`.
+//   in the following format: `organizations/{org}`.
 func (r *OrganizationsDatacollectorsService) List(parent string) *OrganizationsDatacollectorsListCall {
 	c := &OrganizationsDatacollectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15089,7 +15093,7 @@ func (c *OrganizationsDatacollectorsListCall) Header() http.Header {
 
 func (c *OrganizationsDatacollectorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15226,7 +15230,7 @@ type OrganizationsDatacollectorsPatchCall struct {
 // Patch: Updates a data collector.
 //
 // - name: Name of the data collector in the following format:
-// `organizations/{org}/datacollectors/{data_collector_id}`.
+//   `organizations/{org}/datacollectors/{data_collector_id}`.
 func (r *OrganizationsDatacollectorsService) Patch(name string, googlecloudapigeev1datacollector *GoogleCloudApigeeV1DataCollector) *OrganizationsDatacollectorsPatchCall {
 	c := &OrganizationsDatacollectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15268,7 +15272,7 @@ func (c *OrganizationsDatacollectorsPatchCall) Header() http.Header {
 
 func (c *OrganizationsDatacollectorsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15382,7 +15386,7 @@ type OrganizationsDeploymentsListCall struct {
 // List: Lists all deployments of API proxies or shared flows.
 //
 // - parent: Name of the organization for which to return deployment
-// information in the following format: `organizations/{org}`
+//   information in the following format: `organizations/{org}`.
 func (r *OrganizationsDeploymentsService) List(parent string) *OrganizationsDeploymentsListCall {
 	c := &OrganizationsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15435,7 +15439,7 @@ func (c *OrganizationsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15555,8 +15559,8 @@ type OrganizationsDevelopersAttributesCall struct {
 // seconds.
 //
 // - parent: Email address of the developer for which attributes are
-// being updated in the following format:
-// `organizations/{org}/developers/{developer_email}`
+//   being updated in the following format:
+//   `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersService) Attributes(parent string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsDevelopersAttributesCall {
 	c := &OrganizationsDevelopersAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15591,7 +15595,7 @@ func (c *OrganizationsDevelopersAttributesCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15702,8 +15706,8 @@ type OrganizationsDevelopersCreateCall struct {
 // API.
 //
 // - parent: Name of the Apigee organization in which the developer is
-// created. Use the following structure in your request:
-// `organizations/{org}`.
+//   created. Use the following structure in your request:
+//   `organizations/{org}`.
 func (r *OrganizationsDevelopersService) Create(parent string, googlecloudapigeev1developer *GoogleCloudApigeeV1Developer) *OrganizationsDevelopersCreateCall {
 	c := &OrganizationsDevelopersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15738,7 +15742,7 @@ func (c *OrganizationsDevelopersCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15853,7 +15857,7 @@ type OrganizationsDevelopersDeleteCall struct {
 // deleted.
 //
 // - name: Email address of the developer. Use the following structure
-// in your request: `organizations/{org}/developers/{developer_email}`
+//   in your request: `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersService) Delete(name string) *OrganizationsDevelopersDeleteCall {
 	c := &OrganizationsDevelopersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15887,7 +15891,7 @@ func (c *OrganizationsDevelopersDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15989,7 +15993,7 @@ type OrganizationsDevelopersGetCall struct {
 // includes only the first 100 developer apps.
 //
 // - name: Email address of the developer. Use the following structure
-// in your request: `organizations/{org}/developers/{developer_email}`
+//   in your request: `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersService) Get(name string) *OrganizationsDevelopersGetCall {
 	c := &OrganizationsDevelopersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16040,7 +16044,7 @@ func (c *OrganizationsDevelopersGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16153,7 +16157,7 @@ type OrganizationsDevelopersListCall struct {
 // `startKey` and `count` query parameters.
 //
 // - parent: Name of the Apigee organization. Use the following
-// structure in your request: `organizations/{org}`.
+//   structure in your request: `organizations/{org}`.
 func (r *OrganizationsDevelopersService) List(parent string) *OrganizationsDevelopersListCall {
 	c := &OrganizationsDevelopersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16248,7 +16252,7 @@ func (c *OrganizationsDevelopersListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16390,7 +16394,7 @@ type OrganizationsDevelopersSetDeveloperStatusCall struct {
 // following HTTP status code: `204 No Content`
 //
 // - name: Email address of the developer. Use the following structure
-// in your request: `organizations/{org}/developers/{developer_email}`
+//   in your request: `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersService) SetDeveloperStatus(name string) *OrganizationsDevelopersSetDeveloperStatusCall {
 	c := &OrganizationsDevelopersSetDeveloperStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16431,7 +16435,7 @@ func (c *OrganizationsDevelopersSetDeveloperStatusCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersSetDeveloperStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16545,7 +16549,7 @@ type OrganizationsDevelopersUpdateCall struct {
 // access token in less than 180 seconds.
 //
 // - name: Email address of the developer. Use the following structure
-// in your request: `organizations/{org}/developers/{developer_email}`
+//   in your request: `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersService) Update(name string, googlecloudapigeev1developer *GoogleCloudApigeeV1Developer) *OrganizationsDevelopersUpdateCall {
 	c := &OrganizationsDevelopersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16580,7 +16584,7 @@ func (c *OrganizationsDevelopersUpdateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16689,8 +16693,8 @@ type OrganizationsDevelopersAppsAttributesCall struct {
 // the current attributes with those specified in the request.
 //
 // - name: Name of the developer app. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}`.
 func (r *OrganizationsDevelopersAppsService) Attributes(name string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsDevelopersAppsAttributesCall {
 	c := &OrganizationsDevelopersAppsAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16725,7 +16729,7 @@ func (c *OrganizationsDevelopersAppsAttributesCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16839,7 +16843,7 @@ type OrganizationsDevelopersAppsCreateCall struct {
 // `name` appears in the UI.
 //
 // - parent: Name of the developer. Use the following structure in your
-// request: `organizations/{org}/developers/{developer_email}`
+//   request: `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersAppsService) Create(parent string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsCreateCall {
 	c := &OrganizationsDevelopersAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16874,7 +16878,7 @@ func (c *OrganizationsDevelopersAppsCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16984,8 +16988,8 @@ type OrganizationsDevelopersAppsDeleteCall struct {
 // anywhere from a few seconds to a few minutes to be deleted.
 //
 // - name: Name of the developer app. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}`.
 func (r *OrganizationsDevelopersAppsService) Delete(name string) *OrganizationsDevelopersAppsDeleteCall {
 	c := &OrganizationsDevelopersAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17019,7 +17023,7 @@ func (c *OrganizationsDevelopersAppsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17144,8 +17148,8 @@ type OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall st
 // hybrid from another system, see the CreateDeveloperAppKey API.
 //
 // - name: Name of the developer app. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}`.
 func (r *OrganizationsDevelopersAppsService) GenerateKeyPairOrUpdateDeveloperAppStatus(name string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall {
 	c := &OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17187,7 +17191,7 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 
 func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17300,8 +17304,8 @@ type OrganizationsDevelopersAppsGetCall struct {
 // Get: Returns the details for a developer app.
 //
 // - name: Name of the developer app. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}`.
 func (r *OrganizationsDevelopersAppsService) Get(name string) *OrganizationsDevelopersAppsGetCall {
 	c := &OrganizationsDevelopersAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17363,7 +17367,7 @@ func (c *OrganizationsDevelopersAppsGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17480,7 +17484,7 @@ type OrganizationsDevelopersAppsListCall struct {
 // `startKey` and `count` query parameters.
 //
 // - parent: Name of the developer. Use the following structure in your
-// request: `organizations/{org}/developers/{developer_email}`
+//   request: `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersAppsService) List(parent string) *OrganizationsDevelopersAppsListCall {
 	c := &OrganizationsDevelopersAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17561,7 +17565,7 @@ func (c *OrganizationsDevelopersAppsListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17697,8 +17701,8 @@ type OrganizationsDevelopersAppsUpdateCall struct {
 // retain or delete, respectively.
 //
 // - name: Name of the developer app. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}`.
 func (r *OrganizationsDevelopersAppsService) Update(name string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsUpdateCall {
 	c := &OrganizationsDevelopersAppsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17733,7 +17737,7 @@ func (c *OrganizationsDevelopersAppsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17840,9 +17844,9 @@ type OrganizationsDevelopersAppsAttributesDeleteCall struct {
 // Delete: Deletes a developer app attribute.
 //
 // - name: Name of the developer app attribute. Use the following
-// structure in your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/attribute
-// s/{attribute}`
+//   structure in your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/attribu
+//   tes/{attribute}`.
 func (r *OrganizationsDevelopersAppsAttributesService) Delete(name string) *OrganizationsDevelopersAppsAttributesDeleteCall {
 	c := &OrganizationsDevelopersAppsAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17876,7 +17880,7 @@ func (c *OrganizationsDevelopersAppsAttributesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17976,9 +17980,9 @@ type OrganizationsDevelopersAppsAttributesGetCall struct {
 // Get: Returns a developer app attribute.
 //
 // - name: Name of the developer app attribute. Use the following
-// structure in your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/attribute
-// s/{attribute}`
+//   structure in your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/attribu
+//   tes/{attribute}`.
 func (r *OrganizationsDevelopersAppsAttributesService) Get(name string) *OrganizationsDevelopersAppsAttributesGetCall {
 	c := &OrganizationsDevelopersAppsAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18022,7 +18026,7 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18125,8 +18129,8 @@ type OrganizationsDevelopersAppsAttributesListCall struct {
 // List: Returns a list of all developer app attributes.
 //
 // - parent: Name of the developer app. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}`.
 func (r *OrganizationsDevelopersAppsAttributesService) List(parent string) *OrganizationsDevelopersAppsAttributesListCall {
 	c := &OrganizationsDevelopersAppsAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18170,7 +18174,7 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18280,9 +18284,9 @@ type OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall struct
 // 180 seconds.
 //
 // - name: Name of the developer app attribute. Use the following
-// structure in your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/attribute
-// s/{attribute}`
+//   structure in your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/attribu
+//   tes/{attribute}`.
 func (r *OrganizationsDevelopersAppsAttributesService) UpdateDeveloperAppAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall {
 	c := &OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18317,7 +18321,7 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) H
 
 func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18437,8 +18441,8 @@ type OrganizationsDevelopersAppsKeysCreateCall struct {
 // DeleteDeveloperAppKey API.
 //
 // - parent: Parent of the developer app key. Use the following
-// structure in your request:
-// `organizations/{org}/developers/{developer_email}/apps`
+//   structure in your request:
+//   `organizations/{org}/developers/{developer_email}/apps`.
 func (r *OrganizationsDevelopersAppsKeysService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18473,7 +18477,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18587,9 +18591,9 @@ type OrganizationsDevelopersAppsKeysDeleteCall struct {
 // Delete the developer app, if it is no longer required.
 //
 // - name: Name of the developer app key. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
-// }`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{k
+//   ey}`.
 func (r *OrganizationsDevelopersAppsKeysService) Delete(name string) *OrganizationsDevelopersAppsKeysDeleteCall {
 	c := &OrganizationsDevelopersAppsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18623,7 +18627,7 @@ func (c *OrganizationsDevelopersAppsKeysDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18726,9 +18730,9 @@ type OrganizationsDevelopersAppsKeysGetCall struct {
 // other information.
 //
 // - name: Name of the developer app key. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
-// }`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{k
+//   ey}`.
 func (r *OrganizationsDevelopersAppsKeysService) Get(name string) *OrganizationsDevelopersAppsKeysGetCall {
 	c := &OrganizationsDevelopersAppsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18772,7 +18776,7 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18882,9 +18886,9 @@ type OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall struct {
 // the app.
 //
 // - name: Name of the developer app key. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
-// }`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{k
+//   ey}`.
 func (r *OrganizationsDevelopersAppsKeysService) ReplaceDeveloperAppKey(name string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall {
 	c := &OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18919,7 +18923,7 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) Header() htt
 
 func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19034,9 +19038,9 @@ type OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall struct {
 // use the same key to access all API products associated with the app.
 //
 // - name: Name of the developer app key. Use the following structure in
-// your request:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
-// }`
+//   your request:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{k
+//   ey}`.
 func (r *OrganizationsDevelopersAppsKeysService) UpdateDeveloperAppKey(name string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall {
 	c := &OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19079,7 +19083,7 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Header() http
 
 func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19195,9 +19199,9 @@ type OrganizationsDevelopersAppsKeysApiproductsDeleteCall struct {
 // removed, only its association with the API product.
 //
 // - name: Name of the API product in the developer app key in the
-// following format:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
-// }/apiproducts/{apiproduct}`
+//   following format:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{k
+//   ey}/apiproducts/{apiproduct}`.
 func (r *OrganizationsDevelopersAppsKeysApiproductsService) Delete(name string) *OrganizationsDevelopersAppsKeysApiproductsDeleteCall {
 	c := &OrganizationsDevelopersAppsKeysApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19231,7 +19235,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) Header() http.Hea
 
 func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19337,9 +19341,9 @@ type OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCa
 // API.
 //
 // - name: Name of the API product in the developer app key in the
-// following format:
-// `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key
-// }/apiproducts/{apiproduct}`
+//   following format:
+//   `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{k
+//   ey}/apiproducts/{apiproduct}`.
 func (r *OrganizationsDevelopersAppsKeysApiproductsService) UpdateDeveloperAppKeyApiProduct(name string) *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall {
 	c := &OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19381,7 +19385,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProdu
 
 func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19498,8 +19502,8 @@ type OrganizationsDevelopersAppsKeysCreateCreateCall struct {
 // DeleteDeveloperAppKey API.
 //
 // - parent: Parent of the developer app key. Use the following
-// structure in your request:
-// `organizations/{org}/developers/{developer_email}/apps`
+//   structure in your request:
+//   `organizations/{org}/developers/{developer_email}/apps`.
 func (r *OrganizationsDevelopersAppsKeysCreateService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19534,7 +19538,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19642,9 +19646,9 @@ type OrganizationsDevelopersAttributesDeleteCall struct {
 // Delete: Deletes a developer attribute.
 //
 // - name: Name of the developer attribute. Use the following structure
-// in your request:
-// `organizations/{org}/developers/{developer_email}/attributes/{attribut
-// e}`
+//   in your request:
+//   `organizations/{org}/developers/{developer_email}/attributes/{attrib
+//   ute}`.
 func (r *OrganizationsDevelopersAttributesService) Delete(name string) *OrganizationsDevelopersAttributesDeleteCall {
 	c := &OrganizationsDevelopersAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19678,7 +19682,7 @@ func (c *OrganizationsDevelopersAttributesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19778,9 +19782,9 @@ type OrganizationsDevelopersAttributesGetCall struct {
 // Get: Returns the value of the specified developer attribute.
 //
 // - name: Name of the developer attribute. Use the following structure
-// in your request:
-// `organizations/{org}/developers/{developer_email}/attributes/{attribut
-// e}`
+//   in your request:
+//   `organizations/{org}/developers/{developer_email}/attributes/{attrib
+//   ute}`.
 func (r *OrganizationsDevelopersAttributesService) Get(name string) *OrganizationsDevelopersAttributesGetCall {
 	c := &OrganizationsDevelopersAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19824,7 +19828,7 @@ func (c *OrganizationsDevelopersAttributesGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19927,8 +19931,8 @@ type OrganizationsDevelopersAttributesListCall struct {
 // List: Returns a list of all developer attributes.
 //
 // - parent: Email address of the developer for which attributes are
-// being listed in the following format:
-// `organizations/{org}/developers/{developer_email}`
+//   being listed in the following format:
+//   `organizations/{org}/developers/{developer_email}`.
 func (r *OrganizationsDevelopersAttributesService) List(parent string) *OrganizationsDevelopersAttributesListCall {
 	c := &OrganizationsDevelopersAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19972,7 +19976,7 @@ func (c *OrganizationsDevelopersAttributesListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20081,9 +20085,9 @@ type OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall struct {
 // to expire an access token in less than 180 seconds.
 //
 // - name: Name of the developer attribute. Use the following structure
-// in your request:
-// `organizations/{org}/developers/{developer_email}/attributes/{attribut
-// e}`
+//   in your request:
+//   `organizations/{org}/developers/{developer_email}/attributes/{attrib
+//   ute}`.
 func (r *OrganizationsDevelopersAttributesService) UpdateDeveloperAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall {
 	c := &OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20118,7 +20122,7 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) Header()
 
 func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20226,7 +20230,7 @@ type OrganizationsEnvgroupsCreateCall struct {
 // Create: Creates a new environment group.
 //
 // - parent: Name of the organization in which to create the environment
-// group in the following format: `organizations/{org}`.
+//   group in the following format: `organizations/{org}`.
 func (r *OrganizationsEnvgroupsService) Create(parent string, googlecloudapigeev1environmentgroup *GoogleCloudApigeeV1EnvironmentGroup) *OrganizationsEnvgroupsCreateCall {
 	c := &OrganizationsEnvgroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20268,7 +20272,7 @@ func (c *OrganizationsEnvgroupsCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20380,7 +20384,7 @@ type OrganizationsEnvgroupsDeleteCall struct {
 // Delete: Deletes an environment group.
 //
 // - name: Name of the environment group in the following format:
-// `organizations/{org}/envgroups/{envgroup}`.
+//   `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsService) Delete(name string) *OrganizationsEnvgroupsDeleteCall {
 	c := &OrganizationsEnvgroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20414,7 +20418,7 @@ func (c *OrganizationsEnvgroupsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20514,7 +20518,7 @@ type OrganizationsEnvgroupsGetCall struct {
 // Get: Gets an environment group.
 //
 // - name: Name of the environment group in the following format:
-// `organizations/{org}/envgroups/{envgroup}`.
+//   `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsService) Get(name string) *OrganizationsEnvgroupsGetCall {
 	c := &OrganizationsEnvgroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20558,7 +20562,7 @@ func (c *OrganizationsEnvgroupsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20662,7 +20666,7 @@ type OrganizationsEnvgroupsListCall struct {
 // List: Lists all environment groups.
 //
 // - parent: Name of the organization for which to list environment
-// groups in the following format: `organizations/{org}`.
+//   groups in the following format: `organizations/{org}`.
 func (r *OrganizationsEnvgroupsService) List(parent string) *OrganizationsEnvgroupsListCall {
 	c := &OrganizationsEnvgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20721,7 +20725,7 @@ func (c *OrganizationsEnvgroupsListCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20858,7 +20862,7 @@ type OrganizationsEnvgroupsPatchCall struct {
 // Patch: Updates an environment group.
 //
 // - name: Name of the environment group to update in the format:
-// `organizations/{org}/envgroups/{envgroup}.
+//   `organizations/{org}/envgroups/{envgroup}.
 func (r *OrganizationsEnvgroupsService) Patch(name string, googlecloudapigeev1environmentgroup *GoogleCloudApigeeV1EnvironmentGroup) *OrganizationsEnvgroupsPatchCall {
 	c := &OrganizationsEnvgroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20900,7 +20904,7 @@ func (c *OrganizationsEnvgroupsPatchCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21015,7 +21019,7 @@ type OrganizationsEnvgroupsAttachmentsCreateCall struct {
 // group.
 //
 // - parent: EnvironmentGroup under which to create the attachment in
-// the following format: `organizations/{org}/envgroups/{envgroup}`.
+//   the following format: `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) Create(parent string, googlecloudapigeev1environmentgroupattachment *GoogleCloudApigeeV1EnvironmentGroupAttachment) *OrganizationsEnvgroupsAttachmentsCreateCall {
 	c := &OrganizationsEnvgroupsAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21050,7 +21054,7 @@ func (c *OrganizationsEnvgroupsAttachmentsCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21157,8 +21161,8 @@ type OrganizationsEnvgroupsAttachmentsDeleteCall struct {
 // Delete: Deletes an environment group attachment.
 //
 // - name: Name of the environment group attachment to delete in the
-// following format:
-// `organizations/{org}/envgroups/{envgroup}/attachments/{attachment}`.
+//   following format:
+//   `organizations/{org}/envgroups/{envgroup}/attachments/{attachment}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) Delete(name string) *OrganizationsEnvgroupsAttachmentsDeleteCall {
 	c := &OrganizationsEnvgroupsAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21192,7 +21196,7 @@ func (c *OrganizationsEnvgroupsAttachmentsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21292,8 +21296,8 @@ type OrganizationsEnvgroupsAttachmentsGetCall struct {
 // Get: Gets an environment group attachment.
 //
 // - name: Name of the environment group attachment in the following
-// format:
-// `organizations/{org}/envgroups/{envgroup}/attachments/{attachment}`
+//   format:
+//   `organizations/{org}/envgroups/{envgroup}/attachments/{attachment}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) Get(name string) *OrganizationsEnvgroupsAttachmentsGetCall {
 	c := &OrganizationsEnvgroupsAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21337,7 +21341,7 @@ func (c *OrganizationsEnvgroupsAttachmentsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21442,7 +21446,7 @@ type OrganizationsEnvgroupsAttachmentsListCall struct {
 // List: Lists all attachments of an environment group.
 //
 // - parent: Name of the environment group in the following format:
-// `organizations/{org}/envgroups/{envgroup}`.
+//   `organizations/{org}/envgroups/{envgroup}`.
 func (r *OrganizationsEnvgroupsAttachmentsService) List(parent string) *OrganizationsEnvgroupsAttachmentsListCall {
 	c := &OrganizationsEnvgroupsAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21502,7 +21506,7 @@ func (c *OrganizationsEnvgroupsAttachmentsListCall) Header() http.Header {
 
 func (c *OrganizationsEnvgroupsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21640,8 +21644,8 @@ type OrganizationsEnvironmentsCreateCall struct {
 // Create: Creates an environment in an organization.
 //
 // - parent: Name of the organization in which the environment will be
-// created. Use the following structure in your request:
-// `organizations/{org}`
+//   created. Use the following structure in your request:
+//   `organizations/{org}`.
 func (r *OrganizationsEnvironmentsService) Create(parent string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsCreateCall {
 	c := &OrganizationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21684,7 +21688,7 @@ func (c *OrganizationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21796,7 +21800,7 @@ type OrganizationsEnvironmentsDeleteCall struct {
 // Delete: Deletes an environment from an organization.
 //
 // - name: Name of the environment. Use the following structure in your
-// request: `organizations/{org}/environments/{env}`
+//   request: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsService) Delete(name string) *OrganizationsEnvironmentsDeleteCall {
 	c := &OrganizationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21830,7 +21834,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21930,7 +21934,7 @@ type OrganizationsEnvironmentsGetCall struct {
 // Get: Gets environment details.
 //
 // - name: Name of the environment. Use the following structure in your
-// request: `organizations/{org}/environments/{env}`
+//   request: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsService) Get(name string) *OrganizationsEnvironmentsGetCall {
 	c := &OrganizationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21974,7 +21978,7 @@ func (c *OrganizationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22078,7 +22082,7 @@ type OrganizationsEnvironmentsGetDebugmaskCall struct {
 // environment.
 //
 // - name: Name of the debug mask. Use the following structure in your
-// request: `organizations/{org}/environments/{env}/debugmask`.
+//   request: `organizations/{org}/environments/{env}/debugmask`.
 func (r *OrganizationsEnvironmentsService) GetDebugmask(name string) *OrganizationsEnvironmentsGetDebugmaskCall {
 	c := &OrganizationsEnvironmentsGetDebugmaskCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22122,7 +22126,7 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetDebugmaskCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22226,8 +22230,8 @@ type OrganizationsEnvironmentsGetDeployedConfigCall struct {
 // environment.
 //
 // - name: Name of the environment deployed configuration resource. Use
-// the following structure in your request:
-// `organizations/{org}/environments/{env}/deployedConfig`
+//   the following structure in your request:
+//   `organizations/{org}/environments/{env}/deployedConfig`.
 func (r *OrganizationsEnvironmentsService) GetDeployedConfig(name string) *OrganizationsEnvironmentsGetDeployedConfigCall {
 	c := &OrganizationsEnvironmentsGetDeployedConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22271,7 +22275,7 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetDeployedConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22379,8 +22383,8 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22438,7 +22442,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22548,7 +22552,7 @@ type OrganizationsEnvironmentsGetTraceConfigCall struct {
 // environment.
 //
 // - name: Name of the trace configuration. Use the following structure
-// in your request: "organizations/*/environments/*/traceConfig".
+//   in your request: "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsService) GetTraceConfig(name string) *OrganizationsEnvironmentsGetTraceConfigCall {
 	c := &OrganizationsEnvironmentsGetTraceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22592,7 +22596,7 @@ func (c *OrganizationsEnvironmentsGetTraceConfigCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetTraceConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22700,8 +22704,8 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 // call this API.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22736,7 +22740,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22845,7 +22849,7 @@ type OrganizationsEnvironmentsSubscribeCall struct {
 // The "name" and "push_config" must *not* be specified.
 //
 // - parent: Name of the environment. Use the following structure in
-// your request: `organizations/{org}/environments/{env}`
+//   your request: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsService) Subscribe(parent string) *OrganizationsEnvironmentsSubscribeCall {
 	c := &OrganizationsEnvironmentsSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22879,7 +22883,7 @@ func (c *OrganizationsEnvironmentsSubscribeCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsSubscribeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22982,8 +22986,8 @@ type OrganizationsEnvironmentsTestIamPermissionsCall struct {
 // permission set is returned (a NOT_FOUND error is not returned).
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsEnvironmentsTestIamPermissionsCall {
 	c := &OrganizationsEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23018,7 +23022,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23128,7 +23132,7 @@ type OrganizationsEnvironmentsUnsubscribeCall struct {
 // topic.
 //
 // - parent: Name of the environment. Use the following structure in
-// your request: `organizations/{org}/environments/{env}`
+//   your request: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsService) Unsubscribe(parent string, googlecloudapigeev1subscription *GoogleCloudApigeeV1Subscription) *OrganizationsEnvironmentsUnsubscribeCall {
 	c := &OrganizationsEnvironmentsUnsubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23163,7 +23167,7 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUnsubscribeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23275,7 +23279,7 @@ type OrganizationsEnvironmentsUpdateCall struct {
 // environment, use the Get Environment API (get).
 //
 // - name: Name of the environment. Use the following structure in your
-// request: `organizations/{org}/environments/{env}`
+//   request: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsService) Update(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsUpdateCall {
 	c := &OrganizationsEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23310,7 +23314,7 @@ func (c *OrganizationsEnvironmentsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23470,7 +23474,7 @@ func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23593,7 +23597,7 @@ type OrganizationsEnvironmentsUpdateEnvironmentCall struct {
 // the environment, use the Get Environment API (get).
 //
 // - name: Name of the environment. Use the following structure in your
-// request: `organizations/{org}/environments/{env}`
+//   request: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsService) UpdateEnvironment(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsUpdateEnvironmentCall {
 	c := &OrganizationsEnvironmentsUpdateEnvironmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23628,7 +23632,7 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23739,7 +23743,7 @@ type OrganizationsEnvironmentsUpdateTraceConfigCall struct {
 // the value of the fields in the request body.
 //
 // - name: Name of the trace configuration. Use the following structure
-// in your request: "organizations/*/environments/*/traceConfig".
+//   in your request: "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsService) UpdateTraceConfig(name string, googlecloudapigeev1traceconfig *GoogleCloudApigeeV1TraceConfig) *OrganizationsEnvironmentsUpdateTraceConfigCall {
 	c := &OrganizationsEnvironmentsUpdateTraceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23781,7 +23785,7 @@ func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23898,8 +23902,8 @@ type OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call struct {
 // whether it is a standard or custom field.
 //
 // - name: Path to the schema. Use the following structure in your
-// request:
-// `organizations/{org}/environments/{env}/analytics/admin/schemav2`.
+//   request:
+//   `organizations/{org}/environments/{env}/analytics/admin/schemav2`.
 func (r *OrganizationsEnvironmentsAnalyticsAdminService) GetSchemav2(name string) *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call {
 	c := &OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23960,7 +23964,7 @@ func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) Header() http.H
 
 func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24076,7 +24080,7 @@ type OrganizationsEnvironmentsAnalyticsExportsCreateCall struct {
 // `state` value of "enqueued".
 //
 // - parent: Names of the parent organization and environment. Must be
-// of the form `organizations/{org}/environments/{env}`.
+//   of the form `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsAnalyticsExportsService) Create(parent string, googlecloudapigeev1exportrequest *GoogleCloudApigeeV1ExportRequest) *OrganizationsEnvironmentsAnalyticsExportsCreateCall {
 	c := &OrganizationsEnvironmentsAnalyticsExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24111,7 +24115,7 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsCreateCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsAnalyticsExportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24266,7 +24270,7 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsGetCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsAnalyticsExportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24370,7 +24374,7 @@ type OrganizationsEnvironmentsAnalyticsExportsListCall struct {
 // belonging to the parent organization and environment.
 //
 // - parent: Names of the parent organization and environment. Must be
-// of the form `organizations/{org}/environments/{env}`.
+//   of the form `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsAnalyticsExportsService) List(parent string) *OrganizationsEnvironmentsAnalyticsExportsListCall {
 	c := &OrganizationsEnvironmentsAnalyticsExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24414,7 +24418,7 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsListCall) Header() http.Header
 
 func (c *OrganizationsEnvironmentsAnalyticsExportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24518,7 +24522,8 @@ type OrganizationsEnvironmentsApisDeploymentsListCall struct {
 // List: Lists all deployments of an API proxy in an environment.
 //
 // - parent: Name representing an API proxy in an environment in the
-// following format: `organizations/{org}/environments/{env}/apis/{api}`
+//   following format:
+//   `organizations/{org}/environments/{env}/apis/{api}`.
 func (r *OrganizationsEnvironmentsApisDeploymentsService) List(parent string) *OrganizationsEnvironmentsApisDeploymentsListCall {
 	c := &OrganizationsEnvironmentsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24562,7 +24567,7 @@ func (c *OrganizationsEnvironmentsApisDeploymentsListCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsApisDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24678,8 +24683,8 @@ type OrganizationsEnvironmentsApisRevisionsDeployCall struct {
 // `organizations/{org}/apis/{api}/revisions/{rev}`
 //
 // - name: Name of the API proxy revision deployment in the following
-// format:
-// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
+//   format:
+//   `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsEnvironmentsApisRevisionsService) Deploy(name string) *OrganizationsEnvironmentsApisRevisionsDeployCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24744,7 +24749,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24855,8 +24860,8 @@ type OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall struct {
 // actual state reported by runtime pods.
 //
 // - name: Name representing an API proxy revision in an environment in
-// the following format:
-// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
+//   the following format:
+//   `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsEnvironmentsApisRevisionsService) GetDeployments(name string) *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall {
 	c := &OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24900,7 +24905,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) Header() http
 
 func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25009,8 +25014,8 @@ type OrganizationsEnvironmentsApisRevisionsUndeployCall struct {
 // `organizations/{org}/apis/{api}/revisions/{rev}`
 //
 // - name: Name of the API proxy revision deployment in the following
-// format:
-// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
+//   format:
+//   `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsEnvironmentsApisRevisionsService) Undeploy(name string) *OrganizationsEnvironmentsApisRevisionsUndeployCall {
 	c := &OrganizationsEnvironmentsApisRevisionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25061,7 +25066,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) Header() http.Heade
 
 func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25166,9 +25171,9 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall struct {
 // Create: Creates a debug session for a deployed API Proxy revision.
 //
 // - parent: The resource name of the API Proxy revision deployment for
-// which to create the DebugSession. Must be of the form
-// `organizations/{organization}/environments/{environment}/apis/{api}/re
-// visions/{revision}`.
+//   which to create the DebugSession. Must be of the form
+//   `organizations/{organization}/environments/{environment}/apis/{api}/
+//   revisions/{revision}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Create(parent string, googlecloudapigeev1debugsession *GoogleCloudApigeeV1DebugSession) *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25211,7 +25216,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) Header()
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25326,8 +25331,8 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall struct {
 // if the session is still active in runtime pods.
 //
 // - name: The name of the debug session to delete. Must be of the form:
-// `organizations/{organization}/environments/{environment}/apis/{api}/re
-// visions/{revision}/debugsessions/{debugsession}`.
+//   `organizations/{organization}/environments/{environment}/apis/{api}/
+//   revisions/{revision}/debugsessions/{debugsession}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) DeleteData(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25361,7 +25366,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) Head
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25461,9 +25466,9 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall struct {
 // Get: Retrieves a debug session.
 //
 // - name: The name of the debug session to retrieve. Must be of the
-// form:
-// `organizations/{organization}/environments/{environment}/apis/{api}/re
-// visions/{revision}/debugsessions/{session}`.
+//   form:
+//   `organizations/{organization}/environments/{environment}/apis/{api}/
+//   revisions/{revision}/debugsessions/{session}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25507,7 +25512,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Header() ht
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25611,9 +25616,9 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall struct {
 // Proxy revision.
 //
 // - parent: The name of the API Proxy revision deployment for which to
-// list debug sessions. Must be of the form:
-// `organizations/{organization}/environments/{environment}/apis/{api}/re
-// visions/{revision}`.
+//   list debug sessions. Must be of the form:
+//   `organizations/{organization}/environments/{environment}/apis/{api}/
+//   revisions/{revision}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) List(parent string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25672,7 +25677,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) Header() h
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25809,9 +25814,9 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall struct {
 // Get: Gets the debug data from a transaction.
 //
 // - name: The name of the debug session transaction. Must be of the
-// form:
-// `organizations/{organization}/environments/{environment}/apis/{api}/re
-// visions/{revision}/debugsessions/{session}/data/{transaction}`.
+//   form:
+//   `organizations/{organization}/environments/{environment}/apis/{api}/
+//   revisions/{revision}/debugsessions/{session}/data/{transaction}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25855,7 +25860,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) Header(
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25972,8 +25977,8 @@ type OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReport
 // `organizations/{org}/apis/{api}/revisions/{rev}`
 //
 // - name: Name of the API proxy revision deployment in the following
-// format:
-// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
+//   format:
+//   `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDeploymentsService) GenerateDeployChangeReport(name string) *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26015,7 +26020,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeRe
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26135,8 +26140,8 @@ type OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeRepo
 // `organizations/{org}/apis/{api}/revisions/{rev}`
 //
 // - name: Name of the API proxy revision deployment in the following
-// format:
-// `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`
+//   format:
+//   `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`.
 func (r *OrganizationsEnvironmentsApisRevisionsDeploymentsService) GenerateUndeployChangeReport(name string) *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeReportCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26170,7 +26175,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChange
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChangeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26271,8 +26276,8 @@ type OrganizationsEnvironmentsCachesDeleteCall struct {
 // Delete: Deletes a cache.
 //
 // - name: Cache resource name of the form:
-// `organizations/{organization_id}/environments/{environment_id}/caches/
-// {cache_id}`
+//   `organizations/{organization_id}/environments/{environment_id}/cache
+//   s/{cache_id}`.
 func (r *OrganizationsEnvironmentsCachesService) Delete(name string) *OrganizationsEnvironmentsCachesDeleteCall {
 	c := &OrganizationsEnvironmentsCachesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26306,7 +26311,7 @@ func (c *OrganizationsEnvironmentsCachesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsCachesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26407,8 +26412,8 @@ type OrganizationsEnvironmentsDeploymentsListCall struct {
 // environment.
 //
 // - parent: Name of the environment for which to return deployment
-// information in the following format:
-// `organizations/{org}/environments/{env}`
+//   information in the following format:
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsDeploymentsService) List(parent string) *OrganizationsEnvironmentsDeploymentsListCall {
 	c := &OrganizationsEnvironmentsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26461,7 +26466,7 @@ func (c *OrganizationsEnvironmentsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26571,8 +26576,8 @@ type OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall struct {
 // AttachSharedFlowToFlowHook: Attaches a shared flow to a flow hook.
 //
 // - name: Name of the flow hook to which the shared flow should be
-// attached in the following format:
-// `organizations/{org}/environments/{env}/flowhooks/{flowhook}`
+//   attached in the following format:
+//   `organizations/{org}/environments/{env}/flowhooks/{flowhook}`.
 func (r *OrganizationsEnvironmentsFlowhooksService) AttachSharedFlowToFlowHook(name string, googlecloudapigeev1flowhook *GoogleCloudApigeeV1FlowHook) *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall {
 	c := &OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26607,7 +26612,7 @@ func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) Heade
 
 func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26715,7 +26720,7 @@ type OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall struct {
 // hook.
 //
 // - name: Name of the flow hook to detach in the following format:
-// `organizations/{org}/environments/{env}/flowhooks/{flowhook}`
+//   `organizations/{org}/environments/{env}/flowhooks/{flowhook}`.
 func (r *OrganizationsEnvironmentsFlowhooksService) DetachSharedFlowFromFlowHook(name string) *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall {
 	c := &OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26749,7 +26754,7 @@ func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) Hea
 
 func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26852,7 +26857,7 @@ type OrganizationsEnvironmentsFlowhooksGetCall struct {
 // response.
 //
 // - name: Name of the flow hook in the following format:
-// `organizations/{org}/environments/{env}/flowhooks/{flowhook}`
+//   `organizations/{org}/environments/{env}/flowhooks/{flowhook}`.
 func (r *OrganizationsEnvironmentsFlowhooksService) Get(name string) *OrganizationsEnvironmentsFlowhooksGetCall {
 	c := &OrganizationsEnvironmentsFlowhooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26896,7 +26901,7 @@ func (c *OrganizationsEnvironmentsFlowhooksGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsFlowhooksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27003,8 +27008,8 @@ type OrganizationsEnvironmentsKeystoresCreateCall struct {
 // that are not signed by a trusted CA.
 //
 // - parent: Name of the environment in which to create the keystore.
-// Use the following format in your request:
-// `organizations/{org}/environments/{env}`
+//   Use the following format in your request:
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsKeystoresService) Create(parent string, googlecloudapigeev1keystore *GoogleCloudApigeeV1Keystore) *OrganizationsEnvironmentsKeystoresCreateCall {
 	c := &OrganizationsEnvironmentsKeystoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27046,7 +27051,7 @@ func (c *OrganizationsEnvironmentsKeystoresCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeystoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27158,8 +27163,8 @@ type OrganizationsEnvironmentsKeystoresDeleteCall struct {
 // Delete: Deletes a keystore or truststore.
 //
 // - name: Name of the keystore. Use the following format in your
-// request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}`
+//   request:
+//   `organizations/{org}/environments/{env}/keystores/{keystore}`.
 func (r *OrganizationsEnvironmentsKeystoresService) Delete(name string) *OrganizationsEnvironmentsKeystoresDeleteCall {
 	c := &OrganizationsEnvironmentsKeystoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27193,7 +27198,7 @@ func (c *OrganizationsEnvironmentsKeystoresDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeystoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27293,8 +27298,8 @@ type OrganizationsEnvironmentsKeystoresGetCall struct {
 // Get: Gets a keystore or truststore.
 //
 // - name: Name of the keystore. Use the following format in your
-// request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}`.
+//   request:
+//   `organizations/{org}/environments/{env}/keystores/{keystore}`.
 func (r *OrganizationsEnvironmentsKeystoresService) Get(name string) *OrganizationsEnvironmentsKeystoresGetCall {
 	c := &OrganizationsEnvironmentsKeystoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27338,7 +27343,7 @@ func (c *OrganizationsEnvironmentsKeystoresGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeystoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27452,8 +27457,8 @@ type OrganizationsEnvironmentsKeystoresAliasesCreateCall struct {
 // CertificateGenerationSpec in the request body.
 //
 // - parent: Name of the keystore. Use the following format in your
-// request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}`.
+//   request:
+//   `organizations/{org}/environments/{env}/keystores/{keystore}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsKeystoresAliasesCreateCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27535,7 +27540,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27669,8 +27674,8 @@ type OrganizationsEnvironmentsKeystoresAliasesCsrCall struct {
 // key in an alias.
 //
 // - name: Name of the alias. Use the following format in your request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
-// alias}`.
+//   `organizations/{org}/environments/{env}/keystores/{keystore}/aliases
+//   /{alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Csr(name string) *OrganizationsEnvironmentsKeystoresAliasesCsrCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesCsrCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27714,7 +27719,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27816,8 +27821,8 @@ type OrganizationsEnvironmentsKeystoresAliasesDeleteCall struct {
 // Delete: Deletes an alias.
 //
 // - name: Name of the alias. Use the following format in your request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
-// alias}`.
+//   `organizations/{org}/environments/{env}/keystores/{keystore}/aliases
+//   /{alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Delete(name string) *OrganizationsEnvironmentsKeystoresAliasesDeleteCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27851,7 +27856,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27951,8 +27956,8 @@ type OrganizationsEnvironmentsKeystoresAliasesGetCall struct {
 // Get: Gets an alias.
 //
 // - name: Name of the alias. Use the following format in your request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
-// alias}`.
+//   `organizations/{org}/environments/{env}/keystores/{keystore}/aliases
+//   /{alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Get(name string) *OrganizationsEnvironmentsKeystoresAliasesGetCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27996,7 +28001,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28100,8 +28105,8 @@ type OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall struct {
 // form.
 //
 // - name: Name of the alias. Use the following format in your request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
-// alias}`.
+//   `organizations/{org}/environments/{env}/keystores/{keystore}/aliases
+//   /{alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) GetCertificate(name string) *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28145,7 +28150,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) Header() h
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28248,8 +28253,8 @@ type OrganizationsEnvironmentsKeystoresAliasesUpdateCall struct {
 // Update: Updates the certificate in an alias.
 //
 // - name: Name of the alias. Use the following format in your request:
-// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{
-// alias}`
+//   `organizations/{org}/environments/{env}/keystores/{keystore}/aliases
+//   /{alias}`.
 func (r *OrganizationsEnvironmentsKeystoresAliasesService) Update(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsKeystoresAliasesUpdateCall {
 	c := &OrganizationsEnvironmentsKeystoresAliasesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28303,7 +28308,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28421,8 +28426,8 @@ type OrganizationsEnvironmentsKeyvaluemapsCreateCall struct {
 // Create: Creates a key value map in an environment.
 //
 // - parent: The name of the environment in which to create the key
-// value map. Must be of the form
-// `organizations/{organization}/environments/{environment}`.
+//   value map. Must be of the form
+//   `organizations/{organization}/environments/{environment}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsEnvironmentsKeyvaluemapsCreateCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28457,7 +28462,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28564,8 +28569,8 @@ type OrganizationsEnvironmentsKeyvaluemapsDeleteCall struct {
 // Delete: Delete a key value map in an environment.
 //
 // - name: The name of the key value map. Must be of the form
-// `organizations/{organization}/environments/{environment}/keyvaluemaps/
-// {keyvaluemap}`.
+//   `organizations/{organization}/environments/{environment}/keyvaluemap
+//   s/{keyvaluemap}`.
 func (r *OrganizationsEnvironmentsKeyvaluemapsService) Delete(name string) *OrganizationsEnvironmentsKeyvaluemapsDeleteCall {
 	c := &OrganizationsEnvironmentsKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28599,7 +28604,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28704,13 +28709,13 @@ type OrganizationsEnvironmentsOptimizedStatsGetCall struct {
 // separate api.
 //
 // - name: The resource name for which the interactive query will be
-// executed. Must be of the form
-// `organizations/{organization_id}/environments/{environment_id/optimize
-// dStats/{dimensions}` Dimensions let you view metrics in meaningful
-// groupings. E.g. apiproxy, target_host. The value of dimensions should
-// be comma separated list as shown below
-// `organizations/{org}/environments/{env}/optimizedStats/apiproxy,reques
-// t_verb`
+//   executed. Must be of the form
+//   `organizations/{organization_id}/environments/{environment_id/optimi
+//   zedStats/{dimensions}` Dimensions let you view metrics in
+//   meaningful groupings. E.g. apiproxy, target_host. The value of
+//   dimensions should be comma separated list as shown below
+//   `organizations/{org}/environments/{env}/optimizedStats/apiproxy,requ
+//   est_verb`.
 func (r *OrganizationsEnvironmentsOptimizedStatsService) Get(name string) *OrganizationsEnvironmentsOptimizedStatsGetCall {
 	c := &OrganizationsEnvironmentsOptimizedStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28868,7 +28873,7 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29050,7 +29055,7 @@ type OrganizationsEnvironmentsQueriesCreateCall struct {
 // `state` of "enqueued" means that the request succeeded.
 //
 // - parent: The parent resource name. Must be of the form
-// `organizations/{org}/environments/{env}`.
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsQueriesService) Create(parent string, googlecloudapigeev1query *GoogleCloudApigeeV1Query) *OrganizationsEnvironmentsQueriesCreateCall {
 	c := &OrganizationsEnvironmentsQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29085,7 +29090,7 @@ func (c *OrganizationsEnvironmentsQueriesCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29195,7 +29200,7 @@ type OrganizationsEnvironmentsQueriesGetCall struct {
 // `state` is set to "completed"
 //
 // - name: Name of the asynchronous query to get. Must be of the form
-// `organizations/{org}/environments/{env}/queries/{queryId}`.
+//   `organizations/{org}/environments/{env}/queries/{queryId}`.
 func (r *OrganizationsEnvironmentsQueriesService) Get(name string) *OrganizationsEnvironmentsQueriesGetCall {
 	c := &OrganizationsEnvironmentsQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29239,7 +29244,7 @@ func (c *OrganizationsEnvironmentsQueriesGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29346,8 +29351,8 @@ type OrganizationsEnvironmentsQueriesGetResultCall struct {
 // `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`
 //
 // - name: Name of the asynchronous query result to get. Must be of the
-// form
-// `organizations/{org}/environments/{env}/queries/{queryId}/result`.
+//   form
+//   `organizations/{org}/environments/{env}/queries/{queryId}/result`.
 func (r *OrganizationsEnvironmentsQueriesService) GetResult(name string) *OrganizationsEnvironmentsQueriesGetResultCall {
 	c := &OrganizationsEnvironmentsQueriesGetResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29391,7 +29396,7 @@ func (c *OrganizationsEnvironmentsQueriesGetResultCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesGetResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29494,7 +29499,7 @@ type OrganizationsEnvironmentsQueriesListCall struct {
 // List: Return a list of Asynchronous Queries
 //
 // - parent: The parent resource name. Must be of the form
-// `organizations/{org}/environments/{env}`.
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsQueriesService) List(parent string) *OrganizationsEnvironmentsQueriesListCall {
 	c := &OrganizationsEnvironmentsQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29583,7 +29588,7 @@ func (c *OrganizationsEnvironmentsQueriesListCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29718,8 +29723,8 @@ type OrganizationsEnvironmentsReferencesCreateCall struct {
 // Create: Creates a Reference in the specified environment.
 //
 // - parent: The parent environment name under which the Reference will
-// be created. Must be of the form
-// `organizations/{org}/environments/{env}`.
+//   be created. Must be of the form
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsReferencesService) Create(parent string, googlecloudapigeev1reference *GoogleCloudApigeeV1Reference) *OrganizationsEnvironmentsReferencesCreateCall {
 	c := &OrganizationsEnvironmentsReferencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29754,7 +29759,7 @@ func (c *OrganizationsEnvironmentsReferencesCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29862,7 +29867,7 @@ type OrganizationsEnvironmentsReferencesDeleteCall struct {
 // Reference resource.
 //
 // - name: The name of the Reference to delete. Must be of the form
-// `organizations/{org}/environments/{env}/references/{ref}`.
+//   `organizations/{org}/environments/{env}/references/{ref}`.
 func (r *OrganizationsEnvironmentsReferencesService) Delete(name string) *OrganizationsEnvironmentsReferencesDeleteCall {
 	c := &OrganizationsEnvironmentsReferencesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29896,7 +29901,7 @@ func (c *OrganizationsEnvironmentsReferencesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29996,7 +30001,7 @@ type OrganizationsEnvironmentsReferencesGetCall struct {
 // Get: Gets a Reference resource.
 //
 // - name: The name of the Reference to get. Must be of the form
-// `organizations/{org}/environments/{env}/references/{ref}`.
+//   `organizations/{org}/environments/{env}/references/{ref}`.
 func (r *OrganizationsEnvironmentsReferencesService) Get(name string) *OrganizationsEnvironmentsReferencesGetCall {
 	c := &OrganizationsEnvironmentsReferencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30040,7 +30045,7 @@ func (c *OrganizationsEnvironmentsReferencesGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30145,7 +30150,7 @@ type OrganizationsEnvironmentsReferencesUpdateCall struct {
 // with the resource in the request body.
 //
 // - name: The name of the Reference to update. Must be of the form
-// `organizations/{org}/environments/{env}/references/{ref}`.
+//   `organizations/{org}/environments/{env}/references/{ref}`.
 func (r *OrganizationsEnvironmentsReferencesService) Update(name string, googlecloudapigeev1reference *GoogleCloudApigeeV1Reference) *OrganizationsEnvironmentsReferencesUpdateCall {
 	c := &OrganizationsEnvironmentsReferencesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30180,7 +30185,7 @@ func (c *OrganizationsEnvironmentsReferencesUpdateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30291,8 +30296,8 @@ type OrganizationsEnvironmentsResourcefilesCreateCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 //
 // - parent: Name of the environment in which to create the resource
-// file in the following format:
-// `organizations/{org}/environments/{env}`.
+//   file in the following format:
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsResourcefilesService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesCreateCall {
 	c := &OrganizationsEnvironmentsResourcefilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30342,7 +30347,7 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsResourcefilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30463,10 +30468,10 @@ type OrganizationsEnvironmentsResourcefilesDeleteCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 //
 // - name: ID of the resource file to delete. Must match the regular
-// expression: [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}
+//   expression: [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}.
 // - parent: Name of the environment in the following format:
-// `organizations/{org}/environments/{env}`.
-// - type: Resource file type. {{ resource_file_type }}
+//   `organizations/{org}/environments/{env}`.
+// - type: Resource file type. {{ resource_file_type }}.
 func (r *OrganizationsEnvironmentsResourcefilesService) Delete(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesDeleteCall {
 	c := &OrganizationsEnvironmentsResourcefilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30502,7 +30507,7 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30622,10 +30627,10 @@ type OrganizationsEnvironmentsResourcefilesGetCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 //
 // - name: ID of the resource file. Must match the regular expression:
-// [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}
+//   [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}.
 // - parent: Name of the environment in the following format:
-// `organizations/{org}/environments/{env}`.
-// - type: Resource file type. {{ resource_file_type }}
+//   `organizations/{org}/environments/{env}`.
+// - type: Resource file type. {{ resource_file_type }}.
 func (r *OrganizationsEnvironmentsResourcefilesService) Get(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesGetCall {
 	c := &OrganizationsEnvironmentsResourcefilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30671,7 +30676,7 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsResourcefilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30792,7 +30797,7 @@ type OrganizationsEnvironmentsResourcefilesListCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 //
 // - parent: Name of the environment in which to list resource files in
-// the following format: `organizations/{org}/environments/{env}`.
+//   the following format: `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsResourcefilesService) List(parent string) *OrganizationsEnvironmentsResourcefilesListCall {
 	c := &OrganizationsEnvironmentsResourcefilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30843,7 +30848,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsResourcefilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30957,9 +30962,9 @@ type OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 //
 // - parent: Name of the environment in which to list resource files in
-// the following format: `organizations/{org}/environments/{env}`.
+//   the following format: `organizations/{org}/environments/{env}`.
 // - type: Optional. Type of resource files to list. {{
-// resource_file_type }}
+//   resource_file_type }}.
 func (r *OrganizationsEnvironmentsResourcefilesService) ListEnvironmentResources(parent string, type_ string) *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall {
 	c := &OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31004,7 +31009,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) Hea
 
 func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31122,10 +31127,10 @@ type OrganizationsEnvironmentsResourcefilesUpdateCall struct {
 // (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 //
 // - name: ID of the resource file to update. Must match the regular
-// expression: [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}
+//   expression: [a-zA-Z0-9:/\\!@#$%^&{}\\ ()+\-=,.~'` ]{1,255}.
 // - parent: Name of the environment in the following format:
-// `organizations/{org}/environments/{env}`.
-// - type: Resource file type. {{ resource_file_type }}
+//   `organizations/{org}/environments/{env}`.
+// - type: Resource file type. {{ resource_file_type }}.
 func (r *OrganizationsEnvironmentsResourcefilesService) Update(parent string, type_ string, name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesUpdateCall {
 	c := &OrganizationsEnvironmentsResourcefilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31162,7 +31167,7 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31286,8 +31291,8 @@ type OrganizationsEnvironmentsSharedflowsDeploymentsListCall struct {
 // List: Lists all deployments of a shared flow in an environment.
 //
 // - parent: Name representing a shared flow in an environment in the
-// following format:
-// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}`
+//   following format:
+//   `organizations/{org}/environments/{env}/sharedflows/{sharedflow}`.
 func (r *OrganizationsEnvironmentsSharedflowsDeploymentsService) List(parent string) *OrganizationsEnvironmentsSharedflowsDeploymentsListCall {
 	c := &OrganizationsEnvironmentsSharedflowsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31331,7 +31336,7 @@ func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) Header() http.
 
 func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31445,9 +31450,9 @@ type OrganizationsEnvironmentsSharedflowsRevisionsDeployCall struct {
 // `organizations/{org}/sharedflows/{sf}/revisions/{rev}`
 //
 // - name: Name of the shared flow revision to deploy in the following
-// format:
-// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revis
-// ions/{rev}`
+//   format:
+//   `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/rev
+//   isions/{rev}`.
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) Deploy(name string) *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31492,7 +31497,7 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall) Header() http.
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31598,9 +31603,9 @@ type OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall struct {
 // actual state reported by runtime pods.
 //
 // - name: Name representing a shared flow in an environment in the
-// following format:
-// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revis
-// ions/{rev}`
+//   following format:
+//   `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/rev
+//   isions/{rev}`.
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) GetDeployments(name string) *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31644,7 +31649,7 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) Header
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31753,9 +31758,9 @@ type OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall struct {
 // `organizations/{org}/sharedflows/{sf}/revisions/{rev}`
 //
 // - name: Name of the shared flow revision to undeploy in the following
-// format:
-// `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/revis
-// ions/{rev}`
+//   format:
+//   `organizations/{org}/environments/{env}/sharedflows/{sharedflow}/rev
+//   isions/{rev}`.
 func (r *OrganizationsEnvironmentsSharedflowsRevisionsService) Undeploy(name string) *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall {
 	c := &OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -31789,7 +31794,7 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall) Header() htt
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31894,12 +31899,12 @@ type OrganizationsEnvironmentsStatsGetCall struct {
 // are computed on the entire data for the given timerange.
 //
 // - name: The resource name for which the interactive query will be
-// executed. Must be of the form
-// `organizations/{organization_id}/environments/{environment_id/stats/{d
-// imensions}` Dimensions let you view metrics in meaningful groupings.
-// E.g. apiproxy, target_host. The value of dimensions should be comma
-// separated list as shown below
-// `organizations/{org}/environments/{env}/stats/apiproxy,request_verb`
+//   executed. Must be of the form
+//   `organizations/{organization_id}/environments/{environment_id/stats/
+//   {dimensions}` Dimensions let you view metrics in meaningful
+//   groupings. E.g. apiproxy, target_host. The value of dimensions
+//   should be comma separated list as shown below
+//   `organizations/{org}/environments/{env}/stats/apiproxy,request_verb`.
 func (r *OrganizationsEnvironmentsStatsService) Get(name string) *OrganizationsEnvironmentsStatsGetCall {
 	c := &OrganizationsEnvironmentsStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32058,7 +32063,7 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32236,8 +32241,8 @@ type OrganizationsEnvironmentsTargetserversCreateCall struct {
 // Create: Creates a TargetServer in the specified environment.
 //
 // - parent: The parent environment name under which the TargetServer
-// will be created. Must be of the form
-// `organizations/{org}/environments/{env}`.
+//   will be created. Must be of the form
+//   `organizations/{org}/environments/{env}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Create(parent string, googlecloudapigeev1targetserver *GoogleCloudApigeeV1TargetServer) *OrganizationsEnvironmentsTargetserversCreateCall {
 	c := &OrganizationsEnvironmentsTargetserversCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32279,7 +32284,7 @@ func (c *OrganizationsEnvironmentsTargetserversCreateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsTargetserversCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32392,8 +32397,8 @@ type OrganizationsEnvironmentsTargetserversDeleteCall struct {
 // deleted TargetServer resource.
 //
 // - name: The name of the TargetServer to delete. Must be of the form
-// `organizations/{org}/environments/{env}/targetservers/{target_server_i
-// d}`.
+//   `organizations/{org}/environments/{env}/targetservers/{target_server
+//   _id}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Delete(name string) *OrganizationsEnvironmentsTargetserversDeleteCall {
 	c := &OrganizationsEnvironmentsTargetserversDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32427,7 +32432,7 @@ func (c *OrganizationsEnvironmentsTargetserversDeleteCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsTargetserversDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32527,8 +32532,8 @@ type OrganizationsEnvironmentsTargetserversGetCall struct {
 // Get: Gets a TargetServer resource.
 //
 // - name: The name of the TargetServer to get. Must be of the form
-// `organizations/{org}/environments/{env}/targetservers/{target_server_i
-// d}`.
+//   `organizations/{org}/environments/{env}/targetservers/{target_server
+//   _id}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Get(name string) *OrganizationsEnvironmentsTargetserversGetCall {
 	c := &OrganizationsEnvironmentsTargetserversGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32572,7 +32577,7 @@ func (c *OrganizationsEnvironmentsTargetserversGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsTargetserversGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32677,8 +32682,8 @@ type OrganizationsEnvironmentsTargetserversUpdateCall struct {
 // TargetServer with the resource in the request body.
 //
 // - name: The name of the TargetServer to replace. Must be of the form
-// `organizations/{org}/environments/{env}/targetservers/{target_server_i
-// d}`.
+//   `organizations/{org}/environments/{env}/targetservers/{target_server
+//   _id}`.
 func (r *OrganizationsEnvironmentsTargetserversService) Update(name string, googlecloudapigeev1targetserver *GoogleCloudApigeeV1TargetServer) *OrganizationsEnvironmentsTargetserversUpdateCall {
 	c := &OrganizationsEnvironmentsTargetserversUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32713,7 +32718,7 @@ func (c *OrganizationsEnvironmentsTargetserversUpdateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsTargetserversUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32824,8 +32829,8 @@ type OrganizationsEnvironmentsTraceConfigOverridesCreateCall struct {
 // trace configuration overrides.
 //
 // - parent: Parent resource of the trace configuration override. Use
-// the following structure in your request.
-// "organizations/*/environments/*/traceConfig".
+//   the following structure in your request.
+//   "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Create(parent string, googlecloudapigeev1traceconfigoverride *GoogleCloudApigeeV1TraceConfigOverride) *OrganizationsEnvironmentsTraceConfigOverridesCreateCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32860,7 +32865,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesCreateCall) Header() http.
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32968,8 +32973,8 @@ type OrganizationsEnvironmentsTraceConfigOverridesDeleteCall struct {
 // Delete: Deletes a distributed trace configuration override.
 //
 // - name: Name of the trace configuration override. Use the following
-// structure in your request:
-// "organizations/*/environments/*/traceConfig/overrides/*".
+//   structure in your request:
+//   "organizations/*/environments/*/traceConfig/overrides/*".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Delete(name string) *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33003,7 +33008,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall) Header() http.
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33103,8 +33108,8 @@ type OrganizationsEnvironmentsTraceConfigOverridesGetCall struct {
 // Get: Gets a trace configuration override.
 //
 // - name: Name of the trace configuration override. Use the following
-// structure in your request:
-// "organizations/*/environments/*/traceConfig/overrides/*".
+//   structure in your request:
+//   "organizations/*/environments/*/traceConfig/overrides/*".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Get(name string) *OrganizationsEnvironmentsTraceConfigOverridesGetCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33148,7 +33153,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesGetCall) Header() http.Hea
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33253,8 +33258,8 @@ type OrganizationsEnvironmentsTraceConfigOverridesListCall struct {
 // an environment.
 //
 // - parent: Parent resource of the trace configuration override. Use
-// the following structure in your request:
-// "organizations/*/environments/*/traceConfig".
+//   the following structure in your request:
+//   "organizations/*/environments/*/traceConfig".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) List(parent string) *OrganizationsEnvironmentsTraceConfigOverridesListCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33316,7 +33321,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesListCall) Header() http.He
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33456,8 +33461,8 @@ type OrganizationsEnvironmentsTraceConfigOverridesPatchCall struct {
 // the request body.
 //
 // - name: Name of the trace configuration override. Use the following
-// structure in your request:
-// "organizations/*/environments/*/traceConfig/overrides/*".
+//   structure in your request:
+//   "organizations/*/environments/*/traceConfig/overrides/*".
 func (r *OrganizationsEnvironmentsTraceConfigOverridesService) Patch(name string, googlecloudapigeev1traceconfigoverride *GoogleCloudApigeeV1TraceConfigOverride) *OrganizationsEnvironmentsTraceConfigOverridesPatchCall {
 	c := &OrganizationsEnvironmentsTraceConfigOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33499,7 +33504,7 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesPatchCall) Header() http.H
 
 func (c *OrganizationsEnvironmentsTraceConfigOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33618,7 +33623,7 @@ type OrganizationsHostQueriesCreateCall struct {
 // succeeded.
 //
 // - parent: The parent resource name. Must be of the form
-// `organizations/{org}`.
+//   `organizations/{org}`.
 func (r *OrganizationsHostQueriesService) Create(parent string, googlecloudapigeev1query *GoogleCloudApigeeV1Query) *OrganizationsHostQueriesCreateCall {
 	c := &OrganizationsHostQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33653,7 +33658,7 @@ func (c *OrganizationsHostQueriesCreateCall) Header() http.Header {
 
 func (c *OrganizationsHostQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33763,7 +33768,7 @@ type OrganizationsHostQueriesGetCall struct {
 // has completed successfully, `state` is set to "completed"
 //
 // - name: Name of the asynchronous query to get. Must be of the form
-// `organizations/{org}/queries/{queryId}`.
+//   `organizations/{org}/queries/{queryId}`.
 func (r *OrganizationsHostQueriesService) Get(name string) *OrganizationsHostQueriesGetCall {
 	c := &OrganizationsHostQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33807,7 +33812,7 @@ func (c *OrganizationsHostQueriesGetCall) Header() http.Header {
 
 func (c *OrganizationsHostQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33914,7 +33919,7 @@ type OrganizationsHostQueriesGetResultCall struct {
 // `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-318d0cb961bd.zip`
 //
 // - name: Name of the asynchronous query result to get. Must be of the
-// form `organizations/{org}/queries/{queryId}/result`.
+//   form `organizations/{org}/queries/{queryId}/result`.
 func (r *OrganizationsHostQueriesService) GetResult(name string) *OrganizationsHostQueriesGetResultCall {
 	c := &OrganizationsHostQueriesGetResultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33958,7 +33963,7 @@ func (c *OrganizationsHostQueriesGetResultCall) Header() http.Header {
 
 func (c *OrganizationsHostQueriesGetResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34061,7 +34066,7 @@ type OrganizationsHostQueriesGetResultViewCall struct {
 // GetResultView:
 //
 // - name: Name of the asynchronous query result view to get. Must be of
-// the form `organizations/{org}/queries/{queryId}/resultView`.
+//   the form `organizations/{org}/queries/{queryId}/resultView`.
 func (r *OrganizationsHostQueriesService) GetResultView(name string) *OrganizationsHostQueriesGetResultViewCall {
 	c := &OrganizationsHostQueriesGetResultViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34105,7 +34110,7 @@ func (c *OrganizationsHostQueriesGetResultViewCall) Header() http.Header {
 
 func (c *OrganizationsHostQueriesGetResultViewCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34209,7 +34214,7 @@ type OrganizationsHostQueriesListCall struct {
 // List: Return a list of Asynchronous Queries at host level.
 //
 // - parent: The parent resource name. Must be of the form
-// `organizations/{org}`.
+//   `organizations/{org}`.
 func (r *OrganizationsHostQueriesService) List(parent string) *OrganizationsHostQueriesListCall {
 	c := &OrganizationsHostQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34305,7 +34310,7 @@ func (c *OrganizationsHostQueriesListCall) Header() http.Header {
 
 func (c *OrganizationsHostQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34450,11 +34455,12 @@ type OrganizationsHostStatsGetCall struct {
 // the metrics are computed on the entire data for the given timerange.
 //
 // - name: The resource name for which the interactive query will be
-// executed. Must be of the form
-// `organizations/{organization_id}/hostStats/{dimensions}`. Dimensions
-// let you view metrics in meaningful groupings. E.g. apiproxy,
-// target_host. The value of dimensions should be comma separated list
-// as shown below `organizations/{org}/hostStats/apiproxy,request_verb`
+//   executed. Must be of the form
+//   `organizations/{organization_id}/hostStats/{dimensions}`.
+//   Dimensions let you view metrics in meaningful groupings. E.g.
+//   apiproxy, target_host. The value of dimensions should be comma
+//   separated list as shown below
+//   `organizations/{org}/hostStats/apiproxy,request_verb`.
 func (r *OrganizationsHostStatsService) Get(name string) *OrganizationsHostStatsGetCall {
 	c := &OrganizationsHostStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34603,7 +34609,7 @@ func (c *OrganizationsHostStatsGetCall) Header() http.Header {
 
 func (c *OrganizationsHostStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34778,7 +34784,7 @@ type OrganizationsInstancesCreateCall struct {
 // organization. **Note:** Not supported for Apigee hybrid.
 //
 // - parent: Name of the organization. Use the following structure in
-// your request: `organizations/{org}`.
+//   your request: `organizations/{org}`.
 func (r *OrganizationsInstancesService) Create(parent string, googlecloudapigeev1instance *GoogleCloudApigeeV1Instance) *OrganizationsInstancesCreateCall {
 	c := &OrganizationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -34813,7 +34819,7 @@ func (c *OrganizationsInstancesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34922,7 +34928,7 @@ type OrganizationsInstancesDeleteCall struct {
 // supported for Apigee hybrid.
 //
 // - name: Name of the instance. Use the following structure in your
-// request: `organizations/{org}/instances/{instance}`.
+//   request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesService) Delete(name string) *OrganizationsInstancesDeleteCall {
 	c := &OrganizationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -34956,7 +34962,7 @@ func (c *OrganizationsInstancesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35057,7 +35063,7 @@ type OrganizationsInstancesGetCall struct {
 // supported for Apigee hybrid.
 //
 // - name: Name of the instance. Use the following structure in your
-// request: `organizations/{org}/instances/{instance}`.
+//   request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesService) Get(name string) *OrganizationsInstancesGetCall {
 	c := &OrganizationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35101,7 +35107,7 @@ func (c *OrganizationsInstancesGetCall) Header() http.Header {
 
 func (c *OrganizationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35205,7 +35211,7 @@ type OrganizationsInstancesListCall struct {
 // **Note:** Not supported for Apigee hybrid.
 //
 // - parent: Name of the organization. Use the following structure in
-// your request: `organizations/{org}`.
+//   your request: `organizations/{org}`.
 func (r *OrganizationsInstancesService) List(parent string) *OrganizationsInstancesListCall {
 	c := &OrganizationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35264,7 +35270,7 @@ func (c *OrganizationsInstancesListCall) Header() http.Header {
 
 func (c *OrganizationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35401,8 +35407,8 @@ type OrganizationsInstancesReportStatusCall struct {
 // ReportStatus: Reports the latest status for a runtime instance.
 //
 // - instance: The name of the instance reporting this status. For SaaS
-// the request will be rejected if no instance exists under this name.
-// Format is organizations/{org}/instances/{instance}
+//   the request will be rejected if no instance exists under this name.
+//   Format is organizations/{org}/instances/{instance}.
 func (r *OrganizationsInstancesService) ReportStatus(instance string, googlecloudapigeev1reportinstancestatusrequest *GoogleCloudApigeeV1ReportInstanceStatusRequest) *OrganizationsInstancesReportStatusCall {
 	c := &OrganizationsInstancesReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instance = instance
@@ -35437,7 +35443,7 @@ func (c *OrganizationsInstancesReportStatusCall) Header() http.Header {
 
 func (c *OrganizationsInstancesReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35548,7 +35554,7 @@ type OrganizationsInstancesAttachmentsCreateCall struct {
 // **Note:** Not supported for Apigee hybrid.
 //
 // - parent: Name of the instance. Use the following structure in your
-// request: `organizations/{org}/instances/{instance}`.
+//   request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesAttachmentsService) Create(parent string, googlecloudapigeev1instanceattachment *GoogleCloudApigeeV1InstanceAttachment) *OrganizationsInstancesAttachmentsCreateCall {
 	c := &OrganizationsInstancesAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35583,7 +35589,7 @@ func (c *OrganizationsInstancesAttachmentsCreateCall) Header() http.Header {
 
 func (c *OrganizationsInstancesAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35691,8 +35697,8 @@ type OrganizationsInstancesAttachmentsDeleteCall struct {
 // hybrid.
 //
 // - name: Name of the attachment. Use the following structure in your
-// request:
-// `organizations/{org}/instances/{instance}/attachments/{attachment}`.
+//   request:
+//   `organizations/{org}/instances/{instance}/attachments/{attachment}`.
 func (r *OrganizationsInstancesAttachmentsService) Delete(name string) *OrganizationsInstancesAttachmentsDeleteCall {
 	c := &OrganizationsInstancesAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35726,7 +35732,7 @@ func (c *OrganizationsInstancesAttachmentsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInstancesAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35826,8 +35832,8 @@ type OrganizationsInstancesAttachmentsGetCall struct {
 // Get: Gets an attachment. **Note:** Not supported for Apigee hybrid.
 //
 // - name: Name of the attachment. Use the following structure in your
-// request:
-// `organizations/{org}/instances/{instance}/attachments/{attachment}`
+//   request:
+//   `organizations/{org}/instances/{instance}/attachments/{attachment}`.
 func (r *OrganizationsInstancesAttachmentsService) Get(name string) *OrganizationsInstancesAttachmentsGetCall {
 	c := &OrganizationsInstancesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35871,7 +35877,7 @@ func (c *OrganizationsInstancesAttachmentsGetCall) Header() http.Header {
 
 func (c *OrganizationsInstancesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35976,7 +35982,7 @@ type OrganizationsInstancesAttachmentsListCall struct {
 // for Apigee hybrid.
 //
 // - parent: Name of the organization. Use the following structure in
-// your request: `organizations/{org}/instances/{instance}`
+//   your request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesAttachmentsService) List(parent string) *OrganizationsInstancesAttachmentsListCall {
 	c := &OrganizationsInstancesAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36035,7 +36041,7 @@ func (c *OrganizationsInstancesAttachmentsListCall) Header() http.Header {
 
 func (c *OrganizationsInstancesAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36172,7 +36178,7 @@ type OrganizationsInstancesCanaryevaluationsCreateCall struct {
 // Create: Creates a new canary evaluation for an organization.
 //
 // - parent: Name of the organization. Use the following structure in
-// your request: `organizations/{org}/instances/{instance}`.
+//   your request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesCanaryevaluationsService) Create(parent string, googlecloudapigeev1canaryevaluation *GoogleCloudApigeeV1CanaryEvaluation) *OrganizationsInstancesCanaryevaluationsCreateCall {
 	c := &OrganizationsInstancesCanaryevaluationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36207,7 +36213,7 @@ func (c *OrganizationsInstancesCanaryevaluationsCreateCall) Header() http.Header
 
 func (c *OrganizationsInstancesCanaryevaluationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36315,8 +36321,8 @@ type OrganizationsInstancesCanaryevaluationsGetCall struct {
 // Get: Gets a CanaryEvaluation for an organization.
 //
 // - name: Name of the CanaryEvaluation. Use the following structure in
-// your request:
-// `organizations/{org}/instances/*/canaryevaluations/{evaluation}`
+//   your request:
+//   `organizations/{org}/instances/*/canaryevaluations/{evaluation}`.
 func (r *OrganizationsInstancesCanaryevaluationsService) Get(name string) *OrganizationsInstancesCanaryevaluationsGetCall {
 	c := &OrganizationsInstancesCanaryevaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36360,7 +36366,7 @@ func (c *OrganizationsInstancesCanaryevaluationsGetCall) Header() http.Header {
 
 func (c *OrganizationsInstancesCanaryevaluationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36466,8 +36472,9 @@ type OrganizationsInstancesNatAddressesActivateCall struct {
 // hybrid.
 //
 // - name: Name of the nat address. Use the following structure in your
-// request:
-// `organizations/{org}/instances/{instances}/natAddresses/{nataddress}``
+//   request:
+//   `organizations/{org}/instances/{instances}/natAddresses/{nataddress}
+//   ``.
 func (r *OrganizationsInstancesNatAddressesService) Activate(name string, googlecloudapigeev1activatenataddressrequest *GoogleCloudApigeeV1ActivateNatAddressRequest) *OrganizationsInstancesNatAddressesActivateCall {
 	c := &OrganizationsInstancesNatAddressesActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36502,7 +36509,7 @@ func (c *OrganizationsInstancesNatAddressesActivateCall) Header() http.Header {
 
 func (c *OrganizationsInstancesNatAddressesActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36615,7 +36622,7 @@ type OrganizationsInstancesNatAddressesCreateCall struct {
 // for Apigee hybrid.
 //
 // - parent: Name of the instance. Use the following structure in your
-// request: `organizations/{org}/instances/{instance}`
+//   request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesNatAddressesService) Create(parent string, googlecloudapigeev1nataddress *GoogleCloudApigeeV1NatAddress) *OrganizationsInstancesNatAddressesCreateCall {
 	c := &OrganizationsInstancesNatAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -36650,7 +36657,7 @@ func (c *OrganizationsInstancesNatAddressesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInstancesNatAddressesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36759,8 +36766,9 @@ type OrganizationsInstancesNatAddressesDeleteCall struct {
 // for Apigee hybrid.
 //
 // - name: Name of the nat address. Use the following structure in your
-// request:
-// `organizations/{org}/instances/{instances}/natAddresses/{nataddress}``
+//   request:
+//   `organizations/{org}/instances/{instances}/natAddresses/{nataddress}
+//   ``.
 func (r *OrganizationsInstancesNatAddressesService) Delete(name string) *OrganizationsInstancesNatAddressesDeleteCall {
 	c := &OrganizationsInstancesNatAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36794,7 +36802,7 @@ func (c *OrganizationsInstancesNatAddressesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInstancesNatAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36895,8 +36903,9 @@ type OrganizationsInstancesNatAddressesGetCall struct {
 // Apigee hybrid.
 //
 // - name: Name of the nat address. Use the following structure in your
-// request:
-// `organizations/{org}/instances/{instances}/natAddresses/{nataddress}`
+//   request:
+//   `organizations/{org}/instances/{instances}/natAddresses/{nataddress}
+//   `.
 func (r *OrganizationsInstancesNatAddressesService) Get(name string) *OrganizationsInstancesNatAddressesGetCall {
 	c := &OrganizationsInstancesNatAddressesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -36940,7 +36949,7 @@ func (c *OrganizationsInstancesNatAddressesGetCall) Header() http.Header {
 
 func (c *OrganizationsInstancesNatAddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37044,7 +37053,7 @@ type OrganizationsInstancesNatAddressesListCall struct {
 // supported for Apigee hybrid.
 //
 // - parent: Name of the instance. Use the following structure in your
-// request: `organizations/{org}/instances/{instance}`
+//   request: `organizations/{org}/instances/{instance}`.
 func (r *OrganizationsInstancesNatAddressesService) List(parent string) *OrganizationsInstancesNatAddressesListCall {
 	c := &OrganizationsInstancesNatAddressesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37103,7 +37112,7 @@ func (c *OrganizationsInstancesNatAddressesListCall) Header() http.Header {
 
 func (c *OrganizationsInstancesNatAddressesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37240,7 +37249,7 @@ type OrganizationsKeyvaluemapsCreateCall struct {
 // Create: Creates a key value map in an organization.
 //
 // - parent: The name of the organization in which to create the key
-// value map file. Must be of the form `organizations/{organization}`.
+//   value map file. Must be of the form `organizations/{organization}`.
 func (r *OrganizationsKeyvaluemapsService) Create(parent string, googlecloudapigeev1keyvaluemap *GoogleCloudApigeeV1KeyValueMap) *OrganizationsKeyvaluemapsCreateCall {
 	c := &OrganizationsKeyvaluemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -37275,7 +37284,7 @@ func (c *OrganizationsKeyvaluemapsCreateCall) Header() http.Header {
 
 func (c *OrganizationsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37382,7 +37391,7 @@ type OrganizationsKeyvaluemapsDeleteCall struct {
 // Delete: Delete a key value map in an organization.
 //
 // - name: The name of the key value map. Must be of the form
-// `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+//   `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
 func (r *OrganizationsKeyvaluemapsService) Delete(name string) *OrganizationsKeyvaluemapsDeleteCall {
 	c := &OrganizationsKeyvaluemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37416,7 +37425,7 @@ func (c *OrganizationsKeyvaluemapsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37561,7 +37570,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37737,7 +37746,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37879,12 +37888,12 @@ type OrganizationsOptimizedHostStatsGetCall struct {
 // less verbose.
 //
 // - name: The resource name for which the interactive query will be
-// executed. Must be of the form
-// `organizations/{organization_id}/optimizedHostStats/{dimensions}`.
-// Dimensions let you view metrics in meaningful groupings. E.g.
-// apiproxy, target_host. The value of dimensions should be comma
-// separated list as shown below
-// `organizations/{org}/optimizedHostStats/apiproxy,request_verb`
+//   executed. Must be of the form
+//   `organizations/{organization_id}/optimizedHostStats/{dimensions}`.
+//   Dimensions let you view metrics in meaningful groupings. E.g.
+//   apiproxy, target_host. The value of dimensions should be comma
+//   separated list as shown below
+//   `organizations/{org}/optimizedHostStats/apiproxy,request_verb`.
 func (r *OrganizationsOptimizedHostStatsService) Get(name string) *OrganizationsOptimizedHostStatsGetCall {
 	c := &OrganizationsOptimizedHostStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38033,7 +38042,7 @@ func (c *OrganizationsOptimizedHostStatsGetCall) Header() http.Header {
 
 func (c *OrganizationsOptimizedHostStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38214,8 +38223,8 @@ type OrganizationsReportsCreateCall struct {
 // result in a chart.
 //
 // - parent: The parent organization name under which the Custom Report
-// will be created. Must be of the form:
-// `organizations/{organization_id}/reports`
+//   will be created. Must be of the form:
+//   `organizations/{organization_id}/reports`.
 func (r *OrganizationsReportsService) Create(parent string, googlecloudapigeev1customreport *GoogleCloudApigeeV1CustomReport) *OrganizationsReportsCreateCall {
 	c := &OrganizationsReportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38250,7 +38259,7 @@ func (c *OrganizationsReportsCreateCall) Header() http.Header {
 
 func (c *OrganizationsReportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38357,7 +38366,7 @@ type OrganizationsReportsDeleteCall struct {
 // Delete: Deletes an existing custom report definition
 //
 // - name: Custom Report name of the form:
-// `organizations/{organization_id}/reports/{report_name}`
+//   `organizations/{organization_id}/reports/{report_name}`.
 func (r *OrganizationsReportsService) Delete(name string) *OrganizationsReportsDeleteCall {
 	c := &OrganizationsReportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38391,7 +38400,7 @@ func (c *OrganizationsReportsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38493,7 +38502,7 @@ type OrganizationsReportsGetCall struct {
 // Get: Retrieve a custom report definition.
 //
 // - name: Custom Report name of the form:
-// `organizations/{organization_id}/reports/{report_name}`
+//   `organizations/{organization_id}/reports/{report_name}`.
 func (r *OrganizationsReportsService) Get(name string) *OrganizationsReportsGetCall {
 	c := &OrganizationsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38537,7 +38546,7 @@ func (c *OrganizationsReportsGetCall) Header() http.Header {
 
 func (c *OrganizationsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38640,7 +38649,7 @@ type OrganizationsReportsListCall struct {
 // List: Return a list of Custom Reports
 //
 // - parent: The parent organization name under which the API product
-// will be listed `organizations/{organization_id}/reports`
+//   will be listed `organizations/{organization_id}/reports`.
 func (r *OrganizationsReportsService) List(parent string) *OrganizationsReportsListCall {
 	c := &OrganizationsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38691,7 +38700,7 @@ func (c *OrganizationsReportsListCall) Header() http.Header {
 
 func (c *OrganizationsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38801,7 +38810,7 @@ type OrganizationsReportsUpdateCall struct {
 // Update: Update an existing custom report definition
 //
 // - name: Custom Report name of the form:
-// `organizations/{organization_id}/reports/{report_name}`
+//   `organizations/{organization_id}/reports/{report_name}`.
 func (r *OrganizationsReportsService) Update(name string, googlecloudapigeev1customreport *GoogleCloudApigeeV1CustomReport) *OrganizationsReportsUpdateCall {
 	c := &OrganizationsReportsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38836,7 +38845,7 @@ func (c *OrganizationsReportsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38949,8 +38958,8 @@ type OrganizationsSharedflowsCreateCall struct {
 // is 15 MB.
 //
 // - parent: The name of the parent organization under which to create
-// the shared flow. Must be of the form:
-// `organizations/{organization_id}`
+//   the shared flow. Must be of the form:
+//   `organizations/{organization_id}`.
 func (r *OrganizationsSharedflowsService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsSharedflowsCreateCall {
 	c := &OrganizationsSharedflowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38999,7 +39008,7 @@ func (c *OrganizationsSharedflowsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39118,7 +39127,7 @@ type OrganizationsSharedflowsDeleteCall struct {
 // must be undeployed before you can delete it.
 //
 // - name: shared flow name of the form:
-// `organizations/{organization_id}/sharedflows/{shared_flow_id}`
+//   `organizations/{organization_id}/sharedflows/{shared_flow_id}`.
 func (r *OrganizationsSharedflowsService) Delete(name string) *OrganizationsSharedflowsDeleteCall {
 	c := &OrganizationsSharedflowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39152,7 +39161,7 @@ func (c *OrganizationsSharedflowsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39252,7 +39261,7 @@ type OrganizationsSharedflowsGetCall struct {
 // Get: Gets a shared flow by name, including a list of its revisions.
 //
 // - name: The name of the shared flow to get. Must be of the form:
-// `organizations/{organization_id}/sharedflows/{shared_flow_id}`
+//   `organizations/{organization_id}/sharedflows/{shared_flow_id}`.
 func (r *OrganizationsSharedflowsService) Get(name string) *OrganizationsSharedflowsGetCall {
 	c := &OrganizationsSharedflowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39296,7 +39305,7 @@ func (c *OrganizationsSharedflowsGetCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39399,7 +39408,8 @@ type OrganizationsSharedflowsListCall struct {
 // List: Lists all shared flows in the organization.
 //
 // - parent: The name of the parent organization under which to get
-// shared flows. Must be of the form: `organizations/{organization_id}`
+//   shared flows. Must be of the form:
+//   `organizations/{organization_id}`.
 func (r *OrganizationsSharedflowsService) List(parent string) *OrganizationsSharedflowsListCall {
 	c := &OrganizationsSharedflowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39457,7 +39467,7 @@ func (c *OrganizationsSharedflowsListCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39572,8 +39582,8 @@ type OrganizationsSharedflowsDeploymentsListCall struct {
 // List: Lists all deployments of a shared flow.
 //
 // - parent: Name of the shared flow for which to return deployment
-// information in the following format:
-// `organizations/{org}/sharedflows/{sharedflow}`
+//   information in the following format:
+//   `organizations/{org}/sharedflows/{sharedflow}`.
 func (r *OrganizationsSharedflowsDeploymentsService) List(parent string) *OrganizationsSharedflowsDeploymentsListCall {
 	c := &OrganizationsSharedflowsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -39617,7 +39627,7 @@ func (c *OrganizationsSharedflowsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39722,9 +39732,9 @@ type OrganizationsSharedflowsRevisionsDeleteCall struct {
 // and revisions. You must undeploy the shared flow before deleting it.
 //
 // - name: The name of the shared flow revision to delete. Must be of
-// the form:
-// `organizations/{organization_id}/sharedflows/{shared_flow_id}/revision
-// s/{revision_id}`
+//   the form:
+//   `organizations/{organization_id}/sharedflows/{shared_flow_id}/revisi
+//   ons/{revision_id}`.
 func (r *OrganizationsSharedflowsRevisionsService) Delete(name string) *OrganizationsSharedflowsRevisionsDeleteCall {
 	c := &OrganizationsSharedflowsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39758,7 +39768,7 @@ func (c *OrganizationsSharedflowsRevisionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39865,9 +39875,9 @@ type OrganizationsSharedflowsRevisionsGetCall struct {
 // described in updateSharedFlowRevision (updateSharedFlowRevision).
 //
 // - name: The name of the shared flow revision to get. Must be of the
-// form:
-// `organizations/{organization_id}/sharedflows/{shared_flow_id}/revision
-// s/{revision_id}`
+//   form:
+//   `organizations/{organization_id}/sharedflows/{shared_flow_id}/revisi
+//   ons/{revision_id}`.
 func (r *OrganizationsSharedflowsRevisionsService) Get(name string) *OrganizationsSharedflowsRevisionsGetCall {
 	c := &OrganizationsSharedflowsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39919,7 +39929,7 @@ func (c *OrganizationsSharedflowsRevisionsGetCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40032,9 +40042,9 @@ type OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall struct {
 // application/octet-stream.
 //
 // - name: The name of the shared flow revision to update. Must be of
-// the form:
-// `organizations/{organization_id}/sharedflows/{shared_flow_id}/revision
-// s/{revision_id}`
+//   the form:
+//   `organizations/{organization_id}/sharedflows/{shared_flow_id}/revisi
+//   ons/{revision_id}`.
 func (r *OrganizationsSharedflowsRevisionsService) UpdateSharedFlowRevision(name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall {
 	c := &OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40078,7 +40088,7 @@ func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) Header()
 
 func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40192,8 +40202,8 @@ type OrganizationsSharedflowsRevisionsDeploymentsListCall struct {
 // List: Lists all deployments of a shared flow revision.
 //
 // - parent: Name of the API proxy revision for which to return
-// deployment information in the following format:
-// `organizations/{org}/sharedflows/{sharedflow}/revisions/{rev}`.
+//   deployment information in the following format:
+//   `organizations/{org}/sharedflows/{sharedflow}/revisions/{rev}`.
 func (r *OrganizationsSharedflowsRevisionsDeploymentsService) List(parent string) *OrganizationsSharedflowsRevisionsDeploymentsListCall {
 	c := &OrganizationsSharedflowsRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -40237,7 +40247,7 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) Header() http.Hea
 
 func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40342,7 +40352,7 @@ type OrganizationsSitesApicategoriesCreateCall struct {
 // Create: Creates a new category on the portal.
 //
 // - parent: Name of the portal. Use the following structure in your
-// request: `organizations/{org}/sites/{site}`
+//   request: `organizations/{org}/sites/{site}`.
 func (r *OrganizationsSitesApicategoriesService) Create(parent string, googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData) *OrganizationsSitesApicategoriesCreateCall {
 	c := &OrganizationsSitesApicategoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -40377,7 +40387,7 @@ func (c *OrganizationsSitesApicategoriesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSitesApicategoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40484,8 +40494,8 @@ type OrganizationsSitesApicategoriesDeleteCall struct {
 // Delete: Deletes a category from the portal.
 //
 // - name: Name of the category. Use the following structure in your
-// request:
-// `organizations/{org}/sites/{site}/apicategories/{apicategory}`
+//   request:
+//   `organizations/{org}/sites/{site}/apicategories/{apicategory}`.
 func (r *OrganizationsSitesApicategoriesService) Delete(name string) *OrganizationsSitesApicategoriesDeleteCall {
 	c := &OrganizationsSitesApicategoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40519,7 +40529,7 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSitesApicategoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40620,8 +40630,8 @@ type OrganizationsSitesApicategoriesGetCall struct {
 // Get: Gets a category on the portal.
 //
 // - name: Name of the category. Use the following structure in your
-// request:
-// `organizations/{org}/sites/{site}/apicategories/{apicategory}`
+//   request:
+//   `organizations/{org}/sites/{site}/apicategories/{apicategory}`.
 func (r *OrganizationsSitesApicategoriesService) Get(name string) *OrganizationsSitesApicategoriesGetCall {
 	c := &OrganizationsSitesApicategoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40665,7 +40675,7 @@ func (c *OrganizationsSitesApicategoriesGetCall) Header() http.Header {
 
 func (c *OrganizationsSitesApicategoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40768,7 +40778,7 @@ type OrganizationsSitesApicategoriesListCall struct {
 // List: Lists the categories on the portal.
 //
 // - parent: Name of the portal. Use the following structure in your
-// request: `organizations/{org}/sites/{site}`
+//   request: `organizations/{org}/sites/{site}`.
 func (r *OrganizationsSitesApicategoriesService) List(parent string) *OrganizationsSitesApicategoriesListCall {
 	c := &OrganizationsSitesApicategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -40812,7 +40822,7 @@ func (c *OrganizationsSitesApicategoriesListCall) Header() http.Header {
 
 func (c *OrganizationsSitesApicategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40917,8 +40927,8 @@ type OrganizationsSitesApicategoriesPatchCall struct {
 // Patch: Updates a category on the portal.
 //
 // - name: Name of the category. Use the following structure in your
-// request:
-// `organizations/{org}/sites/{site}/apicategories/{apicategory}`
+//   request:
+//   `organizations/{org}/sites/{site}/apicategories/{apicategory}`.
 func (r *OrganizationsSitesApicategoriesService) Patch(name string, googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData) *OrganizationsSitesApicategoriesPatchCall {
 	c := &OrganizationsSitesApicategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -40953,7 +40963,7 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSitesApicategoriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41063,7 +41073,7 @@ type ProjectsProvisionOrganizationCall struct {
 // organizations for a free Apigee trial.
 //
 // - project: Name of the GCP project with which to associate the Apigee
-// organization.
+//   organization.
 func (r *ProjectsService) ProvisionOrganization(project string, googlecloudapigeev1provisionorganizationrequest *GoogleCloudApigeeV1ProvisionOrganizationRequest) *ProjectsProvisionOrganizationCall {
 	c := &ProjectsProvisionOrganizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -41098,7 +41108,7 @@ func (c *ProjectsProvisionOrganizationCall) Header() http.Header {
 
 func (c *ProjectsProvisionOrganizationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

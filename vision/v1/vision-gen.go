@@ -13980,7 +13980,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14112,7 +14112,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14238,7 +14238,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14370,7 +14370,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14511,7 +14511,7 @@ func (c *LocationsOperationsGetCall) Header() http.Header {
 
 func (c *LocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14658,7 +14658,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14802,7 +14802,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14948,7 +14948,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15125,7 +15125,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15271,11 +15271,11 @@ type ProjectsFilesAnnotateCall struct {
 // detection and annotation for each image extracted.
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsFilesAnnotateCall {
 	c := &ProjectsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15310,7 +15310,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15425,11 +15425,11 @@ type ProjectsFilesAsyncBatchAnnotateCall struct {
 // (results).
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15464,7 +15464,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15573,11 +15573,11 @@ type ProjectsImagesAnnotateCall struct {
 // Annotate: Run image detection and annotation for a batch of images.
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsImagesAnnotateCall {
 	c := &ProjectsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15612,7 +15612,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15727,11 +15727,11 @@ type ProjectsImagesAsyncBatchAnnotateCall struct {
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15766,7 +15766,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15880,11 +15880,11 @@ type ProjectsLocationsFilesAnnotateCall struct {
 // detection and annotation for each image extracted.
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsLocationsFilesAnnotateCall {
 	c := &ProjectsLocationsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15919,7 +15919,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16034,11 +16034,11 @@ type ProjectsLocationsFilesAsyncBatchAnnotateCall struct {
 // (results).
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16073,7 +16073,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16182,11 +16182,11 @@ type ProjectsLocationsImagesAnnotateCall struct {
 // Annotate: Run image detection and annotation for a batch of images.
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsLocationsImagesAnnotateCall {
 	c := &ProjectsLocationsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16221,7 +16221,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16336,11 +16336,11 @@ type ProjectsLocationsImagesAsyncBatchAnnotateCall struct {
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
 //
 // - parent: Optional. Target project and location to make a call.
-// Format: `projects/{project-id}/locations/{location-id}`. If no parent
-// is specified, a region will be chosen automatically. Supported
-// location-ids: `us`: USA country only, `asia`: East asia areas, like
-// Japan, Taiwan, `eu`: The European Union. Example:
-// `projects/project-A/locations/eu`.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16375,7 +16375,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16529,7 +16529,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16636,7 +16636,7 @@ type ProjectsLocationsProductSetsAddProductCall struct {
 // NOT_FOUND if the Product or the ProductSet doesn't exist.
 //
 // - name: The resource name for the ProductSet to modify. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
+//   `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) AddProduct(name string, addproducttoproductsetrequest *AddProductToProductSetRequest) *ProjectsLocationsProductSetsAddProductCall {
 	c := &ProjectsLocationsProductSetsAddProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16671,7 +16671,7 @@ func (c *ProjectsLocationsProductSetsAddProductCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsAddProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16782,7 +16782,7 @@ type ProjectsLocationsProductSetsCreateCall struct {
 // longer than 4096 characters.
 //
 // - parent: The project in which the ProductSet should be created.
-// Format is `projects/PROJECT_ID/locations/LOC_ID`.
+//   Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) Create(parent string, productset *ProductSet) *ProjectsLocationsProductSetsCreateCall {
 	c := &ProjectsLocationsProductSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16827,7 +16827,7 @@ func (c *ProjectsLocationsProductSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16942,7 +16942,7 @@ type ProjectsLocationsProductSetsDeleteCall struct {
 // files are not deleted from Google Cloud Storage.
 //
 // - name: Resource name of the ProductSet to delete. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
+//   `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) Delete(name string) *ProjectsLocationsProductSetsDeleteCall {
 	c := &ProjectsLocationsProductSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16976,7 +16976,7 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17078,7 +17078,7 @@ type ProjectsLocationsProductSetsGetCall struct {
 // * Returns NOT_FOUND if the ProductSet does not exist.
 //
 // - name: Resource name of the ProductSet to get. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
+//   `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) Get(name string) *ProjectsLocationsProductSetsGetCall {
 	c := &ProjectsLocationsProductSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17122,7 +17122,7 @@ func (c *ProjectsLocationsProductSetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17233,7 +17233,7 @@ type ProjectsLocationsProductSetsImportCall struct {
 // csv file please see ImportProductSetsGcsSource.csv_file_uri.
 //
 // - parent: The project in which the ProductSets should be imported.
-// Format is `projects/PROJECT_ID/locations/LOC_ID`.
+//   Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) Import(parent string, importproductsetsrequest *ImportProductSetsRequest) *ProjectsLocationsProductSetsImportCall {
 	c := &ProjectsLocationsProductSetsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17268,7 +17268,7 @@ func (c *ProjectsLocationsProductSetsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17379,7 +17379,7 @@ type ProjectsLocationsProductSetsListCall struct {
 // than 1.
 //
 // - parent: The project from which ProductSets should be listed. Format
-// is `projects/PROJECT_ID/locations/LOC_ID`.
+//   is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) List(parent string) *ProjectsLocationsProductSetsListCall {
 	c := &ProjectsLocationsProductSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17437,7 +17437,7 @@ func (c *ProjectsLocationsProductSetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17577,8 +17577,8 @@ type ProjectsLocationsProductSetsPatchCall struct {
 // 4096 characters.
 //
 // - name: The resource name of the ProductSet. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
-// This field is ignored when creating a ProductSet.
+//   `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
+//   This field is ignored when creating a ProductSet.
 func (r *ProjectsLocationsProductSetsService) Patch(name string, productset *ProductSet) *ProjectsLocationsProductSetsPatchCall {
 	c := &ProjectsLocationsProductSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17622,7 +17622,7 @@ func (c *ProjectsLocationsProductSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17737,7 +17737,7 @@ type ProjectsLocationsProductSetsRemoveProductCall struct {
 // RemoveProduct: Removes a Product from the specified ProductSet.
 //
 // - name: The resource name for the ProductSet to modify. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
+//   `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) RemoveProduct(name string, removeproductfromproductsetrequest *RemoveProductFromProductSetRequest) *ProjectsLocationsProductSetsRemoveProductCall {
 	c := &ProjectsLocationsProductSetsRemoveProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17772,7 +17772,7 @@ func (c *ProjectsLocationsProductSetsRemoveProductCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsRemoveProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17884,8 +17884,8 @@ type ProjectsLocationsProductSetsProductsListCall struct {
 // page_size is greater than 100 or less than 1.
 //
 // - name: The ProductSet resource for which to retrieve Products.
-// Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
+//   Format is:
+//   `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsProductsService) List(name string) *ProjectsLocationsProductSetsProductsListCall {
 	c := &ProjectsLocationsProductSetsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17943,7 +17943,7 @@ func (c *ProjectsLocationsProductSetsProductsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18083,7 +18083,7 @@ type ProjectsLocationsProductsCreateCall struct {
 // is missing or invalid.
 //
 // - parent: The project in which the Product should be created. Format
-// is `projects/PROJECT_ID/locations/LOC_ID`.
+//   is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) Create(parent string, product *Product) *ProjectsLocationsProductsCreateCall {
 	c := &ProjectsLocationsProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18128,7 +18128,7 @@ func (c *ProjectsLocationsProductsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18244,7 +18244,7 @@ type ProjectsLocationsProductsDeleteCall struct {
 // may still work until all related caches are refreshed.
 //
 // - name: Resource name of product to delete. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsService) Delete(name string) *ProjectsLocationsProductsDeleteCall {
 	c := &ProjectsLocationsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18278,7 +18278,7 @@ func (c *ProjectsLocationsProductsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18380,7 +18380,7 @@ type ProjectsLocationsProductsGetCall struct {
 // Returns NOT_FOUND if the Product does not exist.
 //
 // - name: Resource name of the Product to get. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsService) Get(name string) *ProjectsLocationsProductsGetCall {
 	c := &ProjectsLocationsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18424,7 +18424,7 @@ func (c *ProjectsLocationsProductsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18530,7 +18530,7 @@ type ProjectsLocationsProductsListCall struct {
 // than 1.
 //
 // - parent: The project OR ProductSet from which Products should be
-// listed. Format: `projects/PROJECT_ID/locations/LOC_ID`
+//   listed. Format: `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) List(parent string) *ProjectsLocationsProductsListCall {
 	c := &ProjectsLocationsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18588,7 +18588,7 @@ func (c *ProjectsLocationsProductsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18732,8 +18732,8 @@ type ProjectsLocationsProductsPatchCall struct {
 // INVALID_ARGUMENT if product_category is present in update_mask.
 //
 // - name: The resource name of the product. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
-// field is ignored when creating a product.
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+//   field is ignored when creating a product.
 func (r *ProjectsLocationsProductsService) Patch(name string, product *Product) *ProjectsLocationsProductsPatchCall {
 	c := &ProjectsLocationsProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18777,7 +18777,7 @@ func (c *ProjectsLocationsProductsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18909,7 +18909,7 @@ type ProjectsLocationsProductsPurgeCall struct {
 // `Operation.metadata` contains `BatchOperationMetadata`. (progress)
 //
 // - parent: The project and location in which the Products should be
-// deleted. Format is `projects/PROJECT_ID/locations/LOC_ID`.
+//   deleted. Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) Purge(parent string, purgeproductsrequest *PurgeProductsRequest) *ProjectsLocationsProductsPurgeCall {
 	c := &ProjectsLocationsProductsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18944,7 +18944,7 @@ func (c *ProjectsLocationsProductsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19066,8 +19066,8 @@ type ProjectsLocationsProductsReferenceImagesCreateCall struct {
 // polygons.
 //
 // - parent: Resource name of the product in which to create the
-// reference image. Format is
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
+//   reference image. Format is
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Create(parent string, referenceimage *ReferenceImage) *ProjectsLocationsProductsReferenceImagesCreateCall {
 	c := &ProjectsLocationsProductsReferenceImagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19113,7 +19113,7 @@ func (c *ProjectsLocationsProductsReferenceImagesCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsProductsReferenceImagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19230,9 +19230,9 @@ type ProjectsLocationsProductsReferenceImagesDeleteCall struct {
 // Storage.
 //
 // - name: The resource name of the reference image to delete. Format
-// is:
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
-// ges/IMAGE_ID`
+//   is:
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceI
+//   mages/IMAGE_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Delete(name string) *ProjectsLocationsProductsReferenceImagesDeleteCall {
 	c := &ProjectsLocationsProductsReferenceImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19266,7 +19266,7 @@ func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19368,8 +19368,8 @@ type ProjectsLocationsProductsReferenceImagesGetCall struct {
 // errors: * Returns NOT_FOUND if the specified image does not exist.
 //
 // - name: The resource name of the ReferenceImage to get. Format is:
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
-// ges/IMAGE_ID`.
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceI
+//   mages/IMAGE_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Get(name string) *ProjectsLocationsProductsReferenceImagesGetCall {
 	c := &ProjectsLocationsProductsReferenceImagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19413,7 +19413,7 @@ func (c *ProjectsLocationsProductsReferenceImagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsReferenceImagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19519,8 +19519,8 @@ type ProjectsLocationsProductsReferenceImagesListCall struct {
 // page_size is greater than 100, or less than 1.
 //
 // - parent: Resource name of the product containing the reference
-// images. Format is
-// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
+//   images. Format is
+//   `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) List(parent string) *ProjectsLocationsProductsReferenceImagesListCall {
 	c := &ProjectsLocationsProductsReferenceImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19580,7 +19580,7 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) Header() http.Header 
 
 func (c *ProjectsLocationsProductsReferenceImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19761,7 +19761,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

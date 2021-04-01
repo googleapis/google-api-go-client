@@ -2286,10 +2286,10 @@ type IamPoliciesSearchAllCall struct {
 // scope, otherwise the request will be rejected.
 //
 // - scope: The relative name of an asset. The search is limited to the
-// resources within the `scope`. The allowed value must be: *
-// Organization number (such as "organizations/123") * Folder
-// number(such as "folders/1234") * Project number (such as
-// "projects/12345") * Project id (such as "projects/abc")
+//   resources within the `scope`. The allowed value must be: *
+//   Organization number (such as "organizations/123") * Folder
+//   number(such as "folders/1234") * Project number (such as
+//   "projects/12345") * Project id (such as "projects/abc").
 func (r *IamPoliciesService) SearchAll(scope string) *IamPoliciesSearchAllCall {
 	c := &IamPoliciesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -2362,7 +2362,7 @@ func (c *IamPoliciesSearchAllCall) Header() http.Header {
 
 func (c *IamPoliciesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2508,10 +2508,10 @@ type ResourcesSearchAllCall struct {
 // rejected.
 //
 // - scope: The relative name of an asset. The search is limited to the
-// resources within the `scope`. The allowed value must be: *
-// Organization number (such as "organizations/123") * Folder
-// number(such as "folders/1234") * Project number (such as
-// "projects/12345") * Project id (such as "projects/abc")
+//   resources within the `scope`. The allowed value must be: *
+//   Organization number (such as "organizations/123") * Folder
+//   number(such as "folders/1234") * Project number (such as
+//   "projects/12345") * Project id (such as "projects/abc").
 func (r *ResourcesService) SearchAll(scope string) *ResourcesSearchAllCall {
 	c := &ResourcesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -2600,7 +2600,7 @@ func (c *ResourcesSearchAllCall) Header() http.Header {
 
 func (c *ResourcesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

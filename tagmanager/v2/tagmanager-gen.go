@@ -3425,7 +3425,7 @@ type AccountsGetCall struct {
 // Get: Gets a GTM Account.
 //
 // - path: GTM Accounts's API relative path. Example:
-// accounts/{account_id}
+//   accounts/{account_id}.
 func (r *AccountsService) Get(path string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3469,7 +3469,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3620,7 +3620,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3739,7 +3739,7 @@ type AccountsUpdateCall struct {
 // Update: Updates a GTM Account.
 //
 // - path: GTM Accounts's API relative path. Example:
-// accounts/{account_id}
+//   accounts/{account_id}.
 func (r *AccountsService) Update(path string, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3782,7 +3782,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3895,7 +3895,7 @@ type AccountsContainersCreateCall struct {
 // Create: Creates a Container.
 //
 // - parent: GTM Account's API relative path. Example:
-// accounts/{account_id}.
+//   accounts/{account_id}.
 func (r *AccountsContainersService) Create(parent string, container *Container) *AccountsContainersCreateCall {
 	c := &AccountsContainersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3930,7 +3930,7 @@ func (c *AccountsContainersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4037,7 +4037,7 @@ type AccountsContainersDeleteCall struct {
 // Delete: Deletes a Container.
 //
 // - path: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Delete(path string) *AccountsContainersDeleteCall {
 	c := &AccountsContainersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4071,7 +4071,7 @@ func (c *AccountsContainersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4143,7 +4143,7 @@ type AccountsContainersGetCall struct {
 // Get: Gets a Container.
 //
 // - path: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Get(path string) *AccountsContainersGetCall {
 	c := &AccountsContainersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4187,7 +4187,7 @@ func (c *AccountsContainersGetCall) Header() http.Header {
 
 func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4291,7 +4291,7 @@ type AccountsContainersListCall struct {
 // List: Lists all Containers that belongs to a GTM Account.
 //
 // - parent: GTM Accounts's API relative path. Example:
-// accounts/{account_id}.
+//   accounts/{account_id}.
 func (r *AccountsContainersService) List(parent string) *AccountsContainersListCall {
 	c := &AccountsContainersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4342,7 +4342,7 @@ func (c *AccountsContainersListCall) Header() http.Header {
 
 func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4472,7 +4472,7 @@ type AccountsContainersUpdateCall struct {
 // Update: Updates a Container.
 //
 // - path: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Update(path string, container *Container) *AccountsContainersUpdateCall {
 	c := &AccountsContainersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4515,7 +4515,7 @@ func (c *AccountsContainersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4628,7 +4628,7 @@ type AccountsContainersEnvironmentsCreateCall struct {
 // Create: Creates a GTM Environment.
 //
 // - parent: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersEnvironmentsService) Create(parent string, environment *Environment) *AccountsContainersEnvironmentsCreateCall {
 	c := &AccountsContainersEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4663,7 +4663,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4770,8 +4770,8 @@ type AccountsContainersEnvironmentsDeleteCall struct {
 // Delete: Deletes a GTM Environment.
 //
 // - path: GTM Environment's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/environments/{environm
-// ent_id}
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Delete(path string) *AccountsContainersEnvironmentsDeleteCall {
 	c := &AccountsContainersEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4805,7 +4805,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4877,8 +4877,8 @@ type AccountsContainersEnvironmentsGetCall struct {
 // Get: Gets a GTM Environment.
 //
 // - path: GTM Environment's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/environments/{environm
-// ent_id}
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Get(path string) *AccountsContainersEnvironmentsGetCall {
 	c := &AccountsContainersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4922,7 +4922,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5026,7 +5026,7 @@ type AccountsContainersEnvironmentsListCall struct {
 // List: Lists all GTM Environments of a GTM Container.
 //
 // - parent: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersEnvironmentsService) List(parent string) *AccountsContainersEnvironmentsListCall {
 	c := &AccountsContainersEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5077,7 +5077,7 @@ func (c *AccountsContainersEnvironmentsListCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5208,8 +5208,8 @@ type AccountsContainersEnvironmentsReauthorizeCall struct {
 // Environment.
 //
 // - path: GTM Environment's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/environments/{environm
-// ent_id}
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Reauthorize(path string, environment *Environment) *AccountsContainersEnvironmentsReauthorizeCall {
 	c := &AccountsContainersEnvironmentsReauthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5244,7 +5244,7 @@ func (c *AccountsContainersEnvironmentsReauthorizeCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsReauthorizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5352,8 +5352,8 @@ type AccountsContainersEnvironmentsUpdateCall struct {
 // Update: Updates a GTM Environment.
 //
 // - path: GTM Environment's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/environments/{environm
-// ent_id}
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Update(path string, environment *Environment) *AccountsContainersEnvironmentsUpdateCall {
 	c := &AccountsContainersEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5396,7 +5396,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5509,7 +5509,7 @@ type AccountsContainersVersionHeadersLatestCall struct {
 // Latest: Gets the latest container version header
 //
 // - parent: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionHeadersService) Latest(parent string) *AccountsContainersVersionHeadersLatestCall {
 	c := &AccountsContainersVersionHeadersLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5553,7 +5553,7 @@ func (c *AccountsContainersVersionHeadersLatestCall) Header() http.Header {
 
 func (c *AccountsContainersVersionHeadersLatestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5657,7 +5657,7 @@ type AccountsContainersVersionHeadersListCall struct {
 // List: Lists all Container Versions of a GTM Container.
 //
 // - parent: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionHeadersService) List(parent string) *AccountsContainersVersionHeadersListCall {
 	c := &AccountsContainersVersionHeadersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5715,7 +5715,7 @@ func (c *AccountsContainersVersionHeadersListCall) Header() http.Header {
 
 func (c *AccountsContainersVersionHeadersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5850,7 +5850,8 @@ type AccountsContainersVersionsDeleteCall struct {
 // Delete: Deletes a Container Version.
 //
 // - path: GTM ContainerVersion's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/versions/{version_id}
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Delete(path string) *AccountsContainersVersionsDeleteCall {
 	c := &AccountsContainersVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5884,7 +5885,7 @@ func (c *AccountsContainersVersionsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5956,7 +5957,8 @@ type AccountsContainersVersionsGetCall struct {
 // Get: Gets a Container Version.
 //
 // - path: GTM ContainerVersion's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/versions/{version_id}
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Get(path string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6008,7 +6010,7 @@ func (c *AccountsContainersVersionsGetCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6118,7 +6120,7 @@ type AccountsContainersVersionsLiveCall struct {
 // Live: Gets the live (i.e. published) container version
 //
 // - parent: GTM Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionsService) Live(parent string) *AccountsContainersVersionsLiveCall {
 	c := &AccountsContainersVersionsLiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6162,7 +6164,7 @@ func (c *AccountsContainersVersionsLiveCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsLiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6265,7 +6267,8 @@ type AccountsContainersVersionsPublishCall struct {
 // Publish: Publishes a Container Version.
 //
 // - path: GTM ContainerVersion's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/versions/{version_id}
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Publish(path string) *AccountsContainersVersionsPublishCall {
 	c := &AccountsContainersVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6307,7 +6310,7 @@ func (c *AccountsContainersVersionsPublishCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6412,7 +6415,8 @@ type AccountsContainersVersionsSetLatestCall struct {
 // workspaces when detecting conflicts and errors.
 //
 // - path: GTM ContainerVersion's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/versions/{version_id}
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) SetLatest(path string) *AccountsContainersVersionsSetLatestCall {
 	c := &AccountsContainersVersionsSetLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6446,7 +6450,7 @@ func (c *AccountsContainersVersionsSetLatestCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsSetLatestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6545,7 +6549,8 @@ type AccountsContainersVersionsUndeleteCall struct {
 // Undelete: Undeletes a Container Version.
 //
 // - path: GTM ContainerVersion's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/versions/{version_id}
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Undelete(path string) *AccountsContainersVersionsUndeleteCall {
 	c := &AccountsContainersVersionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6579,7 +6584,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6679,7 +6684,8 @@ type AccountsContainersVersionsUpdateCall struct {
 // Update: Updates a Container Version.
 //
 // - path: GTM ContainerVersion's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/versions/{version_id}
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Update(path string, containerversion *ContainerVersion) *AccountsContainersVersionsUpdateCall {
 	c := &AccountsContainersVersionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6722,7 +6728,7 @@ func (c *AccountsContainersVersionsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6835,7 +6841,7 @@ type AccountsContainersWorkspacesCreateCall struct {
 // Create: Creates a Workspace.
 //
 // - parent: GTM parent Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersWorkspacesService) Create(parent string, workspace *Workspace) *AccountsContainersWorkspacesCreateCall {
 	c := &AccountsContainersWorkspacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6870,7 +6876,7 @@ func (c *AccountsContainersWorkspacesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6980,8 +6986,8 @@ type AccountsContainersWorkspacesCreateVersionCall struct {
 // version to the newly created version.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) CreateVersion(path string, createcontainerversionrequestversionoptions *CreateContainerVersionRequestVersionOptions) *AccountsContainersWorkspacesCreateVersionCall {
 	c := &AccountsContainersWorkspacesCreateVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7016,7 +7022,7 @@ func (c *AccountsContainersWorkspacesCreateVersionCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesCreateVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7123,8 +7129,8 @@ type AccountsContainersWorkspacesDeleteCall struct {
 // Delete: Deletes a Workspace.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Delete(path string) *AccountsContainersWorkspacesDeleteCall {
 	c := &AccountsContainersWorkspacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7158,7 +7164,7 @@ func (c *AccountsContainersWorkspacesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7230,8 +7236,8 @@ type AccountsContainersWorkspacesGetCall struct {
 // Get: Gets a Workspace.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Get(path string) *AccountsContainersWorkspacesGetCall {
 	c := &AccountsContainersWorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7275,7 +7281,7 @@ func (c *AccountsContainersWorkspacesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7379,8 +7385,8 @@ type AccountsContainersWorkspacesGetStatusCall struct {
 // GetStatus: Finds conflicting and modified entities in the workspace.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) GetStatus(path string) *AccountsContainersWorkspacesGetStatusCall {
 	c := &AccountsContainersWorkspacesGetStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7424,7 +7430,7 @@ func (c *AccountsContainersWorkspacesGetStatusCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesGetStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7528,7 +7534,7 @@ type AccountsContainersWorkspacesListCall struct {
 // List: Lists all Workspaces that belong to a GTM Container.
 //
 // - parent: GTM parent Container's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersWorkspacesService) List(parent string) *AccountsContainersWorkspacesListCall {
 	c := &AccountsContainersWorkspacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7579,7 +7585,7 @@ func (c *AccountsContainersWorkspacesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7709,8 +7715,8 @@ type AccountsContainersWorkspacesQuickPreviewCall struct {
 // version from all entities in the provided workspace.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) QuickPreview(path string) *AccountsContainersWorkspacesQuickPreviewCall {
 	c := &AccountsContainersWorkspacesQuickPreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7744,7 +7750,7 @@ func (c *AccountsContainersWorkspacesQuickPreviewCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesQuickPreviewCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7845,8 +7851,8 @@ type AccountsContainersWorkspacesResolveConflictCall struct {
 // updating it to the resolved entity passed in the request.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) ResolveConflict(path string, entity *Entity) *AccountsContainersWorkspacesResolveConflictCall {
 	c := &AccountsContainersWorkspacesResolveConflictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7889,7 +7895,7 @@ func (c *AccountsContainersWorkspacesResolveConflictCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesResolveConflictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7975,8 +7981,8 @@ type AccountsContainersWorkspacesSyncCall struct {
 // modified entities.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Sync(path string) *AccountsContainersWorkspacesSyncCall {
 	c := &AccountsContainersWorkspacesSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8010,7 +8016,7 @@ func (c *AccountsContainersWorkspacesSyncCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8110,8 +8116,8 @@ type AccountsContainersWorkspacesUpdateCall struct {
 // Update: Updates a Workspace.
 //
 // - path: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Update(path string, workspace *Workspace) *AccountsContainersWorkspacesUpdateCall {
 	c := &AccountsContainersWorkspacesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8154,7 +8160,7 @@ func (c *AccountsContainersWorkspacesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8266,8 +8272,8 @@ type AccountsContainersWorkspacesBuiltInVariablesCreateCall struct {
 // Create: Creates one or more GTM Built-In Variables.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8420,7 +8426,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Header() http.H
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8749,8 +8755,8 @@ type AccountsContainersWorkspacesBuiltInVariablesDeleteCall struct {
 // Delete: Deletes one or more GTM Built-In Variables.
 //
 // - path: GTM BuiltInVariable's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/built_in_variables
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/built_in_variables.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8903,7 +8909,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Header() http.H
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9205,8 +9211,8 @@ type AccountsContainersWorkspacesBuiltInVariablesListCall struct {
 // List: Lists all the enabled Built-In Variables of a GTM Container.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) List(parent string) *AccountsContainersWorkspacesBuiltInVariablesListCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9257,7 +9263,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesListCall) Header() http.Hea
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9388,8 +9394,8 @@ type AccountsContainersWorkspacesBuiltInVariablesRevertCall struct {
 // Workspace.
 //
 // - path: GTM BuiltInVariable's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/built_in_variables
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/built_in_variables.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9542,7 +9548,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Header() http.H
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9871,8 +9877,8 @@ type AccountsContainersWorkspacesFoldersCreateCall struct {
 // Create: Creates a GTM Folder.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Create(parent string, folder *Folder) *AccountsContainersWorkspacesFoldersCreateCall {
 	c := &AccountsContainersWorkspacesFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9907,7 +9913,7 @@ func (c *AccountsContainersWorkspacesFoldersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10014,8 +10020,8 @@ type AccountsContainersWorkspacesFoldersDeleteCall struct {
 // Delete: Deletes a GTM Folder.
 //
 // - path: GTM Folder's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/folders/{folder_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Delete(path string) *AccountsContainersWorkspacesFoldersDeleteCall {
 	c := &AccountsContainersWorkspacesFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10049,7 +10055,7 @@ func (c *AccountsContainersWorkspacesFoldersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10120,8 +10126,8 @@ type AccountsContainersWorkspacesFoldersEntitiesCall struct {
 // Entities: List all entities in a GTM Folder.
 //
 // - path: GTM Folder's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/folders/{folder_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Entities(path string) *AccountsContainersWorkspacesFoldersEntitiesCall {
 	c := &AccountsContainersWorkspacesFoldersEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10162,7 +10168,7 @@ func (c *AccountsContainersWorkspacesFoldersEntitiesCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10289,8 +10295,8 @@ type AccountsContainersWorkspacesFoldersGetCall struct {
 // Get: Gets a GTM Folder.
 //
 // - path: GTM Folder's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/folders/{folder_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Get(path string) *AccountsContainersWorkspacesFoldersGetCall {
 	c := &AccountsContainersWorkspacesFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10334,7 +10340,7 @@ func (c *AccountsContainersWorkspacesFoldersGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10438,8 +10444,8 @@ type AccountsContainersWorkspacesFoldersListCall struct {
 // List: Lists all GTM Folders of a Container.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesFoldersService) List(parent string) *AccountsContainersWorkspacesFoldersListCall {
 	c := &AccountsContainersWorkspacesFoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10490,7 +10496,7 @@ func (c *AccountsContainersWorkspacesFoldersListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10620,8 +10626,8 @@ type AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall struct {
 // MoveEntitiesToFolder: Moves entities to a GTM Folder.
 //
 // - path: GTM Folder's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/folders/{folder_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) MoveEntitiesToFolder(path string, folder *Folder) *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall {
 	c := &AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10677,7 +10683,7 @@ func (c *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall) Header() h
 
 func (c *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10774,8 +10780,8 @@ type AccountsContainersWorkspacesFoldersRevertCall struct {
 // Revert: Reverts changes to a GTM Folder in a GTM Workspace.
 //
 // - path: GTM Folder's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/folders/{folder_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Revert(path string) *AccountsContainersWorkspacesFoldersRevertCall {
 	c := &AccountsContainersWorkspacesFoldersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10816,7 +10822,7 @@ func (c *AccountsContainersWorkspacesFoldersRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10921,8 +10927,8 @@ type AccountsContainersWorkspacesFoldersUpdateCall struct {
 // Update: Updates a GTM Folder.
 //
 // - path: GTM Folder's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/folders/{folder_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Update(path string, folder *Folder) *AccountsContainersWorkspacesFoldersUpdateCall {
 	c := &AccountsContainersWorkspacesFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10964,7 +10970,7 @@ func (c *AccountsContainersWorkspacesFoldersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11077,8 +11083,8 @@ type AccountsContainersWorkspacesTagsCreateCall struct {
 // Create: Creates a GTM Tag.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTagsService) Create(parent string, tag *Tag) *AccountsContainersWorkspacesTagsCreateCall {
 	c := &AccountsContainersWorkspacesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11113,7 +11119,7 @@ func (c *AccountsContainersWorkspacesTagsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11220,8 +11226,8 @@ type AccountsContainersWorkspacesTagsDeleteCall struct {
 // Delete: Deletes a GTM Tag.
 //
 // - path: GTM Tag's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/tags/{tag_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Delete(path string) *AccountsContainersWorkspacesTagsDeleteCall {
 	c := &AccountsContainersWorkspacesTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11255,7 +11261,7 @@ func (c *AccountsContainersWorkspacesTagsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11327,8 +11333,8 @@ type AccountsContainersWorkspacesTagsGetCall struct {
 // Get: Gets a GTM Tag.
 //
 // - path: GTM Tag's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/tags/{tag_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Get(path string) *AccountsContainersWorkspacesTagsGetCall {
 	c := &AccountsContainersWorkspacesTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11372,7 +11378,7 @@ func (c *AccountsContainersWorkspacesTagsGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11476,8 +11482,8 @@ type AccountsContainersWorkspacesTagsListCall struct {
 // List: Lists all GTM Tags of a Container.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTagsService) List(parent string) *AccountsContainersWorkspacesTagsListCall {
 	c := &AccountsContainersWorkspacesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11528,7 +11534,7 @@ func (c *AccountsContainersWorkspacesTagsListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11657,8 +11663,8 @@ type AccountsContainersWorkspacesTagsRevertCall struct {
 // Revert: Reverts changes to a GTM Tag in a GTM Workspace.
 //
 // - path: GTM Tag's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/tags/{tag_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Revert(path string) *AccountsContainersWorkspacesTagsRevertCall {
 	c := &AccountsContainersWorkspacesTagsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11699,7 +11705,7 @@ func (c *AccountsContainersWorkspacesTagsRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11804,8 +11810,8 @@ type AccountsContainersWorkspacesTagsUpdateCall struct {
 // Update: Updates a GTM Tag.
 //
 // - path: GTM Tag's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/tags/{tag_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Update(path string, tag *Tag) *AccountsContainersWorkspacesTagsUpdateCall {
 	c := &AccountsContainersWorkspacesTagsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11847,7 +11853,7 @@ func (c *AccountsContainersWorkspacesTagsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11960,8 +11966,8 @@ type AccountsContainersWorkspacesTemplatesCreateCall struct {
 // Create: Creates a GTM Custom Template.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Create(parent string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesCreateCall {
 	c := &AccountsContainersWorkspacesTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11996,7 +12002,7 @@ func (c *AccountsContainersWorkspacesTemplatesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12103,8 +12109,8 @@ type AccountsContainersWorkspacesTemplatesDeleteCall struct {
 // Delete: Deletes a GTM Template.
 //
 // - path: GTM Custom Template's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/templates/{template_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Delete(path string) *AccountsContainersWorkspacesTemplatesDeleteCall {
 	c := &AccountsContainersWorkspacesTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12138,7 +12144,7 @@ func (c *AccountsContainersWorkspacesTemplatesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12210,8 +12216,8 @@ type AccountsContainersWorkspacesTemplatesGetCall struct {
 // Get: Gets a GTM Template.
 //
 // - path: GTM Custom Template's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/templates/{template_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Get(path string) *AccountsContainersWorkspacesTemplatesGetCall {
 	c := &AccountsContainersWorkspacesTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12255,7 +12261,7 @@ func (c *AccountsContainersWorkspacesTemplatesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12359,8 +12365,8 @@ type AccountsContainersWorkspacesTemplatesListCall struct {
 // List: Lists all GTM Templates of a GTM container workspace.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) List(parent string) *AccountsContainersWorkspacesTemplatesListCall {
 	c := &AccountsContainersWorkspacesTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12411,7 +12417,7 @@ func (c *AccountsContainersWorkspacesTemplatesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12540,8 +12546,8 @@ type AccountsContainersWorkspacesTemplatesRevertCall struct {
 // Revert: Reverts changes to a GTM Template in a GTM Workspace.
 //
 // - path: GTM Custom Template's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/templates/{template_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Revert(path string) *AccountsContainersWorkspacesTemplatesRevertCall {
 	c := &AccountsContainersWorkspacesTemplatesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12583,7 +12589,7 @@ func (c *AccountsContainersWorkspacesTemplatesRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12688,8 +12694,8 @@ type AccountsContainersWorkspacesTemplatesUpdateCall struct {
 // Update: Updates a GTM Template.
 //
 // - path: GTM Custom Template's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/templates/{template_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Update(path string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesUpdateCall {
 	c := &AccountsContainersWorkspacesTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12732,7 +12738,7 @@ func (c *AccountsContainersWorkspacesTemplatesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12845,8 +12851,8 @@ type AccountsContainersWorkspacesTriggersCreateCall struct {
 // Create: Creates a GTM Trigger.
 //
 // - parent: GTM Workspaces's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Create(parent string, trigger *Trigger) *AccountsContainersWorkspacesTriggersCreateCall {
 	c := &AccountsContainersWorkspacesTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12881,7 +12887,7 @@ func (c *AccountsContainersWorkspacesTriggersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12988,8 +12994,8 @@ type AccountsContainersWorkspacesTriggersDeleteCall struct {
 // Delete: Deletes a GTM Trigger.
 //
 // - path: GTM Trigger's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/triggers/{trigger_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Delete(path string) *AccountsContainersWorkspacesTriggersDeleteCall {
 	c := &AccountsContainersWorkspacesTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13023,7 +13029,7 @@ func (c *AccountsContainersWorkspacesTriggersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13095,8 +13101,8 @@ type AccountsContainersWorkspacesTriggersGetCall struct {
 // Get: Gets a GTM Trigger.
 //
 // - path: GTM Trigger's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/triggers/{trigger_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Get(path string) *AccountsContainersWorkspacesTriggersGetCall {
 	c := &AccountsContainersWorkspacesTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13140,7 +13146,7 @@ func (c *AccountsContainersWorkspacesTriggersGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13244,8 +13250,8 @@ type AccountsContainersWorkspacesTriggersListCall struct {
 // List: Lists all GTM Triggers of a Container.
 //
 // - parent: GTM Workspaces's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) List(parent string) *AccountsContainersWorkspacesTriggersListCall {
 	c := &AccountsContainersWorkspacesTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13296,7 +13302,7 @@ func (c *AccountsContainersWorkspacesTriggersListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13425,8 +13431,8 @@ type AccountsContainersWorkspacesTriggersRevertCall struct {
 // Revert: Reverts changes to a GTM Trigger in a GTM Workspace.
 //
 // - path: GTM Trigger's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/triggers/{trigger_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Revert(path string) *AccountsContainersWorkspacesTriggersRevertCall {
 	c := &AccountsContainersWorkspacesTriggersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13468,7 +13474,7 @@ func (c *AccountsContainersWorkspacesTriggersRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13573,8 +13579,8 @@ type AccountsContainersWorkspacesTriggersUpdateCall struct {
 // Update: Updates a GTM Trigger.
 //
 // - path: GTM Trigger's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/triggers/{trigger_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Update(path string, trigger *Trigger) *AccountsContainersWorkspacesTriggersUpdateCall {
 	c := &AccountsContainersWorkspacesTriggersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13617,7 +13623,7 @@ func (c *AccountsContainersWorkspacesTriggersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13730,8 +13736,8 @@ type AccountsContainersWorkspacesVariablesCreateCall struct {
 // Create: Creates a GTM Variable.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Create(parent string, variable *Variable) *AccountsContainersWorkspacesVariablesCreateCall {
 	c := &AccountsContainersWorkspacesVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13766,7 +13772,7 @@ func (c *AccountsContainersWorkspacesVariablesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13873,8 +13879,8 @@ type AccountsContainersWorkspacesVariablesDeleteCall struct {
 // Delete: Deletes a GTM Variable.
 //
 // - path: GTM Variable's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/variables/{variable_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Delete(path string) *AccountsContainersWorkspacesVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13908,7 +13914,7 @@ func (c *AccountsContainersWorkspacesVariablesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13980,8 +13986,8 @@ type AccountsContainersWorkspacesVariablesGetCall struct {
 // Get: Gets a GTM Variable.
 //
 // - path: GTM Variable's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/variables/{variable_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Get(path string) *AccountsContainersWorkspacesVariablesGetCall {
 	c := &AccountsContainersWorkspacesVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14025,7 +14031,7 @@ func (c *AccountsContainersWorkspacesVariablesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14129,8 +14135,8 @@ type AccountsContainersWorkspacesVariablesListCall struct {
 // List: Lists all GTM Variables of a Container.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesVariablesService) List(parent string) *AccountsContainersWorkspacesVariablesListCall {
 	c := &AccountsContainersWorkspacesVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14181,7 +14187,7 @@ func (c *AccountsContainersWorkspacesVariablesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14310,8 +14316,8 @@ type AccountsContainersWorkspacesVariablesRevertCall struct {
 // Revert: Reverts changes to a GTM Variable in a GTM Workspace.
 //
 // - path: GTM Variable's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/variables/{variable_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Revert(path string) *AccountsContainersWorkspacesVariablesRevertCall {
 	c := &AccountsContainersWorkspacesVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14353,7 +14359,7 @@ func (c *AccountsContainersWorkspacesVariablesRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14458,8 +14464,8 @@ type AccountsContainersWorkspacesVariablesUpdateCall struct {
 // Update: Updates a GTM Variable.
 //
 // - path: GTM Variable's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/variables/{variable_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Update(path string, variable *Variable) *AccountsContainersWorkspacesVariablesUpdateCall {
 	c := &AccountsContainersWorkspacesVariablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14502,7 +14508,7 @@ func (c *AccountsContainersWorkspacesVariablesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14615,8 +14621,8 @@ type AccountsContainersWorkspacesZonesCreateCall struct {
 // Create: Creates a GTM Zone.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesZonesService) Create(parent string, zone *Zone) *AccountsContainersWorkspacesZonesCreateCall {
 	c := &AccountsContainersWorkspacesZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14651,7 +14657,7 @@ func (c *AccountsContainersWorkspacesZonesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14758,8 +14764,8 @@ type AccountsContainersWorkspacesZonesDeleteCall struct {
 // Delete: Deletes a GTM Zone.
 //
 // - path: GTM Zone's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/zones/{zone_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Delete(path string) *AccountsContainersWorkspacesZonesDeleteCall {
 	c := &AccountsContainersWorkspacesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14793,7 +14799,7 @@ func (c *AccountsContainersWorkspacesZonesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14865,8 +14871,8 @@ type AccountsContainersWorkspacesZonesGetCall struct {
 // Get: Gets a GTM Zone.
 //
 // - path: GTM Zone's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/zones/{zone_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Get(path string) *AccountsContainersWorkspacesZonesGetCall {
 	c := &AccountsContainersWorkspacesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14910,7 +14916,7 @@ func (c *AccountsContainersWorkspacesZonesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15014,8 +15020,8 @@ type AccountsContainersWorkspacesZonesListCall struct {
 // List: Lists all GTM Zones of a GTM container workspace.
 //
 // - parent: GTM Workspace's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesZonesService) List(parent string) *AccountsContainersWorkspacesZonesListCall {
 	c := &AccountsContainersWorkspacesZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15066,7 +15072,7 @@ func (c *AccountsContainersWorkspacesZonesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15195,8 +15201,8 @@ type AccountsContainersWorkspacesZonesRevertCall struct {
 // Revert: Reverts changes to a GTM Zone in a GTM Workspace.
 //
 // - path: GTM Zone's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/zones/{zone_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Revert(path string) *AccountsContainersWorkspacesZonesRevertCall {
 	c := &AccountsContainersWorkspacesZonesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15237,7 +15243,7 @@ func (c *AccountsContainersWorkspacesZonesRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15342,8 +15348,8 @@ type AccountsContainersWorkspacesZonesUpdateCall struct {
 // Update: Updates a GTM Zone.
 //
 // - path: GTM Zone's API relative path. Example:
-// accounts/{account_id}/containers/{container_id}/workspaces/{workspace_
-// id}/zones/{zone_id}
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Update(path string, zone *Zone) *AccountsContainersWorkspacesZonesUpdateCall {
 	c := &AccountsContainersWorkspacesZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15385,7 +15391,7 @@ func (c *AccountsContainersWorkspacesZonesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15498,7 +15504,7 @@ type AccountsUserPermissionsCreateCall struct {
 // Create: Creates a user's Account & Container access.
 //
 // - parent: GTM Account's API relative path. Example:
-// accounts/{account_id}
+//   accounts/{account_id}.
 func (r *AccountsUserPermissionsService) Create(parent string, userpermission *UserPermission) *AccountsUserPermissionsCreateCall {
 	c := &AccountsUserPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15533,7 +15539,7 @@ func (c *AccountsUserPermissionsCreateCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15641,7 +15647,7 @@ type AccountsUserPermissionsDeleteCall struct {
 // all of its containers.
 //
 // - path: GTM UserPermission's API relative path. Example:
-// accounts/{account_id}/user_permissions/{user_permission_id}
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Delete(path string) *AccountsUserPermissionsDeleteCall {
 	c := &AccountsUserPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15675,7 +15681,7 @@ func (c *AccountsUserPermissionsDeleteCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15747,7 +15753,7 @@ type AccountsUserPermissionsGetCall struct {
 // Get: Gets a user's Account & Container access.
 //
 // - path: GTM UserPermission's API relative path. Example:
-// accounts/{account_id}/user_permissions/{user_permission_id}
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Get(path string) *AccountsUserPermissionsGetCall {
 	c := &AccountsUserPermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15791,7 +15797,7 @@ func (c *AccountsUserPermissionsGetCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15895,7 +15901,7 @@ type AccountsUserPermissionsListCall struct {
 // Account and Container user access granted to each of them.
 //
 // - parent: GTM Accounts's API relative path. Example:
-// accounts/{account_id}
+//   accounts/{account_id}.
 func (r *AccountsUserPermissionsService) List(parent string) *AccountsUserPermissionsListCall {
 	c := &AccountsUserPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15946,7 +15952,7 @@ func (c *AccountsUserPermissionsListCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16075,7 +16081,7 @@ type AccountsUserPermissionsUpdateCall struct {
 // Update: Updates a user's Account & Container access.
 //
 // - path: GTM UserPermission's API relative path. Example:
-// accounts/{account_id}/user_permissions/{user_permission_id}
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Update(path string, userpermission *UserPermission) *AccountsUserPermissionsUpdateCall {
 	c := &AccountsUserPermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -16110,7 +16116,7 @@ func (c *AccountsUserPermissionsUpdateCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

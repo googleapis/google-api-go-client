@@ -5935,8 +5935,8 @@ type ProjectsDocumentsBatchProcessCall struct {
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
 // - parent: Target project and location to make a call. Format:
-// `projects/{project-id}/locations/{location-id}`. If no location is
-// specified, a region will be chosen automatically.
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically.
 func (r *ProjectsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsDocumentsBatchProcessCall {
 	c := &ProjectsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5971,7 +5971,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6079,9 +6079,9 @@ type ProjectsDocumentsProcessCall struct {
 // Process: Processes a single document.
 //
 // - parent: Target project and location to make a call. Format:
-// `projects/{project-id}/locations/{location-id}`. If no location is
-// specified, a region will be chosen automatically. This field is only
-// populated when used in ProcessDocument method.
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically. This field is
+//   only populated when used in ProcessDocument method.
 func (r *ProjectsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsDocumentsProcessCall {
 	c := &ProjectsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6116,7 +6116,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6226,8 +6226,8 @@ type ProjectsLocationsDocumentsBatchProcessCall struct {
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
 // - parent: Target project and location to make a call. Format:
-// `projects/{project-id}/locations/{location-id}`. If no location is
-// specified, a region will be chosen automatically.
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically.
 func (r *ProjectsLocationsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsLocationsDocumentsBatchProcessCall {
 	c := &ProjectsLocationsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6262,7 +6262,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6370,9 +6370,9 @@ type ProjectsLocationsDocumentsProcessCall struct {
 // Process: Processes a single document.
 //
 // - parent: Target project and location to make a call. Format:
-// `projects/{project-id}/locations/{location-id}`. If no location is
-// specified, a region will be chosen automatically. This field is only
-// populated when used in ProcessDocument method.
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically. This field is
+//   only populated when used in ProcessDocument method.
 func (r *ProjectsLocationsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsLocationsDocumentsProcessCall {
 	c := &ProjectsLocationsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6407,7 +6407,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6561,7 +6561,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6709,7 +6709,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

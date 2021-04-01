@@ -1521,12 +1521,12 @@ type FoldersGetContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The name of the ContainerThreatDetectionSettings to retrieve.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *FoldersService) GetContainerThreatDetectionSettings(name string) *FoldersGetContainerThreatDetectionSettingsCall {
 	c := &FoldersGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1570,7 +1570,7 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1674,9 +1674,10 @@ type FoldersGetEventThreatDetectionSettingsCall struct {
 // resource.
 //
 // - name: The name of the EventThreatDetectionSettings to retrieve.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *FoldersService) GetEventThreatDetectionSettings(name string) *FoldersGetEventThreatDetectionSettingsCall {
 	c := &FoldersGetEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1720,7 +1721,7 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1824,10 +1825,10 @@ type FoldersGetSecurityHealthAnalyticsSettingsCall struct {
 // SecurityHealthAnalyticsSettings resource.
 //
 // - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *FoldersService) GetSecurityHealthAnalyticsSettings(name string) *FoldersGetSecurityHealthAnalyticsSettingsCall {
 	c := &FoldersGetSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1871,7 +1872,7 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) Header() http.Header {
 
 func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1975,9 +1976,9 @@ type FoldersGetWebSecurityScannerSettingsCall struct {
 // resource.
 //
 // - name: The name of the WebSecurityScannerSettings to retrieve.
-// Formats: * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *FoldersService) GetWebSecurityScannerSettings(name string) *FoldersGetWebSecurityScannerSettingsCall {
 	c := &FoldersGetWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2021,7 +2022,7 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *FoldersGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2125,12 +2126,12 @@ type FoldersUpdateContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The resource name of the ContainerThreatDetectionSettings.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *FoldersService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *FoldersUpdateContainerThreatDetectionSettingsCall {
 	c := &FoldersUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2172,7 +2173,7 @@ func (c *FoldersUpdateContainerThreatDetectionSettingsCall) Header() http.Header
 
 func (c *FoldersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,9 +2288,10 @@ type FoldersUpdateEventThreatDetectionSettingsCall struct {
 // EventThreatDetectionSettings resource.
 //
 // - name: The resource name of the EventThreatDetectionSettings.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *FoldersService) UpdateEventThreatDetectionSettings(name string, eventthreatdetectionsettings *EventThreatDetectionSettings) *FoldersUpdateEventThreatDetectionSettingsCall {
 	c := &FoldersUpdateEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2331,7 +2333,7 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2446,10 +2448,10 @@ type FoldersUpdateSecurityHealthAnalyticsSettingsCall struct {
 // SecurityHealthAnalyticsSettings resource.
 //
 // - name: The resource name of the SecurityHealthAnalyticsSettings.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *FoldersService) UpdateSecurityHealthAnalyticsSettings(name string, securityhealthanalyticssettings *SecurityHealthAnalyticsSettings) *FoldersUpdateSecurityHealthAnalyticsSettingsCall {
 	c := &FoldersUpdateSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2491,7 +2493,7 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) Header() http.Header 
 
 func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2606,9 +2608,9 @@ type FoldersUpdateWebSecurityScannerSettingsCall struct {
 // WebSecurityScannerSettings resource.
 //
 // - name: The resource name of the WebSecurityScannerSettings. Formats:
-// * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   * organizations/{organization}/webSecurityScannerSettings *
+//   folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *FoldersService) UpdateWebSecurityScannerSettings(name string, websecurityscannersettings *WebSecurityScannerSettings) *FoldersUpdateWebSecurityScannerSettingsCall {
 	c := &FoldersUpdateWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2650,7 +2652,7 @@ func (c *FoldersUpdateWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2765,12 +2767,12 @@ type FoldersContainerThreatDetectionSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the ContainerThreatDetectionSettings to
-// calculate. Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *FoldersContainerThreatDetectionSettingsService) Calculate(name string) *FoldersContainerThreatDetectionSettingsCalculateCall {
 	c := &FoldersContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2814,7 +2816,7 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) Header() http.Hea
 
 func (c *FoldersContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2918,9 +2920,10 @@ type FoldersEventThreatDetectionSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the EventThreatDetectionSettings to calculate.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *FoldersEventThreatDetectionSettingsService) Calculate(name string) *FoldersEventThreatDetectionSettingsCalculateCall {
 	c := &FoldersEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2964,7 +2967,7 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) Header() http.Header 
 
 func (c *FoldersEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3068,10 +3071,10 @@ type FoldersSecurityHealthAnalyticsSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the SecurityHealthAnalyticsSettings to calculate.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *FoldersSecurityHealthAnalyticsSettingsService) Calculate(name string) *FoldersSecurityHealthAnalyticsSettingsCalculateCall {
 	c := &FoldersSecurityHealthAnalyticsSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3115,7 +3118,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) Header() http.Head
 
 func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3219,9 +3222,9 @@ type FoldersWebSecurityScannerSettingsCalculateCall struct {
 // on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the WebSecurityScannerSettings to calculate.
-// Formats: * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *FoldersWebSecurityScannerSettingsService) Calculate(name string) *FoldersWebSecurityScannerSettingsCalculateCall {
 	c := &FoldersWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3265,7 +3268,7 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) Header() http.Header {
 
 func (c *FoldersWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3369,12 +3372,12 @@ type OrganizationsGetContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The name of the ContainerThreatDetectionSettings to retrieve.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *OrganizationsService) GetContainerThreatDetectionSettings(name string) *OrganizationsGetContainerThreatDetectionSettingsCall {
 	c := &OrganizationsGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3418,7 +3421,7 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) Header() http.Hea
 
 func (c *OrganizationsGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3522,9 +3525,10 @@ type OrganizationsGetEventThreatDetectionSettingsCall struct {
 // resource.
 //
 // - name: The name of the EventThreatDetectionSettings to retrieve.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *OrganizationsService) GetEventThreatDetectionSettings(name string) *OrganizationsGetEventThreatDetectionSettingsCall {
 	c := &OrganizationsGetEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3568,7 +3572,7 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Header() http.Header 
 
 func (c *OrganizationsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3671,7 +3675,7 @@ type OrganizationsGetSecurityCenterSettingsCall struct {
 // GetSecurityCenterSettings: Get the SecurityCenterSettings resource.
 //
 // - name: The name of the SecurityCenterSettings to retrieve. Format:
-// organizations/{organization}/securityCenterSettings
+//   organizations/{organization}/securityCenterSettings.
 func (r *OrganizationsService) GetSecurityCenterSettings(name string) *OrganizationsGetSecurityCenterSettingsCall {
 	c := &OrganizationsGetSecurityCenterSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3715,7 +3719,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3819,10 +3823,10 @@ type OrganizationsGetSecurityHealthAnalyticsSettingsCall struct {
 // SecurityHealthAnalyticsSettings resource.
 //
 // - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *OrganizationsService) GetSecurityHealthAnalyticsSettings(name string) *OrganizationsGetSecurityHealthAnalyticsSettingsCall {
 	c := &OrganizationsGetSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3866,7 +3870,7 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) Header() http.Head
 
 func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3969,7 +3973,7 @@ type OrganizationsGetSubscriptionCall struct {
 // GetSubscription: Get the Subscription resource.
 //
 // - name: The name of the subscription to retrieve. Format:
-// organizations/{organization}/subscription
+//   organizations/{organization}/subscription.
 func (r *OrganizationsService) GetSubscription(name string) *OrganizationsGetSubscriptionCall {
 	c := &OrganizationsGetSubscriptionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4013,7 +4017,7 @@ func (c *OrganizationsGetSubscriptionCall) Header() http.Header {
 
 func (c *OrganizationsGetSubscriptionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4117,9 +4121,9 @@ type OrganizationsGetWebSecurityScannerSettingsCall struct {
 // resource.
 //
 // - name: The name of the WebSecurityScannerSettings to retrieve.
-// Formats: * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *OrganizationsService) GetWebSecurityScannerSettings(name string) *OrganizationsGetWebSecurityScannerSettingsCall {
 	c := &OrganizationsGetWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4163,7 +4167,7 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4267,12 +4271,12 @@ type OrganizationsUpdateContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The resource name of the ContainerThreatDetectionSettings.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *OrganizationsService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *OrganizationsUpdateContainerThreatDetectionSettingsCall {
 	c := &OrganizationsUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4314,7 +4318,7 @@ func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) Header() http.
 
 func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4429,9 +4433,10 @@ type OrganizationsUpdateEventThreatDetectionSettingsCall struct {
 // EventThreatDetectionSettings resource.
 //
 // - name: The resource name of the EventThreatDetectionSettings.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *OrganizationsService) UpdateEventThreatDetectionSettings(name string, eventthreatdetectionsettings *EventThreatDetectionSettings) *OrganizationsUpdateEventThreatDetectionSettingsCall {
 	c := &OrganizationsUpdateEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4473,7 +4478,7 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) Header() http.Head
 
 func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4588,10 +4593,10 @@ type OrganizationsUpdateSecurityHealthAnalyticsSettingsCall struct {
 // SecurityHealthAnalyticsSettings resource.
 //
 // - name: The resource name of the SecurityHealthAnalyticsSettings.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *OrganizationsService) UpdateSecurityHealthAnalyticsSettings(name string, securityhealthanalyticssettings *SecurityHealthAnalyticsSettings) *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall {
 	c := &OrganizationsUpdateSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4633,7 +4638,7 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) Header() http.H
 
 func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4748,9 +4753,9 @@ type OrganizationsUpdateWebSecurityScannerSettingsCall struct {
 // WebSecurityScannerSettings resource.
 //
 // - name: The resource name of the WebSecurityScannerSettings. Formats:
-// * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   * organizations/{organization}/webSecurityScannerSettings *
+//   folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *OrganizationsService) UpdateWebSecurityScannerSettings(name string, websecurityscannersettings *WebSecurityScannerSettings) *OrganizationsUpdateWebSecurityScannerSettingsCall {
 	c := &OrganizationsUpdateWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4792,7 +4797,7 @@ func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) Header() http.Header
 
 func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4907,12 +4912,12 @@ type OrganizationsContainerThreatDetectionSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the ContainerThreatDetectionSettings to
-// calculate. Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *OrganizationsContainerThreatDetectionSettingsService) Calculate(name string) *OrganizationsContainerThreatDetectionSettingsCalculateCall {
 	c := &OrganizationsContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4956,7 +4961,7 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) Header() ht
 
 func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5060,9 +5065,10 @@ type OrganizationsEventThreatDetectionSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the EventThreatDetectionSettings to calculate.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *OrganizationsEventThreatDetectionSettingsService) Calculate(name string) *OrganizationsEventThreatDetectionSettingsCalculateCall {
 	c := &OrganizationsEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5106,7 +5112,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) Header() http.H
 
 func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5210,10 +5216,10 @@ type OrganizationsSecurityHealthAnalyticsSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the SecurityHealthAnalyticsSettings to calculate.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *OrganizationsSecurityHealthAnalyticsSettingsService) Calculate(name string) *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall {
 	c := &OrganizationsSecurityHealthAnalyticsSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5257,7 +5263,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) Header() htt
 
 func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5361,9 +5367,9 @@ type OrganizationsWebSecurityScannerSettingsCalculateCall struct {
 // on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the WebSecurityScannerSettings to calculate.
-// Formats: * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *OrganizationsWebSecurityScannerSettingsService) Calculate(name string) *OrganizationsWebSecurityScannerSettingsCalculateCall {
 	c := &OrganizationsWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5407,7 +5413,7 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) Header() http.Hea
 
 func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5511,12 +5517,12 @@ type ProjectsGetContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The name of the ContainerThreatDetectionSettings to retrieve.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsService) GetContainerThreatDetectionSettings(name string) *ProjectsGetContainerThreatDetectionSettingsCall {
 	c := &ProjectsGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5560,7 +5566,7 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5664,9 +5670,10 @@ type ProjectsGetEventThreatDetectionSettingsCall struct {
 // resource.
 //
 // - name: The name of the EventThreatDetectionSettings to retrieve.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *ProjectsService) GetEventThreatDetectionSettings(name string) *ProjectsGetEventThreatDetectionSettingsCall {
 	c := &ProjectsGetEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5710,7 +5717,7 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5814,10 +5821,10 @@ type ProjectsGetSecurityHealthAnalyticsSettingsCall struct {
 // SecurityHealthAnalyticsSettings resource.
 //
 // - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *ProjectsService) GetSecurityHealthAnalyticsSettings(name string) *ProjectsGetSecurityHealthAnalyticsSettingsCall {
 	c := &ProjectsGetSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5861,7 +5868,7 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5965,9 +5972,9 @@ type ProjectsGetWebSecurityScannerSettingsCall struct {
 // resource.
 //
 // - name: The name of the WebSecurityScannerSettings to retrieve.
-// Formats: * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *ProjectsService) GetWebSecurityScannerSettings(name string) *ProjectsGetWebSecurityScannerSettingsCall {
 	c := &ProjectsGetWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6011,7 +6018,7 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6115,12 +6122,12 @@ type ProjectsUpdateContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The resource name of the ContainerThreatDetectionSettings.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *ProjectsUpdateContainerThreatDetectionSettingsCall {
 	c := &ProjectsUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6162,7 +6169,7 @@ func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) Header() http.Heade
 
 func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6277,9 +6284,10 @@ type ProjectsUpdateEventThreatDetectionSettingsCall struct {
 // EventThreatDetectionSettings resource.
 //
 // - name: The resource name of the EventThreatDetectionSettings.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *ProjectsService) UpdateEventThreatDetectionSettings(name string, eventthreatdetectionsettings *EventThreatDetectionSettings) *ProjectsUpdateEventThreatDetectionSettingsCall {
 	c := &ProjectsUpdateEventThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6321,7 +6329,7 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6436,10 +6444,10 @@ type ProjectsUpdateSecurityHealthAnalyticsSettingsCall struct {
 // SecurityHealthAnalyticsSettings resource.
 //
 // - name: The resource name of the SecurityHealthAnalyticsSettings.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *ProjectsService) UpdateSecurityHealthAnalyticsSettings(name string, securityhealthanalyticssettings *SecurityHealthAnalyticsSettings) *ProjectsUpdateSecurityHealthAnalyticsSettingsCall {
 	c := &ProjectsUpdateSecurityHealthAnalyticsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6481,7 +6489,7 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) Header() http.Header
 
 func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6596,9 +6604,9 @@ type ProjectsUpdateWebSecurityScannerSettingsCall struct {
 // WebSecurityScannerSettings resource.
 //
 // - name: The resource name of the WebSecurityScannerSettings. Formats:
-// * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   * organizations/{organization}/webSecurityScannerSettings *
+//   folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *ProjectsService) UpdateWebSecurityScannerSettings(name string, websecurityscannersettings *WebSecurityScannerSettings) *ProjectsUpdateWebSecurityScannerSettingsCall {
 	c := &ProjectsUpdateWebSecurityScannerSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6640,7 +6648,7 @@ func (c *ProjectsUpdateWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6755,12 +6763,12 @@ type ProjectsContainerThreatDetectionSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the ContainerThreatDetectionSettings to
-// calculate. Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsContainerThreatDetectionSettingsService) Calculate(name string) *ProjectsContainerThreatDetectionSettingsCalculateCall {
 	c := &ProjectsContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6804,7 +6812,7 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) Header() http.He
 
 func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6908,9 +6916,10 @@ type ProjectsEventThreatDetectionSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the EventThreatDetectionSettings to calculate.
-// Formats: * organizations/{organization}/eventThreatDetectionSettings
-// * folders/{folder}/eventThreatDetectionSettings *
-// projects/{project}/eventThreatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/eventThreatDetectionSettings *
+//   folders/{folder}/eventThreatDetectionSettings *
+//   projects/{project}/eventThreatDetectionSettings.
 func (r *ProjectsEventThreatDetectionSettingsService) Calculate(name string) *ProjectsEventThreatDetectionSettingsCalculateCall {
 	c := &ProjectsEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6954,7 +6963,7 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) Header() http.Header
 
 func (c *ProjectsEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7058,12 +7067,12 @@ type ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall struct {
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The name of the ContainerThreatDetectionSettings to retrieve.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsLocationsClustersService) GetContainerThreatDetectionSettings(name string) *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall {
 	c := &ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7107,7 +7116,7 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) Heade
 
 func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7211,12 +7220,12 @@ type ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall struct 
 // ContainerThreatDetectionSettings resource.
 //
 // - name: The resource name of the ContainerThreatDetectionSettings.
-// Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsLocationsClustersService) UpdateContainerThreatDetectionSettings(name string, containerthreatdetectionsettings *ContainerThreatDetectionSettings) *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall {
 	c := &ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7258,7 +7267,7 @@ func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) He
 
 func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7373,12 +7382,12 @@ type ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall stru
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the ContainerThreatDetectionSettings to
-// calculate. Formats: *
-// organizations/{organization}/containerThreatDetectionSettings *
-// folders/{folder}/containerThreatDetectionSettings *
-// projects/{project}/containerThreatDetectionSettings *
-// projects/{project}/locations/{location}/clusters/{cluster}/containerTh
-// reatDetectionSettings
+//   calculate. Formats: *
+//   organizations/{organization}/containerThreatDetectionSettings *
+//   folders/{folder}/containerThreatDetectionSettings *
+//   projects/{project}/containerThreatDetectionSettings *
+//   projects/{project}/locations/{location}/clusters/{cluster}/container
+//   ThreatDetectionSettings.
 func (r *ProjectsLocationsClustersContainerThreatDetectionSettingsService) Calculate(name string) *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall {
 	c := &ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7422,7 +7431,7 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 
 func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7526,10 +7535,10 @@ type ProjectsSecurityHealthAnalyticsSettingsCalculateCall struct {
 // based on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the SecurityHealthAnalyticsSettings to calculate.
-// Formats: *
-// organizations/{organization}/securityHealthAnalyticsSettings *
-// folders/{folder}/securityHealthAnalyticsSettings *
-// projects/{project}/securityHealthAnalyticsSettings
+//   Formats: *
+//   organizations/{organization}/securityHealthAnalyticsSettings *
+//   folders/{folder}/securityHealthAnalyticsSettings *
+//   projects/{project}/securityHealthAnalyticsSettings.
 func (r *ProjectsSecurityHealthAnalyticsSettingsService) Calculate(name string) *ProjectsSecurityHealthAnalyticsSettingsCalculateCall {
 	c := &ProjectsSecurityHealthAnalyticsSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7573,7 +7582,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) Header() http.Hea
 
 func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7677,9 +7686,9 @@ type ProjectsWebSecurityScannerSettingsCalculateCall struct {
 // on its level in the resource hierarchy and its settings.
 //
 // - name: The name of the WebSecurityScannerSettings to calculate.
-// Formats: * organizations/{organization}/webSecurityScannerSettings *
-// folders/{folder}/webSecurityScannerSettings *
-// projects/{project}/webSecurityScannerSettings
+//   Formats: * organizations/{organization}/webSecurityScannerSettings
+//   * folders/{folder}/webSecurityScannerSettings *
+//   projects/{project}/webSecurityScannerSettings.
 func (r *ProjectsWebSecurityScannerSettingsService) Calculate(name string) *ProjectsWebSecurityScannerSettingsCalculateCall {
 	c := &ProjectsWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7723,7 +7732,7 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) Header() http.Header {
 
 func (c *ProjectsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

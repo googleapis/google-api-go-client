@@ -1514,7 +1514,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1618,7 +1618,7 @@ type ProjectsLocationsListCall struct {
 // service.
 //
 // - name: The resource that owns the locations collection, if
-// applicable.
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1686,7 +1686,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1827,7 +1827,7 @@ type ProjectsSecretsAddVersionCall struct {
 // attaches it to an existing Secret.
 //
 // - parent: The resource name of the Secret to associate with the
-// SecretVersion in the format `projects/*/secrets/*`.
+//   SecretVersion in the format `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) AddVersion(parent string, addsecretversionrequest *AddSecretVersionRequest) *ProjectsSecretsAddVersionCall {
 	c := &ProjectsSecretsAddVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1862,7 +1862,7 @@ func (c *ProjectsSecretsAddVersionCall) Header() http.Header {
 
 func (c *ProjectsSecretsAddVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1970,7 +1970,7 @@ type ProjectsSecretsCreateCall struct {
 // Create: Creates a new Secret containing no SecretVersions.
 //
 // - parent: The resource name of the project to associate with the
-// Secret, in the format `projects/*`.
+//   Secret, in the format `projects/*`.
 func (r *ProjectsSecretsService) Create(parent string, secret *Secret) *ProjectsSecretsCreateCall {
 	c := &ProjectsSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2015,7 +2015,7 @@ func (c *ProjectsSecretsCreateCall) Header() http.Header {
 
 func (c *ProjectsSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2127,7 +2127,7 @@ type ProjectsSecretsDeleteCall struct {
 // Delete: Deletes a Secret.
 //
 // - name: The resource name of the Secret to delete in the format
-// `projects/*/secrets/*`.
+//   `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Delete(name string) *ProjectsSecretsDeleteCall {
 	c := &ProjectsSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2161,7 +2161,7 @@ func (c *ProjectsSecretsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2261,7 +2261,7 @@ type ProjectsSecretsGetCall struct {
 // Get: Gets metadata for a given Secret.
 //
 // - name: The resource name of the Secret, in the format
-// `projects/*/secrets/*`.
+//   `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Get(name string) *ProjectsSecretsGetCall {
 	c := &ProjectsSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2305,7 +2305,7 @@ func (c *ProjectsSecretsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2409,8 +2409,8 @@ type ProjectsSecretsGetIamPolicyCall struct {
 // empty policy if the secret exists and does not have a policy set.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSecretsService) GetIamPolicy(resource string) *ProjectsSecretsGetIamPolicyCall {
 	c := &ProjectsSecretsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2468,7 +2468,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2577,7 +2577,7 @@ type ProjectsSecretsListCall struct {
 // List: Lists Secrets.
 //
 // - parent: The resource name of the project associated with the
-// Secrets, in the format `projects/*`.
+//   Secrets, in the format `projects/*`.
 func (r *ProjectsSecretsService) List(parent string) *ProjectsSecretsListCall {
 	c := &ProjectsSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2637,7 +2637,7 @@ func (c *ProjectsSecretsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2772,7 +2772,7 @@ type ProjectsSecretsPatchCall struct {
 // Patch: Updates metadata of an existing Secret.
 //
 // - name: Output only. The resource name of the Secret in the format
-// `projects/*/secrets/*`.
+//   `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Patch(name string, secret *Secret) *ProjectsSecretsPatchCall {
 	c := &ProjectsSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2814,7 +2814,7 @@ func (c *ProjectsSecretsPatchCall) Header() http.Header {
 
 func (c *ProjectsSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2930,8 +2930,8 @@ type ProjectsSecretsSetIamPolicyCall struct {
 // enforced according to the policy set on the associated Secret.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsSecretsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSecretsSetIamPolicyCall {
 	c := &ProjectsSecretsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2966,7 +2966,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3079,8 +3079,8 @@ type ProjectsSecretsTestIamPermissionsCall struct {
 // may "fail open" without warning.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsSecretsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSecretsTestIamPermissionsCall {
 	c := &ProjectsSecretsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3115,7 +3115,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSecretsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3225,7 +3225,7 @@ type ProjectsSecretsVersionsAccessCall struct {
 // SecretVersion.
 //
 // - name: The resource name of the SecretVersion in the format
-// `projects/*/secrets/*/versions/*`.
+//   `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Access(name string) *ProjectsSecretsVersionsAccessCall {
 	c := &ProjectsSecretsVersionsAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3269,7 +3269,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3373,7 +3373,7 @@ type ProjectsSecretsVersionsDestroyCall struct {
 // SecretVersion to DESTROYED and irrevocably destroys the secret data.
 //
 // - name: The resource name of the SecretVersion to destroy in the
-// format `projects/*/secrets/*/versions/*`.
+//   format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Destroy(name string, destroysecretversionrequest *DestroySecretVersionRequest) *ProjectsSecretsVersionsDestroyCall {
 	c := &ProjectsSecretsVersionsDestroyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3408,7 +3408,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3517,7 +3517,7 @@ type ProjectsSecretsVersionsDisableCall struct {
 // SecretVersion to DISABLED.
 //
 // - name: The resource name of the SecretVersion to disable in the
-// format `projects/*/secrets/*/versions/*`.
+//   format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Disable(name string, disablesecretversionrequest *DisableSecretVersionRequest) *ProjectsSecretsVersionsDisableCall {
 	c := &ProjectsSecretsVersionsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3552,7 +3552,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3661,7 +3661,7 @@ type ProjectsSecretsVersionsEnableCall struct {
 // to ENABLED.
 //
 // - name: The resource name of the SecretVersion to enable in the
-// format `projects/*/secrets/*/versions/*`.
+//   format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Enable(name string, enablesecretversionrequest *EnableSecretVersionRequest) *ProjectsSecretsVersionsEnableCall {
 	c := &ProjectsSecretsVersionsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3696,7 +3696,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3806,9 +3806,9 @@ type ProjectsSecretsVersionsGetCall struct {
 // SecretVersion.
 //
 // - name: The resource name of the SecretVersion in the format
-// `projects/*/secrets/*/versions/*`.
-// `projects/*/secrets/*/versions/latest` is an alias to the `latest`
-// SecretVersion.
+//   `projects/*/secrets/*/versions/*`.
+//   `projects/*/secrets/*/versions/latest` is an alias to the `latest`
+//   SecretVersion.
 func (r *ProjectsSecretsVersionsService) Get(name string) *ProjectsSecretsVersionsGetCall {
 	c := &ProjectsSecretsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3852,7 +3852,7 @@ func (c *ProjectsSecretsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3955,7 +3955,7 @@ type ProjectsSecretsVersionsListCall struct {
 // List: Lists SecretVersions. This call does not return secret data.
 //
 // - parent: The resource name of the Secret associated with the
-// SecretVersions to list, in the format `projects/*/secrets/*`.
+//   SecretVersions to list, in the format `projects/*/secrets/*`.
 func (r *ProjectsSecretsVersionsService) List(parent string) *ProjectsSecretsVersionsListCall {
 	c := &ProjectsSecretsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4015,7 +4015,7 @@ func (c *ProjectsSecretsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

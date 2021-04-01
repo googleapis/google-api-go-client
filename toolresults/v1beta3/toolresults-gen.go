@@ -4592,7 +4592,7 @@ func (c *ProjectsGetSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4746,7 +4746,7 @@ func (c *ProjectsInitializeSettingsCall) Header() http.Header {
 
 func (c *ProjectsInitializeSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4891,7 +4891,7 @@ func (c *ProjectsHistoriesCreateCall) Header() http.Header {
 
 func (c *ProjectsHistoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5052,7 +5052,7 @@ func (c *ProjectsHistoriesGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5233,7 +5233,7 @@ func (c *ProjectsHistoriesListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5421,7 +5421,7 @@ func (c *ProjectsHistoriesExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5593,7 +5593,7 @@ func (c *ProjectsHistoriesExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5778,7 +5778,7 @@ func (c *ProjectsHistoriesExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5926,8 +5926,8 @@ type ProjectsHistoriesExecutionsPatchCall struct {
 // FAILED_PRECONDITION - if the requested state transition is illegal -
 // NOT_FOUND - if the containing History does not exist
 //
-// - executionId:
-// - historyId:
+// - executionId: .
+// - historyId: .
 // - projectId: A Project id.
 func (r *ProjectsHistoriesExecutionsService) Patch(projectId string, historyId string, executionId string, execution *Execution) *ProjectsHistoriesExecutionsPatchCall {
 	c := &ProjectsHistoriesExecutionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5973,7 +5973,7 @@ func (c *ProjectsHistoriesExecutionsPatchCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6103,7 +6103,7 @@ type ProjectsHistoriesExecutionsClustersGetCall struct {
 
 // Get: Retrieves a single screenshot cluster by its ID
 //
-// - clusterId: A Cluster id
+// - clusterId: A Cluster id.
 // - executionId: An Execution id.
 // - historyId: A History id.
 // - projectId: A Project id.
@@ -6153,7 +6153,7 @@ func (c *ProjectsHistoriesExecutionsClustersGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6334,7 +6334,7 @@ func (c *ProjectsHistoriesExecutionsClustersListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6507,7 +6507,7 @@ func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6701,7 +6701,7 @@ func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6857,8 +6857,8 @@ type ProjectsHistoriesExecutionsStepsAccessibilityClustersCall struct {
 // not exist
 //
 // - name: A full resource name of the step. For example,
-// projects/my-project/histories/bh.1234567890abcdef/executions/
-// 1234567890123456789/steps/bs.1234567890abcdef
+//   projects/my-project/histories/bh.1234567890abcdef/executions/
+//   1234567890123456789/steps/bs.1234567890abcdef.
 func (r *ProjectsHistoriesExecutionsStepsService) AccessibilityClusters(name string) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
 	c := &ProjectsHistoriesExecutionsStepsAccessibilityClustersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6912,7 +6912,7 @@ func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Header() htt
 
 func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7074,7 +7074,7 @@ func (c *ProjectsHistoriesExecutionsStepsCreateCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7257,7 +7257,7 @@ func (c *ProjectsHistoriesExecutionsStepsGetCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7389,7 +7389,7 @@ type ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall struct {
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
+// - projectId: The cloud project.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsService) GetPerfMetricsSummary(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall {
 	c := &ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7437,7 +7437,7 @@ func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Header() htt
 
 func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7635,7 +7635,7 @@ func (c *ProjectsHistoriesExecutionsStepsListCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7842,7 +7842,7 @@ func (c *ProjectsHistoriesExecutionsStepsPatchCall) Header() http.Header {
 
 func (c *ProjectsHistoriesExecutionsStepsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7990,7 +7990,7 @@ type ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall struct {
 // - historyId: A History id.
 // - projectId: A Project id.
 // - stepId: A Step id. Note: This step must include a
-// TestExecutionStep.
+//   TestExecutionStep.
 func (r *ProjectsHistoriesExecutionsStepsService) PublishXunitXmlFiles(projectId string, historyId string, executionId string, stepId string, publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest) *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall {
 	c := &ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8028,7 +8028,7 @@ func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Header() http
 
 func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8165,7 +8165,7 @@ type ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall struct {
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
+// - projectId: The cloud project.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService) Create(projectId string, historyId string, executionId string, stepId string, perfmetricssummary *PerfMetricsSummary) *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8204,7 +8204,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Header() 
 
 func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8341,7 +8341,7 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall struct {
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
+// - projectId: The cloud project.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) Create(projectId string, historyId string, executionId string, stepId string, perfsampleseries *PerfSampleSeries) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8380,7 +8380,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Header() ht
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8517,8 +8517,8 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall struct {
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
-// - sampleSeriesId: A sample series id
+// - projectId: The cloud project.
+// - sampleSeriesId: A sample series id.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) Get(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8567,7 +8567,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Header() http.
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8710,7 +8710,7 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall struct {
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
+// - projectId: The cloud project.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8772,7 +8772,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Header() http
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8930,8 +8930,8 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall stru
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
-// - sampleSeriesId: A sample series id
+// - projectId: The cloud project.
+// - sampleSeriesId: A sample series id.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService) BatchCreate(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string, batchcreateperfsamplesrequest *BatchCreatePerfSamplesRequest) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8971,7 +8971,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall)
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9123,8 +9123,8 @@ type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall struct {
 //
 // - executionId: A tool results execution ID.
 // - historyId: A tool results history ID.
-// - projectId: The cloud project
-// - sampleSeriesId: A sample series id
+// - projectId: The cloud project.
+// - sampleSeriesId: A sample series id.
 // - stepId: A tool results step ID.
 func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService) List(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9188,7 +9188,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Header
 
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9361,11 +9361,11 @@ type ProjectsHistoriesExecutionsStepsTestCasesGetCall struct {
 // authorized to write to project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the containing Test Case does not exist
 //
-// - executionId: A Execution id
+// - executionId: A Execution id.
 // - historyId: A History id.
 // - projectId: A Project id.
 // - stepId: A Step id. Note: This step must include a
-// TestExecutionStep.
+//   TestExecutionStep.
 // - testCaseId: A Test Case id.
 func (r *ProjectsHistoriesExecutionsStepsTestCasesService) Get(projectId string, historyId string, executionId string, stepId string, testCaseId string) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
 	c := &ProjectsHistoriesExecutionsStepsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9414,7 +9414,7 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Header() http.Header 
 
 func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9554,11 +9554,11 @@ type ProjectsHistoriesExecutionsStepsTestCasesListCall struct {
 // authorized to write to project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the containing Step does not exist
 //
-// - executionId: A Execution id
+// - executionId: A Execution id.
 // - historyId: A History id.
 // - projectId: A Project id.
 // - stepId: A Step id. Note: This step must include a
-// TestExecutionStep.
+//   TestExecutionStep.
 func (r *ProjectsHistoriesExecutionsStepsTestCasesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c := &ProjectsHistoriesExecutionsStepsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9620,7 +9620,7 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Header() http.Header
 
 func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9849,7 +9849,7 @@ func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Header() http.Heade
 
 func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

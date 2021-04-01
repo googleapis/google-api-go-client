@@ -2682,7 +2682,7 @@ func (c *IamPoliciesLintPolicyCall) Header() http.Header {
 
 func (c *IamPoliciesLintPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2810,7 +2810,7 @@ func (c *IamPoliciesQueryAuditableServicesCall) Header() http.Header {
 
 func (c *IamPoliciesQueryAuditableServicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2905,22 +2905,23 @@ type OrganizationsRolesCreateCall struct {
 // Create: Creates a new custom Role.
 //
 // - parent: The `parent` parameter's value depends on the target
-// resource for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `parent` value format is described below: * `projects.roles.create()`
-// (/iam/reference/rest/v1/projects.roles/create):
-// `projects/{PROJECT_ID}`. This method creates project-level custom
-// roles (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
-// `organizations.roles.create()`
-// (/iam/reference/rest/v1/organizations.roles/create):
-// `organizations/{ORGANIZATION_ID}`. This method creates
-// organization-level custom roles
-// (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles`
-// Note: Wildcard (*) values are invalid; you must specify a complete
-// project ID or organization ID.
+//   resource for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `parent` value format is described below: *
+//   `projects.roles.create()`
+//   (/iam/reference/rest/v1/projects.roles/create):
+//   `projects/{PROJECT_ID}`. This method creates project-level custom
+//   roles (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
+//   `organizations.roles.create()`
+//   (/iam/reference/rest/v1/organizations.roles/create):
+//   `organizations/{ORGANIZATION_ID}`. This method creates
+//   organization-level custom roles
+//   (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   ` Note: Wildcard (*) values are invalid; you must specify a
+//   complete project ID or organization ID.
 func (r *OrganizationsRolesService) Create(parent string, createrolerequest *CreateRoleRequest) *OrganizationsRolesCreateCall {
 	c := &OrganizationsRolesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2955,7 +2956,7 @@ func (c *OrganizationsRolesCreateCall) Header() http.Header {
 
 func (c *OrganizationsRolesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3070,23 +3071,24 @@ type OrganizationsRolesDeleteCall struct {
 // the binding is permanently removed.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `name` value format is described below: * `projects.roles.delete()`
-// (/iam/reference/rest/v1/projects.roles/delete):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method deletes
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.delete()`
-// (/iam/reference/rest/v1/organizations.roles/delete):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// deletes only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `name` value format is described below: * `projects.roles.delete()`
+//   (/iam/reference/rest/v1/projects.roles/delete):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method deletes
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.delete()`
+//   (/iam/reference/rest/v1/organizations.roles/delete):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method deletes only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *OrganizationsRolesService) Delete(name string) *OrganizationsRolesDeleteCall {
 	c := &OrganizationsRolesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3127,7 +3129,7 @@ func (c *OrganizationsRolesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsRolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3233,28 +3235,29 @@ type OrganizationsRolesGetCall struct {
 // Get: Gets the definition of a Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `roles` (/iam/reference/rest/v1/roles),
-// `projects` (/iam/reference/rest/v1/projects.roles), or
-// `organizations` (/iam/reference/rest/v1/organizations.roles). Each
-// resource type's `name` value format is described below: *
-// `roles.get()` (/iam/reference/rest/v1/roles/get):
-// `roles/{ROLE_NAME}`. This method returns results from all predefined
-// roles (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
-// Example request URL:
-// `https://iam.googleapis.com/v1/roles/{ROLE_NAME}` *
-// `projects.roles.get()` (/iam/reference/rest/v1/projects.roles/get):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method returns
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.get()`
-// (/iam/reference/rest/v1/organizations.roles/get):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// returns only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `roles` (/iam/reference/rest/v1/roles),
+//   `projects` (/iam/reference/rest/v1/projects.roles), or
+//   `organizations` (/iam/reference/rest/v1/organizations.roles). Each
+//   resource type's `name` value format is described below: *
+//   `roles.get()` (/iam/reference/rest/v1/roles/get):
+//   `roles/{ROLE_NAME}`. This method returns results from all
+//   predefined roles (/iam/docs/understanding-roles#predefined_roles)
+//   in Cloud IAM. Example request URL:
+//   `https://iam.googleapis.com/v1/roles/{ROLE_NAME}` *
+//   `projects.roles.get()` (/iam/reference/rest/v1/projects.roles/get):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method returns
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.get()`
+//   (/iam/reference/rest/v1/organizations.roles/get):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method returns only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *OrganizationsRolesService) Get(name string) *OrganizationsRolesGetCall {
 	c := &OrganizationsRolesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3298,7 +3301,7 @@ func (c *OrganizationsRolesGetCall) Header() http.Header {
 
 func (c *OrganizationsRolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3402,27 +3405,28 @@ type OrganizationsRolesListCall struct {
 // role that is defined for an organization or project.
 //
 // - parent: The `parent` parameter's value depends on the target
-// resource for the request, namely `roles`
-// (/iam/reference/rest/v1/roles), `projects`
-// (/iam/reference/rest/v1/projects.roles), or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `parent` value format is described below: * `roles.list()`
-// (/iam/reference/rest/v1/roles/list): An empty string. This method
-// doesn't require a resource; it simply returns all predefined roles
-// (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
-// Example request URL: `https://iam.googleapis.com/v1/roles` *
-// `projects.roles.list()` (/iam/reference/rest/v1/projects.roles/list):
-// `projects/{PROJECT_ID}`. This method lists all project-level custom
-// roles (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
-// `organizations.roles.list()`
-// (/iam/reference/rest/v1/organizations.roles/list):
-// `organizations/{ORGANIZATION_ID}`. This method lists all
-// organization-level custom roles
-// (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles`
-// Note: Wildcard (*) values are invalid; you must specify a complete
-// project ID or organization ID.
+//   resource for the request, namely `roles`
+//   (/iam/reference/rest/v1/roles), `projects`
+//   (/iam/reference/rest/v1/projects.roles), or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `parent` value format is described below: * `roles.list()`
+//   (/iam/reference/rest/v1/roles/list): An empty string. This method
+//   doesn't require a resource; it simply returns all predefined roles
+//   (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
+//   Example request URL: `https://iam.googleapis.com/v1/roles` *
+//   `projects.roles.list()`
+//   (/iam/reference/rest/v1/projects.roles/list):
+//   `projects/{PROJECT_ID}`. This method lists all project-level custom
+//   roles (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
+//   `organizations.roles.list()`
+//   (/iam/reference/rest/v1/organizations.roles/list):
+//   `organizations/{ORGANIZATION_ID}`. This method lists all
+//   organization-level custom roles
+//   (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   ` Note: Wildcard (*) values are invalid; you must specify a
+//   complete project ID or organization ID.
 func (r *OrganizationsRolesService) List(parent string) *OrganizationsRolesListCall {
 	c := &OrganizationsRolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3503,7 +3507,7 @@ func (c *OrganizationsRolesListCall) Header() http.Header {
 
 func (c *OrganizationsRolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3656,23 +3660,24 @@ type OrganizationsRolesPatchCall struct {
 // Patch: Updates the definition of a custom Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `name` value format is described below: * `projects.roles.patch()`
-// (/iam/reference/rest/v1/projects.roles/patch):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method updates
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.patch()`
-// (/iam/reference/rest/v1/organizations.roles/patch):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// updates only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `name` value format is described below: * `projects.roles.patch()`
+//   (/iam/reference/rest/v1/projects.roles/patch):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method updates
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.patch()`
+//   (/iam/reference/rest/v1/organizations.roles/patch):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method updates only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *OrganizationsRolesService) Patch(name string, role *Role) *OrganizationsRolesPatchCall {
 	c := &OrganizationsRolesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3714,7 +3719,7 @@ func (c *OrganizationsRolesPatchCall) Header() http.Header {
 
 func (c *OrganizationsRolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3828,24 +3833,25 @@ type OrganizationsRolesUndeleteCall struct {
 // Undelete: Undeletes a custom Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `name` value format is described below: * `projects.roles.undelete()`
-// (/iam/reference/rest/v1/projects.roles/undelete):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method undeletes
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.undelete()`
-// (/iam/reference/rest/v1/organizations.roles/undelete):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// undeletes only custom roles (/iam/docs/understanding-custom-roles)
-// that have been created at the organization level. Example request
-// URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `name` value format is described below: *
+//   `projects.roles.undelete()`
+//   (/iam/reference/rest/v1/projects.roles/undelete):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method
+//   undeletes only custom roles (/iam/docs/understanding-custom-roles)
+//   that have been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.undelete()`
+//   (/iam/reference/rest/v1/organizations.roles/undelete):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method undeletes only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *OrganizationsRolesService) Undelete(name string, undeleterolerequest *UndeleteRoleRequest) *OrganizationsRolesUndeleteCall {
 	c := &OrganizationsRolesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3880,7 +3886,7 @@ func (c *OrganizationsRolesUndeleteCall) Header() http.Header {
 
 func (c *OrganizationsRolesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4020,7 +4026,7 @@ func (c *PermissionsQueryTestablePermissionsCall) Header() http.Header {
 
 func (c *PermissionsQueryTestablePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4137,7 +4143,7 @@ type ProjectsLocationsWorkloadIdentityPoolsCreateCall struct {
 // of a deleted pool until 30 days after deletion.
 //
 // - parent: The parent resource to create the pool in. The only
-// supported location is `global`.
+//   supported location is `global`.
 func (r *ProjectsLocationsWorkloadIdentityPoolsService) Create(parent string, workloadidentitypool *WorkloadIdentityPool) *ProjectsLocationsWorkloadIdentityPoolsCreateCall {
 	c := &ProjectsLocationsWorkloadIdentityPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4183,7 +4189,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4335,7 +4341,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4478,7 +4484,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4648,7 +4654,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4830,7 +4836,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4979,7 +4985,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsUndeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5132,7 +5138,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsOperationsGetCall) Header() http.
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5282,7 +5288,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersCreateCall) Header() htt
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5431,7 +5437,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersDeleteCall) Header() htt
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5574,7 +5580,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersGetCall) Header() http.H
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5746,7 +5752,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersListCall) Header() http.
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5929,7 +5935,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersPatchCall) Header() http
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6078,7 +6084,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersUndeleteCall) Header() h
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6231,7 +6237,7 @@ func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersOperationsGetCall) Heade
 
 func (c *ProjectsLocationsWorkloadIdentityPoolsProvidersOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6334,22 +6340,23 @@ type ProjectsRolesCreateCall struct {
 // Create: Creates a new custom Role.
 //
 // - parent: The `parent` parameter's value depends on the target
-// resource for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `parent` value format is described below: * `projects.roles.create()`
-// (/iam/reference/rest/v1/projects.roles/create):
-// `projects/{PROJECT_ID}`. This method creates project-level custom
-// roles (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
-// `organizations.roles.create()`
-// (/iam/reference/rest/v1/organizations.roles/create):
-// `organizations/{ORGANIZATION_ID}`. This method creates
-// organization-level custom roles
-// (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles`
-// Note: Wildcard (*) values are invalid; you must specify a complete
-// project ID or organization ID.
+//   resource for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `parent` value format is described below: *
+//   `projects.roles.create()`
+//   (/iam/reference/rest/v1/projects.roles/create):
+//   `projects/{PROJECT_ID}`. This method creates project-level custom
+//   roles (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
+//   `organizations.roles.create()`
+//   (/iam/reference/rest/v1/organizations.roles/create):
+//   `organizations/{ORGANIZATION_ID}`. This method creates
+//   organization-level custom roles
+//   (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   ` Note: Wildcard (*) values are invalid; you must specify a
+//   complete project ID or organization ID.
 func (r *ProjectsRolesService) Create(parent string, createrolerequest *CreateRoleRequest) *ProjectsRolesCreateCall {
 	c := &ProjectsRolesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6384,7 +6391,7 @@ func (c *ProjectsRolesCreateCall) Header() http.Header {
 
 func (c *ProjectsRolesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6499,23 +6506,24 @@ type ProjectsRolesDeleteCall struct {
 // the binding is permanently removed.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `name` value format is described below: * `projects.roles.delete()`
-// (/iam/reference/rest/v1/projects.roles/delete):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method deletes
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.delete()`
-// (/iam/reference/rest/v1/organizations.roles/delete):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// deletes only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `name` value format is described below: * `projects.roles.delete()`
+//   (/iam/reference/rest/v1/projects.roles/delete):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method deletes
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.delete()`
+//   (/iam/reference/rest/v1/organizations.roles/delete):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method deletes only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *ProjectsRolesService) Delete(name string) *ProjectsRolesDeleteCall {
 	c := &ProjectsRolesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6556,7 +6564,7 @@ func (c *ProjectsRolesDeleteCall) Header() http.Header {
 
 func (c *ProjectsRolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6662,28 +6670,29 @@ type ProjectsRolesGetCall struct {
 // Get: Gets the definition of a Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `roles` (/iam/reference/rest/v1/roles),
-// `projects` (/iam/reference/rest/v1/projects.roles), or
-// `organizations` (/iam/reference/rest/v1/organizations.roles). Each
-// resource type's `name` value format is described below: *
-// `roles.get()` (/iam/reference/rest/v1/roles/get):
-// `roles/{ROLE_NAME}`. This method returns results from all predefined
-// roles (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
-// Example request URL:
-// `https://iam.googleapis.com/v1/roles/{ROLE_NAME}` *
-// `projects.roles.get()` (/iam/reference/rest/v1/projects.roles/get):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method returns
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.get()`
-// (/iam/reference/rest/v1/organizations.roles/get):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// returns only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `roles` (/iam/reference/rest/v1/roles),
+//   `projects` (/iam/reference/rest/v1/projects.roles), or
+//   `organizations` (/iam/reference/rest/v1/organizations.roles). Each
+//   resource type's `name` value format is described below: *
+//   `roles.get()` (/iam/reference/rest/v1/roles/get):
+//   `roles/{ROLE_NAME}`. This method returns results from all
+//   predefined roles (/iam/docs/understanding-roles#predefined_roles)
+//   in Cloud IAM. Example request URL:
+//   `https://iam.googleapis.com/v1/roles/{ROLE_NAME}` *
+//   `projects.roles.get()` (/iam/reference/rest/v1/projects.roles/get):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method returns
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.get()`
+//   (/iam/reference/rest/v1/organizations.roles/get):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method returns only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *ProjectsRolesService) Get(name string) *ProjectsRolesGetCall {
 	c := &ProjectsRolesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6727,7 +6736,7 @@ func (c *ProjectsRolesGetCall) Header() http.Header {
 
 func (c *ProjectsRolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6831,27 +6840,28 @@ type ProjectsRolesListCall struct {
 // role that is defined for an organization or project.
 //
 // - parent: The `parent` parameter's value depends on the target
-// resource for the request, namely `roles`
-// (/iam/reference/rest/v1/roles), `projects`
-// (/iam/reference/rest/v1/projects.roles), or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `parent` value format is described below: * `roles.list()`
-// (/iam/reference/rest/v1/roles/list): An empty string. This method
-// doesn't require a resource; it simply returns all predefined roles
-// (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
-// Example request URL: `https://iam.googleapis.com/v1/roles` *
-// `projects.roles.list()` (/iam/reference/rest/v1/projects.roles/list):
-// `projects/{PROJECT_ID}`. This method lists all project-level custom
-// roles (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
-// `organizations.roles.list()`
-// (/iam/reference/rest/v1/organizations.roles/list):
-// `organizations/{ORGANIZATION_ID}`. This method lists all
-// organization-level custom roles
-// (/iam/docs/understanding-custom-roles). Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles`
-// Note: Wildcard (*) values are invalid; you must specify a complete
-// project ID or organization ID.
+//   resource for the request, namely `roles`
+//   (/iam/reference/rest/v1/roles), `projects`
+//   (/iam/reference/rest/v1/projects.roles), or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `parent` value format is described below: * `roles.list()`
+//   (/iam/reference/rest/v1/roles/list): An empty string. This method
+//   doesn't require a resource; it simply returns all predefined roles
+//   (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
+//   Example request URL: `https://iam.googleapis.com/v1/roles` *
+//   `projects.roles.list()`
+//   (/iam/reference/rest/v1/projects.roles/list):
+//   `projects/{PROJECT_ID}`. This method lists all project-level custom
+//   roles (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
+//   `organizations.roles.list()`
+//   (/iam/reference/rest/v1/organizations.roles/list):
+//   `organizations/{ORGANIZATION_ID}`. This method lists all
+//   organization-level custom roles
+//   (/iam/docs/understanding-custom-roles). Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   ` Note: Wildcard (*) values are invalid; you must specify a
+//   complete project ID or organization ID.
 func (r *ProjectsRolesService) List(parent string) *ProjectsRolesListCall {
 	c := &ProjectsRolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6932,7 +6942,7 @@ func (c *ProjectsRolesListCall) Header() http.Header {
 
 func (c *ProjectsRolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7085,23 +7095,24 @@ type ProjectsRolesPatchCall struct {
 // Patch: Updates the definition of a custom Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `name` value format is described below: * `projects.roles.patch()`
-// (/iam/reference/rest/v1/projects.roles/patch):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method updates
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.patch()`
-// (/iam/reference/rest/v1/organizations.roles/patch):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// updates only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `name` value format is described below: * `projects.roles.patch()`
+//   (/iam/reference/rest/v1/projects.roles/patch):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method updates
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.patch()`
+//   (/iam/reference/rest/v1/organizations.roles/patch):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method updates only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *ProjectsRolesService) Patch(name string, role *Role) *ProjectsRolesPatchCall {
 	c := &ProjectsRolesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7143,7 +7154,7 @@ func (c *ProjectsRolesPatchCall) Header() http.Header {
 
 func (c *ProjectsRolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7257,24 +7268,25 @@ type ProjectsRolesUndeleteCall struct {
 // Undelete: Undeletes a custom Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `projects`
-// (/iam/reference/rest/v1/projects.roles) or `organizations`
-// (/iam/reference/rest/v1/organizations.roles). Each resource type's
-// `name` value format is described below: * `projects.roles.undelete()`
-// (/iam/reference/rest/v1/projects.roles/undelete):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method undeletes
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.undelete()`
-// (/iam/reference/rest/v1/organizations.roles/undelete):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// undeletes only custom roles (/iam/docs/understanding-custom-roles)
-// that have been created at the organization level. Example request
-// URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `projects`
+//   (/iam/reference/rest/v1/projects.roles) or `organizations`
+//   (/iam/reference/rest/v1/organizations.roles). Each resource type's
+//   `name` value format is described below: *
+//   `projects.roles.undelete()`
+//   (/iam/reference/rest/v1/projects.roles/undelete):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method
+//   undeletes only custom roles (/iam/docs/understanding-custom-roles)
+//   that have been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.undelete()`
+//   (/iam/reference/rest/v1/organizations.roles/undelete):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method undeletes only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *ProjectsRolesService) Undelete(name string, undeleterolerequest *UndeleteRoleRequest) *ProjectsRolesUndeleteCall {
 	c := &ProjectsRolesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7309,7 +7321,7 @@ func (c *ProjectsRolesUndeleteCall) Header() http.Header {
 
 func (c *ProjectsRolesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7417,7 +7429,7 @@ type ProjectsServiceAccountsCreateCall struct {
 // Create: Creates a ServiceAccount.
 //
 // - name: The resource name of the project associated with the service
-// accounts, such as `projects/my-project-123`.
+//   accounts, such as `projects/my-project-123`.
 func (r *ProjectsServiceAccountsService) Create(name string, createserviceaccountrequest *CreateServiceAccountRequest) *ProjectsServiceAccountsCreateCall {
 	c := &ProjectsServiceAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7452,7 +7464,7 @@ func (c *ProjectsServiceAccountsCreateCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7570,10 +7582,10 @@ type ProjectsServiceAccountsDeleteCall struct {
 // account.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsService) Delete(name string) *ProjectsServiceAccountsDeleteCall {
 	c := &ProjectsServiceAccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7607,7 +7619,7 @@ func (c *ProjectsServiceAccountsDeleteCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7718,10 +7730,10 @@ type ProjectsServiceAccountsDisableCall struct {
 // you can delete the service account with DeleteServiceAccount.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsService) Disable(name string, disableserviceaccountrequest *DisableServiceAccountRequest) *ProjectsServiceAccountsDisableCall {
 	c := &ProjectsServiceAccountsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7756,7 +7768,7 @@ func (c *ProjectsServiceAccountsDisableCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7869,10 +7881,10 @@ type ProjectsServiceAccountsEnableCall struct {
 // service account.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsService) Enable(name string, enableserviceaccountrequest *EnableServiceAccountRequest) *ProjectsServiceAccountsEnableCall {
 	c := &ProjectsServiceAccountsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7907,7 +7919,7 @@ func (c *ProjectsServiceAccountsEnableCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8015,10 +8027,10 @@ type ProjectsServiceAccountsGetCall struct {
 // Get: Gets a ServiceAccount.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsService) Get(name string) *ProjectsServiceAccountsGetCall {
 	c := &ProjectsServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8062,7 +8074,7 @@ func (c *ProjectsServiceAccountsGetCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8173,8 +8185,8 @@ type ProjectsServiceAccountsGetIamPolicyCall struct {
 // method.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsServiceAccountsService) GetIamPolicy(resource string) *ProjectsServiceAccountsGetIamPolicyCall {
 	c := &ProjectsServiceAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8222,7 +8234,7 @@ func (c *ProjectsServiceAccountsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8328,7 +8340,7 @@ type ProjectsServiceAccountsListCall struct {
 // List: Lists every ServiceAccount that belongs to a specific project.
 //
 // - name: The resource name of the project associated with the service
-// accounts, such as `projects/my-project-123`.
+//   accounts, such as `projects/my-project-123`.
 func (r *ProjectsServiceAccountsService) List(name string) *ProjectsServiceAccountsListCall {
 	c := &ProjectsServiceAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8390,7 +8402,7 @@ func (c *ProjectsServiceAccountsListCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8525,17 +8537,17 @@ type ProjectsServiceAccountsPatchCall struct {
 // Patch: Patches a ServiceAccount.
 //
 // - name: The resource name of the service account. Use one of the
-// following formats: *
-// `projects/{PROJECT_ID}/serviceAccounts/{EMAIL_ADDRESS}` *
-// `projects/{PROJECT_ID}/serviceAccounts/{UNIQUE_ID}` As an
-// alternative, you can use the `-` wildcard character instead of the
-// project ID: * `projects/-/serviceAccounts/{EMAIL_ADDRESS}` *
-// `projects/-/serviceAccounts/{UNIQUE_ID}` When possible, avoid using
-// the `-` wildcard character, because it can cause response messages to
-// contain misleading error codes. For example, if you try to get the
-// service account `projects/-/serviceAccounts/fake@example.com`, which
-// does not exist, the response contains an HTTP `403 Forbidden` error
-// instead of a `404 Not Found` error.
+//   following formats: *
+//   `projects/{PROJECT_ID}/serviceAccounts/{EMAIL_ADDRESS}` *
+//   `projects/{PROJECT_ID}/serviceAccounts/{UNIQUE_ID}` As an
+//   alternative, you can use the `-` wildcard character instead of the
+//   project ID: * `projects/-/serviceAccounts/{EMAIL_ADDRESS}` *
+//   `projects/-/serviceAccounts/{UNIQUE_ID}` When possible, avoid using
+//   the `-` wildcard character, because it can cause response messages
+//   to contain misleading error codes. For example, if you try to get
+//   the service account `projects/-/serviceAccounts/fake@example.com`,
+//   which does not exist, the response contains an HTTP `403 Forbidden`
+//   error instead of a `404 Not Found` error.
 func (r *ProjectsServiceAccountsService) Patch(name string, patchserviceaccountrequest *PatchServiceAccountRequest) *ProjectsServiceAccountsPatchCall {
 	c := &ProjectsServiceAccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8570,7 +8582,7 @@ func (c *ProjectsServiceAccountsPatchCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8689,8 +8701,8 @@ type ProjectsServiceAccountsSetIamPolicyCall struct {
 // (https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsServiceAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsServiceAccountsSetIamPolicyCall {
 	c := &ProjectsServiceAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8725,7 +8737,7 @@ func (c *ProjectsServiceAccountsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8839,12 +8851,12 @@ type ProjectsServiceAccountsSignBlobCall struct {
 // ServiceAccount.
 //
 // - name: Deprecated. Migrate to Service Account Credentials API
-// (https://cloud.google.com/iam/help/credentials/migrate-api). The
-// resource name of the service account in the following format:
-// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-` as a
-// wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   (https://cloud.google.com/iam/help/credentials/migrate-api). The
+//   resource name of the service account in the following format:
+//   `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-` as a
+//   wildcard for the `PROJECT_ID` will infer the project from the
+//   account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsService) SignBlob(name string, signblobrequest *SignBlobRequest) *ProjectsServiceAccountsSignBlobCall {
 	c := &ProjectsServiceAccountsSignBlobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8879,7 +8891,7 @@ func (c *ProjectsServiceAccountsSignBlobCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSignBlobCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8993,12 +9005,12 @@ type ProjectsServiceAccountsSignJwtCall struct {
 // private key for a ServiceAccount.
 //
 // - name: Deprecated. Migrate to Service Account Credentials API
-// (https://cloud.google.com/iam/help/credentials/migrate-api). The
-// resource name of the service account in the following format:
-// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-` as a
-// wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   (https://cloud.google.com/iam/help/credentials/migrate-api). The
+//   resource name of the service account in the following format:
+//   `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-` as a
+//   wildcard for the `PROJECT_ID` will infer the project from the
+//   account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsService) SignJwt(name string, signjwtrequest *SignJwtRequest) *ProjectsServiceAccountsSignJwtCall {
 	c := &ProjectsServiceAccountsSignJwtCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9033,7 +9045,7 @@ func (c *ProjectsServiceAccountsSignJwtCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSignJwtCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9142,8 +9154,8 @@ type ProjectsServiceAccountsTestIamPermissionsCall struct {
 // permissions on a ServiceAccount.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsServiceAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsServiceAccountsTestIamPermissionsCall {
 	c := &ProjectsServiceAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9178,7 +9190,7 @@ func (c *ProjectsServiceAccountsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9291,9 +9303,10 @@ type ProjectsServiceAccountsUndeleteCall struct {
 // removed.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_UNIQUE_ID}`.
-// Using `-` as a wildcard for the `PROJECT_ID` will infer the project
-// from the account.
+//   format:
+//   `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_UNIQUE_ID}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account.
 func (r *ProjectsServiceAccountsService) Undelete(name string, undeleteserviceaccountrequest *UndeleteServiceAccountRequest) *ProjectsServiceAccountsUndeleteCall {
 	c := &ProjectsServiceAccountsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9328,7 +9341,7 @@ func (c *ProjectsServiceAccountsUndeleteCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9438,17 +9451,17 @@ type ProjectsServiceAccountsUpdateCall struct {
 // update only the `display_name` and `description` fields.
 //
 // - name: The resource name of the service account. Use one of the
-// following formats: *
-// `projects/{PROJECT_ID}/serviceAccounts/{EMAIL_ADDRESS}` *
-// `projects/{PROJECT_ID}/serviceAccounts/{UNIQUE_ID}` As an
-// alternative, you can use the `-` wildcard character instead of the
-// project ID: * `projects/-/serviceAccounts/{EMAIL_ADDRESS}` *
-// `projects/-/serviceAccounts/{UNIQUE_ID}` When possible, avoid using
-// the `-` wildcard character, because it can cause response messages to
-// contain misleading error codes. For example, if you try to get the
-// service account `projects/-/serviceAccounts/fake@example.com`, which
-// does not exist, the response contains an HTTP `403 Forbidden` error
-// instead of a `404 Not Found` error.
+//   following formats: *
+//   `projects/{PROJECT_ID}/serviceAccounts/{EMAIL_ADDRESS}` *
+//   `projects/{PROJECT_ID}/serviceAccounts/{UNIQUE_ID}` As an
+//   alternative, you can use the `-` wildcard character instead of the
+//   project ID: * `projects/-/serviceAccounts/{EMAIL_ADDRESS}` *
+//   `projects/-/serviceAccounts/{UNIQUE_ID}` When possible, avoid using
+//   the `-` wildcard character, because it can cause response messages
+//   to contain misleading error codes. For example, if you try to get
+//   the service account `projects/-/serviceAccounts/fake@example.com`,
+//   which does not exist, the response contains an HTTP `403 Forbidden`
+//   error instead of a `404 Not Found` error.
 func (r *ProjectsServiceAccountsService) Update(name string, serviceaccount *ServiceAccount) *ProjectsServiceAccountsUpdateCall {
 	c := &ProjectsServiceAccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9483,7 +9496,7 @@ func (c *ProjectsServiceAccountsUpdateCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9591,10 +9604,10 @@ type ProjectsServiceAccountsKeysCreateCall struct {
 // Create: Creates a ServiceAccountKey.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsKeysService) Create(name string, createserviceaccountkeyrequest *CreateServiceAccountKeyRequest) *ProjectsServiceAccountsKeysCreateCall {
 	c := &ProjectsServiceAccountsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9629,7 +9642,7 @@ func (c *ProjectsServiceAccountsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9738,10 +9751,11 @@ type ProjectsServiceAccountsKeysDeleteCall struct {
 // on the service account key.
 //
 // - name: The resource name of the service account key in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
-// Using `-` as a wildcard for the `PROJECT_ID` will infer the project
-// from the account. The `ACCOUNT` value can be the `email` address or
-// the `unique_id` of the service account.
+//   format:
+//   `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsKeysService) Delete(name string) *ProjectsServiceAccountsKeysDeleteCall {
 	c := &ProjectsServiceAccountsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9775,7 +9789,7 @@ func (c *ProjectsServiceAccountsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9875,10 +9889,11 @@ type ProjectsServiceAccountsKeysGetCall struct {
 // Get: Gets a ServiceAccountKey.
 //
 // - name: The resource name of the service account key in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
-// Using `-` as a wildcard for the `PROJECT_ID` will infer the project
-// from the account. The `ACCOUNT` value can be the `email` address or
-// the `unique_id` of the service account.
+//   format:
+//   `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsKeysService) Get(name string) *ProjectsServiceAccountsKeysGetCall {
 	c := &ProjectsServiceAccountsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9935,7 +9950,7 @@ func (c *ProjectsServiceAccountsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10053,10 +10068,10 @@ type ProjectsServiceAccountsKeysListCall struct {
 // List: Lists every ServiceAccountKey for a service account.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID`, will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID`, will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsKeysService) List(name string) *ProjectsServiceAccountsKeysListCall {
 	c := &ProjectsServiceAccountsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10117,7 +10132,7 @@ func (c *ProjectsServiceAccountsKeysListCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10237,10 +10252,10 @@ type ProjectsServiceAccountsKeysUploadCall struct {
 // provide.
 //
 // - name: The resource name of the service account in the following
-// format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using `-`
-// as a wildcard for the `PROJECT_ID` will infer the project from the
-// account. The `ACCOUNT` value can be the `email` address or the
-// `unique_id` of the service account.
+//   format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. Using
+//   `-` as a wildcard for the `PROJECT_ID` will infer the project from
+//   the account. The `ACCOUNT` value can be the `email` address or the
+//   `unique_id` of the service account.
 func (r *ProjectsServiceAccountsKeysService) Upload(name string, uploadserviceaccountkeyrequest *UploadServiceAccountKeyRequest) *ProjectsServiceAccountsKeysUploadCall {
 	c := &ProjectsServiceAccountsKeysUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10275,7 +10290,7 @@ func (c *ProjectsServiceAccountsKeysUploadCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsKeysUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10383,28 +10398,29 @@ type RolesGetCall struct {
 // Get: Gets the definition of a Role.
 //
 // - name: The `name` parameter's value depends on the target resource
-// for the request, namely `roles` (/iam/reference/rest/v1/roles),
-// `projects` (/iam/reference/rest/v1/projects.roles), or
-// `organizations` (/iam/reference/rest/v1/organizations.roles). Each
-// resource type's `name` value format is described below: *
-// `roles.get()` (/iam/reference/rest/v1/roles/get):
-// `roles/{ROLE_NAME}`. This method returns results from all predefined
-// roles (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
-// Example request URL:
-// `https://iam.googleapis.com/v1/roles/{ROLE_NAME}` *
-// `projects.roles.get()` (/iam/reference/rest/v1/projects.roles/get):
-// `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method returns
-// only custom roles (/iam/docs/understanding-custom-roles) that have
-// been created at the project level. Example request URL:
-// `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_ROL
-// E_ID}` * `organizations.roles.get()`
-// (/iam/reference/rest/v1/organizations.roles/get):
-// `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This method
-// returns only custom roles (/iam/docs/understanding-custom-roles) that
-// have been created at the organization level. Example request URL:
-// `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles/{
-// CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
-// specify a complete project ID or organization ID.
+//   for the request, namely `roles` (/iam/reference/rest/v1/roles),
+//   `projects` (/iam/reference/rest/v1/projects.roles), or
+//   `organizations` (/iam/reference/rest/v1/organizations.roles). Each
+//   resource type's `name` value format is described below: *
+//   `roles.get()` (/iam/reference/rest/v1/roles/get):
+//   `roles/{ROLE_NAME}`. This method returns results from all
+//   predefined roles (/iam/docs/understanding-roles#predefined_roles)
+//   in Cloud IAM. Example request URL:
+//   `https://iam.googleapis.com/v1/roles/{ROLE_NAME}` *
+//   `projects.roles.get()` (/iam/reference/rest/v1/projects.roles/get):
+//   `projects/{PROJECT_ID}/roles/{CUSTOM_ROLE_ID}`. This method returns
+//   only custom roles (/iam/docs/understanding-custom-roles) that have
+//   been created at the project level. Example request URL:
+//   `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles/{CUSTOM_R
+//   OLE_ID}` * `organizations.roles.get()`
+//   (/iam/reference/rest/v1/organizations.roles/get):
+//   `organizations/{ORGANIZATION_ID}/roles/{CUSTOM_ROLE_ID}`. This
+//   method returns only custom roles
+//   (/iam/docs/understanding-custom-roles) that have been created at
+//   the organization level. Example request URL:
+//   `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles
+//   /{CUSTOM_ROLE_ID}` Note: Wildcard (*) values are invalid; you must
+//   specify a complete project ID or organization ID.
 func (r *RolesService) Get(name string) *RolesGetCall {
 	c := &RolesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10448,7 +10464,7 @@ func (c *RolesGetCall) Header() http.Header {
 
 func (c *RolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10655,7 +10671,7 @@ func (c *RolesListCall) Header() http.Header {
 
 func (c *RolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10833,7 +10849,7 @@ func (c *RolesQueryGrantableRolesCall) Header() http.Header {
 
 func (c *RolesQueryGrantableRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1042,7 +1042,7 @@ type PagespeedapiRunpagespeedCall struct {
 // URL, and returns PageSpeed scores, a list of suggestions to make that
 // page faster, and other information.
 //
-// - url: The URL to fetch and analyze
+// - url: The URL to fetch and analyze.
 func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeedCall {
 	c := &PagespeedapiRunpagespeedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("url", url)
@@ -1147,7 +1147,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

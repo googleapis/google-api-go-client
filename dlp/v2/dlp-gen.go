@@ -8219,7 +8219,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8333,7 +8333,7 @@ type LocationsInfoTypesListCall struct {
 // https://cloud.google.com/dlp/docs/infotypes-reference to learn more.
 //
 // - parent: The parent resource name. The format of this value is as
-// follows: locations/ LOCATION_ID
+//   follows: locations/ LOCATION_ID.
 func (r *LocationsInfoTypesService) List(parent string) *LocationsInfoTypesListCall {
 	c := &LocationsInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8401,7 +8401,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8523,19 +8523,19 @@ type OrganizationsDeidentifyTemplatesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsDeidentifyTemplatesService) Create(parentid string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsDeidentifyTemplatesCreateCall {
 	c := &OrganizationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -8570,7 +8570,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8680,9 +8680,9 @@ type OrganizationsDeidentifyTemplatesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be deleted, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be deleted, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *OrganizationsDeidentifyTemplatesService) Delete(name string) *OrganizationsDeidentifyTemplatesDeleteCall {
 	c := &OrganizationsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8716,7 +8716,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8818,9 +8818,9 @@ type OrganizationsDeidentifyTemplatesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be read, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be read, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *OrganizationsDeidentifyTemplatesService) Get(name string) *OrganizationsDeidentifyTemplatesGetCall {
 	c := &OrganizationsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8864,7 +8864,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8970,19 +8970,19 @@ type OrganizationsDeidentifyTemplatesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsDeidentifyTemplatesService) List(parentid string) *OrganizationsDeidentifyTemplatesListCall {
 	c := &OrganizationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -9063,7 +9063,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9212,9 +9212,9 @@ type OrganizationsDeidentifyTemplatesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and deidentify template to be
-// updated, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *OrganizationsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *OrganizationsDeidentifyTemplatesPatchCall {
 	c := &OrganizationsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9249,7 +9249,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9360,19 +9360,19 @@ type OrganizationsInspectTemplatesCreateCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsInspectTemplatesService) Create(parentid string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsInspectTemplatesCreateCall {
 	c := &OrganizationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -9407,7 +9407,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9516,9 +9516,9 @@ type OrganizationsInspectTemplatesDeleteCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// deleted, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   deleted, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *OrganizationsInspectTemplatesService) Delete(name string) *OrganizationsInspectTemplatesDeleteCall {
 	c := &OrganizationsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9552,7 +9552,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9653,9 +9653,9 @@ type OrganizationsInspectTemplatesGetCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// read, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   read, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *OrganizationsInspectTemplatesService) Get(name string) *OrganizationsInspectTemplatesGetCall {
 	c := &OrganizationsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9699,7 +9699,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9804,19 +9804,19 @@ type OrganizationsInspectTemplatesListCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsInspectTemplatesService) List(parentid string) *OrganizationsInspectTemplatesListCall {
 	c := &OrganizationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -9897,7 +9897,7 @@ func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10045,9 +10045,9 @@ type OrganizationsInspectTemplatesPatchCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of organization and inspectTemplate to be
-// updated, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *OrganizationsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *OrganizationsInspectTemplatesPatchCall {
 	c := &OrganizationsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10082,7 +10082,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10194,19 +10194,19 @@ type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsDeidentifyTemplatesService) Create(parentid string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsLocationsDeidentifyTemplatesCreateCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -10241,7 +10241,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10351,9 +10351,9 @@ type OrganizationsLocationsDeidentifyTemplatesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be deleted, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be deleted, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *OrganizationsLocationsDeidentifyTemplatesService) Delete(name string) *OrganizationsLocationsDeidentifyTemplatesDeleteCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10387,7 +10387,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10489,9 +10489,9 @@ type OrganizationsLocationsDeidentifyTemplatesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be read, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be read, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *OrganizationsLocationsDeidentifyTemplatesService) Get(name string) *OrganizationsLocationsDeidentifyTemplatesGetCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10535,7 +10535,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Header() http.Header 
 
 func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10641,19 +10641,19 @@ type OrganizationsLocationsDeidentifyTemplatesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsDeidentifyTemplatesService) List(parentid string) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -10734,7 +10734,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Header() http.Header
 
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10883,9 +10883,9 @@ type OrganizationsLocationsDeidentifyTemplatesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and deidentify template to be
-// updated, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *OrganizationsLocationsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *OrganizationsLocationsDeidentifyTemplatesPatchCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10920,7 +10920,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Header() http.Heade
 
 func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11032,15 +11032,15 @@ type OrganizationsLocationsDlpJobsListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsDlpJobsService) List(parentid string) *OrganizationsLocationsDlpJobsListCall {
 	c := &OrganizationsLocationsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -11154,7 +11154,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11322,19 +11322,19 @@ type OrganizationsLocationsInspectTemplatesCreateCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsInspectTemplatesService) Create(parentid string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsLocationsInspectTemplatesCreateCall {
 	c := &OrganizationsLocationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -11369,7 +11369,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11478,9 +11478,9 @@ type OrganizationsLocationsInspectTemplatesDeleteCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// deleted, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   deleted, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *OrganizationsLocationsInspectTemplatesService) Delete(name string) *OrganizationsLocationsInspectTemplatesDeleteCall {
 	c := &OrganizationsLocationsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11514,7 +11514,7 @@ func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11615,9 +11615,9 @@ type OrganizationsLocationsInspectTemplatesGetCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// read, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   read, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *OrganizationsLocationsInspectTemplatesService) Get(name string) *OrganizationsLocationsInspectTemplatesGetCall {
 	c := &OrganizationsLocationsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11661,7 +11661,7 @@ func (c *OrganizationsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11766,19 +11766,19 @@ type OrganizationsLocationsInspectTemplatesListCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsInspectTemplatesService) List(parentid string) *OrganizationsLocationsInspectTemplatesListCall {
 	c := &OrganizationsLocationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -11859,7 +11859,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12007,9 +12007,9 @@ type OrganizationsLocationsInspectTemplatesPatchCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of organization and inspectTemplate to be
-// updated, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *OrganizationsLocationsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *OrganizationsLocationsInspectTemplatesPatchCall {
 	c := &OrganizationsLocationsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12044,7 +12044,7 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12156,15 +12156,15 @@ type OrganizationsLocationsJobTriggersCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *OrganizationsLocationsJobTriggersCreateCall {
 	c := &OrganizationsLocationsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -12199,7 +12199,7 @@ func (c *OrganizationsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12308,7 +12308,7 @@ type OrganizationsLocationsJobTriggersDeleteCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *OrganizationsLocationsJobTriggersService) Delete(name string) *OrganizationsLocationsJobTriggersDeleteCall {
 	c := &OrganizationsLocationsJobTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12342,7 +12342,7 @@ func (c *OrganizationsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12444,7 +12444,7 @@ type OrganizationsLocationsJobTriggersGetCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *OrganizationsLocationsJobTriggersService) Get(name string) *OrganizationsLocationsJobTriggersGetCall {
 	c := &OrganizationsLocationsJobTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12488,7 +12488,7 @@ func (c *OrganizationsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12593,15 +12593,15 @@ type OrganizationsLocationsJobTriggersListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsJobTriggersService) List(parentid string) *OrganizationsLocationsJobTriggersListCall {
 	c := &OrganizationsLocationsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -12705,7 +12705,7 @@ func (c *OrganizationsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12859,7 +12859,7 @@ type OrganizationsLocationsJobTriggersPatchCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *OrganizationsLocationsJobTriggersService) Patch(name string, googleprivacydlpv2updatejobtriggerrequest *GooglePrivacyDlpV2UpdateJobTriggerRequest) *OrganizationsLocationsJobTriggersPatchCall {
 	c := &OrganizationsLocationsJobTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12894,7 +12894,7 @@ func (c *OrganizationsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13005,19 +13005,19 @@ type OrganizationsLocationsStoredInfoTypesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsStoredInfoTypesService) Create(parentid string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsLocationsStoredInfoTypesCreateCall {
 	c := &OrganizationsLocationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -13052,7 +13052,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13161,9 +13161,9 @@ type OrganizationsLocationsStoredInfoTypesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// deleted, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   deleted, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *OrganizationsLocationsStoredInfoTypesService) Delete(name string) *OrganizationsLocationsStoredInfoTypesDeleteCall {
 	c := &OrganizationsLocationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13197,7 +13197,7 @@ func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13299,8 +13299,9 @@ type OrganizationsLocationsStoredInfoTypesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// read, for example `organizations/433245324/storedInfoTypes/432452342`
-// or projects/project-id/storedInfoTypes/432452342.
+//   read, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *OrganizationsLocationsStoredInfoTypesService) Get(name string) *OrganizationsLocationsStoredInfoTypesGetCall {
 	c := &OrganizationsLocationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13344,7 +13345,7 @@ func (c *OrganizationsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13449,19 +13450,19 @@ type OrganizationsLocationsStoredInfoTypesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsStoredInfoTypesService) List(parentid string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c := &OrganizationsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -13542,7 +13543,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13693,9 +13694,9 @@ type OrganizationsLocationsStoredInfoTypesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and storedInfoType to be
-// updated, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   updated, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *OrganizationsLocationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *OrganizationsLocationsStoredInfoTypesPatchCall {
 	c := &OrganizationsLocationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13730,7 +13731,7 @@ func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13841,19 +13842,19 @@ type OrganizationsStoredInfoTypesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsStoredInfoTypesService) Create(parentid string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesCreateCall {
 	c := &OrganizationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -13888,7 +13889,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13997,9 +13998,9 @@ type OrganizationsStoredInfoTypesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// deleted, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   deleted, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *OrganizationsStoredInfoTypesService) Delete(name string) *OrganizationsStoredInfoTypesDeleteCall {
 	c := &OrganizationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14033,7 +14034,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14135,8 +14136,9 @@ type OrganizationsStoredInfoTypesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// read, for example `organizations/433245324/storedInfoTypes/432452342`
-// or projects/project-id/storedInfoTypes/432452342.
+//   read, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *OrganizationsStoredInfoTypesService) Get(name string) *OrganizationsStoredInfoTypesGetCall {
 	c := &OrganizationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14180,7 +14182,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14285,19 +14287,19 @@ type OrganizationsStoredInfoTypesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsStoredInfoTypesService) List(parentid string) *OrganizationsStoredInfoTypesListCall {
 	c := &OrganizationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -14378,7 +14380,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14529,9 +14531,9 @@ type OrganizationsStoredInfoTypesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and storedInfoType to be
-// updated, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   updated, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *OrganizationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesPatchCall {
 	c := &OrganizationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14566,7 +14568,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14680,15 +14682,15 @@ type ProjectsContentDeidentifyCall struct {
 // detectors are updated.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsContentService) Deidentify(parentid string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsContentDeidentifyCall {
 	c := &ProjectsContentDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -14723,7 +14725,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14840,15 +14842,15 @@ type ProjectsContentInspectCall struct {
 // https://cloud.google.com/dlp/docs/inspecting-text,
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsContentService) Inspect(parentid string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsContentInspectCall {
 	c := &ProjectsContentInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -14883,7 +14885,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14995,15 +14997,15 @@ type ProjectsContentReidentifyCall struct {
 // to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsContentService) Reidentify(parentid string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsContentReidentifyCall {
 	c := &ProjectsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -15038,7 +15040,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15151,19 +15153,19 @@ type ProjectsDeidentifyTemplatesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsDeidentifyTemplatesService) Create(parentid string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *ProjectsDeidentifyTemplatesCreateCall {
 	c := &ProjectsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -15198,7 +15200,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15308,9 +15310,9 @@ type ProjectsDeidentifyTemplatesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be deleted, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be deleted, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *ProjectsDeidentifyTemplatesService) Delete(name string) *ProjectsDeidentifyTemplatesDeleteCall {
 	c := &ProjectsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15344,7 +15346,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15446,9 +15448,9 @@ type ProjectsDeidentifyTemplatesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be read, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be read, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *ProjectsDeidentifyTemplatesService) Get(name string) *ProjectsDeidentifyTemplatesGetCall {
 	c := &ProjectsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15492,7 +15494,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15598,19 +15600,19 @@ type ProjectsDeidentifyTemplatesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsDeidentifyTemplatesService) List(parentid string) *ProjectsDeidentifyTemplatesListCall {
 	c := &ProjectsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -15691,7 +15693,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15840,9 +15842,9 @@ type ProjectsDeidentifyTemplatesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and deidentify template to be
-// updated, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *ProjectsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *ProjectsDeidentifyTemplatesPatchCall {
 	c := &ProjectsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15877,7 +15879,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16025,7 +16027,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16139,15 +16141,15 @@ type ProjectsDlpJobsCreateCall struct {
 // are updated.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsDlpJobsService) Create(parentid string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsDlpJobsCreateCall {
 	c := &ProjectsDlpJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -16182,7 +16184,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16327,7 +16329,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16473,7 +16475,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16579,15 +16581,15 @@ type ProjectsDlpJobsListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsDlpJobsService) List(parentid string) *ProjectsDlpJobsListCall {
 	c := &ProjectsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -16701,7 +16703,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16873,15 +16875,15 @@ type ProjectsImageRedactCall struct {
 // detectors are updated.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsImageService) Redact(parentid string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsImageRedactCall {
 	c := &ProjectsImageRedactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -16916,7 +16918,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17027,19 +17029,19 @@ type ProjectsInspectTemplatesCreateCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsInspectTemplatesService) Create(parentid string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *ProjectsInspectTemplatesCreateCall {
 	c := &ProjectsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -17074,7 +17076,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17183,9 +17185,9 @@ type ProjectsInspectTemplatesDeleteCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// deleted, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   deleted, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *ProjectsInspectTemplatesService) Delete(name string) *ProjectsInspectTemplatesDeleteCall {
 	c := &ProjectsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17219,7 +17221,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17320,9 +17322,9 @@ type ProjectsInspectTemplatesGetCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// read, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   read, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *ProjectsInspectTemplatesService) Get(name string) *ProjectsInspectTemplatesGetCall {
 	c := &ProjectsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17366,7 +17368,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17471,19 +17473,19 @@ type ProjectsInspectTemplatesListCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsInspectTemplatesService) List(parentid string) *ProjectsInspectTemplatesListCall {
 	c := &ProjectsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -17564,7 +17566,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17712,9 +17714,9 @@ type ProjectsInspectTemplatesPatchCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of organization and inspectTemplate to be
-// updated, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *ProjectsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *ProjectsInspectTemplatesPatchCall {
 	c := &ProjectsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17749,7 +17751,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17859,7 +17861,7 @@ type ProjectsJobTriggersActivateCall struct {
 // trigger instead of waiting on the trigger event to occur.
 //
 // - name: Resource name of the trigger to activate, for example
-// `projects/dlp-test-project/jobTriggers/53234423`.
+//   `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsJobTriggersService) Activate(name string, googleprivacydlpv2activatejobtriggerrequest *GooglePrivacyDlpV2ActivateJobTriggerRequest) *ProjectsJobTriggersActivateCall {
 	c := &ProjectsJobTriggersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17894,7 +17896,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18005,15 +18007,15 @@ type ProjectsJobTriggersCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *ProjectsJobTriggersCreateCall {
 	c := &ProjectsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -18048,7 +18050,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18157,7 +18159,7 @@ type ProjectsJobTriggersDeleteCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsJobTriggersService) Delete(name string) *ProjectsJobTriggersDeleteCall {
 	c := &ProjectsJobTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18191,7 +18193,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18293,7 +18295,7 @@ type ProjectsJobTriggersGetCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsJobTriggersService) Get(name string) *ProjectsJobTriggersGetCall {
 	c := &ProjectsJobTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18337,7 +18339,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18442,15 +18444,15 @@ type ProjectsJobTriggersListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsJobTriggersService) List(parentid string) *ProjectsJobTriggersListCall {
 	c := &ProjectsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -18554,7 +18556,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18708,7 +18710,7 @@ type ProjectsJobTriggersPatchCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsJobTriggersService) Patch(name string, googleprivacydlpv2updatejobtriggerrequest *GooglePrivacyDlpV2UpdateJobTriggerRequest) *ProjectsJobTriggersPatchCall {
 	c := &ProjectsJobTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18743,7 +18745,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18857,15 +18859,15 @@ type ProjectsLocationsContentDeidentifyCall struct {
 // detectors are updated.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsContentService) Deidentify(parentid string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsLocationsContentDeidentifyCall {
 	c := &ProjectsLocationsContentDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -18900,7 +18902,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19017,15 +19019,15 @@ type ProjectsLocationsContentInspectCall struct {
 // https://cloud.google.com/dlp/docs/inspecting-text,
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsContentService) Inspect(parentid string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsLocationsContentInspectCall {
 	c := &ProjectsLocationsContentInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -19060,7 +19062,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19172,15 +19174,15 @@ type ProjectsLocationsContentReidentifyCall struct {
 // to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsContentService) Reidentify(parentid string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsLocationsContentReidentifyCall {
 	c := &ProjectsLocationsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -19215,7 +19217,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19328,19 +19330,19 @@ type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsDeidentifyTemplatesService) Create(parentid string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *ProjectsLocationsDeidentifyTemplatesCreateCall {
 	c := &ProjectsLocationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -19375,7 +19377,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19485,9 +19487,9 @@ type ProjectsLocationsDeidentifyTemplatesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be deleted, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be deleted, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *ProjectsLocationsDeidentifyTemplatesService) Delete(name string) *ProjectsLocationsDeidentifyTemplatesDeleteCall {
 	c := &ProjectsLocationsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19521,7 +19523,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19623,9 +19625,9 @@ type ProjectsLocationsDeidentifyTemplatesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and deidentify template to
-// be read, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   be read, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *ProjectsLocationsDeidentifyTemplatesService) Get(name string) *ProjectsLocationsDeidentifyTemplatesGetCall {
 	c := &ProjectsLocationsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19669,7 +19671,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19775,19 +19777,19 @@ type ProjectsLocationsDeidentifyTemplatesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsDeidentifyTemplatesService) List(parentid string) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c := &ProjectsLocationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -19868,7 +19870,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20017,9 +20019,9 @@ type ProjectsLocationsDeidentifyTemplatesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and deidentify template to be
-// updated, for example
-// `organizations/433245324/deidentifyTemplates/432452342` or
-// projects/project-id/deidentifyTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/deidentifyTemplates/432452342` or
+//   projects/project-id/deidentifyTemplates/432452342.
 func (r *ProjectsLocationsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *ProjectsLocationsDeidentifyTemplatesPatchCall {
 	c := &ProjectsLocationsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20054,7 +20056,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20202,7 +20204,7 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20316,15 +20318,15 @@ type ProjectsLocationsDlpJobsCreateCall struct {
 // are updated.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsDlpJobsService) Create(parentid string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsLocationsDlpJobsCreateCall {
 	c := &ProjectsLocationsDlpJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -20359,7 +20361,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20504,7 +20506,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20639,7 +20641,7 @@ func (c *ProjectsLocationsDlpJobsFinishCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsFinishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20793,7 +20795,7 @@ func (c *ProjectsLocationsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20898,7 +20900,7 @@ type ProjectsLocationsDlpJobsHybridInspectCall struct {
 // asynchronously.
 //
 // - name: Resource name of the job to execute a hybrid inspect on, for
-// example `projects/dlp-test-project/dlpJob/53234423`.
+//   example `projects/dlp-test-project/dlpJob/53234423`.
 func (r *ProjectsLocationsDlpJobsService) HybridInspect(name string, googleprivacydlpv2hybridinspectdlpjobrequest *GooglePrivacyDlpV2HybridInspectDlpJobRequest) *ProjectsLocationsDlpJobsHybridInspectCall {
 	c := &ProjectsLocationsDlpJobsHybridInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20933,7 +20935,7 @@ func (c *ProjectsLocationsDlpJobsHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21045,15 +21047,15 @@ type ProjectsLocationsDlpJobsListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsDlpJobsService) List(parentid string) *ProjectsLocationsDlpJobsListCall {
 	c := &ProjectsLocationsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -21167,7 +21169,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21339,15 +21341,15 @@ type ProjectsLocationsImageRedactCall struct {
 // detectors are updated.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsImageService) Redact(parentid string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsLocationsImageRedactCall {
 	c := &ProjectsLocationsImageRedactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -21382,7 +21384,7 @@ func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21493,19 +21495,19 @@ type ProjectsLocationsInspectTemplatesCreateCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsInspectTemplatesService) Create(parentid string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *ProjectsLocationsInspectTemplatesCreateCall {
 	c := &ProjectsLocationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -21540,7 +21542,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21649,9 +21651,9 @@ type ProjectsLocationsInspectTemplatesDeleteCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// deleted, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   deleted, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *ProjectsLocationsInspectTemplatesService) Delete(name string) *ProjectsLocationsInspectTemplatesDeleteCall {
 	c := &ProjectsLocationsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21685,7 +21687,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21786,9 +21788,9 @@ type ProjectsLocationsInspectTemplatesGetCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of the organization and inspectTemplate to be
-// read, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   read, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *ProjectsLocationsInspectTemplatesService) Get(name string) *ProjectsLocationsInspectTemplatesGetCall {
 	c := &ProjectsLocationsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21832,7 +21834,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21937,19 +21939,19 @@ type ProjectsLocationsInspectTemplatesListCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsInspectTemplatesService) List(parentid string) *ProjectsLocationsInspectTemplatesListCall {
 	c := &ProjectsLocationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -22030,7 +22032,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22178,9 +22180,9 @@ type ProjectsLocationsInspectTemplatesPatchCall struct {
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
 // - name: Resource name of organization and inspectTemplate to be
-// updated, for example
-// `organizations/433245324/inspectTemplates/432452342` or
-// projects/project-id/inspectTemplates/432452342.
+//   updated, for example
+//   `organizations/433245324/inspectTemplates/432452342` or
+//   projects/project-id/inspectTemplates/432452342.
 func (r *ProjectsLocationsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *ProjectsLocationsInspectTemplatesPatchCall {
 	c := &ProjectsLocationsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22215,7 +22217,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22325,7 +22327,7 @@ type ProjectsLocationsJobTriggersActivateCall struct {
 // trigger instead of waiting on the trigger event to occur.
 //
 // - name: Resource name of the trigger to activate, for example
-// `projects/dlp-test-project/jobTriggers/53234423`.
+//   `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsLocationsJobTriggersService) Activate(name string, googleprivacydlpv2activatejobtriggerrequest *GooglePrivacyDlpV2ActivateJobTriggerRequest) *ProjectsLocationsJobTriggersActivateCall {
 	c := &ProjectsLocationsJobTriggersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22360,7 +22362,7 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22471,15 +22473,15 @@ type ProjectsLocationsJobTriggersCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *ProjectsLocationsJobTriggersCreateCall {
 	c := &ProjectsLocationsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -22514,7 +22516,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22623,7 +22625,7 @@ type ProjectsLocationsJobTriggersDeleteCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsLocationsJobTriggersService) Delete(name string) *ProjectsLocationsJobTriggersDeleteCall {
 	c := &ProjectsLocationsJobTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22657,7 +22659,7 @@ func (c *ProjectsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22759,7 +22761,7 @@ type ProjectsLocationsJobTriggersGetCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsLocationsJobTriggersService) Get(name string) *ProjectsLocationsJobTriggersGetCall {
 	c := &ProjectsLocationsJobTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22803,7 +22805,7 @@ func (c *ProjectsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22908,7 +22910,7 @@ type ProjectsLocationsJobTriggersHybridInspectCall struct {
 // the findings monitor the jobs within the trigger.
 //
 // - name: Resource name of the trigger to execute a hybrid inspect on,
-// for example `projects/dlp-test-project/jobTriggers/53234423`.
+//   for example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsLocationsJobTriggersService) HybridInspect(name string, googleprivacydlpv2hybridinspectjobtriggerrequest *GooglePrivacyDlpV2HybridInspectJobTriggerRequest) *ProjectsLocationsJobTriggersHybridInspectCall {
 	c := &ProjectsLocationsJobTriggersHybridInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22943,7 +22945,7 @@ func (c *ProjectsLocationsJobTriggersHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23054,15 +23056,15 @@ type ProjectsLocationsJobTriggersListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID The
-// following example `parent` string specifies a parent project with the
-// identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID The
+//   following example `parent` string specifies a parent project with
+//   the identifier `example-project`, and specifies the `europe-west3`
+//   location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsJobTriggersService) List(parentid string) *ProjectsLocationsJobTriggersListCall {
 	c := &ProjectsLocationsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -23166,7 +23168,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23320,7 +23322,7 @@ type ProjectsLocationsJobTriggersPatchCall struct {
 // more.
 //
 // - name: Resource name of the project and the triggeredJob, for
-// example `projects/dlp-test-project/jobTriggers/53234423`.
+//   example `projects/dlp-test-project/jobTriggers/53234423`.
 func (r *ProjectsLocationsJobTriggersService) Patch(name string, googleprivacydlpv2updatejobtriggerrequest *GooglePrivacyDlpV2UpdateJobTriggerRequest) *ProjectsLocationsJobTriggersPatchCall {
 	c := &ProjectsLocationsJobTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23355,7 +23357,7 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23466,19 +23468,19 @@ type ProjectsLocationsStoredInfoTypesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsStoredInfoTypesService) Create(parentid string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *ProjectsLocationsStoredInfoTypesCreateCall {
 	c := &ProjectsLocationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -23513,7 +23515,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23622,9 +23624,9 @@ type ProjectsLocationsStoredInfoTypesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// deleted, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   deleted, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *ProjectsLocationsStoredInfoTypesService) Delete(name string) *ProjectsLocationsStoredInfoTypesDeleteCall {
 	c := &ProjectsLocationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23658,7 +23660,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23760,8 +23762,9 @@ type ProjectsLocationsStoredInfoTypesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// read, for example `organizations/433245324/storedInfoTypes/432452342`
-// or projects/project-id/storedInfoTypes/432452342.
+//   read, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *ProjectsLocationsStoredInfoTypesService) Get(name string) *ProjectsLocationsStoredInfoTypesGetCall {
 	c := &ProjectsLocationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23805,7 +23808,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23910,19 +23913,19 @@ type ProjectsLocationsStoredInfoTypesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsStoredInfoTypesService) List(parentid string) *ProjectsLocationsStoredInfoTypesListCall {
 	c := &ProjectsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -24003,7 +24006,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24154,9 +24157,9 @@ type ProjectsLocationsStoredInfoTypesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and storedInfoType to be
-// updated, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   updated, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *ProjectsLocationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *ProjectsLocationsStoredInfoTypesPatchCall {
 	c := &ProjectsLocationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24191,7 +24194,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24302,19 +24305,19 @@ type ProjectsStoredInfoTypesCreateCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsStoredInfoTypesService) Create(parentid string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *ProjectsStoredInfoTypesCreateCall {
 	c := &ProjectsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -24349,7 +24352,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24458,9 +24461,9 @@ type ProjectsStoredInfoTypesDeleteCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// deleted, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   deleted, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *ProjectsStoredInfoTypesService) Delete(name string) *ProjectsStoredInfoTypesDeleteCall {
 	c := &ProjectsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24494,7 +24497,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24596,8 +24599,9 @@ type ProjectsStoredInfoTypesGetCall struct {
 // more.
 //
 // - name: Resource name of the organization and storedInfoType to be
-// read, for example `organizations/433245324/storedInfoTypes/432452342`
-// or projects/project-id/storedInfoTypes/432452342.
+//   read, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *ProjectsStoredInfoTypesService) Get(name string) *ProjectsStoredInfoTypesGetCall {
 	c := &ProjectsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24641,7 +24645,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24746,19 +24750,19 @@ type ProjectsStoredInfoTypesListCall struct {
 // more.
 //
 // - parent: Parent resource name. The format of this value varies
-// depending on the scope of the request (project or organization) and
-// whether you have specified a processing location
-// (https://cloud.google.com/dlp/docs/specifying-location): + Projects
-// scope, location specified:
-// `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-// location specified (defaults to global): `projects/`PROJECT_ID +
-// Organizations scope, location specified:
-// `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope,
-// no location specified (defaults to global): `organizations/`ORG_ID
-// The following example `parent` string specifies a parent project with
-// the identifier `example-project`, and specifies the `europe-west3`
-// location for processing data:
-// parent=projects/example-project/locations/europe-west3
+//   depending on the scope of the request (project or organization) and
+//   whether you have specified a processing location
+//   (https://cloud.google.com/dlp/docs/specifying-location): + Projects
+//   scope, location specified:
+//   `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
+//   location specified (defaults to global): `projects/`PROJECT_ID +
+//   Organizations scope, location specified:
+//   `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
+//   scope, no location specified (defaults to global):
+//   `organizations/`ORG_ID The following example `parent` string
+//   specifies a parent project with the identifier `example-project`,
+//   and specifies the `europe-west3` location for processing data:
+//   parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsStoredInfoTypesService) List(parentid string) *ProjectsStoredInfoTypesListCall {
 	c := &ProjectsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -24839,7 +24843,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24990,9 +24994,9 @@ type ProjectsStoredInfoTypesPatchCall struct {
 // more.
 //
 // - name: Resource name of organization and storedInfoType to be
-// updated, for example
-// `organizations/433245324/storedInfoTypes/432452342` or
-// projects/project-id/storedInfoTypes/432452342.
+//   updated, for example
+//   `organizations/433245324/storedInfoTypes/432452342` or
+//   projects/project-id/storedInfoTypes/432452342.
 func (r *ProjectsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *ProjectsStoredInfoTypesPatchCall {
 	c := &ProjectsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25027,7 +25031,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

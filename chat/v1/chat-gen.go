@@ -1641,7 +1641,7 @@ type DmsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1690,7 +1690,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1801,7 +1801,7 @@ type DmsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1850,7 +1850,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1961,7 +1961,7 @@ type DmsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2010,7 +2010,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2121,7 +2121,7 @@ type MediaDownloadCall struct {
 // `/v1/media/{+name}?alt=media`.
 //
 // - resourceName: Name of the media that is being downloaded. See
-// ReadRequest.resource_name.
+//   ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -2165,7 +2165,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2283,7 +2283,7 @@ type RoomsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2332,7 +2332,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2443,7 +2443,7 @@ type RoomsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2492,7 +2492,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2603,7 +2603,7 @@ type RoomsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2652,7 +2652,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2762,7 +2762,7 @@ type SpacesGetCall struct {
 // Get: Returns a space.
 //
 // - name: Resource name of the space, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2806,7 +2806,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2960,7 +2960,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3081,7 +3081,7 @@ type SpacesWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3130,7 +3130,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3240,8 +3240,8 @@ type SpacesMembersGetCall struct {
 // Get: Returns a membership.
 //
 // - name: Resource name of the membership to be retrieved, in the form
-// "spaces/*/members/*". Example:
-// spaces/AAAAMpdlehY/members/105115627578887013105
+//   "spaces/*/members/*". Example:
+//   spaces/AAAAMpdlehY/members/105115627578887013105.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3285,7 +3285,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3385,7 +3385,7 @@ type SpacesMembersListCall struct {
 // List: Lists human memberships in a space.
 //
 // - parent: The resource name of the space for which membership list is
-// to be fetched, in the form "spaces/*". Example: spaces/AAAAMpdlehY
+//   to be fetched, in the form "spaces/*". Example: spaces/AAAAMpdlehY.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3444,7 +3444,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3576,7 +3576,7 @@ type SpacesMessagesCreateCall struct {
 // Create: Creates a message.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-// spaces/AAAAMpdlehY
+//   spaces/AAAAMpdlehY.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3625,7 +3625,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3734,8 +3734,8 @@ type SpacesMessagesDeleteCall struct {
 // Delete: Deletes a message.
 //
 // - name: Resource name of the message to be deleted, in the form
-// "spaces/*/messages/*" Example:
-// spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4
+//   "spaces/*/messages/*" Example:
+//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3769,7 +3769,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3866,8 +3866,8 @@ type SpacesMessagesGetCall struct {
 // Get: Returns a message.
 //
 // - name: Resource name of the message to be retrieved, in the form
-// "spaces/*/messages/*". Example:
-// spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4
+//   "spaces/*/messages/*". Example:
+//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3911,7 +3911,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4010,7 +4010,7 @@ type SpacesMessagesUpdateCall struct {
 
 // Update: Updates a message.
 //
-// - name:
+// - name: .
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4053,7 +4053,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4164,7 +4164,7 @@ type SpacesMessagesAttachmentsGetCall struct {
 // is fetched using the media API.
 //
 // - name: Resource name of the attachment, in the form
-// "spaces/*/messages/*/attachments/*".
+//   "spaces/*/messages/*/attachments/*".
 func (r *SpacesMessagesAttachmentsService) Get(name string) *SpacesMessagesAttachmentsGetCall {
 	c := &SpacesMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4208,7 +4208,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

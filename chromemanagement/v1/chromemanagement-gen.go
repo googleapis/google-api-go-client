@@ -470,7 +470,7 @@ type CustomersReportsCountChromeVersionsCall struct {
 // CountChromeVersions: Generate report of installed Chrome versions.
 //
 // - customer: Customer id or "my_customer" to use the customer
-// associated to the account making the request.
+//   associated to the account making the request.
 func (r *CustomersReportsService) CountChromeVersions(customer string) *CustomersReportsCountChromeVersionsCall {
 	c := &CustomersReportsCountChromeVersionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -544,7 +544,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -691,7 +691,7 @@ type CustomersReportsCountInstalledAppsCall struct {
 // CountInstalledApps: Generate report of app installations.
 //
 // - customer: Customer id or "my_customer" to use the customer
-// associated to the account making the request.
+//   associated to the account making the request.
 func (r *CustomersReportsService) CountInstalledApps(customer string) *CustomersReportsCountInstalledAppsCall {
 	c := &CustomersReportsCountInstalledAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -774,7 +774,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -927,7 +927,7 @@ type CustomersReportsFindInstalledAppDevicesCall struct {
 // specified app installed.
 //
 // - customer: Customer id or "my_customer" to use the customer
-// associated to the account making the request.
+//   associated to the account making the request.
 func (r *CustomersReportsService) FindInstalledAppDevices(customer string) *CustomersReportsFindInstalledAppDevicesCall {
 	c := &CustomersReportsFindInstalledAppDevicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1031,7 +1031,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -4160,12 +4160,12 @@ type ActionResultsGetCall struct {
 // `NOT_FOUND`: The requested `ActionResult` is not in the cache.
 //
 // - hash: The hash. In the case of SHA-256, it will always be a
-// lowercase hex string exactly 64 characters long.
+//   lowercase hex string exactly 64 characters long.
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 // - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes int64) *ActionResultsGetCall {
 	c := &ActionResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4236,7 +4236,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4385,12 +4385,12 @@ type ActionResultsUpdateCall struct {
 // entry to the cache.
 //
 // - hash: The hash. In the case of SHA-256, it will always be a
-// lowercase hex string exactly 64 characters long.
+//   lowercase hex string exactly 64 characters long.
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 // - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Update(instanceName string, hash string, sizeBytes int64, buildbazelremoteexecutionv2actionresult *BuildBazelRemoteExecutionV2ActionResult) *ActionResultsUpdateCall {
 	c := &ActionResultsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4442,7 +4442,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4621,10 +4621,10 @@ type ActionsExecuteCall struct {
 // continue to run, even if the operation is completed.
 //
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *ActionsService) Execute(instanceName string, buildbazelremoteexecutionv2executerequest *BuildBazelRemoteExecutionV2ExecuteRequest) *ActionsExecuteCall {
 	c := &ActionsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4659,7 +4659,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4776,10 +4776,10 @@ type BlobsBatchReadCall struct {
 // returned in the corresponding digest status.
 //
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchRead(instanceName string, buildbazelremoteexecutionv2batchreadblobsrequest *BuildBazelRemoteExecutionV2BatchReadBlobsRequest) *BlobsBatchReadCall {
 	c := &BlobsBatchReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4814,7 +4814,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4935,10 +4935,10 @@ type BlobsBatchUpdateCall struct {
 // Digest does not match the provided data.
 //
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchUpdate(instanceName string, buildbazelremoteexecutionv2batchupdateblobsrequest *BuildBazelRemoteExecutionV2BatchUpdateBlobsRequest) *BlobsBatchUpdateCall {
 	c := &BlobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4973,7 +4973,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5087,10 +5087,10 @@ type BlobsFindMissingCall struct {
 // necessary and applicable. There are no method-specific errors.
 //
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) FindMissing(instanceName string, buildbazelremoteexecutionv2findmissingblobsrequest *BuildBazelRemoteExecutionV2FindMissingBlobsRequest) *BlobsFindMissingCall {
 	c := &BlobsFindMissingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5125,7 +5125,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5250,12 +5250,12 @@ type BlobsGetTreeCall struct {
 // requested tree root is not present in the CAS.
 //
 // - hash: The hash. In the case of SHA-256, it will always be a
-// lowercase hex string exactly 64 characters long.
+//   lowercase hex string exactly 64 characters long.
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 // - sizeBytes: The size of the blob, in bytes.
 func (r *BlobsService) GetTree(instanceName string, hash string, sizeBytes int64) *BlobsGetTreeCall {
 	c := &BlobsGetTreeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5322,7 +5322,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,7 +5516,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5630,10 +5630,10 @@ type V2GetCapabilitiesCall struct {
 // return CacheCapabilities.
 //
 // - instanceName: The instance of the execution system to operate
-// against. A server may support multiple instances of the execution
-// system (with their own workers, storage, caches, etc.). The server
-// MAY require use of this field to select between them in an
-// implementation-defined fashion, otherwise it can be omitted.
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *V2Service) GetCapabilities(instanceName string) *V2GetCapabilitiesCall {
 	c := &V2GetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5677,7 +5677,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

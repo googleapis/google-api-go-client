@@ -322,8 +322,8 @@ type ProjectsTraceSinksCreateCall struct {
 // 'parent').
 //
 // - parent: The resource in which to create the sink (currently only
-// project sinks are supported): "projects/[PROJECT_ID]" Examples:
-// "projects/my-trace-project", "projects/123456789".
+//   project sinks are supported): "projects/[PROJECT_ID]" Examples:
+//   "projects/my-trace-project", "projects/123456789".
 func (r *ProjectsTraceSinksService) Create(parent string, tracesink *TraceSink) *ProjectsTraceSinksCreateCall {
 	c := &ProjectsTraceSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -358,7 +358,7 @@ func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -466,9 +466,9 @@ type ProjectsTraceSinksDeleteCall struct {
 // Delete: Deletes a sink.
 //
 // - name: The full resource name of the sink to delete, including the
-// parent resource and the sink identifier:
-// "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
-// "projects/12345/traceSinks/my-sink-id".
+//   parent resource and the sink identifier:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Delete(nameid string) *ProjectsTraceSinksDeleteCall {
 	c := &ProjectsTraceSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -502,7 +502,7 @@ func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -604,8 +604,8 @@ type ProjectsTraceSinksGetCall struct {
 // project).
 //
 // - name: The resource name of the sink:
-// "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
-// "projects/12345/traceSinks/my-sink-id".
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Get(name string) *ProjectsTraceSinksGetCall {
 	c := &ProjectsTraceSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -649,7 +649,7 @@ func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -753,7 +753,8 @@ type ProjectsTraceSinksListCall struct {
 // List: List all sinks for the parent resource (GCP project).
 //
 // - parent: The parent resource whose sinks are to be listed (currently
-// only project parent resources are supported): "projects/[PROJECT_ID]"
+//   only project parent resources are supported):
+//   "projects/[PROJECT_ID]".
 func (r *ProjectsTraceSinksService) List(parent string) *ProjectsTraceSinksListCall {
 	c := &ProjectsTraceSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -816,7 +817,7 @@ func (c *ProjectsTraceSinksListCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -954,9 +955,9 @@ type ProjectsTraceSinksPatchCall struct {
 // changed nor any output-only fields (e.g. the writer_identity).
 //
 // - name: The full resource name of the sink to update, including the
-// parent resource and the sink identifier:
-// "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
-// "projects/12345/traceSinks/my-sink-id".
+//   parent resource and the sink identifier:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *ProjectsTraceSinksPatchCall {
 	c := &ProjectsTraceSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1004,7 +1005,7 @@ func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

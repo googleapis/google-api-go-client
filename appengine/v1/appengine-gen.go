@@ -3798,7 +3798,7 @@ func (c *AppsCreateCall) Header() http.Header {
 
 func (c *AppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3893,7 +3893,7 @@ type AppsGetCall struct {
 // Get: Gets information about an application.
 //
 // - appsId: Part of `name`. Name of the Application resource to get.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsService) Get(appsId string) *AppsGetCall {
 	c := &AppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3937,7 +3937,7 @@ func (c *AppsGetCall) Header() http.Header {
 
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4044,7 +4044,7 @@ type AppsPatchCall struct {
 // - Cookie expiration policy for the application.
 //
 // - appsId: Part of `name`. Name of the Application resource to update.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4086,7 +4086,7 @@ func (c *AppsPatchCall) Header() http.Header {
 
 func (c *AppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4208,7 +4208,7 @@ type AppsRepairCall struct {
 // Cloud Console Activity Log.
 //
 // - appsId: Part of `name`. Name of the application to repair. Example:
-// apps/myapp
+//   apps/myapp.
 func (r *AppsService) Repair(appsId string, repairapplicationrequest *RepairApplicationRequest) *AppsRepairCall {
 	c := &AppsRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4243,7 +4243,7 @@ func (c *AppsRepairCall) Header() http.Header {
 
 func (c *AppsRepairCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4350,7 +4350,7 @@ type AppsAuthorizedCertificatesCreateCall struct {
 // Create: Uploads the specified SSL certificate.
 //
 // - appsId: Part of `parent`. Name of the parent Application resource.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsAuthorizedCertificatesService) Create(appsId string, authorizedcertificate *AuthorizedCertificate) *AppsAuthorizedCertificatesCreateCall {
 	c := &AppsAuthorizedCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4385,7 +4385,7 @@ func (c *AppsAuthorizedCertificatesCreateCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4492,9 +4492,9 @@ type AppsAuthorizedCertificatesDeleteCall struct {
 // Delete: Deletes the specified SSL certificate.
 //
 // - appsId: Part of `name`. Name of the resource to delete. Example:
-// apps/myapp/authorizedCertificates/12345.
+//   apps/myapp/authorizedCertificates/12345.
 // - authorizedCertificatesId: Part of `name`. See documentation of
-// `appsId`.
+//   `appsId`.
 func (r *AppsAuthorizedCertificatesService) Delete(appsId string, authorizedCertificatesId string) *AppsAuthorizedCertificatesDeleteCall {
 	c := &AppsAuthorizedCertificatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4529,7 +4529,7 @@ func (c *AppsAuthorizedCertificatesDeleteCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4637,9 +4637,9 @@ type AppsAuthorizedCertificatesGetCall struct {
 // Get: Gets the specified SSL certificate.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/authorizedCertificates/12345.
+//   apps/myapp/authorizedCertificates/12345.
 // - authorizedCertificatesId: Part of `name`. See documentation of
-// `appsId`.
+//   `appsId`.
 func (r *AppsAuthorizedCertificatesService) Get(appsId string, authorizedCertificatesId string) *AppsAuthorizedCertificatesGetCall {
 	c := &AppsAuthorizedCertificatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4698,7 +4698,7 @@ func (c *AppsAuthorizedCertificatesGetCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4824,7 +4824,7 @@ type AppsAuthorizedCertificatesListCall struct {
 // administer.
 //
 // - appsId: Part of `parent`. Name of the parent Application resource.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsAuthorizedCertificatesService) List(appsId string) *AppsAuthorizedCertificatesListCall {
 	c := &AppsAuthorizedCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4896,7 +4896,7 @@ func (c *AppsAuthorizedCertificatesListCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5051,9 +5051,9 @@ type AppsAuthorizedCertificatesPatchCall struct {
 // display_name may also be updated.
 //
 // - appsId: Part of `name`. Name of the resource to update. Example:
-// apps/myapp/authorizedCertificates/12345.
+//   apps/myapp/authorizedCertificates/12345.
 // - authorizedCertificatesId: Part of `name`. See documentation of
-// `appsId`.
+//   `appsId`.
 func (r *AppsAuthorizedCertificatesService) Patch(appsId string, authorizedCertificatesId string, authorizedcertificate *AuthorizedCertificate) *AppsAuthorizedCertificatesPatchCall {
 	c := &AppsAuthorizedCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5097,7 +5097,7 @@ func (c *AppsAuthorizedCertificatesPatchCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5218,7 +5218,7 @@ type AppsAuthorizedDomainsListCall struct {
 // List: Lists all domains the user is authorized to administer.
 //
 // - appsId: Part of `parent`. Name of the parent Application resource.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsAuthorizedDomainsService) List(appsId string) *AppsAuthorizedDomainsListCall {
 	c := &AppsAuthorizedDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5276,7 +5276,7 @@ func (c *AppsAuthorizedDomainsListCall) Header() http.Header {
 
 func (c *AppsAuthorizedDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5415,7 +5415,7 @@ type AppsDomainMappingsCreateCall struct {
 // AuthorizedDomains.ListAuthorizedDomains.
 //
 // - appsId: Part of `parent`. Name of the parent Application resource.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsDomainMappingsService) Create(appsId string, domainmapping *DomainMapping) *AppsDomainMappingsCreateCall {
 	c := &AppsDomainMappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5470,7 +5470,7 @@ func (c *AppsDomainMappingsCreateCall) Header() http.Header {
 
 func (c *AppsDomainMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5594,7 +5594,7 @@ type AppsDomainMappingsDeleteCall struct {
 // DomainMapping resource.
 //
 // - appsId: Part of `name`. Name of the resource to delete. Example:
-// apps/myapp/domainMappings/example.com.
+//   apps/myapp/domainMappings/example.com.
 // - domainMappingsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsDomainMappingsService) Delete(appsId string, domainMappingsId string) *AppsDomainMappingsDeleteCall {
 	c := &AppsDomainMappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5630,7 +5630,7 @@ func (c *AppsDomainMappingsDeleteCall) Header() http.Header {
 
 func (c *AppsDomainMappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5738,7 +5738,7 @@ type AppsDomainMappingsGetCall struct {
 // Get: Gets the specified domain mapping.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/domainMappings/example.com.
+//   apps/myapp/domainMappings/example.com.
 // - domainMappingsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsDomainMappingsService) Get(appsId string, domainMappingsId string) *AppsDomainMappingsGetCall {
 	c := &AppsDomainMappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5784,7 +5784,7 @@ func (c *AppsDomainMappingsGetCall) Header() http.Header {
 
 func (c *AppsDomainMappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5896,7 +5896,7 @@ type AppsDomainMappingsListCall struct {
 // List: Lists the domain mappings on an application.
 //
 // - appsId: Part of `parent`. Name of the parent Application resource.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsDomainMappingsService) List(appsId string) *AppsDomainMappingsListCall {
 	c := &AppsDomainMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5954,7 +5954,7 @@ func (c *AppsDomainMappingsListCall) Header() http.Header {
 
 func (c *AppsDomainMappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6095,7 +6095,7 @@ type AppsDomainMappingsPatchCall struct {
 // resource.
 //
 // - appsId: Part of `name`. Name of the resource to update. Example:
-// apps/myapp/domainMappings/example.com.
+//   apps/myapp/domainMappings/example.com.
 // - domainMappingsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsDomainMappingsService) Patch(appsId string, domainMappingsId string, domainmapping *DomainMapping) *AppsDomainMappingsPatchCall {
 	c := &AppsDomainMappingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6139,7 +6139,7 @@ func (c *AppsDomainMappingsPatchCall) Header() http.Header {
 
 func (c *AppsDomainMappingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6264,7 +6264,7 @@ type AppsFirewallIngressRulesBatchUpdateCall struct {
 // explicitly added to the end of the list.
 //
 // - appsId: Part of `name`. Name of the Firewall collection to set.
-// Example: apps/myapp/firewall/ingressRules.
+//   Example: apps/myapp/firewall/ingressRules.
 func (r *AppsFirewallIngressRulesService) BatchUpdate(appsId string, batchupdateingressrulesrequest *BatchUpdateIngressRulesRequest) *AppsFirewallIngressRulesBatchUpdateCall {
 	c := &AppsFirewallIngressRulesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -6299,7 +6299,7 @@ func (c *AppsFirewallIngressRulesBatchUpdateCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6406,8 +6406,8 @@ type AppsFirewallIngressRulesCreateCall struct {
 // Create: Creates a firewall rule for the application.
 //
 // - appsId: Part of `parent`. Name of the parent Firewall collection in
-// which to create a new rule. Example:
-// apps/myapp/firewall/ingressRules.
+//   which to create a new rule. Example:
+//   apps/myapp/firewall/ingressRules.
 func (r *AppsFirewallIngressRulesService) Create(appsId string, firewallrule *FirewallRule) *AppsFirewallIngressRulesCreateCall {
 	c := &AppsFirewallIngressRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -6442,7 +6442,7 @@ func (c *AppsFirewallIngressRulesCreateCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6549,7 +6549,7 @@ type AppsFirewallIngressRulesDeleteCall struct {
 // Delete: Deletes the specified firewall rule.
 //
 // - appsId: Part of `name`. Name of the Firewall resource to delete.
-// Example: apps/myapp/firewall/ingressRules/100.
+//   Example: apps/myapp/firewall/ingressRules/100.
 // - ingressRulesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsFirewallIngressRulesService) Delete(appsId string, ingressRulesId string) *AppsFirewallIngressRulesDeleteCall {
 	c := &AppsFirewallIngressRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6585,7 +6585,7 @@ func (c *AppsFirewallIngressRulesDeleteCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +6693,7 @@ type AppsFirewallIngressRulesGetCall struct {
 // Get: Gets the specified firewall rule.
 //
 // - appsId: Part of `name`. Name of the Firewall resource to retrieve.
-// Example: apps/myapp/firewall/ingressRules/100.
+//   Example: apps/myapp/firewall/ingressRules/100.
 // - ingressRulesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsFirewallIngressRulesService) Get(appsId string, ingressRulesId string) *AppsFirewallIngressRulesGetCall {
 	c := &AppsFirewallIngressRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6739,7 +6739,7 @@ func (c *AppsFirewallIngressRulesGetCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6851,7 +6851,7 @@ type AppsFirewallIngressRulesListCall struct {
 // List: Lists the firewall rules of an application.
 //
 // - appsId: Part of `parent`. Name of the Firewall collection to
-// retrieve. Example: apps/myapp/firewall/ingressRules.
+//   retrieve. Example: apps/myapp/firewall/ingressRules.
 func (r *AppsFirewallIngressRulesService) List(appsId string) *AppsFirewallIngressRulesListCall {
 	c := &AppsFirewallIngressRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -6918,7 +6918,7 @@ func (c *AppsFirewallIngressRulesListCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7060,7 +7060,7 @@ type AppsFirewallIngressRulesPatchCall struct {
 // Patch: Updates the specified firewall rule.
 //
 // - appsId: Part of `name`. Name of the Firewall resource to update.
-// Example: apps/myapp/firewall/ingressRules/100.
+//   Example: apps/myapp/firewall/ingressRules/100.
 // - ingressRulesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsFirewallIngressRulesService) Patch(appsId string, ingressRulesId string, firewallrule *FirewallRule) *AppsFirewallIngressRulesPatchCall {
 	c := &AppsFirewallIngressRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7104,7 +7104,7 @@ func (c *AppsFirewallIngressRulesPatchCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7271,7 +7271,7 @@ func (c *AppsLocationsGetCall) Header() http.Header {
 
 func (c *AppsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7384,7 +7384,7 @@ type AppsLocationsListCall struct {
 // service.
 //
 // - appsId: Part of `name`. The resource that owns the locations
-// collection, if applicable.
+//   collection, if applicable.
 func (r *AppsLocationsService) List(appsId string) *AppsLocationsListCall {
 	c := &AppsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -7452,7 +7452,7 @@ func (c *AppsLocationsListCall) Header() http.Header {
 
 func (c *AppsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7641,7 +7641,7 @@ func (c *AppsOperationsGetCall) Header() http.Header {
 
 func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7762,7 +7762,7 @@ type AppsOperationsListCall struct {
 // collection id.
 //
 // - appsId: Part of `name`. The name of the operation's parent
-// resource.
+//   resource.
 func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	c := &AppsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -7827,7 +7827,7 @@ func (c *AppsOperationsListCall) Header() http.Header {
 
 func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7968,7 +7968,7 @@ type AppsServicesDeleteCall struct {
 // Delete: Deletes the specified service and all enclosed versions.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default.
+//   apps/myapp/services/default.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesService) Delete(appsId string, servicesId string) *AppsServicesDeleteCall {
 	c := &AppsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8004,7 +8004,7 @@ func (c *AppsServicesDeleteCall) Header() http.Header {
 
 func (c *AppsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8112,7 +8112,7 @@ type AppsServicesGetCall struct {
 // Get: Gets the current configuration of the specified service.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default.
+//   apps/myapp/services/default.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesService) Get(appsId string, servicesId string) *AppsServicesGetCall {
 	c := &AppsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8158,7 +8158,7 @@ func (c *AppsServicesGetCall) Header() http.Header {
 
 func (c *AppsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8270,7 +8270,7 @@ type AppsServicesListCall struct {
 // List: Lists all the services in the application.
 //
 // - appsId: Part of `parent`. Name of the parent Application resource.
-// Example: apps/myapp.
+//   Example: apps/myapp.
 func (r *AppsServicesService) List(appsId string) *AppsServicesListCall {
 	c := &AppsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -8328,7 +8328,7 @@ func (c *AppsServicesListCall) Header() http.Header {
 
 func (c *AppsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8465,7 +8465,7 @@ type AppsServicesPatchCall struct {
 // Patch: Updates the configuration of the specified service.
 //
 // - appsId: Part of `name`. Name of the resource to update. Example:
-// apps/myapp/services/default.
+//   apps/myapp/services/default.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Service) *AppsServicesPatchCall {
 	c := &AppsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8528,7 +8528,7 @@ func (c *AppsServicesPatchCall) Header() http.Header {
 
 func (c *AppsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8655,7 +8655,7 @@ type AppsServicesVersionsCreateCall struct {
 // Create: Deploys code and resource files to a new version.
 //
 // - appsId: Part of `parent`. Name of the parent resource to create
-// this version under. Example: apps/myapp/services/default.
+//   this version under. Example: apps/myapp/services/default.
 // - servicesId: Part of `parent`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Create(appsId string, servicesId string, version *Version) *AppsServicesVersionsCreateCall {
 	c := &AppsServicesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8692,7 +8692,7 @@ func (c *AppsServicesVersionsCreateCall) Header() http.Header {
 
 func (c *AppsServicesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8808,7 +8808,7 @@ type AppsServicesVersionsDeleteCall struct {
 // Delete: Deletes an existing Version resource.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default/versions/v1.
+//   apps/myapp/services/default/versions/v1.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 // - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Delete(appsId string, servicesId string, versionsId string) *AppsServicesVersionsDeleteCall {
@@ -8846,7 +8846,7 @@ func (c *AppsServicesVersionsDeleteCall) Header() http.Header {
 
 func (c *AppsServicesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8965,7 +8965,7 @@ type AppsServicesVersionsGetCall struct {
 // the full resource.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default/versions/v1.
+//   apps/myapp/services/default/versions/v1.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 // - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, versionsId string) *AppsServicesVersionsGetCall {
@@ -9027,7 +9027,7 @@ func (c *AppsServicesVersionsGetCall) Header() http.Header {
 
 func (c *AppsServicesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9161,7 +9161,7 @@ type AppsServicesVersionsListCall struct {
 // List: Lists the versions of a service.
 //
 // - appsId: Part of `parent`. Name of the parent Service resource.
-// Example: apps/myapp/services/default.
+//   Example: apps/myapp/services/default.
 // - servicesId: Part of `parent`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) List(appsId string, servicesId string) *AppsServicesVersionsListCall {
 	c := &AppsServicesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9235,7 +9235,7 @@ func (c *AppsServicesVersionsListCall) Header() http.Header {
 
 func (c *AppsServicesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9429,7 +9429,7 @@ type AppsServicesVersionsPatchCall struct {
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#manualscaling)
 //
 // - appsId: Part of `name`. Name of the resource to update. Example:
-// apps/myapp/services/default/versions/1.
+//   apps/myapp/services/default/versions/1.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 // - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
@@ -9475,7 +9475,7 @@ func (c *AppsServicesVersionsPatchCall) Header() http.Header {
 
 func (c *AppsServicesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9613,7 +9613,7 @@ type AppsServicesVersionsInstancesDebugCall struct {
 // Engine flexible environment.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default/versions/v1/instances/instance-1.
+//   apps/myapp/services/default/versions/v1/instances/instance-1.
 // - instancesId: Part of `name`. See documentation of `appsId`.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 // - versionsId: Part of `name`. See documentation of `appsId`.
@@ -9654,7 +9654,7 @@ func (c *AppsServicesVersionsInstancesDebugCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesDebugCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9798,7 +9798,7 @@ type AppsServicesVersionsInstancesDeleteCall struct {
 // method.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default/versions/v1/instances/instance-1.
+//   apps/myapp/services/default/versions/v1/instances/instance-1.
 // - instancesId: Part of `name`. See documentation of `appsId`.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 // - versionsId: Part of `name`. See documentation of `appsId`.
@@ -9838,7 +9838,7 @@ func (c *AppsServicesVersionsInstancesDeleteCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9964,7 +9964,7 @@ type AppsServicesVersionsInstancesGetCall struct {
 // Get: Gets instance information.
 //
 // - appsId: Part of `name`. Name of the resource requested. Example:
-// apps/myapp/services/default/versions/v1/instances/instance-1.
+//   apps/myapp/services/default/versions/v1/instances/instance-1.
 // - instancesId: Part of `name`. See documentation of `appsId`.
 // - servicesId: Part of `name`. See documentation of `appsId`.
 // - versionsId: Part of `name`. See documentation of `appsId`.
@@ -10014,7 +10014,7 @@ func (c *AppsServicesVersionsInstancesGetCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10146,7 +10146,7 @@ type AppsServicesVersionsInstancesListCall struct {
 // (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
 //
 // - appsId: Part of `parent`. Name of the parent Version resource.
-// Example: apps/myapp/services/default/versions/v1.
+//   Example: apps/myapp/services/default/versions/v1.
 // - servicesId: Part of `parent`. See documentation of `appsId`.
 // - versionsId: Part of `parent`. See documentation of `appsId`.
 func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
@@ -10208,7 +10208,7 @@ func (c *AppsServicesVersionsInstancesListCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

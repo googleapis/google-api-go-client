@@ -4754,7 +4754,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4870,7 +4870,7 @@ type EnterprisesDeleteCall struct {
 // enterprise.
 //
 // - name: This feature is not generally available yet. The name of the
-// enterprise in the form enterprises/{enterpriseId}.
+//   enterprise in the form enterprises/{enterpriseId}.
 func (r *EnterprisesService) Delete(name string) *EnterprisesDeleteCall {
 	c := &EnterprisesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4904,7 +4904,7 @@ func (c *EnterprisesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5004,7 +5004,7 @@ type EnterprisesGetCall struct {
 // Get: Gets an enterprise.
 //
 // - name: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesService) Get(name string) *EnterprisesGetCall {
 	c := &EnterprisesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5048,7 +5048,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5230,7 +5230,7 @@ func (c *EnterprisesListCall) Header() http.Header {
 
 func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5371,7 +5371,7 @@ type EnterprisesPatchCall struct {
 // Patch: Updates an enterprise.
 //
 // - name: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesService) Patch(name string, enterprise *Enterprise) *EnterprisesPatchCall {
 	c := &EnterprisesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5414,7 +5414,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5528,7 +5528,7 @@ type EnterprisesApplicationsGetCall struct {
 // Get: Gets info about an application.
 //
 // - name: The name of the application in the form
-// enterprises/{enterpriseId}/applications/{package_name}.
+//   enterprises/{enterpriseId}/applications/{package_name}.
 func (r *EnterprisesApplicationsService) Get(name string) *EnterprisesApplicationsGetCall {
 	c := &EnterprisesApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5581,7 +5581,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5688,7 +5688,7 @@ type EnterprisesDevicesDeleteCall struct {
 // Delete: Deletes a device. This operation wipes the device.
 //
 // - name: The name of the device in the form
-// enterprises/{enterpriseId}/devices/{deviceId}.
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDeleteCall {
 	c := &EnterprisesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5745,7 +5745,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5866,7 +5866,7 @@ type EnterprisesDevicesGetCall struct {
 // Get: Gets a device.
 //
 // - name: The name of the device in the form
-// enterprises/{enterpriseId}/devices/{deviceId}.
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5910,7 +5910,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6015,7 +6015,7 @@ type EnterprisesDevicesIssueCommandCall struct {
 // operation method to get the status of the command.
 //
 // - name: The name of the device in the form
-// enterprises/{enterpriseId}/devices/{deviceId}.
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) IssueCommand(name string, command *Command) *EnterprisesDevicesIssueCommandCall {
 	c := &EnterprisesDevicesIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6050,7 +6050,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6158,7 +6158,7 @@ type EnterprisesDevicesListCall struct {
 // List: Lists devices for a given enterprise.
 //
 // - parent: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6216,7 +6216,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6351,7 +6351,7 @@ type EnterprisesDevicesPatchCall struct {
 // Patch: Updates a device.
 //
 // - name: The name of the device in the form
-// enterprises/{enterpriseId}/devices/{deviceId}.
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Patch(name string, device *Device) *EnterprisesDevicesPatchCall {
 	c := &EnterprisesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6394,7 +6394,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6549,7 +6549,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6684,7 +6684,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6829,7 +6829,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7005,7 +7005,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7145,7 +7145,7 @@ type EnterprisesEnrollmentTokensCreateCall struct {
 // Create: Creates an enrollment token for a given enterprise.
 //
 // - parent: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) Create(parent string, enrollmenttoken *EnrollmentToken) *EnterprisesEnrollmentTokensCreateCall {
 	c := &EnterprisesEnrollmentTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7180,7 +7180,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7288,7 +7288,7 @@ type EnterprisesEnrollmentTokensDeleteCall struct {
 // token, preventing its future use.
 //
 // - name: The name of the enrollment token in the form
-// enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
+//   enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 func (r *EnterprisesEnrollmentTokensService) Delete(name string) *EnterprisesEnrollmentTokensDeleteCall {
 	c := &EnterprisesEnrollmentTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7322,7 +7322,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7422,7 +7422,7 @@ type EnterprisesPoliciesDeleteCall struct {
 // devices are currently referencing the policy.
 //
 // - name: The name of the policy in the form
-// enterprises/{enterpriseId}/policies/{policyId}.
+//   enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Delete(name string) *EnterprisesPoliciesDeleteCall {
 	c := &EnterprisesPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7456,7 +7456,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7556,7 +7556,7 @@ type EnterprisesPoliciesGetCall struct {
 // Get: Gets a policy.
 //
 // - name: The name of the policy in the form
-// enterprises/{enterpriseId}/policies/{policyId}.
+//   enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Get(name string) *EnterprisesPoliciesGetCall {
 	c := &EnterprisesPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7600,7 +7600,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7703,7 +7703,7 @@ type EnterprisesPoliciesListCall struct {
 // List: Lists policies for a given enterprise.
 //
 // - parent: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesPoliciesService) List(parent string) *EnterprisesPoliciesListCall {
 	c := &EnterprisesPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7761,7 +7761,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7896,7 +7896,7 @@ type EnterprisesPoliciesPatchCall struct {
 // Patch: Updates or creates a policy.
 //
 // - name: The name of the policy in the form
-// enterprises/{enterpriseId}/policies/{policyId}.
+//   enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Patch(name string, policy *Policy) *EnterprisesPoliciesPatchCall {
 	c := &EnterprisesPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7939,7 +7939,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8053,7 +8053,7 @@ type EnterprisesWebAppsCreateCall struct {
 // Create: Creates a web app.
 //
 // - parent: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) Create(parent string, webapp *WebApp) *EnterprisesWebAppsCreateCall {
 	c := &EnterprisesWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8088,7 +8088,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8195,7 +8195,7 @@ type EnterprisesWebAppsDeleteCall struct {
 // Delete: Deletes a web app.
 //
 // - name: The name of the web app in the form
-// enterprises/{enterpriseId}/webApps/{packageName}.
+//   enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Delete(name string) *EnterprisesWebAppsDeleteCall {
 	c := &EnterprisesWebAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8229,7 +8229,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8329,7 +8329,7 @@ type EnterprisesWebAppsGetCall struct {
 // Get: Gets a web app.
 //
 // - name: The name of the web app in the form
-// enterprises/{enterpriseId}/webApp/{packageName}.
+//   enterprises/{enterpriseId}/webApp/{packageName}.
 func (r *EnterprisesWebAppsService) Get(name string) *EnterprisesWebAppsGetCall {
 	c := &EnterprisesWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8373,7 +8373,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8476,7 +8476,7 @@ type EnterprisesWebAppsListCall struct {
 // List: Lists web apps for a given enterprise.
 //
 // - parent: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListCall {
 	c := &EnterprisesWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8534,7 +8534,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8669,7 +8669,7 @@ type EnterprisesWebAppsPatchCall struct {
 // Patch: Updates a web app.
 //
 // - name: The name of the web app in the form
-// enterprises/{enterpriseId}/webApps/{packageName}.
+//   enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Patch(name string, webapp *WebApp) *EnterprisesWebAppsPatchCall {
 	c := &EnterprisesWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8712,7 +8712,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8827,7 +8827,7 @@ type EnterprisesWebTokensCreateCall struct {
 // Play web UI for a given enterprise.
 //
 // - parent: The name of the enterprise in the form
-// enterprises/{enterpriseId}.
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesWebTokensService) Create(parent string, webtoken *WebToken) *EnterprisesWebTokensCreateCall {
 	c := &EnterprisesWebTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8862,7 +8862,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9017,7 +9017,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

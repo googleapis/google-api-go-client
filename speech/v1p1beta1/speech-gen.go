@@ -1687,7 +1687,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,7 +1866,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1999,8 +1999,8 @@ type ProjectsLocationsCustomClassesCreateCall struct {
 // Create: Create a custom class.
 //
 // - parent: The parent resource where this custom class will be
-// created. Format:
-// {api_version}/projects/{project}/locations/{location}/customClasses
+//   created. Format:
+//   {api_version}/projects/{project}/locations/{location}/customClasses.
 func (r *ProjectsLocationsCustomClassesService) Create(parent string, createcustomclassrequest *CreateCustomClassRequest) *ProjectsLocationsCustomClassesCreateCall {
 	c := &ProjectsLocationsCustomClassesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2035,7 +2035,7 @@ func (c *ProjectsLocationsCustomClassesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2142,8 +2142,8 @@ type ProjectsLocationsCustomClassesDeleteCall struct {
 // Delete: Delete a custom class.
 //
 // - name: The name of the custom class to delete. Format:
-// {api_version}/projects/{project}/locations/{location}/customClasses/{c
-// ustom_class}
+//   {api_version}/projects/{project}/locations/{location}/customClasses/
+//   {custom_class}.
 func (r *ProjectsLocationsCustomClassesService) Delete(name string) *ProjectsLocationsCustomClassesDeleteCall {
 	c := &ProjectsLocationsCustomClassesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2177,7 +2177,7 @@ func (c *ProjectsLocationsCustomClassesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2277,8 +2277,8 @@ type ProjectsLocationsCustomClassesGetCall struct {
 // Get: Get a custom class.
 //
 // - name: The name of the custom class to retrieve. Format:
-// {api_version}/projects/{project}/locations/{location}/customClasses/{c
-// ustom_class}
+//   {api_version}/projects/{project}/locations/{location}/customClasses/
+//   {custom_class}.
 func (r *ProjectsLocationsCustomClassesService) Get(name string) *ProjectsLocationsCustomClassesGetCall {
 	c := &ProjectsLocationsCustomClassesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2322,7 +2322,7 @@ func (c *ProjectsLocationsCustomClassesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2425,8 +2425,8 @@ type ProjectsLocationsCustomClassesListCall struct {
 // List: List custom classes.
 //
 // - parent: The parent, which owns this collection of custom classes.
-// Format:
-// {api_version}/projects/{project}/locations/{location}/customClasses
+//   Format:
+//   {api_version}/projects/{project}/locations/{location}/customClasses.
 func (r *ProjectsLocationsCustomClassesService) List(parent string) *ProjectsLocationsCustomClassesListCall {
 	c := &ProjectsLocationsCustomClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2489,7 +2489,7 @@ func (c *ProjectsLocationsCustomClassesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2665,7 +2665,7 @@ func (c *ProjectsLocationsCustomClassesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2782,8 +2782,8 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // the PhraseSet.
 //
 // - parent: The parent resource where this phrase set will be created.
-// Format:
-// {api_version}/projects/{project}/locations/{location}/phraseSets
+//   Format:
+//   {api_version}/projects/{project}/locations/{location}/phraseSets.
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
 	c := &ProjectsLocationsPhraseSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2818,7 +2818,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2925,8 +2925,8 @@ type ProjectsLocationsPhraseSetsDeleteCall struct {
 // Delete: Delete a phrase set.
 //
 // - name: The name of the phrase set to delete. Format:
-// {api_version}/projects/{project}/locations/{location}/phraseSets/{phra
-// se_set}
+//   {api_version}/projects/{project}/locations/{location}/phraseSets/{ph
+//   rase_set}.
 func (r *ProjectsLocationsPhraseSetsService) Delete(name string) *ProjectsLocationsPhraseSetsDeleteCall {
 	c := &ProjectsLocationsPhraseSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2960,7 +2960,7 @@ func (c *ProjectsLocationsPhraseSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3060,8 +3060,8 @@ type ProjectsLocationsPhraseSetsGetCall struct {
 // Get: Get a phrase set.
 //
 // - name: The name of the phrase set to retrieve. Format:
-// {api_version}/projects/{project}/locations/{location}/phraseSets/{phra
-// se_set}
+//   {api_version}/projects/{project}/locations/{location}/phraseSets/{ph
+//   rase_set}.
 func (r *ProjectsLocationsPhraseSetsService) Get(name string) *ProjectsLocationsPhraseSetsGetCall {
 	c := &ProjectsLocationsPhraseSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3105,7 +3105,7 @@ func (c *ProjectsLocationsPhraseSetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3208,7 +3208,7 @@ type ProjectsLocationsPhraseSetsListCall struct {
 // List: List phrase sets.
 //
 // - parent: The parent, which owns this collection of phrase set.
-// Format: projects/{project}/locations/{location}
+//   Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsPhraseSetsService) List(parent string) *ProjectsLocationsPhraseSetsListCall {
 	c := &ProjectsLocationsPhraseSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3271,7 +3271,7 @@ func (c *ProjectsLocationsPhraseSetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3447,7 +3447,7 @@ func (c *ProjectsLocationsPhraseSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3596,7 +3596,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3722,7 +3722,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

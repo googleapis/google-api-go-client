@@ -2456,7 +2456,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2569,9 +2569,9 @@ type V1p7beta1ExportAssetsCall struct {
 // within 5 minutes.
 //
 // - parent: The relative name of the root asset. This can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id"), or a project number (such as
-// "projects/12345"), or a folder number (such as "folders/123").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), or a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *V1p7beta1Service) ExportAssets(parent string, googlecloudassetv1p7beta1exportassetsrequest *GoogleCloudAssetV1p7beta1ExportAssetsRequest) *V1p7beta1ExportAssetsCall {
 	c := &V1p7beta1ExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2606,7 +2606,7 @@ func (c *V1p7beta1ExportAssetsCall) Header() http.Header {
 
 func (c *V1p7beta1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

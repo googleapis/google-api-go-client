@@ -565,7 +565,7 @@ func (c *DetectionsDetectCall) Header() http.Header {
 
 func (c *DetectionsDetectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -661,8 +661,8 @@ type DetectionsListCall struct {
 // List: Detects the language of text within a request.
 //
 // - q: The input text upon which to perform language detection. Repeat
-// this
-// parameter to perform language detection on multiple text inputs.
+//   this
+//   parameter to perform language detection on multiple text inputs.
 func (r *DetectionsService) List(q []string) *DetectionsListCall {
 	c := &DetectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("q", append([]string{}, q...))
@@ -706,7 +706,7 @@ func (c *DetectionsListCall) Header() http.Header {
 
 func (c *DetectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -862,7 +862,7 @@ func (c *LanguagesListCall) Header() http.Header {
 
 func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -963,10 +963,10 @@ type TranslationsListCall struct {
 // List: Translates input text, returning translated text.
 //
 // - q: The input text to translate. Repeat this parameter to perform
-// translation
+//   translation
 // operations on multiple text inputs.
 // - target: The language to use for translation of the input text, set
-// to one of the
+//   to one of the
 // language codes listed in Language Support.
 func (r *TranslationsService) List(q []string, target string) *TranslationsListCall {
 	c := &TranslationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1052,7 +1052,7 @@ func (c *TranslationsListCall) Header() http.Header {
 
 func (c *TranslationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1220,7 +1220,7 @@ func (c *TranslationsTranslateCall) Header() http.Header {
 
 func (c *TranslationsTranslateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

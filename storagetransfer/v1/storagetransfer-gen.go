@@ -1600,7 +1600,7 @@ type GoogleServiceAccountsGetCall struct {
 // Transfer Service.
 //
 // - projectId: The ID of the Google Cloud Platform Console project that
-// the Google service account is associated with.
+//   the Google service account is associated with.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
 	c := &GoogleServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1644,7 +1644,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1776,7 +1776,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1872,7 +1872,7 @@ type TransferJobsGetCall struct {
 //
 // - jobName: " The job to get.
 // - projectId: The ID of the Google Cloud Platform Console project that
-// owns the job.
+//   owns the job.
 func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
 	c := &TransferJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -1917,7 +1917,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2026,13 +2026,13 @@ type TransferJobsListCall struct {
 // List: Lists transfer jobs.
 //
 // - filter: A list of query parameters specified as JSON text in the
-// form of: `{"projectId":"my_project_id",
-// "jobNames":["jobid1","jobid2",...],
-// "jobStatuses":["status1","status2",...]}` Since `jobNames` and
-// `jobStatuses` support multiple values, their values must be specified
-// with array notation. `projectId` is required. `jobNames` and
-// `jobStatuses` are optional. The valid values for `jobStatuses` are
-// case-insensitive: ENABLED, DISABLED, and DELETED.
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "jobStatuses":["status1","status2",...]}` Since `jobNames` and
+//   `jobStatuses` support multiple values, their values must be
+//   specified with array notation. `projectId` is required. `jobNames`
+//   and `jobStatuses` are optional. The valid values for `jobStatuses`
+//   are case-insensitive: ENABLED, DISABLED, and DELETED.
 func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("filter", filter)
@@ -2090,7 +2090,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2258,7 +2258,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2403,7 +2403,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2563,7 +2563,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2716,7 +2716,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2820,15 +2820,16 @@ type TransferOperationsListCall struct {
 // creation time in reverse chronological order.
 //
 // - filter: A list of query parameters specified as JSON text in the
-// form of: `{"projectId":"my_project_id",
-// "jobNames":["jobid1","jobid2",...],
-// "operationNames":["opid1","opid2",...],
-// "transferStatuses":["status1","status2",...]}` Since `jobNames`,
-// `operationNames`, and `transferStatuses` support multiple values,
-// they must be specified with array notation. `projectId` is required.
-// `jobNames`, `operationNames`, and `transferStatuses` are optional.
-// The valid values for `transferStatuses` are case-insensitive:
-// IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "operationNames":["opid1","opid2",...],
+//   "transferStatuses":["status1","status2",...]}` Since `jobNames`,
+//   `operationNames`, and `transferStatuses` support multiple values,
+//   they must be specified with array notation. `projectId` is
+//   required. `jobNames`, `operationNames`, and `transferStatuses` are
+//   optional. The valid values for `transferStatuses` are
+//   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
+//   ABORTED.
 // - name: Not used.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2888,7 +2889,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3064,7 +3065,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3206,7 +3207,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

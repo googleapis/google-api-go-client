@@ -2231,7 +2231,7 @@ func (c *AccountSummariesListCall) Header() http.Header {
 
 func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2364,7 +2364,7 @@ type AccountsDeleteCall struct {
 // if the target is not found.
 //
 // - name: The name of the Account to soft-delete. Format:
-// accounts/{account} Example: "accounts/100"
+//   accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2398,7 +2398,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2498,7 +2498,7 @@ type AccountsGetCall struct {
 // Get: Lookup for a single Account.
 //
 // - name: The name of the account to lookup. Format: accounts/{account}
-// Example: "accounts/100"
+//   Example: "accounts/100".
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2542,7 +2542,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2648,8 +2648,8 @@ type AccountsGetDataSharingSettingsCall struct {
 // sharing settings are singletons.
 //
 // - name: The name of the settings to lookup. Format:
-// accounts/{account}/dataSharingSettings Example:
-// "accounts/1000/dataSharingSettings"
+//   accounts/{account}/dataSharingSettings Example:
+//   "accounts/1000/dataSharingSettings".
 func (r *AccountsService) GetDataSharingSettings(name string) *AccountsGetDataSharingSettingsCall {
 	c := &AccountsGetDataSharingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2693,7 +2693,7 @@ func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 
 func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2870,7 +2870,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3001,7 +3001,7 @@ type AccountsPatchCall struct {
 // Patch: Updates an account.
 //
 // - name: Output only. Resource name of this account. Format:
-// accounts/{account} Example: "accounts/100"
+//   accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount *GoogleAnalyticsAdminV1alphaAccount) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3046,7 +3046,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3191,7 +3191,7 @@ func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 
 func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3290,7 +3290,7 @@ type AccountsSearchChangeHistoryEventsCall struct {
 // or its children given the specified set of filters.
 //
 // - account: The account resource for which to return change history
-// resources.
+//   resources.
 func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyticsadminv1alphasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest) *AccountsSearchChangeHistoryEventsCall {
 	c := &AccountsSearchChangeHistoryEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -3325,7 +3325,7 @@ func (c *AccountsSearchChangeHistoryEventsCall) Header() http.Header {
 
 func (c *AccountsSearchChangeHistoryEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3462,7 +3462,7 @@ type AccountsUserLinksAuditCall struct {
 // removed from the group/etc that gives them permissions, which is
 // currently only usable/discoverable in the GA or GMP UIs.
 //
-// - parent: Example format: accounts/1234
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) Audit(parent string, googleanalyticsadminv1alphaaudituserlinksrequest *GoogleAnalyticsAdminV1alphaAuditUserLinksRequest) *AccountsUserLinksAuditCall {
 	c := &AccountsUserLinksAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3497,7 +3497,7 @@ func (c *AccountsUserLinksAuditCall) Header() http.Header {
 
 func (c *AccountsUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3631,9 +3631,9 @@ type AccountsUserLinksBatchCreateCall struct {
 // cannot be created, none of the UserLinks will be created.
 //
 // - parent: The account or property that all user links in the request
-// are for. This field is required. The parent field in the
-// CreateUserLinkRequest messages must either be empty or match this
-// field. Example format: accounts/1234
+//   are for. This field is required. The parent field in the
+//   CreateUserLinkRequest messages must either be empty or match this
+//   field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchCreate(parent string, googleanalyticsadminv1alphabatchcreateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest) *AccountsUserLinksBatchCreateCall {
 	c := &AccountsUserLinksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3668,7 +3668,7 @@ func (c *AccountsUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3780,8 +3780,8 @@ type AccountsUserLinksBatchDeleteCall struct {
 // account or property.
 //
 // - parent: The account or property that all user links in the request
-// are for. The parent of all values for user link names to delete must
-// match this field. Example format: accounts/1234
+//   are for. The parent of all values for user link names to delete
+//   must match this field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchDelete(parent string, googleanalyticsadminv1alphabatchdeleteuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest) *AccountsUserLinksBatchDeleteCall {
 	c := &AccountsUserLinksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3816,7 +3816,7 @@ func (c *AccountsUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3925,8 +3925,8 @@ type AccountsUserLinksBatchGetCall struct {
 // or property.
 //
 // - parent: The account or property that all user links in the request
-// are for. The parent of all provided values for the 'names' field must
-// match this field. Example format: accounts/1234
+//   are for. The parent of all provided values for the 'names' field
+//   must match this field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchGet(parent string) *AccountsUserLinksBatchGetCall {
 	c := &AccountsUserLinksBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3978,7 +3978,7 @@ func (c *AccountsUserLinksBatchGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4091,8 +4091,9 @@ type AccountsUserLinksBatchUpdateCall struct {
 // account or property.
 //
 // - parent: The account or property that all user links in the request
-// are for. The parent field in the UpdateUserLinkRequest messages must
-// either be empty or match this field. Example format: accounts/1234
+//   are for. The parent field in the UpdateUserLinkRequest messages
+//   must either be empty or match this field. Example format:
+//   accounts/1234.
 func (r *AccountsUserLinksService) BatchUpdate(parent string, googleanalyticsadminv1alphabatchupdateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest) *AccountsUserLinksBatchUpdateCall {
 	c := &AccountsUserLinksBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4127,7 +4128,7 @@ func (c *AccountsUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4240,7 +4241,7 @@ type AccountsUserLinksCreateCall struct {
 // property, then the user's existing permissions will be unioned with
 // the permissions specified in the new UserLink.
 //
-// - parent: Example format: accounts/1234
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) Create(parent string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *AccountsUserLinksCreateCall {
 	c := &AccountsUserLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4283,7 +4284,7 @@ func (c *AccountsUserLinksCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4395,7 +4396,7 @@ type AccountsUserLinksDeleteCall struct {
 
 // Delete: Deletes a user link on an account or property.
 //
-// - name: Example format: accounts/1234/userLinks/5678
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Delete(name string) *AccountsUserLinksDeleteCall {
 	c := &AccountsUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4429,7 +4430,7 @@ func (c *AccountsUserLinksDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4528,7 +4529,7 @@ type AccountsUserLinksGetCall struct {
 
 // Get: Gets information about a user's link to an account or property.
 //
-// - name: Example format: accounts/1234/userLinks/5678
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Get(name string) *AccountsUserLinksGetCall {
 	c := &AccountsUserLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4572,7 +4573,7 @@ func (c *AccountsUserLinksGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4676,7 +4677,7 @@ type AccountsUserLinksListCall struct {
 
 // List: Lists all user links on an account or property.
 //
-// - parent: Example format: accounts/1234
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) List(parent string) *AccountsUserLinksListCall {
 	c := &AccountsUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4739,7 +4740,7 @@ func (c *AccountsUserLinksListCall) Header() http.Header {
 
 func (c *AccountsUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4876,7 +4877,7 @@ type AccountsUserLinksPatchCall struct {
 
 // Patch: Updates a user link on an account or property.
 //
-// - name: Example format: properties/1234/userLinks/5678
+// - name: Example format: properties/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Patch(name string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *AccountsUserLinksPatchCall {
 	c := &AccountsUserLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4911,7 +4912,7 @@ func (c *AccountsUserLinksPatchCall) Header() http.Header {
 
 func (c *AccountsUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5051,7 +5052,7 @@ func (c *PropertiesCreateCall) Header() http.Header {
 
 func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5153,7 +5154,7 @@ type PropertiesDeleteCall struct {
 // if the target is not found, or is not an GA4 Property.
 //
 // - name: The name of the Property to soft-delete. Format:
-// properties/{property_id} Example: "properties/1000"
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Delete(name string) *PropertiesDeleteCall {
 	c := &PropertiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5187,7 +5188,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5287,7 +5288,7 @@ type PropertiesGetCall struct {
 // Get: Lookup for a single "GA4" Property.
 //
 // - name: The name of the property to lookup. Format:
-// properties/{property_id} Example: "properties/1000"
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Get(name string) *PropertiesGetCall {
 	c := &PropertiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5331,7 +5332,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5523,7 +5524,7 @@ func (c *PropertiesListCall) Header() http.Header {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5659,7 +5660,7 @@ type PropertiesPatchCall struct {
 // Patch: Updates a property.
 //
 // - name: Output only. Resource name of this property. Format:
-// properties/{property_id} Example: "properties/1000"
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Patch(name string, googleanalyticsadminv1alphaproperty *GoogleAnalyticsAdminV1alphaProperty) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5704,7 +5705,7 @@ func (c *PropertiesPatchCall) Header() http.Header {
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5824,7 +5825,7 @@ type PropertiesAndroidAppDataStreamsCreateCall struct {
 // appropriate data stream in Analytics (may take up to 24 hours).
 //
 // - parent: The parent resource where this android app data stream will
-// be created. Format: properties/123
+//   be created. Format: properties/123.
 func (r *PropertiesAndroidAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsCreateCall {
 	c := &PropertiesAndroidAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5859,7 +5860,7 @@ func (c *PropertiesAndroidAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5968,8 +5969,8 @@ type PropertiesAndroidAppDataStreamsDeleteCall struct {
 // Delete: Deletes an android app stream on a property.
 //
 // - name: The name of the android app data stream to delete. Format:
-// properties/{property_id}/androidAppDataStreams/{stream_id} Example:
-// "properties/123/androidAppDataStreams/456"
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/123/androidAppDataStreams/456".
 func (r *PropertiesAndroidAppDataStreamsService) Delete(name string) *PropertiesAndroidAppDataStreamsDeleteCall {
 	c := &PropertiesAndroidAppDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6003,7 +6004,7 @@ func (c *PropertiesAndroidAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6103,8 +6104,8 @@ type PropertiesAndroidAppDataStreamsGetCall struct {
 // Get: Lookup for a single AndroidAppDataStream
 //
 // - name: The name of the android app data stream to lookup. Format:
-// properties/{property_id}/androidAppDataStreams/{stream_id} Example:
-// "properties/123/androidAppDataStreams/456"
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/123/androidAppDataStreams/456".
 func (r *PropertiesAndroidAppDataStreamsService) Get(name string) *PropertiesAndroidAppDataStreamsGetCall {
 	c := &PropertiesAndroidAppDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6148,7 +6149,7 @@ func (c *PropertiesAndroidAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6257,8 +6258,8 @@ type PropertiesAndroidAppDataStreamsListCall struct {
 // are found.
 //
 // - parent: The name of the parent property. For example, to limit
-// results to app streams under the property with Id 123:
-// "properties/123"
+//   results to app streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesAndroidAppDataStreamsService) List(parent string) *PropertiesAndroidAppDataStreamsListCall {
 	c := &PropertiesAndroidAppDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6321,7 +6322,7 @@ func (c *PropertiesAndroidAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6460,8 +6461,8 @@ type PropertiesAndroidAppDataStreamsPatchCall struct {
 // Patch: Updates an android app stream on a property.
 //
 // - name: Output only. Resource name of this Data Stream. Format:
-// properties/{property_id}/androidAppDataStreams/{stream_id} Example:
-// "properties/1000/androidAppDataStreams/2000"
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/1000/androidAppDataStreams/2000".
 func (r *PropertiesAndroidAppDataStreamsService) Patch(name string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsPatchCall {
 	c := &PropertiesAndroidAppDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6506,7 +6507,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6622,7 +6623,7 @@ type PropertiesFirebaseLinksCreateCall struct {
 // Create: Creates a FirebaseLink. Properties can have at most one
 // FirebaseLink.
 //
-// - parent: Format: properties/{property_id} Example: properties/1234
+// - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) Create(parent string, googleanalyticsadminv1alphafirebaselink *GoogleAnalyticsAdminV1alphaFirebaseLink) *PropertiesFirebaseLinksCreateCall {
 	c := &PropertiesFirebaseLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6657,7 +6658,7 @@ func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6765,8 +6766,8 @@ type PropertiesFirebaseLinksDeleteCall struct {
 // Delete: Deletes a FirebaseLink on a property
 //
 // - name: Format:
-// properties/{property_id}/firebaseLinks/{firebase_link_id} Example:
-// properties/1234/firebaseLinks/5678
+//   properties/{property_id}/firebaseLinks/{firebase_link_id} Example:
+//   properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Delete(name string) *PropertiesFirebaseLinksDeleteCall {
 	c := &PropertiesFirebaseLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6800,7 +6801,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6900,7 +6901,7 @@ type PropertiesFirebaseLinksListCall struct {
 // List: Lists FirebaseLinks on a property. Properties can have at most
 // one FirebaseLink.
 //
-// - parent: Format: properties/{property_id} Example: properties/1234
+// - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) List(parent string) *PropertiesFirebaseLinksListCall {
 	c := &PropertiesFirebaseLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6964,7 +6965,7 @@ func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7102,7 +7103,7 @@ type PropertiesFirebaseLinksPatchCall struct {
 // Patch: Updates a FirebaseLink on a property
 //
 // - name: Output only. Example format:
-// properties/1234/firebaseLinks/5678
+//   properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Patch(name string, googleanalyticsadminv1alphafirebaselink *GoogleAnalyticsAdminV1alphaFirebaseLink) *PropertiesFirebaseLinksPatchCall {
 	c := &PropertiesFirebaseLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7147,7 +7148,7 @@ func (c *PropertiesFirebaseLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7261,7 +7262,7 @@ type PropertiesGoogleAdsLinksCreateCall struct {
 
 // Create: Creates a GoogleAdsLink.
 //
-// - parent: Example format: properties/1234
+// - parent: Example format: properties/1234.
 func (r *PropertiesGoogleAdsLinksService) Create(parent string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksCreateCall {
 	c := &PropertiesGoogleAdsLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7296,7 +7297,7 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7404,7 +7405,7 @@ type PropertiesGoogleAdsLinksDeleteCall struct {
 
 // Delete: Deletes a GoogleAdsLink on a property
 //
-// - name: Example format: properties/1234/googleAdsLinks/5678
+// - name: Example format: properties/1234/googleAdsLinks/5678.
 func (r *PropertiesGoogleAdsLinksService) Delete(name string) *PropertiesGoogleAdsLinksDeleteCall {
 	c := &PropertiesGoogleAdsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7438,7 +7439,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7537,7 +7538,7 @@ type PropertiesGoogleAdsLinksListCall struct {
 
 // List: Lists GoogleAdsLinks on a property.
 //
-// - parent: Example format: properties/1234
+// - parent: Example format: properties/1234.
 func (r *PropertiesGoogleAdsLinksService) List(parent string) *PropertiesGoogleAdsLinksListCall {
 	c := &PropertiesGoogleAdsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7600,7 +7601,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7738,8 +7739,8 @@ type PropertiesGoogleAdsLinksPatchCall struct {
 // Patch: Updates a GoogleAdsLink on a property
 //
 // - name: Output only. Format:
-// properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
-// googleAdsLinkId is not the Google Ads customer ID.
+//   properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
+//   googleAdsLinkId is not the Google Ads customer ID.
 func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksPatchCall {
 	c := &PropertiesGoogleAdsLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7784,7 +7785,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7905,7 +7906,7 @@ type PropertiesIosAppDataStreamsCreateCall struct {
 // data stream in Analytics (may take up to 24 hours).
 //
 // - parent: The parent resource where this ios app data stream will be
-// created. Format: properties/123
+//   created. Format: properties/123.
 func (r *PropertiesIosAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsCreateCall {
 	c := &PropertiesIosAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7940,7 +7941,7 @@ func (c *PropertiesIosAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8049,8 +8050,8 @@ type PropertiesIosAppDataStreamsDeleteCall struct {
 // Delete: Deletes an iOS app stream on a property.
 //
 // - name: The name of the iOS app data stream to delete. Format:
-// properties/{property_id}/iosAppDataStreams/{stream_id} Example:
-// "properties/123/iosAppDataStreams/456"
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/123/iosAppDataStreams/456".
 func (r *PropertiesIosAppDataStreamsService) Delete(name string) *PropertiesIosAppDataStreamsDeleteCall {
 	c := &PropertiesIosAppDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8084,7 +8085,7 @@ func (c *PropertiesIosAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8184,8 +8185,8 @@ type PropertiesIosAppDataStreamsGetCall struct {
 // Get: Lookup for a single IosAppDataStream
 //
 // - name: The name of the iOS app data stream to lookup. Format:
-// properties/{property_id}/iosAppDataStreams/{stream_id} Example:
-// "properties/123/iosAppDataStreams/456"
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/123/iosAppDataStreams/456".
 func (r *PropertiesIosAppDataStreamsService) Get(name string) *PropertiesIosAppDataStreamsGetCall {
 	c := &PropertiesIosAppDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8229,7 +8230,7 @@ func (c *PropertiesIosAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8338,8 +8339,8 @@ type PropertiesIosAppDataStreamsListCall struct {
 // streams are found.
 //
 // - parent: The name of the parent property. For example, to list
-// results of app streams under the property with Id 123:
-// "properties/123"
+//   results of app streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesIosAppDataStreamsService) List(parent string) *PropertiesIosAppDataStreamsListCall {
 	c := &PropertiesIosAppDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8402,7 +8403,7 @@ func (c *PropertiesIosAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8541,8 +8542,8 @@ type PropertiesIosAppDataStreamsPatchCall struct {
 // Patch: Updates an iOS app stream on a property.
 //
 // - name: Output only. Resource name of this Data Stream. Format:
-// properties/{property_id}/iosAppDataStreams/{stream_id} Example:
-// "properties/1000/iosAppDataStreams/2000"
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/1000/iosAppDataStreams/2000".
 func (r *PropertiesIosAppDataStreamsService) Patch(name string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsPatchCall {
 	c := &PropertiesIosAppDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8587,7 +8588,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8708,7 +8709,7 @@ type PropertiesUserLinksAuditCall struct {
 // removed from the group/etc that gives them permissions, which is
 // currently only usable/discoverable in the GA or GMP UIs.
 //
-// - parent: Example format: accounts/1234
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) Audit(parent string, googleanalyticsadminv1alphaaudituserlinksrequest *GoogleAnalyticsAdminV1alphaAuditUserLinksRequest) *PropertiesUserLinksAuditCall {
 	c := &PropertiesUserLinksAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8743,7 +8744,7 @@ func (c *PropertiesUserLinksAuditCall) Header() http.Header {
 
 func (c *PropertiesUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8877,9 +8878,9 @@ type PropertiesUserLinksBatchCreateCall struct {
 // cannot be created, none of the UserLinks will be created.
 //
 // - parent: The account or property that all user links in the request
-// are for. This field is required. The parent field in the
-// CreateUserLinkRequest messages must either be empty or match this
-// field. Example format: accounts/1234
+//   are for. This field is required. The parent field in the
+//   CreateUserLinkRequest messages must either be empty or match this
+//   field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchCreate(parent string, googleanalyticsadminv1alphabatchcreateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest) *PropertiesUserLinksBatchCreateCall {
 	c := &PropertiesUserLinksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8914,7 +8915,7 @@ func (c *PropertiesUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9026,8 +9027,8 @@ type PropertiesUserLinksBatchDeleteCall struct {
 // account or property.
 //
 // - parent: The account or property that all user links in the request
-// are for. The parent of all values for user link names to delete must
-// match this field. Example format: accounts/1234
+//   are for. The parent of all values for user link names to delete
+//   must match this field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchDelete(parent string, googleanalyticsadminv1alphabatchdeleteuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest) *PropertiesUserLinksBatchDeleteCall {
 	c := &PropertiesUserLinksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9062,7 +9063,7 @@ func (c *PropertiesUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9171,8 +9172,8 @@ type PropertiesUserLinksBatchGetCall struct {
 // or property.
 //
 // - parent: The account or property that all user links in the request
-// are for. The parent of all provided values for the 'names' field must
-// match this field. Example format: accounts/1234
+//   are for. The parent of all provided values for the 'names' field
+//   must match this field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchGet(parent string) *PropertiesUserLinksBatchGetCall {
 	c := &PropertiesUserLinksBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9224,7 +9225,7 @@ func (c *PropertiesUserLinksBatchGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9337,8 +9338,9 @@ type PropertiesUserLinksBatchUpdateCall struct {
 // account or property.
 //
 // - parent: The account or property that all user links in the request
-// are for. The parent field in the UpdateUserLinkRequest messages must
-// either be empty or match this field. Example format: accounts/1234
+//   are for. The parent field in the UpdateUserLinkRequest messages
+//   must either be empty or match this field. Example format:
+//   accounts/1234.
 func (r *PropertiesUserLinksService) BatchUpdate(parent string, googleanalyticsadminv1alphabatchupdateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest) *PropertiesUserLinksBatchUpdateCall {
 	c := &PropertiesUserLinksBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9373,7 +9375,7 @@ func (c *PropertiesUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9486,7 +9488,7 @@ type PropertiesUserLinksCreateCall struct {
 // property, then the user's existing permissions will be unioned with
 // the permissions specified in the new UserLink.
 //
-// - parent: Example format: accounts/1234
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) Create(parent string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *PropertiesUserLinksCreateCall {
 	c := &PropertiesUserLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9529,7 +9531,7 @@ func (c *PropertiesUserLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9641,7 +9643,7 @@ type PropertiesUserLinksDeleteCall struct {
 
 // Delete: Deletes a user link on an account or property.
 //
-// - name: Example format: accounts/1234/userLinks/5678
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Delete(name string) *PropertiesUserLinksDeleteCall {
 	c := &PropertiesUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9675,7 +9677,7 @@ func (c *PropertiesUserLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9774,7 +9776,7 @@ type PropertiesUserLinksGetCall struct {
 
 // Get: Gets information about a user's link to an account or property.
 //
-// - name: Example format: accounts/1234/userLinks/5678
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Get(name string) *PropertiesUserLinksGetCall {
 	c := &PropertiesUserLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9818,7 +9820,7 @@ func (c *PropertiesUserLinksGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9922,7 +9924,7 @@ type PropertiesUserLinksListCall struct {
 
 // List: Lists all user links on an account or property.
 //
-// - parent: Example format: accounts/1234
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) List(parent string) *PropertiesUserLinksListCall {
 	c := &PropertiesUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9985,7 +9987,7 @@ func (c *PropertiesUserLinksListCall) Header() http.Header {
 
 func (c *PropertiesUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10122,7 +10124,7 @@ type PropertiesUserLinksPatchCall struct {
 
 // Patch: Updates a user link on an account or property.
 //
-// - name: Example format: properties/1234/userLinks/5678
+// - name: Example format: properties/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Patch(name string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *PropertiesUserLinksPatchCall {
 	c := &PropertiesUserLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10157,7 +10159,7 @@ func (c *PropertiesUserLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10267,7 +10269,7 @@ type PropertiesWebDataStreamsCreateCall struct {
 // attributes.
 //
 // - parent: The parent resource where this web data stream will be
-// created. Format: properties/123
+//   created. Format: properties/123.
 func (r *PropertiesWebDataStreamsService) Create(parent string, googleanalyticsadminv1alphawebdatastream *GoogleAnalyticsAdminV1alphaWebDataStream) *PropertiesWebDataStreamsCreateCall {
 	c := &PropertiesWebDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10302,7 +10304,7 @@ func (c *PropertiesWebDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10411,8 +10413,8 @@ type PropertiesWebDataStreamsDeleteCall struct {
 // Delete: Deletes a web stream on a property.
 //
 // - name: The name of the web data stream to delete. Format:
-// properties/{property_id}/webDataStreams/{stream_id} Example:
-// "properties/123/webDataStreams/456"
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/123/webDataStreams/456".
 func (r *PropertiesWebDataStreamsService) Delete(name string) *PropertiesWebDataStreamsDeleteCall {
 	c := &PropertiesWebDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10446,7 +10448,7 @@ func (c *PropertiesWebDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10546,8 +10548,8 @@ type PropertiesWebDataStreamsGetCall struct {
 // Get: Lookup for a single WebDataStream
 //
 // - name: The name of the web data stream to lookup. Format:
-// properties/{property_id}/webDataStreams/{stream_id} Example:
-// "properties/123/webDataStreams/456"
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/123/webDataStreams/456".
 func (r *PropertiesWebDataStreamsService) Get(name string) *PropertiesWebDataStreamsGetCall {
 	c := &PropertiesWebDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10591,7 +10593,7 @@ func (c *PropertiesWebDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10699,9 +10701,9 @@ type PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall struct {
 // enable enhanced measurement for these settings to take effect.
 //
 // - name: The name of the settings to lookup. Format:
-// properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasuremen
-// tSettings Example:
-// "properties/1000/webDataStreams/2000/enhancedMeasurementSettings"
+//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
+//   entSettings Example:
+//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
 func (r *PropertiesWebDataStreamsService) GetEnhancedMeasurementSettings(name string) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
 	c := &PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10745,7 +10747,7 @@ func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Header() ht
 
 func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10853,9 +10855,9 @@ type PropertiesWebDataStreamsGetGlobalSiteTagCall struct {
 // Site Tags are immutable singletons.
 //
 // - name: The name of the site tag to lookup. Note that site tags are
-// singletons and do not have unique IDs. Format:
-// properties/{property_id}/webDataStreams/{stream_id}/globalSiteTag
-// Example: "properties/123/webDataStreams/456/globalSiteTag"
+//   singletons and do not have unique IDs. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/globalSiteTag
+//   Example: "properties/123/webDataStreams/456/globalSiteTag".
 func (r *PropertiesWebDataStreamsService) GetGlobalSiteTag(name string) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
 	c := &PropertiesWebDataStreamsGetGlobalSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10899,7 +10901,7 @@ func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11008,8 +11010,8 @@ type PropertiesWebDataStreamsListCall struct {
 // are found.
 //
 // - parent: The name of the parent property. For example, to list
-// results of web streams under the property with Id 123:
-// "properties/123"
+//   results of web streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesWebDataStreamsService) List(parent string) *PropertiesWebDataStreamsListCall {
 	c := &PropertiesWebDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11072,7 +11074,7 @@ func (c *PropertiesWebDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11210,8 +11212,8 @@ type PropertiesWebDataStreamsPatchCall struct {
 // Patch: Updates a web stream on a property.
 //
 // - name: Output only. Resource name of this Data Stream. Format:
-// properties/{property_id}/webDataStreams/{stream_id} Example:
-// "properties/1000/webDataStreams/2000"
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/1000/webDataStreams/2000".
 func (r *PropertiesWebDataStreamsService) Patch(name string, googleanalyticsadminv1alphawebdatastream *GoogleAnalyticsAdminV1alphaWebDataStream) *PropertiesWebDataStreamsPatchCall {
 	c := &PropertiesWebDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11256,7 +11258,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11374,9 +11376,9 @@ type PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall struct {
 // enable enhanced measurement for these settings to take effect.
 //
 // - name: Output only. Resource name of this Data Stream. Format:
-// properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasuremen
-// tSettings Example:
-// "properties/1000/webDataStreams/2000/enhancedMeasurementSettings"
+//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
+//   entSettings Example:
+//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
 func (r *PropertiesWebDataStreamsService) UpdateEnhancedMeasurementSettings(name string, googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
 	c := &PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11421,7 +11423,7 @@ func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Header()
 
 func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

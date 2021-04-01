@@ -2543,9 +2543,9 @@ type FoldersExportAssetsCall struct {
 // finishes within 5 minutes.
 //
 // - parent: The relative name of the root asset. This can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id"), a project number (such as
-// "projects/12345"), or a folder number (such as "folders/123").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *FoldersService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *FoldersExportAssetsCall {
 	c := &FoldersExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2580,7 +2580,7 @@ func (c *FoldersExportAssetsCall) Header() http.Header {
 
 func (c *FoldersExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2733,7 +2733,7 @@ func (c *FoldersOperationsGetCall) Header() http.Header {
 
 func (c *FoldersOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2842,9 +2842,9 @@ type OrganizationsBatchGetAssetsHistoryCall struct {
 // error.
 //
 // - parent: The relative name of the root asset. It can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id")", or a project number (such as
-// "projects/12345").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *OrganizationsBatchGetAssetsHistoryCall {
 	c := &OrganizationsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2928,7 +2928,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *OrganizationsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3070,9 +3070,9 @@ type OrganizationsExportAssetsCall struct {
 // finishes within 5 minutes.
 //
 // - parent: The relative name of the root asset. This can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id"), a project number (such as
-// "projects/12345"), or a folder number (such as "folders/123").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *OrganizationsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *OrganizationsExportAssetsCall {
 	c := &OrganizationsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3107,7 +3107,7 @@ func (c *OrganizationsExportAssetsCall) Header() http.Header {
 
 func (c *OrganizationsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3260,7 +3260,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3369,9 +3369,9 @@ type ProjectsBatchGetAssetsHistoryCall struct {
 // error.
 //
 // - parent: The relative name of the root asset. It can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id")", or a project number (such as
-// "projects/12345").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGetAssetsHistoryCall {
 	c := &ProjectsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3455,7 +3455,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *ProjectsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3597,9 +3597,9 @@ type ProjectsExportAssetsCall struct {
 // finishes within 5 minutes.
 //
 // - parent: The relative name of the root asset. This can only be an
-// organization number (such as "organizations/123"), a project ID (such
-// as "projects/my-project-id"), a project number (such as
-// "projects/12345"), or a folder number (such as "folders/123").
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *ProjectsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *ProjectsExportAssetsCall {
 	c := &ProjectsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3634,7 +3634,7 @@ func (c *ProjectsExportAssetsCall) Header() http.Header {
 
 func (c *ProjectsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3787,7 +3787,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

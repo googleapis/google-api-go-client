@@ -1098,7 +1098,7 @@ type ProjectsDatabasesExportDocumentsCall struct {
 // completion it may leave partial data behind in Google Cloud Storage.
 //
 // - name: Database to export. Should be of the form:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestoreadminv1beta2exportdocumentsrequest *GoogleFirestoreAdminV1beta2ExportDocumentsRequest) *ProjectsDatabasesExportDocumentsCall {
 	c := &ProjectsDatabasesExportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1133,7 +1133,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1247,7 +1247,7 @@ type ProjectsDatabasesImportDocumentsCall struct {
 // of the data has already been imported to Cloud Firestore.
 //
 // - name: Database to import into. Should be of the form:
-// `projects/{project_id}/databases/{database_id}`.
+//   `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestoreadminv1beta2importdocumentsrequest *GoogleFirestoreAdminV1beta2ImportDocumentsRequest) *ProjectsDatabasesImportDocumentsCall {
 	c := &ProjectsDatabasesImportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1282,7 +1282,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1391,8 +1391,8 @@ type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 // Get: Gets the metadata and configuration for a Field.
 //
 // - name: A name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/fields/{field_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/fields/{field_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1436,7 +1436,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1544,8 +1544,8 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 // `indexConfig.usesAncestorConfig:false`.
 //
 // - parent: A parent name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1614,7 +1614,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1768,25 +1768,26 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 // ult__/fields/*`.
 //
 // - name: A field name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/fields/{field_path}` A field path may be a simple field
-// name, e.g. `address` or a path to fields within map_value , e.g.
-// `address.city`, or a special field path. The only valid special field
-// is `*`, which represents any field. Field paths may be quoted using `
-// (backtick). The only character that needs to be escaped within a
-// quoted field path is the backtick character itself, escaped using a
-// backslash. Special characters in field paths that must be quoted
-// include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii
-// symbolic characters. Examples: (Note: Comments here are written in
-// markdown syntax, so there is an additional layer of backticks to
-// represent a code block) `\`address.city\`` represents a field named
-// `address.city`, not the map key `city` in the field `address`.
-// `\`*\`` represents a field named `*`, not any field. A special
-// `Field` contains the default indexing settings for all fields. This
-// field's resource name is:
-// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
-// ult__/fields/*` Indexes defined on this `Field` will be applied to
-// all fields which do not have their own `Field` index configuration.
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/fields/{field_path}` A field path may be a simple field
+//   name, e.g. `address` or a path to fields within map_value , e.g.
+//   `address.city`, or a special field path. The only valid special
+//   field is `*`, which represents any field. Field paths may be quoted
+//   using ` (backtick). The only character that needs to be escaped
+//   within a quoted field path is the backtick character itself,
+//   escaped using a backslash. Special characters in field paths that
+//   must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well
+//   as any ascii symbolic characters. Examples: (Note: Comments here
+//   are written in markdown syntax, so there is an additional layer of
+//   backticks to represent a code block) `\`address.city\`` represents
+//   a field named `address.city`, not the map key `city` in the field
+//   `address`. `\`*\`` represents a field named `*`, not any field. A
+//   special `Field` contains the default indexing settings for all
+//   fields. This field's resource name is:
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/__de
+//   fault__/fields/*` Indexes defined on this `Field` will be applied
+//   to all fields which do not have their own `Field` index
+//   configuration.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, googlefirestoreadminv1beta2field *GoogleFirestoreAdminV1beta2Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1829,7 +1830,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Header() http.Header 
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1947,8 +1948,8 @@ type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 // IndexOperationMetadata.
 //
 // - parent: A parent name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1983,7 +1984,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Header() http.Heade
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2091,8 +2092,8 @@ type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 // Delete: Deletes a composite index.
 //
 // - name: A name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/indexes/{index_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2126,7 +2127,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Header() http.Heade
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2227,8 +2228,8 @@ type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 // Get: Gets a composite index.
 //
 // - name: A name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}/indexes/{index_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2272,7 +2273,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2376,8 +2377,8 @@ type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 // List: Lists composite indexes.
 //
 // - parent: A parent name of the form
-// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-// ction_id}`
+//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//   lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2443,7 +2444,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Header() http.Header 
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

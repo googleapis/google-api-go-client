@@ -3168,7 +3168,7 @@ func (c *CoursesCreateCall) Header() http.Header {
 
 func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3265,7 +3265,7 @@ type CoursesDeleteCall struct {
 // no course exists with the requested ID.
 //
 // - id: Identifier of the course to delete. This identifier can be
-// either the Classroom-assigned identifier or an alias.
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 	c := &CoursesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3299,7 +3299,7 @@ func (c *CoursesDeleteCall) Header() http.Header {
 
 func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3401,7 +3401,7 @@ type CoursesGetCall struct {
 // course exists with the requested ID.
 //
 // - id: Identifier of the course to return. This identifier can be
-// either the Classroom-assigned identifier or an alias.
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Get(id string) *CoursesGetCall {
 	c := &CoursesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3445,7 +3445,7 @@ func (c *CoursesGetCall) Header() http.Header {
 
 func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3660,7 +3660,7 @@ func (c *CoursesListCall) Header() http.Header {
 
 func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3822,7 +3822,7 @@ type CoursesPatchCall struct {
 // following request errors: * CourseNotModifiable
 //
 // - id: Identifier of the course to update. This identifier can be
-// either the Classroom-assigned identifier or an alias.
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	c := &CoursesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3871,7 +3871,7 @@ func (c *CoursesPatchCall) Header() http.Header {
 
 func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3988,7 +3988,7 @@ type CoursesUpdateCall struct {
 // the following request errors: * CourseNotModifiable
 //
 // - id: Identifier of the course to update. This identifier can be
-// either the Classroom-assigned identifier or an alias.
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 	c := &CoursesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -4023,7 +4023,7 @@ func (c *CoursesUpdateCall) Header() http.Header {
 
 func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4136,7 +4136,7 @@ type CoursesAliasesCreateCall struct {
 // if a user not in a domain attempts to access a domain-scoped alias).
 //
 // - courseId: Identifier of the course to alias. This identifier can be
-// either the Classroom-assigned identifier or an alias.
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias) *CoursesAliasesCreateCall {
 	c := &CoursesAliasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4171,7 +4171,7 @@ func (c *CoursesAliasesCreateCall) Header() http.Header {
 
 func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4284,10 +4284,10 @@ type CoursesAliasesDeleteCall struct {
 // domain-scoped alias).
 //
 // - alias: Alias to delete. This may not be the Classroom-assigned
-// identifier.
+//   identifier.
 // - courseId: Identifier of the course whose alias should be deleted.
-// This identifier can be either the Classroom-assigned identifier or an
-// alias.
+//   This identifier can be either the Classroom-assigned identifier or
+//   an alias.
 func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *CoursesAliasesDeleteCall {
 	c := &CoursesAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4322,7 +4322,7 @@ func (c *CoursesAliasesDeleteCall) Header() http.Header {
 
 func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4432,7 +4432,7 @@ type CoursesAliasesListCall struct {
 // `NOT_FOUND` if the course does not exist.
 //
 // - courseId: The identifier of the course. This identifier can be
-// either the Classroom-assigned identifier or an alias.
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 	c := &CoursesAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4494,7 +4494,7 @@ func (c *CoursesAliasesListCall) Header() http.Header {
 
 func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4635,7 +4635,7 @@ type CoursesAnnouncementsCreateCall struct {
 // following request error: * AttachmentNotVisible
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) Create(courseId string, announcement *Announcement) *CoursesAnnouncementsCreateCall {
 	c := &CoursesAnnouncementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4670,7 +4670,7 @@ func (c *CoursesAnnouncementsCreateCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4786,9 +4786,9 @@ type CoursesAnnouncementsDeleteCall struct {
 // exists with the requested ID.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the announcement to delete. This identifier is a
-// Classroom-assigned identifier.
+//   Classroom-assigned identifier.
 func (r *CoursesAnnouncementsService) Delete(courseId string, id string) *CoursesAnnouncementsDeleteCall {
 	c := &CoursesAnnouncementsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4823,7 +4823,7 @@ func (c *CoursesAnnouncementsDeleteCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4935,7 +4935,7 @@ type CoursesAnnouncementsGetCall struct {
 // the requested course or announcement does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Get(courseId string, id string) *CoursesAnnouncementsGetCall {
 	c := &CoursesAnnouncementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4981,7 +4981,7 @@ func (c *CoursesAnnouncementsGetCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5098,7 +5098,7 @@ type CoursesAnnouncementsListCall struct {
 // malformed. * `NOT_FOUND` if the requested course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) List(courseId string) *CoursesAnnouncementsListCall {
 	c := &CoursesAnnouncementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5192,7 +5192,7 @@ func (c *CoursesAnnouncementsListCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5357,7 +5357,7 @@ type CoursesAnnouncementsModifyAssigneesCall struct {
 // `NOT_FOUND` if the requested course or course work does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) ModifyAssignees(courseId string, id string, modifyannouncementassigneesrequest *ModifyAnnouncementAssigneesRequest) *CoursesAnnouncementsModifyAssigneesCall {
 	c := &CoursesAnnouncementsModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5394,7 +5394,7 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,7 +5516,7 @@ type CoursesAnnouncementsPatchCall struct {
 // course or announcement does not exist
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Patch(courseId string, id string, announcement *Announcement) *CoursesAnnouncementsPatchCall {
 	c := &CoursesAnnouncementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5567,7 +5567,7 @@ func (c *CoursesAnnouncementsPatchCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5700,7 +5700,7 @@ type CoursesCourseWorkCreateCall struct {
 // following request error: * AttachmentNotVisible
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
 	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5735,7 +5735,7 @@ func (c *CoursesCourseWorkCreateCall) Header() http.Header {
 
 func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5851,9 +5851,9 @@ type CoursesCourseWorkDeleteCall struct {
 // the requested ID.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the course work to delete. This identifier is a
-// Classroom-assigned identifier.
+//   Classroom-assigned identifier.
 func (r *CoursesCourseWorkService) Delete(courseId string, id string) *CoursesCourseWorkDeleteCall {
 	c := &CoursesCourseWorkDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5888,7 +5888,7 @@ func (c *CoursesCourseWorkDeleteCall) Header() http.Header {
 
 func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6000,7 +6000,7 @@ type CoursesCourseWorkGetCall struct {
 // the requested course or course work does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Get(courseId string, id string) *CoursesCourseWorkGetCall {
 	c := &CoursesCourseWorkGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6046,7 +6046,7 @@ func (c *CoursesCourseWorkGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6165,7 +6165,7 @@ type CoursesCourseWorkListCall struct {
 // malformed. * `NOT_FOUND` if the requested course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListCall {
 	c := &CoursesCourseWorkListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6258,7 +6258,7 @@ func (c *CoursesCourseWorkListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6425,7 +6425,7 @@ type CoursesCourseWorkModifyAssigneesCall struct {
 // requested course or course work does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the coursework.
 func (r *CoursesCourseWorkService) ModifyAssignees(courseId string, id string, modifycourseworkassigneesrequest *ModifyCourseWorkAssigneesRequest) *CoursesCourseWorkModifyAssigneesCall {
 	c := &CoursesCourseWorkModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6462,7 +6462,7 @@ func (c *CoursesCourseWorkModifyAssigneesCall) Header() http.Header {
 
 func (c *CoursesCourseWorkModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6590,7 +6590,7 @@ type CoursesCourseWorkPatchCall struct {
 // course work, or student submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework *CourseWork) *CoursesCourseWorkPatchCall {
 	c := &CoursesCourseWorkPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6643,7 +6643,7 @@ func (c *CoursesCourseWorkPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6770,7 +6770,7 @@ type CoursesCourseWorkStudentSubmissionsGetCall struct {
 // requested course, course work, or student submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the course work.
 // - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Get(courseId string, courseWorkId string, id string) *CoursesCourseWorkStudentSubmissionsGetCall {
@@ -6818,7 +6818,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6951,10 +6951,10 @@ type CoursesCourseWorkStudentSubmissionsListCall struct {
 // the requested course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the student work to request. This may
-// be set to the string literal "-" to request student work for all
-// course work in the specified course.
+//   be set to the string literal "-" to request student work for all
+//   course work in the specified course.
 func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, courseWorkId string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c := &CoursesCourseWorkStudentSubmissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7061,7 +7061,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7263,7 +7263,7 @@ type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 // student submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the course work.
 // - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId string, courseWorkId string, id string, modifyattachmentsrequest *ModifyAttachmentsRequest) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
@@ -7302,7 +7302,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Header() http
 
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7439,7 +7439,7 @@ type CoursesCourseWorkStudentSubmissionsPatchCall struct {
 // student submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the course work.
 // - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, courseWorkId string, id string, studentsubmission *StudentSubmission) *CoursesCourseWorkStudentSubmissionsPatchCall {
@@ -7488,7 +7488,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7634,7 +7634,7 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 // submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the course work.
 // - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, courseWorkId string, id string, reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReclaimCall {
@@ -7673,7 +7673,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7811,7 +7811,7 @@ type CoursesCourseWorkStudentSubmissionsReturnCall struct {
 // requested course, course work, or student submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the course work.
 // - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, courseWorkId string, id string, returnstudentsubmissionrequest *ReturnStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReturnCall {
@@ -7850,7 +7850,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7986,7 +7986,7 @@ type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
 // requested course, course work, or student submission does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - courseWorkId: Identifier of the course work.
 // - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, courseWorkId string, id string, turninstudentsubmissionrequest *TurnInStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsTurnInCall {
@@ -8025,7 +8025,7 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8155,7 +8155,7 @@ type CoursesCourseWorkMaterialsCreateCall struct {
 // request error: * AttachmentNotVisible
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) Create(courseId string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsCreateCall {
 	c := &CoursesCourseWorkMaterialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8190,7 +8190,7 @@ func (c *CoursesCourseWorkMaterialsCreateCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8306,9 +8306,9 @@ type CoursesCourseWorkMaterialsDeleteCall struct {
 // `NOT_FOUND` if no course exists with the requested ID.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the course work material to delete. This
-// identifier is a Classroom-assigned identifier.
+//   identifier is a Classroom-assigned identifier.
 func (r *CoursesCourseWorkMaterialsService) Delete(courseId string, id string) *CoursesCourseWorkMaterialsDeleteCall {
 	c := &CoursesCourseWorkMaterialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8343,7 +8343,7 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8456,7 +8456,7 @@ type CoursesCourseWorkMaterialsGetCall struct {
 // material does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Get(courseId string, id string) *CoursesCourseWorkMaterialsGetCall {
 	c := &CoursesCourseWorkMaterialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8502,7 +8502,7 @@ func (c *CoursesCourseWorkMaterialsGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8620,7 +8620,7 @@ type CoursesCourseWorkMaterialsListCall struct {
 // requested course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourseWorkMaterialsListCall {
 	c := &CoursesCourseWorkMaterialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8733,7 +8733,7 @@ func (c *CoursesCourseWorkMaterialsListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8908,7 +8908,7 @@ type CoursesCourseWorkMaterialsPatchCall struct {
 // work material does not exist
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsPatchCall {
 	c := &CoursesCourseWorkMaterialsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8960,7 +8960,7 @@ func (c *CoursesCourseWorkMaterialsPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9089,8 +9089,8 @@ type CoursesStudentsCreateCall struct {
 // course.
 //
 // - courseId: Identifier of the course to create the student in. This
-// identifier can be either the Classroom-assigned identifier or an
-// alias.
+//   identifier can be either the Classroom-assigned identifier or an
+//   alias.
 func (r *CoursesStudentsService) Create(courseId string, student *Student) *CoursesStudentsCreateCall {
 	c := &CoursesStudentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9135,7 +9135,7 @@ func (c *CoursesStudentsCreateCall) Header() http.Header {
 
 func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9253,11 +9253,11 @@ type CoursesStudentsDeleteCall struct {
 // ID or if the course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - userId: Identifier of the student to delete. The identifier can be
-// one of the following: * the numeric identifier for the user * the
-// email address of the user * the string literal "me", indicating the
-// requesting user
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesStudentsService) Delete(courseId string, userId string) *CoursesStudentsDeleteCall {
 	c := &CoursesStudentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9292,7 +9292,7 @@ func (c *CoursesStudentsDeleteCall) Header() http.Header {
 
 func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9404,11 +9404,11 @@ type CoursesStudentsGetCall struct {
 // the course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - userId: Identifier of the student to return. The identifier can be
-// one of the following: * the numeric identifier for the user * the
-// email address of the user * the string literal "me", indicating the
-// requesting user
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStudentsGetCall {
 	c := &CoursesStudentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9453,7 +9453,7 @@ func (c *CoursesStudentsGetCall) Header() http.Header {
 
 func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9569,7 +9569,7 @@ type CoursesStudentsListCall struct {
 // access errors.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall {
 	c := &CoursesStudentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9630,7 +9630,7 @@ func (c *CoursesStudentsListCall) Header() http.Header {
 
 func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9775,7 +9775,7 @@ type CoursesTeachersCreateCall struct {
 // already a teacher or student in the course.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *CoursesTeachersCreateCall {
 	c := &CoursesTeachersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9810,7 +9810,7 @@ func (c *CoursesTeachersCreateCall) Header() http.Header {
 
 func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9924,11 +9924,11 @@ type CoursesTeachersDeleteCall struct {
 // requested ID belongs to the primary teacher of this course.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - userId: Identifier of the teacher to delete. The identifier can be
-// one of the following: * the numeric identifier for the user * the
-// email address of the user * the string literal "me", indicating the
-// requesting user
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesTeachersService) Delete(courseId string, userId string) *CoursesTeachersDeleteCall {
 	c := &CoursesTeachersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9963,7 +9963,7 @@ func (c *CoursesTeachersDeleteCall) Header() http.Header {
 
 func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10075,11 +10075,11 @@ type CoursesTeachersGetCall struct {
 // the course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - userId: Identifier of the teacher to return. The identifier can be
-// one of the following: * the numeric identifier for the user * the
-// email address of the user * the string literal "me", indicating the
-// requesting user
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTeachersGetCall {
 	c := &CoursesTeachersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10124,7 +10124,7 @@ func (c *CoursesTeachersGetCall) Header() http.Header {
 
 func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10240,7 +10240,7 @@ type CoursesTeachersListCall struct {
 // access errors.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall {
 	c := &CoursesTeachersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10301,7 +10301,7 @@ func (c *CoursesTeachersListCall) Header() http.Header {
 
 func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10442,7 +10442,7 @@ type CoursesTopicsCreateCall struct {
 // malformed. * `NOT_FOUND` if the requested course does not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) Create(courseId string, topic *Topic) *CoursesTopicsCreateCall {
 	c := &CoursesTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10477,7 +10477,7 @@ func (c *CoursesTopicsCreateCall) Header() http.Header {
 
 func (c *CoursesTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10589,7 +10589,7 @@ type CoursesTopicsDeleteCall struct {
 // requested ID.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the topic to delete.
 func (r *CoursesTopicsService) Delete(courseId string, id string) *CoursesTopicsDeleteCall {
 	c := &CoursesTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10625,7 +10625,7 @@ func (c *CoursesTopicsDeleteCall) Header() http.Header {
 
 func (c *CoursesTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10782,7 +10782,7 @@ func (c *CoursesTopicsGetCall) Header() http.Header {
 
 func (c *CoursesTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10898,7 +10898,7 @@ type CoursesTopicsListCall struct {
 // not exist.
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) List(courseId string) *CoursesTopicsListCall {
 	c := &CoursesTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10960,7 +10960,7 @@ func (c *CoursesTopicsListCall) Header() http.Header {
 
 func (c *CoursesTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11100,7 +11100,7 @@ type CoursesTopicsPatchCall struct {
 // `NOT_FOUND` if the requested course or topic does not exist
 //
 // - courseId: Identifier of the course. This identifier can be either
-// the Classroom-assigned identifier or an alias.
+//   the Classroom-assigned identifier or an alias.
 // - id: Identifier of the topic.
 func (r *CoursesTopicsService) Patch(courseId string, id string, topic *Topic) *CoursesTopicsPatchCall {
 	c := &CoursesTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11150,7 +11150,7 @@ func (c *CoursesTopicsPatchCall) Header() http.Header {
 
 func (c *CoursesTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11311,7 +11311,7 @@ func (c *InvitationsAcceptCall) Header() http.Header {
 
 func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11448,7 +11448,7 @@ func (c *InvitationsCreateCall) Header() http.Header {
 
 func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11578,7 +11578,7 @@ func (c *InvitationsDeleteCall) Header() http.Header {
 
 func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11723,7 +11723,7 @@ func (c *InvitationsGetCall) Header() http.Header {
 
 func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11903,7 +11903,7 @@ func (c *InvitationsListCall) Header() http.Header {
 
 func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12090,7 +12090,7 @@ func (c *RegistrationsCreateCall) Header() http.Header {
 
 func (c *RegistrationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12185,7 +12185,7 @@ type RegistrationsDeleteCall struct {
 // notifications for that `Registration`.
 //
 // - registrationId: The `registration_id` of the `Registration` to be
-// deleted.
+//   deleted.
 func (r *RegistrationsService) Delete(registrationId string) *RegistrationsDeleteCall {
 	c := &RegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registrationId = registrationId
@@ -12219,7 +12219,7 @@ func (c *RegistrationsDeleteCall) Header() http.Header {
 
 func (c *RegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12321,9 +12321,9 @@ type UserProfilesGetCall struct {
 // ID, or for access errors.
 //
 // - userId: Identifier of the profile to return. The identifier can be
-// one of the following: * the numeric identifier for the user * the
-// email address of the user * the string literal "me", indicating the
-// requesting user
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12367,7 +12367,7 @@ func (c *UserProfilesGetCall) Header() http.Header {
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12495,7 +12495,7 @@ type UserProfilesGuardianInvitationsCreateCall struct {
 // provided `invited_email_address` matches the Google account of an
 // existing `Guardian` for this user.
 //
-// - studentId: ID of the student (in standard format)
+// - studentId: ID of the student (in standard format).
 func (r *UserProfilesGuardianInvitationsService) Create(studentId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsCreateCall {
 	c := &UserProfilesGuardianInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12530,7 +12530,7 @@ func (c *UserProfilesGuardianInvitationsCreateCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12648,9 +12648,9 @@ type UserProfilesGuardianInvitationsGetCall struct {
 // to see that student.
 //
 // - invitationId: The `id` field of the `GuardianInvitation` being
-// requested.
+//   requested.
 // - studentId: The ID of the student whose guardian invitation is being
-// requested.
+//   requested.
 func (r *UserProfilesGuardianInvitationsService) Get(studentId string, invitationId string) *UserProfilesGuardianInvitationsGetCall {
 	c := &UserProfilesGuardianInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12695,7 +12695,7 @@ func (c *UserProfilesGuardianInvitationsGetCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12818,12 +12818,12 @@ type UserProfilesGuardianInvitationsListCall struct {
 // recognized, but Classroom has no record of that student.
 //
 // - studentId: The ID of the student whose guardian invitations are to
-// be returned. The identifier can be one of the following: * the
-// numeric identifier for the user * the email address of the user * the
-// string literal "me", indicating the requesting user * the string
-// literal "-", indicating that results should be returned for all
-// students that the requesting user is permitted to view guardian
-// invitations.
+//   be returned. The identifier can be one of the following: * the
+//   numeric identifier for the user * the email address of the user *
+//   the string literal "me", indicating the requesting user * the
+//   string literal "-", indicating that results should be returned
+//   for all students that the requesting user is permitted to view
+//   guardian invitations.
 func (r *UserProfilesGuardianInvitationsService) List(studentId string) *UserProfilesGuardianInvitationsListCall {
 	c := &UserProfilesGuardianInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12907,7 +12907,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13078,9 +13078,9 @@ type UserProfilesGuardianInvitationsPatchCall struct {
 // Classroom.
 //
 // - invitationId: The `id` field of the `GuardianInvitation` to be
-// modified.
+//   modified.
 // - studentId: The ID of the student whose guardian invitation is to be
-// modified.
+//   modified.
 func (r *UserProfilesGuardianInvitationsService) Patch(studentId string, invitationId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsPatchCall {
 	c := &UserProfilesGuardianInvitationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13126,7 +13126,7 @@ func (c *UserProfilesGuardianInvitationsPatchCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13260,9 +13260,9 @@ type UserProfilesGuardiansDeleteCall struct {
 //
 // - guardianId: The `id` field from a `Guardian`.
 // - studentId: The student whose guardian is to be deleted. One of the
-// following: * the numeric identifier for the user * the email address
-// of the user * the string literal "me", indicating the requesting
-// user
+//   following: * the numeric identifier for the user * the email
+//   address of the user * the string literal "me", indicating the
+//   requesting user.
 func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId string) *UserProfilesGuardiansDeleteCall {
 	c := &UserProfilesGuardiansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13297,7 +13297,7 @@ func (c *UserProfilesGuardiansDeleteCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13417,9 +13417,9 @@ type UserProfilesGuardiansGetCall struct {
 //
 // - guardianId: The `id` field from a `Guardian`.
 // - studentId: The student whose guardian is being requested. One of
-// the following: * the numeric identifier for the user * the email
-// address of the user * the string literal "me", indicating the
-// requesting user
+//   the following: * the numeric identifier for the user * the email
+//   address of the user * the string literal "me", indicating the
+//   requesting user.
 func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) *UserProfilesGuardiansGetCall {
 	c := &UserProfilesGuardiansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13464,7 +13464,7 @@ func (c *UserProfilesGuardiansGetCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13592,11 +13592,11 @@ type UserProfilesGuardiansListCall struct {
 // student.
 //
 // - studentId: Filter results by the student who the guardian is linked
-// to. The identifier can be one of the following: * the numeric
-// identifier for the user * the email address of the user * the string
-// literal "me", indicating the requesting user * the string literal
-// "-", indicating that results should be returned for all students
-// that the requesting user has access to view.
+//   to. The identifier can be one of the following: * the numeric
+//   identifier for the user * the email address of the user * the
+//   string literal "me", indicating the requesting user * the string
+//   literal "-", indicating that results should be returned for all
+//   students that the requesting user has access to view.
 func (r *UserProfilesGuardiansService) List(studentId string) *UserProfilesGuardiansListCall {
 	c := &UserProfilesGuardiansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13667,7 +13667,7 @@ func (c *UserProfilesGuardiansListCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

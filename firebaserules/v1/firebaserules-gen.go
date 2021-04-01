@@ -1169,10 +1169,10 @@ type ProjectsTestCall struct {
 // } }
 //
 // - name: Tests may either provide `source` or a `Ruleset` resource
-// name. For tests against `source`, the resource name must refer to the
-// project: Format: `projects/{project_id}` For tests against a
-// `Ruleset`, this must be the `Ruleset` resource name: Format:
-// `projects/{project_id}/rulesets/{ruleset_id}`
+//   name. For tests against `source`, the resource name must refer to
+//   the project: Format: `projects/{project_id}` For tests against a
+//   `Ruleset`, this must be the `Ruleset` resource name: Format:
+//   `projects/{project_id}/rulesets/{ruleset_id}`.
 func (r *ProjectsService) Test(name string, testrulesetrequest *TestRulesetRequest) *ProjectsTestCall {
 	c := &ProjectsTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1207,7 +1207,7 @@ func (c *ProjectsTestCall) Header() http.Header {
 
 func (c *ProjectsTestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1332,7 +1332,7 @@ type ProjectsReleasesCreateCall struct {
 // may be updated using the UpdateRelease method.
 //
 // - name: Resource name for the project which owns this `Release`.
-// Format: `projects/{project_id}`
+//   Format: `projects/{project_id}`.
 func (r *ProjectsReleasesService) Create(name string, release *Release) *ProjectsReleasesCreateCall {
 	c := &ProjectsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1367,7 +1367,7 @@ func (c *ProjectsReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1475,7 +1475,7 @@ type ProjectsReleasesDeleteCall struct {
 // Delete: Delete a `Release` by resource name.
 //
 // - name: Resource name for the `Release` to delete. Format:
-// `projects/{project_id}/releases/{release_id}`
+//   `projects/{project_id}/releases/{release_id}`.
 func (r *ProjectsReleasesService) Delete(name string) *ProjectsReleasesDeleteCall {
 	c := &ProjectsReleasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1509,7 +1509,7 @@ func (c *ProjectsReleasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsReleasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1610,7 +1610,7 @@ type ProjectsReleasesGetCall struct {
 // Get: Get a `Release` by name.
 //
 // - name: Resource name of the `Release`. Format:
-// `projects/{project_id}/releases/{release_id}`
+//   `projects/{project_id}/releases/{release_id}`.
 func (r *ProjectsReleasesService) Get(name string) *ProjectsReleasesGetCall {
 	c := &ProjectsReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1654,7 +1654,7 @@ func (c *ProjectsReleasesGetCall) Header() http.Header {
 
 func (c *ProjectsReleasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1760,7 +1760,7 @@ type ProjectsReleasesGetExecutableCall struct {
 // rules.
 //
 // - name: Resource name of the `Release`. Format:
-// `projects/{project_id}/releases/{release_id}`
+//   `projects/{project_id}/releases/{release_id}`.
 func (r *ProjectsReleasesService) GetExecutable(name string) *ProjectsReleasesGetExecutableCall {
 	c := &ProjectsReleasesGetExecutableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1820,7 +1820,7 @@ func (c *ProjectsReleasesGetExecutableCall) Header() http.Header {
 
 func (c *ProjectsReleasesGetExecutableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1942,7 +1942,7 @@ type ProjectsReleasesListCall struct {
 // name, or any combination thereof.
 //
 // - name: Resource name for the project. Format:
-// `projects/{project_id}`
+//   `projects/{project_id}`.
 func (r *ProjectsReleasesService) List(name string) *ProjectsReleasesListCall {
 	c := &ProjectsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2027,7 +2027,7 @@ func (c *ProjectsReleasesListCall) Header() http.Header {
 
 func (c *ProjectsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2172,7 +2172,7 @@ type ProjectsReleasesPatchCall struct {
 // CreateRelease method.
 //
 // - name: Resource name for the project which owns this `Release`.
-// Format: `projects/{project_id}`
+//   Format: `projects/{project_id}`.
 func (r *ProjectsReleasesService) Patch(name string, updatereleaserequest *UpdateReleaseRequest) *ProjectsReleasesPatchCall {
 	c := &ProjectsReleasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2207,7 +2207,7 @@ func (c *ProjectsReleasesPatchCall) Header() http.Header {
 
 func (c *ProjectsReleasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2320,7 +2320,7 @@ type ProjectsRulesetsCreateCall struct {
 // of `Source` issues, use TestRuleset.
 //
 // - name: Resource name for Project which owns this `Ruleset`. Format:
-// `projects/{project_id}`
+//   `projects/{project_id}`.
 func (r *ProjectsRulesetsService) Create(name string, ruleset *Ruleset) *ProjectsRulesetsCreateCall {
 	c := &ProjectsRulesetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2355,7 +2355,7 @@ func (c *ProjectsRulesetsCreateCall) Header() http.Header {
 
 func (c *ProjectsRulesetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2464,7 +2464,7 @@ type ProjectsRulesetsDeleteCall struct {
 // referenced by a `Release` the operation will fail.
 //
 // - name: Resource name for the ruleset to delete. Format:
-// `projects/{project_id}/rulesets/{ruleset_id}`
+//   `projects/{project_id}/rulesets/{ruleset_id}`.
 func (r *ProjectsRulesetsService) Delete(name string) *ProjectsRulesetsDeleteCall {
 	c := &ProjectsRulesetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2498,7 +2498,7 @@ func (c *ProjectsRulesetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsRulesetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2599,7 +2599,7 @@ type ProjectsRulesetsGetCall struct {
 // Get: Get a `Ruleset` by name including the full `Source` contents.
 //
 // - name: Resource name for the ruleset to get. Format:
-// `projects/{project_id}/rulesets/{ruleset_id}`
+//   `projects/{project_id}/rulesets/{ruleset_id}`.
 func (r *ProjectsRulesetsService) Get(name string) *ProjectsRulesetsGetCall {
 	c := &ProjectsRulesetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2643,7 +2643,7 @@ func (c *ProjectsRulesetsGetCall) Header() http.Header {
 
 func (c *ProjectsRulesetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2750,7 +2750,7 @@ type ProjectsRulesetsListCall struct {
 // retrieved with GetRuleset.
 //
 // - name: Resource name for the project. Format:
-// `projects/{project_id}`
+//   `projects/{project_id}`.
 func (r *ProjectsRulesetsService) List(name string) *ProjectsRulesetsListCall {
 	c := &ProjectsRulesetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2821,7 +2821,7 @@ func (c *ProjectsRulesetsListCall) Header() http.Header {
 
 func (c *ProjectsRulesetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

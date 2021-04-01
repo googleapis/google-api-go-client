@@ -926,11 +926,11 @@ type ActivitiesListCall struct {
 // reference guides.
 //
 // - applicationName: Application name for which the events are to be
-// retrieved.
+//   retrieved.
 // - userKey: Represents the profile ID or the user email for which the
-// data should be filtered. Can be `all` for all information, or
-// `userKey` for a user's unique Google Workspace profile ID or their
-// primary email address.
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1121,7 +1121,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1360,11 +1360,11 @@ type ActivitiesWatchCall struct {
 // information, see Receiving Push Notifications.
 //
 // - applicationName: Application name for which the events are to be
-// retrieved.
+//   retrieved.
 // - userKey: Represents the profile ID or the user email for which the
-// data should be filtered. Can be `all` for all information, or
-// `userKey` for a user's unique Google Workspace profile ID or their
-// primary email address.
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1546,7 +1546,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1797,7 +1797,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1868,8 +1868,8 @@ type CustomerUsageReportsGetCall struct {
 // reference guides.
 //
 // - date: Represents the date the usage occurred. The timestamp is in
-// the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's
-// time zone for this.
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -1951,7 +1951,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2098,10 +2098,10 @@ type EntityUsageReportsGetCall struct {
 // Usage parameters reference guides.
 //
 // - date: Represents the date the usage occurred. The timestamp is in
-// the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's
-// time zone for this.
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
 // - entityKey: Represents the key of the object to filter the data
-// with.
+//   with.
 // - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2218,7 +2218,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2409,12 +2409,12 @@ type UserUsageReportGetCall struct {
 // report's parameters, see the Users Usage parameters reference guides.
 //
 // - date: Represents the date the usage occurred. The timestamp is in
-// the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's
-// time zone for this.
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
 // - userKey: Represents the profile ID or the user email for which the
-// data should be filtered. Can be `all` for all information, or
-// `userKey` for a user's unique Google Workspace profile ID or their
-// primary email address.
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -2549,7 +2549,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

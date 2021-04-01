@@ -4515,7 +4515,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4658,7 +4658,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4803,7 +4803,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4979,7 +4979,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5119,8 +5119,8 @@ type ServicesSearchCall struct {
 // Search: Search tenancy units for a managed service.
 //
 // - parent: Service for which search is performed. services/{service}
-// {service} the name of a service, for example
-// 'service.googleapis.com'.
+//   {service} the name of a service, for example
+//   'service.googleapis.com'.
 func (r *ServicesService) Search(parent string) *ServicesSearchCall {
 	c := &ServicesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5200,7 +5200,7 @@ func (c *ServicesSearchCall) Header() http.Header {
 
 func (c *ServicesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5344,7 +5344,7 @@ type ServicesTenancyUnitsAddProjectCall struct {
 // another call to `AddTenantProject` with the same tag. Operation.
 //
 // - parent: Name of the tenancy unit. Such as
-// 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) AddProject(parent string, addtenantprojectrequest *AddTenantProjectRequest) *ServicesTenancyUnitsAddProjectCall {
 	c := &ServicesTenancyUnitsAddProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5379,7 +5379,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAddProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5502,7 +5502,7 @@ type ServicesTenancyUnitsApplyProjectConfigCall struct {
 // Operation.
 //
 // - name: Name of the tenancy unit. Such as
-// 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) ApplyProjectConfig(name string, applytenantprojectconfigrequest *ApplyTenantProjectConfigRequest) *ServicesTenancyUnitsApplyProjectConfigCall {
 	c := &ServicesTenancyUnitsApplyProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5537,7 +5537,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5654,8 +5654,8 @@ type ServicesTenancyUnitsAttachProjectCall struct {
 // is reserved by calling `AddTenantProject`. Operation.
 //
 // - name: Name of the tenancy unit that the project will be attached
-// to. Such as
-// 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   to. Such as
+//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) AttachProject(name string, attachtenantprojectrequest *AttachTenantProjectRequest) *ServicesTenancyUnitsAttachProjectCall {
 	c := &ServicesTenancyUnitsAttachProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5690,7 +5690,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5802,12 +5802,12 @@ type ServicesTenancyUnitsCreateCall struct {
 // all fields populated.
 //
 // - parent: services/{service}/{collection id}/{resource id}
-// {collection id} is the cloud resource collection type representing
-// the service consumer, for example 'projects', or 'organizations'.
-// {resource id} is the consumer numeric id, such as project number:
-// '123456'. {service} the name of a managed service, such as
-// 'service.googleapis.com'. Enables service binding using the new
-// tenancy unit.
+//   {collection id} is the cloud resource collection type representing
+//   the service consumer, for example 'projects', or 'organizations'.
+//   {resource id} is the consumer numeric id, such as project number:
+//   '123456'. {service} the name of a managed service, such as
+//   'service.googleapis.com'. Enables service binding using the new
+//   tenancy unit.
 func (r *ServicesTenancyUnitsService) Create(parent string, createtenancyunitrequest *CreateTenancyUnitRequest) *ServicesTenancyUnitsCreateCall {
 	c := &ServicesTenancyUnitsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5842,7 +5842,7 @@ func (c *ServicesTenancyUnitsCreateCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5984,7 +5984,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6092,7 +6092,7 @@ type ServicesTenancyUnitsDeleteProjectCall struct {
 // Operation.
 //
 // - name: Name of the tenancy unit. Such as
-// 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) DeleteProject(name string, deletetenantprojectrequest *DeleteTenantProjectRequest) *ServicesTenancyUnitsDeleteProjectCall {
 	c := &ServicesTenancyUnitsDeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6127,7 +6127,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6239,11 +6239,11 @@ type ServicesTenancyUnitsListCall struct {
 // information after the project is created.
 //
 // - parent: Managed service and service consumer. Required.
-// services/{service}/{collection id}/{resource id} {collection id} is
-// the cloud resource collection type representing the service consumer,
-// for example 'projects', or 'organizations'. {resource id} is the
-// consumer numeric id, such as project number: '123456'. {service} the
-// name of a service, such as 'service.googleapis.com'.
+//   services/{service}/{collection id}/{resource id} {collection id} is
+//   the cloud resource collection type representing the service
+//   consumer, for example 'projects', or 'organizations'. {resource id}
+//   is the consumer numeric id, such as project number: '123456'.
+//   {service} the name of a service, such as 'service.googleapis.com'.
 func (r *ServicesTenancyUnitsService) List(parent string) *ServicesTenancyUnitsListCall {
 	c := &ServicesTenancyUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6310,7 +6310,7 @@ func (c *ServicesTenancyUnitsListCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6457,7 +6457,7 @@ type ServicesTenancyUnitsRemoveProjectCall struct {
 // unit. Operation.
 //
 // - name: Name of the tenancy unit. Such as
-// 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) RemoveProject(name string, removetenantprojectrequest *RemoveTenantProjectRequest) *ServicesTenancyUnitsRemoveProjectCall {
 	c := &ServicesTenancyUnitsRemoveProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6492,7 +6492,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsRemoveProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6605,7 +6605,7 @@ type ServicesTenancyUnitsUndeleteProjectCall struct {
 // resources. Operation.
 //
 // - name: Name of the tenancy unit. Such as
-// 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) UndeleteProject(name string, undeletetenantprojectrequest *UndeleteTenantProjectRequest) *ServicesTenancyUnitsUndeleteProjectCall {
 	c := &ServicesTenancyUnitsUndeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6640,7 +6640,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

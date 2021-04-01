@@ -865,7 +865,7 @@ type ProjectsLocationsGetBiReservationCall struct {
 // GetBiReservation: Retrieves a BI reservation.
 //
 // - name: Name of the requested reservation, for example:
-// `projects/{project_id}/locations/{location_id}/biReservation`
+//   `projects/{project_id}/locations/{location_id}/biReservation`.
 func (r *ProjectsLocationsService) GetBiReservation(name string) *ProjectsLocationsGetBiReservationCall {
 	c := &ProjectsLocationsGetBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -909,7 +909,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1025,7 +1025,7 @@ type ProjectsLocationsSearchAllAssignmentsCall struct {
 // `projects/*/locations/*reservations/*`.
 //
 // - parent: The resource name with location (project name could be the
-// wildcard '-'), e.g.: `projects/-/locations/US`.
+//   wildcard '-'), e.g.: `projects/-/locations/US`.
 func (r *ProjectsLocationsService) SearchAllAssignments(parent string) *ProjectsLocationsSearchAllAssignmentsCall {
 	c := &ProjectsLocationsSearchAllAssignmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1092,7 +1092,7 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAllAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1246,7 +1246,7 @@ type ProjectsLocationsSearchAssignmentsCall struct {
 // for projects nor locations.
 //
 // - parent: The resource name of the admin project(containing project
-// and location), e.g.: `projects/myproject/locations/US`.
+//   and location), e.g.: `projects/myproject/locations/US`.
 func (r *ProjectsLocationsService) SearchAssignments(parent string) *ProjectsLocationsSearchAssignmentsCall {
 	c := &ProjectsLocationsSearchAssignmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1313,7 +1313,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1458,8 +1458,8 @@ type ProjectsLocationsUpdateBiReservationCall struct {
 // capacity reservation size must be set to 0.
 //
 // - name: The resource name of the singleton BI reservation.
-// Reservation names have the form
-// `projects/{project_id}/locations/{location_id}/biReservation`.
+//   Reservation names have the form
+//   `projects/{project_id}/locations/{location_id}/biReservation`.
 func (r *ProjectsLocationsService) UpdateBiReservation(name string, bireservation *BiReservation) *ProjectsLocationsUpdateBiReservationCall {
 	c := &ProjectsLocationsUpdateBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1501,7 +1501,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1616,7 +1616,7 @@ type ProjectsLocationsCapacityCommitmentsCreateCall struct {
 // Create: Creates a new capacity commitment resource.
 //
 // - parent: Resource name of the parent reservation. E.g.,
-// `projects/myproject/locations/US`
+//   `projects/myproject/locations/US`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsCreateCall {
 	c := &ProjectsLocationsCapacityCommitmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1659,7 +1659,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1774,7 +1774,7 @@ type ProjectsLocationsCapacityCommitmentsDeleteCall struct {
 // code `google.rpc.Code.FAILED_PRECONDITION`.
 //
 // - name: Resource name of the capacity commitment to delete. E.g.,
-// `projects/myproject/locations/US/capacityCommitments/123`
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Delete(name string) *ProjectsLocationsCapacityCommitmentsDeleteCall {
 	c := &ProjectsLocationsCapacityCommitmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1808,7 +1808,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1909,7 +1909,7 @@ type ProjectsLocationsCapacityCommitmentsGetCall struct {
 // Get: Returns information about the capacity commitment.
 //
 // - name: Resource name of the capacity commitment to retrieve. E.g.,
-// `projects/myproject/locations/US/capacityCommitments/123`
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Get(name string) *ProjectsLocationsCapacityCommitmentsGetCall {
 	c := &ProjectsLocationsCapacityCommitmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1953,7 +1953,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2057,7 +2057,7 @@ type ProjectsLocationsCapacityCommitmentsListCall struct {
 // List: Lists all the capacity commitments for the admin project.
 //
 // - parent: Resource name of the parent reservation. E.g.,
-// `projects/myproject/locations/US`
+//   `projects/myproject/locations/US`.
 func (r *ProjectsLocationsCapacityCommitmentsService) List(parent string) *ProjectsLocationsCapacityCommitmentsListCall {
 	c := &ProjectsLocationsCapacityCommitmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2115,7 +2115,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2255,7 +2255,7 @@ type ProjectsLocationsCapacityCommitmentsMergeCall struct {
 // with the error code `google.rpc.Code.FAILED_PRECONDITION`.
 //
 // - parent: Parent resource that identifies admin project and location
-// e.g., `projects/myproject/locations/us`
+//   e.g., `projects/myproject/locations/us`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Merge(parent string, mergecapacitycommitmentsrequest *MergeCapacityCommitmentsRequest) *ProjectsLocationsCapacityCommitmentsMergeCall {
 	c := &ProjectsLocationsCapacityCommitmentsMergeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2290,7 +2290,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2403,7 +2403,7 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 // `google.rpc.Code.FAILED_PRECONDITION`.
 //
 // - name: Output only. The resource name of the capacity commitment,
-// e.g., `projects/myproject/locations/US/capacityCommitments/123`
+//   e.g., `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2445,7 +2445,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2565,7 +2565,7 @@ type ProjectsLocationsCapacityCommitmentsSplitCall struct {
 // `FLEX` and then delete it.
 //
 // - name: The resource name e.g.,:
-// `projects/myproject/locations/US/capacityCommitments/123`
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Split(name string, splitcapacitycommitmentrequest *SplitCapacityCommitmentRequest) *ProjectsLocationsCapacityCommitmentsSplitCall {
 	c := &ProjectsLocationsCapacityCommitmentsSplitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2600,7 +2600,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2708,7 +2708,7 @@ type ProjectsLocationsReservationsCreateCall struct {
 
 // Create: Creates a new reservation resource.
 //
-// - parent: Project, location. E.g., `projects/myproject/locations/US`
+// - parent: Project, location. E.g., `projects/myproject/locations/US`.
 func (r *ProjectsLocationsReservationsService) Create(parent string, reservation *Reservation) *ProjectsLocationsReservationsCreateCall {
 	c := &ProjectsLocationsReservationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2751,7 +2751,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2866,7 +2866,7 @@ type ProjectsLocationsReservationsDeleteCall struct {
 // assignments.
 //
 // - name: Resource name of the reservation to retrieve. E.g.,
-// `projects/myproject/locations/US/reservations/team1-prod`
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Delete(name string) *ProjectsLocationsReservationsDeleteCall {
 	c := &ProjectsLocationsReservationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2900,7 +2900,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3001,7 +3001,7 @@ type ProjectsLocationsReservationsGetCall struct {
 // Get: Returns information about the reservation.
 //
 // - name: Resource name of the reservation to retrieve. E.g.,
-// `projects/myproject/locations/US/reservations/team1-prod`
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Get(name string) *ProjectsLocationsReservationsGetCall {
 	c := &ProjectsLocationsReservationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3045,7 +3045,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3150,7 +3150,7 @@ type ProjectsLocationsReservationsListCall struct {
 // location.
 //
 // - parent: The parent resource name containing project and location,
-// e.g.: `projects/myproject/locations/US`
+//   e.g.: `projects/myproject/locations/US`.
 func (r *ProjectsLocationsReservationsService) List(parent string) *ProjectsLocationsReservationsListCall {
 	c := &ProjectsLocationsReservationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3208,7 +3208,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3344,7 +3344,7 @@ type ProjectsLocationsReservationsPatchCall struct {
 // Patch: Updates an existing reservation resource.
 //
 // - name: The resource name of the reservation, e.g.,
-// `projects/*/locations/*/reservations/team1-prod`.
+//   `projects/*/locations/*/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Patch(name string, reservation *Reservation) *ProjectsLocationsReservationsPatchCall {
 	c := &ProjectsLocationsReservationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3386,7 +3386,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3524,7 +3524,7 @@ type ProjectsLocationsReservationsAssignmentsCreateCall struct {
 // does not match location of the reservation.
 //
 // - parent: The parent resource name of the assignment E.g.
-// `projects/myproject/locations/US/reservations/team1-prod`
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Create(parent string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsCreateCall {
 	c := &ProjectsLocationsReservationsAssignmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3559,7 +3559,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3675,8 +3675,8 @@ type ProjectsLocationsReservationsAssignmentsDeleteCall struct {
 // on-demand mode.
 //
 // - name: Name of the resource, e.g.
-// `projects/myproject/locations/US/reservations/team1-prod/assignments/1
-// 23`
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Delete(name string) *ProjectsLocationsReservationsAssignmentsDeleteCall {
 	c := &ProjectsLocationsReservationsAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3710,7 +3710,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3821,8 +3821,8 @@ type ProjectsLocationsReservationsAssignmentsListCall struct {
 // locations.
 //
 // - parent: The parent resource name e.g.:
-// `projects/myproject/locations/US/reservations/team1-prod` Or:
-// `projects/myproject/locations/US/reservations/-`
+//   `projects/myproject/locations/US/reservations/team1-prod` Or:
+//   `projects/myproject/locations/US/reservations/-`.
 func (r *ProjectsLocationsReservationsAssignmentsService) List(parent string) *ProjectsLocationsReservationsAssignmentsListCall {
 	c := &ProjectsLocationsReservationsAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3880,7 +3880,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4019,8 +4019,8 @@ type ProjectsLocationsReservationsAssignmentsMoveCall struct {
 // associated reservation.
 //
 // - name: The resource name of the assignment, e.g.
-// `projects/myproject/locations/US/reservations/team1-prod/assignments/1
-// 23`
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Move(name string, moveassignmentrequest *MoveAssignmentRequest) *ProjectsLocationsReservationsAssignmentsMoveCall {
 	c := &ProjectsLocationsReservationsAssignmentsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4055,7 +4055,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

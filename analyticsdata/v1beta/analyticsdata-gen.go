@@ -2330,12 +2330,12 @@ type PropertiesBatchRunPivotReportsCall struct {
 // reports must be for the same GA4 Property.
 //
 // - property: A Google Analytics GA4 property identifier whose events
-// are tracked. Specified in the URL path and not the body. To learn
-// more, see where to find your Property ID
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-// This property must be specified for the batch. The property within
-// RunPivotReportRequest may either be unspecified or consistent with
-// this property. Example: properties/1234
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   This property must be specified for the batch. The property within
+//   RunPivotReportRequest may either be unspecified or consistent with
+//   this property. Example: properties/1234.
 func (r *PropertiesService) BatchRunPivotReports(propertyid string, batchrunpivotreportsrequest *BatchRunPivotReportsRequest) *PropertiesBatchRunPivotReportsCall {
 	c := &PropertiesBatchRunPivotReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -2370,7 +2370,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2480,12 +2480,12 @@ type PropertiesBatchRunReportsCall struct {
 // must be for the same GA4 Property.
 //
 // - property: A Google Analytics GA4 property identifier whose events
-// are tracked. Specified in the URL path and not the body. To learn
-// more, see where to find your Property ID
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-// This property must be specified for the batch. The property within
-// RunReportRequest may either be unspecified or consistent with this
-// property. Example: properties/1234
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   This property must be specified for the batch. The property within
+//   RunReportRequest may either be unspecified or consistent with this
+//   property. Example: properties/1234.
 func (r *PropertiesService) BatchRunReports(propertyid string, batchrunreportsrequest *BatchRunReportsRequest) *PropertiesBatchRunReportsCall {
 	c := &PropertiesBatchRunReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -2520,7 +2520,7 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,13 +2638,13 @@ type PropertiesGetMetadataCall struct {
 // `totalUsers`.
 //
 // - name: The resource name of the metadata to retrieve. This name
-// field is specified in the URL path and not URL parameters. Property
-// is a numeric Google Analytics GA4 Property identifier. To learn more,
-// see where to find your Property ID
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-// Example: properties/1234/metadata Set the Property ID to 0 for
-// dimensions and metrics common to all properties. In this special
-// mode, this method will not return custom dimensions and metrics.
+//   field is specified in the URL path and not URL parameters. Property
+//   is a numeric Google Analytics GA4 Property identifier. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Example: properties/1234/metadata Set the Property ID to 0 for
+//   dimensions and metrics common to all properties. In this special
+//   mode, this method will not return custom dimensions and metrics.
 func (r *PropertiesService) GetMetadata(nameid string) *PropertiesGetMetadataCall {
 	c := &PropertiesGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2688,7 +2688,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2796,11 +2796,12 @@ type PropertiesRunPivotReportCall struct {
 // specified to further dissect your data.
 //
 // - property: A Google Analytics GA4 property identifier whose events
-// are tracked. Specified in the URL path and not the body. To learn
-// more, see where to find your Property ID
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-// Within a batch request, this property should either be unspecified or
-// consistent with the batch-level property. Example: properties/1234
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Within a batch request, this property should either be unspecified
+//   or consistent with the batch-level property. Example:
+//   properties/1234.
 func (r *PropertiesService) RunPivotReport(propertyid string, runpivotreportrequest *RunPivotReportRequest) *PropertiesRunPivotReportCall {
 	c := &PropertiesRunPivotReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -2835,7 +2836,7 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2946,10 +2947,10 @@ type PropertiesRunRealtimeReportCall struct {
 // reports show events and usage from the last 30 minutes.
 //
 // - property: A Google Analytics GA4 property identifier whose events
-// are tracked. Specified in the URL path and not the body. To learn
-// more, see where to find your Property ID
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-// Example: properties/1234
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Example: properties/1234.
 func (r *PropertiesService) RunRealtimeReport(propertyid string, runrealtimereportrequest *RunRealtimeReportRequest) *PropertiesRunRealtimeReportCall {
 	c := &PropertiesRunRealtimeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -2984,7 +2985,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3099,11 +3100,12 @@ type PropertiesRunReportCall struct {
 // metrics across some common criteria, such as country or event name.
 //
 // - property: A Google Analytics GA4 property identifier whose events
-// are tracked. Specified in the URL path and not the body. To learn
-// more, see where to find your Property ID
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-// Within a batch request, this property should either be unspecified or
-// consistent with the batch-level property. Example: properties/1234
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Within a batch request, this property should either be unspecified
+//   or consistent with the batch-level property. Example:
+//   properties/1234.
 func (r *PropertiesService) RunReport(propertyid string, runreportrequest *RunReportRequest) *PropertiesRunReportCall {
 	c := &PropertiesRunReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3138,7 +3140,7 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

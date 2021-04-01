@@ -467,7 +467,7 @@ type CreateProjectMetadata struct {
 	// CreateTime: Creation time of the project creation workflow.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Gettable: True if the project can be retrieved using GetProject. No
+	// Gettable: True if the project can be retrieved using `GetProject`. No
 	// other operations on the project are guaranteed to work until the
 	// project creation is complete.
 	Gettable bool `json:"gettable,omitempty"`
@@ -509,17 +509,17 @@ type CreateTagValueMetadata struct {
 }
 
 // DeleteFolderMetadata: A status object which is used as the `metadata`
-// field for the Operation returned by DeleteFolder.
+// field for the `Operation` returned by `DeleteFolder`.
 type DeleteFolderMetadata struct {
 }
 
 // DeleteOrganizationMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by DeleteOrganization.
+// `metadata` field for the operation returned by DeleteOrganization.
 type DeleteOrganizationMetadata struct {
 }
 
 // DeleteProjectMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by DeleteProject.
+// `metadata` field for the Operation returned by `DeleteProject`.
 type DeleteProjectMetadata struct {
 }
 
@@ -854,7 +854,7 @@ func (s *ListFoldersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MoveFolderMetadata: Metadata pertaining to the Folder move process.
+// MoveFolderMetadata: Metadata pertaining to the folder move process.
 type MoveFolderMetadata struct {
 	// DestinationParent: The resource name of the folder or organization to
 	// move the folder to.
@@ -1368,7 +1368,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // UndeleteFolderMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by UndeleteFolder.
+// `metadata` field for the `Operation` returned by `UndeleteFolder`.
 type UndeleteFolderMetadata struct {
 }
 
@@ -1382,7 +1382,7 @@ type UndeleteOrganizationMetadata struct {
 }
 
 // UndeleteProjectMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by UndeleteProject.
+// `metadata` field for the Operation returned by `UndeleteProject`.
 type UndeleteProjectMetadata struct {
 }
 
@@ -1476,7 +1476,7 @@ func (c *FoldersCreateCall) Header() http.Header {
 
 func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1581,7 +1581,7 @@ type FoldersDeleteCall struct {
 // `resourcemanager.folders.delete` permission on the identified folder.
 //
 // - name: the resource name of the Folder to be deleted. Must be of the
-// form `folders/{folder_id}`.
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1615,7 +1615,7 @@ func (c *FoldersDeleteCall) Header() http.Header {
 
 func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1718,7 +1718,7 @@ type FoldersGetCall struct {
 // `resourcemanager.folders.get` permission on the identified folder.
 //
 // - name: The resource name of the Folder to retrieve. Must be of the
-// form `folders/{folder_id}`.
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1762,7 +1762,7 @@ func (c *FoldersGetCall) Header() http.Header {
 
 func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1871,8 +1871,8 @@ type FoldersGetIamPolicyCall struct {
 // folder.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// requested. See the operation documentation for the appropriate value
-// for this field.
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1907,7 +1907,7 @@ func (c *FoldersGetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2094,7 +2094,7 @@ func (c *FoldersListCall) Header() http.Header {
 
 func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2241,7 +2241,7 @@ type FoldersMoveCall struct {
 // current and proposed new parent.
 //
 // - name: The resource name of the Folder to move. Must be of the form
-// folders/{folder_id}
+//   folders/{folder_id}.
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2276,7 +2276,7 @@ func (c *FoldersMoveCall) Header() http.Header {
 
 func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,7 +2395,7 @@ type FoldersPatchCall struct {
 // Status.details field.
 //
 // - name: Output only. The resource name of the Folder. Its format is
-// `folders/{folder_id}`, for example: "folders/1234".
+//   `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2437,7 +2437,7 @@ func (c *FoldersPatchCall) Header() http.Header {
 
 func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2585,7 +2585,7 @@ func (c *FoldersSearchCall) Header() http.Header {
 
 func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2706,8 +2706,8 @@ type FoldersSetIamPolicyCall struct {
 // folder.
 //
 // - resource: REQUIRED: The resource for which the policy is being
-// specified. See the operation documentation for the appropriate value
-// for this field.
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2742,7 +2742,7 @@ func (c *FoldersSetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2853,8 +2853,8 @@ type FoldersTestIamPermissionsCall struct {
 // for making this API call.
 //
 // - resource: REQUIRED: The resource for which the policy detail is
-// being requested. See the operation documentation for the appropriate
-// value for this field.
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2889,7 +2889,7 @@ func (c *FoldersTestIamPermissionsCall) Header() http.Header {
 
 func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3004,7 +3004,7 @@ type FoldersUndeleteCall struct {
 // folder.
 //
 // - name: The resource name of the Folder to undelete. Must be of the
-// form `folders/{folder_id}`.
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3039,7 +3039,7 @@ func (c *FoldersUndeleteCall) Header() http.Header {
 
 func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3192,7 +3192,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210330")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

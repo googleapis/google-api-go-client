@@ -155,6 +155,8 @@ type AccountsReportsGenerateCall struct {
 // Generate: Generate an AdSense report based on the report request sent
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
+//
+// - accountId: Account upon which to report.
 func (r *AccountsReportsService) Generate(ids []int64, currency string, accountId string, dimension []string) *AccountsReportsGenerateCall {
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	var ids_ []string

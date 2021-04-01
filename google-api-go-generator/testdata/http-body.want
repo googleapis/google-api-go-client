@@ -292,6 +292,9 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall struct {
 
 // CreateResource: Creates a FHIR resource.
 //
+//
+// - parent: The name of the FHIR store this resource belongs to.
+// - type: The type of the resource to create.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) CreateResource(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -425,6 +428,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirReadCall struct {
 // request cannot be mapped to a valid API method on a FHIR store, a
 // generic
 // GCP error might be returned instead.
+//
+// - name: The name of the resource to retrieve.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Read(name string) *ProjectsLocationsDatasetsFhirStoresFhirReadCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

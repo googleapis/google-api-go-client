@@ -890,6 +890,8 @@ type Container struct {
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
 
 	// Name: (Optional) Name of the container specified as a DNS_LABEL.
+	// Currently unused in Cloud Run. More info:
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
 	Name string `json:"name,omitempty"`
 
 	// Ports: (Optional) List of ports to expose from the container. Only a
@@ -941,9 +943,10 @@ type Container struct {
 	// File. Cannot be updated.
 	TerminationMessagePolicy string `json:"terminationMessagePolicy,omitempty"`
 
-	// VolumeMounts: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Pod volumes to mount into the container's
-	// filesystem.
+	// VolumeMounts: (Optional) Cloud Run fully managed: supported Volume to
+	// mount into the container's filesystem. Only supports
+	// SecretVolumeSources. Cloud Run for Anthos: supported Pod volumes to
+	// mount into the container's filesystem.
 	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
 	// WorkingDir: (Optional) Cloud Run fully managed: not supported Cloud
@@ -1211,7 +1214,8 @@ type EnvVar struct {
 	// exists or not. Defaults to "".
 	Value string `json:"value,omitempty"`
 
-	// ValueFrom: (Optional) Cloud Run fully managed: not supported Cloud
+	// ValueFrom: (Optional) Cloud Run fully managed: supported Source for
+	// the environment variable's value. Only supports secret_key_ref. Cloud
 	// Run for Anthos: supported Source for the environment variable's
 	// value. Cannot be used if value is not empty.
 	ValueFrom *EnvVarSource `json:"valueFrom,omitempty"`
@@ -1247,9 +1251,9 @@ type EnvVarSource struct {
 	// Cloud Run for Anthos: supported Selects a key of a ConfigMap.
 	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
 
-	// SecretKeyRef: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Selects a key of a secret in the pod's
-	// namespace
+	// SecretKeyRef: (Optional) Cloud Run fully managed: supported. Selects
+	// a key (version) of a secret in Secret Manager. Cloud Run for Anthos:
+	// supported. Selects a key of a secret in the pod's namespace.
 	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapKeyRef") to
@@ -1506,11 +1510,13 @@ func (s *HTTPHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// KeyToPath: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported Maps a string key to a path within a volume.
+// KeyToPath: Cloud Run fully managed: supported Cloud Run for Anthos:
+// supported Maps a string key to a path within a volume.
 type KeyToPath struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The key to project.
+	// Key: Cloud Run fully managed: supported The Cloud Secret Manager
+	// secret version. Can be 'latest' for the latest value or an integer
+	// for a specific version. Cloud Run for Anthos: supported The key to
+	// project.
 	Key string `json:"key,omitempty"`
 
 	// Mode: (Optional) Cloud Run fully managed: not supported Cloud Run for
@@ -1520,7 +1526,7 @@ type KeyToPath struct {
 	// file mode, like fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 
-	// Path: Cloud Run fully managed: not supported Cloud Run for Anthos:
+	// Path: Cloud Run fully managed: supported Cloud Run for Anthos:
 	// supported The relative path of the file to map the key to. May not be
 	// an absolute path. May not contain the path element '..'. May not
 	// start with the string '..'.
@@ -2093,14 +2099,15 @@ type ObjectMeta struct {
 	// garbage collected.
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
-	// ResourceVersion: (Optional) An opaque value that represents the
+	// ResourceVersion: Optional. An opaque value that represents the
 	// internal version of this object that can be used by clients to
 	// determine when objects have changed. May be used for optimistic
 	// concurrency, change detection, and the watch operation on a resource
 	// or set of resources. Clients must treat these values as opaque and
-	// passed unmodified back to the server. They may only be valid for a
-	// particular resource or set of resources. Populated by the system.
-	// Read-only. Value must be treated as opaque by clients. More info:
+	// passed unmodified back to the server or omit the value to disable
+	// conflict-detection. They may only be valid for a particular resource
+	// or set of resources. Populated by the system. Read-only. Value must
+	// be treated as opaque by clients or omitted. More info:
 	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
@@ -2861,9 +2868,10 @@ func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 // SecretKeySelector: Cloud Run fully managed: not supported Cloud Run
 // for Anthos: supported SecretKeySelector selects a key of a Secret.
 type SecretKeySelector struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The key of the secret to select from. Must be a valid
-	// secret key.
+	// Key: Cloud Run fully managed: supported A Cloud Secret Manager secret
+	// version. Must be 'latest' for the latest version or an integer for a
+	// specific version. Cloud Run for Anthos: supported The key of the
+	// secret to select from. Must be a valid secret key.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -2871,7 +2879,13 @@ type SecretKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
+	// Name: Cloud Run fully managed: supported The name of the secret in
+	// Cloud Secret Manager. By default, the secret is assumed to be in the
+	// same project. If the secret is in another project, you must define an
+	// alias. An alias definition has the form: :projects//secrets/. If
+	// multiple alias definitions are needed, they must be separated by
+	// commas. The alias definitions must be set on the
+	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
 	// supported The name of the secret in the pod's namespace to select
 	// from.
 	Name string `json:"name,omitempty"`
@@ -2904,10 +2918,12 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretVolumeSource: Cloud Run fully managed: not supported Cloud Run
-// for Anthos: supported The contents of the target Secret's Data field
-// will be presented in a volume as files using the keys in the Data
-// field as the file names.
+// SecretVolumeSource: Cloud Run fully managed: supported The secret's
+// value will be presented as the content of a file whose name is
+// defined in the item path. If no items are defined, the name of the
+// file is the secret_name. Cloud Run for Anthos: supported The contents
+// of the target Secret's Data field will be presented in a volume as
+// files using the keys in the Data field as the file names.
 type SecretVolumeSource struct {
 	// DefaultMode: (Optional) Cloud Run fully managed: not supported Cloud
 	// Run for Anthos: supported Mode bits to use on created files by
@@ -2920,14 +2936,18 @@ type SecretVolumeSource struct {
 	// "777" (a=rwx) should have the integer value 777.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported If unspecified, each key-value pair in the Data
-	// field of the referenced Secret will be projected into the volume as a
-	// file whose name is the key and content is the value. If specified,
-	// the listed keys will be projected into the specified paths, and
-	// unlisted keys will not be present. If a key is specified which is not
-	// present in the Secret, the volume setup will error unless it is
-	// marked optional.
+	// Items: (Optional) Cloud Run fully managed: supported If unspecified,
+	// the volume will expose a file whose name is the secret_name. If
+	// specified, the key will be used as the version to fetch from Cloud
+	// Secret Manager and the path will be the name of the file exposed in
+	// the volume. When items are defined, they must specify a key and a
+	// path. Cloud Run for Anthos: supported If unspecified, each key-value
+	// pair in the Data field of the referenced Secret will be projected
+	// into the volume as a file whose name is the key and content is the
+	// value. If specified, the listed keys will be projected into the
+	// specified paths, and unlisted keys will not be present. If a key is
+	// specified which is not present in the Secret, the volume setup will
+	// error unless it is marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
 	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
@@ -2935,9 +2955,14 @@ type SecretVolumeSource struct {
 	// defined.
 	Optional bool `json:"optional,omitempty"`
 
-	// SecretName: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Name of the secret in the container's namespace to
-	// use.
+	// SecretName: Cloud Run fully managed: supported The name of the secret
+	// in Cloud Secret Manager. By default, the secret is assumed to be in
+	// the same project. If the secret is in another project, you must
+	// define an alias. An alias definition has the form:
+	// :projects//secrets/. If multiple alias definitions are needed, they
+	// must be separated by commas. The alias definitions must be set on the
+	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
+	// supported Name of the secret in the container's namespace to use.
 	SecretName string `json:"secretName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
@@ -3554,11 +3579,11 @@ type Volume struct {
 	// Anthos: supported
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
+	// Name: Cloud Run fully managed: supported Cloud Run for Anthos:
 	// supported Volume's name.
 	Name string `json:"name,omitempty"`
 
-	// Secret: Cloud Run fully managed: not supported Cloud Run for Anthos:
+	// Secret: Cloud Run fully managed: supported Cloud Run for Anthos:
 	// supported
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
 
@@ -3589,17 +3614,17 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 // Anthos: supported VolumeMount describes a mounting of a Volume within
 // a container.
 type VolumeMount struct {
-	// MountPath: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Path within the container at which the volume
-	// should be mounted. Must not contain ':'.
+	// MountPath: Cloud Run fully managed: supported Cloud Run for Anthos:
+	// supported Path within the container at which the volume should be
+	// mounted. Must not contain ':'.
 	MountPath string `json:"mountPath,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
+	// Name: Cloud Run fully managed: supported Cloud Run for Anthos:
 	// supported This must match the Name of a Volume.
 	Name string `json:"name,omitempty"`
 
-	// ReadOnly: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Only true is accepted. Defaults to true.
+	// ReadOnly: (Optional) Cloud Run fully managed: supported Cloud Run for
+	// Anthos: supported Only true is accepted. Defaults to true.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// SubPath: (Optional) Cloud Run fully managed: not supported Cloud Run
@@ -3702,7 +3727,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3882,7 +3907,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4084,7 +4109,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4232,9 +4257,9 @@ func (r *NamespacesDomainmappingsService) Create(parent string, domainmapping *D
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *NamespacesDomainmappingsCreateCall) DryRun(dryRun string) *NamespacesDomainmappingsCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -4267,7 +4292,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4340,7 +4365,7 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4394,9 +4419,9 @@ func (c *NamespacesDomainmappingsDeleteCall) ApiVersion(apiVersion string) *Name
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *NamespacesDomainmappingsDeleteCall) DryRun(dryRun string) *NamespacesDomainmappingsDeleteCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -4446,7 +4471,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4519,7 +4544,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4611,7 +4636,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4813,7 +4838,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4965,9 +4990,9 @@ func (c *NamespacesRevisionsDeleteCall) ApiVersion(apiVersion string) *Namespace
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *NamespacesRevisionsDeleteCall) DryRun(dryRun string) *NamespacesRevisionsDeleteCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -5017,7 +5042,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5090,7 +5115,7 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 	//       "type": "string"
 	//     },
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5181,7 +5206,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5383,7 +5408,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5566,7 +5591,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5768,7 +5793,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5916,9 +5941,9 @@ func (r *NamespacesServicesService) Create(parent string, service *Service) *Nam
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *NamespacesServicesCreateCall) DryRun(dryRun string) *NamespacesServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -5951,7 +5976,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6024,7 +6049,7 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6079,9 +6104,9 @@ func (c *NamespacesServicesDeleteCall) ApiVersion(apiVersion string) *Namespaces
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *NamespacesServicesDeleteCall) DryRun(dryRun string) *NamespacesServicesDeleteCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -6131,7 +6156,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6204,7 +6229,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "type": "string"
 	//     },
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6295,7 +6320,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6497,7 +6522,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6648,9 +6673,9 @@ func (r *NamespacesServicesService) ReplaceService(name string, service *Service
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *NamespacesServicesReplaceServiceCall) DryRun(dryRun string) *NamespacesServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -6683,7 +6708,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6756,7 +6781,7 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6854,7 +6879,7 @@ func (c *ProjectsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7058,7 +7083,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7256,7 +7281,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7436,7 +7461,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7638,7 +7663,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7786,9 +7811,9 @@ func (r *ProjectsLocationsDomainmappingsService) Create(parent string, domainmap
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *ProjectsLocationsDomainmappingsCreateCall) DryRun(dryRun string) *ProjectsLocationsDomainmappingsCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -7821,7 +7846,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7894,7 +7919,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7948,9 +7973,9 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) ApiVersion(apiVersion string
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *ProjectsLocationsDomainmappingsDeleteCall) DryRun(dryRun string) *ProjectsLocationsDomainmappingsDeleteCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -8000,7 +8025,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8073,7 +8098,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8165,7 +8190,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8367,7 +8392,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8519,9 +8544,9 @@ func (c *ProjectsLocationsRevisionsDeleteCall) ApiVersion(apiVersion string) *Pr
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *ProjectsLocationsRevisionsDeleteCall) DryRun(dryRun string) *ProjectsLocationsRevisionsDeleteCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -8571,7 +8596,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8644,7 +8669,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8735,7 +8760,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8937,7 +8962,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9120,7 +9145,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9322,7 +9347,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9470,9 +9495,9 @@ func (r *ProjectsLocationsServicesService) Create(parent string, service *Servic
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *ProjectsLocationsServicesCreateCall) DryRun(dryRun string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -9505,7 +9530,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9578,7 +9603,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9633,9 +9658,9 @@ func (c *ProjectsLocationsServicesDeleteCall) ApiVersion(apiVersion string) *Pro
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *ProjectsLocationsServicesDeleteCall) DryRun(dryRun string) *ProjectsLocationsServicesDeleteCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -9685,7 +9710,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9758,7 +9783,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9849,7 +9874,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10013,7 +10038,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10221,7 +10246,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10372,9 +10397,9 @@ func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *
 	return c
 }
 
-// DryRun sets the optional parameter "dryRun": DryRun is a query string
-// parameter which indicates that the server should run validation
-// without persisting the request.
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
 func (c *ProjectsLocationsServicesReplaceServiceCall) DryRun(dryRun string) *ProjectsLocationsServicesReplaceServiceCall {
 	c.urlParams_.Set("dryRun", dryRun)
 	return c
@@ -10407,7 +10432,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10480,7 +10505,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "dryRun": {
-	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10557,7 +10582,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10703,7 +10728,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

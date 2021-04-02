@@ -4973,7 +4973,9 @@ type TimeSeries struct {
 	Points []*Point `json:"points,omitempty"`
 
 	// Resource: The associated monitored resource. Custom metrics can use
-	// only certain monitored resource types in their time series data.
+	// only certain monitored resource types in their time series data. For
+	// more information, see Monitored resources for custom metrics
+	// (https://cloud.google.com/monitoring/custom-metrics/creating-metrics#custom-metric-resources).
 	Resource *MonitoredResource `json:"resource,omitempty"`
 
 	// Unit: The units in which the metric value is reported. It is only
@@ -5630,9 +5632,11 @@ type FoldersTimeSeriesListCall struct {
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
 //
-// - name: The project, organization or folder on which to execute the
-//   request. The format is: projects/[PROJECT_ID_OR_NUMBER]
-//   organizations/[ORGANIZATION_ID] folders/[FOLDER_ID].
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name),
+//   organization or folder on which to execute the request. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//   folders/[FOLDER_ID].
 func (r *FoldersTimeSeriesService) List(name string) *FoldersTimeSeriesListCall {
 	c := &FoldersTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6223,7 +6227,7 @@ func (c *FoldersTimeSeriesListCall) Header() http.Header {
 
 func (c *FoldersTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6407,7 +6411,7 @@ func (c *FoldersTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTimeS
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name), organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -6587,9 +6591,11 @@ type OrganizationsTimeSeriesListCall struct {
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
 //
-// - name: The project, organization or folder on which to execute the
-//   request. The format is: projects/[PROJECT_ID_OR_NUMBER]
-//   organizations/[ORGANIZATION_ID] folders/[FOLDER_ID].
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name),
+//   organization or folder on which to execute the request. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//   folders/[FOLDER_ID].
 func (r *OrganizationsTimeSeriesService) List(name string) *OrganizationsTimeSeriesListCall {
 	c := &OrganizationsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7180,7 +7186,7 @@ func (c *OrganizationsTimeSeriesListCall) Header() http.Header {
 
 func (c *OrganizationsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7364,7 +7370,7 @@ func (c *OrganizationsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name), organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -7543,15 +7549,17 @@ type ProjectsAlertPoliciesCreateCall struct {
 
 // Create: Creates a new alerting policy.
 //
-// - name: The project in which to create the alerting policy. The
-//   format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field
-//   names the parent container in which the alerting policy will be
-//   written, not the name of the created policy. |name| must be a host
-//   project of a workspace, otherwise INVALID_ARGUMENT error will
-//   return. The alerting policy that is returned will have a name that
-//   contains a normalized representation of this name as a prefix but
-//   adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID],
-//   identifying the policy in the container.
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the alerting policy. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+//   parent container in which the alerting policy will be written, not
+//   the name of the created policy. |name| must be a host project of a
+//   workspace, otherwise INVALID_ARGUMENT error will return. The
+//   alerting policy that is returned will have a name that contains a
+//   normalized representation of this name as a prefix but adds a
+//   suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying
+//   the policy in the container.
 func (r *ProjectsAlertPoliciesService) Create(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesCreateCall {
 	c := &ProjectsAlertPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7586,7 +7594,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7659,7 +7667,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project in which to create the alerting policy. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. |name| must be a host project of a workspace, otherwise INVALID_ARGUMENT error will return. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the alerting policy. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. |name| must be a host project of a workspace, otherwise INVALID_ARGUMENT error will return. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7729,7 +7737,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7874,7 +7882,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7978,8 +7986,10 @@ type ProjectsAlertPoliciesListCall struct {
 
 // List: Lists the existing alerting policies for the workspace.
 //
-// - name: The project whose alert policies are to be listed. The format
-//   is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//   alert policies are to be listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
 //   parent container in which the alerting policies to be listed are
 //   stored. To retrieve a single alerting policy by name, use the
 //   GetAlertPolicy operation, instead.
@@ -8062,7 +8072,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8138,7 +8148,7 @@ func (c *ProjectsAlertPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project whose alert policies are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose alert policies are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8275,7 +8285,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8391,8 +8401,10 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 // series.This method is only for use by the Stackdriver Monitoring
 // Agent. Use projects.timeSeries.create instead.
 //
-// - name: The project in which to create the time series. The format
-//   is: projects/[PROJECT_ID_OR_NUMBER].
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the time series. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsCollectdTimeSeriesService) Create(name string, createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest) *ProjectsCollectdTimeSeriesCreateCall {
 	c := &ProjectsCollectdTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8427,7 +8439,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8500,7 +8512,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project in which to create the time series. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the time series. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8536,8 +8548,9 @@ type ProjectsGroupsCreateCall struct {
 
 // Create: Creates a new group.
 //
-// - name: The project in which to create the group. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) Create(name string, group *Group) *ProjectsGroupsCreateCall {
 	c := &ProjectsGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8579,7 +8592,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8652,7 +8665,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project in which to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8735,7 +8748,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8885,7 +8898,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8989,7 +9002,9 @@ type ProjectsGroupsListCall struct {
 
 // List: Lists the existing groups.
 //
-// - name: The project whose groups are to be listed. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//   groups are to be listed. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 	c := &ProjectsGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9083,7 +9098,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9169,7 +9184,7 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project whose groups are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose groups are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9281,7 +9296,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9483,7 +9498,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9638,8 +9653,10 @@ type ProjectsMetricDescriptorsCreateCall struct {
 // descriptors define custom metrics
 // (https://cloud.google.com/monitoring/custom-metrics).
 //
-// - name: The project on which to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is: 4
+//   projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsMetricDescriptorsService) Create(name string, metricdescriptor *MetricDescriptor) *ProjectsMetricDescriptorsCreateCall {
 	c := &ProjectsMetricDescriptorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9674,7 +9691,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9747,7 +9764,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: 4 projects/PROJECT_ID_OR_NUMBER",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9820,7 +9837,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9969,7 +9986,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10075,7 +10092,9 @@ type ProjectsMetricDescriptorsListCall struct {
 // List: Lists metric descriptors that match a filter. This method does
 // not require a Workspace.
 //
-// - name: The project on which to execute the request. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDescriptorsListCall {
 	c := &ProjectsMetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10149,7 +10168,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10225,7 +10244,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10339,7 +10358,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10445,7 +10464,9 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 // List: Lists monitored resource descriptors that match a filter. This
 // method does not require a Workspace.
 //
-// - name: The project on which to execute the request. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *ProjectsMonitoredResourceDescriptorsListCall {
 	c := &ProjectsMonitoredResourceDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10517,7 +10538,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10595,7 +10616,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10710,7 +10731,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10818,10 +10839,11 @@ type ProjectsNotificationChannelDescriptorsListCall struct {
 //
 // - name: The REST resource name of the parent from which to retrieve
 //   the notification channel descriptors. The expected syntax is:
-//   projects/[PROJECT_ID_OR_NUMBER] Note that this names the parent
-//   container in which to look for the descriptors; to retrieve a
-//   single descriptor by name, use the GetNotificationChannelDescriptor
-//   operation, instead.
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this names
+//   (https://cloud.google.com/monitoring/api/v3#project_name) the
+//   parent container in which to look for the descriptors; to retrieve
+//   a single descriptor by name, use the
+//   GetNotificationChannelDescriptor operation, instead.
 func (r *ProjectsNotificationChannelDescriptorsService) List(name string) *ProjectsNotificationChannelDescriptorsListCall {
 	c := &ProjectsNotificationChannelDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10881,7 +10903,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10954,7 +10976,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is: projects/[PROJECT_ID_OR_NUMBER] Note that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
+	//       "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is: projects/[PROJECT_ID_OR_NUMBER] Note that this names (https://cloud.google.com/monitoring/api/v3#project_name) the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -11021,7 +11043,9 @@ type ProjectsNotificationChannelsCreateCall struct {
 // notification endpoint such as an email address, SMS number, or
 // PagerDuty service.
 //
-// - name: The project on which to execute the request. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER] This names the container into which
 //   the channel will be written, this does not name the newly created
 //   channel. The resulting channel's name will have a normalized
@@ -11061,7 +11085,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11134,7 +11158,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container into which the channel will be written, this does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container into which the channel will be written, this does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -11213,7 +11237,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11368,7 +11392,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11530,7 +11554,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11641,7 +11665,9 @@ type ProjectsNotificationChannelsListCall struct {
 // List: Lists the notification channels that have been created for the
 // project.
 //
-// - name: The project on which to execute the request. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER] This names the container in which
 //   to look for the notification channels; it does not name a specific
 //   channel. To query a specific channel by REST resource name, use the
@@ -11726,7 +11752,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11802,7 +11828,7 @@ func (c *ProjectsNotificationChannelsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -11918,7 +11944,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12070,7 +12096,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12215,7 +12241,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12326,7 +12352,9 @@ type ProjectsTimeSeriesCreateCall struct {
 // series could not be written, a corresponding failure message is
 // included in the error response.
 //
-// - name: The project on which to execute the request. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Create(name string, createtimeseriesrequest *CreateTimeSeriesRequest) *ProjectsTimeSeriesCreateCall {
 	c := &ProjectsTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12362,7 +12390,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12435,7 +12463,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -12472,9 +12500,11 @@ type ProjectsTimeSeriesListCall struct {
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
 //
-// - name: The project, organization or folder on which to execute the
-//   request. The format is: projects/[PROJECT_ID_OR_NUMBER]
-//   organizations/[ORGANIZATION_ID] folders/[FOLDER_ID].
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name),
+//   organization or folder on which to execute the request. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//   folders/[FOLDER_ID].
 func (r *ProjectsTimeSeriesService) List(name string) *ProjectsTimeSeriesListCall {
 	c := &ProjectsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13065,7 +13095,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13249,7 +13279,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name), organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -13429,7 +13459,9 @@ type ProjectsTimeSeriesQueryCall struct {
 // Query: Queries time series using Monitoring Query Language. This
 // method does not require a Workspace.
 //
-// - name: The project on which to execute the request. The format is:
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
 //   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Query(name string, querytimeseriesrequest *QueryTimeSeriesRequest) *ProjectsTimeSeriesQueryCall {
 	c := &ProjectsTimeSeriesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13465,7 +13497,7 @@ func (c *ProjectsTimeSeriesQueryCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13538,7 +13570,7 @@ func (c *ProjectsTimeSeriesQueryCall) Do(opts ...googleapi.CallOption) (*QueryTi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -13595,8 +13627,10 @@ type ProjectsUptimeCheckConfigsCreateCall struct {
 
 // Create: Creates a new Uptime check configuration.
 //
-// - parent: The project in which to create the Uptime check. The format
-//   is: projects/[PROJECT_ID_OR_NUMBER].
+// - parent: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the Uptime check. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) Create(parent string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsCreateCall {
 	c := &ProjectsUptimeCheckConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13631,7 +13665,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13704,7 +13738,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project in which to create the Uptime check. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the Uptime check. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -13776,7 +13810,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13921,7 +13955,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14026,8 +14060,10 @@ type ProjectsUptimeCheckConfigsListCall struct {
 // List: Lists the existing valid Uptime check configurations for the
 // project (leaving out any invalid configurations).
 //
-// - parent: The project whose Uptime check configurations are listed.
-//   The format is: projects/[PROJECT_ID_OR_NUMBER].
+// - parent: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//   Uptime check configurations are listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeCheckConfigsListCall {
 	c := &ProjectsUptimeCheckConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14090,7 +14126,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14172,7 +14208,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project whose Uptime check configurations are listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose Uptime check configurations are listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -14280,7 +14316,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14394,8 +14430,9 @@ type ServicesCreateCall struct {
 
 // Create: Create a Service.
 //
-// - parent: Resource name of the parent workspace. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+// - parent: Resource name
+//   (https://cloud.google.com/monitoring/api/v3#project_name) of the
+//   parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) Create(parent string, service *MService) *ServicesCreateCall {
 	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14438,7 +14475,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14511,7 +14548,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*MService, error)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. Resource name (https://cloud.google.com/monitoring/api/v3#project_name) of the parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -14585,7 +14622,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14730,7 +14767,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14835,7 +14872,9 @@ type ServicesListCall struct {
 // List: List Services for this workspace.
 //
 // - parent: Resource name of the parent containing the listed services,
-//   either a project or a Monitoring Workspace. The formats are:
+//   either a project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) or a
+//   Monitoring Workspace. The formats are:
 //   projects/[PROJECT_ID_OR_NUMBER]
 //   workspaces/[HOST_PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) List(parent string) *ServicesListCall {
@@ -14917,7 +14956,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15004,7 +15043,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent containing the listed services, either a project or a Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER] workspaces/[HOST_PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. Resource name of the parent containing the listed services, either a project (https://cloud.google.com/monitoring/api/v3#project_name) or a Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER] workspaces/[HOST_PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -15101,7 +15140,7 @@ func (c *ServicesPatchCall) Header() http.Header {
 
 func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15260,7 +15299,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15409,7 +15448,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15577,7 +15616,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15788,7 +15827,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15989,7 +16028,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16163,7 +16202,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -83,7 +83,7 @@ const mtlsBasePath = "https://cloudtrace.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Write Trace data for a project or application
@@ -421,7 +421,7 @@ func (c *ProjectsPatchTracesCall) Header() http.Header {
 
 func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -575,7 +575,7 @@ func (c *ProjectsTracesGetCall) Header() http.Header {
 
 func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -820,7 +820,7 @@ func (c *ProjectsTracesListCall) Header() http.Header {
 
 func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

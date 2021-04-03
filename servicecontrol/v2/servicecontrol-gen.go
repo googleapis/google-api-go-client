@@ -83,7 +83,7 @@ const mtlsBasePath = "https://servicecontrol.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your Google Service Control data
@@ -602,8 +602,8 @@ type CheckResponse struct {
 	// `CheckRequest`.
 	Headers map[string]string `json:"headers,omitempty"`
 
-	// Status: An 'OK' status allows the operation. Any other status
-	// indicates a denial; google.rpc.Status.details () would contain
+	// Status: Operation is allowed when this field is not set. Any non-'OK'
+	// status indicates a denial; google.rpc.Status.details () would contain
 	// additional details about the denial.
 	Status *Status `json:"status,omitempty"`
 
@@ -1342,7 +1342,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210402")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1500,7 +1500,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210401")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210402")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

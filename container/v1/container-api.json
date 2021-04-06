@@ -2459,7 +2459,7 @@
       }
     }
   },
-  "revision": "20210312",
+  "revision": "20210325",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2735,6 +2735,10 @@
             "$ref": "StatusCondition"
           },
           "type": "array"
+        },
+        "confidentialNodes": {
+          "$ref": "ConfidentialNodes",
+          "description": "Configuration of Confidential Nodes"
         },
         "createTime": {
           "description": "[Output only] The time the cluster was created, in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.",
@@ -3118,6 +3122,17 @@
         "zone": {
           "description": "Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConfidentialNodes": {
+      "description": "ConfidentialNodes is configuration for the confidential nodes feature, which makes nodes run on confidential VMs.",
+      "id": "ConfidentialNodes",
+      "properties": {
+        "enabled": {
+          "description": "Whether Confidential Nodes feature is enabled for all nodes in this cluster.",
+          "type": "boolean"
         }
       },
       "type": "object"

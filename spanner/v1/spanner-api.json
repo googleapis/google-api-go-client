@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/spanner.admin": {
           "description": "Administer your Spanner databases"
@@ -1923,7 +1923,7 @@
       }
     }
   },
-  "revision": "20210318",
+  "revision": "20210325",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -3374,6 +3374,14 @@
             "This specifies that the request is high priority."
           ],
           "type": "string"
+        },
+        "requestTag": {
+          "description": "A per-request tag which can be applied to queries or reads, used for statistics collection. Both request_tag and transaction_tag can be specified for a read or query that belongs to a transaction. This field is ignored for requests where it's not applicable (e.g. CommitRequest). `request_tag` must be a valid identifier of the form: `a-zA-Z` between 2 and 64 characters in length",
+          "type": "string"
+        },
+        "transactionTag": {
+          "description": "A tag used for statistics collection about this transaction. Both request_tag and transaction_tag can be specified for a read or query that belongs to a transaction. The value of transaction_tag should be the same for all requests belonging to the same transaction. If this request doesn’t belong to any transaction, transaction_tag will be ignored. `transaction_tag` must be a valid identifier of the format: `a-zA-Z{0,49}`",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3840,6 +3848,13 @@
         "database": {
           "description": "The database being modified.",
           "type": "string"
+        },
+        "progress": {
+          "description": "The progress of the UpdateDatabaseDdl operations. Currently, only index creation statements will have a continuously updating progress. For non-index creation statements, `progress[i]` will have start time and end time populated with commit timestamp of operation, as well as a progress of 100% once the operation has completed. `progress[i]` is the operation progress for `statements[i]`.",
+          "items": {
+            "$ref": "OperationProgress"
+          },
+          "type": "array"
         },
         "statements": {
           "description": "For an update this list contains all the statements. For an individual statement, this list contains only that statement.",

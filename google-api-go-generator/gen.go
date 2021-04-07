@@ -966,6 +966,7 @@ var pointerFields = []fieldName{
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "StringValue"},
 	{api: "compute:alpha", schema: "ExternalVpnGateway", field: "Id"},
+	{api: "compute:alpha", schema: "MetadataItems", field: "Value"},
 	{api: "compute:alpha", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "compute:beta", schema: "ExternalVpnGateway", field: "Id"},
 	{api: "compute:beta", schema: "MetadataItems", field: "Value"},

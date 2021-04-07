@@ -161,18 +161,7 @@ type BiddersBiddingFunctionsService struct {
 // TURTLEDOVE simulation experiment bidding flow.
 type BiddingFunction struct {
 	// BiddingFunction: The raw Javascript source code of the bidding
-	// function. The function takes in a Javascript object, `inputs`, that
-	// contains the following named fields: `openrtbContextualBidRequest` OR
-	// `googleContextualBidRequest`, `customContextualSignal`,
-	// `interestBasedBidData`, `interestGroupData`, `recentImpressionAges`,
-	// and returns the bid price CPM (double). Example: ``` /* Returns a bid
-	// price CPM (double). * * @param {Object} inputs an object with the *
-	// following named fields: * - openrtbContextualBidRequest * OR
-	// googleContextualBidRequest * - customContextualSignal * -
-	// interestBasedBidData * - interestGroupData * - recentImpressionAges
-	// */ function biddingFunction(inputs) { ... return
-	// inputs.interestBasedBidData.cpm *
-	// inputs.customContextualSignals.placementMultiplier; } ```
+	// function.
 	BiddingFunction string `json:"biddingFunction,omitempty"`
 
 	// Name: The name of the bidding function that must follow the pattern:
@@ -296,7 +285,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210405")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -465,7 +454,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210405")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

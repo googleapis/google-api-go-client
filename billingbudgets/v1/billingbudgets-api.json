@@ -270,7 +270,7 @@
       }
     }
   },
-  "revision": "20210319",
+  "revision": "20210403",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1Budget": {
@@ -283,7 +283,7 @@
         },
         "budgetFilter": {
           "$ref": "GoogleCloudBillingBudgetsV1Filter",
-          "description": "Optional. Filters that define which resources are used to compute the actual spend against the budget."
+          "description": "Optional. Filters that define which resources are used to compute the actual spend against the budget amount, such as projects, services, and the budget's time period, as well as other filters."
         },
         "displayName": {
           "description": "User data for display name in UI. The name must be less than or equal to 60 characters.",
@@ -318,7 +318,7 @@
       "properties": {
         "lastPeriodAmount": {
           "$ref": "GoogleCloudBillingBudgetsV1LastPeriodAmount",
-          "description": "Use the last period's actual spend as the budget for the present period. Cannot be set in combination with Filter.custom_period."
+          "description": "Use the last period's actual spend as the budget for the present period. LastPeriodAmount can only be set when the budget's time period is a Filter.calendar_period. It cannot be set in combination with Filter.custom_period."
         },
         "specifiedAmount": {
           "$ref": "GoogleTypeMoney",
@@ -424,7 +424,7 @@
       "type": "object"
     },
     "GoogleCloudBillingBudgetsV1LastPeriodAmount": {
-      "description": "Describes a budget amount targeted to last period's spend. At this time, the amount is automatically 100% of last period's spend; that is, there are no other options yet. Future configuration will be described here (for example, configuring a percentage of last period's spend).",
+      "description": "Describes a budget amount targeted to the last Filter.calendar_period spend. At this time, the amount is automatically 100% of the last calendar period's spend; that is, there are no other options yet. Future configuration options will be described here (for example, configuring a percentage of last period's spend). LastPeriodAmount cannot be set for a budget configured with a Filter.custom_period.",
       "id": "GoogleCloudBillingBudgetsV1LastPeriodAmount",
       "properties": {},
       "type": "object"
@@ -487,7 +487,7 @@
           "enumDescriptions": [
             "Unspecified threshold basis.",
             "Use current spend as the basis for comparison against the threshold.",
-            "Use forecasted spend for the period as the basis for comparison against the threshold. Cannot be set in combination with Filter.custom_period."
+            "Use forecasted spend for the period as the basis for comparison against the threshold. FORECASTED_SPEND can only be set when the budget's time period is a Filter.calendar_period. It cannot be set in combination with Filter.custom_period."
           ],
           "type": "string"
         },

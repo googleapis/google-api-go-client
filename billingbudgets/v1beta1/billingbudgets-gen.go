@@ -245,7 +245,9 @@ type GoogleCloudBillingBudgetsV1beta1Budget struct {
 	Amount *GoogleCloudBillingBudgetsV1beta1BudgetAmount `json:"amount,omitempty"`
 
 	// BudgetFilter: Optional. Filters that define which resources are used
-	// to compute the actual spend against the budget.
+	// to compute the actual spend against the budget amount, such as
+	// projects, services, and the budget's time period, as well as other
+	// filters.
 	BudgetFilter *GoogleCloudBillingBudgetsV1beta1Filter `json:"budgetFilter,omitempty"`
 
 	// DisplayName: User data for display name in UI. Validation: <= 60
@@ -299,8 +301,9 @@ func (s *GoogleCloudBillingBudgetsV1beta1Budget) MarshalJSON() ([]byte, error) {
 // each usage period.
 type GoogleCloudBillingBudgetsV1beta1BudgetAmount struct {
 	// LastPeriodAmount: Use the last period's actual spend as the budget
-	// for the present period. Cannot be set in combination with
-	// Filter.custom_period.
+	// for the present period. LastPeriodAmount can only be set when the
+	// budget's time period is a Filter.calendar_period. It cannot be set in
+	// combination with Filter.custom_period.
 	LastPeriodAmount *GoogleCloudBillingBudgetsV1beta1LastPeriodAmount `json:"lastPeriodAmount,omitempty"`
 
 	// SpecifiedAmount: A specified amount to use as the budget.
@@ -499,10 +502,12 @@ func (s *GoogleCloudBillingBudgetsV1beta1Filter) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudBillingBudgetsV1beta1LastPeriodAmount: Describes a budget
-// amount targeted to last period's spend. At this time, the amount is
-// automatically 100% of last period's spend; that is, there are no
-// other options yet. Future configuration will be described here (for
-// example, configuring a percentage of last period's spend).
+// amount targeted to the last Filter.calendar_period spend. At this
+// time, the amount is automatically 100% of the last calendar period's
+// spend; that is, there are no other options yet. Future configuration
+// options will be described here (for example, configuring a percentage
+// of last period's spend). LastPeriodAmount cannot be set for a budget
+// configured with a Filter.custom_period.
 type GoogleCloudBillingBudgetsV1beta1LastPeriodAmount struct {
 }
 
@@ -561,8 +566,9 @@ type GoogleCloudBillingBudgetsV1beta1ThresholdRule struct {
 	//   "CURRENT_SPEND" - Use current spend as the basis for comparison
 	// against the threshold.
 	//   "FORECASTED_SPEND" - Use forecasted spend for the period as the
-	// basis for comparison against the threshold. Cannot be set in
-	// combination with Filter.custom_period.
+	// basis for comparison against the threshold. FORECASTED_SPEND can only
+	// be set when the budget's time period is a Filter.calendar_period. It
+	// cannot be set in combination with Filter.custom_period.
 	SpendBasis string `json:"spendBasis,omitempty"`
 
 	// ThresholdPercent: Required. Send an alert when this threshold is
@@ -794,7 +800,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -937,7 +943,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1085,7 +1091,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1254,7 +1260,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1431,7 +1437,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210406")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -342,7 +342,7 @@
       }
     }
   },
-  "revision": "20210323",
+  "revision": "20210331",
   "rootUrl": "https://doubleclickbidmanager.googleapis.com/",
   "schemas": {
     "ChannelGrouping": {
@@ -3491,9 +3491,11 @@
             "WEEKLY",
             "SEMI_MONTHLY",
             "MONTHLY",
-            "QUARTERLY"
+            "QUARTERLY",
+            "YEARLY"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

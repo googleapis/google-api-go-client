@@ -670,6 +670,73 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConditionContext: The IAM conditions context.
+type ConditionContext struct {
+	// AccessTime: The hypothetical access timestamp to evaluate IAM
+	// conditions. Note that this value must not be earlier than the current
+	// time; otherwise, an INVALID_ARGUMENT error will be returned.
+	AccessTime string `json:"accessTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConditionContext) MarshalJSON() ([]byte, error) {
+	type NoMethod ConditionContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConditionEvaluation: The Condition evaluation.
+type ConditionEvaluation struct {
+	// EvaluationValue: The evaluation result.
+	//
+	// Possible values:
+	//   "EVALUATION_VALUE_UNSPECIFIED" - Reserved for future use.
+	//   "TRUE" - The evaluation result is `true`.
+	//   "FALSE" - The evaluation result is `false`.
+	//   "CONDITIONAL" - The evaluation result is `conditional` when the
+	// condition expression contains variables that are either missing input
+	// values or have not been supported by Analyzer yet.
+	EvaluationValue string `json:"evaluationValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EvaluationValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EvaluationValue") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConditionEvaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod ConditionEvaluation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateFeedRequest: Create asset feed request.
 type CreateFeedRequest struct {
 	// Feed: Required. The feed details. The field `name` must be empty and
@@ -1094,6 +1161,10 @@ type GoogleCloudAssetV1AccessControlList struct {
 	// The access_selector, if it is specified in request; - Otherwise,
 	// access specifiers reachable from the policy binding's role.
 	Accesses []*GoogleCloudAssetV1Access `json:"accesses,omitempty"`
+
+	// ConditionEvaluation: Condition evaluation for this AccessControlList,
+	// if there is a condition defined in the above IAM policy binding.
+	ConditionEvaluation *ConditionEvaluation `json:"conditionEvaluation,omitempty"`
 
 	// ResourceEdges: Resource edges of the graph starting from the policy
 	// attached resource to any descendant resources. The Edge.source_node
@@ -2962,6 +3033,10 @@ type IamPolicyAnalysisQuery struct {
 	// analysis. This is optional.
 	AccessSelector *AccessSelector `json:"accessSelector,omitempty"`
 
+	// ConditionContext: Optional. The hypothetical context for IAM
+	// conditions evaluation.
+	ConditionContext *ConditionContext `json:"conditionContext,omitempty"`
+
 	// IdentitySelector: Optional. Specifies an identity for analysis.
 	IdentitySelector *IdentitySelector `json:"identitySelector,omitempty"`
 
@@ -4693,7 +4768,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4836,7 +4911,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4982,7 +5057,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5131,7 +5206,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5274,7 +5349,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5427,7 +5502,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5557,6 +5632,16 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorPermissions(analysis
 // "analysisQuery.accessSelector.roles": The roles to appear in result.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysisQueryAccessSelectorRoles ...string) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.SetMulti("analysisQuery.accessSelector.roles", append([]string{}, analysisQueryAccessSelectorRoles...))
+	return c
+}
+
+// AnalysisQueryConditionContextAccessTime sets the optional parameter
+// "analysisQuery.conditionContext.accessTime": The hypothetical access
+// timestamp to evaluate IAM conditions. Note that this value must not
+// be earlier than the current time; otherwise, an INVALID_ARGUMENT
+// error will be returned.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryConditionContextAccessTime(analysisQueryConditionContextAccessTime string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.conditionContext.accessTime", analysisQueryConditionContextAccessTime)
 	return c
 }
 
@@ -5727,7 +5812,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5807,6 +5892,12 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "description": "Optional. The roles to appear in result.",
 	//       "location": "query",
 	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "analysisQuery.conditionContext.accessTime": {
+	//       "description": "The hypothetical access timestamp to evaluate IAM conditions. Note that this value must not be earlier than the current time; otherwise, an INVALID_ARGUMENT error will be returned.",
+	//       "format": "google-datetime",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.identitySelector.identity": {
@@ -5939,7 +6030,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6143,7 +6234,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6332,7 +6423,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6553,7 +6644,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6834,7 +6925,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210407")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

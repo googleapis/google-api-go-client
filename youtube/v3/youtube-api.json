@@ -2723,7 +2723,7 @@
                 "3d"
               ],
               "enumDescriptions": [
-                "",
+                "Include both 3D and non-3D videos in returned results. This is the default value.",
                 "Restrict search results to exclude 3D videos.",
                 "Restrict search results to only include 3D videos."
               ],
@@ -3764,7 +3764,7 @@
       }
     }
   },
-  "revision": "20210406",
+  "revision": "20210407",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -7915,12 +7915,18 @@
           "type": "string"
         },
         "scheduledEndTime": {
-          "description": "The date and time that the broadcast is scheduled to start.",
+          "description": "The date and time that the broadcast is scheduled to end.",
           "format": "date-time",
           "type": "string"
         },
         "scheduledStartTime": {
-          "description": "The date and time that the broadcast is scheduled to end.",
+          "annotations": {
+            "required": [
+              "youtube.liveBroadcasts.insert",
+              "youtube.liveBroadcasts.update"
+            ]
+          },
+          "description": "The date and time that the broadcast is scheduled to start.",
           "format": "date-time",
           "type": "string"
         },

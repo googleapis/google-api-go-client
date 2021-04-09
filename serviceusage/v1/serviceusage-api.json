@@ -426,7 +426,7 @@
       }
     }
   },
-  "revision": "20210326",
+  "revision": "20210407",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "AdminQuotaPolicy": {
@@ -860,6 +860,12 @@
       },
       "type": "object"
     },
+    "CreateAdminQuotaPolicyMetadata": {
+      "description": "Metadata message that provides information such as progress, partial failures, and similar information on each GetOperation call of LRO returned by CreateAdminQuotaPolicy.",
+      "id": "CreateAdminQuotaPolicyMetadata",
+      "properties": {},
+      "type": "object"
+    },
     "CustomError": {
       "description": "Customize service error responses. For example, list any service specific protobuf types that can appear in error detail lists of error responses. Example: custom_error: types: - google.foo.v1.CustomError - google.foo.v1.AnotherError",
       "id": "CustomError",
@@ -909,6 +915,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "DeleteAdminQuotaPolicyMetadata": {
+      "description": "Metadata message that provides information such as progress, partial failures, and similar information on each GetOperation call of LRO returned by DeleteAdminQuotaPolicy.",
+      "id": "DeleteAdminQuotaPolicyMetadata",
+      "properties": {},
       "type": "object"
     },
     "DisableServiceRequest": {
@@ -1235,6 +1247,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GetServiceIdentityMetadata": {
+      "description": "Metadata for the `GetServiceIdentity` method.",
+      "id": "GetServiceIdentityMetadata",
+      "properties": {},
       "type": "object"
     },
     "GetServiceIdentityResponse": {
@@ -1609,6 +1627,12 @@
       },
       "type": "object"
     },
+    "ImportAdminOverridesMetadata": {
+      "description": "Metadata message that provides information such as progress, partial failures, and similar information on each GetOperation call of LRO returned by ImportAdminOverrides.",
+      "id": "ImportAdminOverridesMetadata",
+      "properties": {},
+      "type": "object"
+    },
     "ImportAdminOverridesResponse": {
       "description": "Response message for ImportAdminOverrides",
       "id": "ImportAdminOverridesResponse",
@@ -1623,6 +1647,12 @@
       },
       "type": "object"
     },
+    "ImportAdminQuotaPoliciesMetadata": {
+      "description": "Metadata message that provides information such as progress, partial failures, and similar information on each GetOperation call of LRO returned by ImportAdminQuotaPolicies.",
+      "id": "ImportAdminQuotaPoliciesMetadata",
+      "properties": {},
+      "type": "object"
+    },
     "ImportAdminQuotaPoliciesResponse": {
       "description": "Response message for ImportAdminQuotaPolicies",
       "id": "ImportAdminQuotaPoliciesResponse",
@@ -1635,6 +1665,12 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "ImportConsumerOverridesMetadata": {
+      "description": "Metadata message that provides information such as progress, partial failures, and similar information on each GetOperation call of LRO returned by ImportConsumerOverrides.",
+      "id": "ImportConsumerOverridesMetadata",
+      "properties": {},
       "type": "object"
     },
     "ImportConsumerOverridesResponse": {
@@ -2500,6 +2536,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "UpdateAdminQuotaPolicyMetadata": {
+      "description": "Metadata message that provides information such as progress, partial failures, and similar information on each GetOperation call of LRO returned by UpdateAdminQuotaPolicy.",
+      "id": "UpdateAdminQuotaPolicyMetadata",
+      "properties": {},
       "type": "object"
     },
     "Usage": {

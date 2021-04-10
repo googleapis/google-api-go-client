@@ -2264,7 +2264,7 @@ type Request struct {
 	// Method: The HTTP request method, such as `GET`, `POST`.
 	Method string `json:"method,omitempty"`
 
-	// Path: The HTTP URL path.
+	// Path: The HTTP URL path, excluding the query parameters.
 	Path string `json:"path,omitempty"`
 
 	// Protocol: The network protocol used with the request, such as
@@ -2920,7 +2920,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,7 +3078,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3234,7 +3234,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210408")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

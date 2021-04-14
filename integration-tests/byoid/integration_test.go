@@ -40,6 +40,8 @@ import (
 	"os"
 	"testing"
 	"time"
+
+	"google.golang.org/api/dns/v1"
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
 )
@@ -49,6 +51,7 @@ const (
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
 	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
 )
+
 var (
 	oidcAudience string
 	oidcToken    string
@@ -72,7 +75,6 @@ func TestMain(m *testing.M) {
 	if oidcAudience == "" {
 		log.Fatalf("Please set %s to the OIDC Audience", envAudienceOIDC)
 	}
-
 	var err error
 
 	clientID, err = getClientID(keyFileName)
@@ -211,26 +213,22 @@ func TestFileBasedCredentials(t *testing.T) {
 // Tests to make sure URL based external credentials work properly.
 func TestURLBasedCredentials(t *testing.T) {
 	//Set up a server to return a token
-	 ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		 if r.Method != "GET" {
-			 t.Errorf("Unexpected request method, %v is found", r.Method)
-		 }
-		 w.Write([]byte(oidcToken))
-	 }))
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" {
+			t.Errorf("Unexpected request method, %v is found", r.Method)
+		}
+		w.Write([]byte(oidcToken))
+	}))
 
-	 testBYOID(t, config{
-	 	Type:			"external_account",
-	 	Audience:		oidcAudience,
-	 	SubjectTokenType:		"urn:ietf:params:oauth:token-type:jwt",
-	 	TokenURL:		"https://sts.googleapis.com/v1beta/token",
-	 	ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
-	 	CredentialSource: credentialSource{
-	 		URL: ts.URL,
+	testBYOID(t, config{
+		Type:                           "external_account",
+		Audience:                       oidcAudience,
+		SubjectTokenType:               "urn:ietf:params:oauth:token-type:jwt",
+		TokenURL:                       "https://sts.googleapis.com/v1beta/token",
+		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
+		CredentialSource: credentialSource{
+			URL: ts.URL,
 		},
-	 })
+	})
 }
 
-// now aliases time.Now for testing
-var now = func() time.Time {
-	return time.Now().UTC()
-}

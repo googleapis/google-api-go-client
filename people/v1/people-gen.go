@@ -102,7 +102,7 @@ const (
 	// See and download your exact date of birth
 	UserBirthdayReadScope = "https://www.googleapis.com/auth/user.birthday.read"
 
-	// View your email addresses
+	// See and download all of your Google Account email addresses
 	UserEmailsReadScope = "https://www.googleapis.com/auth/user.emails.read"
 
 	// See your gender
@@ -114,7 +114,7 @@ const (
 	// See and download your personal phone numbers
 	UserPhonenumbersReadScope = "https://www.googleapis.com/auth/user.phonenumbers.read"
 
-	// View your email address
+	// See your primary Google Account email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
 	// See your personal info, including any personal info you've made
@@ -350,6 +350,124 @@ func (s *AgeRangeType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateContactsRequest: A request to create a batch of contacts.
+type BatchCreateContactsRequest struct {
+	// Contacts: Required. The contact to create. Allows up to 200 contacts
+	// in a single request.
+	Contacts []*ContactToCreate `json:"contacts,omitempty"`
+
+	// ReadMask: Required. A field mask to restrict which fields on each
+	// person are returned in the response. Multiple fields can be specified
+	// by separating them with commas. If read mask is left empty, the
+	// post-mutate-get is skipped and no data will be returned in the
+	// response. Valid values are: * addresses * ageRanges * biographies *
+	// birthdays * calendarUrls * clientData * coverPhotos * emailAddresses
+	// * events * externalIds * genders * imClients * interests * locales *
+	// locations * memberships * metadata * miscKeywords * names * nicknames
+	// * occupations * organizations * phoneNumbers * photos * relations *
+	// sipAddresses * skills * urls * userDefined
+	ReadMask string `json:"readMask,omitempty"`
+
+	// Sources: Optional. A mask of what source types to return in the post
+	// mutate read. Defaults to READ_SOURCE_TYPE_CONTACT and
+	// READ_SOURCE_TYPE_PROFILE if not set.
+	//
+	// Possible values:
+	//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+	//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+	// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
+	//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+	// SourceType.DOMAIN_CONTACT.
+	Sources []string `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contacts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateContactsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateContactsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreateContactsResponse: The response to a request to create a
+// batch of contacts.
+type BatchCreateContactsResponse struct {
+	// CreatedPeople: The contacts that were created, unless the request
+	// `read_mask` is empty.
+	CreatedPeople []*PersonResponse `json:"createdPeople,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreatedPeople") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedPeople") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateContactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateContactsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteContactsRequest: A request to delete a batch of existing
+// contacts.
+type BatchDeleteContactsRequest struct {
+	// ResourceNames: Required. The resource names of the contact to delete.
+	// It's repeatable. Allows up to 500 resource names in a single request.
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteContactsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteContactsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetContactGroupsResponse: The response to a batch get contact
 // groups request.
 type BatchGetContactGroupsResponse struct {
@@ -380,6 +498,104 @@ type BatchGetContactGroupsResponse struct {
 
 func (s *BatchGetContactGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetContactGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateContactsRequest: A request to update a batch of contacts.
+type BatchUpdateContactsRequest struct {
+	// Contacts: Required. A map of resource names to the person data to be
+	// updated. Allows up to 200 contacts in a single request.
+	Contacts map[string]Person `json:"contacts,omitempty"`
+
+	// ReadMask: Required. A field mask to restrict which fields on each
+	// person are returned. Multiple fields can be specified by separating
+	// them with commas. If read mask is left empty, the post-mutate-get is
+	// skipped and no data will be returned in the response. Valid values
+	// are: * addresses * ageRanges * biographies * birthdays * calendarUrls
+	// * clientData * coverPhotos * emailAddresses * events * externalIds *
+	// genders * imClients * interests * locales * locations * memberships *
+	// metadata * miscKeywords * names * nicknames * occupations *
+	// organizations * phoneNumbers * photos * relations * sipAddresses *
+	// skills * urls * userDefined
+	ReadMask string `json:"readMask,omitempty"`
+
+	// Sources: Optional. A mask of what source types to return. Defaults to
+	// READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.
+	//
+	// Possible values:
+	//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+	//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+	// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
+	//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+	// SourceType.DOMAIN_CONTACT.
+	Sources []string `json:"sources,omitempty"`
+
+	// UpdateMask: Required. A field mask to restrict which fields on the
+	// person are updated. Multiple fields can be specified by separating
+	// them with commas. All specified fields will be replaced, or cleared
+	// if left empty for each person. Valid values are: * addresses *
+	// biographies * birthdays * calendarUrls * clientData * emailAddresses
+	// * events * externalIds * genders * imClients * interests * locales *
+	// locations * memberships * miscKeywords * names * nicknames *
+	// occupations * organizations * phoneNumbers * relations * sipAddresses
+	// * urls * userDefined
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contacts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateContactsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateContactsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateContactsResponse: The response to a request to create a
+// batch of contacts.
+type BatchUpdateContactsResponse struct {
+	// UpdateResult: A map of resource names to the contacts that were
+	// updated, unless the request `read_mask` is empty.
+	UpdateResult map[string]PersonResponse `json:"updateResult,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "UpdateResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UpdateResult") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateContactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateContactsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -745,6 +961,36 @@ func (s *ContactGroupResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContactToCreate: A wrapper that contains the person data to populate
+// a newly created source.
+type ContactToCreate struct {
+	// ContactPerson: Required. The person data to populate a newly created
+	// source.
+	ContactPerson *Person `json:"contactPerson,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContactPerson") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContactPerson") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContactToCreate) MarshalJSON() ([]byte, error) {
+	type NoMethod ContactToCreate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CopyOtherContactToMyContactsGroupRequest: A request to copy an "Other
 // contact" to my contacts group.
 type CopyOtherContactToMyContactsGroupRequest struct {
@@ -917,7 +1163,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeleteContactPhotoResponse: The response for deleteing a contact's
+// DeleteContactPhotoResponse: The response for deleting a contact's
 // photo.
 type DeleteContactPhotoResponse struct {
 	// Person: The updated person, if person_fields is set in the
@@ -1262,7 +1508,7 @@ func (s *GetPeopleResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GroupClientData: Arbitrary client data that is populated by clients.
-// Duplicate keys and values are allowed. LINT.IfChange(GroupClientData)
+// Duplicate keys and values are allowed.
 type GroupClientData struct {
 	// Key: The client specified key of the client data.
 	Key string `json:"key,omitempty"`
@@ -2641,6 +2887,67 @@ func (s *SearchDirectoryPeopleResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SearchResponse: The response to a search request for the
+// authenticated user, given a query.
+type SearchResponse struct {
+	// Results: The results of the request.
+	Results []*SearchResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchResult: A result of a search query.
+type SearchResult struct {
+	// Person: The matched Person.
+	Person *Person `json:"person,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Person") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Person") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SipAddress: A person's SIP address. Session Initial Protocol
 // addresses are used for VoIP communications to make voice or video
 // calls over the internet.
@@ -3137,7 +3444,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3277,7 +3584,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3370,6 +3677,8 @@ type ContactGroupsDeleteCall struct {
 
 // Delete: Delete an existing contact group owned by the authenticated
 // user by specifying a contact group resource name.
+//
+// - resourceName: The resource name of the contact group to delete.
 func (r *ContactGroupsService) Delete(resourceName string) *ContactGroupsDeleteCall {
 	c := &ContactGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3410,7 +3719,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3514,6 +3823,8 @@ type ContactGroupsGetCall struct {
 
 // Get: Get a specific contact group owned by the authenticated user by
 // specifying a contact group resource name.
+//
+// - resourceName: The resource name of the contact group to get.
 func (r *ContactGroupsService) Get(resourceName string) *ContactGroupsGetCall {
 	c := &ContactGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3575,7 +3886,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3766,7 +4077,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3900,6 +4211,10 @@ type ContactGroupsUpdateCall struct {
 
 // Update: Update the name of an existing contact group owned by the
 // authenticated user.
+//
+// - resourceName: The resource name for the contact group, assigned by
+//   the server. An ASCII string, in the form of
+//   `contactGroups/{contact_group_id}`.
 func (r *ContactGroupsService) Update(resourceName string, updatecontactgrouprequest *UpdateContactGroupRequest) *ContactGroupsUpdateCall {
 	c := &ContactGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3934,7 +4249,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4044,6 +4359,8 @@ type ContactGroupsMembersModifyCall struct {
 // members added are `contactGroups/myContacts` and
 // `contactGroups/starred`. Other system contact groups are deprecated
 // and can only have contacts removed.
+//
+// - resourceName: The resource name of the contact group to modify.
 func (r *ContactGroupsMembersService) Modify(resourceName string, modifycontactgroupmembersrequest *ModifyContactGroupMembersRequest) *ContactGroupsMembersModifyCall {
 	c := &ContactGroupsMembersModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4078,7 +4395,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4186,6 +4503,8 @@ type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 
 // CopyOtherContactToMyContactsGroup: Copies an "Other contact" to a new
 // contact in the user's "myContacts" group
+//
+// - resourceName: The resource name of the "Other contact" to copy.
 func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
 	c := &OtherContactsCopyOtherContactToMyContactsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4220,7 +4539,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4418,7 +4737,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4543,6 +4862,562 @@ func (c *OtherContactsListCall) Pages(ctx context.Context, f func(*ListOtherCont
 	}
 }
 
+// method id "people.otherContacts.search":
+
+type OtherContactsSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Provides a list of contacts in the authenticated user's other
+// contacts that matches the search query. The query matches on a
+// contact's `names`, `emailAddresses`, and `phoneNumbers` fields that
+// are from the OTHER_CONTACT source.
+func (r *OtherContactsService) Search() *OtherContactsSearchCall {
+	c := &OtherContactsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// results to return. Defaults to 10 if field is not set, or set to 0.
+func (c *OtherContactsSearchCall) PageSize(pageSize int64) *OtherContactsSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// Query sets the optional parameter "query": Required. The plain-text
+// query for the request. The query is used to match prefix phrases of
+// the fields on a person. For example, a person with name "foo name"
+// matches queries such as "f", "fo", "foo", "foo n", "nam", etc., but
+// not "oo n".
+func (c *OtherContactsSearchCall) Query(query string) *OtherContactsSearchCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. A field
+// mask to restrict which fields on each person are returned. Multiple
+// fields can be specified by separating them with commas. Valid values
+// are: * emailAddresses * names * phoneNumbers
+func (c *OtherContactsSearchCall) ReadMask(readMask string) *OtherContactsSearchCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OtherContactsSearchCall) Fields(s ...googleapi.Field) *OtherContactsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OtherContactsSearchCall) IfNoneMatch(entityTag string) *OtherContactsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OtherContactsSearchCall) Context(ctx context.Context) *OtherContactsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OtherContactsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/otherContacts:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.otherContacts.search" call.
+// Exactly one of *SearchResponse or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SearchResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OtherContactsSearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provides a list of contacts in the authenticated user's other contacts that matches the search query. The query matches on a contact's `names`, `emailAddresses`, and `phoneNumbers` fields that are from the OTHER_CONTACT source.",
+	//   "flatPath": "v1/otherContacts:search",
+	//   "httpMethod": "GET",
+	//   "id": "people.otherContacts.search",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "query": {
+	//       "description": "Required. The plain-text query for the request. The query is used to match prefix phrases of the fields on a person. For example, a person with name \"foo name\" matches queries such as \"f\", \"fo\", \"foo\", \"foo n\", \"nam\", etc., but not \"oo n\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/otherContacts:search",
+	//   "response": {
+	//     "$ref": "SearchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/contacts.other.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "people.people.batchCreateContacts":
+
+type PeopleBatchCreateContactsCall struct {
+	s                          *Service
+	batchcreatecontactsrequest *BatchCreateContactsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchCreateContacts: Create a batch of new contacts and return the
+// PersonResponses for the newly created contacts. Limited to 10
+// parallel requests per user.
+func (r *PeopleService) BatchCreateContacts(batchcreatecontactsrequest *BatchCreateContactsRequest) *PeopleBatchCreateContactsCall {
+	c := &PeopleBatchCreateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.batchcreatecontactsrequest = batchcreatecontactsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PeopleBatchCreateContactsCall) Fields(s ...googleapi.Field) *PeopleBatchCreateContactsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PeopleBatchCreateContactsCall) Context(ctx context.Context) *PeopleBatchCreateContactsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PeopleBatchCreateContactsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreatecontactsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:batchCreateContacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.people.batchCreateContacts" call.
+// Exactly one of *BatchCreateContactsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchCreateContactsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PeopleBatchCreateContactsCall) Do(opts ...googleapi.CallOption) (*BatchCreateContactsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchCreateContactsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a batch of new contacts and return the PersonResponses for the newly created contacts. Limited to 10 parallel requests per user.",
+	//   "flatPath": "v1/people:batchCreateContacts",
+	//   "httpMethod": "POST",
+	//   "id": "people.people.batchCreateContacts",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/people:batchCreateContacts",
+	//   "request": {
+	//     "$ref": "BatchCreateContactsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchCreateContactsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/contacts"
+	//   ]
+	// }
+
+}
+
+// method id "people.people.batchDeleteContacts":
+
+type PeopleBatchDeleteContactsCall struct {
+	s                          *Service
+	batchdeletecontactsrequest *BatchDeleteContactsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchDeleteContacts: Delete a batch of contacts. Any non-contact data
+// will not be deleted. Limited to 10 parallel requests per user.
+func (r *PeopleService) BatchDeleteContacts(batchdeletecontactsrequest *BatchDeleteContactsRequest) *PeopleBatchDeleteContactsCall {
+	c := &PeopleBatchDeleteContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.batchdeletecontactsrequest = batchdeletecontactsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PeopleBatchDeleteContactsCall) Fields(s ...googleapi.Field) *PeopleBatchDeleteContactsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PeopleBatchDeleteContactsCall) Context(ctx context.Context) *PeopleBatchDeleteContactsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeletecontactsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:batchDeleteContacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.people.batchDeleteContacts" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PeopleBatchDeleteContactsCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a batch of contacts. Any non-contact data will not be deleted. Limited to 10 parallel requests per user.",
+	//   "flatPath": "v1/people:batchDeleteContacts",
+	//   "httpMethod": "POST",
+	//   "id": "people.people.batchDeleteContacts",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/people:batchDeleteContacts",
+	//   "request": {
+	//     "$ref": "BatchDeleteContactsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/contacts"
+	//   ]
+	// }
+
+}
+
+// method id "people.people.batchUpdateContacts":
+
+type PeopleBatchUpdateContactsCall struct {
+	s                          *Service
+	batchupdatecontactsrequest *BatchUpdateContactsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchUpdateContacts: Update a batch of contacts and return a map of
+// resource names to PersonResponses for the updated contacts. Limited
+// to 10 parallel requests per user.
+func (r *PeopleService) BatchUpdateContacts(batchupdatecontactsrequest *BatchUpdateContactsRequest) *PeopleBatchUpdateContactsCall {
+	c := &PeopleBatchUpdateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.batchupdatecontactsrequest = batchupdatecontactsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PeopleBatchUpdateContactsCall) Fields(s ...googleapi.Field) *PeopleBatchUpdateContactsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PeopleBatchUpdateContactsCall) Context(ctx context.Context) *PeopleBatchUpdateContactsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatecontactsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:batchUpdateContacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.people.batchUpdateContacts" call.
+// Exactly one of *BatchUpdateContactsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdateContactsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PeopleBatchUpdateContactsCall) Do(opts ...googleapi.CallOption) (*BatchUpdateContactsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchUpdateContactsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a batch of contacts and return a map of resource names to PersonResponses for the updated contacts. Limited to 10 parallel requests per user.",
+	//   "flatPath": "v1/people:batchUpdateContacts",
+	//   "httpMethod": "POST",
+	//   "id": "people.people.batchUpdateContacts",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/people:batchUpdateContacts",
+	//   "request": {
+	//     "$ref": "BatchUpdateContactsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUpdateContactsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/contacts"
+	//   ]
+	// }
+
+}
+
 // method id "people.people.createContact":
 
 type PeopleCreateContactCall struct {
@@ -4621,7 +5496,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4739,6 +5614,8 @@ type PeopleDeleteContactCall struct {
 
 // DeleteContact: Delete a contact person. Any non-contact data will not
 // be deleted.
+//
+// - resourceName: The resource name of the contact to delete.
 func (r *PeopleService) DeleteContact(resourceName string) *PeopleDeleteContactCall {
 	c := &PeopleDeleteContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4772,7 +5649,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4869,6 +5746,9 @@ type PeopleDeleteContactPhotoCall struct {
 }
 
 // DeleteContactPhoto: Delete a contact's photo.
+//
+// - resourceName: The resource name of the contact whose photo will be
+//   deleted.
 func (r *PeopleService) DeleteContactPhoto(resourceName string) *PeopleDeleteContactPhotoCall {
 	c := &PeopleDeleteContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4933,7 +5813,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5057,6 +5937,14 @@ type PeopleGetCall struct {
 // Get: Provides information about a person by specifying a resource
 // name. Use `people/me` to indicate the authenticated user. The request
 // returns a 400 error if 'personFields' is not specified.
+//
+// - resourceName: The resource name of the person to provide
+//   information about. - To get information about the authenticated
+//   user, specify `people/me`. - To get information about a google
+//   account, specify `people/{account_id}`. - To get information about
+//   a contact, specify the resource name that identifies the contact as
+//   returned by `people.connections.list`
+//   (/people/api/rest/v1/people.connections/list).
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5139,7 +6027,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5378,7 +6266,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5631,7 +6519,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5786,6 +6674,222 @@ func (c *PeopleListDirectoryPeopleCall) Pages(ctx context.Context, f func(*ListD
 	}
 }
 
+// method id "people.people.searchContacts":
+
+type PeopleSearchContactsCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// SearchContacts: Provides a list of contacts in the authenticated
+// user's grouped contacts that matches the search query. The query
+// matches on a contact's `names`, `nickNames`, `emailAddresses`,
+// `phoneNumbers`, and `organizations` fields that are from the CONTACT"
+// source.
+func (r *PeopleService) SearchContacts() *PeopleSearchContactsCall {
+	c := &PeopleSearchContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// results to return.
+func (c *PeopleSearchContactsCall) PageSize(pageSize int64) *PeopleSearchContactsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// Query sets the optional parameter "query": Required. The plain-text
+// query for the request. The query is used to match prefix phrases of
+// the fields on a person. For example, a person with name "foo name"
+// matches queries such as "f", "fo", "foo", "foo n", "nam", etc., but
+// not "oo n".
+func (c *PeopleSearchContactsCall) Query(query string) *PeopleSearchContactsCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. A field
+// mask to restrict which fields on each person are returned. Multiple
+// fields can be specified by separating them with commas. Valid values
+// are: * addresses * ageRanges * biographies * birthdays * calendarUrls
+// * clientData * coverPhotos * emailAddresses * events * externalIds *
+// genders * imClients * interests * locales * locations * memberships *
+// metadata * miscKeywords * names * nicknames * occupations *
+// organizations * phoneNumbers * photos * relations * sipAddresses *
+// skills * urls * userDefined
+func (c *PeopleSearchContactsCall) ReadMask(readMask string) *PeopleSearchContactsCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Sources sets the optional parameter "sources": A mask of what source
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+//
+// Possible values:
+//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
+//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+// SourceType.DOMAIN_CONTACT.
+func (c *PeopleSearchContactsCall) Sources(sources ...string) *PeopleSearchContactsCall {
+	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PeopleSearchContactsCall) Fields(s ...googleapi.Field) *PeopleSearchContactsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PeopleSearchContactsCall) IfNoneMatch(entityTag string) *PeopleSearchContactsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PeopleSearchContactsCall) Context(ctx context.Context) *PeopleSearchContactsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PeopleSearchContactsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:searchContacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.people.searchContacts" call.
+// Exactly one of *SearchResponse or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SearchResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provides a list of contacts in the authenticated user's grouped contacts that matches the search query. The query matches on a contact's `names`, `nickNames`, `emailAddresses`, `phoneNumbers`, and `organizations` fields that are from the CONTACT\" source.",
+	//   "flatPath": "v1/people:searchContacts",
+	//   "httpMethod": "GET",
+	//   "id": "people.people.searchContacts",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "query": {
+	//       "description": "Required. The plain-text query for the request. The query is used to match prefix phrases of the fields on a person. For example, a person with name \"foo name\" matches queries such as \"f\", \"fo\", \"foo\", \"foo n\", \"nam\", etc., but not \"oo n\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sources": {
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
+	//       "enum": [
+	//         "READ_SOURCE_TYPE_UNSPECIFIED",
+	//         "READ_SOURCE_TYPE_PROFILE",
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified.",
+	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
+	//         "Returns SourceType.CONTACT.",
+	//         "Returns SourceType.DOMAIN_CONTACT."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/people:searchContacts",
+	//   "response": {
+	//     "$ref": "SearchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/contacts",
+	//     "https://www.googleapis.com/auth/contacts.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "people.people.searchDirectoryPeople":
 
 type PeopleSearchDirectoryPeopleCall struct {
@@ -5906,7 +7010,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6082,6 +7186,10 @@ type PeopleUpdateContactCall struct {
 // the person. The server returns a 400 error if more than one field is
 // specified on a field that is a singleton for contact sources: *
 // biographies * birthdays * genders * names
+//
+// - resourceName: The resource name for the person, assigned by the
+//   server. An ASCII string with a max length of 27 characters, in the
+//   form of `people/{person_id}`.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -6161,7 +7269,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6297,6 +7405,8 @@ type PeopleUpdateContactPhotoCall struct {
 }
 
 // UpdateContactPhoto: Update a contact's photo.
+//
+// - resourceName: Person resource name.
 func (r *PeopleService) UpdateContactPhoto(resourceName string, updatecontactphotorequest *UpdateContactPhotoRequest) *PeopleUpdateContactPhotoCall {
 	c := &PeopleUpdateContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -6331,7 +7441,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6442,6 +7552,9 @@ type PeopleConnectionsListCall struct {
 // expired. Sync tokens expire after 7 days to prevent data drift
 // between clients and the server. To handle a sync token expired error,
 // a request should be sent without `sync_token` to get all contacts.
+//
+// - resourceName: The resource name to return connections for. Only
+//   `people/me` is valid.
 func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsListCall {
 	c := &PeopleConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -6583,7 +7696,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

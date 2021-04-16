@@ -261,7 +261,7 @@
       }
     }
   },
-  "revision": "20210210",
+  "revision": "20210218",
   "rootUrl": "https://safebrowsing.googleapis.com/",
   "schemas": {
     "GoogleProtobufEmpty": {

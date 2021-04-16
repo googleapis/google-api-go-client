@@ -89,7 +89,7 @@ const (
 	// View your data in Google BigQuery
 	BigqueryReadonlyScope = "https://www.googleapis.com/auth/bigquery.readonly"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -1141,12 +1141,11 @@ type TransferConfig struct {
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
 
 	// Name: The resource name of the transfer config. Transfer config names
-	// have the form of
+	// have the form
 	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`
-	// . The name is automatically generated based on the config_id
-	// specified in CreateTransferConfigRequest along with project_id and
-	// region. If config_id is not provided, usually a uuid, even though it
-	// is not guaranteed or required, will be generated for config_id.
+	// . Where `config_id` is usually a uuid, even though it is not
+	// guaranteed or required. The name is ignored when creating a transfer
+	// config.
 	Name string `json:"name,omitempty"`
 
 	// NextRunTime: Output only. Next time when data transfer will run.
@@ -1156,7 +1155,11 @@ type TransferConfig struct {
 	// sent after transfer runs associated with this transfer config finish.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
-	// Params: Data transfer specific parameters.
+	// Params: Parameters specific to each data source. For more information
+	// see the bq tab in the 'Setting up a data transfer' section for each
+	// data source. For example the parameters for Cloud Storage transfers
+	// are listed here:
+	// https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// Schedule: Data transfer schedule. If the data source does not support
@@ -1175,13 +1178,13 @@ type TransferConfig struct {
 	// State: Output only. State of the most recently updated transfer run.
 	//
 	// Possible values:
-	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by data transfer backend.
-	//   "RUNNING" - Data transfer is in progress.
-	//   "SUCCEEDED" - Data transfer completed successfully.
-	//   "FAILED" - Data transfer failed.
-	//   "CANCELLED" - Data transfer is cancelled.
+	// up by data transfer backend (2).
+	//   "RUNNING" - Data transfer is in progress (3).
+	//   "SUCCEEDED" - Data transfer completed successfully (4).
+	//   "FAILED" - Data transfer failed (5).
+	//   "CANCELLED" - Data transfer is cancelled (6).
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. Data transfer modification time. Ignored by
@@ -1292,7 +1295,11 @@ type TransferRun struct {
 	// notification will be sent after this transfer run finishes
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
-	// Params: Output only. Data transfer specific parameters.
+	// Params: Output only. Parameters specific to each data source. For
+	// more information see the bq tab in the 'Setting up a data transfer'
+	// section for each data source. For example the parameters for Cloud
+	// Storage transfers are listed here:
+	// https://cloud.google.com/bigquery-transfer/docs/cloud-storage-transfer#bq
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// RunTime: For batch transfer runs, specifies the date and time of the
@@ -1316,13 +1323,13 @@ type TransferRun struct {
 	// State: Data transfer run state. Ignored for input requests.
 	//
 	// Possible values:
-	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by data transfer backend.
-	//   "RUNNING" - Data transfer is in progress.
-	//   "SUCCEEDED" - Data transfer completed successfully.
-	//   "FAILED" - Data transfer failed.
-	//   "CANCELLED" - Data transfer is cancelled.
+	// up by data transfer backend (2).
+	//   "RUNNING" - Data transfer is in progress (3).
+	//   "SUCCEEDED" - Data transfer completed successfully (4).
+	//   "FAILED" - Data transfer failed (5).
+	//   "CANCELLED" - Data transfer is cancelled (6).
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. Last time the data transfer run state was
@@ -1377,6 +1384,11 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 // end user. This API just checks whether we have OAuth token for the
 // particular user, which is a pre-requisite before user can create a
 // transfer config.
+//
+// - name: The data source in the form:
+//   `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsDataSourcesCheckValidCredsCall {
 	c := &ProjectsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1411,7 +1423,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1521,6 +1533,11 @@ type ProjectsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings,
 // which can be used for UI rendering.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsDataSourcesService) Get(name string) *ProjectsDataSourcesGetCall {
 	c := &ProjectsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1564,7 +1581,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1669,6 +1686,10 @@ type ProjectsDataSourcesListCall struct {
 
 // List: Lists supported data sources and returns their settings, which
 // can be used for UI rendering.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned. Must be in the form: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}.
 func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesListCall {
 	c := &ProjectsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1730,7 +1751,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,6 +1887,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1909,7 +1932,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2014,28 +2037,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2078,7 +2107,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2149,7 +2178,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2161,13 +2190,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2224,6 +2253,11 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 // end user. This API just checks whether we have OAuth token for the
 // particular user, which is a pre-requisite before user can create a
 // transfer config.
+//
+// - name: The data source in the form:
+//   `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsLocationsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsLocationsDataSourcesCheckValidCredsCall {
 	c := &ProjectsLocationsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2258,7 +2292,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2368,6 +2402,11 @@ type ProjectsLocationsDataSourcesGetCall struct {
 
 // Get: Retrieves a supported data source and returns its settings,
 // which can be used for UI rendering.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/dataSources/{data_source_id}` or
+//   `projects/{project_id}/locations/{location_id}/dataSources/{data_sou
+//   rce_id}`.
 func (r *ProjectsLocationsDataSourcesService) Get(name string) *ProjectsLocationsDataSourcesGetCall {
 	c := &ProjectsLocationsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2411,7 +2450,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2516,6 +2555,10 @@ type ProjectsLocationsDataSourcesListCall struct {
 
 // List: Lists supported data sources and returns their settings, which
 // can be used for UI rendering.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned. Must be in the form: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}.
 func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocationsDataSourcesListCall {
 	c := &ProjectsLocationsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2577,7 +2620,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2713,6 +2756,12 @@ type ProjectsLocationsTransferConfigsCreateCall struct {
 }
 
 // Create: Creates a new data transfer configuration.
+//
+// - parent: The BigQuery project id where the transfer configuration
+//   should be created. Must be in the format
+//   projects/{project_id}/locations/{location_id} or
+//   projects/{project_id}. If specified location and location of the
+//   destination bigquery dataset do not match - the request will fail.
 func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsCreateCall {
 	c := &ProjectsLocationsTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2790,7 +2839,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2911,6 +2960,11 @@ type ProjectsLocationsTransferConfigsDeleteCall struct {
 
 // Delete: Deletes a data transfer configuration, including any
 // associated transfer runs and logs.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Delete(name string) *ProjectsLocationsTransferConfigsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2944,7 +2998,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3043,6 +3097,11 @@ type ProjectsLocationsTransferConfigsGetCall struct {
 }
 
 // Get: Returns information about a data transfer config.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) Get(name string) *ProjectsLocationsTransferConfigsGetCall {
 	c := &ProjectsLocationsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3086,7 +3145,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3190,6 +3249,10 @@ type ProjectsLocationsTransferConfigsListCall struct {
 }
 
 // List: Returns information about all data transfers in the project.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsTransferConfigsService) List(parent string) *ProjectsLocationsTransferConfigsListCall {
 	c := &ProjectsLocationsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3259,7 +3322,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3402,6 +3465,13 @@ type ProjectsLocationsTransferConfigsPatchCall struct {
 
 // Patch: Updates a data transfer configuration. All fields must be set,
 // even if they are not updated.
+//
+// - name: The resource name of the transfer config. Transfer config
+//   names have the form
+//   `projects/{project_id}/locations/{region}/transferConfigs/{config_id
+//   }`. Where `config_id` is usually a uuid, even though it is not
+//   guaranteed or required. The name is ignored when creating a
+//   transfer config.
 func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsPatchCall {
 	c := &ProjectsLocationsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3487,7 +3557,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3565,7 +3635,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form of `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. The name is automatically generated based on the config_id specified in CreateTransferConfigRequest along with project_id and region. If config_id is not provided, usually a uuid, even though it is not guaranteed or required, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3618,6 +3688,11 @@ type ProjectsLocationsTransferConfigsScheduleRunsCall struct {
 // supports - in the range, one transfer run is created. Note that runs
 // are created per UTC time in the time range. DEPRECATED: use
 // StartManualTransferRuns instead.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c := &ProjectsLocationsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3652,7 +3727,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3762,6 +3837,11 @@ type ProjectsLocationsTransferConfigsStartManualRunsCall struct {
 // schedule_time equal to current time. The transfer runs can be created
 // for a time range where the run_time is between start_time (inclusive)
 // and end_time (exclusive), or for a specific run_time.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c := &ProjectsLocationsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3796,7 +3876,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3902,6 +3982,13 @@ type ProjectsLocationsTransferConfigsRunsDeleteCall struct {
 }
 
 // Delete: Deletes the specified transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Delete(name string) *ProjectsLocationsTransferConfigsRunsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3935,7 +4022,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4034,6 +4121,13 @@ type ProjectsLocationsTransferConfigsRunsGetCall struct {
 }
 
 // Get: Returns information about the particular transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) Get(name string) *ProjectsLocationsTransferConfigsRunsGetCall {
 	c := &ProjectsLocationsTransferConfigsRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4077,7 +4171,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4181,6 +4275,12 @@ type ProjectsLocationsTransferConfigsRunsListCall struct {
 }
 
 // List: Returns information about running and completed jobs.
+//
+// - parent: Name of transfer configuration for which transfer runs
+//   should be retrieved. Format of transfer configuration resource name
+//   is: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsService) List(parent string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4220,13 +4320,13 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) RunAttempt(runAttempt str
 // transfer runs with requested states are returned.
 //
 // Possible values:
-//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 //   "PENDING" - Data transfer is scheduled and is waiting to be picked
-// up by data transfer backend.
-//   "RUNNING" - Data transfer is in progress.
-//   "SUCCEEDED" - Data transfer completed successfully.
-//   "FAILED" - Data transfer failed.
-//   "CANCELLED" - Data transfer is cancelled.
+// up by data transfer backend (2).
+//   "RUNNING" - Data transfer is in progress (3).
+//   "SUCCEEDED" - Data transfer completed successfully (4).
+//   "FAILED" - Data transfer failed (5).
+//   "CANCELLED" - Data transfer is cancelled (6).
 func (c *ProjectsLocationsTransferConfigsRunsListCall) States(states ...string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
@@ -4269,7 +4369,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4381,12 +4481,12 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	//         "CANCELLED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "State placeholder.",
-	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend.",
-	//         "Data transfer is in progress.",
-	//         "Data transfer completed successfully.",
-	//         "Data transfer failed.",
-	//         "Data transfer is cancelled."
+	//         "State placeholder (0).",
+	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend (2).",
+	//         "Data transfer is in progress (3).",
+	//         "Data transfer completed successfully (4).",
+	//         "Data transfer failed (5).",
+	//         "Data transfer is cancelled (6)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4440,6 +4540,12 @@ type ProjectsLocationsTransferConfigsRunsTransferLogsListCall struct {
 }
 
 // List: Returns user facing log messages for the data transfer run.
+//
+// - parent: Transfer run name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsLocationsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c := &ProjectsLocationsTransferConfigsRunsTransferLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4515,7 +4621,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4669,6 +4775,12 @@ type ProjectsTransferConfigsCreateCall struct {
 }
 
 // Create: Creates a new data transfer configuration.
+//
+// - parent: The BigQuery project id where the transfer configuration
+//   should be created. Must be in the format
+//   projects/{project_id}/locations/{location_id} or
+//   projects/{project_id}. If specified location and location of the
+//   destination bigquery dataset do not match - the request will fail.
 func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *TransferConfig) *ProjectsTransferConfigsCreateCall {
 	c := &ProjectsTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4746,7 +4858,7 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4867,6 +4979,11 @@ type ProjectsTransferConfigsDeleteCall struct {
 
 // Delete: Deletes a data transfer configuration, including any
 // associated transfer runs and logs.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) Delete(name string) *ProjectsTransferConfigsDeleteCall {
 	c := &ProjectsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4900,7 +5017,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4999,6 +5116,11 @@ type ProjectsTransferConfigsGetCall struct {
 }
 
 // Get: Returns information about a data transfer config.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) Get(name string) *ProjectsTransferConfigsGetCall {
 	c := &ProjectsTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5042,7 +5164,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5146,6 +5268,10 @@ type ProjectsTransferConfigsListCall struct {
 }
 
 // List: Returns information about all data transfers in the project.
+//
+// - parent: The BigQuery project id for which data sources should be
+//   returned: `projects/{project_id}` or
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsTransferConfigsService) List(parent string) *ProjectsTransferConfigsListCall {
 	c := &ProjectsTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5215,7 +5341,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5358,6 +5484,13 @@ type ProjectsTransferConfigsPatchCall struct {
 
 // Patch: Updates a data transfer configuration. All fields must be set,
 // even if they are not updated.
+//
+// - name: The resource name of the transfer config. Transfer config
+//   names have the form
+//   `projects/{project_id}/locations/{region}/transferConfigs/{config_id
+//   }`. Where `config_id` is usually a uuid, even though it is not
+//   guaranteed or required. The name is ignored when creating a
+//   transfer config.
 func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsTransferConfigsPatchCall {
 	c := &ProjectsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5443,7 +5576,7 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5521,7 +5654,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form of `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. The name is automatically generated based on the config_id specified in CreateTransferConfigRequest along with project_id and region. If config_id is not provided, usually a uuid, even though it is not guaranteed or required, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5574,6 +5707,11 @@ type ProjectsTransferConfigsScheduleRunsCall struct {
 // supports - in the range, one transfer run is created. Note that runs
 // are created per UTC time in the time range. DEPRECATED: use
 // StartManualTransferRuns instead.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsTransferConfigsScheduleRunsCall {
 	c := &ProjectsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5608,7 +5746,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5718,6 +5856,11 @@ type ProjectsTransferConfigsStartManualRunsCall struct {
 // schedule_time equal to current time. The transfer runs can be created
 // for a time range where the run_time is between start_time (inclusive)
 // and end_time (exclusive), or for a specific run_time.
+//
+// - parent: Transfer configuration name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsTransferConfigsStartManualRunsCall {
 	c := &ProjectsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5752,7 +5895,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5858,6 +6001,13 @@ type ProjectsTransferConfigsRunsDeleteCall struct {
 }
 
 // Delete: Deletes the specified transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Delete(name string) *ProjectsTransferConfigsRunsDeleteCall {
 	c := &ProjectsTransferConfigsRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5891,7 +6041,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5990,6 +6140,13 @@ type ProjectsTransferConfigsRunsGetCall struct {
 }
 
 // Get: Returns information about the particular transfer run.
+//
+// - name: The field will contain name of the resource requested, for
+//   example:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsService) Get(name string) *ProjectsTransferConfigsRunsGetCall {
 	c := &ProjectsTransferConfigsRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6033,7 +6190,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6137,6 +6294,12 @@ type ProjectsTransferConfigsRunsListCall struct {
 }
 
 // List: Returns information about running and completed jobs.
+//
+// - parent: Name of transfer configuration for which transfer runs
+//   should be retrieved. Format of transfer configuration resource name
+//   is: `projects/{project_id}/transferConfigs/{config_id}` or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}`.
 func (r *ProjectsTransferConfigsRunsService) List(parent string) *ProjectsTransferConfigsRunsListCall {
 	c := &ProjectsTransferConfigsRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6176,13 +6339,13 @@ func (c *ProjectsTransferConfigsRunsListCall) RunAttempt(runAttempt string) *Pro
 // transfer runs with requested states are returned.
 //
 // Possible values:
-//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 //   "PENDING" - Data transfer is scheduled and is waiting to be picked
-// up by data transfer backend.
-//   "RUNNING" - Data transfer is in progress.
-//   "SUCCEEDED" - Data transfer completed successfully.
-//   "FAILED" - Data transfer failed.
-//   "CANCELLED" - Data transfer is cancelled.
+// up by data transfer backend (2).
+//   "RUNNING" - Data transfer is in progress (3).
+//   "SUCCEEDED" - Data transfer completed successfully (4).
+//   "FAILED" - Data transfer failed (5).
+//   "CANCELLED" - Data transfer is cancelled (6).
 func (c *ProjectsTransferConfigsRunsListCall) States(states ...string) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
@@ -6225,7 +6388,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6337,12 +6500,12 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	//         "CANCELLED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "State placeholder.",
-	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend.",
-	//         "Data transfer is in progress.",
-	//         "Data transfer completed successfully.",
-	//         "Data transfer failed.",
-	//         "Data transfer is cancelled."
+	//         "State placeholder (0).",
+	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend (2).",
+	//         "Data transfer is in progress (3).",
+	//         "Data transfer completed successfully (4).",
+	//         "Data transfer failed (5).",
+	//         "Data transfer is cancelled (6)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6396,6 +6559,12 @@ type ProjectsTransferConfigsRunsTransferLogsListCall struct {
 }
 
 // List: Returns user facing log messages for the data transfer run.
+//
+// - parent: Transfer run name in the form:
+//   `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+//   or
+//   `projects/{project_id}/locations/{location_id}/transferConfigs/{conf
+//   ig_id}/runs/{run_id}`.
 func (r *ProjectsTransferConfigsRunsTransferLogsService) List(parent string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c := &ProjectsTransferConfigsRunsTransferLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6471,7 +6640,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

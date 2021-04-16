@@ -79,7 +79,7 @@ const mtlsBasePath = "https://managedidentities.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -163,6 +163,7 @@ func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalServi
 	rs := &ProjectsLocationsGlobalService{s: s}
 	rs.Domains = NewProjectsLocationsGlobalDomainsService(s)
 	rs.Operations = NewProjectsLocationsGlobalOperationsService(s)
+	rs.Peerings = NewProjectsLocationsGlobalPeeringsService(s)
 	return rs
 }
 
@@ -172,6 +173,8 @@ type ProjectsLocationsGlobalService struct {
 	Domains *ProjectsLocationsGlobalDomainsService
 
 	Operations *ProjectsLocationsGlobalOperationsService
+
+	Peerings *ProjectsLocationsGlobalPeeringsService
 }
 
 func NewProjectsLocationsGlobalDomainsService(s *Service) *ProjectsLocationsGlobalDomainsService {
@@ -201,6 +204,15 @@ func NewProjectsLocationsGlobalOperationsService(s *Service) *ProjectsLocationsG
 }
 
 type ProjectsLocationsGlobalOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGlobalPeeringsService(s *Service) *ProjectsLocationsGlobalPeeringsService {
+	rs := &ProjectsLocationsGlobalPeeringsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalPeeringsService struct {
 	s *Service
 }
 
@@ -893,9 +905,10 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() 
 // Maintenance schedule which is exposed to customer and potentially end
 // user, indicating published upcoming future maintenance schedule
 type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
-	// CanReschedule: Can this scheduled update be rescheduled? By default,
-	// it's true and API needs to do explicitly check whether it's set, if
-	// it's set as false explicitly, it's false
+	// CanReschedule: This field is deprecated, and will be always set to
+	// true since reschedule can happen multiple times now. This field
+	// should not be removed until all service producers remove this for
+	// their customers.
 	CanReschedule bool `json:"canReschedule,omitempty"`
 
 	// EndTime: The scheduled end time for the maintenance.
@@ -2319,6 +2332,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2362,7 +2377,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2464,28 +2479,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2528,7 +2549,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2599,7 +2620,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2611,13 +2632,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2666,6 +2687,10 @@ type ProjectsLocationsGlobalDomainsAttachTrustCall struct {
 }
 
 // AttachTrust: Adds AD trust in a given domain. Operation
+//
+// - name: The resource domain name, project name and location using the
+//   form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) AttachTrust(name string, attachtrustrequest *AttachTrustRequest) *ProjectsLocationsGlobalDomainsAttachTrustCall {
 	c := &ProjectsLocationsGlobalDomainsAttachTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2700,7 +2725,7 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2806,6 +2831,9 @@ type ProjectsLocationsGlobalDomainsCreateCall struct {
 }
 
 // Create: Creates a Microsoft AD Domain in a given project. Operation
+//
+// - parent: Resource project name and location using the form:
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalDomainsService) Create(parent string, domain *Domain) *ProjectsLocationsGlobalDomainsCreateCall {
 	c := &ProjectsLocationsGlobalDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2819,7 +2847,7 @@ func (r *ProjectsLocationsGlobalDomainsService) Create(parent string, domain *Do
 // numbers, periods and hyphens. * Must start with a letter. * Must
 // contain between 2-64 characters. * Must end with a number or a
 // letter. * Must not start with period. * Must be unique within the
-// project. * First segement length (mydomain form example above)
+// project. * First segment length (mydomain form example above)
 // shouldn't exceed 15 chars. * The last segment cannot be fully
 // numeric.
 func (c *ProjectsLocationsGlobalDomainsCreateCall) DomainName(domainName string) *ProjectsLocationsGlobalDomainsCreateCall {
@@ -2854,7 +2882,7 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2927,7 +2955,7 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "domainName": {
-	//       "description": "The fully qualified domain name. e.g. mydomain.myorganization.com, with the following restrictions: * Must contain only lowercase letters, numbers, periods and hyphens. * Must start with a letter. * Must contain between 2-64 characters. * Must end with a number or a letter. * Must not start with period. * Must be unique within the project. * First segement length (mydomain form example above) shouldn't exceed 15 chars. * The last segment cannot be fully numeric.",
+	//       "description": "The fully qualified domain name. e.g. mydomain.myorganization.com, with the following restrictions: * Must contain only lowercase letters, numbers, periods and hyphens. * Must start with a letter. * Must contain between 2-64 characters. * Must end with a number or a letter. * Must not start with period. * Must be unique within the project. * First segment length (mydomain form example above) shouldn't exceed 15 chars. * The last segment cannot be fully numeric.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2964,6 +2992,9 @@ type ProjectsLocationsGlobalDomainsDeleteCall struct {
 }
 
 // Delete: Deletes identified domain. Operation
+//
+// - name: Domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Delete(name string) *ProjectsLocationsGlobalDomainsDeleteCall {
 	c := &ProjectsLocationsGlobalDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2997,7 +3028,7 @@ func (c *ProjectsLocationsGlobalDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3095,6 +3126,10 @@ type ProjectsLocationsGlobalDomainsDetachTrustCall struct {
 }
 
 // DetachTrust: Removes identified trust. Operation
+//
+// - name: The resource domain name, project name, and location using
+//   the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) DetachTrust(name string, detachtrustrequest *DetachTrustRequest) *ProjectsLocationsGlobalDomainsDetachTrustCall {
 	c := &ProjectsLocationsGlobalDomainsDetachTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3129,7 +3164,7 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3235,6 +3270,9 @@ type ProjectsLocationsGlobalDomainsGetCall struct {
 }
 
 // Get: Gets details of a single Domain.
+//
+// - name: Domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Get(name string) *ProjectsLocationsGlobalDomainsGetCall {
 	c := &ProjectsLocationsGlobalDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3278,7 +3316,7 @@ func (c *ProjectsLocationsGlobalDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3381,6 +3419,10 @@ type ProjectsLocationsGlobalDomainsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalDomainsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3438,7 +3480,7 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3545,6 +3587,9 @@ type ProjectsLocationsGlobalDomainsListCall struct {
 }
 
 // List: Lists Domains in a given project.
+//
+// - parent: The resource name of the domain location using the form:
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalDomainsService) List(parent string) *ProjectsLocationsGlobalDomainsListCall {
 	c := &ProjectsLocationsGlobalDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3621,7 +3666,7 @@ func (c *ProjectsLocationsGlobalDomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3765,6 +3810,10 @@ type ProjectsLocationsGlobalDomainsPatchCall struct {
 
 // Patch: Updates the metadata and configuration of a specified domain.
 // Operation
+//
+// - name: Output only. Unique name of the domain in this scope
+//   including projects and location using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Patch(name string, domain *Domain) *ProjectsLocationsGlobalDomainsPatchCall {
 	c := &ProjectsLocationsGlobalDomainsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3809,7 +3858,7 @@ func (c *ProjectsLocationsGlobalDomainsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3921,6 +3970,10 @@ type ProjectsLocationsGlobalDomainsReconfigureTrustCall struct {
 }
 
 // ReconfigureTrust: Updates the dns conditional forwarder. Operation
+//
+// - name: The resource domain name, project name and location using the
+//   form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) ReconfigureTrust(name string, reconfiguretrustrequest *ReconfigureTrustRequest) *ProjectsLocationsGlobalDomainsReconfigureTrustCall {
 	c := &ProjectsLocationsGlobalDomainsReconfigureTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3955,7 +4008,7 @@ func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4062,6 +4115,9 @@ type ProjectsLocationsGlobalDomainsResetAdminPasswordCall struct {
 
 // ResetAdminPassword: Resets managed identities admin password
 // identified by managed_identities_admin_name
+//
+// - name: The domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) ResetAdminPassword(name string, resetadminpasswordrequest *ResetAdminPasswordRequest) *ProjectsLocationsGlobalDomainsResetAdminPasswordCall {
 	c := &ProjectsLocationsGlobalDomainsResetAdminPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4096,7 +4152,7 @@ func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4204,6 +4260,10 @@ type ProjectsLocationsGlobalDomainsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalDomainsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4238,7 +4298,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4349,6 +4409,10 @@ type ProjectsLocationsGlobalDomainsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalDomainsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalDomainsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4383,7 +4447,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4489,6 +4553,10 @@ type ProjectsLocationsGlobalDomainsValidateTrustCall struct {
 }
 
 // ValidateTrust: Validate the trust state Operation
+//
+// - name: The resource domain name, project name, and location using
+//   the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) ValidateTrust(name string, validatetrustrequest *ValidateTrustRequest) *ProjectsLocationsGlobalDomainsValidateTrustCall {
 	c := &ProjectsLocationsGlobalDomainsValidateTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4523,7 +4591,7 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4629,6 +4697,10 @@ type ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall struct {
 }
 
 // Get: Gets details of a single sqlIntegration.
+//
+// - name: MangedOU resource name using the form:
+//   `projects/{project_id}/locations/global/domains/*/sqlIntegrations/{n
+//   ame}`.
 func (r *ProjectsLocationsGlobalDomainsSqlIntegrationsService) Get(name string) *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall {
 	c := &ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4672,7 +4744,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4773,6 +4845,9 @@ type ProjectsLocationsGlobalDomainsSqlIntegrationsListCall struct {
 }
 
 // List: Lists SQLIntegrations in a given domain.
+//
+// - parent: The resource name of the SqlIntegrations using the form:
+//   `projects/{project_id}/locations/global/domains/*`.
 func (r *ProjectsLocationsGlobalDomainsSqlIntegrationsService) List(parent string) *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall {
 	c := &ProjectsLocationsGlobalDomainsSqlIntegrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4850,7 +4925,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Header() http.He
 
 func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5002,6 +5077,8 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsGlobalOperationsCancelCall {
 	c := &ProjectsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5036,7 +5113,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5144,6 +5221,8 @@ type ProjectsLocationsGlobalOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsGlobalOperationsService) Delete(name string) *ProjectsLocationsGlobalOperationsDeleteCall {
 	c := &ProjectsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5177,7 +5256,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5277,6 +5356,8 @@ type ProjectsLocationsGlobalOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsGlobalOperationsService) Get(name string) *ProjectsLocationsGlobalOperationsGetCall {
 	c := &ProjectsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5320,7 +5401,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5430,6 +5511,8 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
 	c := &ProjectsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5494,7 +5577,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5618,4 +5701,469 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Pages(ctx context.Context, f
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "managedidentities.projects.locations.global.peerings.getIamPolicy":
+
+type ProjectsLocationsGlobalPeeringsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsGlobalPeeringsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
+	c := &ProjectsLocationsGlobalPeeringsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The policy format version to be
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsGlobalPeeringsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.peerings.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsGlobalPeeringsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/peerings/{peeringsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "managedidentities.projects.locations.global.peerings.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/peerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "managedidentities.projects.locations.global.peerings.setIamPolicy":
+
+type ProjectsLocationsGlobalPeeringsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsGlobalPeeringsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalPeeringsSetIamPolicyCall {
+	c := &ProjectsLocationsGlobalPeeringsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPeeringsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsGlobalPeeringsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.peerings.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsGlobalPeeringsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/peerings/{peeringsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.peerings.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/peerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "managedidentities.projects.locations.global.peerings.testIamPermissions":
+
+type ProjectsLocationsGlobalPeeringsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsGlobalPeeringsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall {
+	c := &ProjectsLocationsGlobalPeeringsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.peerings.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalPeeringsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/peerings/{peeringsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.peerings.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/peerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }

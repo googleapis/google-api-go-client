@@ -769,6 +769,12 @@ func (s *SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
 // the subscription. For more information, see retrieve transferable
 // subscriptions for a customer.
 type SubscriptionTransferInfo struct {
+	// CurrentLegacySkuId: Sku id of the current resold subscription. This
+	// is populated only when customer has subscription with legacy sku and
+	// the subscription resource is populated with recommeded sku for
+	// transfer in.
+	CurrentLegacySkuId string `json:"currentLegacySkuId,omitempty"`
+
 	// MinimumTransferableSeats: When inserting a subscription, this is the
 	// minimum number of seats listed in the transfer order for this
 	// product. For example, if the customer has 20 users, the reseller
@@ -780,19 +786,18 @@ type SubscriptionTransferInfo struct {
 	// format.
 	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "MinimumTransferableSeats") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CurrentLegacySkuId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MinimumTransferableSeats")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "CurrentLegacySkuId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -902,6 +907,12 @@ type CustomersGetCall struct {
 // For more information about the API response for existing customers,
 // see retrieving a customer account
 // (/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
 func (r *CustomersService) Get(customerId string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -945,7 +956,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1107,7 +1118,7 @@ func (c *CustomersInsertCall) Header() http.Header {
 
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1207,6 +1218,12 @@ type CustomersPatchCall struct {
 
 // Patch: Update a customer account's settings. This method supports
 // patch semantics.
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
 func (r *CustomersService) Patch(customerId string, customer *Customer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1241,7 +1258,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1348,6 +1365,12 @@ type CustomersUpdateCall struct {
 // Update: Update a customer account's settings. For more information,
 // see update a customer's settings
 // (/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
 func (r *CustomersService) Update(customerId string, customer *Customer) *CustomersUpdateCall {
 	c := &CustomersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1382,7 +1405,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1529,7 +1552,7 @@ func (c *ResellernotifyGetwatchdetailsCall) Header() http.Header {
 
 func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1657,7 +1680,7 @@ func (c *ResellernotifyRegisterCall) Header() http.Header {
 
 func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1786,7 +1809,7 @@ func (c *ResellernotifyUnregisterCall) Header() http.Header {
 
 func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1880,6 +1903,18 @@ type SubscriptionsActivateCall struct {
 // reseller. If you did not suspend the customer subscription and it is
 // suspended for any other reason, such as for abuse or a pending ToS
 // acceptance, this call will not reactivate the customer subscription.
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) Activate(customerId string, subscriptionId string) *SubscriptionsActivateCall {
 	c := &SubscriptionsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1914,7 +1949,7 @@ func (c *SubscriptionsActivateCall) Header() http.Header {
 
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2026,6 +2061,18 @@ type SubscriptionsChangePlanCall struct {
 // information, see the description in manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
 // on_plan).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) ChangePlan(customerId string, subscriptionId string, changeplanrequest *ChangePlanRequest) *SubscriptionsChangePlanCall {
 	c := &SubscriptionsChangePlanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2061,7 +2108,7 @@ func (c *SubscriptionsChangePlanCall) Header() http.Header {
 
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2178,6 +2225,18 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 // is applicable for accounts with annual commitment plans only. For
 // more information, see the description in manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) ChangeRenewalSettings(customerId string, subscriptionId string, renewalsettings *RenewalSettings) *SubscriptionsChangeRenewalSettingsCall {
 	c := &SubscriptionsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2213,7 +2272,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2331,6 +2390,18 @@ type SubscriptionsChangeSeatsCall struct {
 // plan subscription’s licenses, see Manage Subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
 // on_seat).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) ChangeSeats(customerId string, subscriptionId string, seats *Seats) *SubscriptionsChangeSeatsCall {
 	c := &SubscriptionsChangeSeatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2366,7 +2437,7 @@ func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2479,6 +2550,20 @@ type SubscriptionsDeleteCall struct {
 }
 
 // Delete: Cancel, suspend, or transfer a subscription to direct.
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - deletionType: The `deletionType` query string enables the
+//   cancellation, downgrade, or suspension of a subscription.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) Delete(customerId string, subscriptionId string, deletionType string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2514,7 +2599,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2615,6 +2700,18 @@ type SubscriptionsGetCall struct {
 // subscription, see the information descrived in manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription)
 // .
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) Get(customerId string, subscriptionId string) *SubscriptionsGetCall {
 	c := &SubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2659,7 +2756,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2783,6 +2880,12 @@ type SubscriptionsInsertCall struct {
 // subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscr
 // iption).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
 func (r *SubscriptionsService) Insert(customerId string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2829,7 +2932,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3037,7 +3140,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3180,6 +3283,18 @@ type SubscriptionsStartPaidServiceCall struct {
 // payment plan has already been set up for the 30-day trial
 // subscription. For more information, see manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) StartPaidService(customerId string, subscriptionId string) *SubscriptionsStartPaidServiceCall {
 	c := &SubscriptionsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -3214,7 +3329,7 @@ func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
 
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3329,6 +3444,18 @@ type SubscriptionsSuspendCall struct {
 // activation. We strongly encourage you to suspend subscriptions only
 // for short periods of time as suspensions over 60 days may result in
 // the subscription being cancelled.
+//
+// - customerId: Either the customer's primary domain name or the
+//   customer's unique identifier. If using the domain name, we do not
+//   recommend using a `customerId` as a key for persistent data. If the
+//   domain name for a `customerId` is changed, the Google system
+//   automatically updates.
+// - subscriptionId: This is a required property. The `subscriptionId`
+//   is the subscription identifier and is unique for each customer.
+//   Since a `subscriptionId` changes when a subscription is updated, we
+//   recommend to not use this ID as a key for persistent data. And the
+//   `subscriptionId` can be found using the retrieve all reseller
+//   subscriptions method.
 func (r *SubscriptionsService) Suspend(customerId string, subscriptionId string) *SubscriptionsSuspendCall {
 	c := &SubscriptionsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -3363,7 +3490,7 @@ func (c *SubscriptionsSuspendCall) Header() http.Header {
 
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

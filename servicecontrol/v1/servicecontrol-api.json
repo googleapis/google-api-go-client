@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/servicecontrol": {
           "description": "Manage your Google Service Control data"
@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20210205",
+  "revision": "20210401",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1246,7 +1246,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Private Preview. This feature is only available for approved services. User defined labels for the resource that this operation is associated with. Only a combination of 1000 user labels per consumer project are allowed.",
+          "description": "Private Preview. This feature is only available for approved services. User defined labels for the resource that this operation is associated with.",
           "type": "object"
         }
       },
@@ -1526,7 +1526,7 @@
           "type": "string"
         },
         "path": {
-          "description": "The HTTP URL path.",
+          "description": "The HTTP URL path, excluding the query parameters.",
           "type": "string"
         },
         "protocol": {

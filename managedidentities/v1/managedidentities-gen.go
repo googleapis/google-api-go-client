@@ -79,7 +79,7 @@ const mtlsBasePath = "https://managedidentities.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -874,9 +874,10 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() 
 // Maintenance schedule which is exposed to customer and potentially end
 // user, indicating published upcoming future maintenance schedule
 type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
-	// CanReschedule: Can this scheduled update be rescheduled? By default,
-	// it's true and API needs to do explicitly check whether it's set, if
-	// it's set as false explicitly, it's false
+	// CanReschedule: This field is deprecated, and will be always set to
+	// true since reschedule can happen multiple times now. This field
+	// should not be removed until all service producers remove this for
+	// their customers.
 	CanReschedule bool `json:"canReschedule,omitempty"`
 
 	// EndTime: The scheduled end time for the maintenance.
@@ -2215,6 +2216,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2258,7 +2261,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2360,28 +2363,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2424,7 +2433,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2495,7 +2504,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2507,13 +2516,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2562,6 +2571,10 @@ type ProjectsLocationsGlobalDomainsAttachTrustCall struct {
 }
 
 // AttachTrust: Adds an AD trust to a domain.
+//
+// - name: The resource domain name, project name and location using the
+//   form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) AttachTrust(name string, attachtrustrequest *AttachTrustRequest) *ProjectsLocationsGlobalDomainsAttachTrustCall {
 	c := &ProjectsLocationsGlobalDomainsAttachTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2596,7 +2609,7 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2702,6 +2715,9 @@ type ProjectsLocationsGlobalDomainsCreateCall struct {
 }
 
 // Create: Creates a Microsoft AD domain.
+//
+// - parent: The resource project name and location using the form:
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalDomainsService) Create(parent string, domain *Domain) *ProjectsLocationsGlobalDomainsCreateCall {
 	c := &ProjectsLocationsGlobalDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2750,7 +2766,7 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2860,6 +2876,9 @@ type ProjectsLocationsGlobalDomainsDeleteCall struct {
 }
 
 // Delete: Deletes a domain.
+//
+// - name: The domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Delete(name string) *ProjectsLocationsGlobalDomainsDeleteCall {
 	c := &ProjectsLocationsGlobalDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2893,7 +2912,7 @@ func (c *ProjectsLocationsGlobalDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2991,6 +3010,10 @@ type ProjectsLocationsGlobalDomainsDetachTrustCall struct {
 }
 
 // DetachTrust: Removes an AD trust.
+//
+// - name: The resource domain name, project name, and location using
+//   the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) DetachTrust(name string, detachtrustrequest *DetachTrustRequest) *ProjectsLocationsGlobalDomainsDetachTrustCall {
 	c := &ProjectsLocationsGlobalDomainsDetachTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3025,7 +3048,7 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3131,6 +3154,9 @@ type ProjectsLocationsGlobalDomainsGetCall struct {
 }
 
 // Get: Gets information about a domain.
+//
+// - name: The domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Get(name string) *ProjectsLocationsGlobalDomainsGetCall {
 	c := &ProjectsLocationsGlobalDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3174,7 +3200,7 @@ func (c *ProjectsLocationsGlobalDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3277,6 +3303,10 @@ type ProjectsLocationsGlobalDomainsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalDomainsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3334,7 +3364,7 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3441,6 +3471,9 @@ type ProjectsLocationsGlobalDomainsListCall struct {
 }
 
 // List: Lists domains in a project.
+//
+// - parent: The resource name of the domain location using the form:
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalDomainsService) List(parent string) *ProjectsLocationsGlobalDomainsListCall {
 	c := &ProjectsLocationsGlobalDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3519,7 +3552,7 @@ func (c *ProjectsLocationsGlobalDomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3662,6 +3695,9 @@ type ProjectsLocationsGlobalDomainsPatchCall struct {
 }
 
 // Patch: Updates the metadata and configuration of a domain.
+//
+// - name: The unique name of the domain using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) Patch(name string, domain *Domain) *ProjectsLocationsGlobalDomainsPatchCall {
 	c := &ProjectsLocationsGlobalDomainsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3705,7 +3741,7 @@ func (c *ProjectsLocationsGlobalDomainsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3817,6 +3853,10 @@ type ProjectsLocationsGlobalDomainsReconfigureTrustCall struct {
 }
 
 // ReconfigureTrust: Updates the DNS conditional forwarder.
+//
+// - name: The resource domain name, project name and location using the
+//   form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) ReconfigureTrust(name string, reconfiguretrustrequest *ReconfigureTrustRequest) *ProjectsLocationsGlobalDomainsReconfigureTrustCall {
 	c := &ProjectsLocationsGlobalDomainsReconfigureTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3851,7 +3891,7 @@ func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3957,6 +3997,9 @@ type ProjectsLocationsGlobalDomainsResetAdminPasswordCall struct {
 }
 
 // ResetAdminPassword: Resets a domain's administrator password.
+//
+// - name: The domain resource name using the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) ResetAdminPassword(name string, resetadminpasswordrequest *ResetAdminPasswordRequest) *ProjectsLocationsGlobalDomainsResetAdminPasswordCall {
 	c := &ProjectsLocationsGlobalDomainsResetAdminPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3991,7 +4034,7 @@ func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4099,6 +4142,10 @@ type ProjectsLocationsGlobalDomainsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalDomainsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4133,7 +4180,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4244,6 +4291,10 @@ type ProjectsLocationsGlobalDomainsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalDomainsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalDomainsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalDomainsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4278,7 +4329,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4386,6 +4437,10 @@ type ProjectsLocationsGlobalDomainsValidateTrustCall struct {
 // ValidateTrust: Validates a trust state, that the target domain is
 // reachable, and that the target domain is able to accept incoming
 // trust requests.
+//
+// - name: The resource domain name, project name, and location using
+//   the form:
+//   `projects/{project_id}/locations/global/domains/{domain_name}`.
 func (r *ProjectsLocationsGlobalDomainsService) ValidateTrust(name string, validatetrustrequest *ValidateTrustRequest) *ProjectsLocationsGlobalDomainsValidateTrustCall {
 	c := &ProjectsLocationsGlobalDomainsValidateTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4420,7 +4475,7 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4535,6 +4590,8 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsGlobalOperationsCancelCall {
 	c := &ProjectsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4569,7 +4626,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4677,6 +4734,8 @@ type ProjectsLocationsGlobalOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsGlobalOperationsService) Delete(name string) *ProjectsLocationsGlobalOperationsDeleteCall {
 	c := &ProjectsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4710,7 +4769,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4810,6 +4869,8 @@ type ProjectsLocationsGlobalOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsGlobalOperationsService) Get(name string) *ProjectsLocationsGlobalOperationsGetCall {
 	c := &ProjectsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4853,7 +4914,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4963,6 +5024,8 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
 	c := &ProjectsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5027,7 +5090,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

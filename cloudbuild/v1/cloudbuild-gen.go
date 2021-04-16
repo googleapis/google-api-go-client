@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudbuild.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -415,8 +415,7 @@ type Build struct {
 	// ServiceAccount: IAM service account whose credentials will be used at
 	// build runtime. Must be of the format
 	// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be
-	// email address or uniqueId of the service account. This field is in
-	// beta.
+	// email address or uniqueId of the service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Source: The location of the source files to build.
@@ -794,8 +793,8 @@ type BuildTrigger struct {
 	// build.
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Filename: Path, from the source root, to a file whose contents is
-	// used for the template.
+	// Filename: Path, from the source root, to the build configuration file
+	// (i.e. cloudbuild.yaml).
 	Filename string `json:"filename,omitempty"`
 
 	// Github: GitHubEventsConfig describes the configuration of a trigger
@@ -1985,6 +1984,10 @@ type Source struct {
 	// Google Cloud Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
+	// StorageSourceManifest: If provided, get the source from this manifest
+	// in Google Cloud Storage. This feature is in Preview.
+	StorageSourceManifest *StorageSourceManifest `json:"storageSourceManifest,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "RepoSource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2028,6 +2031,11 @@ type SourceProvenance struct {
 	// ResolvedStorageSource: A copy of the build's `source.storage_source`,
 	// if exists, with any generations resolved.
 	ResolvedStorageSource *StorageSource `json:"resolvedStorageSource,omitempty"`
+
+	// ResolvedStorageSourceManifest: A copy of the build's
+	// `source.storage_source_manifest`, if exists, with any revisions
+	// resolved. This feature is in Preview.
+	ResolvedStorageSourceManifest *StorageSourceManifest `json:"resolvedStorageSourceManifest,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileHashes") to
 	// unconditionally include in API requests. By default, fields with
@@ -2136,6 +2144,45 @@ func (s *StorageSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageSourceManifest: Location of the source manifest in Google
+// Cloud Storage. This feature is in Preview.
+type StorageSourceManifest struct {
+	// Bucket: Google Cloud Storage bucket containing the source manifest
+	// (see Bucket Name Requirements
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
+	Bucket string `json:"bucket,omitempty"`
+
+	// Generation: Google Cloud Storage generation for the object. If the
+	// generation is omitted, the latest generation will be used.
+	Generation int64 `json:"generation,omitempty,string"`
+
+	// Object: Google Cloud Storage object containing the source manifest.
+	// This object must be a JSON file.
+	Object string `json:"object,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageSourceManifest) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageSourceManifest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeSpan: Start and end times for a build execution phase.
 type TimeSpan struct {
 	// EndTime: End of time span.
@@ -2225,6 +2272,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2259,7 +2308,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2367,6 +2416,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2410,7 +2461,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2512,6 +2563,9 @@ type ProjectsBuildsCancelCall struct {
 }
 
 // Cancel: Cancels a build in progress.
+//
+// - id: ID of the build.
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Cancel(projectId string, id string, cancelbuildrequest *CancelBuildRequest) *ProjectsBuildsCancelCall {
 	c := &ProjectsBuildsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2547,7 +2601,7 @@ func (c *ProjectsBuildsCancelCall) Header() http.Header {
 
 func (c *ProjectsBuildsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2663,6 +2717,8 @@ type ProjectsBuildsCreateCall struct {
 // returns a long-running `Operation`, which includes the build ID. Pass
 // the build ID to `GetBuild` to determine the build status (such as
 // `SUCCESS` or `FAILURE`).
+//
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Create(projectId string, build *Build) *ProjectsBuildsCreateCall {
 	c := &ProjectsBuildsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2705,7 +2761,7 @@ func (c *ProjectsBuildsCreateCall) Header() http.Header {
 
 func (c *ProjectsBuildsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2818,6 +2874,9 @@ type ProjectsBuildsGetCall struct {
 // Get: Returns information about a previously requested build. The
 // `Build` that is returned includes its status (such as `SUCCESS`,
 // `FAILURE`, or `WORKING`), and timing information.
+//
+// - id: ID of the build.
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Get(projectId string, id string) *ProjectsBuildsGetCall {
 	c := &ProjectsBuildsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2870,7 +2929,7 @@ func (c *ProjectsBuildsGetCall) Header() http.Header {
 
 func (c *ProjectsBuildsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2985,6 +3044,8 @@ type ProjectsBuildsListCall struct {
 // List: Lists previously requested builds. Previously requested builds
 // may still be in-progress, or may have finished successfully or
 // unsuccessfully.
+//
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) List(projectId string) *ProjectsBuildsListCall {
 	c := &ProjectsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3061,7 +3122,7 @@ func (c *ProjectsBuildsListCall) Header() http.Header {
 
 func (c *ProjectsBuildsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3221,6 +3282,9 @@ type ProjectsBuildsRetryCall struct {
 // object, the new build will attempt to use the same object, which may
 // or may not be available depending on the bucket's lifecycle
 // management settings.
+//
+// - id: Build ID of the original build.
+// - projectId: ID of the project.
 func (r *ProjectsBuildsService) Retry(projectId string, id string, retrybuildrequest *RetryBuildRequest) *ProjectsBuildsRetryCall {
 	c := &ProjectsBuildsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3256,7 +3320,7 @@ func (c *ProjectsBuildsRetryCall) Header() http.Header {
 
 func (c *ProjectsBuildsRetryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3369,6 +3433,9 @@ type ProjectsLocationsBuildsCancelCall struct {
 }
 
 // Cancel: Cancels a build in progress.
+//
+// - name: The name of the `Build` to cancel. Format:
+//   `projects/{project}/locations/{location}/builds/{build}`.
 func (r *ProjectsLocationsBuildsService) Cancel(name string, cancelbuildrequest *CancelBuildRequest) *ProjectsLocationsBuildsCancelCall {
 	c := &ProjectsLocationsBuildsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3403,7 +3470,7 @@ func (c *ProjectsLocationsBuildsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3512,6 +3579,9 @@ type ProjectsLocationsBuildsCreateCall struct {
 // returns a long-running `Operation`, which includes the build ID. Pass
 // the build ID to `GetBuild` to determine the build status (such as
 // `SUCCESS` or `FAILURE`).
+//
+// - parent: The parent resource where this build will be created.
+//   Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsBuildsService) Create(parent string, build *Build) *ProjectsLocationsBuildsCreateCall {
 	c := &ProjectsLocationsBuildsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3553,7 +3623,7 @@ func (c *ProjectsLocationsBuildsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3666,6 +3736,9 @@ type ProjectsLocationsBuildsGetCall struct {
 // Get: Returns information about a previously requested build. The
 // `Build` that is returned includes its status (such as `SUCCESS`,
 // `FAILURE`, or `WORKING`), and timing information.
+//
+// - name: The name of the `Build` to retrieve. Format:
+//   `projects/{project}/locations/{location}/builds/{build}`.
 func (r *ProjectsLocationsBuildsService) Get(name string) *ProjectsLocationsBuildsGetCall {
 	c := &ProjectsLocationsBuildsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3722,7 +3795,7 @@ func (c *ProjectsLocationsBuildsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3835,6 +3908,9 @@ type ProjectsLocationsBuildsListCall struct {
 // List: Lists previously requested builds. Previously requested builds
 // may still be in-progress, or may have finished successfully or
 // unsuccessfully.
+//
+// - parent: The parent of the collection of `Builds`. Format:
+//   `projects/{project}/locations/location`.
 func (r *ProjectsLocationsBuildsService) List(parent string) *ProjectsLocationsBuildsListCall {
 	c := &ProjectsLocationsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3910,7 +3986,7 @@ func (c *ProjectsLocationsBuildsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4070,6 +4146,9 @@ type ProjectsLocationsBuildsRetryCall struct {
 // object, the new build will attempt to use the same object, which may
 // or may not be available depending on the bucket's lifecycle
 // management settings.
+//
+// - name: The name of the `Build` to retry. Format:
+//   `projects/{project}/locations/{location}/builds/{build}`.
 func (r *ProjectsLocationsBuildsService) Retry(name string, retrybuildrequest *RetryBuildRequest) *ProjectsLocationsBuildsRetryCall {
 	c := &ProjectsLocationsBuildsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4104,7 +4183,7 @@ func (c *ProjectsLocationsBuildsRetryCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsRetryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4219,6 +4298,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4253,7 +4334,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4361,6 +4442,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4404,7 +4487,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4505,6 +4588,9 @@ type ProjectsTriggersCreateCall struct {
 }
 
 // Create: Creates a new `BuildTrigger`. This API is experimental.
+//
+// - projectId: ID of the project for which to configure automatic
+//   builds.
 func (r *ProjectsTriggersService) Create(projectId string, buildtrigger *BuildTrigger) *ProjectsTriggersCreateCall {
 	c := &ProjectsTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4539,7 +4625,7 @@ func (c *ProjectsTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4645,6 +4731,9 @@ type ProjectsTriggersDeleteCall struct {
 
 // Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
 // This API is experimental.
+//
+// - projectId: ID of the project that owns the trigger.
+// - triggerId: ID of the `BuildTrigger` to delete.
 func (r *ProjectsTriggersService) Delete(projectId string, triggerId string) *ProjectsTriggersDeleteCall {
 	c := &ProjectsTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4679,7 +4768,7 @@ func (c *ProjectsTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4786,6 +4875,10 @@ type ProjectsTriggersGetCall struct {
 
 // Get: Returns information about a `BuildTrigger`. This API is
 // experimental.
+//
+// - projectId: ID of the project that owns the trigger.
+// - triggerId: Identifier (`id` or `name`) of the `BuildTrigger` to
+//   get.
 func (r *ProjectsTriggersService) Get(projectId string, triggerId string) *ProjectsTriggersGetCall {
 	c := &ProjectsTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4830,7 +4923,7 @@ func (c *ProjectsTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4938,6 +5031,8 @@ type ProjectsTriggersListCall struct {
 }
 
 // List: Lists existing `BuildTrigger`s. This API is experimental.
+//
+// - projectId: ID of the project for which to list BuildTriggers.
 func (r *ProjectsTriggersService) List(projectId string) *ProjectsTriggersListCall {
 	c := &ProjectsTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4995,7 +5090,7 @@ func (c *ProjectsTriggersListCall) Header() http.Header {
 
 func (c *ProjectsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5129,6 +5224,9 @@ type ProjectsTriggersPatchCall struct {
 
 // Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
 // This API is experimental.
+//
+// - projectId: ID of the project that owns the trigger.
+// - triggerId: ID of the `BuildTrigger` to update.
 func (r *ProjectsTriggersService) Patch(projectId string, triggerId string, buildtrigger *BuildTrigger) *ProjectsTriggersPatchCall {
 	c := &ProjectsTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5164,7 +5262,7 @@ func (c *ProjectsTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5278,6 +5376,9 @@ type ProjectsTriggersRunCall struct {
 }
 
 // Run: Runs a `BuildTrigger` at a particular source revision.
+//
+// - projectId: ID of the project.
+// - triggerId: ID of the trigger.
 func (r *ProjectsTriggersService) Run(projectId string, triggerId string, reposource *RepoSource) *ProjectsTriggersRunCall {
 	c := &ProjectsTriggersRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5313,7 +5414,7 @@ func (c *ProjectsTriggersRunCall) Header() http.Header {
 
 func (c *ProjectsTriggersRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5428,6 +5529,9 @@ type ProjectsTriggersWebhookCall struct {
 
 // Webhook: ReceiveTriggerWebhook [Experimental] is called when the API
 // receives a webhook request targeted at a specific trigger.
+//
+// - projectId: Project in which the specified trigger lives.
+// - trigger: Name of the trigger to run the payload against.
 func (r *ProjectsTriggersService) Webhook(projectId string, trigger string, httpbody *HttpBody) *ProjectsTriggersWebhookCall {
 	c := &ProjectsTriggersWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -5470,7 +5574,7 @@ func (c *ProjectsTriggersWebhookCall) Header() http.Header {
 
 func (c *ProjectsTriggersWebhookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -79,7 +79,7 @@ const mtlsBasePath = "https://admin-remotebuildexecution.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -211,14 +211,23 @@ type BuildBazelRemoteExecutionV2Action struct {
 	// referred to, MUST be in the ContentAddressableStorage.
 	InputRootDigest *BuildBazelRemoteExecutionV2Digest `json:"inputRootDigest,omitempty"`
 
-	// OutputNodeProperties: List of required supported NodeProperty keys.
-	// In order to ensure that equivalent `Action`s always hash to the same
-	// value, the supported node properties MUST be lexicographically sorted
-	// by name. Sorting of strings is done by code point, equivalently, by
-	// the UTF-8 bytes. The interpretation of these properties is
-	// server-dependent. If a property is not recognized by the server, the
-	// server will return an `INVALID_ARGUMENT` error.
-	OutputNodeProperties []string `json:"outputNodeProperties,omitempty"`
+	// Platform: The optional platform requirements for the execution
+	// environment. The server MAY choose to execute the action on any
+	// worker satisfying the requirements, so the client SHOULD ensure that
+	// running the action on any such worker will have the same result. A
+	// detailed lexicon for this can be found in the accompanying
+	// platform.md. New in version 2.2: clients SHOULD set these platform
+	// properties as well as those in the Command. Servers SHOULD prefer
+	// those set here.
+	Platform *BuildBazelRemoteExecutionV2Platform `json:"platform,omitempty"`
+
+	// Salt: An optional additional salt value used to place this `Action`
+	// into a separate cache namespace from other instances having the same
+	// field contents. This salt typically comes from operational
+	// configuration specific to sources such as repo and service
+	// configuration, and allows disowning an entire set of ActionResults
+	// that might have been poisoned by buggy software or tool failures.
+	Salt string `json:"salt,omitempty"`
 
 	// Timeout: A timeout after which the execution should be killed. If the
 	// timeout is absent, then the client is specifying that the execution
@@ -261,7 +270,10 @@ func (s *BuildBazelRemoteExecutionV2Action) MarshalJSON() ([]byte, error) {
 }
 
 // BuildBazelRemoteExecutionV2ActionResult: An ActionResult represents
-// the result of an Action being run.
+// the result of an Action being run. It is advised that at least one
+// field (for example `ActionResult.execution_metadata.Worker`) have a
+// non-default value, to ensure that the serialized value is non-empty,
+// which can then be used as a basic data sanity check.
 type BuildBazelRemoteExecutionV2ActionResult struct {
 	// ExecutionMetadata: The details of the execution that originally
 	// produced this result.
@@ -473,6 +485,17 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// `output_paths` instead.
 	OutputFiles []string `json:"outputFiles,omitempty"`
 
+	// OutputNodeProperties: A list of keys for node properties the client
+	// expects to retrieve for output files and directories. Keys are either
+	// names of string-based NodeProperty or names of fields in
+	// NodeProperties. In order to ensure that equivalent `Action`s always
+	// hash to the same value, the node properties MUST be lexicographically
+	// sorted by name. Sorting of strings is done by code point,
+	// equivalently, by the UTF-8 bytes. The interpretation of string-based
+	// properties is server-dependent. If a property is not recognized by
+	// the server, the server will return an `INVALID_ARGUMENT`.
+	OutputNodeProperties []string `json:"outputNodeProperties,omitempty"`
+
 	// OutputPaths: A list of the output paths that the client expects to
 	// retrieve from the action. Only the listed paths will be returned to
 	// the client as output. The type of the output (file or directory) is
@@ -500,7 +523,9 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// The server MAY choose to execute the action on any worker satisfying
 	// the requirements, so the client SHOULD ensure that running the action
 	// on any such worker will have the same result. A detailed lexicon for
-	// this can be found in the accompanying platform.md.
+	// this can be found in the accompanying platform.md. DEPRECATED as of
+	// v2.2: platform properties are now specified directly in the action.
+	// See documentation note in the Action for migration.
 	Platform *BuildBazelRemoteExecutionV2Platform `json:"platform,omitempty"`
 
 	// WorkingDirectory: The working directory, relative to the input root,
@@ -661,8 +686,7 @@ type BuildBazelRemoteExecutionV2Directory struct {
 	// Files: The files in the directory.
 	Files []*BuildBazelRemoteExecutionV2FileNode `json:"files,omitempty"`
 
-	// NodeProperties: The node properties of the Directory.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Symlinks: The symlinks in the directory.
 	Symlinks []*BuildBazelRemoteExecutionV2SymlinkNode `json:"symlinks,omitempty"`
@@ -741,12 +765,14 @@ type BuildBazelRemoteExecutionV2ExecuteOperationMetadata struct {
 	//   "COMPLETED" - Finished execution.
 	Stage string `json:"stage,omitempty"`
 
-	// StderrStreamName: If set, the client can use this name with
-	// ByteStream.Read to stream the standard error.
+	// StderrStreamName: If set, the client can use this resource name with
+	// ByteStream.Read to stream the standard error from the endpoint
+	// hosting streamed responses.
 	StderrStreamName string `json:"stderrStreamName,omitempty"`
 
-	// StdoutStreamName: If set, the client can use this name with
-	// ByteStream.Read to stream the standard output.
+	// StdoutStreamName: If set, the client can use this resource name with
+	// ByteStream.Read to stream the standard output from the endpoint
+	// hosting streamed responses.
 	StdoutStreamName string `json:"stdoutStreamName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionDigest") to
@@ -835,6 +861,11 @@ func (s *BuildBazelRemoteExecutionV2ExecuteResponse) MarshalJSON() ([]byte, erro
 // BuildBazelRemoteExecutionV2ExecutedActionMetadata:
 // ExecutedActionMetadata contains details about a completed execution.
 type BuildBazelRemoteExecutionV2ExecutedActionMetadata struct {
+	// AuxiliaryMetadata: Details that are specific to the kind of worker
+	// used. For example, on POSIX-like systems this could contain a message
+	// with getrusage(2) statistics.
+	AuxiliaryMetadata []googleapi.RawMessage `json:"auxiliaryMetadata,omitempty"`
+
 	// ExecutionCompletedTimestamp: When the worker completed executing the
 	// action command.
 	ExecutionCompletedTimestamp string `json:"executionCompletedTimestamp,omitempty"`
@@ -872,22 +903,21 @@ type BuildBazelRemoteExecutionV2ExecutedActionMetadata struct {
 	// WorkerStartTimestamp: When the worker received the action.
 	WorkerStartTimestamp string `json:"workerStartTimestamp,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ExecutionCompletedTimestamp") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ExecutionCompletedTimestamp") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuxiliaryMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -909,8 +939,7 @@ type BuildBazelRemoteExecutionV2FileNode struct {
 	// Name: The name of the file.
 	Name string `json:"name,omitempty"`
 
-	// NodeProperties: The node properties of the FileNode.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Digest") to
 	// unconditionally include in API requests. By default, fields with
@@ -968,6 +997,42 @@ type BuildBazelRemoteExecutionV2LogFile struct {
 
 func (s *BuildBazelRemoteExecutionV2LogFile) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildBazelRemoteExecutionV2LogFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BuildBazelRemoteExecutionV2NodeProperties: Node properties for
+// FileNodes, DirectoryNodes, and SymlinkNodes. The server is
+// responsible for specifying the properties that it accepts.
+type BuildBazelRemoteExecutionV2NodeProperties struct {
+	// Mtime: The file's last modification timestamp.
+	Mtime string `json:"mtime,omitempty"`
+
+	// Properties: A list of string-based NodeProperties.
+	Properties []*BuildBazelRemoteExecutionV2NodeProperty `json:"properties,omitempty"`
+
+	// UnixMode: The UNIX file mode, e.g., 0755.
+	UnixMode int64 `json:"unixMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mtime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mtime") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildBazelRemoteExecutionV2NodeProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildBazelRemoteExecutionV2NodeProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1061,9 +1126,7 @@ type BuildBazelRemoteExecutionV2OutputFile struct {
 	// IsExecutable: True if file is executable, false otherwise.
 	IsExecutable bool `json:"isExecutable,omitempty"`
 
-	// NodeProperties: The supported node properties of the OutputFile, if
-	// requested by the Action.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Path: The full path of the file relative to the working directory,
 	// including the filename. The path separator is a forward slash `/`.
@@ -1099,9 +1162,7 @@ func (s *BuildBazelRemoteExecutionV2OutputFile) MarshalJSON() ([]byte, error) {
 // `ActionResult`. `OutputSymlink` is binary-compatible with
 // `SymlinkNode`.
 type BuildBazelRemoteExecutionV2OutputSymlink struct {
-	// NodeProperties: The supported node properties of the OutputSymlink,
-	// if requested by the Action.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Path: The full path of the symlink relative to the working directory,
 	// including the filename. The path separator is a forward slash `/`.
@@ -1113,8 +1174,7 @@ type BuildBazelRemoteExecutionV2OutputSymlink struct {
 	// forward slash `/`. The target path can be relative to the parent
 	// directory of the symlink or it can be an absolute path starting with
 	// `/`. Support for absolute paths can be checked using the Capabilities
-	// API. The canonical form forbids the substrings `/./` and `//` in the
-	// target path. `..` components are allowed anywhere in the target path.
+	// API. `..` components are allowed anywhere in the target path.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NodeProperties") to
@@ -1190,7 +1250,10 @@ func (s *BuildBazelRemoteExecutionV2Platform) MarshalJSON() ([]byte, error) {
 // performed may require an exact match with the worker's OS. The server
 // MAY use the `value` of one or more properties to determine how it
 // sets up the execution environment, such as by making specific system
-// files available to the worker.
+// files available to the worker. Both names and values are typically
+// case-sensitive. Note that the platform is implicitly part of the
+// action digest, so even tiny changes in the names or values (like
+// changing case) may result in different action cache entries.
 type BuildBazelRemoteExecutionV2PlatformProperty struct {
 	// Name: The property name.
 	Name string `json:"name,omitempty"`
@@ -1239,10 +1302,28 @@ type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// Execution API are used in order to compile foo.cc.
 	ActionId string `json:"actionId,omitempty"`
 
+	// ActionMnemonic: A brief description of the kind of action, for
+	// example, CppCompile or GoLink. There is no standard agreed set of
+	// values for this, and they are expected to vary between different
+	// client tools.
+	ActionMnemonic string `json:"actionMnemonic,omitempty"`
+
+	// ConfigurationId: An identifier for the configuration in which the
+	// target was built, e.g. for differentiating building host tools or
+	// different target platforms. There is no expectation that this value
+	// will have any particular structure, or equality across invocations,
+	// though some client tools may offer these guarantees.
+	ConfigurationId string `json:"configurationId,omitempty"`
+
 	// CorrelatedInvocationsId: An identifier to tie multiple tool
 	// invocations together. For example, runs of foo_test, bar_test and
 	// baz_test on a post-submit of a given patch.
 	CorrelatedInvocationsId string `json:"correlatedInvocationsId,omitempty"`
+
+	// TargetId: An identifier for the target which produced this action. No
+	// guarantees are made around how many actions may relate to a single
+	// target.
+	TargetId string `json:"targetId,omitempty"`
 
 	// ToolDetails: The details for the tool invoking the requests.
 	ToolDetails *BuildBazelRemoteExecutionV2ToolDetails `json:"toolDetails,omitempty"`
@@ -1281,15 +1362,18 @@ type BuildBazelRemoteExecutionV2SymlinkNode struct {
 	// Name: The name of the symlink.
 	Name string `json:"name,omitempty"`
 
-	// NodeProperties: The node properties of the SymlinkNode.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Target: The target path of the symlink. The path separator is a
 	// forward slash `/`. The target path can be relative to the parent
 	// directory of the symlink or it can be an absolute path starting with
 	// `/`. Support for absolute paths can be checked using the Capabilities
-	// API. The canonical form forbids the substrings `/./` and `//` in the
-	// target path. `..` components are allowed anywhere in the target path.
+	// API. `..` components are allowed anywhere in the target path as
+	// logical canonicalization may lead to different behavior in the
+	// presence of directory symlinks (e.g. `foo/../bar` may not be the same
+	// as `bar`). To reduce potential cache misses, canonicalization is
+	// still recommended where this is possible without impacting
+	// correctness.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1387,6 +1471,9 @@ func (s *BuildBazelRemoteExecutionV2Tree) MarshalJSON() ([]byte, error) {
 // contains the various duration metrics tracked when a bot performs a
 // command.
 type GoogleDevtoolsRemotebuildbotCommandDurations struct {
+	// CasRelease: The time spent to release the CAS blobs used by the task.
+	CasRelease string `json:"casRelease,omitempty"`
+
 	// CmWaitForAssignment: The time spent waiting for Container Manager to
 	// assign an asynchronous container for execution.
 	CmWaitForAssignment string `json:"cmWaitForAssignment,omitempty"`
@@ -1430,21 +1517,20 @@ type GoogleDevtoolsRemotebuildbotCommandDurations struct {
 	// begins.
 	UploadStartTime string `json:"uploadStartTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CmWaitForAssignment")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CasRelease") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CmWaitForAssignment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CasRelease") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1462,8 +1548,8 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	// task execution.
 	//
 	// Possible values:
-	//   "NONE" - Container Manager is disabled or not running for this
-	// execution.
+	//   "CONFIG_NONE" - Container Manager is disabled or not running for
+	// this execution.
 	//   "CONFIG_MATCH" - Container Manager is enabled and there was a
 	// matching container available for use during execution.
 	//   "CONFIG_MISMATCH" - Container Manager is enabled, but there was no
@@ -1485,6 +1571,42 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 
 	// NumWarnings: The number of warnings reported.
 	NumWarnings uint64 `json:"numWarnings,omitempty,string"`
+
+	// OutputLocation: Indicates whether output files and/or output
+	// directories were found relative to the execution root or to the user
+	// provided work directory or both or none.
+	//
+	// Possible values:
+	//   "LOCATION_UNDEFINED" - Location is set to LOCATION_UNDEFINED for
+	// tasks where the working directorty is not specified or is identical
+	// to the execution root directory.
+	//   "LOCATION_NONE" - No output files or directories were found neither
+	// relative to the execution root directory nor relative to the working
+	// directory.
+	//   "LOCATION_EXEC_ROOT_RELATIVE" - Output files or directories were
+	// found relative to the execution root directory but not relative to
+	// the working directory.
+	//   "LOCATION_WORKING_DIR_RELATIVE" - Output files or directories were
+	// found relative to the working directory but not relative to the
+	// execution root directory.
+	//   "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE" - Output files or
+	// directories were found both relative to the execution root directory
+	// and relative to the working directory.
+	//   "LOCATION_EXEC_ROOT_RELATIVE_OUTPUT_OUTSIDE_WORKING_DIR" - Output
+	// files or directories were found relative to the execution root
+	// directory but not relative to the working directory. In addition at
+	// least one output file or directory was found outside of the working
+	// directory such that a working-directory-relative-path would have
+	// needed to start with a `..`.
+	//
+	// "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE_OUTPUT_OUTSIDE_WORKING_DI
+	// R" - Output files or directories were found both relative to the
+	// execution root directory and relative to the working directory. In
+	// addition at least one exec-root-relative output file or directory was
+	// found outside of the working directory such that a
+	// working-directory-relative-path would have needed to start with a
+	// `..`.
+	OutputLocation string `json:"outputLocation,omitempty"`
 
 	// UsedAsyncContainer: Indicates whether an asynchronous container was
 	// used for execution.
@@ -1600,6 +1722,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// overlay mount because of too many levels of symbolic links.
 	//   "LOCAL_CONTAINER_MANAGER_NOT_RUNNING" - The local Container Manager
 	// is not running.
+	//   "DOCKER_IMAGE_VPCSC_PERMISSION_DENIED" - Docker failed because a
+	// request was denied by the organization's policy.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -3263,6 +3387,9 @@ type ProjectsInstancesCreateCall struct {
 // long running operation which contains an instance on completion.
 // While the long running operation is in progress, any call to
 // `GetInstance` returns an instance in state `CREATING`.
+//
+// - parent: Resource name of the project containing the instance.
+//   Format: `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateinstancerequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3297,7 +3424,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3405,6 +3532,9 @@ type ProjectsInstancesDeleteCall struct {
 // operation which contains a `google.protobuf.Empty` response on
 // completion. Deleting an instance with worker pools in it will delete
 // these worker pools.
+//
+// - name: Name of the instance to delete. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3438,7 +3568,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3536,6 +3666,9 @@ type ProjectsInstancesGetCall struct {
 }
 
 // Get: Returns the specified instance.
+//
+// - name: Name of the instance to retrieve. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3579,7 +3712,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3683,6 +3816,9 @@ type ProjectsInstancesListCall struct {
 }
 
 // List: Lists instances in a project.
+//
+// - parent: Resource name of the project. Format:
+//   `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3726,7 +3862,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3832,6 +3968,11 @@ type ProjectsInstancesPatchCall struct {
 // Patch: Updates the specified instance. Returns a long running
 // operation which contains the updated instance in the response on
 // completion.
+//
+// - name: Output only. Instance resource name formatted as:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be
+//   populated when creating an instance since it is provided in the
+//   `instance_id` field.
 func (r *ProjectsInstancesService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphainstance *GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3894,7 +4035,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4020,6 +4161,10 @@ type ProjectsInstancesWorkerpoolsCreateCall struct {
 // worker pool on completion. While the long running operation is in
 // progress, any call to `GetWorkerPool` returns a worker pool in state
 // `CREATING`.
+//
+// - parent: Resource name of the instance in which to create the new
+//   worker pool. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsCreateCall {
 	c := &ProjectsInstancesWorkerpoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4054,7 +4199,7 @@ func (c *ProjectsInstancesWorkerpoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4162,6 +4307,10 @@ type ProjectsInstancesWorkerpoolsDeleteCall struct {
 // operation, which contains a `google.protobuf.Empty` response on
 // completion. While the long running operation is in progress, any call
 // to `GetWorkerPool` returns a worker pool in state `DELETING`.
+//
+// - name: Name of the worker pool to delete. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//   `.
 func (r *ProjectsInstancesWorkerpoolsService) Delete(name string) *ProjectsInstancesWorkerpoolsDeleteCall {
 	c := &ProjectsInstancesWorkerpoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4195,7 +4344,7 @@ func (c *ProjectsInstancesWorkerpoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4293,6 +4442,10 @@ type ProjectsInstancesWorkerpoolsGetCall struct {
 }
 
 // Get: Returns the specified worker pool.
+//
+// - name: Name of the worker pool to retrieve. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//   `.
 func (r *ProjectsInstancesWorkerpoolsService) Get(name string) *ProjectsInstancesWorkerpoolsGetCall {
 	c := &ProjectsInstancesWorkerpoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4336,7 +4489,7 @@ func (c *ProjectsInstancesWorkerpoolsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4440,6 +4593,9 @@ type ProjectsInstancesWorkerpoolsListCall struct {
 }
 
 // List: Lists worker pools in an instance.
+//
+// - parent: Resource name of the instance. Format:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInstancesWorkerpoolsListCall {
 	c := &ProjectsInstancesWorkerpoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4505,7 +4661,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4618,6 +4774,11 @@ type ProjectsInstancesWorkerpoolsPatchCall struct {
 // worker pool on completion. While the long running operation is in
 // progress, any call to `GetWorkerPool` returns a worker pool in state
 // `UPDATING`.
+//
+// - name: WorkerPool resource name formatted as:
+//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//   `. name should not be populated when creating a worker pool since
+//   it is provided in the `poolId` field.
 func (r *ProjectsInstancesWorkerpoolsService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphaupdateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsPatchCall {
 	c := &ProjectsInstancesWorkerpoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4652,7 +4813,7 @@ func (c *ProjectsInstancesWorkerpoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4760,6 +4921,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4803,7 +4966,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

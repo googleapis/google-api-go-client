@@ -79,7 +79,7 @@ const mtlsBasePath = "https://homegraph.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// New Service: https://www.googleapis.com/auth/homegraph
+	// Private Service: https://www.googleapis.com/auth/homegraph
 	HomegraphScope = "https://www.googleapis.com/auth/homegraph"
 )
 
@@ -240,13 +240,6 @@ type Device struct {
 	// Name: Names given to this device by your smart home Action.
 	Name *DeviceNames `json:"name,omitempty"`
 
-	// NonLocalTraits: See description for "traits". For Smart Home
-	// Entertainment Devices (SHED) devices, some traits can only be
-	// executed on 3P cloud, e.g. "non_local_traits": [ { "trait":
-	// "action.devices.traits.MediaInitiation" }, { "trait":
-	// "action.devices.traits.Channel" } ] go/shed-per-trait-routing.
-	NonLocalTraits []*NonLocalTrait `json:"nonLocalTraits,omitempty"`
-
 	// NotificationSupportedByAgent: Indicates whether your smart home
 	// Action will report notifications to Google for this device via
 	// ReportStateAndNotification. If your smart home Action enables users
@@ -384,38 +377,6 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// NonLocalTrait: LINT.IfChange go/shed-per-trait-routing. Making it
-// object to allow for extendible design, where we can add attributes in
-// future.
-type NonLocalTrait struct {
-	// Trait: Trait name, e.g., "action.devices.traits.MediaInitiation". See
-	// device traits
-	// (https://developers.google.com/assistant/smarthome/traits).
-	Trait string `json:"trait,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Trait") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Trait") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NonLocalTrait) MarshalJSON() ([]byte, error) {
-	type NoMethod NonLocalTrait
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequest: Request type for the `Query`
@@ -635,10 +596,7 @@ type ReportStateAndNotificationRequest struct {
 	// EventId: Unique identifier per event (for example, a doorbell press).
 	EventId string `json:"eventId,omitempty"`
 
-	// FollowUpToken: Token to maintain state in the follow up notification
-	// response. Deprecated. See the notifications guide
-	// (https://developers.google.com/assistant/smarthome/develop/notifications)
-	// for details on implementing follow up notifications.
+	// FollowUpToken: Deprecated.
 	FollowUpToken string `json:"followUpToken,omitempty"`
 
 	// Payload: Required. State of devices to update and notification
@@ -911,6 +869,8 @@ type AgentUsersDeleteCall struct {
 // The third-party user's identity is passed in via the `agent_user_id`
 // (see DeleteAgentUserRequest). This request must be authorized using
 // service account credentials from your Actions console project.
+//
+// - agentUserId: Third-party user ID.
 func (r *AgentUsersService) Delete(agentUserId string) *AgentUsersDeleteCall {
 	c := &AgentUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agentUserId = agentUserId
@@ -951,7 +911,7 @@ func (c *AgentUsersDeleteCall) Header() http.Header {
 
 func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1090,7 +1050,7 @@ func (c *DevicesQueryCall) Header() http.Header {
 
 func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1227,7 +1187,7 @@ func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 
 func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1359,7 +1319,7 @@ func (c *DevicesRequestSyncCall) Header() http.Header {
 
 func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1447,7 @@ func (c *DevicesSyncCall) Header() http.Header {
 
 func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

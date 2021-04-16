@@ -79,7 +79,7 @@ const mtlsBasePath = "https://workflowexecutions.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -399,9 +399,7 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 }
 
 // StackTraceElement: A single stack element (frame) where an error
-// occurred. This field currently only exists in v1Beta. We will need to
-// roll this change out to V1 after the feature is thoroughly tested.
-// TODO(b/178540475)
+// occurred.
 type StackTraceElement struct {
 	// Position: The source position information of the stacktrace element.
 	Position *Position `json:"position,omitempty"`
@@ -447,6 +445,10 @@ type ProjectsLocationsWorkflowsExecutionsCancelCall struct {
 }
 
 // Cancel: Cancels an execution of the given name.
+//
+// - name: Name of the execution to be cancelled. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Cancel(name string, cancelexecutionrequest *CancelExecutionRequest) *ProjectsLocationsWorkflowsExecutionsCancelCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -481,7 +483,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -588,6 +590,11 @@ type ProjectsLocationsWorkflowsExecutionsCreateCall struct {
 
 // Create: Creates a new execution using the latest revision of the
 // given workflow.
+//
+// - parent: Name of the workflow for which an execution should be
+//   created. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow} The
+//   latest revision of the workflow will be used.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Create(parent string, execution *Execution) *ProjectsLocationsWorkflowsExecutionsCreateCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -622,7 +629,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -728,6 +735,10 @@ type ProjectsLocationsWorkflowsExecutionsGetCall struct {
 }
 
 // Get: Returns an execution of the given name.
+//
+// - name: Name of the execution to be retrieved. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *ProjectsLocationsWorkflowsExecutionsGetCall {
 	c := &ProjectsLocationsWorkflowsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -786,7 +797,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -905,6 +916,10 @@ type ProjectsLocationsWorkflowsExecutionsListCall struct {
 // the given name. The method returns executions of all workflow
 // revisions. Returned executions are ordered by their start time
 // (newest first).
+//
+// - parent: Name of the workflow for which the executions should be
+//   listed. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c := &ProjectsLocationsWorkflowsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -984,7 +999,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

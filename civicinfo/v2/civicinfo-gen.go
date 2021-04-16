@@ -1355,7 +1355,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1487,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1572,6 +1572,8 @@ type ElectionsVoterInfoQueryCall struct {
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
 // voter's registered address.
+//
+// - address: The registered address of the voter to look up.
 func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQueryCall {
 	c := &ElectionsVoterInfoQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("address", address)
@@ -1643,7 +1645,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1855,7 +1857,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2013,6 +2015,9 @@ type RepresentativesRepresentativeInfoByDivisionCall struct {
 
 // RepresentativeInfoByDivision: Looks up representative information for
 // a single geographic division.
+//
+// - ocdId: The Open Civic Data division identifier of the division to
+//   look up.
 func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ocdId = ocdId
@@ -2108,7 +2113,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

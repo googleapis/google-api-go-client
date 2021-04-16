@@ -83,7 +83,7 @@ const mtlsBasePath = "https://monitoring.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and write monitoring data for all of your Google and third-party
@@ -1860,10 +1860,15 @@ type ProjectsDashboardsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new custom dashboard.This method requires the
-// monitoring.dashboards.create permission on the specified project. For
-// more information, see Google Cloud IAM
-// (https://cloud.google.com/iam).
+// Create: Creates a new custom dashboard. For examples on how you can
+// use this API to create dashboards, see Managing dashboards by API.
+// This method requires the monitoring.dashboards.create permission on
+// the specified project. For more information about permissions, see
+// Cloud Identity and Access Management.
+//
+// - parent: The project on which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must
+//   match the dashboard resource name.
 func (r *ProjectsDashboardsService) Create(parent string, dashboard *Dashboard) *ProjectsDashboardsCreateCall {
 	c := &ProjectsDashboardsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1898,7 +1903,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1962,7 +1967,7 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new custom dashboard.This method requires the monitoring.dashboards.create permission on the specified project. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Creates a new custom dashboard. For examples on how you can use this API to create dashboards, see Managing dashboards by API. This method requires the monitoring.dashboards.create permission on the specified project. For more information about permissions, see Cloud Identity and Access Management.",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.dashboards.create",
@@ -2006,8 +2011,11 @@ type ProjectsDashboardsDeleteCall struct {
 
 // Delete: Deletes an existing custom dashboard.This method requires the
 // monitoring.dashboards.delete permission on the specified dashboard.
-// For more information, see Google Cloud IAM
+// For more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+// - name: The resource name of the Dashboard. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID].
 func (r *ProjectsDashboardsService) Delete(name string) *ProjectsDashboardsDeleteCall {
 	c := &ProjectsDashboardsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2041,7 +2049,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2100,7 +2108,7 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing custom dashboard.This method requires the monitoring.dashboards.delete permission on the specified dashboard. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Deletes an existing custom dashboard.This method requires the monitoring.dashboards.delete permission on the specified dashboard. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards/{dashboardsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.dashboards.delete",
@@ -2142,8 +2150,13 @@ type ProjectsDashboardsGetCall struct {
 
 // Get: Fetches a specific dashboard.This method requires the
 // monitoring.dashboards.get permission on the specified dashboard. For
-// more information, see Google Cloud IAM
+// more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+// - name: The resource name of the Dashboard. The format is one of:
+//   dashboards/[DASHBOARD_ID] (for system dashboards)
+//   projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for
+//   custom dashboards).
 func (r *ProjectsDashboardsService) Get(name string) *ProjectsDashboardsGetCall {
 	c := &ProjectsDashboardsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2187,7 +2200,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2249,7 +2262,7 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches a specific dashboard.This method requires the monitoring.dashboards.get permission on the specified dashboard. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Fetches a specific dashboard.This method requires the monitoring.dashboards.get permission on the specified dashboard. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards/{dashboardsId}",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.dashboards.get",
@@ -2291,8 +2304,11 @@ type ProjectsDashboardsListCall struct {
 
 // List: Lists the existing dashboards.This method requires the
 // monitoring.dashboards.list permission on the specified project. For
-// more information, see Google Cloud IAM
+// more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+// - parent: The scope of the dashboards to list. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsDashboardsService) List(parent string) *ProjectsDashboardsListCall {
 	c := &ProjectsDashboardsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2353,7 +2369,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2415,7 +2431,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing dashboards.This method requires the monitoring.dashboards.list permission on the specified project. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Lists the existing dashboards.This method requires the monitoring.dashboards.list permission on the specified project. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.dashboards.list",
@@ -2490,7 +2506,9 @@ type ProjectsDashboardsPatchCall struct {
 // Patch: Replaces an existing custom dashboard with a new
 // definition.This method requires the monitoring.dashboards.update
 // permission on the specified dashboard. For more information, see
-// Google Cloud IAM (https://cloud.google.com/iam).
+// Cloud Identity and Access Management (https://cloud.google.com/iam).
+//
+// - name: Immutable. The resource name of the dashboard.
 func (r *ProjectsDashboardsService) Patch(name string, dashboard *Dashboard) *ProjectsDashboardsPatchCall {
 	c := &ProjectsDashboardsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2525,7 +2543,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2589,7 +2607,7 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces an existing custom dashboard with a new definition.This method requires the monitoring.dashboards.update permission on the specified dashboard. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Replaces an existing custom dashboard with a new definition.This method requires the monitoring.dashboards.update permission on the specified dashboard. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards/{dashboardsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "monitoring.projects.dashboards.patch",

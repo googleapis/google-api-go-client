@@ -79,7 +79,7 @@ const mtlsBasePath = "https://healthcare.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -185,10 +185,58 @@ type ProjectsLocationsDatasetsService struct {
 
 func NewProjectsLocationsDatasetsConsentStoresService(s *Service) *ProjectsLocationsDatasetsConsentStoresService {
 	rs := &ProjectsLocationsDatasetsConsentStoresService{s: s}
+	rs.AttributeDefinitions = NewProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService(s)
+	rs.ConsentArtifacts = NewProjectsLocationsDatasetsConsentStoresConsentArtifactsService(s)
+	rs.Consents = NewProjectsLocationsDatasetsConsentStoresConsentsService(s)
+	rs.UserDataMappings = NewProjectsLocationsDatasetsConsentStoresUserDataMappingsService(s)
 	return rs
 }
 
 type ProjectsLocationsDatasetsConsentStoresService struct {
+	s *Service
+
+	AttributeDefinitions *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService
+
+	ConsentArtifacts *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService
+
+	Consents *ProjectsLocationsDatasetsConsentStoresConsentsService
+
+	UserDataMappings *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService
+}
+
+func NewProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService(s *Service) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService {
+	rs := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatasetsConsentStoresConsentArtifactsService(s *Service) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService {
+	rs := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsConsentStoresConsentArtifactsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatasetsConsentStoresConsentsService(s *Service) *ProjectsLocationsDatasetsConsentStoresConsentsService {
+	rs := &ProjectsLocationsDatasetsConsentStoresConsentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsConsentStoresConsentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatasetsConsentStoresUserDataMappingsService(s *Service) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService {
+	rs := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsService struct {
 	s *Service
 }
 
@@ -298,6 +346,174 @@ func NewProjectsLocationsDatasetsOperationsService(s *Service) *ProjectsLocation
 
 type ProjectsLocationsDatasetsOperationsService struct {
 	s *Service
+}
+
+// ActivateConsentRequest: Activates the latest revision of the
+// specified Consent by committing a new revision with `state` updated
+// to `ACTIVE`. If the latest revision of the given Consent is in the
+// `ACTIVE` state, no new revision is committed. A FAILED_PRECONDITION
+// error occurs if the latest revision of the given consent is in the
+// `REJECTED` or `REVOKED` state.
+type ActivateConsentRequest struct {
+	// ConsentArtifact: Required. The resource name of the Consent artifact
+	// that contains documentation of the user's consent, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
+	// `. If the draft Consent had a Consent artifact, this Consent artifact
+	// overwrites it.
+	ConsentArtifact string `json:"consentArtifact,omitempty"`
+
+	// ExpireTime: Timestamp in UTC of when this Consent is considered
+	// expired.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Ttl: The time to live for this Consent from when it is marked as
+	// active.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentArtifact") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentArtifact") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActivateConsentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivateConsentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ArchiveUserDataMappingRequest: Archives the specified User data
+// mapping.
+type ArchiveUserDataMappingRequest struct {
+}
+
+// ArchiveUserDataMappingResponse: Archives the specified User data
+// mapping.
+type ArchiveUserDataMappingResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// Attribute: An attribute value for a Consent or User data mapping.
+// Each Attribute must have a corresponding AttributeDefinition in the
+// consent store that defines the default and allowed values.
+type Attribute struct {
+	// AttributeDefinitionId: Indicates the name of an attribute defined in
+	// the consent store.
+	AttributeDefinitionId string `json:"attributeDefinitionId,omitempty"`
+
+	// Values: Required. The value of the attribute. Must be an acceptable
+	// value as defined in the consent store. For example, if the consent
+	// store defines "data type" with acceptable values "questionnaire" and
+	// "step-count", when the attribute name is data type, this field must
+	// contain one of those values.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttributeDefinitionId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeDefinitionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Attribute) MarshalJSON() ([]byte, error) {
+	type NoMethod Attribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttributeDefinition: A client-defined consent attribute.
+type AttributeDefinition struct {
+	// AllowedValues: Required. Possible values for the attribute. The
+	// number of allowed values must not exceed 100. An empty list is
+	// invalid. The list can only be expanded after creation.
+	AllowedValues []string `json:"allowedValues,omitempty"`
+
+	// Category: Required. The category of the attribute. The value of this
+	// field cannot be changed after creation.
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - No category specified. This option is
+	// invalid.
+	//   "RESOURCE" - Specify this category when this attribute describes
+	// the properties of resources. For example, data anonymity or data
+	// type.
+	//   "REQUEST" - Specify this category when this attribute describes the
+	// properties of requests. For example, requester's role or requester's
+	// organization.
+	Category string `json:"category,omitempty"`
+
+	// ConsentDefaultValues: Optional. Default values of the attribute in
+	// Consents. If no default values are specified, it defaults to an empty
+	// value.
+	ConsentDefaultValues []string `json:"consentDefaultValues,omitempty"`
+
+	// DataMappingDefaultValue: Optional. Default value of the attribute in
+	// User data mappings. If no default value is specified, it defaults to
+	// an empty value. This field is only applicable to attributes of the
+	// category `RESOURCE`.
+	DataMappingDefaultValue string `json:"dataMappingDefaultValue,omitempty"`
+
+	// Description: Optional. A description of the attribute.
+	Description string `json:"description,omitempty"`
+
+	// Name: Resource name of the Attribute definition, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/attributeDefinitions/{attribute_defini
+	// tion_id}`. Cannot be changed after creation.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttributeDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod AttributeDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -502,6 +718,395 @@ type CharacterMaskConfig struct {
 
 func (s *CharacterMaskConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CharacterMaskConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckDataAccessRequest: Checks if a particular data_id of a User data
+// mapping in the given consent store is consented for a given use.
+type CheckDataAccessRequest struct {
+	// ConsentList: Optional. Specific Consents to evaluate the access
+	// request against. These Consents must have the same `user_id` as the
+	// evaluated User data mapping, must exist in the current
+	// `consent_store`, and have a `state` of either `ACTIVE` or `DRAFT`. A
+	// maximum of 100 Consents can be provided here. If no selection is
+	// specified, the access request is evaluated against all `ACTIVE`
+	// unexpired Consents with the same `user_id` as the evaluated User data
+	// mapping.
+	ConsentList *ConsentList `json:"consentList,omitempty"`
+
+	// DataId: Required. The unique identifier of the resource to check
+	// access for. This identifier must correspond to a User data mapping in
+	// the given consent store.
+	DataId string `json:"dataId,omitempty"`
+
+	// RequestAttributes: The values of request attributes associated with
+	// this access request.
+	RequestAttributes map[string]string `json:"requestAttributes,omitempty"`
+
+	// ResponseView: Optional. The view for CheckDataAccessResponse. If
+	// unspecified, defaults to `BASIC` and returns `consented` as `TRUE` or
+	// `FALSE`.
+	//
+	// Possible values:
+	//   "RESPONSE_VIEW_UNSPECIFIED" - No response view specified. The API
+	// will default to the BASIC view.
+	//   "BASIC" - Only the `consented` field is populated in
+	// CheckDataAccessResponse.
+	//   "FULL" - All fields within CheckDataAccessResponse are populated.
+	// When set to `FULL`, all `ACTIVE` Consents are evaluated even if a
+	// matching policy is found during evaluation.
+	ResponseView string `json:"responseView,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentList") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckDataAccessRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckDataAccessRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckDataAccessResponse: Checks if a particular data_id of a User
+// data mapping in the given consent store is consented for a given use.
+type CheckDataAccessResponse struct {
+	// ConsentDetails: The resource names of all evaluated Consents mapped
+	// to their evaluation.
+	ConsentDetails map[string]ConsentEvaluation `json:"consentDetails,omitempty"`
+
+	// Consented: Whether the requested resource is consented for the given
+	// use.
+	Consented bool `json:"consented,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckDataAccessResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckDataAccessResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Consent: Represents a user's consent.
+type Consent struct {
+	// ConsentArtifact: Required. The resource name of the Consent artifact
+	// that contains proof of the end user's consent, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
+	// `.
+	ConsentArtifact string `json:"consentArtifact,omitempty"`
+
+	// ExpireTime: Timestamp in UTC of when this Consent is considered
+	// expired.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Metadata: Optional. User-supplied key-value pairs used to organize
+	// Consent resources. Metadata keys must: - be between 1 and 63
+	// characters long - have a UTF-8 encoding of maximum 128 bytes - begin
+	// with a letter - consist of up to 63 characters including lowercase
+	// letters, numeric characters, underscores, and dashes Metadata values
+	// must be: - be between 1 and 63 characters long - have a UTF-8
+	// encoding of maximum 128 bytes - consist of up to 63 characters
+	// including lowercase letters, numeric characters, underscores, and
+	// dashes No more than 64 metadata entries can be associated with a
+	// given consent.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Name: Resource name of the Consent, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
+	// changed after creation.
+	Name string `json:"name,omitempty"`
+
+	// Policies: Optional. Represents a user's consent in terms of the
+	// resources that can be accessed and under what conditions.
+	Policies []*GoogleCloudHealthcareV1ConsentPolicy `json:"policies,omitempty"`
+
+	// RevisionCreateTime: Output only. The timestamp that the revision was
+	// created.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+
+	// RevisionId: Output only. The revision ID of the Consent. The format
+	// is an 8-character hexadecimal string. Refer to a specific revision of
+	// a Consent by appending `@{revision_id}` to the Consent's resource
+	// name.
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// State: Required. Indicates the current state of this Consent.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state specified.
+	//   "ACTIVE" - The Consent is active and is considered when evaluating
+	// a user's consent on resources.
+	//   "ARCHIVED" - When a Consent is updated, the current version is
+	// archived and a new one is created with its state set to the updated
+	// Consent's previous state.
+	//   "REVOKED" - A revoked Consent is not considered when evaluating a
+	// user's consent on resources.
+	//   "DRAFT" - A draft Consent is not considered when evaluating a
+	// user's consent on resources unless explicitly specified.
+	//   "REJECTED" - When a draft Consent is rejected by a user, it is set
+	// to a rejected state. A rejected Consent is not considered when
+	// evaluating a user's consent on resources.
+	State string `json:"state,omitempty"`
+
+	// Ttl: Input only. The time to live for this Consent from when it is
+	// created.
+	Ttl string `json:"ttl,omitempty"`
+
+	// UserId: Required. User's UUID provided by the client.
+	UserId string `json:"userId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentArtifact") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentArtifact") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Consent) MarshalJSON() ([]byte, error) {
+	type NoMethod Consent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsentArtifact: Documentation of a user's consent.
+type ConsentArtifact struct {
+	// ConsentContentScreenshots: Optional. Screenshots, PDFs, or other
+	// binary information documenting the user's consent.
+	ConsentContentScreenshots []*Image `json:"consentContentScreenshots,omitempty"`
+
+	// ConsentContentVersion: Optional. An string indicating the version of
+	// the consent information shown to the user.
+	ConsentContentVersion string `json:"consentContentVersion,omitempty"`
+
+	// GuardianSignature: Optional. A signature from a guardian.
+	GuardianSignature *Signature `json:"guardianSignature,omitempty"`
+
+	// Metadata: Optional. Metadata associated with the Consent artifact.
+	// For example, the consent locale or user agent version.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Name: Resource name of the Consent artifact, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
+	// `. Cannot be changed after creation.
+	Name string `json:"name,omitempty"`
+
+	// UserId: Required. User's UUID provided by the client.
+	UserId string `json:"userId,omitempty"`
+
+	// UserSignature: Optional. User's signature.
+	UserSignature *Signature `json:"userSignature,omitempty"`
+
+	// WitnessSignature: Optional. A signature from a witness.
+	WitnessSignature *Signature `json:"witnessSignature,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConsentContentScreenshots") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ConsentContentScreenshots") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsentEvaluation: The detailed evaluation of a particular Consent.
+type ConsentEvaluation struct {
+	// EvaluationResult: The evaluation result.
+	//
+	// Possible values:
+	//   "EVALUATION_RESULT_UNSPECIFIED" - No evaluation result specified.
+	// This option is invalid.
+	//   "NOT_APPLICABLE" - The Consent is not applicable to the requested
+	// access determination. For example, the Consent does not apply to the
+	// user for which the access determination is requested, or it has a
+	// `state` of `REVOKED`.
+	//   "NO_MATCHING_POLICY" - The Consent does not have a policy that
+	// matches the `resource_attributes` of the evaluated resource.
+	//   "NO_SATISFIED_POLICY" - The Consent has at least one policy that
+	// matches the `resource_attributes` of the evaluated resource, but no
+	// `authorization_rule` was satisfied.
+	//   "HAS_SATISFIED_POLICY" - The Consent has at least one policy that
+	// matches the `resource_attributes` of the evaluated resource, and at
+	// least one `authorization_rule` was satisfied.
+	EvaluationResult string `json:"evaluationResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EvaluationResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EvaluationResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentEvaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentEvaluation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsentList: List of resource names of Consent resources.
+type ConsentList struct {
+	// Consents: The resource names of the Consents to evaluate against, of
+	// the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consents/{consent_id}`.
+	Consents []string `json:"consents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Consents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Consents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentList) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsentStore: Represents a consent store.
+type ConsentStore struct {
+	// DefaultConsentTtl: Optional. Default time to live for Consents
+	// created in this store. Must be at least 24 hours. Updating this field
+	// will not affect the expiration time of existing consents.
+	DefaultConsentTtl string `json:"defaultConsentTtl,omitempty"`
+
+	// EnableConsentCreateOnUpdate: Optional. If `true`, UpdateConsent
+	// creates the Consent if it does not already exist. If unspecified,
+	// defaults to `false`.
+	EnableConsentCreateOnUpdate bool `json:"enableConsentCreateOnUpdate,omitempty"`
+
+	// Labels: Optional. User-supplied key-value pairs used to organize
+	// consent stores. Label keys must be between 1 and 63 characters long,
+	// have a UTF-8 encoding of maximum 128 bytes, and must conform to the
+	// following PCRE regular expression: \p{Ll}\p{Lo}{0,62}. Label values
+	// must be between 1 and 63 characters long, have a UTF-8 encoding of
+	// maximum 128 bytes, and must conform to the following PCRE regular
+	// expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63}. No more than 64 labels can
+	// be associated with a given store. For more information:
+	// https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Resource name of the consent store, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}`. Cannot be changed after creation.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultConsentTtl")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultConsentTtl") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentStore) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentStore
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -971,6 +1576,115 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EvaluateUserConsentsRequest: Evaluate a user's Consents for all
+// matching User data mappings. Note: User data mappings are indexed
+// asynchronously, causing slight delays between the time mappings are
+// created or updated and when they are included in EvaluateUserConsents
+// results.
+type EvaluateUserConsentsRequest struct {
+	// ConsentList: Optional. Specific Consents to evaluate the access
+	// request against. These Consents must have the same `user_id` as the
+	// User data mappings being evalauted, must exist in the current
+	// `consent_store`, and must have a `state` of either `ACTIVE` or
+	// `DRAFT`. A maximum of 100 Consents can be provided here. If
+	// unspecified, all `ACTIVE` unexpired Consents in the current
+	// `consent_store` will be evaluated.
+	ConsentList *ConsentList `json:"consentList,omitempty"`
+
+	// PageSize: Optional. Limit on the number of User data mappings to
+	// return in a single response. If not specified, 100 is used. May not
+	// be larger than 1000.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. Token to retrieve the next page of results, or
+	// empty to get the first page.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// RequestAttributes: Required. The values of request attributes
+	// associated with this access request.
+	RequestAttributes map[string]string `json:"requestAttributes,omitempty"`
+
+	// ResourceAttributes: Optional. The values of resource attributes
+	// associated with the resources being requested. If no values are
+	// specified, then all resources are queried.
+	ResourceAttributes map[string]string `json:"resourceAttributes,omitempty"`
+
+	// ResponseView: Optional. The view for EvaluateUserConsentsResponse. If
+	// unspecified, defaults to `BASIC` and returns `consented` as `TRUE` or
+	// `FALSE`.
+	//
+	// Possible values:
+	//   "RESPONSE_VIEW_UNSPECIFIED" - No response view specified. The API
+	// will default to the BASIC view.
+	//   "BASIC" - Only the `data_id` and `consented` fields are populated
+	// in the response.
+	//   "FULL" - All fields within the response are populated. When set to
+	// `FULL`, all `ACTIVE` Consents are evaluated even if a matching policy
+	// is found during evaluation.
+	ResponseView string `json:"responseView,omitempty"`
+
+	// UserId: Required. User ID to evaluate consents for.
+	UserId string `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentList") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluateUserConsentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluateUserConsentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EvaluateUserConsentsResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list. This token is valid for 72
+	// hours after it is created.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Results: The consent evaluation result for each `data_id`.
+	Results []*Result `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluateUserConsentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluateUserConsentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExportDicomDataRequest: Exports data from the specified DICOM store.
 // If a given resource, such as a DICOM object with the same SOPInstance
 // UID, already exists in the output, it is overwritten with the version
@@ -1218,9 +1932,9 @@ type FhirStore struct {
 	// non-existent resource return errors. It is strongly advised not to
 	// include or encode any sensitive data such as patient identifiers in
 	// client-specified resource IDs. Those IDs are part of the FHIR
-	// resource path recorded in Cloud audit logs and Cloud Pub/Sub
-	// notifications. Those IDs can also be contained in reference fields
-	// within other resources.
+	// resource path recorded in Cloud audit logs and Pub/Sub notifications.
+	// Those IDs can also be contained in reference fields within other
+	// resources.
 	EnableUpdateCreate bool `json:"enableUpdateCreate,omitempty"`
 
 	// Labels: User-supplied key-value pairs used to organize FHIR stores.
@@ -1239,7 +1953,7 @@ type FhirStore struct {
 	Name string `json:"name,omitempty"`
 
 	// NotificationConfig: If non-empty, publish all resource modifications
-	// of this FHIR store to this destination. The Cloud Pub/Sub message
+	// of this FHIR store to this destination. The Pub/Sub message
 	// attributes contain a map with a string describing the action that has
 	// triggered the notification. For example, "action":"CreateResource".
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
@@ -1303,6 +2017,50 @@ func (s *FhirStore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Field: A (sub) field of a type.
+type Field struct {
+	// MaxOccurs: The maximum number of times this field can be repeated. 0
+	// or -1 means unbounded.
+	MaxOccurs int64 `json:"maxOccurs,omitempty"`
+
+	// MinOccurs: The minimum number of times this field must be
+	// present/repeated.
+	MinOccurs int64 `json:"minOccurs,omitempty"`
+
+	// Name: The name of the field. For example, "PID-1" or just "1".
+	Name string `json:"name,omitempty"`
+
+	// Table: The HL7v2 table this field refers to. For example, PID-15
+	// (Patient's Primary Language) usually refers to table "0296".
+	Table string `json:"table,omitempty"`
+
+	// Type: The type of this field. A Type with this name must be defined
+	// in an Hl7TypesConfig.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxOccurs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxOccurs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Field) MarshalJSON() ([]byte, error) {
+	type NoMethod Field
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FieldMetadata: Specifies FHIR paths to match, and how to handle
 // de-identification of matching fields.
 type FieldMetadata struct {
@@ -1345,6 +2103,80 @@ type FieldMetadata struct {
 
 func (s *FieldMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudHealthcareV1ConsentGcsDestination: The Cloud Storage
+// location for export.
+type GoogleCloudHealthcareV1ConsentGcsDestination struct {
+	// UriPrefix: URI for a Cloud Storage directory where the server writes
+	// result files, in the format
+	// `gs://{bucket-id}/{path/to/destination/dir}`. If there is no trailing
+	// slash, the service appends one when composing the object path. The
+	// user is responsible for creating the Cloud Storage bucket and
+	// directory referenced in `uri_prefix`.
+	UriPrefix string `json:"uriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UriPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UriPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudHealthcareV1ConsentGcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudHealthcareV1ConsentGcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudHealthcareV1ConsentPolicy: Represents a user's consent in
+// terms of the resources that can be accessed and under what
+// conditions.
+type GoogleCloudHealthcareV1ConsentPolicy struct {
+	// AuthorizationRule: Required. The request conditions to meet to grant
+	// access. In addition to any supported comparison operators,
+	// authorization rules may have `IN` operator as well as at most 10
+	// logical operators that are limited to `AND` (`&&`), `OR` (`||`).
+	AuthorizationRule *Expr `json:"authorizationRule,omitempty"`
+
+	// ResourceAttributes: The resources that this policy applies to. A
+	// resource is a match if it matches all the attributes listed here. If
+	// empty, this policy applies to all User data mappings for the given
+	// user.
+	ResourceAttributes []*Attribute `json:"resourceAttributes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorizationRule")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizationRule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudHealthcareV1ConsentPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudHealthcareV1ConsentPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1463,15 +2295,15 @@ type GoogleCloudHealthcareV1DicomGcsSource struct {
 	// Uri: Points to a Cloud Storage URI containing file(s) with content
 	// only. The URI must be in the following format:
 	// `gs://{bucket_id}/{object_id}`. The URI can include wildcards in
-	// `object_id` and thus identify multiple files. Supported wildcards:
-	// '*' to match 0 or more non-separator characters '**' to match 0 or
+	// `object_id` and thus identify multiple files. Supported wildcards: *
+	// '*' to match 0 or more non-separator characters * '**' to match 0 or
 	// more characters (including separators). Must be used at the end of a
 	// path and with no other wildcards in the path. Can also be used with a
 	// file extension (such as .dcm), which imports all files with the
 	// extension in the specified directory and its sub-directories. For
 	// example, `gs://my-bucket/my-directory/**.dcm` imports all files with
-	// .dcm extensions in `my-directory/` and its sub-directories. '?' to
-	// match 1 character All other URI formats are invalid. Files matching
+	// .dcm extensions in `my-directory/` and its sub-directories. * '?' to
+	// match 1 character. All other URI formats are invalid. Files matching
 	// the wildcard are expected to contain content only, no metadata.
 	Uri string `json:"uri,omitempty"`
 
@@ -1526,7 +2358,7 @@ type GoogleCloudHealthcareV1FhirBigQueryDestination struct {
 	// WRITE_EMPTY.
 	//   "WRITE_EMPTY" - Only export data if the destination tables are
 	// empty.
-	//   "WRITE_TRUNCATE" - Erase all existing data in a tables before
+	//   "WRITE_TRUNCATE" - Erase all existing data in the tables before
 	// writing the instances.
 	//   "WRITE_APPEND" - Append data to the existing tables.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
@@ -1629,6 +2461,105 @@ func (s *GoogleCloudHealthcareV1FhirGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GroupOrSegment: Construct representing a logical group or a segment.
+type GroupOrSegment struct {
+	Group *SchemaGroup `json:"group,omitempty"`
+
+	Segment *SchemaSegment `json:"segment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Group") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupOrSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupOrSegment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Hl7SchemaConfig: Root config message for HL7v2 schema. This contains
+// a schema structure of groups and segments, and filters that determine
+// which messages to apply the schema structure to.
+type Hl7SchemaConfig struct {
+	// MessageSchemaConfigs: Map from each HL7v2 message type and trigger
+	// event pair, such as ADT_A04, to its schema configuration root group.
+	MessageSchemaConfigs map[string]SchemaGroup `json:"messageSchemaConfigs,omitempty"`
+
+	// Version: Each VersionSource is tested and only if they all match is
+	// the schema used for the message.
+	Version []*VersionSource `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MessageSchemaConfigs") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MessageSchemaConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Hl7SchemaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod Hl7SchemaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Hl7TypesConfig: Root config for HL7v2 datatype definitions for a
+// specific HL7v2 version.
+type Hl7TypesConfig struct {
+	// Type: The HL7v2 type definitions.
+	Type []*Type `json:"type,omitempty"`
+
+	// Version: The version selectors that this config applies to. A message
+	// must match ALL version sources to apply.
+	Version []*VersionSource `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Hl7TypesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod Hl7TypesConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Hl7V2NotificationConfig: Specifies where and whether to send
 // notifications upon changes to a data store.
 type Hl7V2NotificationConfig struct {
@@ -1663,24 +2594,26 @@ type Hl7V2NotificationConfig struct {
 	// the MSH-7 segment. For example, `send_date < "2017-01-02". *
 	// `send_time`, the timestamp when the message was sent, using the
 	// RFC3339 time format for comparisons, from the MSH-7 segment. For
-	// example, `send_time < "2017-01-02T00:00:00-05:00". *
-	// `send_facility`, the care center that the message came from, from the
-	// MSH-4 segment. For example, `send_facility = "ABC". *
-	// `PatientId(value, type)`, which matches if the message lists a
-	// patient having an ID of the given value and type in the PID-2, PID-3,
-	// or PID-4 segments. For example, `PatientId("123456", "MRN")`. *
-	// `labels.x`, a string value of the label with key `x` as set using the
-	// Message.labels map. For example, `labels."priority"="high". The
-	// operator `:*` can be used to assert the existence of a label. For
-	// example, `labels."priority":*`.
+	// example, `send_time < "2017-01-02T00:00:00-05:00". * `create_time`,
+	// the timestamp when the message was created in the HL7v2 store. Use
+	// the RFC3339 time format for comparisons. For example, `create_time <
+	// "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that
+	// the message came from, from the MSH-4 segment. For example,
+	// `send_facility = "ABC". * `PatientId(value, type)`, which matches if
+	// the message lists a patient having an ID of the given value and type
+	// in the PID-2, PID-3, or PID-4 segments. For example,
+	// `PatientId("123456", "MRN")`. * `labels.x`, a string value of the
+	// label with key `x` as set using the Message.labels map. For example,
+	// `labels."priority"="high". The operator `:*` can be used to assert
+	// the existence of a label. For example, `labels."priority":*`.
 	Filter string `json:"filter,omitempty"`
 
-	// PubsubTopic: The Cloud Pub/Sub
-	// (https://cloud.google.com/pubsub/docs/) topic that notifications of
-	// changes are published on. Supplied by the client. The notification is
-	// a `PubsubMessage` with the following fields: * `PubsubMessage.Data`
-	// contains the resource name. * `PubsubMessage.MessageId` is the ID of
-	// this notification. It's guaranteed to be unique within the topic. *
+	// PubsubTopic: The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. The notification is a `PubsubMessage` with the following
+	// fields: * `PubsubMessage.Data` contains the resource name. *
+	// `PubsubMessage.MessageId` is the ID of this notification. It's
+	// guaranteed to be unique within the topic. *
 	// `PubsubMessage.PublishTime` is the time when the message was
 	// published. Note that notifications are only sent if the topic is
 	// non-empty. Topic names
@@ -1689,9 +2622,10 @@ type Hl7V2NotificationConfig struct {
 	// service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com,
 	// must have publisher permissions on the given Pub/Sub topic. Not
 	// having adequate permissions causes the calls that send notifications
-	// to fail. If a notification cannot be published to Cloud Pub/Sub,
-	// errors are logged to Cloud Logging. For more information, see Viewing
-	// error logs in Cloud Logging (/healthcare/docs/how-tos/logging)).
+	// to fail. If a notification cannot be published to Pub/Sub, errors are
+	// logged to Cloud Logging. For more information, see Viewing error logs
+	// in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -1837,6 +2771,47 @@ type HttpBody struct {
 
 func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Image: Raw bytes representing consent artifact content.
+type Image struct {
+	// GcsUri: Input only. Points to a Cloud Storage URI containing the
+	// consent artifact content. The URI must be in the following format:
+	// `gs://{bucket_id}/{object_id}`. The Cloud Healthcare API service
+	// account must have the `roles/storage.objectViewer` Cloud IAM role for
+	// this Cloud Storage location. The consent artifact content at this URI
+	// is copied to a Cloud Storage location managed by the Cloud Healthcare
+	// API. Responses to fetching requests return the consent artifact
+	// content in raw_bytes.
+	GcsUri string `json:"gcsUri,omitempty"`
+
+	// RawBytes: Consent artifact content represented as a stream of bytes.
+	// This field is populated when returned in GetConsentArtifact response,
+	// but not included in CreateConsentArtifact and ListConsentArtifact
+	// response.
+	RawBytes string `json:"rawBytes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Image) MarshalJSON() ([]byte, error) {
+	type NoMethod Image
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2080,6 +3055,194 @@ type IngestMessageResponse struct {
 
 func (s *IngestMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestMessageResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListAttributeDefinitionsResponse struct {
+	// AttributeDefinitions: The returned Attribute definitions. The maximum
+	// number of attributes returned is determined by the value of page_size
+	// in the ListAttributeDefinitionsRequest.
+	AttributeDefinitions []*AttributeDefinition `json:"attributeDefinitions,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttributeDefinitions") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeDefinitions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAttributeDefinitionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAttributeDefinitionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListConsentArtifactsResponse struct {
+	// ConsentArtifacts: The returned Consent artifacts. The maximum number
+	// of artifacts returned is determined by the value of page_size in the
+	// ListConsentArtifactsRequest.
+	ConsentArtifacts []*ConsentArtifact `json:"consentArtifacts,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentArtifacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentArtifacts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConsentArtifactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConsentArtifactsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListConsentRevisionsResponse struct {
+	// Consents: The returned Consent revisions. The maximum number of
+	// revisions returned is determined by the value of `page_size` in the
+	// ListConsentRevisionsRequest.
+	Consents []*Consent `json:"consents,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Consents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Consents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConsentRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConsentRevisionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListConsentStoresResponse struct {
+	// ConsentStores: The returned consent stores. The maximum number of
+	// stores returned is determined by the value of page_size in the
+	// ListConsentStoresRequest.
+	ConsentStores []*ConsentStore `json:"consentStores,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentStores") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentStores") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConsentStoresResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConsentStoresResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListConsentsResponse struct {
+	// Consents: The returned Consents. The maximum number of Consents
+	// returned is determined by the value of page_size in the
+	// ListConsentsRequest.
+	Consents []*Consent `json:"consents,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Consents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Consents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConsentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConsentsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2343,6 +3506,43 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListUserDataMappingsResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// UserDataMappings: The returned User data mappings. The maximum number
+	// of User data mappings returned is determined by the value of
+	// page_size in the ListUserDataMappingsRequest.
+	UserDataMappings []*UserDataMapping `json:"userDataMappings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListUserDataMappingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserDataMappingsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
@@ -2430,6 +3630,10 @@ type Message struct {
 	// segments of this message.
 	PatientIds []*PatientId `json:"patientIds,omitempty"`
 
+	// SchematizedData: The parsed version of the raw message data
+	// schematized according to this store's schemas and type definitions.
+	SchematizedData *SchematizedData `json:"schematizedData,omitempty"`
+
 	// SendFacility: The hospital that this message came from. MSH-4.
 	SendFacility string `json:"sendFacility,omitempty"`
 
@@ -2467,22 +3671,23 @@ func (s *Message) MarshalJSON() ([]byte, error) {
 // NotificationConfig: Specifies where to send notifications upon
 // changes to a data store.
 type NotificationConfig struct {
-	// PubsubTopic: The Cloud Pub/Sub
-	// (https://cloud.google.com/pubsub/docs/) topic that notifications of
-	// changes are published on. Supplied by the client. PubsubMessage.Data
-	// contains the resource name. PubsubMessage.MessageId is the ID of this
-	// message. It is guaranteed to be unique within the topic.
-	// PubsubMessage.PublishTime is the time at which the message was
-	// published. Notifications are only sent if the topic is non-empty.
-	// Topic names (https://cloud.google.com/pubsub/docs/overview#names)
-	// must be scoped to a project. Cloud Healthcare API service account
-	// must have publisher permissions on the given Cloud Pub/Sub topic. Not
-	// having adequate permissions causes the calls that send notifications
-	// to fail. If a notification can't be published to Cloud Pub/Sub,
-	// errors are logged to Cloud Logging (see Viewing logs
-	// (/healthcare/docs/how-tos/logging)). If the number of errors exceeds
-	// a certain rate, some aren't submitted. Note that not all operations
-	// trigger notifications, see Configuring Pub/Sub notifications
+	// PubsubTopic: The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. PubsubMessage.Data contains the resource name.
+	// PubsubMessage.MessageId is the ID of this message. It is guaranteed
+	// to be unique within the topic. PubsubMessage.PublishTime is the time
+	// at which the message was published. Notifications are only sent if
+	// the topic is non-empty. Topic names
+	// (https://cloud.google.com/pubsub/docs/overview#names) must be scoped
+	// to a project. Cloud Healthcare API service account must have
+	// publisher permissions on the given Pub/Sub topic. Not having adequate
+	// permissions causes the calls that send notifications to fail. If a
+	// notification can't be published to Pub/Sub, errors are logged to
+	// Cloud Logging (see Viewing error logs in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)). If the
+	// number of errors exceeds a certain rate, some aren't submitted. Note
+	// that not all operations trigger notifications, see Configuring
+	// Pub/Sub notifications
 	// (https://cloud.google.com/healthcare/docs/how-tos/pubsub) for
 	// specific details.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
@@ -2593,8 +3798,9 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// LogsUrl: A link to audit and error logs in the log viewer. Error logs
-	// are generated only by some operations, listed at Viewing logs
-	// (/healthcare/docs/how-tos/logging).
+	// are generated only by some operations, listed at Viewing error logs
+	// in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging).
 	LogsUrl string `json:"logsUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiMethodName") to
@@ -2653,6 +3859,10 @@ type ParserConfig struct {
 	// AllowNullHeader: Determines whether messages with no header are
 	// allowed.
 	AllowNullHeader bool `json:"allowNullHeader,omitempty"`
+
+	// Schema: Schemas used to parse messages in this store, if schematized
+	// parsing is desired.
+	Schema *SchemaPackage `json:"schema,omitempty"`
 
 	// SegmentTerminator: Byte(s) to use as the segment terminator. If this
 	// is unset, '\r' is used as segment terminator, matching the HL7
@@ -2853,10 +4063,94 @@ func (s *ProgressCounter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryAccessibleDataRequest: Queries all data_ids that are consented
+// for a given use in the given consent store and writes them to a
+// specified destination. The returned Operation includes a progress
+// counter for the number of User data mappings processed. Errors are
+// logged to Cloud Logging (see [Viewing error logs in Cloud Logging]
+// (https://cloud.google.com/healthcare/docs/how-tos/logging) and
+// [QueryAccessibleData] for a sample log entry).
+type QueryAccessibleDataRequest struct {
+	// GcsDestination: The Cloud Storage destination. The Cloud Healthcare
+	// API service account must have the `roles/storage.objectAdmin` Cloud
+	// IAM role for this Cloud Storage location.
+	GcsDestination *GoogleCloudHealthcareV1ConsentGcsDestination `json:"gcsDestination,omitempty"`
+
+	// RequestAttributes: The values of request attributes associated with
+	// this access request.
+	RequestAttributes map[string]string `json:"requestAttributes,omitempty"`
+
+	// ResourceAttributes: Optional. The values of resource attributes
+	// associated with the type of resources being requested. If no values
+	// are specified, then all resource types are included in the output.
+	ResourceAttributes map[string]string `json:"resourceAttributes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAccessibleDataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAccessibleDataRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RedactConfig: Define how to redact sensitive values. Default
 // behaviour is erase. For example, "My name is Jane." becomes "My name
 // is ."
 type RedactConfig struct {
+}
+
+// RejectConsentRequest: Rejects the latest revision of the specified
+// Consent by committing a new revision with `state` updated to
+// `REJECTED`. If the latest revision of the given Consent is in the
+// `REJECTED` state, no new revision is committed.
+type RejectConsentRequest struct {
+	// ConsentArtifact: Optional. The resource name of the Consent artifact
+	// that contains documentation of the user's rejection of the draft
+	// Consent, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
+	// `. If the draft Consent had a Consent artifact, this Consent artifact
+	// overwrites it.
+	ConsentArtifact string `json:"consentArtifact,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentArtifact") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentArtifact") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RejectConsentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RejectConsentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceWithInfoTypeConfig: When using the INSPECT_AND_TRANSFORM
@@ -2890,6 +4184,79 @@ type Resources struct {
 
 func (s *Resources) MarshalJSON() ([]byte, error) {
 	type NoMethod Resources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Result: The consent evaluation result for a single `data_id`.
+type Result struct {
+	// ConsentDetails: The resource names of all evaluated Consents mapped
+	// to their evaluation.
+	ConsentDetails map[string]ConsentEvaluation `json:"consentDetails,omitempty"`
+
+	// Consented: Whether the resource is consented for the given use.
+	Consented bool `json:"consented,omitempty"`
+
+	// DataId: The unique identifier of the evaluated resource.
+	DataId string `json:"dataId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Result) MarshalJSON() ([]byte, error) {
+	type NoMethod Result
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevokeConsentRequest: Revokes the latest revision of the specified
+// Consent by committing a new revision with `state` updated to
+// `REVOKED`. If the latest revision of the given Consent is in the
+// `REVOKED` state, no new revision is committed.
+type RevokeConsentRequest struct {
+	// ConsentArtifact: Optional. The resource name of the Consent artifact
+	// that contains proof of the user's revocation of the Consent, of the
+	// form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
+	// `.
+	ConsentArtifact string `json:"consentArtifact,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentArtifact") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentArtifact") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevokeConsentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RevokeConsentRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2941,6 +4308,174 @@ type SchemaConfig struct {
 
 func (s *SchemaConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SchemaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SchemaGroup: An HL7v2 logical group construct.
+type SchemaGroup struct {
+	// Choice: True indicates that this is a choice group, meaning that only
+	// one of its segments can exist in a given message.
+	Choice bool `json:"choice,omitempty"`
+
+	// MaxOccurs: The maximum number of times this group can be repeated. 0
+	// or -1 means unbounded.
+	MaxOccurs int64 `json:"maxOccurs,omitempty"`
+
+	// Members: Nested groups and/or segments.
+	Members []*GroupOrSegment `json:"members,omitempty"`
+
+	// MinOccurs: The minimum number of times this group must be
+	// present/repeated.
+	MinOccurs int64 `json:"minOccurs,omitempty"`
+
+	// Name: The name of this group. For example, "ORDER_DETAIL".
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Choice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Choice") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchemaGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SchemaPackage: A schema package contains a set of schemas and type
+// definitions.
+type SchemaPackage struct {
+	// IgnoreMinOccurs: Flag to ignore all min_occurs restrictions in the
+	// schema. This means that incoming messages can omit any group,
+	// segment, field, component, or subcomponent.
+	IgnoreMinOccurs bool `json:"ignoreMinOccurs,omitempty"`
+
+	// Schemas: Schema configs that are layered based on their
+	// VersionSources that match the incoming message. Schema configs
+	// present in higher indices override those in lower indices with the
+	// same message type and trigger event if their VersionSources all match
+	// an incoming message.
+	Schemas []*Hl7SchemaConfig `json:"schemas,omitempty"`
+
+	// SchematizedParsingType: Determines how messages that fail to parse
+	// are handled.
+	//
+	// Possible values:
+	//   "SCHEMATIZED_PARSING_TYPE_UNSPECIFIED" - Unspecified schematized
+	// parsing type, equivalent to `SOFT_FAIL`.
+	//   "SOFT_FAIL" - Messages that fail to parse are still stored and
+	// ACKed but a parser error is stored in place of the schematized data.
+	//   "HARD_FAIL" - Messages that fail to parse are rejected from
+	// ingestion/insertion and return an error code.
+	SchematizedParsingType string `json:"schematizedParsingType,omitempty"`
+
+	// Types: Schema type definitions that are layered based on their
+	// VersionSources that match the incoming message. Type definitions
+	// present in higher indices override those in lower indices with the
+	// same type name if their VersionSources all match an incoming message.
+	Types []*Hl7TypesConfig `json:"types,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IgnoreMinOccurs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IgnoreMinOccurs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchemaPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaPackage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SchemaSegment: An HL7v2 Segment.
+type SchemaSegment struct {
+	// MaxOccurs: The maximum number of times this segment can be present in
+	// this group. 0 or -1 means unbounded.
+	MaxOccurs int64 `json:"maxOccurs,omitempty"`
+
+	// MinOccurs: The minimum number of times this segment can be present in
+	// this group.
+	MinOccurs int64 `json:"minOccurs,omitempty"`
+
+	// Type: The Segment type. For example, "PID".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxOccurs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxOccurs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchemaSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaSegment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SchematizedData: The content of an HL7v2 message in a structured
+// format as specified by a schema.
+type SchematizedData struct {
+	// Data: JSON output of the parser.
+	Data string `json:"data,omitempty"`
+
+	// Error: The error output of the parser.
+	Error string `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchematizedData) MarshalJSON() ([]byte, error) {
+	type NoMethod SchematizedData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3061,6 +4596,44 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Signature: User signature.
+type Signature struct {
+	// Image: Optional. An image of the user's signature.
+	Image *Image `json:"image,omitempty"`
+
+	// Metadata: Optional. Metadata associated with the user's signature.
+	// For example, the user's name or the user's title.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// SignatureTime: Optional. Timestamp of the signature.
+	SignatureTime string `json:"signatureTime,omitempty"`
+
+	// UserId: Required. User's UUID provided by the client.
+	UserId string `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Image") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Signature) MarshalJSON() ([]byte, error) {
+	type NoMethod Signature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -3137,7 +4710,7 @@ type StreamConfig struct {
 	// mentioned above also filters out duplicates. If a resource mutation
 	// cannot be streamed to BigQuery, errors are logged to Cloud Logging.
 	// For more information, see Viewing error logs in Cloud Logging
-	// (/healthcare/docs/how-tos/logging)).
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 	BigqueryDestination *GoogleCloudHealthcareV1FhirBigQueryDestination `json:"bigqueryDestination,omitempty"`
 
 	// ResourceTypes: Supply a FHIR resource type (such as "Patient" or
@@ -3297,6 +4870,141 @@ func (s *TextConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Type: A type definition for some HL7v2 type (incl. Segments and
+// Datatypes).
+type Type struct {
+	// Fields: The (sub) fields this type has (if not primitive).
+	Fields []*Field `json:"fields,omitempty"`
+
+	// Name: The name of this type. This would be the segment or datatype
+	// name. For example, "PID" or "XPN".
+	Name string `json:"name,omitempty"`
+
+	// Primitive: If this is a primitive type then this field is the type of
+	// the primitive For example, STRING. Leave unspecified for composite
+	// types.
+	//
+	// Possible values:
+	//   "PRIMITIVE_UNSPECIFIED" - Not a primitive.
+	//   "STRING" - String primitive.
+	//   "VARIES" - Element that can have unschematized children.
+	//   "UNESCAPED_STRING" - Like STRING, but all delimiters below this
+	// element are ignored.
+	Primitive string `json:"primitive,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Type) MarshalJSON() ([]byte, error) {
+	type NoMethod Type
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserDataMapping: Maps a resource to the associated user and
+// Attributes.
+type UserDataMapping struct {
+	// ArchiveTime: Output only. Indicates the time when this mapping was
+	// archived.
+	ArchiveTime string `json:"archiveTime,omitempty"`
+
+	// Archived: Output only. Indicates whether this mapping is archived.
+	Archived bool `json:"archived,omitempty"`
+
+	// DataId: Required. A unique identifier for the mapped resource.
+	DataId string `json:"dataId,omitempty"`
+
+	// Name: Resource name of the User data mapping, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+	// onsentStores/{consent_store_id}/userDataMappings/{user_data_mapping_id
+	// }`.
+	Name string `json:"name,omitempty"`
+
+	// ResourceAttributes: Attributes of the resource. Only explicitly set
+	// attributes are displayed here. Attribute definitions with defaults
+	// set implicitly apply to these User data mappings. Attributes listed
+	// here must be single valued, that is, exactly one value is specified
+	// for the field "values" in each Attribute.
+	ResourceAttributes []*Attribute `json:"resourceAttributes,omitempty"`
+
+	// UserId: Required. User's UUID provided by the client.
+	UserId string `json:"userId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArchiveTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserDataMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod UserDataMapping
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VersionSource: Describes a selector for extracting and matching an
+// MSH field to a value.
+type VersionSource struct {
+	// MshField: The field to extract from the MSH segment. For example,
+	// "3.1" or "18[1].1".
+	MshField string `json:"mshField,omitempty"`
+
+	// Value: The value to match with the field. For example, "My
+	// Application Name" or "2.3".
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MshField") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MshField") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VersionSource) MarshalJSON() ([]byte, error) {
+	type NoMethod VersionSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "healthcare.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -3309,6 +5017,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3352,7 +5062,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3454,28 +5164,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3518,7 +5234,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3589,7 +5305,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3601,13 +5317,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3659,6 +5375,10 @@ type ProjectsLocationsDatasetsCreateCall struct {
 // the Operation interface which returns either an `Operation.response`
 // which contains a Dataset or `Operation.error`. The metadata field
 // type is OperationMetadata.
+//
+// - parent: The name of the project where the server creates the
+//   dataset. For example,
+//   `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDatasetsService) Create(parent string, dataset *Dataset) *ProjectsLocationsDatasetsCreateCall {
 	c := &ProjectsLocationsDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3701,7 +5421,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3819,8 +5539,12 @@ type ProjectsLocationsDatasetsDeidentifyCall struct {
 // instances. The new de-identified dataset will not contain these
 // failed resources. Failed resource totals are tracked in
 // Operation.metadata. Error details are also logged to Cloud Logging.
-// For more information, see Viewing logs
-// (/healthcare/docs/how-tos/logging).
+// For more information, see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging).
+//
+// - sourceDataset: Source dataset resource name. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Deidentify(sourceDataset string, deidentifydatasetrequest *DeidentifyDatasetRequest) *ProjectsLocationsDatasetsDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceDataset = sourceDataset
@@ -3855,7 +5579,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3919,7 +5643,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new dataset containing de-identified data from the source dataset. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifySummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The new de-identified dataset will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging. For more information, see [Viewing logs](/healthcare/docs/how-tos/logging).",
+	//   "description": "Creates a new dataset containing de-identified data from the source dataset. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifySummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The new de-identified dataset will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.deidentify",
@@ -3962,6 +5686,10 @@ type ProjectsLocationsDatasetsDeleteCall struct {
 // Delete: Deletes the specified health dataset and all data contained
 // in the dataset. Deleting a dataset does not affect the sources from
 // which the dataset was imported (if any).
+//
+// - name: The name of the dataset to delete. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Delete(name string) *ProjectsLocationsDatasetsDeleteCall {
 	c := &ProjectsLocationsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3995,7 +5723,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4093,6 +5821,10 @@ type ProjectsLocationsDatasetsGetCall struct {
 }
 
 // Get: Gets any metadata associated with a dataset.
+//
+// - name: The name of the dataset to read. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Get(name string) *ProjectsLocationsDatasetsGetCall {
 	c := &ProjectsLocationsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4136,7 +5868,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4239,6 +5971,10 @@ type ProjectsLocationsDatasetsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4296,7 +6032,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4403,6 +6139,9 @@ type ProjectsLocationsDatasetsListCall struct {
 }
 
 // List: Lists the health datasets in the current project.
+//
+// - parent: The name of the project whose datasets should be listed.
+//   For example, `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDatasetsService) List(parent string) *ProjectsLocationsDatasetsListCall {
 	c := &ProjectsLocationsDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4461,7 +6200,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4594,6 +6333,10 @@ type ProjectsLocationsDatasetsPatchCall struct {
 }
 
 // Patch: Updates dataset metadata.
+//
+// - name: Resource name of the dataset, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   `.
 func (r *ProjectsLocationsDatasetsService) Patch(name string, dataset *Dataset) *ProjectsLocationsDatasetsPatchCall {
 	c := &ProjectsLocationsDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4636,7 +6379,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4750,6 +6493,10 @@ type ProjectsLocationsDatasetsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4784,7 +6531,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4895,6 +6642,10 @@ type ProjectsLocationsDatasetsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4929,7 +6680,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5023,6 +6774,758 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Do(opts ...googleapi.C
 
 }
 
+// method id "healthcare.projects.locations.datasets.consentStores.checkDataAccess":
+
+type ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall struct {
+	s                      *Service
+	consentStore           string
+	checkdataaccessrequest *CheckDataAccessRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// CheckDataAccess: Checks if a particular data_id of a User data
+// mapping in the specified consent store is consented for the specified
+// use.
+//
+// - consentStore: Name of the consent store where the requested data_id
+//   is stored, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}`.
+func (r *ProjectsLocationsDatasetsConsentStoresService) CheckDataAccess(consentStore string, checkdataaccessrequest *CheckDataAccessRequest) *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall {
+	c := &ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.consentStore = consentStore
+	c.checkdataaccessrequest = checkdataaccessrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkdataaccessrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+consentStore}:checkDataAccess")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"consentStore": c.consentStore,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.checkDataAccess" call.
+// Exactly one of *CheckDataAccessResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CheckDataAccessResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Do(opts ...googleapi.CallOption) (*CheckDataAccessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CheckDataAccessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Checks if a particular data_id of a User data mapping in the specified consent store is consented for the specified use.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:checkDataAccess",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.checkDataAccess",
+	//   "parameterOrder": [
+	//     "consentStore"
+	//   ],
+	//   "parameters": {
+	//     "consentStore": {
+	//       "description": "Required. Name of the consent store where the requested data_id is stored, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+consentStore}:checkDataAccess",
+	//   "request": {
+	//     "$ref": "CheckDataAccessRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CheckDataAccessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.create":
+
+type ProjectsLocationsDatasetsConsentStoresCreateCall struct {
+	s            *Service
+	parent       string
+	consentstore *ConsentStore
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a new consent store in the parent dataset. Attempting
+// to create a consent store with the same ID as an existing store fails
+// with an ALREADY_EXISTS error.
+//
+// - parent: The name of the dataset this consent store belongs to.
+func (r *ProjectsLocationsDatasetsConsentStoresService) Create(parent string, consentstore *ConsentStore) *ProjectsLocationsDatasetsConsentStoresCreateCall {
+	c := &ProjectsLocationsDatasetsConsentStoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.consentstore = consentstore
+	return c
+}
+
+// ConsentStoreId sets the optional parameter "consentStoreId":
+// Required. The ID of the consent store to create. The string must
+// match the following regex: `[\p{L}\p{N}_\-\.]{1,256}`. Cannot be
+// changed after creation.
+func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) ConsentStoreId(consentStoreId string) *ProjectsLocationsDatasetsConsentStoresCreateCall {
+	c.urlParams_.Set("consentStoreId", consentStoreId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.consentstore)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/consentStores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.create" call.
+// Exactly one of *ConsentStore or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConsentStore.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Do(opts ...googleapi.CallOption) (*ConsentStore, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsentStore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new consent store in the parent dataset. Attempting to create a consent store with the same ID as an existing store fails with an ALREADY_EXISTS error.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "consentStoreId": {
+	//       "description": "Required. The ID of the consent store to create. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`. Cannot be changed after creation.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the dataset this consent store belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/consentStores",
+	//   "request": {
+	//     "$ref": "ConsentStore"
+	//   },
+	//   "response": {
+	//     "$ref": "ConsentStore"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.delete":
+
+type ProjectsLocationsDatasetsConsentStoresDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified consent store and removes all the
+// consent store's data.
+//
+// - name: The resource name of the consent store to delete.
+func (r *ProjectsLocationsDatasetsConsentStoresService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresDeleteCall {
+	c := &ProjectsLocationsDatasetsConsentStoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified consent store and removes all the consent store's data.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the consent store to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.evaluateUserConsents":
+
+type ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall struct {
+	s                           *Service
+	consentStore                string
+	evaluateuserconsentsrequest *EvaluateUserConsentsRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// EvaluateUserConsents: Evaluates the user's Consents for all matching
+// User data mappings. Note: User data mappings are indexed
+// asynchronously, which can cause a slight delay between the time
+// mappings are created or updated and when they are included in
+// EvaluateUserConsents results.
+//
+// - consentStore: Name of the consent store to retrieve User data
+//   mappings from.
+func (r *ProjectsLocationsDatasetsConsentStoresService) EvaluateUserConsents(consentStore string, evaluateuserconsentsrequest *EvaluateUserConsentsRequest) *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall {
+	c := &ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.consentStore = consentStore
+	c.evaluateuserconsentsrequest = evaluateuserconsentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.evaluateuserconsentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+consentStore}:evaluateUserConsents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"consentStore": c.consentStore,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.evaluateUserConsents" call.
+// Exactly one of *EvaluateUserConsentsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EvaluateUserConsentsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Do(opts ...googleapi.CallOption) (*EvaluateUserConsentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &EvaluateUserConsentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Evaluates the user's Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, which can cause a slight delay between the time mappings are created or updated and when they are included in EvaluateUserConsents results.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:evaluateUserConsents",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.evaluateUserConsents",
+	//   "parameterOrder": [
+	//     "consentStore"
+	//   ],
+	//   "parameters": {
+	//     "consentStore": {
+	//       "description": "Required. Name of the consent store to retrieve User data mappings from.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+consentStore}:evaluateUserConsents",
+	//   "request": {
+	//     "$ref": "EvaluateUserConsentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "EvaluateUserConsentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Pages(ctx context.Context, f func(*EvaluateUserConsentsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.evaluateuserconsentsrequest.PageToken = pt }(c.evaluateuserconsentsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.evaluateuserconsentsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.get":
+
+type ProjectsLocationsDatasetsConsentStoresGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified consent store.
+//
+// - name: The resource name of the consent store to get.
+func (r *ProjectsLocationsDatasetsConsentStoresService) Get(name string) *ProjectsLocationsDatasetsConsentStoresGetCall {
+	c := &ProjectsLocationsDatasetsConsentStoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.get" call.
+// Exactly one of *ConsentStore or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConsentStore.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Do(opts ...googleapi.CallOption) (*ConsentStore, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsentStore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the consent store to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ConsentStore"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.consentStores.getIamPolicy":
 
 type ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall struct {
@@ -5037,6 +7540,10 @@ type ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5094,7 +7601,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5189,6 +7696,542 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Do(opts ...goog
 
 }
 
+// method id "healthcare.projects.locations.datasets.consentStores.list":
+
+type ProjectsLocationsDatasetsConsentStoresListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the consent stores in the specified dataset.
+//
+// - parent: Name of the dataset.
+func (r *ProjectsLocationsDatasetsConsentStoresService) List(parent string) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c := &ProjectsLocationsDatasetsConsentStoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restricts the stores
+// returned to those matching a filter. Only filtering on labels is
+// supported. For example, `filter=labels.key=value`.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Limit on the number
+// of consent stores to return in a single response. If not specified,
+// 100 is used. May not be larger than 1000.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to retrieve
+// the next page of results, or empty to get the first page.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/consentStores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.list" call.
+// Exactly one of *ListConsentStoresResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListConsentStoresResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) Do(opts ...googleapi.CallOption) (*ListConsentStoresResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConsentStoresResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the consent stores in the specified dataset.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Restricts the stores returned to those matching a filter. Only filtering on labels is supported. For example, `filter=labels.key=value`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Limit on the number of consent stores to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to retrieve the next page of results, or empty to get the first page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the dataset.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/consentStores",
+	//   "response": {
+	//     "$ref": "ListConsentStoresResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresListCall) Pages(ctx context.Context, f func(*ListConsentStoresResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.patch":
+
+type ProjectsLocationsDatasetsConsentStoresPatchCall struct {
+	s            *Service
+	name         string
+	consentstore *ConsentStore
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates the specified consent store.
+//
+// - name: Resource name of the consent store, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}`. Cannot be changed after
+//   creation.
+func (r *ProjectsLocationsDatasetsConsentStoresService) Patch(name string, consentstore *ConsentStore) *ProjectsLocationsDatasetsConsentStoresPatchCall {
+	c := &ProjectsLocationsDatasetsConsentStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.consentstore = consentstore
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask that applies to the resource. For the `FieldMask`
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// Only the `labels`, `default_consent_ttl`, and
+// `enable_consent_create_on_update` fields are allowed to be updated.
+func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.consentstore)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.patch" call.
+// Exactly one of *ConsentStore or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConsentStore.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Do(opts ...googleapi.CallOption) (*ConsentStore, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsentStore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the consent store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. Cannot be changed after creation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `labels`, `default_consent_ttl`, and `enable_consent_create_on_update` fields are allowed to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ConsentStore"
+	//   },
+	//   "response": {
+	//     "$ref": "ConsentStore"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.queryAccessibleData":
+
+type ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall struct {
+	s                          *Service
+	consentStore               string
+	queryaccessibledatarequest *QueryAccessibleDataRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// QueryAccessibleData: Queries all data_ids that are consented for a
+// specified use in the given consent store and writes them to a
+// specified destination. The returned Operation includes a progress
+// counter for the number of User data mappings processed. Errors are
+// logged to Cloud Logging (see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)). For
+// example, the following sample log entry shows a `failed to evaluate
+// consent policy` error that occurred during a QueryAccessibleData call
+// to consent store
+// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+// onsentStores/{consent_store_id}`. ```json jsonPayload: { @type:
+// "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDa
+// taLogEntry" error: { code: 9 message: "failed to evaluate consent
+// policy" } resourceName:
+// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
+// onsentStores/{consent_store_id}/consents/{consent_id}" } logName:
+// "projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessib
+// le_data" operation: { id:
+// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/o
+// perations/{operation_id}" producer:
+// "healthcare.googleapis.com/QueryAccessibleData" } receiveTimestamp:
+// "TIMESTAMP" resource: { labels: { consent_store_id:
+// "{consent_store_id}" dataset_id: "{dataset_id}" location:
+// "{location_id}" project_id: "{project_id}" } type:
+// "healthcare_consent_store" } severity: "ERROR" timestamp: "TIMESTAMP"
+// ```
+//
+// - consentStore: Name of the consent store to retrieve User data
+//   mappings from.
+func (r *ProjectsLocationsDatasetsConsentStoresService) QueryAccessibleData(consentStore string, queryaccessibledatarequest *QueryAccessibleDataRequest) *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall {
+	c := &ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.consentStore = consentStore
+	c.queryaccessibledatarequest = queryaccessibledatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryaccessibledatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+consentStore}:queryAccessibleData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"consentStore": c.consentStore,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.queryAccessibleData" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: \"type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry\" error: { code: 9 message: \"failed to evaluate consent policy\" } resourceName: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}\" } logName: \"projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data\" operation: { id: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}\" producer: \"healthcare.googleapis.com/QueryAccessibleData\" } receiveTimestamp: \"TIMESTAMP\" resource: { labels: { consent_store_id: \"{consent_store_id}\" dataset_id: \"{dataset_id}\" location: \"{location_id}\" project_id: \"{project_id}\" } type: \"healthcare_consent_store\" } severity: \"ERROR\" timestamp: \"TIMESTAMP\" ```",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:queryAccessibleData",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.queryAccessibleData",
+	//   "parameterOrder": [
+	//     "consentStore"
+	//   ],
+	//   "parameters": {
+	//     "consentStore": {
+	//       "description": "Required. Name of the consent store to retrieve User data mappings from.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+consentStore}:queryAccessibleData",
+	//   "request": {
+	//     "$ref": "QueryAccessibleDataRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.consentStores.setIamPolicy":
 
 type ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall struct {
@@ -5203,6 +8246,10 @@ type ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5237,7 +8284,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5348,6 +8395,10 @@ type ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5382,7 +8433,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5476,6 +8527,4092 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Do(opts .
 
 }
 
+// method id "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.create":
+
+type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall struct {
+	s                   *Service
+	parent              string
+	attributedefinition *AttributeDefinition
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Creates a new Attribute definition in the parent consent
+// store.
+//
+// - parent: The name of the consent store that this Attribute
+//   definition belongs to.
+func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Create(parent string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
+	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.attributedefinition = attributedefinition
+	return c
+}
+
+// AttributeDefinitionId sets the optional parameter
+// "attributeDefinitionId": Required. The ID of the Attribute definition
+// to create. The string must match the following regex:
+// `_a-zA-Z{0,255}` and must not be a reserved keyword within the Common
+// Expression Language as listed on
+// https://github.com/google/cel-spec/blob/master/doc/langdef.md.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) AttributeDefinitionId(attributeDefinitionId string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
+	c.urlParams_.Set("attributeDefinitionId", attributeDefinitionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attributedefinition)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attributeDefinitions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.create" call.
+// Exactly one of *AttributeDefinition or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AttributeDefinition.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) Do(opts ...googleapi.CallOption) (*AttributeDefinition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AttributeDefinition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Attribute definition in the parent consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "attributeDefinitionId": {
+	//       "description": "Required. The ID of the Attribute definition to create. The string must match the following regex: `_a-zA-Z{0,255}` and must not be a reserved keyword within the Common Expression Language as listed on https://github.com/google/cel-spec/blob/master/doc/langdef.md.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the consent store that this Attribute definition belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/attributeDefinitions",
+	//   "request": {
+	//     "$ref": "AttributeDefinition"
+	//   },
+	//   "response": {
+	//     "$ref": "AttributeDefinition"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.delete":
+
+type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified Attribute definition. Fails if the
+// Attribute definition is referenced by any User data mapping, or the
+// latest revision of any Consent.
+//
+// - name: The resource name of the Attribute definition to delete. To
+//   preserve referential integrity, Attribute definitions referenced by
+//   a User data mapping or the latest revision of a Consent cannot be
+//   deleted.
+func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall {
+	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified Attribute definition. Fails if the Attribute definition is referenced by any User data mapping, or the latest revision of any Consent.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions/{attributeDefinitionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Attribute definition to delete. To preserve referential integrity, Attribute definitions referenced by a User data mapping or the latest revision of a Consent cannot be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.get":
+
+type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified Attribute definition.
+//
+// - name: The resource name of the Attribute definition to get.
+func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Get(name string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall {
+	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.get" call.
+// Exactly one of *AttributeDefinition or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AttributeDefinition.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Do(opts ...googleapi.CallOption) (*AttributeDefinition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AttributeDefinition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified Attribute definition.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions/{attributeDefinitionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Attribute definition to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "AttributeDefinition"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.list":
+
+type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Attribute definitions in the specified consent store.
+//
+// - parent: Name of the consent store to retrieve Attribute definitions
+//   from.
+func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restricts the attributes
+// returned to those matching a filter. The only field available for
+// filtering is `category`. For example, `filter=category=\"REQUEST\".
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Limit on the number
+// of Attribute definitions to return in a single response. If not
+// specified, 100 is used. May not be larger than 1000.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to retrieve
+// the next page of results or empty to get the first page.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attributeDefinitions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.list" call.
+// Exactly one of *ListAttributeDefinitionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAttributeDefinitionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Do(opts ...googleapi.CallOption) (*ListAttributeDefinitionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAttributeDefinitionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Attribute definitions in the specified consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Restricts the attributes returned to those matching a filter. The only field available for filtering is `category`. For example, `filter=category=\\\"REQUEST\\\"`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Limit on the number of Attribute definitions to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to retrieve the next page of results or empty to get the first page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the consent store to retrieve Attribute definitions from.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/attributeDefinitions",
+	//   "response": {
+	//     "$ref": "ListAttributeDefinitionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Pages(ctx context.Context, f func(*ListAttributeDefinitionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.patch":
+
+type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall struct {
+	s                   *Service
+	name                string
+	attributedefinition *AttributeDefinition
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Patch: Updates the specified Attribute definition.
+//
+// - name: Resource name of the Attribute definition, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/attributeDefinitions/{attribute_de
+//   finition_id}`. Cannot be changed after creation.
+func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Patch(name string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
+	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.attributedefinition = attributedefinition
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask that applies to the resource. For the `FieldMask`
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// Only the `description`, `allowed_values`, `consent_default_values`
+// and `data_mapping_default_value` fields can be updated. The updated
+// `allowed_values` must contain all values from the previous
+// `allowed_values`.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attributedefinition)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.patch" call.
+// Exactly one of *AttributeDefinition or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AttributeDefinition.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Do(opts ...googleapi.CallOption) (*AttributeDefinition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AttributeDefinition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified Attribute definition.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions/{attributeDefinitionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `description`, `allowed_values`, `consent_default_values` and `data_mapping_default_value` fields can be updated. The updated `allowed_values` must contain all values from the previous `allowed_values`.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "AttributeDefinition"
+	//   },
+	//   "response": {
+	//     "$ref": "AttributeDefinition"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consentArtifacts.create":
+
+type ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall struct {
+	s               *Service
+	parent          string
+	consentartifact *ConsentArtifact
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new Consent artifact in the parent consent store.
+//
+// - parent: The name of the consent store this Consent artifact belongs
+//   to.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Create(parent string, consentartifact *ConsentArtifact) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.consentartifact = consentartifact
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.consentartifact)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/consentArtifacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consentArtifacts.create" call.
+// Exactly one of *ConsentArtifact or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConsentArtifact.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Do(opts ...googleapi.CallOption) (*ConsentArtifact, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsentArtifact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Consent artifact in the parent consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the consent store this Consent artifact belongs to.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/consentArtifacts",
+	//   "request": {
+	//     "$ref": "ConsentArtifact"
+	//   },
+	//   "response": {
+	//     "$ref": "ConsentArtifact"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consentArtifacts.delete":
+
+type ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified Consent artifact. Fails if the artifact
+// is referenced by the latest revision of any Consent.
+//
+// - name: The resource name of the Consent artifact to delete. To
+//   preserve referential integrity, Consent artifacts referenced by the
+//   latest revision of a Consent cannot be deleted.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consentArtifacts.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified Consent artifact. Fails if the artifact is referenced by the latest revision of any Consent.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts/{consentArtifactsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent artifact to delete. To preserve referential integrity, Consent artifacts referenced by the latest revision of a Consent cannot be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consentArtifacts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consentArtifacts.get":
+
+type ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified Consent artifact.
+//
+// - name: The resource name of the Consent artifact to retrieve.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Get(name string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consentArtifacts.get" call.
+// Exactly one of *ConsentArtifact or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConsentArtifact.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Do(opts ...googleapi.CallOption) (*ConsentArtifact, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConsentArtifact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified Consent artifact.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts/{consentArtifactsId}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent artifact to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consentArtifacts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ConsentArtifact"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consentArtifacts.list":
+
+type ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Consent artifacts in the specified consent store.
+//
+// - parent: Name of the consent store to retrieve consent artifacts
+//   from.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restricts the artifacts
+// returned to those matching a filter. The following syntax is
+// available: * A string field value can be written as text inside
+// quotation marks, for example "query text". The only valid
+// relational operation for text fields is equality (`=`), where text is
+// searched within the field, rather than having the field be equal to
+// the text. For example, "Comment = great" returns messages with
+// `great` in the comment field. * A number field value can be written
+// as an integer, a decimal, or an exponential. The valid relational
+// operators for number fields are the equality operator (`=`), along
+// with the less than/greater than operators (`<`, `<=`, `>`, `>=`).
+// Note that there is no inequality (`!=`) operator. You can prepend the
+// `NOT` operator to an expression to negate it. * A date field value
+// must be written in `yyyy-mm-dd` form. Fields with date and time use
+// the RFC3339 time format. Leading zeros are required for one-digit
+// months and days. The valid relational operators for date fields are
+// the equality operator (`=`) , along with the less than/greater than
+// operators (`<`, `<=`, `>`, `>=`). Note that there is no inequality
+// (`!=`) operator. You can prepend the `NOT` operator to an expression
+// to negate it. * Multiple field query expressions can be combined in
+// one query by adding `AND` or `OR` operators between the expressions.
+// If a boolean operator appears within a quoted string, it is not
+// treated as special, it's just another part of the character string to
+// be matched. You can prepend the `NOT` operator to an expression to
+// negate it. The fields available for filtering are: - user_id. For
+// example, `filter=user_id=\"user123\". - consent_content_version -
+// metadata. For example, `filter=Metadata(\"testkey\")=\"value\" or
+// `filter=HasMetadata(\"testkey\")`.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Limit on the number
+// of consent artifacts to return in a single response. If not
+// specified, 100 is used. May not be larger than 1000.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from the previous List request, if
+// any.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/consentArtifacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consentArtifacts.list" call.
+// Exactly one of *ListConsentArtifactsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConsentArtifactsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Do(opts ...googleapi.CallOption) (*ListConsentArtifactsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConsentArtifactsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Consent artifacts in the specified consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Restricts the artifacts returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - user_id. For example, `filter=user_id=\\\"user123\\\"`. - consent_content_version - metadata. For example, `filter=Metadata(\\\"testkey\\\")=\\\"value\\\"` or `filter=HasMetadata(\\\"testkey\\\")`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Limit on the number of consent artifacts to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from the previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the consent store to retrieve consent artifacts from.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/consentArtifacts",
+	//   "response": {
+	//     "$ref": "ListConsentArtifactsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Pages(ctx context.Context, f func(*ListConsentArtifactsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.activate":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsActivateCall struct {
+	s                      *Service
+	name                   string
+	activateconsentrequest *ActivateConsentRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Activate: Activates the latest revision of the specified Consent by
+// committing a new revision with `state` updated to `ACTIVE`. If the
+// latest revision of the specified Consent is in the `ACTIVE` state, no
+// new revision is committed. A FAILED_PRECONDITION error occurs if the
+// latest revision of the specified Consent is in the `REJECTED` or
+// `REVOKED` state.
+//
+// - name: The resource name of the Consent to activate, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Activate(name string, activateconsentrequest *ActivateConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.activateconsentrequest = activateconsentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activateconsentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:activate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.activate" call.
+// Exactly one of *Consent or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Consent.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Do(opts ...googleapi.CallOption) (*Consent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Consent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Activates the latest revision of the specified Consent by committing a new revision with `state` updated to `ACTIVE`. If the latest revision of the specified Consent is in the `ACTIVE` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `REJECTED` or `REVOKED` state.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:activate",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.activate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent to activate, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:activate",
+	//   "request": {
+	//     "$ref": "ActivateConsentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Consent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.create":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsCreateCall struct {
+	s          *Service
+	parent     string
+	consent    *Consent
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Consent in the parent consent store.
+//
+// - parent: Name of the consent store.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Create(parent string, consent *Consent) *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.consent = consent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.consent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/consents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.create" call.
+// Exactly one of *Consent or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Consent.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Do(opts ...googleapi.CallOption) (*Consent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Consent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Consent in the parent consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the consent store.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/consents",
+	//   "request": {
+	//     "$ref": "Consent"
+	//   },
+	//   "response": {
+	//     "$ref": "Consent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.delete":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the Consent and its revisions. To keep a record of
+// the Consent but mark it inactive, see [RevokeConsent]. To delete a
+// revision of a Consent, see [DeleteConsentRevision]. This operation
+// does not delete the related Consent artifact.
+//
+// - name: The resource name of the Consent to delete, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the Consent and its revisions. To keep a record of the Consent but mark it inactive, see [RevokeConsent]. To delete a revision of a Consent, see [DeleteConsentRevision]. This operation does not delete the related Consent artifact.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent to delete, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.deleteRevision":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DeleteRevision: Deletes the specified revision of a Consent. An
+// INVALID_ARGUMENT error occurs if the specified revision is the latest
+// revision.
+//
+// - name: The resource name of the Consent revision to delete, of the
+//   form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
+//   }`. An INVALID_ARGUMENT error occurs if `revision_id` is not
+//   specified in the name.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) DeleteRevision(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deleteRevision")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.deleteRevision" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified revision of a Consent. An INVALID_ARGUMENT error occurs if the specified revision is the latest revision.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:deleteRevision",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.deleteRevision",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent revision to delete, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is not specified in the name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:deleteRevision",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.get":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified revision of a Consent, or the latest revision
+// if `revision_id` is not specified in the resource name.
+//
+// - name: The resource name of the Consent to retrieve, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. In order
+//   to retrieve a previous revision of the Consent, also provide the
+//   revision ID:
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
+//   }`.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Get(name string) *ProjectsLocationsDatasetsConsentStoresConsentsGetCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresConsentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.get" call.
+// Exactly one of *Consent or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Consent.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Do(opts ...googleapi.CallOption) (*Consent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Consent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified revision of a Consent, or the latest revision if `revision_id` is not specified in the resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent to retrieve, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. In order to retrieve a previous revision of the Consent, also provide the revision ID: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Consent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.list":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Consent in the given consent store, returning each
+// Consent's latest revision.
+//
+// - parent: Name of the consent store to retrieve Consents from.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restricts the Consents
+// returned to those matching a filter. The following syntax is
+// available: * A string field value can be written as text inside
+// quotation marks, for example "query text". The only valid
+// relational operation for text fields is equality (`=`), where text is
+// searched within the field, rather than having the field be equal to
+// the text. For example, "Comment = great" returns messages with
+// `great` in the comment field. * A number field value can be written
+// as an integer, a decimal, or an exponential. The valid relational
+// operators for number fields are the equality operator (`=`), along
+// with the less than/greater than operators (`<`, `<=`, `>`, `>=`).
+// Note that there is no inequality (`!=`) operator. You can prepend the
+// `NOT` operator to an expression to negate it. * A date field value
+// must be written in `yyyy-mm-dd` form. Fields with date and time use
+// the RFC3339 time format. Leading zeros are required for one-digit
+// months and days. The valid relational operators for date fields are
+// the equality operator (`=`) , along with the less than/greater than
+// operators (`<`, `<=`, `>`, `>=`). Note that there is no inequality
+// (`!=`) operator. You can prepend the `NOT` operator to an expression
+// to negate it. * Multiple field query expressions can be combined in
+// one query by adding `AND` or `OR` operators between the expressions.
+// If a boolean operator appears within a quoted string, it is not
+// treated as special, it's just another part of the character string to
+// be matched. You can prepend the `NOT` operator to an expression to
+// negate it. The fields available for filtering are: - user_id. For
+// example, `filter='user_id="user123"'`. - consent_artifact - state -
+// revision_create_time - metadata. For example,
+// `filter=Metadata(\"testkey\")=\"value\" or
+// `filter=HasMetadata(\"testkey\")`.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Limit on the number
+// of Consents to return in a single response. If not specified, 100 is
+// used. May not be larger than 1000.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from the previous List request, if
+// any.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/consents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.list" call.
+// Exactly one of *ListConsentsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListConsentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Do(opts ...googleapi.CallOption) (*ListConsentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConsentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Consent in the given consent store, returning each Consent's latest revision.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Restricts the Consents returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - user_id. For example, `filter='user_id=\"user123\"'`. - consent_artifact - state - revision_create_time - metadata. For example, `filter=Metadata(\\\"testkey\\\")=\\\"value\\\"` or `filter=HasMetadata(\\\"testkey\\\")`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Limit on the number of Consents to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from the previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the consent store to retrieve Consents from.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/consents",
+	//   "response": {
+	//     "$ref": "ListConsentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Pages(ctx context.Context, f func(*ListConsentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.listRevisions":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListRevisions: Lists the revisions of the specified Consent in
+// reverse chronological order.
+//
+// - name: The resource name of the Consent to retrieve revisions for.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) ListRevisions(name string) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restricts the revisions
+// returned to those matching a filter. The following syntax is
+// available: * A string field value can be written as text inside
+// quotation marks, for example "query text". The only valid
+// relational operation for text fields is equality (`=`), where text is
+// searched within the field, rather than having the field be equal to
+// the text. For example, "Comment = great" returns messages with
+// `great` in the comment field. * A number field value can be written
+// as an integer, a decimal, or an exponential. The valid relational
+// operators for number fields are the equality operator (`=`), along
+// with the less than/greater than operators (`<`, `<=`, `>`, `>=`).
+// Note that there is no inequality (`!=`) operator. You can prepend the
+// `NOT` operator to an expression to negate it. * A date field value
+// must be written in `yyyy-mm-dd` form. Fields with date and time use
+// the RFC3339 time format. Leading zeros are required for one-digit
+// months and days. The valid relational operators for date fields are
+// the equality operator (`=`) , along with the less than/greater than
+// operators (`<`, `<=`, `>`, `>=`). Note that there is no inequality
+// (`!=`) operator. You can prepend the `NOT` operator to an expression
+// to negate it. * Multiple field query expressions can be combined in
+// one query by adding `AND` or `OR` operators between the expressions.
+// If a boolean operator appears within a quoted string, it is not
+// treated as special, it's just another part of the character string to
+// be matched. You can prepend the `NOT` operator to an expression to
+// negate it. Fields available for filtering are: - user_id. For
+// example, `filter='user_id="user123"'`. - consent_artifact - state -
+// revision_create_time - metadata. For example,
+// `filter=Metadata(\"testkey\")=\"value\" or
+// `filter=HasMetadata(\"testkey\")`.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Limit on the number
+// of revisions to return in a single response. If not specified, 100 is
+// used. May not be larger than 1000.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to retrieve
+// the next page of results or empty if there are no more results in the
+// list.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listRevisions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.listRevisions" call.
+// Exactly one of *ListConsentRevisionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConsentRevisionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Do(opts ...googleapi.CallOption) (*ListConsentRevisionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConsentRevisionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the revisions of the specified Consent in reverse chronological order.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:listRevisions",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.listRevisions",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Restricts the revisions returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Fields available for filtering are: - user_id. For example, `filter='user_id=\"user123\"'`. - consent_artifact - state - revision_create_time - metadata. For example, `filter=Metadata(\\\"testkey\\\")=\\\"value\\\"` or `filter=HasMetadata(\\\"testkey\\\")`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent to retrieve revisions for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Limit on the number of revisions to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to retrieve the next page of results or empty if there are no more results in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:listRevisions",
+	//   "response": {
+	//     "$ref": "ListConsentRevisionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Pages(ctx context.Context, f func(*ListConsentRevisionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.patch":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsPatchCall struct {
+	s          *Service
+	name       string
+	consent    *Consent
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the latest revision of the specified Consent by
+// committing a new revision with the changes. A FAILED_PRECONDITION
+// error occurs if the latest revision of the specified Consent is in
+// the `REJECTED` or `REVOKED` state.
+//
+// - name: Resource name of the Consent, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
+//   changed after creation.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Patch(name string, consent *Consent) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.consent = consent
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask to apply to the resource. For the `FieldMask` definition,
+// see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// Only the `user_id`, `policies`, `consent_artifact`, and `metadata`
+// fields can be updated.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.consent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.patch" call.
+// Exactly one of *Consent or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Consent.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Do(opts ...googleapi.CallOption) (*Consent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Consent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the latest revision of the specified Consent by committing a new revision with the changes. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `REJECTED` or `REVOKED` state.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The update mask to apply to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `user_id`, `policies`, `consent_artifact`, and `metadata` fields can be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Consent"
+	//   },
+	//   "response": {
+	//     "$ref": "Consent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.reject":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsRejectCall struct {
+	s                    *Service
+	name                 string
+	rejectconsentrequest *RejectConsentRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Reject: Rejects the latest revision of the specified Consent by
+// committing a new revision with `state` updated to `REJECTED`. If the
+// latest revision of the specified Consent is in the `REJECTED` state,
+// no new revision is committed. A FAILED_PRECONDITION error occurs if
+// the latest revision of the specified Consent is in the `ACTIVE` or
+// `REVOKED` state.
+//
+// - name: The resource name of the Consent to reject, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Reject(name string, rejectconsentrequest *RejectConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rejectconsentrequest = rejectconsentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectconsentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.reject" call.
+// Exactly one of *Consent or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Consent.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Do(opts ...googleapi.CallOption) (*Consent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Consent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the specified Consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `ACTIVE` or `REVOKED` state.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:reject",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.reject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent to reject, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:reject",
+	//   "request": {
+	//     "$ref": "RejectConsentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Consent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.consents.revoke":
+
+type ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall struct {
+	s                    *Service
+	name                 string
+	revokeconsentrequest *RevokeConsentRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Revoke: Revokes the latest revision of the specified Consent by
+// committing a new revision with `state` updated to `REVOKED`. If the
+// latest revision of the specified Consent is in the `REVOKED` state,
+// no new revision is committed. A FAILED_PRECONDITION error occurs if
+// the latest revision of the given consent is in `DRAFT` or `REJECTED`
+// state.
+//
+// - name: The resource name of the Consent to revoke, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//   name.
+func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Revoke(name string, revokeconsentrequest *RevokeConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall {
+	c := &ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.revokeconsentrequest = revokeconsentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revokeconsentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:revoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.consents.revoke" call.
+// Exactly one of *Consent or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Consent.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Do(opts ...googleapi.CallOption) (*Consent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Consent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the specified Consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:revoke",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.revoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Consent to revoke, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:revoke",
+	//   "request": {
+	//     "$ref": "RevokeConsentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Consent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.userDataMappings.archive":
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall struct {
+	s                             *Service
+	name                          string
+	archiveuserdatamappingrequest *ArchiveUserDataMappingRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Archive: Archives the specified User data mapping.
+//
+// - name: The resource name of the User data mapping to archive.
+func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Archive(name string, archiveuserdatamappingrequest *ArchiveUserDataMappingRequest) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall {
+	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.archiveuserdatamappingrequest = archiveuserdatamappingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.archiveuserdatamappingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:archive")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.userDataMappings.archive" call.
+// Exactly one of *ArchiveUserDataMappingResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ArchiveUserDataMappingResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Do(opts ...googleapi.CallOption) (*ArchiveUserDataMappingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ArchiveUserDataMappingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Archives the specified User data mapping.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings/{userDataMappingsId}:archive",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.archive",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the User data mapping to archive.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:archive",
+	//   "request": {
+	//     "$ref": "ArchiveUserDataMappingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ArchiveUserDataMappingResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.userDataMappings.create":
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall struct {
+	s               *Service
+	parent          string
+	userdatamapping *UserDataMapping
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new User data mapping in the parent consent store.
+//
+// - parent: Name of the consent store.
+func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Create(parent string, userdatamapping *UserDataMapping) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall {
+	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.userdatamapping = userdatamapping
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userdatamapping)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userDataMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.userDataMappings.create" call.
+// Exactly one of *UserDataMapping or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *UserDataMapping.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Do(opts ...googleapi.CallOption) (*UserDataMapping, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UserDataMapping{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new User data mapping in the parent consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the consent store.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/userDataMappings",
+	//   "request": {
+	//     "$ref": "UserDataMapping"
+	//   },
+	//   "response": {
+	//     "$ref": "UserDataMapping"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.userDataMappings.delete":
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified User data mapping.
+//
+// - name: The resource name of the User data mapping to delete.
+func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall {
+	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.userDataMappings.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified User data mapping.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings/{userDataMappingsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the User data mapping to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.userDataMappings.get":
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified User data mapping.
+//
+// - name: The resource name of the User data mapping to retrieve.
+func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Get(name string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall {
+	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.userDataMappings.get" call.
+// Exactly one of *UserDataMapping or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *UserDataMapping.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Do(opts ...googleapi.CallOption) (*UserDataMapping, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UserDataMapping{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified User data mapping.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings/{userDataMappingsId}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the User data mapping to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "UserDataMapping"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.userDataMappings.list":
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the User data mappings in the specified consent store.
+//
+// - parent: Name of the consent store to retrieve User data mappings
+//   from.
+func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Restricts the User data
+// mappings returned to those matching a filter. The following syntax is
+// available: * A string field value can be written as text inside
+// quotation marks, for example "query text". The only valid
+// relational operation for text fields is equality (`=`), where text is
+// searched within the field, rather than having the field be equal to
+// the text. For example, "Comment = great" returns messages with
+// `great` in the comment field. * A number field value can be written
+// as an integer, a decimal, or an exponential. The valid relational
+// operators for number fields are the equality operator (`=`), along
+// with the less than/greater than operators (`<`, `<=`, `>`, `>=`).
+// Note that there is no inequality (`!=`) operator. You can prepend the
+// `NOT` operator to an expression to negate it. * A date field value
+// must be written in `yyyy-mm-dd` form. Fields with date and time use
+// the RFC3339 time format. Leading zeros are required for one-digit
+// months and days. The valid relational operators for date fields are
+// the equality operator (`=`) , along with the less than/greater than
+// operators (`<`, `<=`, `>`, `>=`). Note that there is no inequality
+// (`!=`) operator. You can prepend the `NOT` operator to an expression
+// to negate it. * Multiple field query expressions can be combined in
+// one query by adding `AND` or `OR` operators between the expressions.
+// If a boolean operator appears within a quoted string, it is not
+// treated as special, it's just another part of the character string to
+// be matched. You can prepend the `NOT` operator to an expression to
+// negate it. The fields available for filtering are: - data_id -
+// user_id. For example, `filter=user_id=\"user123\". - archived -
+// archive_time
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Limit on the number
+// of User data mappings to return in a single response. If not
+// specified, 100 is used. May not be larger than 1000.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to retrieve
+// the next page of results, or empty to get the first page.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userDataMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.userDataMappings.list" call.
+// Exactly one of *ListUserDataMappingsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListUserDataMappingsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Do(opts ...googleapi.CallOption) (*ListUserDataMappingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListUserDataMappingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the User data mappings in the specified consent store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Restricts the User data mappings returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - data_id - user_id. For example, `filter=user_id=\\\"user123\\\"`. - archived - archive_time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Limit on the number of User data mappings to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to retrieve the next page of results, or empty to get the first page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the consent store to retrieve User data mappings from.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/userDataMappings",
+	//   "response": {
+	//     "$ref": "ListUserDataMappingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Pages(ctx context.Context, f func(*ListUserDataMappingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "healthcare.projects.locations.datasets.consentStores.userDataMappings.patch":
+
+type ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall struct {
+	s               *Service
+	name            string
+	userdatamapping *UserDataMapping
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates the specified User data mapping.
+//
+// - name: Resource name of the User data mapping, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /consentStores/{consent_store_id}/userDataMappings/{user_data_mappin
+//   g_id}`.
+func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Patch(name string, userdatamapping *UserDataMapping) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
+	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.userdatamapping = userdatamapping
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask that applies to the resource. For the `FieldMask`
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// Only the `data_id`, `user_id` and `resource_attributes` fields can be
+// updated.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userdatamapping)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.consentStores.userDataMappings.patch" call.
+// Exactly one of *UserDataMapping or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *UserDataMapping.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Do(opts ...googleapi.CallOption) (*UserDataMapping, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UserDataMapping{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified User data mapping.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings/{userDataMappingsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the User data mapping, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/userDataMappings/{user_data_mapping_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `data_id`, `user_id` and `resource_attributes` fields can be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "UserDataMapping"
+	//   },
+	//   "response": {
+	//     "$ref": "UserDataMapping"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.dicomStores.create":
 
 type ProjectsLocationsDatasetsDicomStoresCreateCall struct {
@@ -5488,6 +12625,8 @@ type ProjectsLocationsDatasetsDicomStoresCreateCall struct {
 }
 
 // Create: Creates a new DICOM store within the parent dataset.
+//
+// - parent: The name of the dataset this DICOM store belongs to.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Create(parent string, dicomstore *DicomStore) *ProjectsLocationsDatasetsDicomStoresCreateCall {
 	c := &ProjectsLocationsDatasetsDicomStoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5530,7 +12669,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5647,8 +12786,12 @@ type ProjectsLocationsDatasetsDicomStoresDeidentifyCall struct {
 // result may still be successful if de-identification fails for some
 // DICOM instances. The output DICOM store will not contain these failed
 // resources. Failed resource totals are tracked in Operation.metadata.
-// Error details are also logged to Cloud Logging (see Viewing logs
-// (/healthcare/docs/how-tos/logging)).
+// Error details are also logged to Cloud Logging (see Viewing error
+// logs in Cloud Logging (/healthcare/docs/how-tos/logging)).
+//
+// - sourceStore: Source DICOM store resource name. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Deidentify(sourceStore string, deidentifydicomstorerequest *DeidentifyDicomStoreRequest) *ProjectsLocationsDatasetsDicomStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -5683,7 +12826,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5747,7 +12890,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyDicomStoreSummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The output DICOM store will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)).",
+	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyDicomStoreSummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The output DICOM store will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](/healthcare/docs/how-tos/logging)).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.deidentify",
@@ -5789,6 +12932,8 @@ type ProjectsLocationsDatasetsDicomStoresDeleteCall struct {
 
 // Delete: Deletes the specified DICOM store and removes all images that
 // are contained within it.
+//
+// - name: The resource name of the DICOM store to delete.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Delete(name string) *ProjectsLocationsDatasetsDicomStoresDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5822,7 +12967,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5921,8 +13066,14 @@ type ProjectsLocationsDatasetsDicomStoresExportCall struct {
 
 // Export: Exports data to the specified destination by copying it from
 // the DICOM store. Errors are also logged to Cloud Logging. For more
-// information, see Viewing logs (/healthcare/docs/how-tos/logging). The
+// information, see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging). The
 // metadata field type is OperationMetadata.
+//
+// - name: The DICOM store resource name from which to export the data.
+//   For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Export(name string, exportdicomdatarequest *ExportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresExportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5957,7 +13108,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6021,7 +13172,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing logs](/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
+	//   "description": "Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.export",
@@ -6063,6 +13214,8 @@ type ProjectsLocationsDatasetsDicomStoresGetCall struct {
 }
 
 // Get: Gets the specified DICOM store.
+//
+// - name: The resource name of the DICOM store to get.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Get(name string) *ProjectsLocationsDatasetsDicomStoresGetCall {
 	c := &ProjectsLocationsDatasetsDicomStoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6106,7 +13259,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6209,6 +13362,10 @@ type ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6266,7 +13423,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6374,8 +13531,14 @@ type ProjectsLocationsDatasetsDicomStoresImportCall struct {
 
 // Import: Imports data into the DICOM store by copying it from the
 // specified source. Errors are logged to Cloud Logging. For more
-// information, see Viewing logs (/healthcare/docs/how-tos/logging). The
+// information, see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging). The
 // metadata field type is OperationMetadata.
+//
+// - name: The name of the DICOM store resource into which the data is
+//   imported. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Import(name string, importdicomdatarequest *ImportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresImportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6410,7 +13573,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6474,7 +13637,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing logs](/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
+	//   "description": "Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.import",
@@ -6516,6 +13679,8 @@ type ProjectsLocationsDatasetsDicomStoresListCall struct {
 }
 
 // List: Lists the DICOM stores in the given dataset.
+//
+// - parent: Name of the dataset.
 func (r *ProjectsLocationsDatasetsDicomStoresService) List(parent string) *ProjectsLocationsDatasetsDicomStoresListCall {
 	c := &ProjectsLocationsDatasetsDicomStoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6606,7 +13771,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6744,6 +13909,10 @@ type ProjectsLocationsDatasetsDicomStoresPatchCall struct {
 }
 
 // Patch: Updates the specified DICOM store.
+//
+// - name: Resource name of the DICOM store, of the form
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Patch(name string, dicomstore *DicomStore) *ProjectsLocationsDatasetsDicomStoresPatchCall {
 	c := &ProjectsLocationsDatasetsDicomStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6786,7 +13955,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6908,6 +14077,14 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 // show how to call SearchForInstances, see Searching for studies,
 // series, instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+//
+// - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
+//   request. For example, `instances`, `series/{series_uid}/instances`,
+//   or `studies/{study_uid}/instances`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6952,7 +14129,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7039,6 +14216,13 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 // show how to call SearchForSeries, see Searching for studies, series,
 // instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+//
+// - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
+//   example, `series` or `studies/{study_uid}/series`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7083,7 +14267,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7170,6 +14354,13 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 // show how to call SearchForStudies, see Searching for studies, series,
 // instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+//
+// - dicomWebPath: The path of the SearchForStudies DICOMweb request.
+//   For example, `studies`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForStudies(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7214,7 +14405,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Header() http
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7293,6 +14484,10 @@ type ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7327,7 +14522,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7442,6 +14637,14 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 // the Cloud Healthcare API conformance statement. For samples that show
 // how to call StoreInstances, see Storing DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
+//
+// - dicomWebPath: The path of the StoreInstances DICOMweb request. For
+//   example, `studies/[{study_uid}]`. Note that the `study_uid` is
+//   optional.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7477,7 +14680,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7558,6 +14761,10 @@ type ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7592,7 +14799,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7706,6 +14913,10 @@ type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
 // results until the deletion operation finishes. For samples that show
 // how to call DeleteStudy, see Deleting a study, series, or instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+//
+// - dicomWebPath: The path of the DeleteStudy request. For example,
+//   `studies/{study_uid}`.
+// - parent: .
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7740,7 +14951,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7856,6 +15067,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveStudyMetadata, see Retrieving metadata
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+//
+// - dicomWebPath: The path of the RetrieveStudyMetadata DICOMweb
+//   request. For example, `studies/{study_uid}/metadata`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7900,7 +15118,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Header
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7986,6 +15204,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveStudy, see Retrieving DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+//
+// - dicomWebPath: The path of the RetrieveStudy DICOMweb request. For
+//   example, `studies/{study_uid}`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveStudy(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8030,7 +15255,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Header() 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8117,6 +15342,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 // show how to call SearchForInstances, see Searching for studies,
 // series, instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+//
+// - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
+//   request. For example, `instances`, `series/{series_uid}/instances`,
+//   or `studies/{study_uid}/instances`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8161,7 +15394,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Head
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8248,6 +15481,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 // show how to call SearchForSeries, see Searching for studies, series,
 // instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+//
+// - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
+//   example, `series` or `studies/{study_uid}/series`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8292,7 +15532,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Header(
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8378,6 +15618,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 // the Cloud Healthcare API conformance statement. For samples that show
 // how to call StoreInstances, see Storing DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
+//
+// - dicomWebPath: The path of the StoreInstances DICOMweb request. For
+//   example, `studies/[{study_uid}]`. Note that the `study_uid` is
+//   optional.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8413,7 +15661,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Header()
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8498,6 +15746,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 // that show how to call DeleteSeries, see Deleting a study, series, or
 // instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+//
+// - dicomWebPath: The path of the DeleteSeries request. For example,
+//   `studies/{study_uid}/series/{series_uid}`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8532,7 +15787,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Header() h
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8649,6 +15904,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveSeriesMetadata, see Retrieving metadata
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+//
+// - dicomWebPath: The path of the RetrieveSeriesMetadata DICOMweb
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/metadata`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8693,7 +15956,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8779,6 +16042,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveSeries, see Retrieving DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+//
+// - dicomWebPath: The path of the RetrieveSeries DICOMweb request. For
+//   example, `studies/{study_uid}/series/{series_uid}`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8823,7 +16093,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8910,6 +16180,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 // show how to call SearchForInstances, see Searching for studies,
 // series, instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+//
+// - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
+//   request. For example, `instances`, `series/{series_uid}/instances`,
+//   or `studies/{study_uid}/instances`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8954,7 +16232,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9037,6 +16315,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall struct
 // instance is deleted using DeleteInstance. For samples that show how
 // to call DeleteInstance, see Deleting a study, series, or instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+//
+// - dicomWebPath: The path of the DeleteInstance request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9071,7 +16356,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9190,6 +16475,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 // the Cloud Healthcare API conformance statement. For samples that show
 // how to call RetrieveInstance, see Retrieving an instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).
+//
+// - dicomWebPath: The path of the RetrieveInstance DICOMweb request.
+//   For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveInstance(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9234,7 +16527,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9322,6 +16615,15 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveInstanceMetadata, see Retrieving metadata
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+//
+// - dicomWebPath: The path of the RetrieveInstanceMetadata DICOMweb
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/me
+//   tadata`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9366,7 +16668,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9454,6 +16756,15 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // show how to call RetrieveRenderedInstance, see Retrieving consumer
 // image formats
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
+//
+// - dicomWebPath: The path of the RetrieveRenderedInstance DICOMweb
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/re
+//   ndered`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9498,7 +16809,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9584,6 +16895,15 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 // Cloud Healthcare API conformance statement. For samples that show how
 // to call RetrieveFrames, see Retrieving DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+//
+// - dicomWebPath: The path of the RetrieveFrames DICOMweb request. For
+//   example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
+//   ames/{frame_list}`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveFrames(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9628,7 +16948,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9716,6 +17036,15 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // show how to call RetrieveRenderedFrames, see Retrieving consumer
 // image formats
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
+//
+// - dicomWebPath: The path of the RetrieveRenderedFrames DICOMweb
+//   request. For example,
+//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
+//   ames/{frame_list}/rendered`.
+// - parent: The name of the DICOM store that is being accessed. For
+//   example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9760,7 +17089,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9837,6 +17166,8 @@ type ProjectsLocationsDatasetsFhirStoresCreateCall struct {
 }
 
 // Create: Creates a new FHIR store within the parent dataset.
+//
+// - parent: The name of the dataset this FHIR store belongs to.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Create(parent string, fhirstore *FhirStore) *ProjectsLocationsDatasetsFhirStoresCreateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9879,7 +17210,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9993,8 +17324,13 @@ type ProjectsLocationsDatasetsFhirStoresDeidentifyCall struct {
 // the destination store. The metadata field type is OperationMetadata.
 // If the request is successful, the response field type is
 // DeidentifyFhirStoreSummary. If errors occur, error is set. Error
-// details are also logged to Cloud Logging (see Viewing logs
-// (/healthcare/docs/how-tos/logging)).
+// details are also logged to Cloud Logging (see Viewing error logs in
+// Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+//
+// - sourceStore: Source FHIR store resource name. For example,
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Deidentify(sourceStore string, deidentifyfhirstorerequest *DeidentifyFhirStoreRequest) *ProjectsLocationsDatasetsFhirStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -10029,7 +17365,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10093,7 +17429,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyFhirStoreSummary. If errors occur, error is set. Error details are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)).",
+	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyFhirStoreSummary. If errors occur, error is set. Error details are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.deidentify",
@@ -10135,6 +17471,8 @@ type ProjectsLocationsDatasetsFhirStoresDeleteCall struct {
 
 // Delete: Deletes the specified FHIR store and removes all resources
 // within it.
+//
+// - name: The resource name of the FHIR store to delete.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Delete(name string) *ProjectsLocationsDatasetsFhirStoresDeleteCall {
 	c := &ProjectsLocationsDatasetsFhirStoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10168,7 +17506,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10269,10 +17607,16 @@ type ProjectsLocationsDatasetsFhirStoresExportCall struct {
 // destination. This method returns an Operation that can be used to
 // track the status of the export by calling GetOperation. Immediate
 // fatal errors appear in the error field, errors are also logged to
-// Cloud Logging (see Viewing logs (/healthcare/docs/how-tos/logging)).
+// Cloud Logging (see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 // Otherwise, when the operation finishes, a detailed response of type
 // ExportResourcesResponse is returned in the response field. The
 // metadata field type for this operation is OperationMetadata.
+//
+// - name: The name of the FHIR store to export resource from, in the
+//   format of
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Export(name string, exportresourcesrequest *ExportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresExportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10307,7 +17651,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10371,7 +17715,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Export resources from the FHIR store to the specified destination. This method returns an Operation that can be used to track the status of the export by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ExportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
+	//   "description": "Export resources from the FHIR store to the specified destination. This method returns an Operation that can be used to track the status of the export by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ExportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.export",
@@ -10413,6 +17757,8 @@ type ProjectsLocationsDatasetsFhirStoresGetCall struct {
 }
 
 // Get: Gets the configuration of the specified FHIR store.
+//
+// - name: The resource name of the FHIR store to get.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Get(name string) *ProjectsLocationsDatasetsFhirStoresGetCall {
 	c := &ProjectsLocationsDatasetsFhirStoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10456,7 +17802,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10559,6 +17905,10 @@ type ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10616,7 +17966,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10734,7 +18084,7 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // enable_update_create setting on the FHIR store. It is strongly
 // advised not to include or encode any sensitive data such as patient
 // identifiers in client-specified resource IDs. Those IDs are part of
-// the FHIR resource path recorded in Cloud audit logs and Cloud Pub/Sub
+// the FHIR resource path recorded in Cloud Audit Logs and Cloud Pub/Sub
 // notifications. Those IDs can also be contained in reference fields
 // within other resources. The import process does not enforce
 // referential integrity, regardless of the
@@ -10777,11 +18127,17 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // by a FHIR search or Patient-everything operation. This method returns
 // an Operation that can be used to track the status of the import by
 // calling GetOperation. Immediate fatal errors appear in the error
-// field, errors are also logged to Cloud Logging (see Viewing logs
-// (/healthcare/docs/how-tos/logging)). Otherwise, when the operation
-// finishes, a detailed response of type ImportResourcesResponse is
-// returned in the response field. The metadata field type for this
-// operation is OperationMetadata.
+// field, errors are also logged to Cloud Logging (see Viewing error
+// logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+// Otherwise, when the operation finishes, a detailed response of type
+// ImportResourcesResponse is returned in the response field. The
+// metadata field type for this operation is OperationMetadata.
+//
+// - name: The name of the FHIR store to import FHIR resources to, in
+//   the format of
+//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//   /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Import(name string, importresourcesrequest *ImportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresImportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10816,7 +18172,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10880,7 +18236,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports resources to the FHIR store by loading data from the specified sources. This method is optimized to load large quantities of data using import semantics that ignore some FHIR store configuration options and are not suitable for all use cases. It is primarily intended to load data into an empty FHIR store that is not being used by other clients. In cases where this method is not appropriate, consider using ExecuteBundle to load data. Every resource in the input must contain a client-supplied ID. Each resource is stored using the supplied ID regardless of the enable_update_create setting on the FHIR store. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud audit logs and Cloud Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The import process does not enforce referential integrity, regardless of the disable_referential_integrity setting on the FHIR store. This allows the import of resources with arbitrary interdependencies without considering grouping or ordering, but if the input data contains invalid references or if some resources fail to be imported, the FHIR store might be left in a state that violates referential integrity. The import process does not trigger Pub/Sub notification or BigQuery streaming update, regardless of how those are configured on the FHIR store. If a resource with the specified ID already exists, the most recent version of the resource is overwritten without creating a new historical version, regardless of the disable_resource_versioning setting on the FHIR store. If transient failures occur during the import, it's possible that successfully imported resources will be overwritten more than once. The import operation is idempotent unless the input data contains multiple valid resources with the same ID but different contents. In that case, after the import completes, the store contains exactly one resource with that ID but there is no ordering guarantee on which version of the contents it will have. The operation result counters do not count duplicate IDs as an error and count one success for each resource in the input, which might result in a success count larger than the number of resources in the FHIR store. This often occurs when importing data organized in bundles produced by Patient-everything where each bundle contains its own copy of a resource such as Practitioner that might be referred to by many patients. If some resources fail to import, for example due to parsing errors, successfully imported resources are not rolled back. The location and format of the input data is specified by the parameters in ImportResourcesRequest. Note that if no format is specified, this method assumes the `BUNDLE` format. When using the `BUNDLE` format this method ignores the `Bundle.type` field, except that `history` bundles are rejected, and does not apply any of the bundle processing semantics for batch or transaction bundles. Unlike in ExecuteBundle, transaction bundles are not executed as a single transaction and bundle-internal references are not rewritten. The bundle is treated as a collection of resources to be written as provided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As an example, this allows the import of `searchset` bundles produced by a FHIR search or Patient-everything operation. This method returns an Operation that can be used to track the status of the import by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ImportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
+	//   "description": "Imports resources to the FHIR store by loading data from the specified sources. This method is optimized to load large quantities of data using import semantics that ignore some FHIR store configuration options and are not suitable for all use cases. It is primarily intended to load data into an empty FHIR store that is not being used by other clients. In cases where this method is not appropriate, consider using ExecuteBundle to load data. Every resource in the input must contain a client-supplied ID. Each resource is stored using the supplied ID regardless of the enable_update_create setting on the FHIR store. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud Audit Logs and Cloud Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The import process does not enforce referential integrity, regardless of the disable_referential_integrity setting on the FHIR store. This allows the import of resources with arbitrary interdependencies without considering grouping or ordering, but if the input data contains invalid references or if some resources fail to be imported, the FHIR store might be left in a state that violates referential integrity. The import process does not trigger Pub/Sub notification or BigQuery streaming update, regardless of how those are configured on the FHIR store. If a resource with the specified ID already exists, the most recent version of the resource is overwritten without creating a new historical version, regardless of the disable_resource_versioning setting on the FHIR store. If transient failures occur during the import, it's possible that successfully imported resources will be overwritten more than once. The import operation is idempotent unless the input data contains multiple valid resources with the same ID but different contents. In that case, after the import completes, the store contains exactly one resource with that ID but there is no ordering guarantee on which version of the contents it will have. The operation result counters do not count duplicate IDs as an error and count one success for each resource in the input, which might result in a success count larger than the number of resources in the FHIR store. This often occurs when importing data organized in bundles produced by Patient-everything where each bundle contains its own copy of a resource such as Practitioner that might be referred to by many patients. If some resources fail to import, for example due to parsing errors, successfully imported resources are not rolled back. The location and format of the input data is specified by the parameters in ImportResourcesRequest. Note that if no format is specified, this method assumes the `BUNDLE` format. When using the `BUNDLE` format this method ignores the `Bundle.type` field, except that `history` bundles are rejected, and does not apply any of the bundle processing semantics for batch or transaction bundles. Unlike in ExecuteBundle, transaction bundles are not executed as a single transaction and bundle-internal references are not rewritten. The bundle is treated as a collection of resources to be written as provided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As an example, this allows the import of `searchset` bundles produced by a FHIR search or Patient-everything operation. This method returns an Operation that can be used to track the status of the import by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ImportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -10922,6 +18278,8 @@ type ProjectsLocationsDatasetsFhirStoresListCall struct {
 }
 
 // List: Lists the FHIR stores in the given dataset.
+//
+// - parent: Name of the dataset.
 func (r *ProjectsLocationsDatasetsFhirStoresService) List(parent string) *ProjectsLocationsDatasetsFhirStoresListCall {
 	c := &ProjectsLocationsDatasetsFhirStoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11012,7 +18370,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11150,6 +18508,10 @@ type ProjectsLocationsDatasetsFhirStoresPatchCall struct {
 }
 
 // Patch: Updates the configuration of the specified FHIR store.
+//
+// - name: Output only. Resource name of the FHIR store, of the form
+//   `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_
+//   id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Patch(name string, fhirstore *FhirStore) *ProjectsLocationsDatasetsFhirStoresPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11192,7 +18554,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11306,6 +18668,10 @@ type ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11340,7 +18706,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11451,6 +18817,10 @@ type ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11485,7 +18855,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11598,18 +18968,18 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 // (http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)).
-// On success, the response body will contain a JSON-encoded
-// representation of a `Bundle` resource of type `searchset`, containing
-// the results of the operation. Errors generated by the FHIR store will
-// contain a JSON-encoded `OperationOutcome` resource describing the
-// reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned
-// instead. The resources in scope for the response are: * The patient
-// resource itself. * All the resources directly referenced by the
-// patient resource. * Resources directly referencing the patient
-// resource that meet the inclusion criteria. The inclusion criteria are
-// based on the membership rules in the patient compartment definition
-// (DSTU2 (http://hl7.org/fhir/DSTU2/compartment-patient.html), STU3
+// On success, the response body contains a JSON-encoded representation
+// of a `Bundle` resource of type `searchset`, containing the results of
+// the operation. Errors generated by the FHIR store contain a
+// JSON-encoded `OperationOutcome` resource describing the reason for
+// the error. If the request cannot be mapped to a valid API method on a
+// FHIR store, a generic GCP error might be returned instead. The
+// resources in scope for the response are: * The patient resource
+// itself. * All the resources directly referenced by the patient
+// resource. * Resources directly referencing the patient resource that
+// meet the inclusion criteria. The inclusion criteria are based on the
+// membership rules in the patient compartment definition (DSTU2
+// (http://hl7.org/fhir/DSTU2/compartment-patient.html), STU3
 // (http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), R4
 // (http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which
 // details the eligible resource types and referencing search
@@ -11617,6 +18987,9 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 // see Getting all patient compartment resources
 // (/healthcare/docs/how-tos/fhir-resources#getting_all_patient_compartme
 // nt_resources).
+//
+// - name: Name of the `Patient` resource for which the information is
+//   required.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) PatientEverything(name string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11713,7 +19086,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11742,7 +19115,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Retrieves a Patient resource and resources related to that patient. Implements the FHIR extended operation Patient-everything ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything), [STU3](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything), [R4](http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)). On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the operation. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The resources in scope for the response are: * The patient resource itself. * All the resources directly referenced by the patient resource. * Resources directly referencing the patient resource that meet the inclusion criteria. The inclusion criteria are based on the membership rules in the patient compartment definition ([DSTU2](http://hl7.org/fhir/DSTU2/compartment-patient.html), [STU3](http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), [R4](http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which details the eligible resource types and referencing search parameters. For samples that show how to call `Patient-everything`, see [Getting all patient compartment resources](/healthcare/docs/how-tos/fhir-resources#getting_all_patient_compartment_resources).",
+	//   "description": "Retrieves a Patient resource and resources related to that patient. Implements the FHIR extended operation Patient-everything ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything), [STU3](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything), [R4](http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)). On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the operation. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The resources in scope for the response are: * The patient resource itself. * All the resources directly referenced by the patient resource. * Resources directly referencing the patient resource that meet the inclusion criteria. The inclusion criteria are based on the membership rules in the patient compartment definition ([DSTU2](http://hl7.org/fhir/DSTU2/compartment-patient.html), [STU3](http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), [R4](http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which details the eligible resource types and referencing search parameters. For samples that show how to call `Patient-everything`, see [Getting all patient compartment resources](/healthcare/docs/how-tos/fhir-resources#getting_all_patient_compartment_resources).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$everything",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything",
@@ -11818,6 +19191,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall struct {
 // versions of a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#deleting_historical_versions_
 // of_a_fhir_resource).
+//
+// - name: The name of the resource to purge.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourcePurge(name string) *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11851,7 +19226,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11962,8 +19337,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall struct {
 // (http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)),
 // or the conformance interaction
 // (http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance)
-// in the DSTU2 case. On success, the response body will contain a
+// in the DSTU2 case. On success, the response body contains a
 // JSON-encoded representation of a `CapabilityStatement` resource.
+//
+// - name: Name of the FHIR store to retrieve the capabilities for.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Capabilities(name string) *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12007,7 +19384,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12036,7 +19413,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Do(opts ...goo
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Gets the FHIR capability statement ([STU3](http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html), [R4](http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html)), or the [conformance statement](http://hl7.org/implement/standards/fhir/DSTU2/conformance.html) in the DSTU2 case for the store, which contains a description of functionality supported by the server. Implements the FHIR standard capabilities interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#capabilities), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)), or the [conformance interaction](http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance) in the DSTU2 case. On success, the response body will contain a JSON-encoded representation of a `CapabilityStatement` resource.",
+	//   "description": "Gets the FHIR capability statement ([STU3](http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html), [R4](http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html)), or the [conformance statement](http://hl7.org/implement/standards/fhir/DSTU2/conformance.html) in the DSTU2 case for the store, which contains a description of functionality supported by the server. Implements the FHIR standard capabilities interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#capabilities), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)), or the [conformance interaction](http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance) in the DSTU2 case. On success, the response body contains a JSON-encoded representation of a `CapabilityStatement` resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.capabilities",
@@ -12083,15 +19460,25 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
 // which creates a new resource with a server-assigned resource ID. The
 // request body must contain a JSON-encoded FHIR resource, and the
 // request headers must contain `Content-Type: application/fhir+json`.
-// On success, the response body will contain a JSON-encoded
-// representation of the resource as it was created on the server,
-// including the server-assigned resource ID and version ID. Errors
-// generated by the FHIR store will contain a JSON-encoded
-// `OperationOutcome` resource describing the reason for the error. If
-// the request cannot be mapped to a valid API method on a FHIR store, a
-// generic GCP error might be returned instead. For samples that show
-// how to call `create`, see Creating a FHIR resource
+// On success, the response body contains a JSON-encoded representation
+// of the resource as it was created on the server, including the
+// server-assigned resource ID and version ID. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped
+// to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. For samples that show how to call `create`, see
+// Creating a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).
+//
+// - parent: The name of the FHIR store this resource belongs to.
+// - type: The FHIR resource type to create, such as Patient or
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   Must match the resource type in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Create(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirCreateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12127,7 +19514,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12153,7 +19540,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Creates a FHIR resource. Implements the FHIR standard create interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#create), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#create), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#create)), which creates a new resource with a server-assigned resource ID. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. On success, the response body will contain a JSON-encoded representation of the resource as it was created on the server, including the server-assigned resource ID and version ID. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `create`, see [Creating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).",
+	//   "description": "Creates a FHIR resource. Implements the FHIR standard create interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#create), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#create), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#create)), which creates a new resource with a server-assigned resource ID. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. On success, the response body contains a JSON-encoded representation of the resource as it was created on the server, including the server-assigned resource ID and version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `create`, see [Creating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.create",
@@ -12213,6 +19600,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirDeleteCall struct {
 // by the purge method. For samples that show how to call `delete`, see
 // Deleting a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#deleting_a_fhir_resource).
+//
+// - name: The name of the resource to delete.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Delete(name string) *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12246,7 +19635,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12342,6 +19731,9 @@ type ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall struct {
 // FHIR store, a generic GCP error might be returned instead. For
 // samples that show how to call `executeBundle`, see Managing FHIR
 // resources using FHIR bundles (/healthcare/docs/how-tos/fhir-bundles).
+//
+// - parent: Name of the FHIR store in which this bundle will be
+//   executed.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ExecuteBundle(parent string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12376,7 +19768,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12449,16 +19841,18 @@ type ProjectsLocationsDatasetsFhirStoresFhirHistoryCall struct {
 // STU3
 // (http://hl7.org/implement/standards/fhir/STU3/http.html#history), R4
 // (http://hl7.org/implement/standards/fhir/R4/http.html#history)). On
-// success, the response body will contain a JSON-encoded representation
-// of a `Bundle` resource of type `history`, containing the version
-// history sorted from most recent to oldest versions. Errors generated
-// by the FHIR store will contain a JSON-encoded `OperationOutcome`
-// resource describing the reason for the error. If the request cannot
-// be mapped to a valid API method on a FHIR store, a generic GCP error
-// might be returned instead. For samples that show how to call
-// `history`, see Listing FHIR resource versions
+// success, the response body contains a JSON-encoded representation of
+// a `Bundle` resource of type `history`, containing the version history
+// sorted from most recent to oldest versions. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped
+// to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. For samples that show how to call `history`, see
+// Listing FHIR resource versions
 // (/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_version
 // s).
+//
+// - name: The name of the resource to retrieve.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) History(name string) *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12544,7 +19938,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12573,7 +19967,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Do(opts ...googleap
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Lists all the versions of a resource (including the current version and deleted versions) from the FHIR store. Implements the per-resource form of the FHIR standard history interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#history), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#history), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#history)). On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `history`, containing the version history sorted from most recent to oldest versions. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `history`, see [Listing FHIR resource versions](/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_versions).",
+	//   "description": "Lists all the versions of a resource (including the current version and deleted versions) from the FHIR store. Implements the per-resource form of the FHIR standard history interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#history), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#history), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#history)). On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `history`, containing the version history sorted from most recent to oldest versions. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `history`, see [Listing FHIR resource versions](/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_versions).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}/_history",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.history",
@@ -12640,15 +20034,17 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatchCall struct {
 // doesn't define a patch method, but the server supports it in the same
 // way it supports STU3. The request body must contain a JSON Patch
 // document, and the request headers must contain `Content-Type:
-// application/json-patch+json`. On success, the response body will
-// contain a JSON-encoded representation of the updated resource,
-// including the server-assigned version ID. Errors generated by the
-// FHIR store will contain a JSON-encoded `OperationOutcome` resource
-// describing the reason for the error. If the request cannot be mapped
-// to a valid API method on a FHIR store, a generic GCP error might be
-// returned instead. For samples that show how to call `patch`, see
-// Patching a FHIR resource
+// application/json-patch+json`. On success, the response body contains
+// a JSON-encoded representation of the updated resource, including the
+// server-assigned version ID. Errors generated by the FHIR store
+// contain a JSON-encoded `OperationOutcome` resource describing the
+// reason for the error. If the request cannot be mapped to a valid API
+// method on a FHIR store, a generic GCP error might be returned
+// instead. For samples that show how to call `patch`, see Patching a
+// FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).
+//
+// - name: The name of the resource to update.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Patch(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12683,7 +20079,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12708,7 +20104,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Do(opts ...googleapi.
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Updates part of an existing resource by applying the operations specified in a [JSON Patch](http://jsonpatch.com/) document. Implements the FHIR standard patch interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#patch), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#patch)). DSTU2 doesn't define a patch method, but the server supports it in the same way it supports STU3. The request body must contain a JSON Patch document, and the request headers must contain `Content-Type: application/json-patch+json`. On success, the response body will contain a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `patch`, see [Patching a FHIR resource](/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).",
+	//   "description": "Updates part of an existing resource by applying the operations specified in a [JSON Patch](http://jsonpatch.com/) document. Implements the FHIR standard patch interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#patch), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#patch)). DSTU2 doesn't define a patch method, but the server supports it in the same way it supports STU3. The request body must contain a JSON Patch document, and the request headers must contain `Content-Type: application/json-patch+json`. On success, the response body contains a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `patch`, see [Patching a FHIR resource](/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "PATCH",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.patch",
@@ -12760,13 +20156,15 @@ type ProjectsLocationsDatasetsFhirStoresFhirReadCall struct {
 // (http://hl7.org/implement/standards/fhir/R4/http.html#cread))
 // specified by supplying an `If-Modified-Since` header with a date/time
 // value or an `If-None-Match` header with an ETag value. On success,
-// the response body will contain a JSON-encoded representation of the
-// resource. Errors generated by the FHIR store will contain a
-// JSON-encoded `OperationOutcome` resource describing the reason for
-// the error. If the request cannot be mapped to a valid API method on a
-// FHIR store, a generic GCP error might be returned instead. For
-// samples that show how to call `read`, see Getting a FHIR resource
+// the response body contains a JSON-encoded representation of the
+// resource. Errors generated by the FHIR store contain a JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If
+// the request cannot be mapped to a valid API method on a FHIR store, a
+// generic GCP error might be returned instead. For samples that show
+// how to call `read`, see Getting a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).
+//
+// - name: The name of the resource to retrieve.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Read(name string) *ProjectsLocationsDatasetsFhirStoresFhirReadCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12810,7 +20208,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12839,7 +20237,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Do(opts ...googleapi.C
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Gets the contents of a FHIR resource. Implements the FHIR standard read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#read), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#read), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#read)). Also supports the FHIR standard conditional read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#cread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#cread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#cread)) specified by supplying an `If-Modified-Since` header with a date/time value or an `If-None-Match` header with an ETag value. On success, the response body will contain a JSON-encoded representation of the resource. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `read`, see [Getting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).",
+	//   "description": "Gets the contents of a FHIR resource. Implements the FHIR standard read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#read), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#read), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#read)). Also supports the FHIR standard conditional read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#cread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#cread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#cread)) specified by supplying an `If-Modified-Since` header with a date/time value or an `If-None-Match` header with an ETag value. On success, the response body contains a JSON-encoded representation of the resource. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `read`, see [Getting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.read",
@@ -12896,17 +20294,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // same semantics as the `GET` method for the specified type. The `GET`
 // and `POST` methods do not support compartment searches. The `POST`
 // method does not support `application/x-www-form-urlencoded` search
-// parameters. On success, the response body will contain a JSON-encoded
+// parameters. On success, the response body contains a JSON-encoded
 // representation of a `Bundle` resource of type `searchset`, containing
-// the results of the search. Errors generated by the FHIR store will
-// contain a JSON-encoded `OperationOutcome` resource describing the
-// reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned
-// instead. The server's capability statement, retrieved through
-// capabilities, indicates what search parameters are supported on each
-// FHIR resource. A list of all search parameters defined by the
-// specification can be found in the FHIR Search Parameter Registry
-// (STU3
+// the results of the search. Errors generated by the FHIR store contain
+// a JSON-encoded `OperationOutcome` resource describing the reason for
+// the error. If the request cannot be mapped to a valid API method on a
+// FHIR store, a generic GCP error might be returned instead. The
+// server's capability statement, retrieved through capabilities,
+// indicates what search parameters are supported on each FHIR resource.
+// A list of all search parameters defined by the specification can be
+// found in the FHIR Search Parameter Registry (STU3
 // (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
@@ -12928,6 +20325,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // see Searching for FHIR resources
 // (/healthcare/docs/how-tos/fhir-search) and Advanced FHIR search
 // features (/healthcare/docs/how-tos/fhir-advanced-search).
+//
+// - parent: Name of the FHIR store to retrieve resources from.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Search(parent string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12962,7 +20361,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12993,7 +20392,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -13054,17 +20453,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // same semantics as the `GET` method for the specified type. The `GET`
 // and `POST` methods do not support compartment searches. The `POST`
 // method does not support `application/x-www-form-urlencoded` search
-// parameters. On success, the response body will contain a JSON-encoded
+// parameters. On success, the response body contains a JSON-encoded
 // representation of a `Bundle` resource of type `searchset`, containing
-// the results of the search. Errors generated by the FHIR store will
-// contain a JSON-encoded `OperationOutcome` resource describing the
-// reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned
-// instead. The server's capability statement, retrieved through
-// capabilities, indicates what search parameters are supported on each
-// FHIR resource. A list of all search parameters defined by the
-// specification can be found in the FHIR Search Parameter Registry
-// (STU3
+// the results of the search. Errors generated by the FHIR store contain
+// a JSON-encoded `OperationOutcome` resource describing the reason for
+// the error. If the request cannot be mapped to a valid API method on a
+// FHIR store, a generic GCP error might be returned instead. The
+// server's capability statement, retrieved through capabilities,
+// indicates what search parameters are supported on each FHIR resource.
+// A list of all search parameters defined by the specification can be
+// found in the FHIR Search Parameter Registry (STU3
 // (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
@@ -13086,6 +20484,15 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // see Searching for FHIR resources
 // (/healthcare/docs/how-tos/fhir-search) and Advanced FHIR search
 // features (/healthcare/docs/how-tos/fhir-advanced-search).
+//
+// - parent: Name of the FHIR store to retrieve resources from.
+// - resourceType: The FHIR resource type to search, such as Patient or
+//   Observation. For a complete list, see the FHIR Resource Index
+//   (DSTU2
+//   (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//   STU3
+//   (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//   R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchType(parent string, resourceType string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13121,7 +20528,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13153,7 +20560,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{resourceType}/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search-type",
@@ -13211,20 +20618,22 @@ type ProjectsLocationsDatasetsFhirStoresFhirUpdateCall struct {
 // client-specified ID. It is strongly advised not to include or encode
 // any sensitive data such as patient identifiers in client-specified
 // resource IDs. Those IDs are part of the FHIR resource path recorded
-// in Cloud audit logs and Cloud Pub/Sub notifications. Those IDs can
-// also be contained in reference fields within other resources. The
-// request body must contain a JSON-encoded FHIR resource, and the
-// request headers must contain `Content-Type: application/fhir+json`.
-// The resource must contain an `id` element having an identical value
-// to the ID in the REST path of the request. On success, the response
-// body will contain a JSON-encoded representation of the updated
-// resource, including the server-assigned version ID. Errors generated
-// by the FHIR store will contain a JSON-encoded `OperationOutcome`
-// resource describing the reason for the error. If the request cannot
-// be mapped to a valid API method on a FHIR store, a generic GCP error
-// might be returned instead. For samples that show how to call
-// `update`, see Updating a FHIR resource
+// in Cloud Audit Logs and Pub/Sub notifications. Those IDs can also be
+// contained in reference fields within other resources. The request
+// body must contain a JSON-encoded FHIR resource, and the request
+// headers must contain `Content-Type: application/fhir+json`. The
+// resource must contain an `id` element having an identical value to
+// the ID in the REST path of the request. On success, the response body
+// contains a JSON-encoded representation of the updated resource,
+// including the server-assigned version ID. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped
+// to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. For samples that show how to call `update`, see
+// Updating a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).
+//
+// - name: The name of the resource to update.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Update(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13259,7 +20668,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13284,7 +20693,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Updates the entire contents of a resource. Implements the FHIR standard update interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#update), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#update), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#update)). If the specified resource does not exist and the FHIR store has enable_update_create set, creates the resource with the client-specified ID. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud audit logs and Cloud Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. The resource must contain an `id` element having an identical value to the ID in the REST path of the request. On success, the response body will contain a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `update`, see [Updating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).",
+	//   "description": "Updates the entire contents of a resource. Implements the FHIR standard update interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#update), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#update), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#update)). If the specified resource does not exist and the FHIR store has enable_update_create set, creates the resource with the client-specified ID. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. The resource must contain an `id` element having an identical value to the ID in the REST path of the request. On success, the response body contains a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `update`, see [Updating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "PUT",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.update",
@@ -13331,8 +20740,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirVreadCall struct {
 // (http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), STU3
 // (http://hl7.org/implement/standards/fhir/STU3/http.html#vread), R4
 // (http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On
-// success, the response body will contain a JSON-encoded representation
-// of the resource. Errors generated by the FHIR store will contain a
+// success, the response body contains a JSON-encoded representation of
+// the resource. Errors generated by the FHIR store contain a
 // JSON-encoded `OperationOutcome` resource describing the reason for
 // the error. If the request cannot be mapped to a valid API method on a
 // FHIR store, a generic GCP error might be returned instead. For
@@ -13340,6 +20749,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirVreadCall struct {
 // version
 // (/healthcare/docs/how-tos/fhir-resources#retrieving_a_fhir_resource_ve
 // rsion).
+//
+// - name: The name of the resource version to retrieve.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Vread(name string) *ProjectsLocationsDatasetsFhirStoresFhirVreadCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirVreadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13383,7 +20794,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13412,7 +20823,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Do(opts ...googleapi.
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Gets the contents of a version (current or historical) of a FHIR resource by version ID. Implements the FHIR standard vread interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#vread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On success, the response body will contain a JSON-encoded representation of the resource. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `vread`, see [Retrieving a FHIR resource version](/healthcare/docs/how-tos/fhir-resources#retrieving_a_fhir_resource_version).",
+	//   "description": "Gets the contents of a version (current or historical) of a FHIR resource by version ID. Implements the FHIR standard vread interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#vread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On success, the response body contains a JSON-encoded representation of the resource. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `vread`, see [Retrieving a FHIR resource version](/healthcare/docs/how-tos/fhir-resources#retrieving_a_fhir_resource_version).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}/_history/{_historyId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.vread",
@@ -13451,6 +20862,8 @@ type ProjectsLocationsDatasetsHl7V2StoresCreateCall struct {
 }
 
 // Create: Creates a new HL7v2 store within the parent dataset.
+//
+// - parent: The name of the dataset this HL7v2 store belongs to.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Create(parent string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresCreateCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13493,7 +20906,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13604,6 +21017,8 @@ type ProjectsLocationsDatasetsHl7V2StoresDeleteCall struct {
 
 // Delete: Deletes the specified HL7v2 store and removes all messages
 // that it contains.
+//
+// - name: The resource name of the HL7v2 store to delete.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Delete(name string) *ProjectsLocationsDatasetsHl7V2StoresDeleteCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13637,7 +21052,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13735,6 +21150,8 @@ type ProjectsLocationsDatasetsHl7V2StoresGetCall struct {
 }
 
 // Get: Gets the specified HL7v2 store.
+//
+// - name: The resource name of the HL7v2 store to get.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Get(name string) *ProjectsLocationsDatasetsHl7V2StoresGetCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13778,7 +21195,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13881,6 +21298,10 @@ type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13938,7 +21359,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14045,6 +21466,8 @@ type ProjectsLocationsDatasetsHl7V2StoresListCall struct {
 }
 
 // List: Lists the HL7v2 stores in the given dataset.
+//
+// - parent: Name of the dataset.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) List(parent string) *ProjectsLocationsDatasetsHl7V2StoresListCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14135,7 +21558,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14273,6 +21696,10 @@ type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
 }
 
 // Patch: Updates the HL7v2 store.
+//
+// - name: Resource name of the HL7v2 store, of the form
+//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_stor
+//   e_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14315,7 +21742,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14429,6 +21856,10 @@ type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14463,7 +21894,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14574,6 +22005,10 @@ type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14608,7 +22043,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14714,11 +22149,13 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall struct {
 }
 
 // Create: Parses and stores an HL7v2 message. This method triggers an
-// asynchronous notification to any Cloud Pub/Sub topic configured in
-// projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if
-// the filtering matches the message. If an MLLP adapter is configured
-// to listen to a Cloud Pub/Sub topic, the adapter transmits the message
-// when a notification is received.
+// asynchronous notification to any Pub/Sub topic configured in
+// Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the
+// message. If an MLLP adapter is configured to listen to a Pub/Sub
+// topic, the adapter transmits the message when a notification is
+// received.
+//
+// - parent: The name of the dataset this message belongs to.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Create(parent string, createmessagerequest *CreateMessageRequest) *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14753,7 +22190,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14817,7 +22254,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Cloud Pub/Sub topic configured in projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Cloud Pub/Sub topic, the adapter transmits the message when a notification is received.",
+	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Pub/Sub topic configured in Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Pub/Sub topic, the adapter transmits the message when a notification is received.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.messages.create",
@@ -14858,6 +22295,8 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall struct {
 }
 
 // Delete: Deletes an HL7v2 message.
+//
+// - name: The resource name of the HL7v2 message to delete.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Delete(name string) *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14891,7 +22330,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14989,6 +22428,8 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall struct {
 }
 
 // Get: Gets an HL7v2 message.
+//
+// - name: The resource name of the HL7v2 message to retrieve.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Get(name string) *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15049,7 +22490,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15169,15 +22610,17 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall struct {
 }
 
 // Ingest: Parses and stores an HL7v2 message. This method triggers an
-// asynchronous notification to any Cloud Pub/Sub topic configured in
-// projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if
-// the filtering matches the message. If an MLLP adapter is configured
-// to listen to a Cloud Pub/Sub topic, the adapter transmits the message
-// when a notification is received. This method also generates a
-// response containing an HL7v2 acknowledgement (`ACK`) message when
-// successful or a negative acknowledgement (`NACK`) message in case of
-// error, suitable for replying to HL7v2 interface systems that expect
-// these acknowledgements.
+// asynchronous notification to any Pub/Sub topic configured in
+// Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the
+// message. If an MLLP adapter is configured to listen to a Pub/Sub
+// topic, the adapter transmits the message when a notification is
+// received. If the method is successful, it generates a response
+// containing an HL7v2 acknowledgment (`ACK`) message. If the method
+// encounters an error, it returns a negative acknowledgment (`NACK`)
+// message. This behavior is suitable for replying to HL7v2 interface
+// systems that expect these acknowledgments.
+//
+// - parent: The name of the HL7v2 store this message belongs to.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Ingest(parent string, ingestmessagerequest *IngestMessageRequest) *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15212,7 +22655,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15276,7 +22719,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Cloud Pub/Sub topic configured in projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Cloud Pub/Sub topic, the adapter transmits the message when a notification is received. This method also generates a response containing an HL7v2 acknowledgement (`ACK`) message when successful or a negative acknowledgement (`NACK`) message in case of error, suitable for replying to HL7v2 interface systems that expect these acknowledgements.",
+	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Pub/Sub topic configured in Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Pub/Sub topic, the adapter transmits the message when a notification is received. If the method is successful, it generates a response containing an HL7v2 acknowledgment (`ACK`) message. If the method encounters an error, it returns a negative acknowledgment (`NACK`) message. This behavior is suitable for replying to HL7v2 interface systems that expect these acknowledgments.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages:ingest",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.messages.ingest",
@@ -15321,6 +22764,8 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesListCall struct {
 // for filtering. Note: HL7v2 messages are indexed asynchronously, so
 // there might be a slight delay between the time a message is created
 // and when it can be found through a filter.
+//
+// - parent: Name of the HL7v2 store to retrieve messages from.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15358,6 +22803,9 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string
 // segment. For example, `send_date < "2017-01-02". * `send_time`, the
 // timestamp when the message was sent, using the RFC3339 time format
 // for comparisons, from the MSH-7 segment. For example, `send_time <
+// "2017-01-02T00:00:00-05:00". * `create_time`, the timestamp when the
+// message was created in the HL7v2 store. Use the RFC3339 time format
+// for comparisons. For example, `create_time <
 // "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that
 // the message came from, from the MSH-4 segment. For example,
 // `send_facility = "ABC". * `PatientId(value, type)`, which matches if
@@ -15453,7 +22901,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15524,7 +22972,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts messages returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Fields/functions available for filtering are: * `message_type`, from the MSH-9.1 field. For example, `NOT message_type = \"ADT\"`. * `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in the dataset's time_zone, from the MSH-7 segment. For example, `send_date \u003c \"2017-01-02\"`. * `send_time`, the timestamp when the message was sent, using the RFC3339 time format for comparisons, from the MSH-7 segment. For example, `send_time \u003c \"2017-01-02T00:00:00-05:00\"`. * `send_facility`, the care center that the message came from, from the MSH-4 segment. For example, `send_facility = \"ABC\"`. * `PatientId(value, type)`, which matches if the message lists a patient having an ID of the given value and type in the PID-2, PID-3, or PID-4 segments. For example, `PatientId(\"123456\", \"MRN\")`. * `labels.x`, a string value of the label with key `x` as set using the Message.labels map. For example, `labels.\"priority\"=\"high\"`. The operator `:*` can be used to assert the existence of a label. For example, `labels.\"priority\":*`.",
+	//       "description": "Restricts messages returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Fields/functions available for filtering are: * `message_type`, from the MSH-9.1 field. For example, `NOT message_type = \"ADT\"`. * `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in the dataset's time_zone, from the MSH-7 segment. For example, `send_date \u003c \"2017-01-02\"`. * `send_time`, the timestamp when the message was sent, using the RFC3339 time format for comparisons, from the MSH-7 segment. For example, `send_time \u003c \"2017-01-02T00:00:00-05:00\"`. * `create_time`, the timestamp when the message was created in the HL7v2 store. Use the RFC3339 time format for comparisons. For example, `create_time \u003c \"2017-01-02T00:00:00-05:00\"`. * `send_facility`, the care center that the message came from, from the MSH-4 segment. For example, `send_facility = \"ABC\"`. * `PatientId(value, type)`, which matches if the message lists a patient having an ID of the given value and type in the PID-2, PID-3, or PID-4 segments. For example, `PatientId(\"123456\", \"MRN\")`. * `labels.x`, a string value of the label with key `x` as set using the Message.labels map. For example, `labels.\"priority\"=\"high\"`. The operator `:*` can be used to assert the existence of a label. For example, `labels.\"priority\":*`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15620,6 +23068,10 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall struct {
 // is allowed to be updated. The labels in the request are merged with
 // the existing set of labels. Existing labels with the same keys are
 // updated.
+//
+// - name: Resource name of the Message, of the form
+//   `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_sto
+//   re_id}/messages/{message_id}`. Assigned by the server.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string, message *Message) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15662,7 +23114,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15783,6 +23235,8 @@ type ProjectsLocationsDatasetsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsDatasetsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsDatasetsOperationsCancelCall {
 	c := &ProjectsLocationsDatasetsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15817,7 +23271,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15925,6 +23379,8 @@ type ProjectsLocationsDatasetsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsDatasetsOperationsService) Get(name string) *ProjectsLocationsDatasetsOperationsGetCall {
 	c := &ProjectsLocationsDatasetsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15968,7 +23424,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16078,6 +23534,8 @@ type ProjectsLocationsDatasetsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsDatasetsOperationsService) List(name string) *ProjectsLocationsDatasetsOperationsListCall {
 	c := &ProjectsLocationsDatasetsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16142,7 +23600,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

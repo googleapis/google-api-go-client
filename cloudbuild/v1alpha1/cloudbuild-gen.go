@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudbuild.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -379,8 +379,7 @@ type Build struct {
 	// ServiceAccount: IAM service account whose credentials will be used at
 	// build runtime. Must be of the format
 	// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be
-	// email address or uniqueId of the service account. This field is in
-	// beta.
+	// email address or uniqueId of the service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Source: The location of the source files to build.
@@ -1582,6 +1581,10 @@ type Source struct {
 	// Google Cloud Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
+	// StorageSourceManifest: If provided, get the source from this manifest
+	// in Google Cloud Storage. This feature is in Preview.
+	StorageSourceManifest *StorageSourceManifest `json:"storageSourceManifest,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "RepoSource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1625,6 +1628,11 @@ type SourceProvenance struct {
 	// ResolvedStorageSource: A copy of the build's `source.storage_source`,
 	// if exists, with any generations resolved.
 	ResolvedStorageSource *StorageSource `json:"resolvedStorageSource,omitempty"`
+
+	// ResolvedStorageSourceManifest: A copy of the build's
+	// `source.storage_source_manifest`, if exists, with any revisions
+	// resolved. This feature is in Preview.
+	ResolvedStorageSourceManifest *StorageSourceManifest `json:"resolvedStorageSourceManifest,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileHashes") to
 	// unconditionally include in API requests. By default, fields with
@@ -1729,6 +1737,45 @@ type StorageSource struct {
 
 func (s *StorageSource) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageSourceManifest: Location of the source manifest in Google
+// Cloud Storage. This feature is in Preview.
+type StorageSourceManifest struct {
+	// Bucket: Google Cloud Storage bucket containing the source manifest
+	// (see Bucket Name Requirements
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
+	Bucket string `json:"bucket,omitempty"`
+
+	// Generation: Google Cloud Storage generation for the object. If the
+	// generation is omitted, the latest generation will be used.
+	Generation int64 `json:"generation,omitempty,string"`
+
+	// Object: Google Cloud Storage object containing the source manifest.
+	// This object must be a JSON file.
+	Object string `json:"object,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageSourceManifest) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageSourceManifest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1969,6 +2016,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2003,7 +2052,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2111,6 +2160,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2154,7 +2205,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2256,6 +2307,8 @@ type ProjectsWorkerPoolsCreateCall struct {
 
 // Create: Creates a `WorkerPool` to run the builds, and returns the new
 // worker pool.
+//
+// - parent: ID of the parent project.
 func (r *ProjectsWorkerPoolsService) Create(parent string, workerpool *WorkerPool) *ProjectsWorkerPoolsCreateCall {
 	c := &ProjectsWorkerPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2290,7 +2343,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,6 +2448,9 @@ type ProjectsWorkerPoolsDeleteCall struct {
 }
 
 // Delete: Deletes a `WorkerPool` by its project ID and WorkerPool name.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: "projects/project-1/workerPools/workerpool-name".
 func (r *ProjectsWorkerPoolsService) Delete(name string) *ProjectsWorkerPoolsDeleteCall {
 	c := &ProjectsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2428,7 +2484,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2526,6 +2582,9 @@ type ProjectsWorkerPoolsGetCall struct {
 }
 
 // Get: Returns information about a `WorkerPool`.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: "projects/project-1/workerPools/workerpool-name".
 func (r *ProjectsWorkerPoolsService) Get(name string) *ProjectsWorkerPoolsGetCall {
 	c := &ProjectsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2569,7 +2628,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2670,6 +2729,8 @@ type ProjectsWorkerPoolsListCall struct {
 }
 
 // List: List project's `WorkerPool`s.
+//
+// - parent: ID of the parent project.
 func (r *ProjectsWorkerPoolsService) List(parent string) *ProjectsWorkerPoolsListCall {
 	c := &ProjectsWorkerPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2713,7 +2774,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,6 +2875,9 @@ type ProjectsWorkerPoolsPatchCall struct {
 }
 
 // Patch: Update a `WorkerPool`.
+//
+// - name: The field will contain name of the resource requested, for
+//   example: "projects/project-1/workerPools/workerpool-name".
 func (r *ProjectsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) *ProjectsWorkerPoolsPatchCall {
 	c := &ProjectsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2848,7 +2912,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

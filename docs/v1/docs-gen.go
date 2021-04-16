@@ -92,8 +92,8 @@ const (
 	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
-	// View and manage Google Drive files and folders that you have opened
-	// or created with this app
+	// See, edit, create, and delete only the specific Google Drive files
+	// you use with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
 	// See and download all your Google Drive files
@@ -3784,6 +3784,9 @@ type ParagraphElement struct {
 	// PageBreak: A page break paragraph element.
 	PageBreak *PageBreak `json:"pageBreak,omitempty"`
 
+	// Person: A paragraph element that links to a person or email address.
+	Person *Person `json:"person,omitempty"`
+
 	// StartIndex: The zero-based start index of this paragraph element, in
 	// UTF-16 code units.
 	StartIndex int64 `json:"startIndex,omitempty"`
@@ -4110,6 +4113,93 @@ type ParagraphStyleSuggestionState struct {
 
 func (s *ParagraphStyleSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod ParagraphStyleSuggestionState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Person: A person or email address mentioned in a document. These
+// mentions behave as a single, immutable element containing the
+// person's name or email address.
+type Person struct {
+	// PersonId: Output only. The unique ID of this link.
+	PersonId string `json:"personId,omitempty"`
+
+	// PersonProperties: Output only. The properties of this Person. This
+	// field is always present.
+	PersonProperties *PersonProperties `json:"personProperties,omitempty"`
+
+	// SuggestedDeletionIds: IDs for suggestions that remove this person
+	// link from the document. A Person might have multiple deletion IDs if,
+	// for example, multiple users suggest to delete it. If empty, then this
+	// person link isn't suggested for deletion.
+	SuggestedDeletionIds []string `json:"suggestedDeletionIds,omitempty"`
+
+	// SuggestedInsertionIds: IDs for suggestions that insert this person
+	// link into the document. A Person might have multiple insertion IDs if
+	// it is a nested suggested change (a suggestion within a suggestion
+	// made by a different user, for example). If empty, then this person
+	// link isn't a suggested insertion.
+	SuggestedInsertionIds []string `json:"suggestedInsertionIds,omitempty"`
+
+	// SuggestedTextStyleChanges: The suggested text style changes to this
+	// Person, keyed by suggestion ID.
+	SuggestedTextStyleChanges map[string]SuggestedTextStyle `json:"suggestedTextStyleChanges,omitempty"`
+
+	// TextStyle: The text style of this Person.
+	TextStyle *TextStyle `json:"textStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PersonId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PersonId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Person) MarshalJSON() ([]byte, error) {
+	type NoMethod Person
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersonProperties: Properties specific to a linked Person.
+type PersonProperties struct {
+	// Email: Output only. The email address linked to this Person. This
+	// field is always present.
+	Email string `json:"email,omitempty"`
+
+	// Name: Output only. The name of the person if it is displayed in the
+	// link text instead of the person's email address.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersonProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6993,6 +7083,8 @@ type DocumentsBatchUpdateCall struct {
 // changes. If there are no collaborators, the document should reflect
 // your changes. In any case, the updates in your request are guaranteed
 // to be applied together atomically.
+//
+// - documentId: The ID of the document to update.
 func (r *DocumentsService) BatchUpdate(documentId string, batchupdatedocumentrequest *BatchUpdateDocumentRequest) *DocumentsBatchUpdateCall {
 	c := &DocumentsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.documentId = documentId
@@ -7027,7 +7119,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7168,7 +7260,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7263,6 +7355,8 @@ type DocumentsGetCall struct {
 }
 
 // Get: Gets the latest version of the specified document.
+//
+// - documentId: The ID of the document to retrieve.
 func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.documentId = documentId
@@ -7335,7 +7429,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/compute": {
           "description": "View and manage your Google Compute Engine resources"
@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/_2Oq2undEiuBP9wBNFMzYYF_bbI\"",
+  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/8NH5VUhg7eH5yLGqaLx2Dvdhj6E\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -1152,6 +1152,46 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.backendBuckets.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/backendBuckets/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "insert": {
           "description": "Creates a BackendBucket resource in the specified project using the data included in the request.",
           "httpMethod": "POST",
@@ -1278,6 +1318,79 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+          "httpMethod": "POST",
+          "id": "compute.backendBuckets.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/backendBuckets/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "GlobalSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.backendBuckets.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/backendBuckets/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
         "update": {
@@ -1705,7 +1818,7 @@
           ]
         },
         "setSecurityPolicy": {
-          "description": "Sets the security policy for the specified backend service.",
+          "description": "Sets the Google Cloud Armor security policy for the specified backend service. For more information, see Google Cloud Armor Overview",
           "httpMethod": "POST",
           "id": "compute.backendServices.setSecurityPolicy",
           "parameterOrder": [
@@ -6484,6 +6597,52 @@
         }
       }
     },
+    "imageFamilyViews": {
+      "methods": {
+        "get": {
+          "description": "Returns the latest image that is part of an image family, is not deprecated and is rolled out in the specified zone.",
+          "httpMethod": "GET",
+          "id": "compute.imageFamilyViews.get",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "family"
+          ],
+          "parameters": {
+            "family": {
+              "description": "Name of the image family to search for.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/zones/{zone}/imageFamilyViews/{family}",
+          "response": {
+            "$ref": "ImageFamilyView"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
     "images": {
       "methods": {
         "delete": {
@@ -7690,7 +7849,7 @@
           ]
         },
         "recreateInstances": {
-          "description": "Flags the specified instances in the managed instance group to be immediately recreated. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified VM instances in the managed instance group to be immediately recreated. Each instance is recreated using the group's current configuration. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of each instance by checking its currentAction field; for more information, see Checking the status of managed instances.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.recreateInstances",
           "parameterOrder": [
@@ -9118,8 +9277,49 @@
             "https://www.googleapis.com/auth/compute"
           ]
         },
+        "bulkInsert": {
+          "description": "Creates multiple instances. Count specifies the number of instances to create.",
+          "httpMethod": "POST",
+          "id": "compute.instances.bulkInsert",
+          "parameterOrder": [
+            "project",
+            "zone"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/zones/{zone}/instances/bulkInsert",
+          "request": {
+            "$ref": "BulkInsertInstanceResource"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "delete": {
-          "description": "Deletes the specified Instance resource. For more information, see Stopping or Deleting an Instance.",
+          "description": "Deletes the specified Instance resource. For more information, see Deleting an instance.",
           "httpMethod": "DELETE",
           "id": "compute.instances.delete",
           "parameterOrder": [
@@ -12136,6 +12336,43 @@
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
           ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.  Caution This resource is intended for use only by third-party partners who are creating Cloud Marketplace images.",
+          "httpMethod": "POST",
+          "id": "compute.licenseCodes.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/licenseCodes/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
         }
       }
     },
@@ -12377,6 +12614,43 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.  Caution This resource is intended for use only by third-party partners who are creating Cloud Marketplace images.",
+          "httpMethod": "POST",
+          "id": "compute.licenses.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/licenses/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         }
       }
@@ -17770,6 +18044,51 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionCommitments.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/commitments/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "updateReservations": {
           "description": "Transfers GPUs or local SSDs between reservations within commitments.",
           "httpMethod": "POST",
@@ -18748,6 +19067,51 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
           ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionHealthCheckServices.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/healthCheckServices/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
         }
       }
     },
@@ -18991,6 +19355,51 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionHealthChecks.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/healthChecks/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
         "update": {
@@ -19755,7 +20164,7 @@
           ]
         },
         "recreateInstances": {
-          "description": "Flags the specified instances in the managed instance group to be immediately recreated. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified VM instances in the managed instance group to be immediately recreated. Each instance is recreated using the group's current configuration. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of each instance by checking its currentAction field; for more information, see Checking the status of managed instances.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.recreateInstances",
           "parameterOrder": [
@@ -20404,6 +20813,51 @@
         }
       }
     },
+    "regionInstances": {
+      "methods": {
+        "bulkInsert": {
+          "description": "Creates multiple instances in a given region. Count specifies the number of instances to create.",
+          "httpMethod": "POST",
+          "id": "compute.regionInstances.bulkInsert",
+          "parameterOrder": [
+            "project",
+            "region"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/instances/bulkInsert",
+          "request": {
+            "$ref": "BulkInsertInstanceResource"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        }
+      }
+    },
     "regionNetworkEndpointGroups": {
       "methods": {
         "delete": {
@@ -20779,6 +21233,51 @@
           "path": "projects/{project}/regions/{region}/notificationEndpoints",
           "response": {
             "$ref": "NotificationEndpointList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionNotificationEndpoints.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/notificationEndpoints/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -21168,6 +21667,51 @@
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
           ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource and region.",
+          "httpMethod": "POST",
+          "id": "compute.regionSslCertificates.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/sslCertificates/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
         }
       }
     },
@@ -21411,6 +21955,51 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionTargetHttpProxies.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/targetHttpProxies/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         }
       }
@@ -21705,6 +22294,51 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
           ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionTargetHttpsProxies.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/targetHttpsProxies/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
         }
       }
     },
@@ -21997,6 +22631,51 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionUrlMaps.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/urlMaps/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
         "update": {
@@ -24427,6 +25106,54 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.serviceAttachments.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/serviceAttachments/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "insert": {
           "description": "Creates a ServiceAttachment in the specified project in the given scope using the parameters that are included in the request.",
           "httpMethod": "POST",
@@ -24523,6 +25250,95 @@
           "path": "projects/{project}/regions/{region}/serviceAttachments",
           "response": {
             "$ref": "ServiceAttachmentList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+          "httpMethod": "POST",
+          "id": "compute.serviceAttachments.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/serviceAttachments/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "RegionSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.serviceAttachments.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/serviceAttachments/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -26193,6 +27009,43 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.targetGrpcProxies.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/targetGrpcProxies/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
           ]
         }
       }
@@ -28499,6 +29352,43 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
           ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.targetTcpProxies.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/global/targetTcpProxies/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
         }
       }
     },
@@ -29610,6 +30500,51 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
           ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.vpnGateways.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/regions/{region}/vpnGateways/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
         }
       }
     },
@@ -30242,7 +31177,7 @@
       }
     }
   },
-  "revision": "20210129",
+  "revision": "20210322",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -30789,21 +31724,23 @@
           "type": "string"
         },
         "prefixLength": {
-          "description": "The prefix length if the resource reprensents an IP range.",
+          "description": "The prefix length if the resource represents an IP range.",
           "format": "int32",
           "type": "integer"
         },
         "purpose": {
-          "description": "The purpose of this resource, which can be one of the following values:  \n- `GCE_ENDPOINT` for addresses that are used by VM instances, alias IP ranges, internal load balancers, and similar resources. \n- `DNS_RESOLVER` for a DNS resolver address in a subnetwork \n- `VPC_PEERING` for addresses that are reserved for VPC peer networks. \n- `NAT_AUTO` for addresses that are external IP addresses automatically reserved for Cloud NAT. \n- `IPSEC_INTERCONNECT` for addresses created from a private IP range that are reserved for a VLAN attachment in an IPsec encrypted Interconnect configuration. These addresses are regional resources.",
+          "description": "The purpose of this resource, which can be one of the following values:  \n- `GCE_ENDPOINT` for addresses that are used by VM instances, alias IP ranges, internal load balancers, and similar resources. \n- `DNS_RESOLVER` for a DNS resolver address in a subnetwork \n- `VPC_PEERING` for addresses that are reserved for VPC peer networks. \n- `NAT_AUTO` for addresses that are external IP addresses automatically reserved for Cloud NAT. \n- `IPSEC_INTERCONNECT` for addresses created from a private IP range that are reserved for a VLAN attachment in an IPsec-encrypted Cloud Interconnect configuration. These addresses are regional resources.",
           "enum": [
             "DNS_RESOLVER",
             "GCE_ENDPOINT",
+            "IPSEC_INTERCONNECT",
             "NAT_AUTO",
             "PRIVATE_SERVICE_CONNECT",
             "SHARED_LOADBALANCER_VIP",
             "VPC_PEERING"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -31911,11 +32848,15 @@
             "NOT_ENOUGH_QUOTA_AVAILABLE",
             "REGION_RESOURCE_STOCKOUT",
             "SCALING_TARGET_DOES_NOT_EXIST",
+            "SCHEDULED_INSTANCES_GREATER_THAN_AUTOSCALER_MAX",
+            "SCHEDULED_INSTANCES_LESS_THAN_AUTOSCALER_MIN",
             "UNKNOWN",
             "UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION",
             "ZONE_RESOURCE_STOCKOUT"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -32399,7 +33340,7 @@
           "type": "string"
         },
         "clientTtl": {
-          "description": "Specifies a separate client (e.g. browser client) TTL, separate from the TTL for Cloud CDN's edge caches. Leaving this empty will use the same cache TTL for both Cloud CDN and the client-facing response. The maximum allowed value is 86400s (1 day).",
+          "description": "Specifies a separate client (e.g. browser client) maximum TTL. This is used to clamp the max-age (or Expires) value sent to the client. With FORCE_CACHE_ALL, the lesser of client_ttl and default_ttl is used for the response max-age directive, along with a \"public\" directive. For cacheable content in CACHE_ALL_STATIC mode, client_ttl clamps the max-age from the origin (if specified), or else sets the response max-age directive to the lesser of the client_ttl and default_ttl, and also ensures a \"public\" cache-control directive is present. If a client TTL is not specified, a default value (1 hour) will be used. The maximum allowed value is 86400s (1 day).",
           "format": "int32",
           "type": "integer"
         },
@@ -32464,7 +33405,7 @@
       "id": "BackendBucketCdnPolicyNegativeCachingPolicy",
       "properties": {
         "code": {
-          "description": "The HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 308, 404, 405, 410, 421, 451 and 501 are can be specified as values, and you cannot specify a status code more than once.",
+          "description": "The HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 are can be specified as values, and you cannot specify a status code more than once.",
           "format": "int32",
           "type": "integer"
         },
@@ -32726,6 +33667,10 @@
           "$ref": "BackendServiceLogConfig",
           "description": "This field denotes the logging options for the load balancer traffic served by this backend service. If logging is enabled, logs will be exported to Stackdriver."
         },
+        "maxStreamDuration": {
+          "$ref": "Duration",
+          "description": "Specifies the default maximum duration (timeout) for streams to this service. Duration is computed from the beginning of the stream until the response has been completely processed, including all retries. A stream that does not complete in this duration is closed.\nIf not specified, there will be no timeout limit, i.e. the maximum duration is infinite.\nThis field is only allowed when the loadBalancingScheme of the backend service is INTERNAL_SELF_MANAGED."
+        },
         "name": {
           "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
@@ -32787,9 +33732,10 @@
           "type": "string"
         },
         "sessionAffinity": {
-          "description": "Type of session affinity to use. The default is NONE.\n\nWhen the loadBalancingScheme is EXTERNAL: * For Network Load Balancing, the possible values are NONE, CLIENT_IP, CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO. * For all other load balancers that use loadBalancingScheme=EXTERNAL, the possible values are NONE, CLIENT_IP, or GENERATED_COOKIE. * You can use GENERATED_COOKIE if the protocol is HTTP, HTTP2, or HTTPS.\n\nWhen the loadBalancingScheme is INTERNAL, possible values are NONE, CLIENT_IP, CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO.\n\nWhen the loadBalancingScheme is INTERNAL_SELF_MANAGED, or INTERNAL_MANAGED, possible values are NONE, CLIENT_IP, GENERATED_COOKIE, HEADER_FIELD, or HTTP_COOKIE.\n\nNot supported when the backend service is referenced by a URL map that is bound to target gRPC proxy that has validateForProxyless field set to true.",
+          "description": "Type of session affinity to use. The default is NONE.\n\nWhen the loadBalancingScheme is EXTERNAL: * For Network Load Balancing, the possible values are NONE, CLIENT_IP, CLIENT_IP_PROTO, or  CLIENT_IP_PORT_PROTO. * For all other load balancers that use loadBalancingScheme=EXTERNAL, the possible values are NONE, CLIENT_IP, or GENERATED_COOKIE. * You can use GENERATED_COOKIE if the protocol is HTTP, HTTP2, or HTTPS.\n\nWhen the loadBalancingScheme is INTERNAL, possible values are NONE, CLIENT_IP, CLIENT_IP_PROTO, or CLIENT_IP_PORT_PROTO.\n\nWhen the loadBalancingScheme is INTERNAL_SELF_MANAGED, or INTERNAL_MANAGED, possible values are NONE, CLIENT_IP, GENERATED_COOKIE, HEADER_FIELD, or HTTP_COOKIE.\n\nNot supported when the backend service is referenced by a URL map that is bound to target gRPC proxy that has validateForProxyless field set to true.",
           "enum": [
             "CLIENT_IP",
+            "CLIENT_IP_NO_DESTINATION",
             "CLIENT_IP_PORT_PROTO",
             "CLIENT_IP_PROTO",
             "GENERATED_COOKIE",
@@ -32804,9 +33750,13 @@
             "",
             "",
             "",
+            "",
             ""
           ],
           "type": "string"
+        },
+        "subsetting": {
+          "$ref": "Subsetting"
         },
         "timeoutSec": {
           "description": "The backend service timeout has a different meaning depending on the type of load balancer. For more information see,  Backend service settings The default is 30 seconds. The full range of timeout values allowed is 1 - 2,147,483,647 seconds.",
@@ -32972,7 +33922,7 @@
           "type": "string"
         },
         "clientTtl": {
-          "description": "Specifies a separate client (e.g. browser client) TTL, separate from the TTL for Cloud CDN's edge caches. Leaving this empty will use the same cache TTL for both Cloud CDN and the client-facing response. The maximum allowed value is 86400s (1 day).",
+          "description": "Specifies a separate client (e.g. browser client) maximum TTL. This is used to clamp the max-age (or Expires) value sent to the client. With FORCE_CACHE_ALL, the lesser of client_ttl and default_ttl is used for the response max-age directive, along with a \"public\" directive. For cacheable content in CACHE_ALL_STATIC mode, client_ttl clamps the max-age from the origin (if specified), or else sets the response max-age directive to the lesser of the client_ttl and default_ttl, and also ensures a \"public\" cache-control directive is present. If a client TTL is not specified, a default value (1 hour) will be used. The maximum allowed value is 86400s (1 day).",
           "format": "int32",
           "type": "integer"
         },
@@ -33037,7 +33987,7 @@
       "id": "BackendServiceCdnPolicyNegativeCachingPolicy",
       "properties": {
         "code": {
-          "description": "The HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 308, 404, 405, 410, 421, 451 and 501 are can be specified as values, and you cannot specify a status code more than once.",
+          "description": "The HTTP status code to define a TTL against. Only HTTP status codes 300, 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 are can be specified as values, and you cannot specify a status code more than once.",
           "format": "int32",
           "type": "integer"
         },
@@ -33661,6 +34611,56 @@
         },
         "role": {
           "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BulkInsertInstanceResource": {
+      "id": "BulkInsertInstanceResource",
+      "properties": {
+        "count": {
+          "description": "The maximum number of instances to create.",
+          "format": "int64",
+          "type": "string"
+        },
+        "instanceProperties": {
+          "$ref": "InstanceProperties",
+          "description": "The instance properties defining the VM instances to be created. Required if sourceInstanceTemplate is not provided."
+        },
+        "locationPolicy": {
+          "$ref": "LocationPolicy",
+          "description": "Policy for chosing target zone."
+        },
+        "minCount": {
+          "description": "The minimum number of instances to create. If no min_count is specified then count is used as the default value. If min_count instances cannot be created, then no instances will be created and instances already created will be deleted.",
+          "format": "int64",
+          "type": "string"
+        },
+        "namePattern": {
+          "description": "The string pattern used for the names of the VMs. Either name_pattern or per_instance_properties must be set. The pattern should contain one continuous sequence of placeholder hash characters (#) with each character corresponding to one digit of the generated instance name. Example: name_pattern of inst-#### will generate instance names such as inst-0001, inst-0002, ... . If there already exist instance(s) whose names match the name pattern in the same project and zone, then the generated instance numbers will start after the biggest existing number. For example, if there exists an instance with name inst-0050, then instance names generated using the pattern inst-#### will be inst-0051, inst-0052, etc. The name pattern placeholder #...# can contain up to 18 characters.",
+          "type": "string"
+        },
+        "perInstanceProperties": {
+          "additionalProperties": {
+            "$ref": "BulkInsertInstanceResourcePerInstanceProperties"
+          },
+          "description": "Per-instance properties to be set on individual instances. Keys of this map specify requested instance names. Can be empty if name_pattern is used.",
+          "type": "object"
+        },
+        "sourceInstanceTemplate": {
+          "description": "Specifies the instance template from which to create instances. You may combine sourceInstanceTemplate with instanceProperties to override specific values from an existing instance template. Bulk API follows the semantics of JSON Merge Patch described by RFC 7396.\n\nIt can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate \n- projects/project/global/instanceTemplates/instanceTemplate \n- global/instanceTemplates/instanceTemplate  \n\nThis field is optional.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BulkInsertInstanceResourcePerInstanceProperties": {
+      "description": "Per-instance properties to be set on individual instances. To be extended in the future.",
+      "id": "BulkInsertInstanceResourcePerInstanceProperties",
+      "properties": {
+        "name": {
+          "description": "This field is only temporary. It will be removed. Do not use it.",
           "type": "string"
         }
       },
@@ -34647,7 +35647,7 @@
           "type": "string"
         },
         "sourceDisk": {
-          "description": "The source disk used to create this disk. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk",
+          "description": "The source disk used to create this disk. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk  \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/disks/disk  \n- projects/project/zones/zone/disks/disk  \n- projects/project/regions/region/disks/disk  \n- zones/zone/disks/disk  \n- regions/region/disks/disk",
           "type": "string"
         },
         "sourceDiskId": {
@@ -36361,7 +37361,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "User-provided name of the Organization firewall plicy. The name should be unique in the organization in which the firewall policy is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "description": "Depreacted, please use short name instead. User-provided name of the Organization firewall plicy. The name should be unique in the organization in which the firewall policy is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
@@ -36407,6 +37407,11 @@
         "selfLinkWithId": {
           "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
+        },
+        "shortName": {
+          "description": "User-provided name of the Organization firewall plicy. The name should be unique in the organization in which the firewall policy is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
         }
       },
       "type": "object"
@@ -36419,7 +37424,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "[Output Only] The display name of the firewall policy of the association.",
+          "description": "[Output Only] Deprecated, please use short name instead. The display name of the firewall policy of the association.",
           "type": "string"
         },
         "firewallPolicyId": {
@@ -36428,6 +37433,10 @@
         },
         "name": {
           "description": "The name for an association.",
+          "type": "string"
+        },
+        "shortName": {
+          "description": "[Output Only] The short name of the firewall policy of the association.",
           "type": "string"
         }
       },
@@ -36698,7 +37707,7 @@
       "id": "ForwardingRule",
       "properties": {
         "IPAddress": {
-          "description": "IP address that this forwarding rule serves. When a client sends traffic to this IP address, the forwarding rule directs the traffic to the target that you specify in the forwarding rule.\n\nIf you don't specify a reserved IP address, an ephemeral IP address is assigned. Methods for specifying an IP address:\n\n* IPv4 dotted decimal, as in `100.1.2.3` * Full URL, as in https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name * Partial URL or by name, as in:  \n- projects/project_id/regions/region/addresses/address-name \n- regions/region/addresses/address-name \n- global/addresses/address-name \n- address-name  \n\nThe loadBalancingScheme and the forwarding rule's target determine the type of IP address that you can use. For detailed information, refer to [IP address specifications](/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n\nMust be set to `0.0.0.0` when the target is targetGrpcProxy that has validateForProxyless field set to true.",
+          "description": "IP address that this forwarding rule serves. When a client sends traffic to this IP address, the forwarding rule directs the traffic to the target that you specify in the forwarding rule.\n\nIf you don't specify a reserved IP address, an ephemeral IP address is assigned. Methods for specifying an IP address:\n\n* IPv4 dotted decimal, as in `100.1.2.3` * Full URL, as in https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name * Partial URL or by name, as in:  \n- projects/project_id/regions/region/addresses/address-name \n- regions/region/addresses/address-name \n- global/addresses/address-name \n- address-name  \n\nThe loadBalancingScheme and the forwarding rule's target determine the type of IP address that you can use. For detailed information, refer to [IP address specifications](/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n\nMust be set to `0.0.0.0` when the target is targetGrpcProxy that has validateForProxyless field set to true.\n\nFor Private Service Connect forwarding rules that forward traffic to Google APIs, IP address must be provided.",
           "type": "string"
         },
         "IPProtocol": {
@@ -36817,7 +37826,7 @@
           "type": "string"
         },
         "network": {
-          "description": "This field is not used for external load balancing.\n\nFor Internal TCP/UDP Load Balancing, this field identifies the network that the load balanced IP should belong to for this Forwarding Rule. If this field is not specified, the default network will be used.",
+          "description": "This field is not used for external load balancing.\n\nFor Internal TCP/UDP Load Balancing, this field identifies the network that the load balanced IP should belong to for this Forwarding Rule. If this field is not specified, the default network will be used.\n\nFor Private Service Connect forwarding rules that forward traffic to Google APIs, a network must be provided.",
           "type": "string"
         },
         "networkTier": {
@@ -36877,7 +37886,6 @@
           "type": "string"
         },
         "target": {
-          "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must be in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object. For more information, see the \"Target\" column in [Port specifications](/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).",
           "type": "string"
         }
       },
@@ -37672,7 +38680,7 @@
           "description": "Configure logging on this health check."
         },
         "name": {
-          "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. For example, a name that is 1-63 characters long, matches the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`, and otherwise complies with RFC1035. This regular expression describes a name where the first character is a lowercase letter, and all following characters are a dash, lowercase letter, or digit, except the last character, which isn't a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
@@ -38306,6 +39314,14 @@
           "description": "Metadata defined as annotations for network endpoint.",
           "type": "object"
         },
+        "forwardingRule": {
+          "description": "URL of the forwarding rule associated with the health status of the instance.",
+          "type": "string"
+        },
+        "forwardingRuleIp": {
+          "description": "A forwarding rule IP address assigned to this instance.",
+          "type": "string"
+        },
         "healthState": {
           "description": "Health state of the instance.",
           "enum": [
@@ -38857,6 +39873,10 @@
           "$ref": "HttpFaultInjection",
           "description": "The specification for fault injection introduced into traffic to test the resiliency of clients to backend service failure. As part of fault injection, when clients send requests to a backend service, delays can be introduced by Loadbalancer on a percentage of requests before sending those request to the backend service. Similarly requests from clients can be aborted by the Loadbalancer for a percentage of requests.\ntimeout and retry_policy will be ignored by clients that are configured with a fault_injection_policy.\nNot supported when the URL map is bound to target gRPC proxy that has validateForProxyless field set to true."
         },
+        "maxStreamDuration": {
+          "$ref": "Duration",
+          "description": "Specifies the maximum duration (timeout) for streams on the selected route. Unlike the timeout field where the timeout duration starts from the time the request has been fully processed (i.e. end-of-stream), the duration in this field is computed from the beginning of the stream until the response has been completely processed, including all retries. A stream that does not complete in this duration is closed.\nIf not specified, will use the largest maxStreamDuration among all backend services associated with the route.\nThis field is only allowed if the Url map is used with backend services with loadBalancingScheme set to INTERNAL_SELF_MANAGED."
+        },
         "requestMirrorPolicy": {
           "$ref": "RequestMirrorPolicy",
           "description": "Specifies the policy on how requests intended for the route's backends are shadowed to a separate mirrored backend service. Loadbalancer does not wait for responses from the shadow service. Prior to sending traffic to the shadow service, the host / authority header is suffixed with -shadow.\nNot supported when the URL map is bound to target gRPC proxy that has validateForProxyless field set to true."
@@ -39366,6 +40386,16 @@
       },
       "type": "object"
     },
+    "ImageFamilyView": {
+      "id": "ImageFamilyView",
+      "properties": {
+        "image": {
+          "$ref": "Image",
+          "description": "The latest image that is part of the specified image family in the requested location, and that is not deprecated."
+        }
+      },
+      "type": "object"
+    },
     "ImageList": {
       "description": "Contains a list of images.",
       "id": "ImageList",
@@ -39647,6 +40677,20 @@
         "networkPerformanceConfig": {
           "$ref": "NetworkPerformanceConfig"
         },
+        "postKeyRevocationActionType": {
+          "description": "PostKeyRevocationActionType of the instance.",
+          "enum": [
+            "NOOP",
+            "POST_KEY_REVOCATION_ACTION_TYPE_UNSPECIFIED",
+            "SHUTDOWN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "privateIpv6GoogleAccess": {
           "description": "The private IPv6 google access type for the VM. If not specified, use  INHERIT_FROM_SUBNETWORK as default.",
           "enum": [
@@ -39711,7 +40755,7 @@
         },
         "sourceMachineImageEncryptionKey": {
           "$ref": "CustomerEncryptionKey",
-          "description": "Source GMI encryption key when creating an instance from GMI."
+          "description": "Source machine image encryption key when creating an instance from a machine image."
         },
         "startRestricted": {
           "description": "[Output Only] Whether a VM has been restricted for start because Compute Engine has detected suspicious activity.",
@@ -40736,6 +41780,22 @@
         },
         "minimalAction": {
           "description": "Minimal action to be taken on an instance. You can specify either RESTART to restart existing instances or REPLACE to delete and create new instances from the target template. If you specify a RESTART, the Updater will attempt to perform that action only. However, if the Updater determines that the minimal action you specify is not enough to perform the update, it might perform a more disruptive action.",
+          "enum": [
+            "NONE",
+            "REFRESH",
+            "REPLACE",
+            "RESTART"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "mostDisruptiveAllowedAction": {
+          "description": "Most disruptive action that is allowed to be taken on an instance. You can specify either NONE to forbid any actions, REFRESH to allow actions that do not need instance restart, RESTART to allow actions that can be applied without instance replacing or REPLACE to allow all possible actions. If the Updater determines that the minimal update action needed is more disruptive than most disruptive allowed action you specify it will not perform the update at all.",
           "enum": [
             "NONE",
             "REFRESH",
@@ -42224,7 +43284,7 @@
       "id": "InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy",
       "properties": {
         "displayName": {
-          "description": "[Output Only] The display name of the firewall policy.",
+          "description": "[Output Only] Deprecated, please use short name instead. The display name of the firewall policy.",
           "type": "string"
         },
         "name": {
@@ -42237,6 +43297,10 @@
             "$ref": "FirewallPolicyRule"
           },
           "type": "array"
+        },
+        "shortName": {
+          "description": "[Output Only] The short name of the firewall policy.",
+          "type": "string"
         },
         "type": {
           "description": "[Output Only] The type of the firewall policy.",
@@ -42753,6 +43817,18 @@
           ],
           "type": "string"
         },
+        "encryption": {
+          "description": "Indicates the user-supplied encryption option of this interconnect attachment: \n- NONE is the default value, which means that the attachment carries unencrypted traffic. VMs can send traffic to, or receive traffic from, this type of attachment. \n- IPSEC indicates that the attachment carries only traffic encrypted by an IPsec device such as an HA VPN gateway. VMs cannot directly send traffic to, or receive traffic from, such an attachment. To use IPsec-encrypted Cloud Interconnect, create the attachment using this option. \nNot currently available in all Interconnect locations.",
+          "enum": [
+            "IPSEC",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "googleReferenceId": {
           "description": "[Output Only] Google reference ID, to be used when raising support tickets with Google or otherwise to debug backend connectivity issues. [Deprecated] This field is not used.",
           "type": "string"
@@ -42765,6 +43841,13 @@
         "interconnect": {
           "description": "URL of the underlying Interconnect object that this attachment's traffic will traverse through.",
           "type": "string"
+        },
+        "ipsecInternalAddresses": {
+          "description": "URL of addresses that have been reserved for the interconnect attachment, Used only for interconnect attachment that has the encryption option as IPSEC. The addresses must be RFC 1918 IP address ranges. When creating HA VPN gateway over the interconnect attachment, if the attachment is configured to use an RFC 1918 IP address, then the VPN gateway?s IP address will be allocated from the IP address range specified here. For example, if the HA VPN gateway?s interface 0 is paired to this interconnect attachment, then an RFC 1918 IP address for the VPN gateway interface 0 will be allocated from the IP address specified for this interconnect attachment. If this field is not specified for interconnect attachment that has encryption option as IPSEC, later on when creating HA VPN gateway on this interconnect attachment, the HA VPN gateway's IP address will be allocated from regional external IP address pool.\nNot currently available in all Interconnect locations.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "kind": {
           "default": "compute#interconnectAttachment",
@@ -44146,6 +45229,40 @@
         },
         "diskType": {
           "description": "Specifies the desired disk type on the node. This disk type must be a local storage type (e.g.: local-ssd). Note that for nodeTemplates, this should be the name of the disk type and not its URL.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocationPolicy": {
+      "description": "Configuration for location policy among multiple possible locations (e.g. preferences for zone selection among zones in a single region).",
+      "id": "LocationPolicy",
+      "properties": {
+        "locations": {
+          "additionalProperties": {
+            "$ref": "LocationPolicyLocation"
+          },
+          "description": "Location configurations mapped by location name. Currently only zone names are supported and must be represented as valid internal URLs, such as zones/us-central1-a.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "LocationPolicyLocation": {
+      "id": "LocationPolicyLocation",
+      "properties": {
+        "preference": {
+          "description": "Preference for a given locaction: ALLOW or DENY.",
+          "enum": [
+            "ALLOW",
+            "DENY",
+            "PREFERENCE_UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -45987,7 +47104,7 @@
           "type": "array"
         },
         "fingerprint": {
-          "description": "Fingerprint hash of contents stored in this network interface. This field will be ignored when inserting an Instance or adding a NetworkInterface. An up-to-date fingerprint must be provided in order to update the NetworkInterface, otherwise the request will fail with error 412 conditionNotMet.",
+          "description": "Fingerprint hash of contents stored in this network interface. This field will be ignored when inserting an Instance or adding a NetworkInterface. An up-to-date fingerprint must be provided in order to update the NetworkInterface. The request will fail with error 400 Bad Request if the fingerprint is not provided, or 412 Precondition Failed if the fingerprint is out of date.",
           "format": "byte",
           "type": "string"
         },
@@ -46303,7 +47420,7 @@
       "id": "NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy",
       "properties": {
         "displayName": {
-          "description": "[Output Only] The display name of the firewall policy.",
+          "description": "[Output Only] Deprecated, please use short name instead. The display name of the firewall policy.",
           "type": "string"
         },
         "name": {
@@ -46316,6 +47433,10 @@
             "$ref": "FirewallPolicyRule"
           },
           "type": "array"
+        },
+        "shortName": {
+          "description": "[Output Only] The short name of the firewall policy.",
+          "type": "string"
         },
         "type": {
           "description": "[Output Only] The type of the firewall policy.",
@@ -48184,6 +49305,10 @@
         },
         "name": {
           "description": "[Output Only] Name of the operation.",
+          "type": "string"
+        },
+        "operationGroupId": {
+          "description": "[Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.",
           "type": "string"
         },
         "operationType": {
@@ -50420,9 +51545,11 @@
             "AUTOSCALERS",
             "BACKEND_BUCKETS",
             "BACKEND_SERVICES",
+            "C2D_CPUS",
             "C2_CPUS",
             "COMMITMENTS",
             "COMMITTED_A2_CPUS",
+            "COMMITTED_C2D_CPUS",
             "COMMITTED_C2_CPUS",
             "COMMITTED_CPUS",
             "COMMITTED_E2_CPUS",
@@ -50529,6 +51656,8 @@
             "XPN_SERVICE_PROJECTS"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -53462,6 +54591,10 @@
           "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
         },
+        "encryptedInterconnectRouter": {
+          "description": "Field to indicate if a router is dedicated to use with encrypted Interconnect Attachment (IPsec-encrypted Cloud Interconnect feature).\nNot currently available in all Interconnect locations.",
+          "type": "boolean"
+        },
         "id": {
           "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
           "format": "uint64",
@@ -53697,7 +54830,7 @@
           "type": "integer"
         },
         "keepaliveInterval": {
-          "description": "The interval in seconds between BGP keepalive messages that are sent to the peer.\nNot currently available publicly.\nHold time is three times the interval at which keepalive messages are sent, and the hold time is the maximum number of seconds allowed to elapse between successive keepalive messages that BGP receives from a peer.\nBGP will use the smaller of either the local hold time value or the peer's hold time value as the hold time for the BGP connection between the two peers.\nIf set, this value must be between 1 and 120. The default is 20.",
+          "description": "The interval in seconds between BGP keepalive messages that are sent to the peer.\nNot currently available publicly.\nHold time is three times the interval at which keepalive messages are sent, and the hold time is the maximum number of seconds allowed to elapse between successive keepalive messages that BGP receives from a peer.\nBGP will use the smaller of either the local hold time value or the peer's hold time value as the hold time for the BGP connection between the two peers.\nIf set, this value must be between 20 and 60. The default is 20.",
           "format": "uint32",
           "type": "integer"
         }
@@ -53720,7 +54853,7 @@
           "type": "string"
         },
         "advertisedGroups": {
-          "description": "User-specified list of prefix groups to advertise in custom mode, which can take one of the following options: \n- ALL_SUBNETS: Advertises all available subnets, including peer VPC subnets. \n- ALL_VPC_SUBNETS: Advertises the router's own VPC subnets. \n- ALL_PEER_VPC_SUBNETS: Advertises peer subnets of the router's VPC network. Note that this field can only be populated if advertise_mode is CUSTOM and overrides the list defined for the router (in the \"bgp\" message). These groups are advertised in addition to any specified prefixes. Leave this field blank to advertise no custom groups.",
+          "description": "User-specified list of prefix groups to advertise in custom mode, which can take one of the following options: \n- ALL_SUBNETS: Advertises all available subnets, including peer VPC subnets. \n- ALL_VPC_SUBNETS: Advertises the router's own VPC subnets. Note that this field can only be populated if advertise_mode is CUSTOM and overrides the list defined for the router (in the \"bgp\" message). These groups are advertised in addition to any specified prefixes. Leave this field blank to advertise no custom groups.",
           "items": {
             "enum": [
               "ALL_SUBNETS"
@@ -53803,6 +54936,10 @@
         "peerIpAddress": {
           "description": "IP address of the BGP interface outside Google Cloud Platform. Only IPv4 is supported.",
           "type": "string"
+        },
+        "routerApplianceInstance": {
+          "description": "URI of the VM instance that is used as third-party router appliances such as Next Gen Firewalls, Virtual Routers, or Router Appliances. The VM instance must be located in zones contained in the same region as this Cloud Router. The VM instance is the peer side of the BGP session.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -53877,6 +55014,19 @@
           },
           "description": "Name of this interface entry. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "privateIpAddress": {
+          "description": "The regional private internal IP address that is used to establish BGP sessions to a VM instance acting as a third-party Router Appliance, such as a Next Gen Firewall, a Virtual Router, or an SD-WAN VM.",
+          "type": "string"
+        },
+        "redundantInterface": {
+          "description": "Name of the interface that will be redundant with the current interface you are creating. The redundantInterface must belong to the same Cloud Router as the interface here. To establish the BGP session to a Router Appliance VM, you must create two BGP peers. The two BGP peers must be attached to two separate interfaces that are redundant with each other. The redundant_interface must be 1-63 characters long, and comply with RFC1035. Specifically, the redundant_interface must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "subnetwork": {
+          "description": "The URL of the subnetwork resource that this interface belongs to, which must be in the same region as the Cloud Router. When you establish a BGP session to a VM instance using this interface, the VM instance must belong to the same subnetwork as the subnetwork specified here.",
           "type": "string"
         }
       },
@@ -54217,6 +55367,10 @@
         },
         "peerIpAddress": {
           "description": "IP address of the remote BGP interface.",
+          "type": "string"
+        },
+        "routerApplianceInstance": {
+          "description": "[Output only] URI of the VM instance that is used as third-party router appliances such as Next Gen Firewalls, Virtual Routers, or Router Appliances. The VM instance is the peer side of the BGP session.",
           "type": "string"
         },
         "state": {
@@ -54685,7 +55839,7 @@
       "type": "object"
     },
     "Scheduling": {
-      "description": "Sets the scheduling options for an Instance. NextID: 17",
+      "description": "Sets the scheduling options for an Instance. NextID: 20",
       "id": "Scheduling",
       "properties": {
         "automaticRestart": {
@@ -55072,7 +56226,7 @@
       "id": "SecurityPolicyRule",
       "properties": {
         "action": {
-          "description": "The Action to preform when the client connection triggers the rule. Can currently be either \"allow\" or \"deny()\" where valid values for status are 403, 404, and 502.",
+          "description": "The Action to perform when the client connection triggers the rule. Can currently be either \"allow\" or \"deny()\" where valid values for status are 403, 404, and 502.",
           "type": "string"
         },
         "description": {
@@ -55301,7 +56455,7 @@
       "type": "object"
     },
     "ServiceAttachment": {
-      "description": "Represents a ServiceAttachment resource.\n\nA service attachment represents a service that a producer has exposed. It encapsulates the load balancer which fronts the service runs and a list of NAT IP ranges that the producers uses to represent the consumers connecting to the service. next tag = 16",
+      "description": "Represents a ServiceAttachment resource.\n\nA service attachment represents a service that a producer has exposed. It encapsulates the load balancer which fronts the service runs and a list of NAT IP ranges that the producers uses to represent the consumers connecting to the service. next tag = 19",
       "id": "ServiceAttachment",
       "properties": {
         "connectionPreference": {
@@ -55372,6 +56526,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "targetService": {
+          "description": "The URL of a service serving the endpoint identified by this service attachment.",
           "type": "string"
         }
       },
@@ -55502,7 +56660,7 @@
       "type": "object"
     },
     "ServiceAttachmentConsumerForwardingRule": {
-      "description": "[Output Only] A consumer forwarding rule connected to this service attachment.",
+      "description": "[Output Only] A consumer forwarding rule connected to this service attachment. [Deprecated] Do not use.",
       "id": "ServiceAttachmentConsumerForwardingRule",
       "properties": {
         "forwardingRule": {
@@ -55513,11 +56671,13 @@
           "description": "The status of the forwarding rule.",
           "enum": [
             "ACCEPTED",
+            "CLOSED",
             "PENDING",
             "REJECTED",
             "STATUS_UNSPECIFIED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -57147,7 +58307,7 @@
           "type": "string"
         },
         "ipCidrRange": {
-          "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 100.64.0.0/10. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported. This field is set at resource creation time. This may be a RFC 1918 IP range, or a privately routed, non-RFC 1918 IP range, not belonging to Google. The range can be expanded after creation using expandIpCidrRange.",
+          "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 100.64.0.0/10. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported. This field is set at resource creation time. The range can be any range listed in the Valid ranges list. The range can be expanded after creation using expandIpCidrRange.",
           "type": "string"
         },
         "ipv6CidrRange": {
@@ -57525,7 +58685,7 @@
           "type": "number"
         },
         "metadata": {
-          "description": "Can only be specified if VPC flow logs for this subnetwork is enabled. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default is INCLUDE_ALL_METADATA.",
+          "description": "Can only be specified if VPC flow logs for this subnetwork is enabled. Configures whether all, none or a subset of metadata fields should be added to the reported VPC flow logs. Default is EXCLUDE_ALL_METADATA.",
           "enum": [
             "CUSTOM_METADATA",
             "EXCLUDE_ALL_METADATA",
@@ -57553,7 +58713,7 @@
       "id": "SubnetworkSecondaryRange",
       "properties": {
         "ipCidrRange": {
-          "description": "The range of IP addresses belonging to this subnetwork secondary range. Provide this property when you create the subnetwork. Ranges must be unique and non-overlapping with all primary and secondary IP ranges within a network. Only IPv4 is supported. This may be a RFC 1918 IP range, or a privately, non-RFC 1918 IP range, not belonging to Google.",
+          "description": "The range of IP addresses belonging to this subnetwork secondary range. Provide this property when you create the subnetwork. Ranges must be unique and non-overlapping with all primary and secondary IP ranges within a network. Only IPv4 is supported. The range can be any range listed in the Valid ranges list.",
           "type": "string"
         },
         "rangeName": {
@@ -57676,6 +58836,24 @@
       "properties": {
         "privateIpGoogleAccess": {
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "Subsetting": {
+      "description": "Subsetting options to make L4 ILB support any number of backend instances",
+      "id": "Subsetting",
+      "properties": {
+        "policy": {
+          "enum": [
+            "CONSISTENT_HASH_SUBSETTING",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -58469,6 +59647,11 @@
           "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
         },
+        "fingerprint": {
+          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a TargetHttpsProxy. An up-to-date fingerprint must be provided in order to patch the TargetHttpsProxy; otherwise, the request will fail with error 412 conditionNotMet. To see the latest fingerprint, make a get() request to retrieve the TargetHttpsProxy.",
+          "format": "byte",
+          "type": "string"
+        },
         "httpFilters": {
           "description": "URLs to networkservices.HttpFilter resources enabled for xDS clients using this configuration. For example, https://networkservices.googleapis.com/beta/projects/project/locations/locationhttpFilters/httpFilter Only filters that handle outbound connection and stream events may be specified. These filters work in conjunction with a default set of HTTP filters that may already be configured by Traffic Director. Traffic Director will determine the final location of these filters within xDS configuration based on the name of the HTTP filter. If Traffic Director positions multiple filters at the same location, those filters will be in the same order as specified in this list.\nhttpFilters only applies for loadbalancers with loadBalancingScheme set to INTERNAL_SELF_MANAGED. See ForwardingRule for more details.",
           "items": {
@@ -59233,6 +60416,7 @@
           "description": "Session affinity option, must be one of the following values:\nNONE: Connections from the same client IP may go to any instance in the pool.\nCLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy.\nCLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.",
           "enum": [
             "CLIENT_IP",
+            "CLIENT_IP_NO_DESTINATION",
             "CLIENT_IP_PORT_PROTO",
             "CLIENT_IP_PROTO",
             "GENERATED_COOKIE",
@@ -59241,6 +60425,7 @@
             "NONE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -61881,6 +63066,10 @@
           "format": "uint32",
           "type": "integer"
         },
+        "interconnectAttachment": {
+          "description": "URL of the interconnect attachment resource. When the value of this field is present, the VPN Gateway will be used for IPsec-encrypted Cloud Interconnect; all Egress or Ingress traffic for this VPN Gateway interface will go through the specified interconnect attachment resource.\nNot currently available in all Interconnect locations.",
+          "type": "string"
+        },
         "ipAddress": {
           "description": "[Output Only] The external IP address for this VPN gateway interface.",
           "type": "string"
@@ -62100,7 +63289,7 @@
           "type": "string"
         },
         "status": {
-          "description": "[Output Only] The status of the VPN tunnel, which can be one of the following: \n- PROVISIONING: Resource is being allocated for the VPN tunnel. \n- WAITING_FOR_FULL_CONFIG: Waiting to receive all VPN-related configs from the user. Network, TargetVpnGateway, VpnTunnel, ForwardingRule, and Route resources are needed to setup the VPN tunnel. \n- FIRST_HANDSHAKE: Successful first handshake with the peer VPN. \n- ESTABLISHED: Secure session is successfully established with the peer VPN. \n- NETWORK_ERROR: Deprecated, replaced by NO_INCOMING_PACKETS \n- AUTHORIZATION_ERROR: Auth error (for example, bad shared secret). \n- NEGOTIATION_FAILURE: Handshake failed. \n- DEPROVISIONING: Resources are being deallocated for the VPN tunnel. \n- FAILED: Tunnel creation has failed and the tunnel is not ready to be used. \n- NO_INCOMING_PACKETS: No incoming packets from peer. \n- REJECTED: Tunnel configuration was rejected, can be result of being blacklisted. \n- ALLOCATING_RESOURCES: Cloud VPN is in the process of allocating all required resources. \n- STOPPED: Tunnel is stopped due to its Forwarding Rules being deleted for Classic VPN tunnels or the project is in frozen state. \n- PEER_IDENTITY_MISMATCH: Peer identity does not match peer IP, probably behind NAT. \n- TS_NARROWING_NOT_ALLOWED: Traffic selector narrowing not allowed for an HA-VPN tunnel.",
+          "description": "[Output Only] The status of the VPN tunnel, which can be one of the following: \n- PROVISIONING: Resource is being allocated for the VPN tunnel. \n- WAITING_FOR_FULL_CONFIG: Waiting to receive all VPN-related configs from the user. Network, TargetVpnGateway, VpnTunnel, ForwardingRule, and Route resources are needed to setup the VPN tunnel. \n- FIRST_HANDSHAKE: Successful first handshake with the peer VPN. \n- ESTABLISHED: Secure session is successfully established with the peer VPN. \n- NETWORK_ERROR: Deprecated, replaced by NO_INCOMING_PACKETS \n- AUTHORIZATION_ERROR: Auth error (for example, bad shared secret). \n- NEGOTIATION_FAILURE: Handshake failed. \n- DEPROVISIONING: Resources are being deallocated for the VPN tunnel. \n- FAILED: Tunnel creation has failed and the tunnel is not ready to be used. \n- NO_INCOMING_PACKETS: No incoming packets from peer. \n- REJECTED: Tunnel configuration was rejected, can be result of being denied access. \n- ALLOCATING_RESOURCES: Cloud VPN is in the process of allocating all required resources. \n- STOPPED: Tunnel is stopped due to its Forwarding Rules being deleted for Classic VPN tunnels or the project is in frozen state. \n- PEER_IDENTITY_MISMATCH: Peer identity does not match peer IP, probably behind NAT. \n- TS_NARROWING_NOT_ALLOWED: Traffic selector narrowing not allowed for an HA-VPN tunnel.",
           "enum": [
             "ALLOCATING_RESOURCES",
             "AUTHORIZATION_ERROR",

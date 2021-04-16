@@ -1428,6 +1428,8 @@ type BlogsGetCall struct {
 }
 
 // Get: Gets a blog by id.
+//
+// - blogId: .
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1471,7 +1473,7 @@ func (c *BlogsGetCall) Header() http.Header {
 
 func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1570,6 +1572,8 @@ type BlogsListCall struct {
 }
 
 // List: Lists blogs by user id, possibly filtered.
+//
+// - userId: .
 func (r *BlogsService) List(userId string) *BlogsListCall {
 	c := &BlogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1613,7 +1617,7 @@ func (c *BlogsListCall) Header() http.Header {
 
 func (c *BlogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1714,6 +1718,10 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets a comment by blog id, post id and comment id.
+//
+// - blogId: .
+// - commentId: .
+// - postId: .
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1759,7 +1767,7 @@ func (c *CommentsGetCall) Header() http.Header {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1873,6 +1881,9 @@ type CommentsListCall struct {
 }
 
 // List: Lists comments.
+//
+// - blogId: .
+// - postId: .
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1941,7 +1952,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2086,6 +2097,9 @@ type PagesGetCall struct {
 }
 
 // Get: Gets a page by blog id and page id.
+//
+// - blogId: .
+// - pageId: .
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2130,7 +2144,7 @@ func (c *PagesGetCall) Header() http.Header {
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2236,6 +2250,8 @@ type PagesListCall struct {
 }
 
 // List: Lists pages.
+//
+// - blogId: .
 func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2285,7 +2301,7 @@ func (c *PagesListCall) Header() http.Header {
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2389,6 +2405,9 @@ type PostsGetCall struct {
 }
 
 // Get: Gets a post by blog id and post id
+//
+// - blogId: .
+// - postId: .
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2433,7 +2452,7 @@ func (c *PostsGetCall) Header() http.Header {
 
 func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2539,6 +2558,8 @@ type PostsListCall struct {
 }
 
 // List: Lists posts.
+//
+// - blogId: .
 func (r *PostsService) List(blogId string) *PostsListCall {
 	c := &PostsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2606,7 +2627,7 @@ func (c *PostsListCall) Header() http.Header {
 
 func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,6 +2764,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets a user by user id.
+//
+// - userId: .
 func (r *UsersService) Get(userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2786,7 +2809,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

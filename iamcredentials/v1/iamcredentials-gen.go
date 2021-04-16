@@ -79,7 +79,7 @@ const mtlsBasePath = "https://iamcredentials.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -512,6 +512,12 @@ type ProjectsServiceAccountsGenerateAccessTokenCall struct {
 
 // GenerateAccessToken: Generates an OAuth 2.0 access token for a
 // service account.
+//
+// - name: The resource name of the service account for which the
+//   credentials are requested, in the following format:
+//   `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+//   wildcard character is required; replacing it with a project ID is
+//   invalid.
 func (r *ProjectsServiceAccountsService) GenerateAccessToken(name string, generateaccesstokenrequest *GenerateAccessTokenRequest) *ProjectsServiceAccountsGenerateAccessTokenCall {
 	c := &ProjectsServiceAccountsGenerateAccessTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -546,7 +552,7 @@ func (c *ProjectsServiceAccountsGenerateAccessTokenCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsGenerateAccessTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -653,6 +659,12 @@ type ProjectsServiceAccountsGenerateIdTokenCall struct {
 
 // GenerateIdToken: Generates an OpenID Connect ID token for a service
 // account.
+//
+// - name: The resource name of the service account for which the
+//   credentials are requested, in the following format:
+//   `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+//   wildcard character is required; replacing it with a project ID is
+//   invalid.
 func (r *ProjectsServiceAccountsService) GenerateIdToken(name string, generateidtokenrequest *GenerateIdTokenRequest) *ProjectsServiceAccountsGenerateIdTokenCall {
 	c := &ProjectsServiceAccountsGenerateIdTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -687,7 +699,7 @@ func (c *ProjectsServiceAccountsGenerateIdTokenCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsGenerateIdTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -794,6 +806,12 @@ type ProjectsServiceAccountsSignBlobCall struct {
 
 // SignBlob: Signs a blob using a service account's system-managed
 // private key.
+//
+// - name: The resource name of the service account for which the
+//   credentials are requested, in the following format:
+//   `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+//   wildcard character is required; replacing it with a project ID is
+//   invalid.
 func (r *ProjectsServiceAccountsService) SignBlob(name string, signblobrequest *SignBlobRequest) *ProjectsServiceAccountsSignBlobCall {
 	c := &ProjectsServiceAccountsSignBlobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -828,7 +846,7 @@ func (c *ProjectsServiceAccountsSignBlobCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSignBlobCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -935,6 +953,12 @@ type ProjectsServiceAccountsSignJwtCall struct {
 
 // SignJwt: Signs a JWT using a service account's system-managed private
 // key.
+//
+// - name: The resource name of the service account for which the
+//   credentials are requested, in the following format:
+//   `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+//   wildcard character is required; replacing it with a project ID is
+//   invalid.
 func (r *ProjectsServiceAccountsService) SignJwt(name string, signjwtrequest *SignJwtRequest) *ProjectsServiceAccountsSignJwtCall {
 	c := &ProjectsServiceAccountsSignJwtCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -969,7 +993,7 @@ func (c *ProjectsServiceAccountsSignJwtCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSignJwtCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

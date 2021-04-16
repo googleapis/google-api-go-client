@@ -83,7 +83,7 @@ const mtlsBasePath = "https://servicecontrol.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your Google Service Control data
@@ -1781,8 +1781,7 @@ type Operation struct {
 
 	// UserLabels: Private Preview. This feature is only available for
 	// approved services. User defined labels for the resource that this
-	// operation is associated with. Only a combination of 1000 user labels
-	// per consumer project are allowed.
+	// operation is associated with.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
@@ -2265,7 +2264,7 @@ type Request struct {
 	// Method: The HTTP request method, such as `GET`, `POST`.
 	Method string `json:"method,omitempty"`
 
-	// Path: The HTTP URL path.
+	// Path: The HTTP URL path, excluding the query parameters.
 	Path string `json:"path,omitempty"`
 
 	// Protocol: The network protocol used with the request, such as
@@ -2883,6 +2882,10 @@ type ServicesAllocateQuotaCall struct {
 // `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system reliability,
 // the server may inject these errors to prohibit any hard dependency on
 // the quota functionality.
+//
+// - serviceName: Name of the service as specified in the service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service for the definition of a service name.
 func (r *ServicesService) AllocateQuota(serviceName string, allocatequotarequest *AllocateQuotaRequest) *ServicesAllocateQuotaCall {
 	c := &ServicesAllocateQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -2917,7 +2920,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3035,6 +3038,12 @@ type ServicesCheckCall struct {
 // `servicemanagement.services.check` permission on the specified
 // service. For more information, see Cloud IAM
 // (https://cloud.google.com/iam).
+//
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3069,7 +3078,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3185,6 +3194,12 @@ type ServicesReportCall struct {
 // method requires the `servicemanagement.services.report` permission on
 // the specified service. For more information, see Google Cloud IAM
 // (https://cloud.google.com/iam).
+//
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3219,7 +3234,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

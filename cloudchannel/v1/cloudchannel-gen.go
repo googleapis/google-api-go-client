@@ -161,10 +161,22 @@ type AccountsService struct {
 
 func NewAccountsChannelPartnerLinksService(s *Service) *AccountsChannelPartnerLinksService {
 	rs := &AccountsChannelPartnerLinksService{s: s}
+	rs.Customers = NewAccountsChannelPartnerLinksCustomersService(s)
 	return rs
 }
 
 type AccountsChannelPartnerLinksService struct {
+	s *Service
+
+	Customers *AccountsChannelPartnerLinksCustomersService
+}
+
+func NewAccountsChannelPartnerLinksCustomersService(s *Service) *AccountsChannelPartnerLinksCustomersService {
+	rs := &AccountsChannelPartnerLinksCustomersService{s: s}
+	return rs
+}
+
+type AccountsChannelPartnerLinksCustomersService struct {
 	s *Service
 }
 
@@ -231,14 +243,13 @@ type ProductsSkusService struct {
 // GoogleCloudChannelV1ActivateEntitlementRequest: Request message for
 // CloudChannelService.ActivateEntitlement.
 type GoogleCloudChannelV1ActivateEntitlementRequest struct {
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -335,14 +346,13 @@ func (s *GoogleCloudChannelV1AssociationInfo) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1CancelEntitlementRequest: Request message for
 // CloudChannelService.CancelEntitlement.
 type GoogleCloudChannelV1CancelEntitlementRequest struct {
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -384,14 +394,13 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -422,22 +431,21 @@ func (s *GoogleCloudChannelV1ChangeOfferRequest) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1ChangeParametersRequest: Request message for
 // CloudChannelService.ChangeParametersRequest.
 type GoogleCloudChannelV1ChangeParametersRequest struct {
-	// Parameters: Required. Entitlement parameters to update. Only editable
-	// parameters are allowed to be changed.
+	// Parameters: Required. Entitlement parameters to update. You can only
+	// change editable parameters.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// PurchaseOrderId: Optional. Purchase order ID provided by the
 	// reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -471,14 +479,13 @@ type GoogleCloudChannelV1ChangeRenewalSettingsRequest struct {
 	// RenewalSettings: Required. New renewal settings.
 	RenewalSettings *GoogleCloudChannelV1RenewalSettings `json:"renewalSettings,omitempty"`
 
-	// RequestId: Optional. A request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server
-	// will know to ignore the request if it has already been completed. For
-	// example, consider a situation where you make an initial request and
-	// the request times out. If you make the request again with the same
-	// request ID, the server can check if the original operation with the
-	// same request ID was received, and if so, will ignore the second
-	// request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -586,8 +593,8 @@ func (s *GoogleCloudChannelV1ChannelPartnerLink) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest: Request
 // message for CloudChannelService.CheckCloudIdentityAccountsExist.
 type GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest struct {
-	// Domain: Required. Domain for which the Cloud Identity account
-	// customer is fetched.
+	// Domain: Required. Domain to fetch for Cloud Identity account
+	// customer.
 	Domain string `json:"domain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
@@ -650,26 +657,24 @@ func (s *GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse) MarshalJSO
 }
 
 // GoogleCloudChannelV1CloudIdentityCustomerAccount: Entity representing
-// a Cloud Identity account which may or may not be associated with a
-// Channel Services API partner.
+// a Cloud Identity account that may be associated with a Channel
+// Services API partner.
 type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
-	// CustomerCloudIdentityId: Cloud Identity ID of the customer. This
-	// field is populated ONLY if existing = true.
+	// CustomerCloudIdentityId: If existing = true, the Cloud Identity ID of
+	// the customer.
 	CustomerCloudIdentityId string `json:"customerCloudIdentityId,omitempty"`
 
-	// CustomerName: Name of the customer that owns the Cloud Identity
-	// account. This field is populated ONLY if owned = true. The
-	// customer_name takes the format:
+	// CustomerName: If owned = true, the name of the customer that owns the
+	// Cloud Identity account. Customer_name uses the format:
 	// accounts/{account_id}/customers/{customer_id}
 	CustomerName string `json:"customerName,omitempty"`
 
-	// Existing: True if a Cloud Identity account exists for a specific
-	// domain.
+	// Existing: Returns true if a Cloud Identity account exists for a
+	// specific domain.
 	Existing bool `json:"existing,omitempty"`
 
-	// Owned: True if the Cloud Identity account is associated with a
-	// customer belonging to the Channel Services partner making the API
-	// call.
+	// Owned: Returns true if the Cloud Identity account is associated with
+	// a customer of the Channel Services partner.
 	Owned bool `json:"owned,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -722,7 +727,11 @@ type GoogleCloudChannelV1CloudIdentityInfo struct {
 	// EduData: Edu information about the customer.
 	EduData *GoogleCloudChannelV1EduData `json:"eduData,omitempty"`
 
-	// IsDomainVerified: Whether the domain is verified.
+	// IsDomainVerified: Output only. Whether the domain is verified. This
+	// field is not returned for a Customer's cloud_identity_info resource.
+	// Partners can use the domains.get() method of the Workspace SDK's
+	// Directory API, or listen to the PRIMARY_DOMAIN_VERIFIED Pub/Sub event
+	// in to track domain verification of their resolve Workspace customers.
 	IsDomainVerified bool `json:"isDomainVerified,omitempty"`
 
 	// LanguageCode: Language code.
@@ -879,14 +888,13 @@ type GoogleCloudChannelV1CreateEntitlementRequest struct {
 	// Entitlement: Required. The entitlement to create.
 	Entitlement *GoogleCloudChannelV1Entitlement `json:"entitlement,omitempty"`
 
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -1065,6 +1073,9 @@ type GoogleCloudChannelV1CustomerEvent struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. This state doesn't show unless
 	// an error occurs.
+	//   "PRIMARY_DOMAIN_CHANGED" - Primary domain for customer was changed.
+	//   "PRIMARY_DOMAIN_VERIFIED" - Primary domain of the customer has been
+	// verified.
 	EventType string `json:"eventType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
@@ -1340,7 +1351,7 @@ func (s *GoogleCloudChannelV1ListChannelPartnerLinksResponse) MarshalJSON() ([]b
 // GoogleCloudChannelV1ListCustomersResponse: Response message for
 // CloudChannelService.ListCustomers.
 type GoogleCloudChannelV1ListCustomersResponse struct {
-	// Customers: The customers belonging to the reseller or distributor.
+	// Customers: The customers belonging to a reseller or distributor.
 	Customers []*GoogleCloudChannelV1Customer `json:"customers,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. Pass to
@@ -1377,10 +1388,10 @@ func (s *GoogleCloudChannelV1ListCustomersResponse) MarshalJSON() ([]byte, error
 // GoogleCloudChannelV1ListEntitlementsResponse: Response message for
 // CloudChannelService.ListEntitlements.
 type GoogleCloudChannelV1ListEntitlementsResponse struct {
-	// Entitlements: The entitlements belonging to the reseller's customer.
+	// Entitlements: The reseller customer's entitlements.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
 
-	// NextPageToken: A token to List next page of results. Pass to
+	// NextPageToken: A token to list the next page of results. Pass to
 	// ListEntitlementsRequest.page_token to obtain that page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -1639,26 +1650,25 @@ type GoogleCloudChannelV1ListTransferableOffersRequest struct {
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
 
 	// CustomerName: A reseller should create a customer and use the
-	// resource name of the created customer here.
+	// resource name of that customer here.
 	CustomerName string `json:"customerName,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US". If
-	// specified, the response will be localized to the corresponding
-	// language code. Default is "en-US".
+	// LanguageCode: The BCP-47 language code. For example, "en-US". The
+	// response will localize in the corresponding language code, if
+	// specified. The default value is "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// PageSize: Requested page size. Server might return fewer results than
-	// requested. If unspecified, at most 100 Offers will be returned. The
-	// maximum value is 1000; values above 1000 will be coerced to 1000.
+	// requested. If unspecified, returns at most 100 offers. The maximum
+	// value is 1000; the server will coerce values above 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: A token identifying a page of results, if other than the
-	// first one. Typically obtained via
-	// ListTransferableOffersResponse.next_page_token of the previous
-	// CloudChannelService.ListTransferableOffers call.
+	// PageToken: A token for a page of results other than the first page.
+	// Obtained using ListTransferableOffersResponse.next_page_token of the
+	// previous CloudChannelService.ListTransferableOffers call.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// Sku: Required. SKU for which the Offers are being looked up.
+	// Sku: Required. The SKU to look up Offers for.
 	Sku string `json:"sku,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudIdentityId") to
@@ -1726,36 +1736,34 @@ func (s *GoogleCloudChannelV1ListTransferableOffersResponse) MarshalJSON() ([]by
 // GoogleCloudChannelV1ListTransferableSkusRequest: Request message for
 // CloudChannelService.ListTransferableSkus
 type GoogleCloudChannelV1ListTransferableSkusRequest struct {
-	// AuthToken: This token is generated by the Super Admin of the resold
-	// customer to authorize a reseller to access their Cloud Identity and
-	// purchase entitlements on their behalf. This token can be omitted once
-	// the authorization is generated. See
-	// https://support.google.com/a/answer/7643790 for more details.
+	// AuthToken: The super admin of the resold customer generates this
+	// token to authorize a reseller to access their Cloud Identity and
+	// purchase entitlements on their behalf. You can omit this token after
+	// authorization. See https://support.google.com/a/answer/7643790 for
+	// more details.
 	AuthToken string `json:"authToken,omitempty"`
 
 	// CloudIdentityId: Customer's Cloud Identity ID
 	CloudIdentityId string `json:"cloudIdentityId,omitempty"`
 
 	// CustomerName: A reseller is required to create a customer and use the
-	// resource name of the created customer here. The customer_name takes
-	// the format: accounts/{account_id}/customers/{customer_id}
+	// resource name of the created customer here. Customer_name uses the
+	// format: accounts/{account_id}/customers/{customer_id}
 	CustomerName string `json:"customerName,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US". If
-	// specified, the response will be localized to the corresponding
-	// language code. Default is "en-US". Optional.
+	// LanguageCode: The BCP-47 language code. For example, "en-US". The
+	// response will localize in the corresponding language code, if
+	// specified. The default value is "en-US". Optional.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// PageSize: Requested page size. Server might return fewer results than
-	// requested. If unspecified, at most 100 SKUs will be returned. The
-	// maximum value is 1000; values above 1000 will be coerced to 1000.
-	// Optional.
+	// PageSize: The requested page size. Server might return fewer results
+	// than requested. If unspecified, returns at most 100 SKUs. The maximum
+	// value is 1000; the server will coerce values above 1000. Optional.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: A token identifying a page of results, if other than the
-	// first one. Typically obtained via
-	// ListTransferableSkusResponse.next_page_token of the previous
-	// CloudChannelService.ListTransferableSkus call. Optional.
+	// PageToken: A token for a page of results other than the first page.
+	// Obtained using ListTransferableSkusResponse.next_page_token of the
+	// previous CloudChannelService.ListTransferableSkus call. Optional.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
@@ -1789,7 +1797,7 @@ type GoogleCloudChannelV1ListTransferableSkusResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TransferableSkus: Information about existing SKUs for a customer that
-	// would need to be transferred.
+	// needs a transfer.
 	TransferableSkus []*GoogleCloudChannelV1TransferableSku `json:"transferableSkus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2141,6 +2149,10 @@ func (s *GoogleCloudChannelV1Period) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1Plan: The payment plan for the Offer. Describes
 // how to make a payment.
 type GoogleCloudChannelV1Plan struct {
+	// BillingAccount: Reseller Billing account to charge after an offer
+	// transaction. Only present for Google Cloud Platform offers.
+	BillingAccount string `json:"billingAccount,omitempty"`
+
 	// PaymentCycle: Describes how frequently the reseller will be billed,
 	// such as once per month.
 	PaymentCycle *GoogleCloudChannelV1Period `json:"paymentCycle,omitempty"`
@@ -2173,7 +2185,7 @@ type GoogleCloudChannelV1Plan struct {
 	// service is started before the end of the trial period.
 	TrialPeriod *GoogleCloudChannelV1Period `json:"trialPeriod,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PaymentCycle") to
+	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2181,12 +2193,13 @@ type GoogleCloudChannelV1Plan struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PaymentCycle") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillingAccount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2428,8 +2441,8 @@ type GoogleCloudChannelV1ProvisionCloudIdentityRequest struct {
 	// User: Admin user information.
 	User *GoogleCloudChannelV1AdminUser `json:"user,omitempty"`
 
-	// ValidateOnly: If set, validate the request and preview the review,
-	// but do not actually post it.
+	// ValidateOnly: Validate the request and preview the review, but do not
+	// post it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudIdentityInfo")
@@ -2494,8 +2507,8 @@ func (s *GoogleCloudChannelV1ProvisionedService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PurchasableOffer: Offer that can be puchased for
-// a customer. This is used in ListPurchasableOffer API response.
+// GoogleCloudChannelV1PurchasableOffer: Offer that you can purchase for
+// a customer. This is used in the ListPurchasableOffer API response.
 type GoogleCloudChannelV1PurchasableOffer struct {
 	// Offer: Offer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
@@ -2523,8 +2536,8 @@ func (s *GoogleCloudChannelV1PurchasableOffer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudChannelV1PurchasableSku: SKU that can be used for a
-// puchase. This is used in ListPurchasableSku API response.
+// GoogleCloudChannelV1PurchasableSku: SKU that you can purchase. This
+// is used in ListPurchasableSku API response.
 type GoogleCloudChannelV1PurchasableSku struct {
 	// Sku: SKU
 	Sku *GoogleCloudChannelV1Sku `json:"sku,omitempty"`
@@ -2555,8 +2568,8 @@ func (s *GoogleCloudChannelV1PurchasableSku) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1RegisterSubscriberRequest: Request Message for
 // RegisterSubscriber.
 type GoogleCloudChannelV1RegisterSubscriberRequest struct {
-	// ServiceAccount: Required. Service account which will provide
-	// subscriber access to the registered topic.
+	// ServiceAccount: Required. Service account that provides subscriber
+	// access to the registered topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
@@ -2586,7 +2599,7 @@ func (s *GoogleCloudChannelV1RegisterSubscriberRequest) MarshalJSON() ([]byte, e
 // GoogleCloudChannelV1RegisterSubscriberResponse: Response Message for
 // RegisterSubscriber.
 type GoogleCloudChannelV1RegisterSubscriberResponse struct {
-	// Topic: Name of the topic to which the subscriber will listen to.
+	// Topic: Name of the topic the subscriber will listen to.
 	Topic string `json:"topic,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2706,14 +2719,13 @@ func (s *GoogleCloudChannelV1Sku) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1StartPaidServiceRequest: Request message for
 // CloudChannelService.StartPaidService.
 type GoogleCloudChannelV1StartPaidServiceRequest struct {
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -2778,14 +2790,13 @@ func (s *GoogleCloudChannelV1SubscriberEvent) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1SuspendEntitlementRequest: Request message for
 // CloudChannelService.SuspendEntitlement.
 type GoogleCloudChannelV1SuspendEntitlementRequest struct {
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -2859,25 +2870,23 @@ func (s *GoogleCloudChannelV1TransferEligibility) MarshalJSON() ([]byte, error) 
 // GoogleCloudChannelV1TransferEntitlementsRequest: Request message for
 // CloudChannelService.TransferEntitlements.
 type GoogleCloudChannelV1TransferEntitlementsRequest struct {
-	// AuthToken: This token is generated by the Super Admin of the resold
-	// customer to authorize a reseller to access their Cloud Identity and
-	// purchase entitlements on their behalf. This token can be omitted once
-	// the authorization is generated. See
-	// https://support.google.com/a/answer/7643790 for more details.
+	// AuthToken: The super admin of the resold customer generates this
+	// token to authorize a reseller to access their Cloud Identity and
+	// purchase entitlements on their behalf. You can omit this token after
+	// authorization. See https://support.google.com/a/answer/7643790 for
+	// more details.
 	AuthToken string `json:"authToken,omitempty"`
 
-	// Entitlements: Required. The new entitlements to be created or
-	// transferred.
+	// Entitlements: Required. The new entitlements to create or transfer.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
 
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -2906,10 +2915,10 @@ func (s *GoogleCloudChannelV1TransferEntitlementsRequest) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudChannelV1TransferEntitlementsResponse: Response message
-// for CloudChannelService.TransferEntitlements. This will be put into
-// the response field of google.longrunning.Operation.
+// for CloudChannelService.TransferEntitlements. This is put in the
+// response field of google.longrunning.Operation.
 type GoogleCloudChannelV1TransferEntitlementsResponse struct {
-	// Entitlements: The entitlements that have been transferred.
+	// Entitlements: The transferred entitlements.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
@@ -2938,17 +2947,16 @@ func (s *GoogleCloudChannelV1TransferEntitlementsResponse) MarshalJSON() ([]byte
 // GoogleCloudChannelV1TransferEntitlementsToGoogleRequest: Request
 // message for CloudChannelService.TransferEntitlementsToGoogle.
 type GoogleCloudChannelV1TransferEntitlementsToGoogleRequest struct {
-	// Entitlements: Required. The entitlements to be transferred to Google.
+	// Entitlements: Required. The entitlements to transfer to Google.
 	Entitlements []*GoogleCloudChannelV1Entitlement `json:"entitlements,omitempty"`
 
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. For example, consider a situation where you make an
-	// initial request and the request times out. If you make the request
-	// again with the same request ID, the server can check if the original
-	// operation with the same request ID was received, and if so, will
-	// ignore the second request. The request ID must be a valid UUID
+	// RequestId: Optional. You can specify an optional unique request ID,
+	// and if you need to retry your request, the server will know to ignore
+	// the request if it's complete. For example, you make an initial
+	// request and the request times out. If you make the request again with
+	// the same request ID, the server can check if it received the original
+	// operation with the same request ID. If it did, it will ignore the
+	// second request. The request ID must be a valid UUID
 	// (https://tools.ietf.org/html/rfc4122) with the exception that zero
 	// UUID is not supported (`00000000-0000-0000-0000-000000000000`).
 	RequestId string `json:"requestId,omitempty"`
@@ -3010,6 +3018,10 @@ func (s *GoogleCloudChannelV1TransferableOffer) MarshalJSON() ([]byte, error) {
 // information a reseller needs to view existing provisioned services
 // for a customer that they do not own. Read-only.
 type GoogleCloudChannelV1TransferableSku struct {
+	// LegacySku: Optional. The customer to transfer has an entitlement with
+	// the populated legacy SKU.
+	LegacySku *GoogleCloudChannelV1Sku `json:"legacySku,omitempty"`
+
 	// Sku: The SKU pertaining to the provisioning resource as specified in
 	// the Offer.
 	Sku *GoogleCloudChannelV1Sku `json:"sku,omitempty"`
@@ -3017,7 +3029,7 @@ type GoogleCloudChannelV1TransferableSku struct {
 	// TransferEligibility: Describes the transfer eligibility of a SKU.
 	TransferEligibility *GoogleCloudChannelV1TransferEligibility `json:"transferEligibility,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Sku") to
+	// ForceSendFields is a list of field names (e.g. "LegacySku") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3025,8 +3037,8 @@ type GoogleCloudChannelV1TransferableSku struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Sku") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "LegacySku") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -3078,8 +3090,8 @@ func (s *GoogleCloudChannelV1TrialSettings) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1UnregisterSubscriberRequest: Request Message for
 // UnregisterSubscriber.
 type GoogleCloudChannelV1UnregisterSubscriberRequest struct {
-	// ServiceAccount: Required. Service account which will be unregistered
-	// from getting subscriber access to the topic.
+	// ServiceAccount: Required. Service account to unregister from
+	// subscriber access to the topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
@@ -3109,8 +3121,8 @@ func (s *GoogleCloudChannelV1UnregisterSubscriberRequest) MarshalJSON() ([]byte,
 // GoogleCloudChannelV1UnregisterSubscriberResponse: Response Message
 // for UnregisterSubscriber.
 type GoogleCloudChannelV1UnregisterSubscriberResponse struct {
-	// Topic: Name of the topic from which the service account subscriber
-	// access has been removed.
+	// Topic: Name of the topic the service account subscriber access was
+	// removed from.
 	Topic string `json:"topic,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3144,11 +3156,11 @@ func (s *GoogleCloudChannelV1UnregisterSubscriberResponse) MarshalJSON() ([]byte
 // for CloudChannelService.UpdateChannelPartnerLink
 type GoogleCloudChannelV1UpdateChannelPartnerLinkRequest struct {
 	// ChannelPartnerLink: Required. The channel partner link to update.
-	// Only field channel_partner_link.link_state is allowed to be updated.
+	// Only channel_partner_link.link_state is allowed for updates.
 	ChannelPartnerLink *GoogleCloudChannelV1ChannelPartnerLink `json:"channelPartnerLink,omitempty"`
 
 	// UpdateMask: Required. The update mask that applies to the resource.
-	// The only allowable value for update mask is
+	// The only allowable value for an update mask is
 	// channel_partner_link.link_state.
 	UpdateMask string `json:"updateMask,omitempty"`
 
@@ -3178,6 +3190,9 @@ func (s *GoogleCloudChannelV1UpdateChannelPartnerLinkRequest) MarshalJSON() ([]b
 
 // GoogleCloudChannelV1Value: Data type and value of a parameter.
 type GoogleCloudChannelV1Value struct {
+	// BoolValue: Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+
 	// DoubleValue: Represents a double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
 
@@ -3190,7 +3205,7 @@ type GoogleCloudChannelV1Value struct {
 	// StringValue: Represents a string value.
 	StringValue string `json:"stringValue,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3198,10 +3213,10 @@ type GoogleCloudChannelV1Value struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DoubleValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3306,6 +3321,9 @@ type GoogleCloudChannelV1alpha1CustomerEvent struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. This state doesn't show unless
 	// an error occurs.
+	//   "PRIMARY_DOMAIN_CHANGED" - Primary domain for customer was changed.
+	//   "PRIMARY_DOMAIN_VERIFIED" - Primary domain of the customer has been
+	// verified.
 	EventType string `json:"eventType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
@@ -3794,10 +3812,10 @@ func (s *GoogleCloudChannelV1alpha1SubscriberEvent) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudChannelV1alpha1TransferEntitlementsResponse: Response
-// message for CloudChannelService.TransferEntitlements. This will be
-// put into the response field of google.longrunning.Operation.
+// message for CloudChannelService.TransferEntitlements. This is put in
+// the response field of google.longrunning.Operation.
 type GoogleCloudChannelV1alpha1TransferEntitlementsResponse struct {
-	// Entitlements: The entitlements that have been transferred.
+	// Entitlements: The transferred entitlements.
 	Entitlements []*GoogleCloudChannelV1alpha1Entitlement `json:"entitlements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entitlements") to
@@ -3860,6 +3878,9 @@ func (s *GoogleCloudChannelV1alpha1TrialSettings) MarshalJSON() ([]byte, error) 
 
 // GoogleCloudChannelV1alpha1Value: Data type and value of a parameter.
 type GoogleCloudChannelV1alpha1Value struct {
+	// BoolValue: Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+
 	// DoubleValue: Represents a double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
 
@@ -3872,7 +3893,7 @@ type GoogleCloudChannelV1alpha1Value struct {
 	// StringValue: Represents a string value.
 	StringValue string `json:"stringValue,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3880,10 +3901,10 @@ type GoogleCloudChannelV1alpha1Value struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DoubleValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4243,16 +4264,19 @@ type AccountsCheckCloudIdentityAccountsExistCall struct {
 }
 
 // CheckCloudIdentityAccountsExist: Confirms the existence of Cloud
-// Identity accounts, based on the domain and whether the Cloud Identity
-// accounts are owned by the reseller. Possible Error Codes: *
-// PERMISSION_DENIED: If the reseller account making the request and the
-// reseller account being queried for are different. * INVALID_ARGUMENT:
-// Missing or invalid required parameters in the request. *
-// INVALID_VALUE: Invalid domain value in the request. Return Value:
-// List of CloudIdentityCustomerAccount resources for the domain. List
-// may be empty. Note: in the v1alpha1 version of the API, a NOT_FOUND
-// error is returned if no CloudIdentityCustomerAccount resources match
-// the domain.
+// Identity accounts based on the domain and if the Cloud Identity
+// accounts are owned by the reseller. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * INVALID_VALUE: Invalid domain value in the request. Return value: A
+// list of CloudIdentityCustomerAccount resources for the domain (may be
+// empty) Note: in the v1alpha1 version of the API, a NOT_FOUND error
+// returns if no CloudIdentityCustomerAccount resources match the
+// domain.
+//
+// - parent: The reseller account's resource name. Parent uses the
+//   format: accounts/{account_id}.
 func (r *AccountsService) CheckCloudIdentityAccountsExist(parent string, googlecloudchannelv1checkcloudidentityaccountsexistrequest *GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest) *AccountsCheckCloudIdentityAccountsExistCall {
 	c := &AccountsCheckCloudIdentityAccountsExistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4287,7 +4311,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Header() http.Header {
 
 func (c *AccountsCheckCloudIdentityAccountsExistCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4354,7 +4378,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Confirms the existence of Cloud Identity accounts, based on the domain and whether the Cloud Identity accounts are owned by the reseller. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * INVALID_VALUE: Invalid domain value in the request. Return Value: List of CloudIdentityCustomerAccount resources for the domain. List may be empty. Note: in the v1alpha1 version of the API, a NOT_FOUND error is returned if no CloudIdentityCustomerAccount resources match the domain.",
+	//   "description": "Confirms the existence of Cloud Identity accounts based on the domain and if the Cloud Identity accounts are owned by the reseller. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * INVALID_VALUE: Invalid domain value in the request. Return value: A list of CloudIdentityCustomerAccount resources for the domain (may be empty) Note: in the v1alpha1 version of the API, a NOT_FOUND error returns if no CloudIdentityCustomerAccount resources match the domain.",
 	//   "flatPath": "v1/accounts/{accountsId}:checkCloudIdentityAccountsExist",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.checkCloudIdentityAccountsExist",
@@ -4363,7 +4387,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account. The parent takes the format: accounts/{account_id}",
+	//       "description": "Required. The reseller account's resource name. Parent uses the format: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -4397,16 +4421,17 @@ type AccountsListSubscribersCall struct {
 
 // ListSubscribers: Lists service accounts with subscriber privileges on
 // the Cloud Pub/Sub topic created for this Channel Services account.
-// Possible Error Codes: * PERMISSION_DENIED: If the reseller account
-// making the request and the reseller account being provided are
-// different, or if the account is not a super admin. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. * NOT_FOUND: If the topic resource doesn't exist. *
-// INTERNAL: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. * UNKNOWN: Any
-// non-user error related to a technical issue in the backend. In this
-// case, contact Cloud Channel support. Return Value: List of service
-// email addresses if successful, otherwise error is returned.
+// Possible error codes: * PERMISSION_DENIED: The reseller account
+// making the request and the provided reseller account are different,
+// or the impersonated user is not a super admin. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. * NOT_FOUND: The
+// topic resource doesn't exist. * INTERNAL: Any non-user error related
+// to a technical issue in the backend. Contact Cloud Channel support. *
+// UNKNOWN: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. Return value: A list of
+// service email addresses.
+//
+// - account: Resource name of the account.
 func (r *AccountsService) ListSubscribers(account string) *AccountsListSubscribersCall {
 	c := &AccountsListSubscribersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4415,8 +4440,8 @@ func (r *AccountsService) ListSubscribers(account string) *AccountsListSubscribe
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of service accounts to return. The service may return fewer than this
-// value. If unspecified, at most 100 service accounts will be returned.
-// The maximum value is 1000; values above 1000 will be coerced to 1000.
+// value. If unspecified, returns at most 100 service accounts. The
+// maximum value is 1000; the server will coerce values above 1000.
 func (c *AccountsListSubscribersCall) PageSize(pageSize int64) *AccountsListSubscribersCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4469,7 +4494,7 @@ func (c *AccountsListSubscribersCall) Header() http.Header {
 
 func (c *AccountsListSubscribersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4533,7 +4558,7 @@ func (c *AccountsListSubscribersCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists service accounts with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being provided are different, or if the account is not a super admin. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: List of service email addresses if successful, otherwise error is returned.",
+	//   "description": "Lists service accounts with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: A list of service email addresses.",
 	//   "flatPath": "v1/accounts/{accountsId}:listSubscribers",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.listSubscribers",
@@ -4549,7 +4574,7 @@ func (c *AccountsListSubscribersCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of service accounts to return. The service may return fewer than this value. If unspecified, at most 100 service accounts will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. The maximum number of service accounts to return. The service may return fewer than this value. If unspecified, returns at most 100 service accounts. The maximum value is 1000; the server will coerce values above 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4604,17 +4629,18 @@ type AccountsListTransferableOffersCall struct {
 }
 
 // ListTransferableOffers: List TransferableOffers of a customer based
-// on Cloud Identity ID or Customer Name in the request. This method is
-// used when a reseller gets the entitlement information of a customer
-// that is not owned. The reseller should provide the customer's Cloud
-// Identity ID or Customer Name. Possible Error Codes: *
-// PERMISSION_DENIED: Appears because of one of the following: * If the
-// customer doesn't belong to the reseller and no auth token or invalid
-// auth token is supplied. * If the reseller account making the request
-// and the reseller account being queried for are different. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. Return Value: List of TransferableOffer for the given
-// customer and SKU.
+// on Cloud Identity ID or Customer Name in the request. Use this method
+// when a reseller gets the entitlement information of an unowned
+// customer. The reseller should provide the customer's Cloud Identity
+// ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The
+// customer doesn't belong to the reseller and has no auth token. * The
+// supplied auth token is invalid. * The reseller account making the
+// request is different from the reseller account in the query. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// Return value: List of TransferableOffer for the given customer and
+// SKU.
+//
+// - parent: The resource name of the reseller's account.
 func (r *AccountsService) ListTransferableOffers(parent string, googlecloudchannelv1listtransferableoffersrequest *GoogleCloudChannelV1ListTransferableOffersRequest) *AccountsListTransferableOffersCall {
 	c := &AccountsListTransferableOffersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4649,7 +4675,7 @@ func (c *AccountsListTransferableOffersCall) Header() http.Header {
 
 func (c *AccountsListTransferableOffersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4715,7 +4741,7 @@ func (c *AccountsListTransferableOffersCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "List TransferableOffers of a customer based on Cloud Identity ID or Customer Name in the request. This method is used when a reseller gets the entitlement information of a customer that is not owned. The reseller should provide the customer's Cloud Identity ID or Customer Name. Possible Error Codes: * PERMISSION_DENIED: Appears because of one of the following: * If the customer doesn't belong to the reseller and no auth token or invalid auth token is supplied. * If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Return Value: List of TransferableOffer for the given customer and SKU.",
+	//   "description": "List TransferableOffers of a customer based on Cloud Identity ID or Customer Name in the request. Use this method when a reseller gets the entitlement information of an unowned customer. The reseller should provide the customer's Cloud Identity ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no auth token. * The supplied auth token is invalid. * The reseller account making the request is different from the reseller account in the query. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of TransferableOffer for the given customer and SKU.",
 	//   "flatPath": "v1/accounts/{accountsId}:listTransferableOffers",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.listTransferableOffers",
@@ -4778,17 +4804,18 @@ type AccountsListTransferableSkusCall struct {
 }
 
 // ListTransferableSkus: List TransferableSkus of a customer based on
-// Cloud Identity ID or Customer Name in the request. This method is
-// used when a reseller lists the entitlements information of a customer
-// that is not owned. The reseller should provide the customer's Cloud
-// Identity ID or Customer Name. Possible Error Codes: *
-// PERMISSION_DENIED: Appears because of one of the following - * The
-// customer doesn't belong to the reseller and no auth token. * The
-// supplied auth token is invalid. * The reseller account making the
-// request and the queries reseller account are different. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. Return Value: List of TransferableSku for the given
-// customer.
+// the Cloud Identity ID or Customer Name in the request. Use this
+// method to list the entitlements information of an unowned customer.
+// You should provide the customer's Cloud Identity ID or Customer Name.
+// Possible error codes: * PERMISSION_DENIED: * The customer doesn't
+// belong to the reseller and has no auth token. * The supplied auth
+// token is invalid. * The reseller account making the request is
+// different from the reseller account in the query. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. Return value: A
+// list of the customer's TransferableSku.
+//
+// - parent: The reseller account's resource name. Parent uses the
+//   format: accounts/{account_id}.
 func (r *AccountsService) ListTransferableSkus(parent string, googlecloudchannelv1listtransferableskusrequest *GoogleCloudChannelV1ListTransferableSkusRequest) *AccountsListTransferableSkusCall {
 	c := &AccountsListTransferableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4823,7 +4850,7 @@ func (c *AccountsListTransferableSkusCall) Header() http.Header {
 
 func (c *AccountsListTransferableSkusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4889,7 +4916,7 @@ func (c *AccountsListTransferableSkusCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "List TransferableSkus of a customer based on Cloud Identity ID or Customer Name in the request. This method is used when a reseller lists the entitlements information of a customer that is not owned. The reseller should provide the customer's Cloud Identity ID or Customer Name. Possible Error Codes: * PERMISSION_DENIED: Appears because of one of the following - * The customer doesn't belong to the reseller and no auth token. * The supplied auth token is invalid. * The reseller account making the request and the queries reseller account are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Return Value: List of TransferableSku for the given customer.",
+	//   "description": "List TransferableSkus of a customer based on the Cloud Identity ID or Customer Name in the request. Use this method to list the entitlements information of an unowned customer. You should provide the customer's Cloud Identity ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no auth token. * The supplied auth token is invalid. * The reseller account making the request is different from the reseller account in the query. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: A list of the customer's TransferableSku.",
 	//   "flatPath": "v1/accounts/{accountsId}:listTransferableSkus",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.listTransferableSkus",
@@ -4898,7 +4925,7 @@ func (c *AccountsListTransferableSkusCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's account. The parent takes the format: accounts/{account_id}",
+	//       "description": "Required. The reseller account's resource name. Parent uses the format: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -4952,18 +4979,18 @@ type AccountsRegisterCall struct {
 }
 
 // Register: Registers a service account with subscriber privileges on
-// the Cloud Pub/Sub topic created for this Channel Services account.
-// Once you create a subscriber, you will get the events as per
-// SubscriberEvent Possible Error Codes: * PERMISSION_DENIED: If the
-// reseller account making the request and the reseller account being
-// provided are different, or if the impersonated user is not a super
-// admin. * INVALID_ARGUMENT: Missing or invalid required parameters in
-// the request. * INTERNAL: Any non-user error related to a technical
-// issue in the backend. In this case, contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// Topic name with service email address registered if successful,
-// otherwise error is returned.
+// the Cloud Pub/Sub topic for this Channel Services account. After you
+// create a subscriber, you get the events through SubscriberEvent
+// Possible error codes: * PERMISSION_DENIED: The reseller account
+// making the request and the provided reseller account are different,
+// or the impersonated user is not a super admin. * INVALID_ARGUMENT:
+// Required request parameters are missing or invalid. * INTERNAL: Any
+// non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return
+// value: The topic name with the registered service email address.
+//
+// - account: Resource name of the account.
 func (r *AccountsService) Register(account string, googlecloudchannelv1registersubscriberrequest *GoogleCloudChannelV1RegisterSubscriberRequest) *AccountsRegisterCall {
 	c := &AccountsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4998,7 +5025,7 @@ func (c *AccountsRegisterCall) Header() http.Header {
 
 func (c *AccountsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5064,7 +5091,7 @@ func (c *AccountsRegisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudCha
 	}
 	return ret, nil
 	// {
-	//   "description": "Registers a service account with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. Once you create a subscriber, you will get the events as per SubscriberEvent Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being provided are different, or if the impersonated user is not a super admin. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Topic name with service email address registered if successful, otherwise error is returned.",
+	//   "description": "Registers a service account with subscriber privileges on the Cloud Pub/Sub topic for this Channel Services account. After you create a subscriber, you get the events through SubscriberEvent Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The topic name with the registered service email address.",
 	//   "flatPath": "v1/accounts/{accountsId}:register",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.register",
@@ -5107,20 +5134,21 @@ type AccountsUnregisterCall struct {
 
 // Unregister: Unregisters a service account with subscriber privileges
 // on the Cloud Pub/Sub topic created for this Channel Services account.
-// If there are no more service account left with sunbscriber
-// privileges, the topic will be deleted. You can check this by calling
-// ListSubscribers api. Possible Error Codes: * PERMISSION_DENIED: If
-// the reseller account making the request and the reseller account
-// being provided are different, or if the impersonated user is not a
-// super admin. * INVALID_ARGUMENT: Missing or invalid required
-// parameters in the request. * NOT_FOUND: If the topic resource doesn't
-// exist. * INTERNAL: Any non-user error related to a technical issue in
-// the backend. In this case, contact Cloud Channel support. * UNKNOWN:
-// Any non-user error related to a technical issue in the backend. In
-// this case, contact Cloud Channel support. Return Value: Topic name
-// from which service email address has been unregistered if successful,
-// otherwise error is returned. If the service email was already not
-// associated with the topic, the success response will be returned.
+// If there are no service accounts left with subscriber privileges,
+// this deletes the topic. You can call ListSubscribers to check for
+// these accounts. Possible error codes: * PERMISSION_DENIED: The
+// reseller account making the request and the provided reseller account
+// are different, or the impersonated user is not a super admin. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any
+// non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return
+// value: The topic name that unregistered the service email address.
+// Returns a success response if the service email address wasn't
+// registered with the topic.
+//
+// - account: Resource name of the account.
 func (r *AccountsService) Unregister(account string, googlecloudchannelv1unregistersubscriberrequest *GoogleCloudChannelV1UnregisterSubscriberRequest) *AccountsUnregisterCall {
 	c := &AccountsUnregisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -5155,7 +5183,7 @@ func (c *AccountsUnregisterCall) Header() http.Header {
 
 func (c *AccountsUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5221,7 +5249,7 @@ func (c *AccountsUnregisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 	}
 	return ret, nil
 	// {
-	//   "description": "Unregisters a service account with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. If there are no more service account left with sunbscriber privileges, the topic will be deleted. You can check this by calling ListSubscribers api. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being provided are different, or if the impersonated user is not a super admin. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Topic name from which service email address has been unregistered if successful, otherwise error is returned. If the service email was already not associated with the topic, the success response will be returned.",
+	//   "description": "Unregisters a service account with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. If there are no service accounts left with subscriber privileges, this deletes the topic. You can call ListSubscribers to check for these accounts. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The topic name that unregistered the service email address. Returns a success response if the service email address wasn't registered with the topic.",
 	//   "flatPath": "v1/accounts/{accountsId}:unregister",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.unregister",
@@ -5263,22 +5291,24 @@ type AccountsChannelPartnerLinksCreateCall struct {
 }
 
 // Create: Initiates a channel partner link between a distributor and a
-// reseller or between resellers in an n-tier reseller channel. To
-// accept the invite, the invited partner should follow the
-// invite_link_uri provided in the response. If the link creation is
-// accepted, a valid link is set up between the two involved parties. To
-// call this method, you must be a distributor. Possible Error Codes: *
-// PERMISSION_DENIED: If the reseller account making the request and the
-// reseller account being queried for are different. * INVALID_ARGUMENT:
-// Missing or invalid required parameters in the request. *
-// ALREADY_EXISTS: If the ChannelPartnerLink sent in the request already
-// exists. * NOT_FOUND: If no Cloud Identity customer exists for domain
-// provided. * INTERNAL: Any non-user error related to a technical issue
-// in the backend. In this case, contact Cloud Channel support. *
+// reseller, or between resellers in an n-tier reseller channel. Invited
+// partners need to follow the invite_link_uri provided in the response
+// to accept. After accepting the invitation, a link is set up between
+// the two parties. You must be a distributor to call this method.
+// Possible error codes: * PERMISSION_DENIED: The reseller account
+// making the request is different from the reseller account in the API
+// request. * INVALID_ARGUMENT: Required request parameters are missing
+// or invalid. * ALREADY_EXISTS: The ChannelPartnerLink sent in the
+// request already exists. * NOT_FOUND: No Cloud Identity customer
+// exists for provided domain. * INTERNAL: Any non-user error related to
+// a technical issue in the backend. Contact Cloud Channel support. *
 // UNKNOWN: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// Newly created ChannelPartnerLink resource if successful, otherwise
-// error is returned.
+// backend. Contact Cloud Channel support. Return value: The new
+// ChannelPartnerLink resource.
+//
+// - parent: Create a channel partner link for the provided reseller
+//   account's resource name. Parent uses the format:
+//   accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) Create(parent string, googlecloudchannelv1channelpartnerlink *GoogleCloudChannelV1ChannelPartnerLink) *AccountsChannelPartnerLinksCreateCall {
 	c := &AccountsChannelPartnerLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5313,7 +5343,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5378,7 +5408,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates a channel partner link between a distributor and a reseller or between resellers in an n-tier reseller channel. To accept the invite, the invited partner should follow the invite_link_uri provided in the response. If the link creation is accepted, a valid link is set up between the two involved parties. To call this method, you must be a distributor. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * ALREADY_EXISTS: If the ChannelPartnerLink sent in the request already exists. * NOT_FOUND: If no Cloud Identity customer exists for domain provided. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Newly created ChannelPartnerLink resource if successful, otherwise error is returned.",
+	//   "description": "Initiates a channel partner link between a distributor and a reseller, or between resellers in an n-tier reseller channel. Invited partners need to follow the invite_link_uri provided in the response to accept. After accepting the invitation, a link is set up between the two parties. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * ALREADY_EXISTS: The ChannelPartnerLink sent in the request already exists. * NOT_FOUND: No Cloud Identity customer exists for provided domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The new ChannelPartnerLink resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.channelPartnerLinks.create",
@@ -5387,7 +5417,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of reseller's account for which to create a channel partner link. The parent takes the format: accounts/{account_id}",
+	//       "description": "Required. Create a channel partner link for the provided reseller account's resource name. Parent uses the format: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -5419,14 +5449,19 @@ type AccountsChannelPartnerLinksGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a requested ChannelPartnerLink resource. To call this
-// method, you must be a distributor. Possible Error Codes: *
-// PERMISSION_DENIED: If the reseller account making the request and the
-// reseller account being queried for are different. * INVALID_ARGUMENT:
-// Missing or invalid required parameters in the request. * NOT_FOUND:
-// ChannelPartnerLink resource not found. Results due invalid channel
-// partner link name. Return Value: ChannelPartnerLink resource if
-// found, otherwise returns an error.
+// Get: Returns a requested ChannelPartnerLink resource. You must be a
+// distributor to call this method. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: ChannelPartnerLink resource not found because of an
+// invalid channel partner link name. Return value: The
+// ChannelPartnerLink resource.
+//
+// - name: The resource name of the channel partner link to retrieve.
+//   Name uses the format:
+//   accounts/{account_id}/channelPartnerLinks/{id} where {id} is the
+//   Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Get(name string) *AccountsChannelPartnerLinksGetCall {
 	c := &AccountsChannelPartnerLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5484,7 +5519,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5547,7 +5582,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a requested ChannelPartnerLink resource. To call this method, you must be a distributor. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: ChannelPartnerLink resource not found. Results due invalid channel partner link name. Return Value: ChannelPartnerLink resource if found, otherwise returns an error.",
+	//   "description": "Returns a requested ChannelPartnerLink resource. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: ChannelPartnerLink resource not found because of an invalid channel partner link name. Return value: The ChannelPartnerLink resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.channelPartnerLinks.get",
@@ -5556,7 +5591,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the channel partner link to retrieve. The name takes the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is the Cloud Identity ID of the partner.",
+	//       "description": "Required. The resource name of the channel partner link to retrieve. Name uses the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is the Cloud Identity ID of the partner.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
 	//       "required": true,
@@ -5600,13 +5635,17 @@ type AccountsChannelPartnerLinksListCall struct {
 	header_      http.Header
 }
 
-// List: List ChannelPartnerLinks belonging to a distributor. To call
-// this method, you must be a distributor. Possible Error Codes: *
-// PERMISSION_DENIED: If the reseller account making the request and the
-// reseller account being queried for are different. * INVALID_ARGUMENT:
-// Missing or invalid required parameters in the request. Return Value:
-// If successful, returns the list of ChannelPartnerLink resources for
-// the distributor account, otherwise returns an error.
+// List: List ChannelPartnerLinks belonging to a distributor. You must
+// be a distributor to call this method. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// Return value: The list of the distributor account's
+// ChannelPartnerLink resources.
+//
+// - parent: The resource name of the reseller account for listing
+//   channel partner links. Parent uses the format:
+//   accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) List(parent string) *AccountsChannelPartnerLinksListCall {
 	c := &AccountsChannelPartnerLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5615,17 +5654,17 @@ func (r *AccountsChannelPartnerLinksService) List(parent string) *AccountsChanne
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // Server might return fewer results than requested. If unspecified,
-// server will pick a default size (25). The maximum value is 200,
-// values above 200 will be coerced to 200.
+// server will pick a default size (25). The maximum value is 200; the
+// server will coerce values above 200.
 func (c *AccountsChannelPartnerLinksListCall) PageSize(pageSize int64) *AccountsChannelPartnerLinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one. Typically
-// obtained via ListChannelPartnerLinksResponse.next_page_token of the
-// previous CloudChannelService.ListChannelPartnerLinks call.
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page. Obtained using
+// ListChannelPartnerLinksResponse.next_page_token of the previous
+// CloudChannelService.ListChannelPartnerLinks call.
 func (c *AccountsChannelPartnerLinksListCall) PageToken(pageToken string) *AccountsChannelPartnerLinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5682,7 +5721,7 @@ func (c *AccountsChannelPartnerLinksListCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5746,7 +5785,7 @@ func (c *AccountsChannelPartnerLinksListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "List ChannelPartnerLinks belonging to a distributor. To call this method, you must be a distributor. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Return Value: If successful, returns the list of ChannelPartnerLink resources for the distributor account, otherwise returns an error.",
+	//   "description": "List ChannelPartnerLinks belonging to a distributor. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: The list of the distributor account's ChannelPartnerLink resources.",
 	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.channelPartnerLinks.list",
@@ -5755,18 +5794,18 @@ func (c *AccountsChannelPartnerLinksListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, server will pick a default size (25). The maximum value is 200, values above 200 will be coerced to 200.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, server will pick a default size (25). The maximum value is 200; the server will coerce values above 200.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one. Typically obtained via ListChannelPartnerLinksResponse.next_page_token of the previous CloudChannelService.ListChannelPartnerLinks call.",
+	//       "description": "Optional. A token for a page of results other than the first page. Obtained using ListChannelPartnerLinksResponse.next_page_token of the previous CloudChannelService.ListChannelPartnerLinks call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account for listing channel partner links. The parent takes the format: accounts/{account_id}",
+	//       "description": "Required. The resource name of the reseller account for listing channel partner links. Parent uses the format: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -5831,21 +5870,24 @@ type AccountsChannelPartnerLinksPatchCall struct {
 	header_                                             http.Header
 }
 
-// Patch: Updates a channel partner link. A distributor calls this
-// method to change a link's status. For example, suspend a partner
-// link. To call this method, you must be a distributor. Possible Error
-// Codes: * PERMISSION_DENIED: If the reseller account making the
-// request and the reseller account being queried for are different. *
-// INVALID_ARGUMENT: It can happen in following scenarios - * Missing or
-// invalid required parameters in the request. * Updating link state
-// from invited to active or suspended. * Sending
-// reseller_cloud_identity_id, invite_url or name in update mask. *
-// NOT_FOUND: ChannelPartnerLink resource not found. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. In this
-// case, contact Cloud Channel support. * UNKNOWN: Any non-user error
-// related to a technical issue in the backend. In this case, contact
-// Cloud Channel support. Return Value: If successful, the updated
-// ChannelPartnerLink resource, otherwise returns an error.
+// Patch: Updates a channel partner link. Distributors call this method
+// to change a link's status. For example, to suspend a partner link.
+// You must be a distributor to call this method. Possible error codes:
+// * PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: * Required request parameters are missing or
+// invalid. * Link state cannot change from invited to active or
+// suspended. * Cannot send reseller_cloud_identity_id, invite_url, or
+// name in update mask. * NOT_FOUND: ChannelPartnerLink resource not
+// found. * INTERNAL: Any non-user error related to a technical issue in
+// the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user
+// error related to a technical issue in the backend. Contact Cloud
+// Channel support. Return value: The updated ChannelPartnerLink
+// resource.
+//
+// - name: The resource name of the channel partner link to cancel. Name
+//   uses the format: accounts/{account_id}/channelPartnerLinks/{id}
+//   where {id} is the Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Patch(name string, googlecloudchannelv1updatechannelpartnerlinkrequest *GoogleCloudChannelV1UpdateChannelPartnerLinkRequest) *AccountsChannelPartnerLinksPatchCall {
 	c := &AccountsChannelPartnerLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5880,7 +5922,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5945,7 +5987,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a channel partner link. A distributor calls this method to change a link's status. For example, suspend a partner link. To call this method, you must be a distributor. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: It can happen in following scenarios - * Missing or invalid required parameters in the request. * Updating link state from invited to active or suspended. * Sending reseller_cloud_identity_id, invite_url or name in update mask. * NOT_FOUND: ChannelPartnerLink resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the updated ChannelPartnerLink resource, otherwise returns an error.",
+	//   "description": "Updates a channel partner link. Distributors call this method to change a link's status. For example, to suspend a partner link. You must be a distributor to call this method. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Link state cannot change from invited to active or suspended. * Cannot send reseller_cloud_identity_id, invite_url, or name in update mask. * NOT_FOUND: ChannelPartnerLink resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The updated ChannelPartnerLink resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudchannel.accounts.channelPartnerLinks.patch",
@@ -5954,7 +5996,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the channel partner link to cancel. The name takes the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is the Cloud Identity ID of the partner.",
+	//       "description": "Required. The resource name of the channel partner link to cancel. Name uses the format: accounts/{account_id}/channelPartnerLinks/{id} where {id} is the Cloud Identity ID of the partner.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
 	//       "required": true,
@@ -5975,6 +6017,808 @@ func (c *AccountsChannelPartnerLinksPatchCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "cloudchannel.accounts.channelPartnerLinks.customers.create":
+
+type AccountsChannelPartnerLinksCustomersCreateCall struct {
+	s                            *Service
+	parent                       string
+	googlecloudchannelv1customer *GoogleCloudChannelV1Customer
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Creates a new Customer resource under the reseller or
+// distributor account. Possible error codes: * PERMISSION_DENIED: The
+// reseller account making the request is different from the reseller
+// account in the API request. * INVALID_ARGUMENT: * Required request
+// parameters are missing or invalid. * Domain field value doesn't match
+// the primary email domain. Return value: The newly created Customer
+// resource.
+//
+// - parent: The resource name of reseller account in which to create
+//   the customer. Parent uses the format: accounts/{account_id}.
+func (r *AccountsChannelPartnerLinksCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersCreateCall {
+	c := &AccountsChannelPartnerLinksCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudchannelv1customer = googlecloudchannelv1customer
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersCreateCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksCustomersCreateCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksCustomersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customer)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.create" call.
+// Exactly one of *GoogleCloudChannelV1Customer or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsChannelPartnerLinksCustomersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1Customer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Customer resource under the reseller or distributor account. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Domain field value doesn't match the primary email domain. Return value: The newly created Customer resource.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers",
+	//   "httpMethod": "POST",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of reseller account in which to create the customer. Parent uses the format: accounts/{account_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customers",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1Customer"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.customers.delete":
+
+type AccountsChannelPartnerLinksCustomersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the given Customer permanently and irreversibly.
+// Possible error codes: * PERMISSION_DENIED: The account making the
+// request does not own this customer. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * FAILED_PRECONDITION: The
+// customer has existing entitlements. * NOT_FOUND: No Customer resource
+// found for the name in the request.
+//
+// - name: The resource name of the customer to delete.
+func (r *AccountsChannelPartnerLinksCustomersService) Delete(name string) *AccountsChannelPartnerLinksCustomersDeleteCall {
+	c := &AccountsChannelPartnerLinksCustomersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the given Customer permanently and irreversibly. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The customer has existing entitlements. * NOT_FOUND: No Customer resource found for the name in the request.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the customer to delete.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.customers.get":
+
+type AccountsChannelPartnerLinksCustomersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a requested Customer resource. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: The customer resource doesn't exist. Usually the result
+// of an invalid name parameter. Return value: The Customer resource.
+//
+// - name: The resource name of the customer to retrieve. Name uses the
+//   format: accounts/{account_id}/customers/{customer_id}.
+func (r *AccountsChannelPartnerLinksCustomersService) Get(name string) *AccountsChannelPartnerLinksCustomersGetCall {
+	c := &AccountsChannelPartnerLinksCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersGetCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsChannelPartnerLinksCustomersGetCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksCustomersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksCustomersGetCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksCustomersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksCustomersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.get" call.
+// Exactly one of *GoogleCloudChannelV1Customer or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsChannelPartnerLinksCustomersGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1Customer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a requested Customer resource. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer resource doesn't exist. Usually the result of an invalid name parameter. Return value: The Customer resource.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the customer to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.customers.list":
+
+type AccountsChannelPartnerLinksCustomersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List Customers. Possible error codes: * PERMISSION_DENIED: The
+// reseller account making the request is different from the reseller
+// account in the API request. * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid. Return value: List of Customers,
+// or an empty list if there are no customers.
+//
+// - parent: The resource name of the reseller account to list customers
+//   from. Parent uses the format: accounts/{account_id}.
+func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *AccountsChannelPartnerLinksCustomersListCall {
+	c := &AccountsChannelPartnerLinksCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of customers to return. The service may return fewer than this value.
+// If unspecified, returns at most 10 customers. The maximum value is
+// 50.
+func (c *AccountsChannelPartnerLinksCustomersListCall) PageSize(pageSize int64) *AccountsChannelPartnerLinksCustomersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results other than the first page. Obtained
+// through ListCustomersResponse.next_page_token of the previous
+// CloudChannelService.ListCustomers call.
+func (c *AccountsChannelPartnerLinksCustomersListCall) PageToken(pageToken string) *AccountsChannelPartnerLinksCustomersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsChannelPartnerLinksCustomersListCall) IfNoneMatch(entityTag string) *AccountsChannelPartnerLinksCustomersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksCustomersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.list" call.
+// Exactly one of *GoogleCloudChannelV1ListCustomersResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ListCustomersResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListCustomersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1ListCustomersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List Customers. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of Customers, or an empty list if there are no customers.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results other than the first page. Obtained through ListCustomersResponse.next_page_token of the previous CloudChannelService.ListCustomers call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the reseller account to list customers from. Parent uses the format: accounts/{account_id}.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customers",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListCustomersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsChannelPartnerLinksCustomersListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListCustomersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudchannel.accounts.channelPartnerLinks.customers.patch":
+
+type AccountsChannelPartnerLinksCustomersPatchCall struct {
+	s                            *Service
+	name                         string
+	googlecloudchannelv1customer *GoogleCloudChannelV1Customer
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Patch: Updates an existing Customer resource for the reseller or
+// distributor. Possible error codes: * PERMISSION_DENIED: The reseller
+// account making the request is different from the reseller account in
+// the API request. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. * NOT_FOUND: No Customer resource found for the
+// name in the request. Return value: The updated Customer resource.
+//
+// - name: Output only. Resource name of the customer. Format:
+//   accounts/{account_id}/customers/{customer_id}.
+func (r *AccountsChannelPartnerLinksCustomersService) Patch(name string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersPatchCall {
+	c := &AccountsChannelPartnerLinksCustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudchannelv1customer = googlecloudchannelv1customer
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// that applies to the resource.
+func (c *AccountsChannelPartnerLinksCustomersPatchCall) UpdateMask(updateMask string) *AccountsChannelPartnerLinksCustomersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsChannelPartnerLinksCustomersPatchCall) Fields(s ...googleapi.Field) *AccountsChannelPartnerLinksCustomersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsChannelPartnerLinksCustomersPatchCall) Context(ctx context.Context) *AccountsChannelPartnerLinksCustomersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsChannelPartnerLinksCustomersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsChannelPartnerLinksCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1customer)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.patch" call.
+// Exactly one of *GoogleCloudChannelV1Customer or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudChannelV1Customer.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsChannelPartnerLinksCustomersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1Customer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudChannelV1Customer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing Customer resource for the reseller or distributor. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: No Customer resource found for the name in the request. Return value: The updated Customer resource.",
+	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudchannel.accounts.channelPartnerLinks.customers.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the customer. Format: accounts/{account_id}/customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The update mask that applies to the resource. Optional.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1Customer"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
 // method id "cloudchannel.accounts.customers.create":
 
 type AccountsCustomersCreateCall struct {
@@ -5987,13 +6831,15 @@ type AccountsCustomersCreateCall struct {
 }
 
 // Create: Creates a new Customer resource under the reseller or
-// distributor account. Possible Error Codes: * PERMISSION_DENIED: If
-// the reseller account making the request and the reseller account
-// being queried for are different. * INVALID_ARGUMENT: It can happen in
-// following scenarios - * Missing or invalid required parameters in the
-// request. * Domain field value doesn't match the domain specified in
-// primary email. Return Value: If successful, the newly created
-// Customer resource, otherwise returns an error.
+// distributor account. Possible error codes: * PERMISSION_DENIED: The
+// reseller account making the request is different from the reseller
+// account in the API request. * INVALID_ARGUMENT: * Required request
+// parameters are missing or invalid. * Domain field value doesn't match
+// the primary email domain. Return value: The newly created Customer
+// resource.
+//
+// - parent: The resource name of reseller account in which to create
+//   the customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersCreateCall {
 	c := &AccountsCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6028,7 +6874,7 @@ func (c *AccountsCustomersCreateCall) Header() http.Header {
 
 func (c *AccountsCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6092,7 +6938,7 @@ func (c *AccountsCustomersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Customer resource under the reseller or distributor account. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: It can happen in following scenarios - * Missing or invalid required parameters in the request. * Domain field value doesn't match the domain specified in primary email. Return Value: If successful, the newly created Customer resource, otherwise returns an error.",
+	//   "description": "Creates a new Customer resource under the reseller or distributor account. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Domain field value doesn't match the primary email domain. Return value: The newly created Customer resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.create",
@@ -6101,7 +6947,7 @@ func (c *AccountsCustomersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of reseller account in which to create the customer. The parent takes the format: accounts/{account_id}",
+	//       "description": "Required. The resource name of reseller account in which to create the customer. Parent uses the format: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -6133,11 +6979,13 @@ type AccountsCustomersDeleteCall struct {
 }
 
 // Delete: Deletes the given Customer permanently and irreversibly.
-// Possible Error Codes: * PERMISSION_DENIED: If the account making the
-// request does not own this customer. * INVALID_ARGUMENT: Missing or
-// invalid required parameters in the request. * FAILED_PRECONDITION: If
-// the customer has existing entitlements. * NOT_FOUND: No Customer
-// resource found for the name specified in the request.
+// Possible error codes: * PERMISSION_DENIED: The account making the
+// request does not own this customer. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * FAILED_PRECONDITION: The
+// customer has existing entitlements. * NOT_FOUND: No Customer resource
+// found for the name in the request.
+//
+// - name: The resource name of the customer to delete.
 func (r *AccountsCustomersService) Delete(name string) *AccountsCustomersDeleteCall {
 	c := &AccountsCustomersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6171,7 +7019,7 @@ func (c *AccountsCustomersDeleteCall) Header() http.Header {
 
 func (c *AccountsCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6230,7 +7078,7 @@ func (c *AccountsCustomersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the given Customer permanently and irreversibly. Possible Error Codes: * PERMISSION_DENIED: If the account making the request does not own this customer. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * FAILED_PRECONDITION: If the customer has existing entitlements. * NOT_FOUND: No Customer resource found for the name specified in the request.",
+	//   "description": "Deletes the given Customer permanently and irreversibly. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The customer has existing entitlements. * NOT_FOUND: No Customer resource found for the name in the request.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudchannel.accounts.customers.delete",
@@ -6268,13 +7116,15 @@ type AccountsCustomersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a requested Customer resource. Possible Error Codes: *
-// PERMISSION_DENIED: If the reseller account making the request and the
-// reseller account being queried for are different. * INVALID_ARGUMENT:
-// Missing or invalid required parameters in the request. * NOT_FOUND:
-// If the customer resource doesn't exist. Usually the result of an
-// invalid name parameter. Return Value: Customer resource if found,
-// error otherwise.
+// Get: Returns a requested Customer resource. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: The customer resource doesn't exist. Usually the result
+// of an invalid name parameter. Return value: The Customer resource.
+//
+// - name: The resource name of the customer to retrieve. Name uses the
+//   format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Get(name string) *AccountsCustomersGetCall {
 	c := &AccountsCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6318,7 +7168,7 @@ func (c *AccountsCustomersGetCall) Header() http.Header {
 
 func (c *AccountsCustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6380,7 +7230,7 @@ func (c *AccountsCustomersGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a requested Customer resource. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the customer resource doesn't exist. Usually the result of an invalid name parameter. Return Value: Customer resource if found, error otherwise.",
+	//   "description": "Returns a requested Customer resource. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer resource doesn't exist. Usually the result of an invalid name parameter. Return value: The Customer resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.get",
@@ -6389,7 +7239,7 @@ func (c *AccountsCustomersGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the customer to retrieve. The name takes the format: accounts/{account_id}/customers/{customer_id}",
+	//       "description": "Required. The resource name of the customer to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
@@ -6418,12 +7268,14 @@ type AccountsCustomersListCall struct {
 	header_      http.Header
 }
 
-// List: List downstream Customers. Possible Error Codes: *
-// PERMISSION_DENIED: If the reseller account making the request and the
-// reseller account being queried for are different. * INVALID_ARGUMENT:
-// Missing or invalid required parameters in the request. Return Value:
-// List of Customers pertaining to the reseller or empty list if there
-// are none.
+// List: List Customers. Possible error codes: * PERMISSION_DENIED: The
+// reseller account making the request is different from the reseller
+// account in the API request. * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid. Return value: List of Customers,
+// or an empty list if there are no customers.
+//
+// - parent: The resource name of the reseller account to list customers
+//   from. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCall {
 	c := &AccountsCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6432,16 +7284,16 @@ func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCal
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to return. The service may return fewer than this value.
-// If unspecified, at most 10 customers will be returned. The maximum
-// value is 50; values about 50 will be coerced to 50.
+// If unspecified, returns at most 10 customers. The maximum value is
+// 50.
 func (c *AccountsCustomersListCall) PageSize(pageSize int64) *AccountsCustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one. Typically
-// obtained via ListCustomersResponse.next_page_token of the previous
+// identifying a page of results other than the first page. Obtained
+// through ListCustomersResponse.next_page_token of the previous
 // CloudChannelService.ListCustomers call.
 func (c *AccountsCustomersListCall) PageToken(pageToken string) *AccountsCustomersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -6485,7 +7337,7 @@ func (c *AccountsCustomersListCall) Header() http.Header {
 
 func (c *AccountsCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6549,7 +7401,7 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	}
 	return ret, nil
 	// {
-	//   "description": "List downstream Customers. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Return Value: List of Customers pertaining to the reseller or empty list if there are none.",
+	//   "description": "List Customers. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of Customers, or an empty list if there are no customers.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.list",
@@ -6558,18 +7410,18 @@ func (c *AccountsCustomersListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, at most 10 customers will be returned. The maximum value is 50; values about 50 will be coerced to 50.",
+	//       "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one. Typically obtained via ListCustomersResponse.next_page_token of the previous CloudChannelService.ListCustomers call.",
+	//       "description": "Optional. A token identifying a page of results other than the first page. Obtained through ListCustomersResponse.next_page_token of the previous CloudChannelService.ListCustomers call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account from which to list customers. The parent takes the format: accounts/{account_id}.",
+	//       "description": "Required. The resource name of the reseller account to list customers from. Parent uses the format: accounts/{account_id}.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -6619,12 +7471,14 @@ type AccountsCustomersListPurchasableOffersCall struct {
 	header_      http.Header
 }
 
-// ListPurchasableOffers: Lists the Purchasable Offers for the following
-// cases: * Offers that can be newly purchased for a customer * Offers
-// that can be changed to, for an entitlement. Possible Error Codes: *
-// PERMISSION_DENIED: If the customer doesn't belong to the reseller *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request.
+// ListPurchasableOffers: Lists the following: * Offers that you can
+// purchase for a customer. * Offers that you can change for an
+// entitlement. Possible error codes: * PERMISSION_DENIED: The customer
+// doesn't belong to the reseller * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid.
+//
+// - customer: The resource name of the customer to list Offers for.
+//   Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *AccountsCustomersListPurchasableOffersCall {
 	c := &AccountsCustomersListPurchasableOffersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -6642,9 +7496,9 @@ func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseEntitlem
 }
 
 // ChangeOfferPurchaseNewSku sets the optional parameter
-// "changeOfferPurchase.newSku": Resource name of the SKU that is being
-// changed to. Should be provided if upgrading or downgrading an
-// entitlement. Format: products/{product_id}/skus/{sku_id}
+// "changeOfferPurchase.newSku": Resource name of the new target SKU.
+// Provide this SKU when upgrading or downgrading an entitlement.
+// Format: products/{product_id}/skus/{sku_id}
 func (c *AccountsCustomersListPurchasableOffersCall) ChangeOfferPurchaseNewSku(changeOfferPurchaseNewSku string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("changeOfferPurchase.newSku", changeOfferPurchaseNewSku)
 	return c
@@ -6659,24 +7513,25 @@ func (c *AccountsCustomersListPurchasableOffersCall) CreateEntitlementPurchaseSk
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US". If specified, the response will be
-// localized to the corresponding language code. Default is "en-US".
+// language code. For example, "en-US". The response will localize in
+// the corresponding language code, if specified. The default value is
+// "en-US".
 func (c *AccountsCustomersListPurchasableOffersCall) LanguageCode(languageCode string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified, at
-// most 100 Offers will be returned. The maximum value is 1000; values
-// above 1000 will be coerced to 1000.
+// Server might return fewer results than requested. If unspecified,
+// returns at most 100 Offers. The maximum value is 1000; the server
+// will coerce values above 1000.
 func (c *AccountsCustomersListPurchasableOffersCall) PageSize(pageSize int64) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one.
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page.
 func (c *AccountsCustomersListPurchasableOffersCall) PageToken(pageToken string) *AccountsCustomersListPurchasableOffersCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6719,7 +7574,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Header() http.Header {
 
 func (c *AccountsCustomersListPurchasableOffersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6783,7 +7638,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Purchasable Offers for the following cases: * Offers that can be newly purchased for a customer * Offers that can be changed to, for an entitlement. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller * INVALID_ARGUMENT: Missing or invalid required parameters in the request.",
+	//   "description": "Lists the following: * Offers that you can purchase for a customer. * Offers that you can change for an entitlement. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:listPurchasableOffers",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.listPurchasableOffers",
@@ -6797,7 +7652,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "changeOfferPurchase.newSku": {
-	//       "description": "Optional. Resource name of the SKU that is being changed to. Should be provided if upgrading or downgrading an entitlement. Format: products/{product_id}/skus/{sku_id}",
+	//       "description": "Optional. Resource name of the new target SKU. Provide this SKU when upgrading or downgrading an entitlement. Format: products/{product_id}/skus/{sku_id}",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6807,25 +7662,25 @@ func (c *AccountsCustomersListPurchasableOffersCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "customer": {
-	//       "description": "Required. The resource name of the customer for which to list Offers. Format: accounts/{account_id}/customers/{customer_id}.",
+	//       "description": "Required. The resource name of the customer to list Offers for. Format: accounts/{account_id}/customers/{customer_id}.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response will be localized to the corresponding language code. Default is \"en-US\".",
+	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, at most 100 Offers will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 Offers. The maximum value is 1000; the server will coerce values above 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one.",
+	//       "description": "Optional. A token for a page of results other than the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6873,12 +7728,14 @@ type AccountsCustomersListPurchasableSkusCall struct {
 	header_      http.Header
 }
 
-// ListPurchasableSkus: Lists the Purchasable SKUs for following cases:
-// * SKUs that can be newly purchased for a customer * SKUs that can be
-// upgraded/downgraded to, for an entitlement. Possible Error Codes: *
-// PERMISSION_DENIED: If the customer doesn't belong to the reseller *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request.
+// ListPurchasableSkus: Lists the following: * SKUs that you can
+// purchase for a customer * SKUs that you can upgrade or downgrade for
+// an entitlement. Possible error codes: * PERMISSION_DENIED: The
+// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid.
+//
+// - customer: The resource name of the customer to list SKUs for.
+//   Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableSkus(customer string) *AccountsCustomersListPurchasableSkusCall {
 	c := &AccountsCustomersListPurchasableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -6918,24 +7775,25 @@ func (c *AccountsCustomersListPurchasableSkusCall) CreateEntitlementPurchaseProd
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US". If specified, the response will be
-// localized to the corresponding language code. Default is "en-US".
+// language code. For example, "en-US". The response will localize in
+// the corresponding language code, if specified. The default value is
+// "en-US".
 func (c *AccountsCustomersListPurchasableSkusCall) LanguageCode(languageCode string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified, at
-// most 100 SKUs will be returned. The maximum value is 1000; values
-// above 1000 will be coerced to 1000.
+// Server might return fewer results than requested. If unspecified,
+// returns at most 100 SKUs. The maximum value is 1000; the server will
+// coerce values above 1000.
 func (c *AccountsCustomersListPurchasableSkusCall) PageSize(pageSize int64) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one.
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page.
 func (c *AccountsCustomersListPurchasableSkusCall) PageToken(pageToken string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6978,7 +7836,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) Header() http.Header {
 
 func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7042,7 +7900,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Purchasable SKUs for following cases: * SKUs that can be newly purchased for a customer * SKUs that can be upgraded/downgraded to, for an entitlement. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller * INVALID_ARGUMENT: Missing or invalid required parameters in the request.",
+	//   "description": "Lists the following: * SKUs that you can purchase for a customer * SKUs that you can upgrade or downgrade for an entitlement. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:listPurchasableSkus",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.listPurchasableSkus",
@@ -7076,25 +7934,25 @@ func (c *AccountsCustomersListPurchasableSkusCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "customer": {
-	//       "description": "Required. The resource name of the customer for which to list SKUs. Format: accounts/{account_id}/customers/{customer_id}.",
+	//       "description": "Required. The resource name of the customer to list SKUs for. Format: accounts/{account_id}/customers/{customer_id}.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response will be localized to the corresponding language code. Default is \"en-US\".",
+	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, at most 100 SKUs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 SKUs. The maximum value is 1000; the server will coerce values above 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one.",
+	//       "description": "Optional. A token for a page of results other than the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7142,14 +8000,15 @@ type AccountsCustomersPatchCall struct {
 	header_                      http.Header
 }
 
-// Patch: Updates an existing Customer resource belonging to the
-// reseller or distributor. Possible Error Codes: * PERMISSION_DENIED:
-// If the reseller account making the request and the reseller account
-// being queried for are different. * INVALID_ARGUMENT: Missing or
-// invalid required parameters in the request. * NOT_FOUND: No Customer
-// resource found for the name specified in the request. Return Value:
-// If successful, the updated Customer resource, otherwise returns an
-// error.
+// Patch: Updates an existing Customer resource for the reseller or
+// distributor. Possible error codes: * PERMISSION_DENIED: The reseller
+// account making the request is different from the reseller account in
+// the API request. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. * NOT_FOUND: No Customer resource found for the
+// name in the request. Return value: The updated Customer resource.
+//
+// - name: Output only. Resource name of the customer. Format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Patch(name string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersPatchCall {
 	c := &AccountsCustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7191,7 +8050,7 @@ func (c *AccountsCustomersPatchCall) Header() http.Header {
 
 func (c *AccountsCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7255,7 +8114,7 @@ func (c *AccountsCustomersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing Customer resource belonging to the reseller or distributor. Possible Error Codes: * PERMISSION_DENIED: If the reseller account making the request and the reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: No Customer resource found for the name specified in the request. Return Value: If successful, the updated Customer resource, otherwise returns an error.",
+	//   "description": "Updates an existing Customer resource for the reseller or distributor. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: No Customer resource found for the name in the request. Return value: The updated Customer resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudchannel.accounts.customers.patch",
@@ -7303,20 +8162,22 @@ type AccountsCustomersProvisionCloudIdentityCall struct {
 }
 
 // ProvisionCloudIdentity: Creates a Cloud Identity for the given
-// customer using the customer's information or the information provided
-// here, if present. Possible Error Codes: * PERMISSION_DENIED: If the
-// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing
-// or invalid required parameters in the request. * NOT_FOUND: If the
-// customer is not found for the reseller. * ALREADY_EXISTS: If the
-// customer's primary email already exists. In this case, retry after
-// changing the customer's primary contact email. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel support in this case. * UNKNOWN: Any non-user error
+// customer using the customer's information, or the information
+// provided here. Possible error codes: * PERMISSION_DENIED: The
+// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: The customer
+// was not found. * ALREADY_EXISTS: The customer's primary email already
+// exists. Retry after changing the customer's primary contact email. *
+// INTERNAL: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
 // related to a technical issue in the backend. Contact Cloud Channel
-// support in this case. Return Value: Long Running Operation ID. To get
-// the results of the operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
+// support. Return value: The ID of a long-running operation. To get the
+// results of the operation, call the GetOperation method of
+// CloudChannelOperationsService. The Operation metadata contains an
 // instance of OperationMetadata.
+//
+// - customer: Resource name of the customer. Format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ProvisionCloudIdentity(customer string, googlecloudchannelv1provisioncloudidentityrequest *GoogleCloudChannelV1ProvisionCloudIdentityRequest) *AccountsCustomersProvisionCloudIdentityCall {
 	c := &AccountsCustomersProvisionCloudIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7351,7 +8212,7 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Header() http.Header {
 
 func (c *AccountsCustomersProvisionCloudIdentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7415,7 +8276,7 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Cloud Identity for the given customer using the customer's information or the information provided here, if present. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the customer is not found for the reseller. * ALREADY_EXISTS: If the customer's primary email already exists. In this case, retry after changing the customer's primary contact email. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support in this case. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support in this case. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Creates a Cloud Identity for the given customer using the customer's information, or the information provided here. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer was not found. * ALREADY_EXISTS: The customer's primary email already exists. Retry after changing the customer's primary contact email. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata contains an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:provisionCloudIdentity",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.provisionCloudIdentity",
@@ -7457,27 +8318,28 @@ type AccountsCustomersTransferEntitlementsCall struct {
 }
 
 // TransferEntitlements: Transfers customer entitlements to new
-// reseller. Possible Error Codes: * PERMISSION_DENIED: If the customer
-// doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or
-// invalid required parameters in the request. * NOT_FOUND: If the
-// customer or offer resource is not found for the reseller. *
-// ALREADY_EXISTS: If the SKU has been already transferred for the
-// customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: This failure
-// can happen in the following cases: * Transferring a SKU that requires
-// domain verification and the domain has not been verified. *
-// Transferring an Add-On SKU like Vault or Drive without transferring
-// the pre-requisite SKU, such as G Suite Basic. * Applicable only for
-// developer accounts: reseller and resold domain must follow the domain
-// naming convention as follows: * Domain names must start with
-// goog-test. * Resold domain names must include the reseller domain. *
-// All transferring entitlements must be specified. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Please
-// contact Cloud Channel Support in this case. * UNKNOWN: Any non-user
-// error related to a technical issue in the backend. Please contact
-// Cloud Channel Support in this case. Return Value: Long Running
-// Operation ID. To get the results of the operation, call the
-// GetOperation method of CloudChannelOperationsService. The Operation
-// metadata will contain an instance of OperationMetadata.
+// reseller. Possible error codes: * PERMISSION_DENIED: The customer
+// doesn't belong to the reseller. * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid. * NOT_FOUND: The customer or offer
+// resource was not found. * ALREADY_EXISTS: The SKU was already
+// transferred for the customer. * CONDITION_NOT_MET or
+// FAILED_PRECONDITION: * The SKU requires domain verification to
+// transfer, but the domain is not verified. * An Add-On SKU (example,
+// Vault or Drive) is missing the pre-requisite SKU (example, G Suite
+// Basic). * (Developer accounts only) Reseller and resold domain must
+// meet the following naming requirements: * Domain names must start
+// with goog-test. * Domain names must include the reseller domain. *
+// Specify all transferring entitlements. * INTERNAL: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel
+// support. * UNKNOWN: Any non-user error related to a technical issue
+// in the backend. Contact Cloud Channel support. Return value: The ID
+// of a long-running operation. To get the results of the operation,
+// call the GetOperation method of CloudChannelOperationsService. The
+// Operation metadata will contain an instance of OperationMetadata.
+//
+// - parent: The resource name of the reseller's customer account that
+//   will receive transferred entitlements. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlements(parent string, googlecloudchannelv1transferentitlementsrequest *GoogleCloudChannelV1TransferEntitlementsRequest) *AccountsCustomersTransferEntitlementsCall {
 	c := &AccountsCustomersTransferEntitlementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7512,7 +8374,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) Header() http.Header {
 
 func (c *AccountsCustomersTransferEntitlementsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7576,7 +8438,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Transfers customer entitlements to new reseller. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the customer or offer resource is not found for the reseller. * ALREADY_EXISTS: If the SKU has been already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: This failure can happen in the following cases: * Transferring a SKU that requires domain verification and the domain has not been verified. * Transferring an Add-On SKU like Vault or Drive without transferring the pre-requisite SKU, such as G Suite Basic. * Applicable only for developer accounts: reseller and resold domain must follow the domain naming convention as follows: * Domain names must start with goog-test. * Resold domain names must include the reseller domain. * All transferring entitlements must be specified. * INTERNAL: Any non-user error related to a technical issue in the backend. Please contact Cloud Channel Support in this case. * UNKNOWN: Any non-user error related to a technical issue in the backend. Please contact Cloud Channel Support in this case. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Transfers customer entitlements to new reseller. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: The SKU was already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain verification to transfer, but the domain is not verified. * An Add-On SKU (example, Vault or Drive) is missing the pre-requisite SKU (example, G Suite Basic). * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * Specify all transferring entitlements. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:transferEntitlements",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.transferEntitlements",
@@ -7585,7 +8447,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of reseller's customer account where the entitlements transfer to. The parent takes the format: accounts/{account_id}/customers/{customer_id}",
+	//       "description": "Required. The resource name of the reseller's customer account that will receive transferred entitlements. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
@@ -7618,28 +8480,29 @@ type AccountsCustomersTransferEntitlementsToGoogleCall struct {
 }
 
 // TransferEntitlementsToGoogle: Transfers customer entitlements from
-// current reseller to Google. Possible Error Codes: *
-// PERMISSION_DENIED: If the customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. * NOT_FOUND: If the customer or offer resource is not found
-// for the reseller. * ALREADY_EXISTS: If the SKU has been already
-// transferred for the customer. * CONDITION_NOT_MET or
-// FAILED_PRECONDITION: This failure can happen in the following cases:
-// * Transferring a SKU that requires domain verification and the domain
-// has not been verified. * Transferring an Add-On SKU like Vault or
-// Drive without purchasing the pre-requisite SKU, such as G Suite
-// Basic. * Applicable only for developer accounts: reseller and resold
-// domain must follow the domain naming convention as follows: * Domain
-// names must start with goog-test. * Resold domain names must include
-// the reseller domain. * INTERNAL: Any non-user error related to a
-// technical issue in the backend. Please contact Cloud Channel Support
-// in this case. * UNKNOWN: Any non-user error related to a technical
-// issue in the backend. Please contact Cloud Channel Support in this
-// case. Return Value: Long Running Operation ID. To get the results of
-// the operation, call the GetOperation method of
-// CloudChannelOperationsService. The response will contain
-// google.protobuf.Empty on success. The Operation metadata will contain
-// an instance of OperationMetadata.
+// their current reseller to Google. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: The customer or offer resource was not found. *
+// ALREADY_EXISTS: The SKU was already transferred for the customer. *
+// CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain
+// verification to transfer, but the domain is not verified. * An Add-On
+// SKU (example, Vault or Drive) is missing the pre-requisite SKU
+// (example, G Suite Basic). * (Developer accounts only) Reseller and
+// resold domain must meet the following naming requirements: * Domain
+// names must start with goog-test. * Domain names must include the
+// reseller domain. * INTERNAL: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. *
+// UNKNOWN: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. Return value: The ID of a
+// long-running operation. To get the results of the operation, call the
+// GetOperation method of CloudChannelOperationsService. The response
+// will contain google.protobuf.Empty on success. The Operation metadata
+// will contain an instance of OperationMetadata.
+//
+// - parent: The resource name of the reseller's customer account where
+//   the entitlements transfer from. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlementsToGoogle(parent string, googlecloudchannelv1transferentitlementstogooglerequest *GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) *AccountsCustomersTransferEntitlementsToGoogleCall {
 	c := &AccountsCustomersTransferEntitlementsToGoogleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7674,7 +8537,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Header() http.Header
 
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7738,7 +8601,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Transfers customer entitlements from current reseller to Google. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the customer or offer resource is not found for the reseller. * ALREADY_EXISTS: If the SKU has been already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: This failure can happen in the following cases: * Transferring a SKU that requires domain verification and the domain has not been verified. * Transferring an Add-On SKU like Vault or Drive without purchasing the pre-requisite SKU, such as G Suite Basic. * Applicable only for developer accounts: reseller and resold domain must follow the domain naming convention as follows: * Domain names must start with goog-test. * Resold domain names must include the reseller domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Please contact Cloud Channel Support in this case. * UNKNOWN: Any non-user error related to a technical issue in the backend. Please contact Cloud Channel Support in this case. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The response will contain google.protobuf.Empty on success. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Transfers customer entitlements from their current reseller to Google. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: The SKU was already transferred for the customer. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The SKU requires domain verification to transfer, but the domain is not verified. * An Add-On SKU (example, Vault or Drive) is missing the pre-requisite SKU (example, G Suite Basic). * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The response will contain google.protobuf.Empty on success. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}:transferEntitlementsToGoogle",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.transferEntitlementsToGoogle",
@@ -7747,7 +8610,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of reseller's customer account where the entitlements transfer from. The parent takes the format: accounts/{account_id}/customers/{customer_id}",
+	//       "description": "Required. The resource name of the reseller's customer account where the entitlements transfer from. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
@@ -7779,27 +8642,29 @@ type AccountsCustomersEntitlementsActivateCall struct {
 	header_                                        http.Header
 }
 
-// Activate: Activates a previously suspended entitlement. The
-// entitlement must be in a suspended state for it to be activated.
-// Entitlements suspended for pending ToS acceptance can't be activated
-// using this method. An entitlement activation is a long-running
-// operation and can result in updates to the state of the customer
-// entitlement. Possible Error Codes: * PERMISSION_DENIED: If the
-// customer doesn't belong to the reseller or if the reseller account
-// making the request and reseller account being queried for are
-// different. * INVALID_ARGUMENT: Missing or invalid required parameters
-// in the request. * NOT_FOUND: Entitlement resource not found. *
-// SUSPENSION_NOT_RESELLER_INITIATED: Can't activate an entitlement that
-// is pending TOS acceptance. Only reseller initiated suspensions can be
-// activated. * NOT_SUSPENDED: Can't activate entitlements that are
-// already in ACTIVE state. Can only activate suspended entitlements. *
-// INTERNAL: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. * UNKNOWN: Any
-// non-user error related to a technical issue in the backend. In this
-// case, contact Cloud Channel support. Return Value: Long Running
-// Operation ID. To get the results of the operation, call the
+// Activate: Activates a previously suspended entitlement. Entitlements
+// suspended for pending ToS acceptance can't be activated using this
+// method. An entitlement activation is a long-running operation and it
+// updates the state of the customer entitlement. Possible error codes:
+// * PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: Entitlement resource not found. *
+// SUSPENSION_NOT_RESELLER_INITIATED: Can only activate
+// reseller-initiated suspensions and entitlements that have accepted
+// the TOS. * NOT_SUSPENDED: Can only activate suspended entitlements
+// not in an ACTIVE state. * INTERNAL: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. *
+// UNKNOWN: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. Return value: The ID of a
+// long-running operation. To get the results of the operation, call the
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to activate. Name uses
+//   the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Activate(name string, googlecloudchannelv1activateentitlementrequest *GoogleCloudChannelV1ActivateEntitlementRequest) *AccountsCustomersEntitlementsActivateCall {
 	c := &AccountsCustomersEntitlementsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7834,7 +8699,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7898,7 +8763,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates a previously suspended entitlement. The entitlement must be in a suspended state for it to be activated. Entitlements suspended for pending ToS acceptance can't be activated using this method. An entitlement activation is a long-running operation and can result in updates to the state of the customer entitlement. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller or if the reseller account making the request and reseller account being queried for are different. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: Entitlement resource not found. * SUSPENSION_NOT_RESELLER_INITIATED: Can't activate an entitlement that is pending TOS acceptance. Only reseller initiated suspensions can be activated. * NOT_SUSPENDED: Can't activate entitlements that are already in ACTIVE state. Can only activate suspended entitlements. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Activates a previously suspended entitlement. Entitlements suspended for pending ToS acceptance can't be activated using this method. An entitlement activation is a long-running operation and it updates the state of the customer entitlement. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * SUSPENSION_NOT_RESELLER_INITIATED: Can only activate reseller-initiated suspensions and entitlements that have accepted the TOS. * NOT_SUSPENDED: Can only activate suspended entitlements not in an ACTIVE state. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:activate",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.activate",
@@ -7907,7 +8772,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to activate. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The resource name of the entitlement to activate. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -7940,23 +8805,28 @@ type AccountsCustomersEntitlementsCancelCall struct {
 }
 
 // Cancel: Cancels a previously fulfilled entitlement. An entitlement
-// cancellation is a long-running operation. Possible Error Codes: *
-// PERMISSION_DENIED: If the customer doesn't belong to the reseller or
-// if the reseller account making the request and reseller account being
-// queried for are different. * FAILED_PRECONDITION: If there are any
-// Google Cloud projects linked to the Google Cloud entitlement's Cloud
-// Billing subaccount. * INVALID_ARGUMENT: Missing or invalid required
-// parameters in the request. * NOT_FOUND: Entitlement resource not
-// found. * DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google
-// Workspace add-ons or entitlements for Google Cloud's development
+// cancellation is a long-running operation. Possible error codes: *
+// PERMISSION_DENIED: The reseller account making the request is
+// different from the reseller account in the API request. *
+// FAILED_PRECONDITION: There are Google Cloud projects linked to the
+// Google Cloud entitlement's Cloud Billing subaccount. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: Entitlement resource not found. *
+// DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google
+// Workspace add-ons, or entitlements for Google Cloud's development
 // platform. * INTERNAL: Any non-user error related to a technical issue
-// in the backend. In this case, contact Cloud Channel support. *
-// UNKNOWN: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. Return Value:
-// Long Running Operation ID. To get the results of the operation, call
-// the GetOperation method of CloudChannelOperationsService. The
-// response will contain google.protobuf.Empty on success. The Operation
-// metadata will contain an instance of OperationMetadata.
+// in the backend. Contact Cloud Channel support. * UNKNOWN: Any
+// non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. Return value: The ID of a long-running
+// operation. To get the results of the operation, call the GetOperation
+// method of CloudChannelOperationsService. The response will contain
+// google.protobuf.Empty on success. The Operation metadata will contain
+// an instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to cancel. Name uses the
+//   format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Cancel(name string, googlecloudchannelv1cancelentitlementrequest *GoogleCloudChannelV1CancelEntitlementRequest) *AccountsCustomersEntitlementsCancelCall {
 	c := &AccountsCustomersEntitlementsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7991,7 +8861,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8055,7 +8925,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels a previously fulfilled entitlement. An entitlement cancellation is a long-running operation. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller or if the reseller account making the request and reseller account being queried for are different. * FAILED_PRECONDITION: If there are any Google Cloud projects linked to the Google Cloud entitlement's Cloud Billing subaccount. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: Entitlement resource not found. * DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google Workspace add-ons or entitlements for Google Cloud's development platform. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The response will contain google.protobuf.Empty on success. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Cancels a previously fulfilled entitlement. An entitlement cancellation is a long-running operation. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * FAILED_PRECONDITION: There are Google Cloud projects linked to the Google Cloud entitlement's Cloud Billing subaccount. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * DELETION_TYPE_NOT_ALLOWED: Cancel is only allowed for Google Workspace add-ons, or entitlements for Google Cloud's development platform. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The response will contain google.protobuf.Empty on success. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.cancel",
@@ -8064,7 +8934,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to cancel. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The resource name of the entitlement to cancel. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -8097,18 +8967,23 @@ type AccountsCustomersEntitlementsChangeOfferCall struct {
 }
 
 // ChangeOffer: Updates the Offer for an existing customer entitlement.
-// An entitlement update is a long-running operation and results in
-// updates to the entitlement as a result of fulfillment. Possible Error
-// Codes: * PERMISSION_DENIED: If the customer doesn't belong to the
-// reseller. * INVALID_ARGUMENT: Missing or invalid required parameters
-// in the request. * NOT_FOUND: Offer or Entitlement resource not found.
-// * INTERNAL: Any non-user error related to a technical issue in the
-// backend. In this case, contact Cloud Channel support. * UNKNOWN: Any
-// non-user error related to a technical issue in the backend. In this
-// case, contact Cloud Channel support. Return Value: Long Running
-// Operation ID. To get the results of the operation, call the
-// GetOperation method of CloudChannelOperationsService. The Operation
-// metadata will contain an instance of OperationMetadata.
+// An entitlement update is a long-running operation and it updates the
+// entitlement as a result of fulfillment. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: Offer or Entitlement resource not found. * INTERNAL: Any
+// non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return
+// value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of
+// CloudChannelOperationsService. The Operation metadata will contain an
+// instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to update. Name uses the
+//   format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeOffer(name string, googlecloudchannelv1changeofferrequest *GoogleCloudChannelV1ChangeOfferRequest) *AccountsCustomersEntitlementsChangeOfferCall {
 	c := &AccountsCustomersEntitlementsChangeOfferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8143,7 +9018,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsChangeOfferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8207,7 +9082,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Offer for an existing customer entitlement. An entitlement update is a long-running operation and results in updates to the entitlement as a result of fulfillment. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: Offer or Entitlement resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Updates the Offer for an existing customer entitlement. An entitlement update is a long-running operation and it updates the entitlement as a result of fulfillment. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Offer or Entitlement resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeOffer",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.changeOffer",
@@ -8216,7 +9091,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entitlement to update. Format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The resource name of the entitlement to update. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -8248,22 +9123,25 @@ type AccountsCustomersEntitlementsChangeParametersCall struct {
 	header_                                     http.Header
 }
 
-// ChangeParameters: Change parameters of the entitlement An entitlement
-// parameters update is a long-running operation and results in updates
-// to the entitlement as a result of fulfillment. Possible Error Codes:
-// * PERMISSION_DENIED: If the customer doesn't belong to the reseller.
-// * INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. For example, if the number of seats being changed to is
-// greater than the allowed number of max seats for the resource. Or
-// decreasing seats for a commitment based plan. * NOT_FOUND:
-// Entitlement resource not found. * INTERNAL: Any non-user error
-// related to a technical issue in the backend. In this case, contact
-// Cloud Channel support. * UNKNOWN: Any non-user error related to a
-// technical issue in the backend. In this case, contact Cloud Channel
-// support. Return Value: Long Running Operation ID. To get the results
+// ChangeParameters: Change parameters of the entitlement. An
+// entitlement update is a long-running operation and it updates the
+// entitlement as a result of fulfillment. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// For example, the number of seats being changed is greater than the
+// allowed number of max seats, or decreasing seats for a commitment
+// based plan. * NOT_FOUND: Entitlement resource not found. * INTERNAL:
+// Any non-user error related to a technical issue in the backend.
+// Contact Cloud Channel support. * UNKNOWN: Any non-user error related
+// to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The ID of a long-running operation. To get the results
 // of the operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - name: The name of the entitlement to update. Name uses the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeParameters(name string, googlecloudchannelv1changeparametersrequest *GoogleCloudChannelV1ChangeParametersRequest) *AccountsCustomersEntitlementsChangeParametersCall {
 	c := &AccountsCustomersEntitlementsChangeParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8298,7 +9176,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Header() http.Header
 
 func (c *AccountsCustomersEntitlementsChangeParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8362,7 +9240,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Change parameters of the entitlement An entitlement parameters update is a long-running operation and results in updates to the entitlement as a result of fulfillment. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. For example, if the number of seats being changed to is greater than the allowed number of max seats for the resource. Or decreasing seats for a commitment based plan. * NOT_FOUND: Entitlement resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Change parameters of the entitlement. An entitlement update is a long-running operation and it updates the entitlement as a result of fulfillment. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. For example, the number of seats being changed is greater than the allowed number of max seats, or decreasing seats for a commitment based plan. * NOT_FOUND: Entitlement resource not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeParameters",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.changeParameters",
@@ -8371,7 +9249,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entitlement to update. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The name of the entitlement to update. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -8405,20 +9283,23 @@ type AccountsCustomersEntitlementsChangeRenewalSettingsCall struct {
 
 // ChangeRenewalSettings: Updates the renewal settings for an existing
 // customer entitlement. An entitlement update is a long-running
-// operation and results in updates to the entitlement as a result of
-// fulfillment. Possible Error Codes: * PERMISSION_DENIED: If the
-// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing
-// or invalid required parameters in the request. * NOT_FOUND:
-// Entitlement resource not found. * NOT_COMMITMENT_PLAN: Renewal
-// Settings are only applicable for a commitment plan. Can't enable or
-// disable renewal for non-commitment plans. * INTERNAL: Any non user
-// error related to a technical issue in the backend. In this case,
-// contact Cloud Channel support. * UNKNOWN: Any non user error related
-// to a technical issue in the backend. In this case, contact Cloud
-// Channel support. Return Value: Long Running Operation ID. To get the
-// results of the operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// operation and it updates the entitlement as a result of fulfillment.
+// Possible error codes: * PERMISSION_DENIED: The customer doesn't
+// belong to the reseller. * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid. * NOT_FOUND: Entitlement resource
+// not found. * NOT_COMMITMENT_PLAN: Renewal Settings are only
+// applicable for a commitment plan. Can't enable or disable renewals
+// for non-commitment plans. * INTERNAL: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. *
+// UNKNOWN: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. Return value: The ID of a
+// long-running operation. To get the results of the operation, call the
+// GetOperation method of CloudChannelOperationsService. The Operation
+// metadata will contain an instance of OperationMetadata.
+//
+// - name: The name of the entitlement to update. Name uses the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeRenewalSettings(name string, googlecloudchannelv1changerenewalsettingsrequest *GoogleCloudChannelV1ChangeRenewalSettingsRequest) *AccountsCustomersEntitlementsChangeRenewalSettingsCall {
 	c := &AccountsCustomersEntitlementsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8453,7 +9334,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Header() http.H
 
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8517,7 +9398,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the renewal settings for an existing customer entitlement. An entitlement update is a long-running operation and results in updates to the entitlement as a result of fulfillment. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: Entitlement resource not found. * NOT_COMMITMENT_PLAN: Renewal Settings are only applicable for a commitment plan. Can't enable or disable renewal for non-commitment plans. * INTERNAL: Any non user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Updates the renewal settings for an existing customer entitlement. An entitlement update is a long-running operation and it updates the entitlement as a result of fulfillment. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * NOT_COMMITMENT_PLAN: Renewal Settings are only applicable for a commitment plan. Can't enable or disable renewals for non-commitment plans. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeRenewalSettings",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.changeRenewalSettings",
@@ -8526,7 +9407,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entitlement to update. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The name of the entitlement to update. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -8558,34 +9439,34 @@ type AccountsCustomersEntitlementsCreateCall struct {
 	header_                                      http.Header
 }
 
-// Create: Creates an entitlement for a customer. Possible Error Codes:
-// * PERMISSION_DENIED: If the customer doesn't belong to the reseller.
-// * INVALID_ARGUMENT: It can happen in below scenarios - * Missing or
-// invalid required parameters in the request. * Cannot purchase an
-// entitlement if there is already an entitlement for customer, for a
-// SKU from the same product family. * INVALID_VALUE: Offer passed in
-// isn't valid. Make sure OfferId is valid. If it is valid, then contact
-// Google Channel support for further troubleshooting. * NOT_FOUND: If
-// the customer or offer resource is not found for the reseller. *
-// ALREADY_EXISTS: This failure can happen in the following cases: * If
-// the SKU has been already purchased for the customer. * If the
-// customer's primary email already exists. In this case retry after
-// changing the customer's primary contact email. * CONDITION_NOT_MET or
-// FAILED_PRECONDITION: This failure can happen in the following cases:
-// * Purchasing a SKU that requires domain verification and the domain
-// has not been verified. * Purchasing an Add-On SKU like Vault or Drive
-// without purchasing the pre-requisite SKU, such as Google Workspace
-// Business Starter. * Applicable only for developer accounts: reseller
-// and resold domain. Must meet the following domain naming
-// requirements: * Domain names must start with goog-test. * Resold
-// domain names must include the reseller domain. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact
-// Cloud Channel Support in this case. * UNKNOWN: Any non-user error
-// related to a technical issue in the backend. Contact Cloud Channel
-// Support in this case. Return Value: Long Running Operation ID. To get
-// the results of the operation, call the GetOperation method of
+// Create: Creates an entitlement for a customer. Possible error codes:
+// * PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: * Required request parameters are missing or
+// invalid. * There is already a customer entitlement for a SKU from the
+// same product family. * INVALID_VALUE: Make sure the OfferId is valid.
+// If it is, contact Google Channel support for further troubleshooting.
+// * NOT_FOUND: The customer or offer resource was not found. *
+// ALREADY_EXISTS: * The SKU was already purchased for the customer. *
+// The customer's primary email already exists. Retry after changing the
+// customer's primary contact email. * CONDITION_NOT_MET or
+// FAILED_PRECONDITION: * The domain required for purchasing a SKU has
+// not been verified. * A pre-requisite SKU required to purchase an
+// Add-On SKU is missing. For example, Google Workspace Business Starter
+// is required to purchase Vault or Drive. * (Developer accounts only)
+// Reseller and resold domain must meet the following naming
+// requirements: * Domain names must start with goog-test. * Domain
+// names must include the reseller domain. * INTERNAL: Any non-user
+// error related to a technical issue in the backend. Contact Cloud
+// Channel support. * UNKNOWN: Any non-user error related to a technical
+// issue in the backend. Contact Cloud Channel support. Return value:
+// The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - parent: The resource name of the reseller's customer account in
+//   which to create the entitlement. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) Create(parent string, googlecloudchannelv1createentitlementrequest *GoogleCloudChannelV1CreateEntitlementRequest) *AccountsCustomersEntitlementsCreateCall {
 	c := &AccountsCustomersEntitlementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8620,7 +9501,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8684,7 +9565,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an entitlement for a customer. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: It can happen in below scenarios - * Missing or invalid required parameters in the request. * Cannot purchase an entitlement if there is already an entitlement for customer, for a SKU from the same product family. * INVALID_VALUE: Offer passed in isn't valid. Make sure OfferId is valid. If it is valid, then contact Google Channel support for further troubleshooting. * NOT_FOUND: If the customer or offer resource is not found for the reseller. * ALREADY_EXISTS: This failure can happen in the following cases: * If the SKU has been already purchased for the customer. * If the customer's primary email already exists. In this case retry after changing the customer's primary contact email. * CONDITION_NOT_MET or FAILED_PRECONDITION: This failure can happen in the following cases: * Purchasing a SKU that requires domain verification and the domain has not been verified. * Purchasing an Add-On SKU like Vault or Drive without purchasing the pre-requisite SKU, such as Google Workspace Business Starter. * Applicable only for developer accounts: reseller and resold domain. Must meet the following domain naming requirements: * Domain names must start with goog-test. * Resold domain names must include the reseller domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel Support in this case. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel Support in this case. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Creates an entitlement for a customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * There is already a customer entitlement for a SKU from the same product family. * INVALID_VALUE: Make sure the OfferId is valid. If it is, contact Google Channel support for further troubleshooting. * NOT_FOUND: The customer or offer resource was not found. * ALREADY_EXISTS: * The SKU was already purchased for the customer. * The customer's primary email already exists. Retry after changing the customer's primary contact email. * CONDITION_NOT_MET or FAILED_PRECONDITION: * The domain required for purchasing a SKU has not been verified. * A pre-requisite SKU required to purchase an Add-On SKU is missing. For example, Google Workspace Business Starter is required to purchase Vault or Drive. * (Developer accounts only) Reseller and resold domain must meet the following naming requirements: * Domain names must start with goog-test. * Domain names must include the reseller domain. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.create",
@@ -8693,7 +9574,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of reseller's customer account in which to create the entitlement. The parent takes the format: accounts/{account_id}/customers/{customer_id}",
+	//       "description": "Required. The resource name of the reseller's customer account in which to create the entitlement. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
@@ -8725,12 +9606,16 @@ type AccountsCustomersEntitlementsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a requested Entitlement resource. Possible Error Codes:
-// * PERMISSION_DENIED: If the customer doesn't belong to the reseller.
-// * INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. * NOT_FOUND: If the entitlement is not found for the
-// customer. Return Value: If found, the requested Entitlement resource,
-// otherwise returns an error.
+// Get: Returns a requested Entitlement resource. Possible error codes:
+// * PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: The customer entitlement was not found. Return value:
+// The requested Entitlement resource.
+//
+// - name: The resource name of the entitlement to retrieve. Name uses
+//   the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Get(name string) *AccountsCustomersEntitlementsGetCall {
 	c := &AccountsCustomersEntitlementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8774,7 +9659,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8836,7 +9721,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a requested Entitlement resource. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: If the entitlement is not found for the customer. Return Value: If found, the requested Entitlement resource, otherwise returns an error.",
+	//   "description": "Returns a requested Entitlement resource. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer entitlement was not found. Return value: The requested Entitlement resource.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.entitlements.get",
@@ -8845,7 +9730,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to retrieve. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{id}",
+	//       "description": "Required. The resource name of the entitlement to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -8874,11 +9759,14 @@ type AccountsCustomersEntitlementsListCall struct {
 	header_      http.Header
 }
 
-// List: List Entitlements belonging to a customer. Possible Error
-// Codes: * PERMISSION_DENIED: If the customer doesn't belong to the
-// reseller. * INVALID_ARGUMENT: Missing or invalid required parameters
-// in the request. Return Value: List of Entitlements belonging to the
-// customer, or empty list if there are none.
+// List: Lists Entitlements belonging to a customer. Possible error
+// codes: * PERMISSION_DENIED: The customer doesn't belong to the
+// reseller. * INVALID_ARGUMENT: Required request parameters are missing
+// or invalid. Return value: A list of the customer's Entitlements.
+//
+// - parent: The resource name of the reseller's customer account to
+//   list entitlements for. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) List(parent string) *AccountsCustomersEntitlementsListCall {
 	c := &AccountsCustomersEntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8886,17 +9774,17 @@ func (r *AccountsCustomersEntitlementsService) List(parent string) *AccountsCust
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified, at
-// most 50 entitlements will be returned. The maximum value is 100;
-// values above 100 will be coerced to 100.
+// Server might return fewer results than requested. If unspecified,
+// return at most 50 entitlements. The maximum value is 100; the server
+// will coerce values above 100.
 func (c *AccountsCustomersEntitlementsListCall) PageSize(pageSize int64) *AccountsCustomersEntitlementsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one. Typically
-// obtained via ListEntitlementsResponse.next_page_token of the previous
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page. Obtained using
+// ListEntitlementsResponse.next_page_token of the previous
 // CloudChannelService.ListEntitlements call.
 func (c *AccountsCustomersEntitlementsListCall) PageToken(pageToken string) *AccountsCustomersEntitlementsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -8940,7 +9828,7 @@ func (c *AccountsCustomersEntitlementsListCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9004,7 +9892,7 @@ func (c *AccountsCustomersEntitlementsListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "List Entitlements belonging to a customer. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. Return Value: List of Entitlements belonging to the customer, or empty list if there are none.",
+	//   "description": "Lists Entitlements belonging to a customer. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: A list of the customer's Entitlements.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.entitlements.list",
@@ -9013,18 +9901,18 @@ func (c *AccountsCustomersEntitlementsListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, at most 50 entitlements will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, return at most 50 entitlements. The maximum value is 100; the server will coerce values above 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one. Typically obtained via ListEntitlementsResponse.next_page_token of the previous CloudChannelService.ListEntitlements call.",
+	//       "description": "Optional. A token for a page of results other than the first page. Obtained using ListEntitlementsResponse.next_page_token of the previous CloudChannelService.ListEntitlements call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the reseller's customer account for which to list entitlements. The parent takes the format: accounts/{account_id}/customers/{customer_id}",
+	//       "description": "Required. The resource name of the reseller's customer account to list entitlements for. Parent uses the format: accounts/{account_id}/customers/{customer_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+$",
 	//       "required": true,
@@ -9076,20 +9964,24 @@ type AccountsCustomersEntitlementsStartPaidServiceCall struct {
 
 // StartPaidService: Starts paid service for a trial entitlement. Starts
 // paid service for a trial entitlement immediately. This method is only
-// applicable if a plan has already been set up for a trial entitlement
-// but has some trial days remaining. Possible Error Codes: *
-// PERMISSION_DENIED: If the customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. * NOT_FOUND: Entitlement resource not found. *
-// FAILED_PRECONDITION/NOT_IN_TRIAL: This method only works for
-// entitlement on trial plans. * INTERNAL: Any non-user error related to
-// a technical issue in the backend. In this case, contact Cloud Channel
-// support. * UNKNOWN: Any non-user error related to a technical issue
-// in the backend. In this case, contact Cloud Channel support. Return
-// Value: Long Running Operation ID. To get the results of the
+// applicable if a plan is set up for a trial entitlement but has some
+// trial days remaining. Possible error codes: * PERMISSION_DENIED: The
+// customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. * NOT_FOUND: Entitlement
+// resource not found. * FAILED_PRECONDITION/NOT_IN_TRIAL: This method
+// only works for entitlement on trial plans. * INTERNAL: Any non-user
+// error related to a technical issue in the backend. Contact Cloud
+// Channel support. * UNKNOWN: Any non-user error related to a technical
+// issue in the backend. Contact Cloud Channel support. Return value:
+// The ID of a long-running operation. To get the results of the
 // operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - name: The name of the entitlement to start a paid service for. Name
+//   uses the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) StartPaidService(name string, googlecloudchannelv1startpaidservicerequest *GoogleCloudChannelV1StartPaidServiceRequest) *AccountsCustomersEntitlementsStartPaidServiceCall {
 	c := &AccountsCustomersEntitlementsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9124,7 +10016,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Header() http.Header
 
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9188,7 +10080,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts paid service for a trial entitlement. Starts paid service for a trial entitlement immediately. This method is only applicable if a plan has already been set up for a trial entitlement but has some trial days remaining. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: Entitlement resource not found. * FAILED_PRECONDITION/NOT_IN_TRIAL: This method only works for entitlement on trial plans. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Starts paid service for a trial entitlement. Starts paid service for a trial entitlement immediately. This method is only applicable if a plan is set up for a trial entitlement but has some trial days remaining. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * FAILED_PRECONDITION/NOT_IN_TRIAL: This method only works for entitlement on trial plans. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:startPaidService",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.startPaidService",
@@ -9197,7 +10089,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entitlement for which paid service is being started. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The name of the entitlement to start a paid service for. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -9230,18 +10122,22 @@ type AccountsCustomersEntitlementsSuspendCall struct {
 }
 
 // Suspend: Suspends a previously fulfilled entitlement. An entitlement
-// suspension is a long-running operation. Possible Error Codes: *
-// PERMISSION_DENIED: If the customer doesn't belong to the reseller. *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request. * NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE:
+// suspension is a long-running operation. Possible error codes: *
+// PERMISSION_DENIED: The customer doesn't belong to the reseller. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE:
 // Entitlement is not active. * INTERNAL: Any non-user error related to
-// a technical issue in the backend. In this case, contact Cloud Channel
-// support. * UNKNOWN: Any non-user error related to a technical issue
-// in the backend. In this case, contact Cloud Channel support. Return
-// Value: Long Running Operation ID. To get the results of the
-// operation, call the GetOperation method of
-// CloudChannelOperationsService. The Operation metadata will contain an
-// instance of OperationMetadata.
+// a technical issue in the backend. Contact Cloud Channel support. *
+// UNKNOWN: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. Return value: The ID of a
+// long-running operation. To get the results of the operation, call the
+// GetOperation method of CloudChannelOperationsService. The Operation
+// metadata will contain an instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to suspend. Name uses
+//   the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Suspend(name string, googlecloudchannelv1suspendentitlementrequest *GoogleCloudChannelV1SuspendEntitlementRequest) *AccountsCustomersEntitlementsSuspendCall {
 	c := &AccountsCustomersEntitlementsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9276,7 +10172,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9340,7 +10236,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Suspends a previously fulfilled entitlement. An entitlement suspension is a long-running operation. Possible Error Codes: * PERMISSION_DENIED: If the customer doesn't belong to the reseller. * INVALID_ARGUMENT: Missing or invalid required parameters in the request. * NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE: Entitlement is not active. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return Value: Long Running Operation ID. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
+	//   "description": "Suspends a previously fulfilled entitlement. An entitlement suspension is a long-running operation. Possible error codes: * PERMISSION_DENIED: The customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: Entitlement resource not found. * NOT_ACTIVE: Entitlement is not active. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata will contain an instance of OperationMetadata.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:suspend",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.customers.entitlements.suspend",
@@ -9349,7 +10245,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the entitlement to suspend. The name takes the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
+	//       "description": "Required. The resource name of the entitlement to suspend. Name uses the format: accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
 	//       "required": true,
@@ -9381,9 +10277,11 @@ type AccountsOffersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Offers the reseller can sell. Possible Error Codes: *
-// INVALID_ARGUMENT: Missing or invalid required parameters in the
-// request.
+// List: Lists the Offers the reseller can sell. Possible error codes: *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+//
+// - parent: The resource name of the reseller account from which to
+//   list Offers. Parent uses the format: accounts/{account_id}.
 func (r *AccountsOffersService) List(parent string) *AccountsOffersListCall {
 	c := &AccountsOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9391,7 +10289,7 @@ func (r *AccountsOffersService) List(parent string) *AccountsOffersListCall {
 }
 
 // Filter sets the optional parameter "filter": The expression to filter
-// results by name (name of the Offer), sku.name (name of the SKU) or
+// results by name (name of the Offer), sku.name (name of the SKU), or
 // sku.product.name (name of the Product). Example 1:
 // sku.product.name=products/p1 AND sku.name!=products/p1/skus/s1
 // Example 2: name=accounts/a1/offers/o1
@@ -9401,24 +10299,25 @@ func (c *AccountsOffersListCall) Filter(filter string) *AccountsOffersListCall {
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US". If specified, the response will be
-// localized to the corresponding language code. Default is "en-US".
+// language code. For example, "en-US". The response will localize in
+// the corresponding language code, if specified. The default value is
+// "en-US".
 func (c *AccountsOffersListCall) LanguageCode(languageCode string) *AccountsOffersListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified, at
-// most 500 Offers will be returned. The maximum value is 1000; values
-// above 1000 will be coerced to 1000.
+// Server might return fewer results than requested. If unspecified,
+// returns at most 500 Offers. The maximum value is 1000; the server
+// will coerce values above 1000.
 func (c *AccountsOffersListCall) PageSize(pageSize int64) *AccountsOffersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one.
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page.
 func (c *AccountsOffersListCall) PageToken(pageToken string) *AccountsOffersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9461,7 +10360,7 @@ func (c *AccountsOffersListCall) Header() http.Header {
 
 func (c *AccountsOffersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9524,7 +10423,7 @@ func (c *AccountsOffersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Offers the reseller can sell. Possible Error Codes: * INVALID_ARGUMENT: Missing or invalid required parameters in the request.",
+	//   "description": "Lists the Offers the reseller can sell. Possible error codes: * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
 	//   "flatPath": "v1/accounts/{accountsId}/offers",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.offers.list",
@@ -9533,28 +10432,28 @@ func (c *AccountsOffersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The expression to filter results by name (name of the Offer), sku.name (name of the SKU) or sku.product.name (name of the Product). Example 1: sku.product.name=products/p1 AND sku.name!=products/p1/skus/s1 Example 2: name=accounts/a1/offers/o1",
+	//       "description": "Optional. The expression to filter results by name (name of the Offer), sku.name (name of the SKU), or sku.product.name (name of the Product). Example 1: sku.product.name=products/p1 AND sku.name!=products/p1/skus/s1 Example 2: name=accounts/a1/offers/o1",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response will be localized to the corresponding language code. Default is \"en-US\".",
+	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, at most 500 Offers will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 500 Offers. The maximum value is 1000; the server will coerce values above 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one.",
+	//       "description": "Optional. A token for a page of results other than the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the reseller account from which to list Offers. The parent takes the format: accounts/{account_id}.",
+	//       "description": "Required. The resource name of the reseller account from which to list Offers. Parent uses the format: accounts/{account_id}.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -9614,6 +10513,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9648,7 +10549,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9756,6 +10657,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9789,7 +10692,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9889,6 +10792,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9932,7 +10837,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10042,6 +10947,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10106,7 +11013,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10244,8 +11151,8 @@ type ProductsListCall struct {
 }
 
 // List: Lists the Products the reseller is authorized to sell. Possible
-// Error Codes: * INVALID_ARGUMENT: Missing or invalid required
-// parameters in the request.
+// error codes: * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid.
 func (r *ProductsService) List() *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -10259,24 +11166,25 @@ func (c *ProductsListCall) Account(account string) *ProductsListCall {
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US". If specified, the response will be
-// localized to the corresponding language code. Default is "en-US".
+// language code. For example, "en-US". The response will localize in
+// the corresponding language code, if specified. The default value is
+// "en-US".
 func (c *ProductsListCall) LanguageCode(languageCode string) *ProductsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified, at
-// most 100 Products will be returned. The maximum value is 1000; values
-// above 1000 will be coerced to 1000.
+// Server might return fewer results than requested. If unspecified,
+// returns at most 100 Products. The maximum value is 1000; the server
+// will coerce values above 1000.
 func (c *ProductsListCall) PageSize(pageSize int64) *ProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one.
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page.
 func (c *ProductsListCall) PageToken(pageToken string) *ProductsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10319,7 +11227,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10380,7 +11288,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannel
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Products the reseller is authorized to sell. Possible Error Codes: * INVALID_ARGUMENT: Missing or invalid required parameters in the request.",
+	//   "description": "Lists the Products the reseller is authorized to sell. Possible error codes: * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
 	//   "flatPath": "v1/products",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.products.list",
@@ -10392,18 +11300,18 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannel
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response will be localized to the corresponding language code. Default is \"en-US\".",
+	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, at most 100 Products will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 Products. The maximum value is 1000; the server will coerce values above 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one.",
+	//       "description": "Optional. A token for a page of results other than the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -10452,8 +11360,12 @@ type ProductsSkusListCall struct {
 }
 
 // List: Lists the SKUs for a product the reseller is authorized to
-// sell. Possible Error Codes: * INVALID_ARGUMENT: Missing or invalid
-// required parameters in the request.
+// sell. Possible error codes: * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid.
+//
+// - parent: The resource name of the Product to list SKUs for. Parent
+//   uses the format: products/{product_id}. Supports products/- to
+//   retrieve SKUs for all products.
 func (r *ProductsSkusService) List(parent string) *ProductsSkusListCall {
 	c := &ProductsSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10468,24 +11380,25 @@ func (c *ProductsSkusListCall) Account(account string) *ProductsSkusListCall {
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US". If specified, the response will be
-// localized to the corresponding language code. Default is "en-US".
+// language code. For example, "en-US". The response will localize in
+// the corresponding language code, if specified. The default value is
+// "en-US".
 func (c *ProductsSkusListCall) LanguageCode(languageCode string) *ProductsSkusListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server might return fewer results than requested. If unspecified, at
-// most 100 SKUs will be returned. The maximum value is 1000; values
-// above 1000 will be coerced to 1000.
+// Server might return fewer results than requested. If unspecified,
+// returns at most 100 SKUs. The maximum value is 1000; the server will
+// coerce values above 1000.
 func (c *ProductsSkusListCall) PageSize(pageSize int64) *ProductsSkusListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results, if other than the first one. Optional.
+// PageToken sets the optional parameter "pageToken": A token for a page
+// of results other than the first page. Optional.
 func (c *ProductsSkusListCall) PageToken(pageToken string) *ProductsSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10528,7 +11441,7 @@ func (c *ProductsSkusListCall) Header() http.Header {
 
 func (c *ProductsSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10591,7 +11504,7 @@ func (c *ProductsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudCha
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the SKUs for a product the reseller is authorized to sell. Possible Error Codes: * INVALID_ARGUMENT: Missing or invalid required parameters in the request.",
+	//   "description": "Lists the SKUs for a product the reseller is authorized to sell. Possible error codes: * INVALID_ARGUMENT: Required request parameters are missing or invalid.",
 	//   "flatPath": "v1/products/{productsId}/skus",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.products.skus.list",
@@ -10605,23 +11518,23 @@ func (c *ProductsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudCha
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response will be localized to the corresponding language code. Default is \"en-US\".",
+	//       "description": "Optional. The BCP-47 language code. For example, \"en-US\". The response will localize in the corresponding language code, if specified. The default value is \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, at most 100 SKUs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. Requested page size. Server might return fewer results than requested. If unspecified, returns at most 100 SKUs. The maximum value is 1000; the server will coerce values above 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results, if other than the first one. Optional.",
+	//       "description": "Optional. A token for a page of results other than the first page. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Product for which to list SKUs. The parent takes the format: products/{product_id}. Supports products/- to retrieve SKUs for all products.",
+	//       "description": "Required. The resource name of the Product to list SKUs for. Parent uses the format: products/{product_id}. Supports products/- to retrieve SKUs for all products.",
 	//       "location": "path",
 	//       "pattern": "^products/[^/]+$",
 	//       "required": true,

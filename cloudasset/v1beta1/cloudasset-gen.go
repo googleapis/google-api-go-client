@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -202,6 +202,11 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 
 type ProjectsOperationsService struct {
 	s *Service
+}
+
+// AnalyzeIamPolicyLongrunningResponse: A response message for
+// AssetService.AnalyzeIamPolicyLongrunning.
+type AnalyzeIamPolicyLongrunningResponse struct {
 }
 
 // Asset: An asset in Google Cloud. An asset can be any resource in the
@@ -634,6 +639,298 @@ type GcsDestination struct {
 
 func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1Asset: An asset in Google Cloud. An asset
+// can be any resource in the Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g.
+// Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
+type GoogleCloudAssetV1p7beta1Asset struct {
+	// AccessLevel: Please also refer to the access level user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-levels).
+	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
+
+	// AccessPolicy: Please also refer to the access policy user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-policies).
+	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
+
+	// Ancestors: The ancestry path of an asset in Google Cloud resource
+	// hierarchy
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// If the asset is a project, folder, or organization, the ancestry path
+	// starts from the asset itself. Example: `["projects/123456789",
+	// "folders/5432", "organizations/1234"]`
+	Ancestors []string `json:"ancestors,omitempty"`
+
+	// AssetType: The type of the asset. Example:
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
+	AssetType string `json:"assetType,omitempty"`
+
+	// IamPolicy: A representation of the Cloud IAM policy set on a Google
+	// Cloud resource. There can be a maximum of one Cloud IAM policy set on
+	// any given resource. In addition, Cloud IAM policies inherit their
+	// granted access scope from any policies set on parent resources in the
+	// resource hierarchy. Therefore, the effectively policy is the union of
+	// both the policy set on this resource and each policy set on all of
+	// the resource's ancestry resource levels in the hierarchy. See this
+	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
+	// more information.
+	IamPolicy *Policy `json:"iamPolicy,omitempty"`
+
+	// Name: The full name of the asset. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
+	Name string `json:"name,omitempty"`
+
+	// OrgPolicy: A representation of an organization policy
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints set on a given resource.
+	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
+
+	// RelatedAssets: The related assets of the asset of one relationship
+	// type. One asset only represents one type of relationship.
+	RelatedAssets *GoogleCloudAssetV1p7beta1RelatedAssets `json:"relatedAssets,omitempty"`
+
+	// Resource: A representation of the resource.
+	Resource *GoogleCloudAssetV1p7beta1Resource `json:"resource,omitempty"`
+
+	// ServicePerimeter: Please also refer to the service perimeter user
+	// guide (https://cloud.google.com/vpc-service-controls/docs/overview).
+	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
+
+	// UpdateTime: The last update timestamp of an asset. update_time is
+	// updated when create/update/delete operation is performed.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1Asset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1RelatedAsset: An asset identify in Google
+// Cloud which contains its name, type and ancestors. An asset can be
+// any resource in the Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g.
+// Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
+type GoogleCloudAssetV1p7beta1RelatedAsset struct {
+	// Ancestors: The ancestors of an asset in Google Cloud resource
+	// hierarchy
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// Example: `["projects/123456789", "folders/5432",
+	// "organizations/1234"]`
+	Ancestors []string `json:"ancestors,omitempty"`
+
+	// Asset: The full name of the asset. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
+	Asset string `json:"asset,omitempty"`
+
+	// AssetType: The type of the asset. Example:
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
+	AssetType string `json:"assetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ancestors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ancestors") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1RelatedAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1RelatedAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1RelatedAssets: The detailed related assets
+// with the `relationship_type`.
+type GoogleCloudAssetV1p7beta1RelatedAssets struct {
+	// Assets: The peer resources of the relationship.
+	Assets []*GoogleCloudAssetV1p7beta1RelatedAsset `json:"assets,omitempty"`
+
+	// RelationshipAttributes: The detailed relation attributes.
+	RelationshipAttributes *GoogleCloudAssetV1p7beta1RelationshipAttributes `json:"relationshipAttributes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assets") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1RelatedAssets) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1RelatedAssets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1RelationshipAttributes: The relationship
+// attributes which include `type`, `source_resource_type`,
+// `target_resource_type` and `action`.
+type GoogleCloudAssetV1p7beta1RelationshipAttributes struct {
+	// Action: The detail of the relationship, e.g. `contains`, `attaches`
+	Action string `json:"action,omitempty"`
+
+	// SourceResourceType: The source asset type. Example:
+	// `compute.googleapis.com/Instance`
+	SourceResourceType string `json:"sourceResourceType,omitempty"`
+
+	// TargetResourceType: The target asset type. Example:
+	// `compute.googleapis.com/Disk`
+	TargetResourceType string `json:"targetResourceType,omitempty"`
+
+	// Type: The unique identifier of the relationship type. Example:
+	// `INSTANCE_TO_INSTANCEGROUP`
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1RelationshipAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1RelationshipAttributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1Resource: A representation of a Google Cloud
+// resource.
+type GoogleCloudAssetV1p7beta1Resource struct {
+	// Data: The content of the resource, in which some sensitive fields are
+	// removed and may not be present.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+
+	// DiscoveryDocumentUri: The URL of the discovery document containing
+	// the resource's JSON schema. Example:
+	// `https://www.googleapis.com/discovery/v1/apis/compute/v1/rest` This
+	// value is unspecified for resources that do not have an API based on a
+	// discovery document, such as Cloud Bigtable.
+	DiscoveryDocumentUri string `json:"discoveryDocumentUri,omitempty"`
+
+	// DiscoveryName: The JSON schema name listed in the discovery document.
+	// Example: `Project` This value is unspecified for resources that do
+	// not have an API based on a discovery document, such as Cloud
+	// Bigtable.
+	DiscoveryName string `json:"discoveryName,omitempty"`
+
+	// Location: The location of the resource in Google Cloud, such as its
+	// zone and region. For more information, see
+	// https://cloud.google.com/about/locations/.
+	Location string `json:"location,omitempty"`
+
+	// Parent: The full name of the immediate parent of this resource. See
+	// Resource Names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information. For Google Cloud assets, this value is the
+	// parent resource defined in the Cloud IAM policy hierarchy
+	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
+	// Example:
+	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
+	// third-party assets, this field may be set differently.
+	Parent string `json:"parent,omitempty"`
+
+	// ResourceUrl: The REST URL for accessing the resource. An HTTP `GET`
+	// request using this URL returns the resource itself. Example:
+	// `https://cloudresourcemanager.googleapis.com/v1/projects/my-project-12
+	// 3` This value is unspecified for resources without a REST API.
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// Version: The API version. Example: `v1`
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1Resource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1Resource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2244,6 +2541,11 @@ type FoldersExportAssetsCall struct {
 // seconds with exponential retry to poll the export operation result.
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *FoldersService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *FoldersExportAssetsCall {
 	c := &FoldersExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2278,7 +2580,7 @@ func (c *FoldersExportAssetsCall) Header() http.Header {
 
 func (c *FoldersExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,6 +2688,8 @@ type FoldersOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *FoldersOperationsService) Get(name string) *FoldersOperationsGetCall {
 	c := &FoldersOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2429,7 +2733,7 @@ func (c *FoldersOperationsGetCall) Header() http.Header {
 
 func (c *FoldersOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2536,6 +2840,11 @@ type OrganizationsBatchGetAssetsHistoryCall struct {
 // history with asset in both non-delete or deleted status. If a
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+// - parent: The relative name of the root asset. It can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *OrganizationsBatchGetAssetsHistoryCall {
 	c := &OrganizationsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2619,7 +2928,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *OrganizationsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2759,6 +3068,11 @@ type OrganizationsExportAssetsCall struct {
 // seconds with exponential retry to poll the export operation result.
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *OrganizationsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *OrganizationsExportAssetsCall {
 	c := &OrganizationsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2793,7 +3107,7 @@ func (c *OrganizationsExportAssetsCall) Header() http.Header {
 
 func (c *OrganizationsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2901,6 +3215,8 @@ type OrganizationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2944,7 +3260,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3051,6 +3367,11 @@ type ProjectsBatchGetAssetsHistoryCall struct {
 // history with asset in both non-delete or deleted status. If a
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+// - parent: The relative name of the root asset. It can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGetAssetsHistoryCall {
 	c := &ProjectsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3134,7 +3455,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *ProjectsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3274,6 +3595,11 @@ type ProjectsExportAssetsCall struct {
 // seconds with exponential retry to poll the export operation result.
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *ProjectsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *ProjectsExportAssetsCall {
 	c := &ProjectsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3308,7 +3634,7 @@ func (c *ProjectsExportAssetsCall) Header() http.Header {
 
 func (c *ProjectsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3416,6 +3742,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3459,7 +3787,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

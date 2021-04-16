@@ -79,7 +79,7 @@ const mtlsBasePath = "https://retail.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -1037,11 +1037,12 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// in parentheses, and must be separated from the tag values by a space.
 	// `-"tagA" is also supported and is equivalent to `NOT "tagA". Tag
 	// values must be double quoted UTF-8 encoded strings with a size limit
-	// of 1,000 characters. * filterOutOfStockItems. Restricts predictions
-	// to products that do not have a stockState value of OUT_OF_STOCK.
-	// Examples: * tag=("Red" OR "Blue") tag="New-Arrival" tag=(NOT
-	// "promotional") * filterOutOfStockItems tag=(-"promotional") *
-	// filterOutOfStockItems If your filter blocks all prediction results,
+	// of 1,000 characters. Note: "Recently viewed" models don't support tag
+	// filtering at the moment. * filterOutOfStockItems. Restricts
+	// predictions to products that do not have a stockState value of
+	// OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue") tag="New-Arrival"
+	// tag=(NOT "promotional") * filterOutOfStockItems tag=(-"promotional")
+	// * filterOutOfStockItems If your filter blocks all prediction results,
 	// nothing will be returned. If you want generic (unfiltered) popular
 	// products to be returned instead, set `strictFiltering` to false in
 	// `PredictRequest.params`.
@@ -1278,10 +1279,8 @@ type GoogleCloudRetailV2Product struct {
 	// {"numbers":[2.3, 15.4]}, "heights_cm": {"numbers":[8.1, 6.4]} }`.
 	// This field needs to pass all below criteria, otherwise an
 	// INVALID_ARGUMENT error is returned: * Max entries count: 150 by
-	// default; 100 for Type.VARIANT. * Max indexable entries count: 150 by
-	// default; 40 for Type.VARIANT. * Max searchable entries count: 30. *
-	// The key must be a UTF-8 encoded string with a length limit of 128
-	// characters.
+	// default; 100 for Type.VARIANT. * The key must be a UTF-8 encoded
+	// string with a length limit of 128 characters.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 
 	// Availability: The online availability of the Product. Default to
@@ -1384,17 +1383,19 @@ type GoogleCloudRetailV2Product struct {
 	Tags []string `json:"tags,omitempty"`
 
 	// Title: Required. Product title. This field must be a UTF-8 encoded
-	// string with a length limit of 128 characters. Otherwise, an
+	// string with a length limit of 1,000 characters. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Google Merchant Center property
 	// title (https://support.google.com/merchants/answer/6324415).
 	// Schema.org property Product.name (https://schema.org/name).
 	Title string `json:"title,omitempty"`
 
 	// Type: Immutable. The type of the product. This field is output-only.
+	// Default to Catalog.product_level_config.ingestion_product_type if
+	// unset.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. Default to Type.PRIMARY if
-	// unset.
+	//   "TYPE_UNSPECIFIED" - Default value. Default to
+	// Catalog.product_level_config.ingestion_product_type if unset.
 	//   "PRIMARY" - The primary type. As the primary unit for predicting,
 	// indexing and search serving, a Type.PRIMARY Product is grouped with
 	// multiple Type.VARIANT Products.
@@ -1561,9 +1562,9 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	// this field is set to an invalid value other than these, an
 	// INVALID_ARGUMENT error is returned. If this field is `variant` and
 	// merchant_center_product_id_field is `itemGroupId`, an
-	// INVALID_ARGUMENT error is returned. See Using catalog levels
-	// (/retail/recommendations-ai/docs/catalog#catalog-levels) for more
-	// details.
+	// INVALID_ARGUMENT error is returned. See Using product levels
+	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
+	// for more details.
 	IngestionProductType string `json:"ingestionProductType,omitempty"`
 
 	// MerchantCenterProductIdField: Which field of Merchant Center Product
@@ -1575,9 +1576,9 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	// represent the item group. If this field is set to an invalid value
 	// other than these, an INVALID_ARGUMENT error is returned. If this
 	// field is `itemGroupId` and ingestion_product_type is `variant`, an
-	// INVALID_ARGUMENT error is returned. See Using catalog levels
-	// (/retail/recommendations-ai/docs/catalog#catalog-levels) for more
-	// details.
+	// INVALID_ARGUMENT error is returned. See Using product levels
+	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
+	// for more details.
 	MerchantCenterProductIdField string `json:"merchantCenterProductIdField,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1875,9 +1876,10 @@ type GoogleCloudRetailV2UserEvent struct {
 	// `add-to-cart`: Products being added to cart. * `category-page-view`:
 	// Special pages such as sale or promotion pages viewed. *
 	// `detail-page-view`: Products detail page viewed. * `home-page-view`:
-	// Homepage viewed. * `purchase-complete`: User finishing a purchase. *
-	// `search`: Product search. * `shopping-cart-page-view`: User viewing a
-	// shopping cart.
+	// Homepage viewed. * `promotion-offered`: Promotion is offered to a
+	// user. * `promotion-not-offered`: Promotion is not offered to a user.
+	// * `purchase-complete`: User finishing a purchase. * `search`: Product
+	// search. * `shopping-cart-page-view`: User viewing a shopping cart.
 	EventType string `json:"eventType,omitempty"`
 
 	// ExperimentIds: A list of identifiers for the independent experiment
@@ -2948,408 +2950,6 @@ func (s *GoogleCloudRetailV2betaUserEventImportSummary) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2mainExportErrorsConfig: Configuration of
-// destination for Export related errors.
-type GoogleCloudRetailV2mainExportErrorsConfig struct {
-	// GcsPrefix: Google Cloud Storage path for import errors. This must be
-	// an empty, existing Cloud Storage bucket. Export errors will be
-	// written to a file in this bucket, one per line, as a JSON-encoded
-	// `google.rpc.Status` message.
-	GcsPrefix string `json:"gcsPrefix,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsPrefix") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainExportErrorsConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainExportErrorsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainExportMetadata: Metadata related to the
-// progress of the Export operation. This will be returned by the
-// google.longrunning.Operation.metadata field.
-type GoogleCloudRetailV2mainExportMetadata struct {
-	// CreateTime: Operation create time.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// UpdateTime: Operation last update time. If the operation is done,
-	// this is also the finish time.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainExportMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainExportMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainExportProductsResponse: Response of the
-// ExportProductsRequest. If the long running operation is done, then
-// this message is returned by the
-// google.longrunning.Operations.response field if the operation was
-// successful.
-type GoogleCloudRetailV2mainExportProductsResponse struct {
-	// ErrorSamples: A sample of errors encountered while processing the
-	// request.
-	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
-
-	// ErrorsConfig: Echoes the destination for the complete errors in the
-	// request if set.
-	ErrorsConfig *GoogleCloudRetailV2mainExportErrorsConfig `json:"errorsConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorSamples") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainExportProductsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainExportProductsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainExportUserEventsResponse: Response of the
-// ExportUserEventsRequest. If the long running operation was
-// successful, then this message is returned by the
-// google.longrunning.Operations.response field if the operation was
-// successful.
-type GoogleCloudRetailV2mainExportUserEventsResponse struct {
-	// ErrorSamples: A sample of errors encountered while processing the
-	// request.
-	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
-
-	// ErrorsConfig: Echoes the destination for the complete errors if this
-	// field was set in the request.
-	ErrorsConfig *GoogleCloudRetailV2mainExportErrorsConfig `json:"errorsConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorSamples") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainExportUserEventsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainExportUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainImportErrorsConfig: Configuration of
-// destination for Import related errors.
-type GoogleCloudRetailV2mainImportErrorsConfig struct {
-	// GcsPrefix: Google Cloud Storage path for import errors. This must be
-	// an empty, existing Cloud Storage bucket. Import errors will be
-	// written to a file in this bucket, one per line, as a JSON-encoded
-	// `google.rpc.Status` message.
-	GcsPrefix string `json:"gcsPrefix,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsPrefix") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainImportErrorsConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainImportErrorsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainImportMetadata: Metadata related to the
-// progress of the Import operation. This will be returned by the
-// google.longrunning.Operation.metadata field.
-type GoogleCloudRetailV2mainImportMetadata struct {
-	// CreateTime: Operation create time.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// FailureCount: Count of entries that encountered errors while
-	// processing.
-	FailureCount int64 `json:"failureCount,omitempty,string"`
-
-	// SuccessCount: Count of entries that were processed successfully.
-	SuccessCount int64 `json:"successCount,omitempty,string"`
-
-	// UpdateTime: Operation last update time. If the operation is done,
-	// this is also the finish time.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainImportMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainImportMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainImportProductsResponse: Response of the
-// ImportProductsRequest. If the long running operation is done, then
-// this message is returned by the
-// google.longrunning.Operations.response field if the operation was
-// successful.
-type GoogleCloudRetailV2mainImportProductsResponse struct {
-	// ErrorSamples: A sample of errors encountered while processing the
-	// request.
-	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
-
-	// ErrorsConfig: Echoes the destination for the complete errors in the
-	// request if set.
-	ErrorsConfig *GoogleCloudRetailV2mainImportErrorsConfig `json:"errorsConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorSamples") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainImportProductsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainImportProductsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainImportUserEventsResponse: Response of the
-// ImportUserEventsRequest. If the long running operation was
-// successful, then this message is returned by the
-// google.longrunning.Operations.response field if the operation was
-// successful.
-type GoogleCloudRetailV2mainImportUserEventsResponse struct {
-	// ErrorSamples: A sample of errors encountered while processing the
-	// request.
-	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
-
-	// ErrorsConfig: Echoes the destination for the complete errors if this
-	// field was set in the request.
-	ErrorsConfig *GoogleCloudRetailV2mainImportErrorsConfig `json:"errorsConfig,omitempty"`
-
-	// ImportSummary: Aggregated statistics of user event import status.
-	ImportSummary *GoogleCloudRetailV2mainUserEventImportSummary `json:"importSummary,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorSamples") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainImportUserEventsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainImportUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainPurgeMetadata: Metadata related to the
-// progress of the Purge operation. This will be returned by the
-// google.longrunning.Operation.metadata field.
-type GoogleCloudRetailV2mainPurgeMetadata struct {
-}
-
-// GoogleCloudRetailV2mainPurgeUserEventsResponse: Response of the
-// PurgeUserEventsRequest. If the long running operation is successfully
-// done, then this message is returned by the
-// google.longrunning.Operations.response field.
-type GoogleCloudRetailV2mainPurgeUserEventsResponse struct {
-	// PurgedEventsCount: The total count of events purged as a result of
-	// the operation.
-	PurgedEventsCount int64 `json:"purgedEventsCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "PurgedEventsCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PurgedEventsCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainPurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainPurgeUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainRejoinUserEventsMetadata: Metadata for
-// RejoinUserEvents method.
-type GoogleCloudRetailV2mainRejoinUserEventsMetadata struct {
-}
-
-// GoogleCloudRetailV2mainRejoinUserEventsResponse: Response message for
-// RejoinUserEvents method.
-type GoogleCloudRetailV2mainRejoinUserEventsResponse struct {
-	// RejoinedUserEventsCount: Number of user events that were joined with
-	// latest product catalog.
-	RejoinedUserEventsCount int64 `json:"rejoinedUserEventsCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RejoinedUserEventsCount") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RejoinedUserEventsCount")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainRejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainRejoinUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2mainUserEventImportSummary: A summary of import
-// result. The UserEventImportSummary summarizes the import status for
-// user events.
-type GoogleCloudRetailV2mainUserEventImportSummary struct {
-	// JoinedEventsCount: Count of user events imported with complete
-	// existing catalog information.
-	JoinedEventsCount int64 `json:"joinedEventsCount,omitempty,string"`
-
-	// UnjoinedEventsCount: Count of user events imported, but with catalog
-	// information not found in the imported catalog.
-	UnjoinedEventsCount int64 `json:"unjoinedEventsCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "JoinedEventsCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JoinedEventsCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2mainUserEventImportSummary) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2mainUserEventImportSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleLongrunningListOperationsResponse: The response message for
 // Operations.ListOperations.
 type GoogleLongrunningListOperationsResponse struct {
@@ -3517,6 +3117,11 @@ type ProjectsLocationsCatalogsListCall struct {
 }
 
 // List: Lists all the Catalogs associated with the project.
+//
+// - parent: The account resource name with an associated location. If
+//   the caller does not have permission to list Catalogs under this
+//   location, regardless of whether or not this location exists, a
+//   PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocationsCatalogsListCall {
 	c := &ProjectsLocationsCatalogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3580,7 +3185,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3714,6 +3319,8 @@ type ProjectsLocationsCatalogsPatchCall struct {
 }
 
 // Patch: Updates the Catalogs.
+//
+// - name: Immutable. The fully qualified resource name of the catalog.
 func (r *ProjectsLocationsCatalogsService) Patch(name string, googlecloudretailv2catalog *GoogleCloudRetailV2Catalog) *ProjectsLocationsCatalogsPatchCall {
 	c := &ProjectsLocationsCatalogsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3722,10 +3329,8 @@ func (r *ProjectsLocationsCatalogsService) Patch(name string, googlecloudretailv
 }
 
 // UpdateMask sets the optional parameter "updateMask": Indicates which
-// fields in the provided Catalog to update. If not set, will only
-// update the Catalog.product_level_config field, which is also the only
-// currently supported field to update. If an unsupported or unknown
-// field is provided, an INVALID_ARGUMENT error is returned.
+// fields in the provided Catalog to update. If an unsupported or
+// unknown field is provided, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsCatalogsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3758,7 +3363,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3838,7 +3443,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided Catalog to update. If not set, will only update the Catalog.product_level_config field, which is also the only currently supported field to update. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Indicates which fields in the provided Catalog to update. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3872,6 +3477,8 @@ type ProjectsLocationsCatalogsBranchesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsBranchesOperationsService) Get(name string) *ProjectsLocationsCatalogsBranchesOperationsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3915,7 +3522,7 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4016,6 +3623,10 @@ type ProjectsLocationsCatalogsBranchesProductsCreateCall struct {
 }
 
 // Create: Creates a Product.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch`.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Create(parent string, googlecloudretailv2product *GoogleCloudRetailV2Product) *ProjectsLocationsCatalogsBranchesProductsCreateCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4063,7 +3674,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4173,6 +3784,17 @@ type ProjectsLocationsCatalogsBranchesProductsDeleteCall struct {
 }
 
 // Delete: Deletes a Product.
+//
+// - name: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to delete the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned. If the Product to
+//   delete does not exist, a NOT_FOUND error is returned. The Product
+//   to delete can neither be a Product.Type.COLLECTION Product member
+//   nor a Product.Type.PRIMARY Product with more than one variants.
+//   Otherwise, an INVALID_ARGUMENT error is returned. All inventory
+//   information for the named Product will be deleted.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Delete(name string) *ProjectsLocationsCatalogsBranchesProductsDeleteCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4206,7 +3828,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4304,6 +3926,13 @@ type ProjectsLocationsCatalogsBranchesProductsGetCall struct {
 }
 
 // Get: Gets a Product.
+//
+// - name: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned. If the requested
+//   Product does not exist, a NOT_FOUND error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Get(name string) *ProjectsLocationsCatalogsBranchesProductsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4347,7 +3976,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4451,6 +4080,12 @@ type ProjectsLocationsCatalogsBranchesProductsImportCall struct {
 // synchronous. No partial updating is supported. Non-existing items are
 // created. Note that it is possible for a subset of the Products to be
 // successfully updated.
+//
+// - parent:
+//   `projects/1234/locations/global/catalogs/default_catalog/branches/de
+//   fault_branch` If no updateMask is specified, requires
+//   products.create permission. If updateMask is specified, requires
+//   products.update permission.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Import(parent string, googlecloudretailv2importproductsrequest *GoogleCloudRetailV2ImportProductsRequest) *ProjectsLocationsCatalogsBranchesProductsImportCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4485,7 +4120,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4591,6 +4226,11 @@ type ProjectsLocationsCatalogsBranchesProductsPatchCall struct {
 }
 
 // Patch: Updates a Product.
+//
+// - name: Immutable. Full resource name of the product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/product_id`. The branch ID must be
+//   "default_branch".
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Patch(name string, googlecloudretailv2product *GoogleCloudRetailV2Product) *ProjectsLocationsCatalogsBranchesProductsPatchCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4644,7 +4284,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4763,6 +4403,8 @@ type ProjectsLocationsCatalogsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsOperationsService) Get(name string) *ProjectsLocationsCatalogsOperationsGetCall {
 	c := &ProjectsLocationsCatalogsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4806,7 +4448,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4916,6 +4558,8 @@ type ProjectsLocationsCatalogsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsOperationsService) List(name string) *ProjectsLocationsCatalogsOperationsListCall {
 	c := &ProjectsLocationsCatalogsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4980,7 +4624,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5119,6 +4763,15 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 }
 
 // Predict: Makes a recommendation prediction.
+//
+// - placement: Full resource name of the format:
+//   {name=projects/*/locations/global/catalogs/default_catalog/placement
+//   s/*} The ID of the Recommendations AI placement. Before you can
+//   request predictions from your model, you must create at least one
+//   placement for it. For more information, see Managing placements
+//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
+//   The full list of available placements can be seen at
+//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -5153,7 +4806,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5227,7 +4880,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} The id of the recommendation engine placement. This id is used to identify the set of models that will be used to make the prediction. We currently support three placements with the following IDs by default: * `shopping_cart`: Predicts products frequently bought together with one or more products in the same shopping session. Commonly displayed after `add-to-cart` events, on product detail pages, or on the shopping cart page. * `home_page`: Predicts the next product that a user will most likely engage with or purchase based on the shopping or viewing history of the specified `userId` or `visitorId`. For example - Recommendations for you. * `product_detail`: Predicts the next product that a user will most likely engage with or purchase. The prediction is based on the shopping or viewing history of the specified `userId` or `visitorId` and its relevance to a specified `CatalogItem`. Typically used on product detail pages. For example - More products like this. * `recently_viewed_default`: Returns up to 75 products recently viewed by the specified `userId` or `visitorId`, most recent ones first. Returns nothing if neither of them has viewed any products yet. For example - Recently viewed. The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
+	//       "description": "Required. Full resource name of the format: {name=projects/*/locations/global/catalogs/default_catalog/placements/*} The ID of the Recommendations AI placement. Before you can request predictions from your model, you must create at least one placement for it. For more information, see [Managing placements](https://cloud.google.com/retail/recommendations-ai/docs/manage-placements). The full list of available placements can be seen at https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -5263,6 +4916,9 @@ type ProjectsLocationsCatalogsUserEventsCollectCall struct {
 // request to due to browser restriction of POST-ing to a 3rd party
 // domain. This method is used only by the Retail API JavaScript pixel
 // and Google Tag Manager. Users should not call this method directly.
+//
+// - parent: The parent catalog name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5330,7 +4986,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5452,6 +5108,8 @@ type ProjectsLocationsCatalogsUserEventsImportCall struct {
 // ImportResponse. Note that it is possible for a subset of the items to
 // be successfully inserted. Operation.metadata is of type
 // ImportMetadata.
+//
+// - parent: `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Import(parent string, googlecloudretailv2importusereventsrequest *GoogleCloudRetailV2ImportUserEventsRequest) *ProjectsLocationsCatalogsUserEventsImportCall {
 	c := &ProjectsLocationsCatalogsUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5486,7 +5144,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5595,6 +5253,10 @@ type ProjectsLocationsCatalogsUserEventsPurgeCall struct {
 // provided. Depending on the number of events specified by the filter,
 // this operation could take hours or days to complete. To test a
 // filter, use the list command first.
+//
+// - parent: The resource name of the catalog under which the events are
+//   created. The format is
+//   `projects/${projectId}/locations/global/catalogs/${catalogId}`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Purge(parent string, googlecloudretailv2purgeusereventsrequest *GoogleCloudRetailV2PurgeUserEventsRequest) *ProjectsLocationsCatalogsUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5629,7 +5291,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5742,6 +5404,9 @@ type ProjectsLocationsCatalogsUserEventsRejoinCall struct {
 // used to trigger a 'join' operation on specified events with latest
 // version of product catalog. It can also be used to correct events
 // joined with wrong product catalog.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Rejoin(parent string, googlecloudretailv2rejoinusereventsrequest *GoogleCloudRetailV2RejoinUserEventsRequest) *ProjectsLocationsCatalogsUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5776,7 +5441,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5882,6 +5547,9 @@ type ProjectsLocationsCatalogsUserEventsWriteCall struct {
 }
 
 // Write: Writes a single user event.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Write(parent string, googlecloudretailv2userevent *GoogleCloudRetailV2UserEvent) *ProjectsLocationsCatalogsUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5916,7 +5584,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6024,6 +5692,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6067,7 +5737,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6177,6 +5847,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6241,7 +5913,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -183,13 +183,13 @@ type ProjectsLocationsOperationsService struct {
 // ApplyParametersRequest: Request for ApplyParameters.
 type ApplyParametersRequest struct {
 	// ApplyAll: Whether to apply instance-level parameter group to all
-	// nodes. If set to true, will explicitly restrict users from specifying
-	// any nodes, and apply parameter group updates to all nodes within the
+	// nodes. If set to true, users are restricted from specifying
+	// individual nodes, and `ApplyParameters` updates all nodes within the
 	// instance.
 	ApplyAll bool `json:"applyAll,omitempty"`
 
-	// NodeIds: Nodes to which we should apply the instance-level parameter
-	// group.
+	// NodeIds: Nodes to which the instance-level parameter group is
+	// applied.
 	NodeIds []string `json:"nodeIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApplyAll") to
@@ -395,7 +395,7 @@ type GoogleCloudMemcacheV1beta2LocationMetadata struct {
 	// location. The map is keyed by the lowercase ID of each zone, as
 	// defined by GCE. These keys can be specified in the `zones` field when
 	// creating a Memcached instance.
-	AvailableZones map[string]ZoneMetadata `json:"availableZones,omitempty"`
+	AvailableZones map[string]GoogleCloudMemcacheV1beta2ZoneMetadata `json:"availableZones,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AvailableZones") to
 	// unconditionally include in API requests. By default, fields with
@@ -471,6 +471,9 @@ func (s *GoogleCloudMemcacheV1beta2OperationMetadata) MarshalJSON() ([]byte, err
 	type NoMethod GoogleCloudMemcacheV1beta2OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudMemcacheV1beta2ZoneMetadata struct {
 }
 
 type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
@@ -586,9 +589,8 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() 
 // Maintenance schedule which is exposed to customer and potentially end
 // user, indicating published upcoming future maintenance schedule
 type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
-	// CanReschedule: Can this scheduled update be rescheduled? By default,
-	// it's true and API needs to do explicitly check whether it's set, if
-	// it's set as false explicitly, it's false
+	// CanReschedule: This field will be deprecated, and will be always set
+	// to true since reschedule can happen multiple times now.
 	CanReschedule bool `json:"canReschedule,omitempty"`
 
 	// EndTime: The scheduled end time for the maintenance.
@@ -601,10 +603,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
 
 	// ScheduleDeadlineTime: schedule_deadline_time is the time deadline any
 	// schedule start time cannot go beyond, including reschedule. It's
-	// normally the initial schedule start time plus a week. If the
-	// reschedule type is next window, simply take this value as start time.
-	// If reschedule type is IMMEDIATELY or BY_TIME, current or selected
-	// time cannot go beyond this deadline.
+	// normally the initial schedule start time plus maintenance window
+	// length (1 day or 1 week). Maintenance cannot be scheduled to start
+	// beyond this deadline.
 	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
 
 	// StartTime: The scheduled start time for the maintenance.
@@ -725,6 +726,47 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility:
+// PerSliSloEligibility is a mapping from an SLI name to eligibility.
+type GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility struct {
+	// Eligibilities: An entry in the eligibilities map specifies an
+	// eligibility for a particular SLI for the given instance. The SLI key
+	// in the name must be a valid SLI name specified in the Eligibility
+	// Exporter binary flags otherwise an error will be emitted by
+	// Eligibility Exporter and the oncaller will be alerted. If an SLI has
+	// been defined in the binary flags but the eligibilities map does not
+	// contain it, the corresponding SLI time series will not be emitted by
+	// the Eligibility Exporter. This ensures a smooth rollout and
+	// compatibility between the data produced by different versions of the
+	// Eligibility Exporters. If eligibilities map contains a key for an SLI
+	// which has not been declared in the binary flags, there will be an
+	// error message emitted in the Eligibility Exporter log and the metric
+	// for the SLI in question will not be emitted.
+	Eligibilities map[string]GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligibilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligibilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource:
 // Describes provisioned dataplane resources.
 type GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource struct {
@@ -822,8 +864,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion struct {
 	Reason string `json:"reason,omitempty"`
 
 	// SliName: Name of an SLI that this exclusion applies to. Can be left
-	// empty, signaling that the instance should be excluded from all SLIs
-	// defined in the service SLO configuration.
+	// empty, signaling that the instance should be excluded from all SLIs.
 	SliName string `json:"sliName,omitempty"`
 
 	// StartTime: Start time of the exclusion. No alignment (e.g. to a full
@@ -857,7 +898,9 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion) MarshalJSO
 // SloMetadata contains resources required for proper SLO classification
 // of the instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
-	// Eligibility: Optional. User-defined instance eligibility.
+	// Eligibility: Optional. Global per-instance SLI eligibility which
+	// applies to all defined SLIs. Exactly one of 'eligibility' and
+	// 'per_sli_eligibility' fields must be used.
 	Eligibility *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibility,omitempty"`
 
 	// Exclusions: List of SLO exclusion windows. When multiple entries in
@@ -879,6 +922,11 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	// Eligibility Exporter and published in the form of per node metric to
 	// Monarch.
 	Nodes []*GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata `json:"nodes,omitempty"`
+
+	// PerSliEligibility: Optional. Multiple per-instance SLI eligibilities
+	// which apply for individual SLIs. Exactly one of 'eligibility' and
+	// 'per_sli_eligibility' fields must be used.
+	PerSliEligibility *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility `json:"perSliEligibility,omitempty"`
 
 	// Tier: Name of the SLO tier the Instance belongs to. This name will be
 	// expected to match the tiers specified in the service SLO
@@ -908,6 +956,7 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Instance: A Memorystore for Memcached instance
 type Instance struct {
 	// AuthorizedNetwork: The full name of the Google Compute Engine network
 	// (https://cloud.google.com/vpc/docs/vpc) to which the instance is
@@ -917,15 +966,15 @@ type Instance struct {
 	// CreateTime: Output only. The time the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DiscoveryEndpoint: Output only. Endpoint for Discovery API
+	// DiscoveryEndpoint: Output only. Endpoint for the Discovery API.
 	DiscoveryEndpoint string `json:"discoveryEndpoint,omitempty"`
 
-	// DisplayName: User provided name for the instance only used for
-	// display purposes. Cannot be more than 80 characters.
+	// DisplayName: User provided name for the instance, which is only used
+	// for display purposes. Cannot be more than 80 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// InstanceMessages: List of messages that describe current statuses of
-	// memcached instance.
+	// InstanceMessages: List of messages that describe the current state of
+	// the Memcached instance.
 	InstanceMessages []*InstanceMessage `json:"instanceMessages,omitempty"`
 
 	// Labels: Resource labels to represent user-provided metadata. Refer to
@@ -939,13 +988,13 @@ type Instance struct {
 	// MemcacheVersion. The full version format will be "memcached-1.5.16".
 	MemcacheFullVersion string `json:"memcacheFullVersion,omitempty"`
 
-	// MemcacheNodes: Output only. List of Memcached nodes. Refer to [Node]
+	// MemcacheNodes: Output only. List of Memcached nodes. Refer to Node
 	// message for more details.
 	MemcacheNodes []*Node `json:"memcacheNodes,omitempty"`
 
 	// MemcacheVersion: The major version of Memcached software. If not
 	// provided, latest supported version will be used. Currently the latest
-	// supported major version is MEMCACHE_1_5. The minor version will be
+	// supported major version is `MEMCACHE_1_5`. The minor version will be
 	// automatically determined by our system based on the latest supported
 	// minor version.
 	//
@@ -957,10 +1006,10 @@ type Instance struct {
 	// Name: Required. Unique name of the resource in this scope including
 	// project and location using the form:
 	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
-	// ` Note: Memcached instances are managed and addressed at regional
-	// level so location_id here refers to a GCP region; however, users may
-	// choose which zones Memcached nodes within an instances should be
-	// provisioned in. Refer to [zones] field for more details.
+	// ` Note: Memcached instances are managed and addressed at the regional
+	// level so `location_id` here refers to a Google Cloud region; however,
+	// users may choose which zones Memcached nodes should be provisioned in
+	// within an instance. Refer to zones field for more details.
 	Name string `json:"name,omitempty"`
 
 	// NodeConfig: Required. Configuration for Memcached nodes.
@@ -991,7 +1040,7 @@ type Instance struct {
 	// UpdateTime: Output only. The time the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Zones: Zones where Memcached nodes should be provisioned in.
+	// Zones: Zones in which Memcached nodes should be provisioned.
 	// Memcached nodes will be equally distributed across these zones. If
 	// not provided, the service will by default create nodes in all zones
 	// in the region for the instance.
@@ -1227,6 +1276,39 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LocationMetadata: Metadata for the given
+// google.cloud.location.Location.
+type LocationMetadata struct {
+	// AvailableZones: Output only. The set of available zones in the
+	// location. The map is keyed by the lowercase ID of each zone, as
+	// defined by GCE. These keys can be specified in the `zones` field when
+	// creating a Memcached instance.
+	AvailableZones map[string]ZoneMetadata `json:"availableZones,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailableZones") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailableZones") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MaintenancePolicy: Defines policies to service maintenance events.
 type MaintenancePolicy struct {
 	// CreateTime: Output only. The time when the resource was created.
@@ -1319,12 +1401,13 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MemcacheParameters: The unique ID associated with this set of
+// parameters. Users can use this id to determine if the parameters
+// associated with the instance differ from the parameters associated
+// with the nodes. A discrepancy between parameter ids can inform users
+// that they may need to take action to apply parameters on nodes.
 type MemcacheParameters struct {
-	// Id: Output only. The unique ID associated with this set of
-	// parameters. Users can use this id to determine if the parameters
-	// associated with the instance differ from the parameters associated
-	// with the nodes and any action needs to be taken to apply parameters
-	// on nodes.
+	// Id: Output only.
 	Id string `json:"id,omitempty"`
 
 	// Params: User defined set of parameters to use in the memcached
@@ -1807,6 +1890,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1850,7 +1935,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1952,28 +2037,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2016,7 +2107,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2087,7 +2178,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2099,13 +2190,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2153,9 +2244,12 @@ type ProjectsLocationsInstancesApplyParametersCall struct {
 	header_                http.Header
 }
 
-// ApplyParameters: ApplyParameters will restart the set of specified
+// ApplyParameters: `ApplyParameters` restarts the set of specified
 // nodes in order to update them to the current set of parameters for
 // the Memcached Instance.
+//
+// - name: Resource name of the Memcached instance for which parameter
+//   group updates should be applied.
 func (r *ProjectsLocationsInstancesService) ApplyParameters(name string, applyparametersrequest *ApplyParametersRequest) *ProjectsLocationsInstancesApplyParametersCall {
 	c := &ProjectsLocationsInstancesApplyParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2190,7 +2284,7 @@ func (c *ProjectsLocationsInstancesApplyParametersCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesApplyParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2254,7 +2348,7 @@ func (c *ProjectsLocationsInstancesApplyParametersCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "ApplyParameters will restart the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.",
+	//   "description": "`ApplyParameters` restarts the set of specified nodes in order to update them to the current set of parameters for the Memcached Instance.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:applyParameters",
 	//   "httpMethod": "POST",
 	//   "id": "memcache.projects.locations.instances.applyParameters",
@@ -2297,6 +2391,9 @@ type ProjectsLocationsInstancesApplySoftwareUpdateCall struct {
 
 // ApplySoftwareUpdate: Updates software on the selected nodes of the
 // Instance.
+//
+// - instance: Resource name of the Memcached instance for which
+//   software update should be applied.
 func (r *ProjectsLocationsInstancesService) ApplySoftwareUpdate(instance string, applysoftwareupdaterequest *ApplySoftwareUpdateRequest) *ProjectsLocationsInstancesApplySoftwareUpdateCall {
 	c := &ProjectsLocationsInstancesApplySoftwareUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instance = instance
@@ -2331,7 +2428,7 @@ func (c *ProjectsLocationsInstancesApplySoftwareUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsInstancesApplySoftwareUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2437,6 +2534,10 @@ type ProjectsLocationsInstancesCreateCall struct {
 }
 
 // Create: Creates a new Instance in a given location.
+//
+// - parent: The resource name of the instance location using the form:
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2449,8 +2550,8 @@ func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Inst
 // following restrictions: * Must contain only lowercase letters,
 // numbers, and hyphens. * Must start with a letter. * Must be between
 // 1-40 characters. * Must end with a number or a letter. * Must be
-// unique within the user project / location If any of the above are not
-// met, will raise an invalid argument error.
+// unique within the user project / location. If any of the above are
+// not met, the API raises an invalid argument error.
 func (c *ProjectsLocationsInstancesCreateCall) InstanceId(instanceId string) *ProjectsLocationsInstancesCreateCall {
 	c.urlParams_.Set("instanceId", instanceId)
 	return c
@@ -2483,7 +2584,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2556,7 +2657,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "instanceId": {
-	//       "description": "Required. The logical name of the Memcached instance in the user project with the following restrictions: * Must contain only lowercase letters, numbers, and hyphens. * Must start with a letter. * Must be between 1-40 characters. * Must end with a number or a letter. * Must be unique within the user project / location If any of the above are not met, will raise an invalid argument error.",
+	//       "description": "Required. The logical name of the Memcached instance in the user project with the following restrictions: * Must contain only lowercase letters, numbers, and hyphens. * Must start with a letter. * Must be between 1-40 characters. * Must end with a number or a letter. * Must be unique within the user project / location. If any of the above are not met, the API raises an invalid argument error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2593,6 +2694,10 @@ type ProjectsLocationsInstancesDeleteCall struct {
 }
 
 // Delete: Deletes a single Instance.
+//
+// - name: Memcached instance resource name in the format:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2626,7 +2731,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2724,6 +2829,10 @@ type ProjectsLocationsInstancesGetCall struct {
 }
 
 // Get: Gets details of a single Instance.
+//
+// - name: Memcached instance resource name in the format:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2767,7 +2876,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2868,6 +2977,10 @@ type ProjectsLocationsInstancesListCall struct {
 }
 
 // List: Lists Instances in a given location.
+//
+// - parent: The resource name of the instance location using the form:
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2891,9 +3004,9 @@ func (c *ProjectsLocationsInstancesListCall) OrderBy(orderBy string) *ProjectsLo
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of items to return. If not specified, a default value of 1000 will be
-// used by the service. Regardless of the page_size value, the response
-// may include a partial list and a caller should only rely on
-// response's next_page_token to determine if there are more instances
+// used by the service. Regardless of the `page_size` value, the
+// response may include a partial list and a caller should only rely on
+// response's `next_page_token` to determine if there are more instances
 // left to be queried.
 func (c *ProjectsLocationsInstancesListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -2901,7 +3014,8 @@ func (c *ProjectsLocationsInstancesListCall) PageSize(pageSize int64) *ProjectsL
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
+// `next_page_token` value returned from a previous List request, if
+// any.
 func (c *ProjectsLocationsInstancesListCall) PageToken(pageToken string) *ProjectsLocationsInstancesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2944,7 +3058,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3015,7 +3129,7 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "List filter. For example, exclude all Memcached instances with name as my-instance by specifying \"name != my-instance\".",
+	//       "description": "List filter. For example, exclude all Memcached instances with name as my-instance by specifying `\"name != my-instance\"`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3025,13 +3139,13 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. If not specified, a default value of 1000 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response's next_page_token to determine if there are more instances left to be queried.",
+	//       "description": "The maximum number of items to return. If not specified, a default value of 1000 will be used by the service. Regardless of the `page_size` value, the response may include a partial list and a caller should only rely on response's `next_page_token` to determine if there are more instances left to be queried.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.",
+	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3087,6 +3201,15 @@ type ProjectsLocationsInstancesPatchCall struct {
 }
 
 // Patch: Updates an existing Instance in a given project and location.
+//
+// - name: Unique name of the resource in this scope including project
+//   and location using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` Note: Memcached instances are managed and addressed at the
+//   regional level so `location_id` here refers to a Google Cloud
+//   region; however, users may choose which zones Memcached nodes
+//   should be provisioned in within an instance. Refer to zones field
+//   for more details.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3128,7 +3251,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3201,7 +3324,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Unique name of the resource in this scope including project and location using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` Note: Memcached instances are managed and addressed at regional level so location_id here refers to a GCP region; however, users may choose which zones Memcached nodes within an instances should be provisioned in. Refer to [zones] field for more details.",
+	//       "description": "Required. Unique name of the resource in this scope including project and location using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` Note: Memcached instances are managed and addressed at the regional level so `location_id` here refers to a Google Cloud region; however, users may choose which zones Memcached nodes should be provisioned in within an instance. Refer to zones field for more details.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3239,10 +3362,13 @@ type ProjectsLocationsInstancesUpdateParametersCall struct {
 	header_                 http.Header
 }
 
-// UpdateParameters: Updates the defined Memcached Parameters for an
-// existing Instance. This method only stages the parameters, it must be
-// followed by ApplyParameters to apply the parameters to nodes of the
-// Memcached Instance.
+// UpdateParameters: Updates the defined Memcached parameters for an
+// existing instance. This method only stages the parameters, it must be
+// followed by `ApplyParameters` to apply the parameters to nodes of the
+// Memcached instance.
+//
+// - name: Resource name of the Memcached instance for which the
+//   parameters should be updated.
 func (r *ProjectsLocationsInstancesService) UpdateParameters(name string, updateparametersrequest *UpdateParametersRequest) *ProjectsLocationsInstancesUpdateParametersCall {
 	c := &ProjectsLocationsInstancesUpdateParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3277,7 +3403,7 @@ func (c *ProjectsLocationsInstancesUpdateParametersCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpdateParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3341,7 +3467,7 @@ func (c *ProjectsLocationsInstancesUpdateParametersCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the defined Memcached Parameters for an existing Instance. This method only stages the parameters, it must be followed by ApplyParameters to apply the parameters to nodes of the Memcached Instance.",
+	//   "description": "Updates the defined Memcached parameters for an existing instance. This method only stages the parameters, it must be followed by `ApplyParameters` to apply the parameters to nodes of the Memcached instance.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:updateParameters",
 	//   "httpMethod": "PATCH",
 	//   "id": "memcache.projects.locations.instances.updateParameters",
@@ -3392,6 +3518,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3426,7 +3554,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3534,6 +3662,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3567,7 +3697,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3667,6 +3797,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3710,7 +3842,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3820,6 +3952,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3884,7 +4018,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

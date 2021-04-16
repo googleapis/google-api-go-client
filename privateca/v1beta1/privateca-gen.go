@@ -79,7 +79,7 @@ const mtlsBasePath = "https://privateca.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -491,40 +491,6 @@ type AuditLogConfig struct {
 
 func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BillingView: Message for reporting billing requests through
-// Eventstream.
-type BillingView struct {
-	// ReportRequests: Billing requests to be reported for
-	// cloud.eventstream.v2.ResourceEvent Each request contains billing
-	// operations to be reported under a service name. See
-	// go/billing-view-construction for documentation on constructing
-	// billing view report requests.
-	ReportRequests []*GoogleApiServicecontrolV1ReportRequest `json:"reportRequests,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ReportRequests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReportRequests") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BillingView) MarshalJSON() ([]byte, error) {
-	type NoMethod BillingView
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1219,66 +1185,6 @@ func (s *EnableCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Exemplar: Exemplars are example points that may be used to annotate
-// aggregated distribution values. They are metadata that gives
-// information about a particular value added to a Distribution bucket,
-// such as a trace ID that was active when a value was added. They may
-// contain further information, such as a example values and timestamps,
-// origin, etc.
-type Exemplar struct {
-	// Attachments: Contextual information about the example value. Examples
-	// are: Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-	// Literal string: type.googleapis.com/google.protobuf.StringValue
-	// Labels dropped during aggregation:
-	// type.googleapis.com/google.monitoring.v3.DroppedLabels There may be
-	// only a single attachment of any given message type in a single
-	// exemplar, and this is enforced by the system.
-	Attachments []googleapi.RawMessage `json:"attachments,omitempty"`
-
-	// Timestamp: The observation (sampling) time of the above value.
-	Timestamp string `json:"timestamp,omitempty"`
-
-	// Value: Value of the exemplar point. This value determines to which
-	// bucket the exemplar belongs.
-	Value float64 `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Attachments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Exemplar) MarshalJSON() ([]byte, error) {
-	type NoMethod Exemplar
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *Exemplar) UnmarshalJSON(data []byte) error {
-	type NoMethod Exemplar
-	var s1 struct {
-		Value gensupport.JSONFloat64 `json:"value"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Value = float64(s1.Value)
-	return nil
-}
-
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -1423,1114 +1329,6 @@ type FetchCertificateAuthorityCsrResponse struct {
 
 func (s *FetchCertificateAuthorityCsrResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchCertificateAuthorityCsrResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1AttributeValue: The allowed types for
-// [VALUE] in a `[KEY]:[VALUE]` attribute.
-type GoogleApiServicecontrolV1AttributeValue struct {
-	// BoolValue: A Boolean value represented by `true` or `false`.
-	BoolValue bool `json:"boolValue,omitempty"`
-
-	// IntValue: A 64-bit signed integer.
-	IntValue int64 `json:"intValue,omitempty,string"`
-
-	// StringValue: A string up to 256 bytes long.
-	StringValue *GoogleApiServicecontrolV1TruncatableString `json:"stringValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1AttributeValue) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1AttributeValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1Attributes: A set of attributes, each in the
-// format `[KEY]:[VALUE]`.
-type GoogleApiServicecontrolV1Attributes struct {
-	// AttributeMap: The set of attributes. Each attribute's key can be up
-	// to 128 bytes long. The value can be a string up to 256 bytes, a
-	// signed 64-bit integer, or the Boolean values `true` and `false`. For
-	// example: "/instance_id": "my-instance" "/http/user_agent": ""
-	// "/http/request_bytes": 300 "abc.com/myattribute": true
-	AttributeMap map[string]GoogleApiServicecontrolV1AttributeValue `json:"attributeMap,omitempty"`
-
-	// DroppedAttributesCount: The number of attributes that were discarded.
-	// Attributes can be discarded because their keys are too long or
-	// because there are too many attributes. If this value is 0 then all
-	// attributes are valid.
-	DroppedAttributesCount int64 `json:"droppedAttributesCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AttributeMap") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttributeMap") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1Attributes) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1Attributes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1Distribution: Distribution represents a
-// frequency distribution of double-valued sample points. It contains
-// the size of the population of sample points plus additional optional
-// information: - the arithmetic mean of the samples - the minimum and
-// maximum of the samples - the sum-squared-deviation of the samples,
-// used to compute variance - a histogram of the values of the sample
-// points
-type GoogleApiServicecontrolV1Distribution struct {
-	// BucketCounts: The number of samples in each histogram bucket.
-	// `bucket_counts` are optional. If present, they must sum to the
-	// `count` value. The buckets are defined below in `bucket_option`.
-	// There are N buckets. `bucket_counts[0]` is the number of samples in
-	// the underflow bucket. `bucket_counts[1]` to `bucket_counts[N-1]` are
-	// the numbers of samples in each of the finite buckets. And
-	// `bucket_counts[N] is the number of samples in the overflow bucket.
-	// See the comments of `bucket_option` below for more details. Any
-	// suffix of trailing zeros may be omitted.
-	BucketCounts googleapi.Int64s `json:"bucketCounts,omitempty"`
-
-	// Count: The total number of samples in the distribution. Must be >= 0.
-	Count int64 `json:"count,omitempty,string"`
-
-	// Exemplars: Example points. Must be in increasing order of `value`
-	// field.
-	Exemplars []*Exemplar `json:"exemplars,omitempty"`
-
-	// ExplicitBuckets: Buckets with arbitrary user-provided width.
-	ExplicitBuckets *GoogleApiServicecontrolV1ExplicitBuckets `json:"explicitBuckets,omitempty"`
-
-	// ExponentialBuckets: Buckets with exponentially growing width.
-	ExponentialBuckets *GoogleApiServicecontrolV1ExponentialBuckets `json:"exponentialBuckets,omitempty"`
-
-	// LinearBuckets: Buckets with constant width.
-	LinearBuckets *GoogleApiServicecontrolV1LinearBuckets `json:"linearBuckets,omitempty"`
-
-	// Maximum: The maximum of the population of values. Ignored if `count`
-	// is zero.
-	Maximum float64 `json:"maximum,omitempty"`
-
-	// Mean: The arithmetic mean of the samples in the distribution. If
-	// `count` is zero then this field must be zero.
-	Mean float64 `json:"mean,omitempty"`
-
-	// Minimum: The minimum of the population of values. Ignored if `count`
-	// is zero.
-	Minimum float64 `json:"minimum,omitempty"`
-
-	// SumOfSquaredDeviation: The sum of squared deviations from the mean:
-	// Sumi=1..count ((x_i - mean)^2) where each x_i is a sample values. If
-	// `count` is zero then this field must be zero, otherwise validation of
-	// the request fails.
-	SumOfSquaredDeviation float64 `json:"sumOfSquaredDeviation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BucketCounts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1Distribution) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1Distribution
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleApiServicecontrolV1Distribution) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleApiServicecontrolV1Distribution
-	var s1 struct {
-		Maximum               gensupport.JSONFloat64 `json:"maximum"`
-		Mean                  gensupport.JSONFloat64 `json:"mean"`
-		Minimum               gensupport.JSONFloat64 `json:"minimum"`
-		SumOfSquaredDeviation gensupport.JSONFloat64 `json:"sumOfSquaredDeviation"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Maximum = float64(s1.Maximum)
-	s.Mean = float64(s1.Mean)
-	s.Minimum = float64(s1.Minimum)
-	s.SumOfSquaredDeviation = float64(s1.SumOfSquaredDeviation)
-	return nil
-}
-
-// GoogleApiServicecontrolV1ExplicitBuckets: Describing buckets with
-// arbitrary user-provided width.
-type GoogleApiServicecontrolV1ExplicitBuckets struct {
-	// Bounds: 'bound' is a list of strictly increasing boundaries between
-	// buckets. Note that a list of length N-1 defines N buckets because of
-	// fenceposting. See comments on `bucket_options` for details. The i'th
-	// finite bucket covers the interval [bound[i-1], bound[i]) where i
-	// ranges from 1 to bound_size() - 1. Note that there are no finite
-	// buckets at all if 'bound' only contains a single element; in that
-	// special case the single bound defines the boundary between the
-	// underflow and overflow buckets. bucket number lower bound upper bound
-	// i == 0 (underflow) -inf bound[i] 0 < i < bound_size() bound[i-1]
-	// bound[i] i == bound_size() (overflow) bound[i-1] +inf
-	Bounds []float64 `json:"bounds,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Bounds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bounds") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1ExplicitBuckets) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1ExplicitBuckets
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1ExponentialBuckets: Describing buckets with
-// exponentially growing width.
-type GoogleApiServicecontrolV1ExponentialBuckets struct {
-	// GrowthFactor: The i'th exponential bucket covers the interval [scale
-	// * growth_factor^(i-1), scale * growth_factor^i) where i ranges from 1
-	// to num_finite_buckets inclusive. Must be larger than 1.0.
-	GrowthFactor float64 `json:"growthFactor,omitempty"`
-
-	// NumFiniteBuckets: The number of finite buckets. With the underflow
-	// and overflow buckets, the total number of buckets is
-	// `num_finite_buckets` + 2. See comments on `bucket_options` for
-	// details.
-	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
-
-	// Scale: The i'th exponential bucket covers the interval [scale *
-	// growth_factor^(i-1), scale * growth_factor^i) where i ranges from 1
-	// to num_finite_buckets inclusive. Must be > 0.
-	Scale float64 `json:"scale,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GrowthFactor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GrowthFactor") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1ExponentialBuckets) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1ExponentialBuckets
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleApiServicecontrolV1ExponentialBuckets) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleApiServicecontrolV1ExponentialBuckets
-	var s1 struct {
-		GrowthFactor gensupport.JSONFloat64 `json:"growthFactor"`
-		Scale        gensupport.JSONFloat64 `json:"scale"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.GrowthFactor = float64(s1.GrowthFactor)
-	s.Scale = float64(s1.Scale)
-	return nil
-}
-
-// GoogleApiServicecontrolV1HttpRequest: A common proto for logging HTTP
-// requests. Only contains semantics defined by the HTTP specification.
-// Product-specific logging information MUST be defined in a separate
-// message.
-type GoogleApiServicecontrolV1HttpRequest struct {
-	// CacheFillBytes: The number of HTTP response bytes inserted into
-	// cache. Set only when a cache fill was attempted.
-	CacheFillBytes int64 `json:"cacheFillBytes,omitempty,string"`
-
-	// CacheHit: Whether or not an entity was served from cache (with or
-	// without validation).
-	CacheHit bool `json:"cacheHit,omitempty"`
-
-	// CacheLookup: Whether or not a cache lookup was attempted.
-	CacheLookup bool `json:"cacheLookup,omitempty"`
-
-	// CacheValidatedWithOriginServer: Whether or not the response was
-	// validated with the origin server before being served from cache. This
-	// field is only meaningful if `cache_hit` is True.
-	CacheValidatedWithOriginServer bool `json:"cacheValidatedWithOriginServer,omitempty"`
-
-	// Latency: The request processing latency on the server, from the time
-	// the request was received until the response was sent.
-	Latency string `json:"latency,omitempty"`
-
-	// Protocol: Protocol used for the request. Examples: "HTTP/1.1",
-	// "HTTP/2", "websocket"
-	Protocol string `json:"protocol,omitempty"`
-
-	// Referer: The referer URL of the request, as defined in HTTP/1.1
-	// Header Field Definitions
-	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
-	Referer string `json:"referer,omitempty"`
-
-	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the
-	// HTTP request. Examples: "192.168.1.1",
-	// "FE80::0202:B3FF:FE1E:8329".
-	RemoteIp string `json:"remoteIp,omitempty"`
-
-	// RequestMethod: The request method. Examples: "GET", "HEAD",
-	// "PUT", "POST".
-	RequestMethod string `json:"requestMethod,omitempty"`
-
-	// RequestSize: The size of the HTTP request message in bytes, including
-	// the request headers and the request body.
-	RequestSize int64 `json:"requestSize,omitempty,string"`
-
-	// RequestUrl: The scheme (http, https), the host name, the path, and
-	// the query portion of the URL that was requested. Example:
-	// "http://example.com/some/info?color=red".
-	RequestUrl string `json:"requestUrl,omitempty"`
-
-	// ResponseSize: The size of the HTTP response message sent back to the
-	// client, in bytes, including the response headers and the response
-	// body.
-	ResponseSize int64 `json:"responseSize,omitempty,string"`
-
-	// ServerIp: The IP address (IPv4 or IPv6) of the origin server that the
-	// request was sent to.
-	ServerIp string `json:"serverIp,omitempty"`
-
-	// Status: The response code indicating the status of the response.
-	// Examples: 200, 404.
-	Status int64 `json:"status,omitempty"`
-
-	// UserAgent: The user agent sent by the client. Example: "Mozilla/4.0
-	// (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)".
-	UserAgent string `json:"userAgent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CacheFillBytes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CacheFillBytes") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1HttpRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1HttpRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1LinearBuckets: Describing buckets with
-// constant width.
-type GoogleApiServicecontrolV1LinearBuckets struct {
-	// NumFiniteBuckets: The number of finite buckets. With the underflow
-	// and overflow buckets, the total number of buckets is
-	// `num_finite_buckets` + 2. See comments on `bucket_options` for
-	// details.
-	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
-
-	// Offset: The i'th linear bucket covers the interval [offset + (i-1) *
-	// width, offset + i * width) where i ranges from 1 to
-	// num_finite_buckets, inclusive.
-	Offset float64 `json:"offset,omitempty"`
-
-	// Width: The i'th linear bucket covers the interval [offset + (i-1) *
-	// width, offset + i * width) where i ranges from 1 to
-	// num_finite_buckets, inclusive. Must be strictly positive.
-	Width float64 `json:"width,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NumFiniteBuckets") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NumFiniteBuckets") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1LinearBuckets) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1LinearBuckets
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleApiServicecontrolV1LinearBuckets) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleApiServicecontrolV1LinearBuckets
-	var s1 struct {
-		Offset gensupport.JSONFloat64 `json:"offset"`
-		Width  gensupport.JSONFloat64 `json:"width"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Offset = float64(s1.Offset)
-	s.Width = float64(s1.Width)
-	return nil
-}
-
-// GoogleApiServicecontrolV1LogEntry: An individual log entry.
-type GoogleApiServicecontrolV1LogEntry struct {
-	// HttpRequest: Optional. Information about the HTTP request associated
-	// with this log entry, if applicable.
-	HttpRequest *GoogleApiServicecontrolV1HttpRequest `json:"httpRequest,omitempty"`
-
-	// InsertId: A unique ID for the log entry used for deduplication. If
-	// omitted, the implementation will generate one based on operation_id.
-	InsertId string `json:"insertId,omitempty"`
-
-	// Labels: A set of user-defined (key, value) data that provides
-	// additional information about the log entry.
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: Required. The log to which this log entry belongs. Examples:
-	// "syslog", "book_log".
-	Name string `json:"name,omitempty"`
-
-	// Operation: Optional. Information about an operation associated with
-	// the log entry, if applicable.
-	Operation *GoogleApiServicecontrolV1LogEntryOperation `json:"operation,omitempty"`
-
-	// ProtoPayload: The log entry payload, represented as a protocol buffer
-	// that is expressed as a JSON object. The only accepted type currently
-	// is AuditLog.
-	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
-
-	// Severity: The severity of the log entry. The default value is
-	// `LogSeverity.DEFAULT`.
-	//
-	// Possible values:
-	//   "DEFAULT" - (0) The log entry has no assigned severity level.
-	//   "DEBUG" - (100) Debug or trace information.
-	//   "INFO" - (200) Routine information, such as ongoing status or
-	// performance.
-	//   "NOTICE" - (300) Normal but significant events, such as start up,
-	// shut down, or a configuration change.
-	//   "WARNING" - (400) Warning events might cause problems.
-	//   "ERROR" - (500) Error events are likely to cause problems.
-	//   "CRITICAL" - (600) Critical events cause more severe problems or
-	// outages.
-	//   "ALERT" - (700) A person must take an action immediately.
-	//   "EMERGENCY" - (800) One or more systems are unusable.
-	Severity string `json:"severity,omitempty"`
-
-	// SourceLocation: Optional. Source code location information associated
-	// with the log entry, if any.
-	SourceLocation *GoogleApiServicecontrolV1LogEntrySourceLocation `json:"sourceLocation,omitempty"`
-
-	// StructPayload: The log entry payload, represented as a structure that
-	// is expressed as a JSON object.
-	StructPayload googleapi.RawMessage `json:"structPayload,omitempty"`
-
-	// TextPayload: The log entry payload, represented as a Unicode string
-	// (UTF-8).
-	TextPayload string `json:"textPayload,omitempty"`
-
-	// Timestamp: The time the event described by the log entry occurred. If
-	// omitted, defaults to operation start time.
-	Timestamp string `json:"timestamp,omitempty"`
-
-	// Trace: Optional. Resource name of the trace associated with the log
-	// entry, if any. If this field contains a relative resource name, you
-	// can assume the name is relative to `//tracing.googleapis.com`.
-	// Example:
-	// `projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`
-	Trace string `json:"trace,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HttpRequest") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1LogEntry) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1LogEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1LogEntryOperation: Additional information
-// about a potentially long-running operation with which a log entry is
-// associated.
-type GoogleApiServicecontrolV1LogEntryOperation struct {
-	// First: Optional. Set this to True if this is the first log entry in
-	// the operation.
-	First bool `json:"first,omitempty"`
-
-	// Id: Optional. An arbitrary operation identifier. Log entries with the
-	// same identifier are assumed to be part of the same operation.
-	Id string `json:"id,omitempty"`
-
-	// Last: Optional. Set this to True if this is the last log entry in the
-	// operation.
-	Last bool `json:"last,omitempty"`
-
-	// Producer: Optional. An arbitrary producer identifier. The combination
-	// of `id` and `producer` must be globally unique. Examples for
-	// `producer`: "MyDivision.MyBigCompany.com",
-	// "github.com/MyProject/MyApplication".
-	Producer string `json:"producer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "First") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "First") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1LogEntryOperation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1LogEntryOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1LogEntrySourceLocation: Additional
-// information about the source code location that produced the log
-// entry.
-type GoogleApiServicecontrolV1LogEntrySourceLocation struct {
-	// File: Optional. Source file name. Depending on the runtime
-	// environment, this might be a simple name or a fully-qualified name.
-	File string `json:"file,omitempty"`
-
-	// Function: Optional. Human-readable name of the function or method
-	// being invoked, with optional context such as the class or package
-	// name. This information may be used in contexts such as the logs
-	// viewer, where a file and line number are less meaningful. The format
-	// can vary by language. For example: `qual.if.ied.Class.method` (Java),
-	// `dir/package.func` (Go), `function` (Python).
-	Function string `json:"function,omitempty"`
-
-	// Line: Optional. Line within the source file. 1-based; 0 indicates no
-	// line number available.
-	Line int64 `json:"line,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "File") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "File") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1LogEntrySourceLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1MetricValue: Represents a single metric
-// value.
-type GoogleApiServicecontrolV1MetricValue struct {
-	// BoolValue: A boolean value.
-	BoolValue bool `json:"boolValue,omitempty"`
-
-	// DistributionValue: A distribution value.
-	DistributionValue *GoogleApiServicecontrolV1Distribution `json:"distributionValue,omitempty"`
-
-	// DoubleValue: A double precision floating point value.
-	DoubleValue float64 `json:"doubleValue,omitempty"`
-
-	// EndTime: The end of the time period over which this metric value's
-	// measurement applies. If not specified,
-	// google.api.servicecontrol.v1.Operation.end_time will be used.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Int64Value: A signed 64-bit integer value.
-	Int64Value int64 `json:"int64Value,omitempty,string"`
-
-	// Labels: The labels describing the metric value. See comments on
-	// google.api.servicecontrol.v1.Operation.labels for the overriding
-	// relationship. Note that this map must not contain monitored resource
-	// labels.
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// MoneyValue: A money value.
-	MoneyValue *Money `json:"moneyValue,omitempty"`
-
-	// StartTime: The start of the time period over which this metric
-	// value's measurement applies. The time period has different semantics
-	// for different metric types (cumulative, delta, and gauge). See the
-	// metric definition documentation in the service configuration for
-	// details. If not specified,
-	// google.api.servicecontrol.v1.Operation.start_time will be used.
-	StartTime string `json:"startTime,omitempty"`
-
-	// StringValue: A text string value.
-	StringValue string `json:"stringValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1MetricValue) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1MetricValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleApiServicecontrolV1MetricValue) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleApiServicecontrolV1MetricValue
-	var s1 struct {
-		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.DoubleValue = float64(s1.DoubleValue)
-	return nil
-}
-
-// GoogleApiServicecontrolV1MetricValueSet: Represents a set of metric
-// values in the same metric. Each metric value in the set should have a
-// unique combination of start time, end time, and label values.
-type GoogleApiServicecontrolV1MetricValueSet struct {
-	// MetricName: The metric name defined in the service configuration.
-	MetricName string `json:"metricName,omitempty"`
-
-	// MetricValues: The values in this metric.
-	MetricValues []*GoogleApiServicecontrolV1MetricValue `json:"metricValues,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MetricName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetricName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1MetricValueSet) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1MetricValueSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1Operation: Represents information regarding
-// an operation.
-type GoogleApiServicecontrolV1Operation struct {
-	// ConsumerId: Identity of the consumer who is using the service. This
-	// field should be filled in for the operations initiated by a consumer,
-	// but not for service-initiated operations that are not related to a
-	// specific consumer. - This can be in one of the following formats: -
-	// project:PROJECT_ID, - project`_`number:PROJECT_NUMBER, -
-	// projects/PROJECT_ID or PROJECT_NUMBER, - folders/FOLDER_NUMBER, -
-	// organizations/ORGANIZATION_NUMBER, - api`_`key:API_KEY.
-	ConsumerId string `json:"consumerId,omitempty"`
-
-	// EndTime: End time of the operation. Required when the operation is
-	// used in ServiceController.Report, but optional when the operation is
-	// used in ServiceController.Check.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Extensions: Unimplemented.
-	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
-
-	// Importance: DO NOT USE. This is an experimental field.
-	//
-	// Possible values:
-	//   "LOW" - Allows data caching, batching, and aggregation. It provides
-	// higher performance with higher data loss risk.
-	//   "HIGH" - Disables data aggregation to minimize data loss. It is for
-	// operations that contains significant monetary value or audit trail.
-	// This feature only applies to the client libraries.
-	//   "DEBUG" - Deprecated. Do not use. Disables data aggregation and
-	// enables additional validation logic. It should only be used during
-	// the onboarding process. It is only available to Google internal
-	// services, and the service must be approved by chemist-dev@google.com
-	// in order to use this level.
-	Importance string `json:"importance,omitempty"`
-
-	// Labels: Labels describing the operation. Only the following labels
-	// are allowed: - Labels describing monitored resources as defined in
-	// the service configuration. - Default labels of metric values. When
-	// specified, labels defined in the metric value override these default.
-	// - The following labels defined by Google Cloud Platform: -
-	// `cloud.googleapis.com/location` describing the location where the
-	// operation happened, - `servicecontrol.googleapis.com/user_agent`
-	// describing the user agent of the API request, -
-	// `servicecontrol.googleapis.com/service_agent` describing the service
-	// used to handle the API request (e.g. ESP), -
-	// `servicecontrol.googleapis.com/platform` describing the platform
-	// where the API is served, such as App Engine, Compute Engine, or
-	// Kubernetes Engine.
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// LogEntries: Represents information to be logged.
-	LogEntries []*GoogleApiServicecontrolV1LogEntry `json:"logEntries,omitempty"`
-
-	// MetricValueSets: Represents information about this operation. Each
-	// MetricValueSet corresponds to a metric defined in the service
-	// configuration. The data type used in the MetricValueSet must agree
-	// with the data type specified in the metric definition. Within a
-	// single operation, it is not allowed to have more than one MetricValue
-	// instances that have the same metric names and identical label value
-	// combinations. If a request has such duplicated MetricValue instances,
-	// the entire request is rejected with an invalid argument error.
-	MetricValueSets []*GoogleApiServicecontrolV1MetricValueSet `json:"metricValueSets,omitempty"`
-
-	// OperationId: Identity of the operation. This must be unique within
-	// the scope of the service that generated the operation. If the service
-	// calls Check() and Report() on the same operation, the two calls
-	// should carry the same id. UUID version 4 is recommended, though not
-	// required. In scenarios where an operation is computed from existing
-	// information and an idempotent id is desirable for deduplication
-	// purpose, UUID version 5 is recommended. See RFC 4122 for details.
-	OperationId string `json:"operationId,omitempty"`
-
-	// OperationName: Fully qualified name of the operation. Reserved for
-	// future use.
-	OperationName string `json:"operationName,omitempty"`
-
-	// QuotaProperties: Represents the properties needed for quota check.
-	// Applicable only if this operation is for a quota check request. If
-	// this is not specified, no quota check will be performed.
-	QuotaProperties *GoogleApiServicecontrolV1QuotaProperties `json:"quotaProperties,omitempty"`
-
-	// Resources: The resources that are involved in the operation. The
-	// maximum supported number of entries in this field is 100.
-	Resources []*GoogleApiServicecontrolV1ResourceInfo `json:"resources,omitempty"`
-
-	// StartTime: Required. Start time of the operation.
-	StartTime string `json:"startTime,omitempty"`
-
-	// TraceSpans: Unimplemented. A list of Cloud Trace spans. The span
-	// names shall contain the id of the destination project which can be
-	// either the produce or the consumer project.
-	TraceSpans []*GoogleApiServicecontrolV1TraceSpan `json:"traceSpans,omitempty"`
-
-	// UserLabels: Private Preview. This feature is only available for
-	// approved services. User defined labels for the resource that this
-	// operation is associated with. Only a combination of 1000 user labels
-	// per consumer project are allowed.
-	UserLabels map[string]string `json:"userLabels,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConsumerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1Operation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1QuotaProperties: Represents the properties
-// needed for quota operations.
-type GoogleApiServicecontrolV1QuotaProperties struct {
-	// QuotaMode: Quota mode for this operation.
-	//
-	// Possible values:
-	//   "ACQUIRE" - Decreases available quota by the cost specified for the
-	// operation. If cost is higher than available quota, operation fails
-	// and returns error.
-	//   "ACQUIRE_BEST_EFFORT" - Decreases available quota by the cost
-	// specified for the operation. If cost is higher than available quota,
-	// operation does not fail and available quota goes down to zero but it
-	// returns error.
-	//   "CHECK" - Does not change any available quota. Only checks if there
-	// is enough quota. No lock is placed on the checked tokens neither.
-	//   "RELEASE" - Increases available quota by the operation cost
-	// specified for the operation.
-	QuotaMode string `json:"quotaMode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "QuotaMode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "QuotaMode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1QuotaProperties) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1QuotaProperties
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1ReportRequest: Request message for the
-// Report method.
-type GoogleApiServicecontrolV1ReportRequest struct {
-	// Operations: Operations to be reported. Typically the service should
-	// report one operation per request. Putting multiple operations into a
-	// single request is allowed, but should be used only when multiple
-	// operations are natually available at the time of the report. There is
-	// no limit on the number of operations in the same ReportRequest,
-	// however the ReportRequest size should be no larger than 1MB. See
-	// ReportResponse.report_errors for partial failure behavior.
-	Operations []*GoogleApiServicecontrolV1Operation `json:"operations,omitempty"`
-
-	// ServiceConfigId: Specifies which version of service config should be
-	// used to process the request. If unspecified or no matching version
-	// can be found, the latest one will be used.
-	ServiceConfigId string `json:"serviceConfigId,omitempty"`
-
-	// ServiceName: The service name as specified in its service
-	// configuration. For example, "pubsub.googleapis.com". See
-	// google.api.Service
-	// (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
-	// for the definition of a service name.
-	ServiceName string `json:"serviceName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Operations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Operations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1ReportRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1ReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1ResourceInfo: Describes a resource
-// associated with this operation.
-type GoogleApiServicecontrolV1ResourceInfo struct {
-	// ResourceContainer: The identifier of the parent of this resource
-	// instance. Must be in one of the following formats: - `projects/` -
-	// `folders/` - `organizations/`
-	ResourceContainer string `json:"resourceContainer,omitempty"`
-
-	// ResourceLocation: The location of the resource. If not empty, the
-	// resource will be checked against location policy. The value must be a
-	// valid zone, region or multiregion. For example: "europe-west4" or
-	// "northamerica-northeast1-a"
-	ResourceLocation string `json:"resourceLocation,omitempty"`
-
-	// ResourceName: Name of the resource. This is used for auditing
-	// purposes.
-	ResourceName string `json:"resourceName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResourceContainer")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceContainer") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1ResourceInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1ResourceInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1TraceSpan: A span represents a single
-// operation within a trace. Spans can be nested to form a trace tree.
-// Often, a trace contains a root span that describes the end-to-end
-// latency, and one or more subspans for its sub-operations. A trace can
-// also contain multiple root spans, or none at all. Spans do not need
-// to be contiguous—there may be gaps or overlaps between spans in a
-// trace.
-type GoogleApiServicecontrolV1TraceSpan struct {
-	// Attributes: A set of attributes on the span. You can have up to 32
-	// attributes per span.
-	Attributes *GoogleApiServicecontrolV1Attributes `json:"attributes,omitempty"`
-
-	// ChildSpanCount: An optional number of child spans that were generated
-	// while this span was active. If set, allows implementation to detect
-	// missing child spans.
-	ChildSpanCount int64 `json:"childSpanCount,omitempty"`
-
-	// DisplayName: A description of the span's operation (up to 128 bytes).
-	// Stackdriver Trace displays the description in the Google Cloud
-	// Platform Console. For example, the display name can be a qualified
-	// method name or a file name and a line number where the operation is
-	// called. A best practice is to use the same display name within an
-	// application and at the same call point. This makes it easier to
-	// correlate spans in different traces.
-	DisplayName *GoogleApiServicecontrolV1TruncatableString `json:"displayName,omitempty"`
-
-	// EndTime: The end time of the span. On the client side, this is the
-	// time kept by the local machine where the span execution ends. On the
-	// server side, this is the time when the server application handler
-	// stops running.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Name: The resource name of the span in the following format:
-	// projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
-	// identifier for a trace within a project; it is a 32-character
-	// hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique
-	// identifier for a span within a trace; it is a 16-character
-	// hexadecimal encoding of an 8-byte array.
-	Name string `json:"name,omitempty"`
-
-	// ParentSpanId: The [SPAN_ID] of this span's parent span. If this is a
-	// root span, then this field must be empty.
-	ParentSpanId string `json:"parentSpanId,omitempty"`
-
-	// SameProcessAsParentSpan: (Optional) Set this parameter to indicate
-	// whether this span is in the same process as its parent. If you do not
-	// set this parameter, Stackdriver Trace is unable to take advantage of
-	// this helpful information.
-	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
-
-	// SpanId: The [SPAN_ID] portion of the span's resource name.
-	SpanId string `json:"spanId,omitempty"`
-
-	// SpanKind: Distinguishes between spans generated in a particular
-	// context. For example, two spans with the same name may be
-	// distinguished using `CLIENT` (caller) and `SERVER` (callee) to
-	// identify an RPC call.
-	//
-	// Possible values:
-	//   "SPAN_KIND_UNSPECIFIED" - Unspecified. Do NOT use as default.
-	// Implementations MAY assume SpanKind.INTERNAL to be default.
-	//   "INTERNAL" - Indicates that the span is used internally. Default
-	// value.
-	//   "SERVER" - Indicates that the span covers server-side handling of
-	// an RPC or other remote network request.
-	//   "CLIENT" - Indicates that the span covers the client-side wrapper
-	// around an RPC or other remote request.
-	//   "PRODUCER" - Indicates that the span describes producer sending a
-	// message to a broker. Unlike client and server, there is no direct
-	// critical path latency relationship between producer and consumer
-	// spans (e.g. publishing a message to a pubsub service).
-	//   "CONSUMER" - Indicates that the span describes consumer receiving a
-	// message from a broker. Unlike client and server, there is no direct
-	// critical path latency relationship between producer and consumer
-	// spans (e.g. receiving a message from a pubsub service subscription).
-	SpanKind string `json:"spanKind,omitempty"`
-
-	// StartTime: The start time of the span. On the client side, this is
-	// the time kept by the local machine where the span execution starts.
-	// On the server side, this is the time when the server's application
-	// handler starts running.
-	StartTime string `json:"startTime,omitempty"`
-
-	// Status: An optional final status for this span.
-	Status *Status `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1TraceSpan) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1TraceSpan
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleApiServicecontrolV1TruncatableString: Represents a string that
-// might be shortened to a specified length.
-type GoogleApiServicecontrolV1TruncatableString struct {
-	// TruncatedByteCount: The number of bytes removed from the original
-	// string. If this value is 0, then the string was not shortened.
-	TruncatedByteCount int64 `json:"truncatedByteCount,omitempty"`
-
-	// Value: The shortened string. For example, if the original string is
-	// 500 bytes long and the limit of the string is 128 bytes, then `value`
-	// contains the first 128 bytes of the 500-byte string. Truncation
-	// always happens on a UTF8 character boundary. If there are multi-byte
-	// characters in the string, then the length of the shortened string
-	// might be less than the size limit.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TruncatedByteCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TruncatedByteCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServicecontrolV1TruncatableString) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServicecontrolV1TruncatableString
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3083,46 +1881,6 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Money: Represents an amount of money with its currency type.
-type Money struct {
-	// CurrencyCode: The three-letter currency code defined in ISO 4217.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Nanos: Number of nano (10^-9) units of the amount. The value must be
-	// between -999,999,999 and +999,999,999 inclusive. If `units` is
-	// positive, `nanos` must be positive or zero. If `units` is zero,
-	// `nanos` can be positive, zero, or negative. If `units` is negative,
-	// `nanos` must be negative or zero. For example $-1.75 is represented
-	// as `units`=-1 and `nanos`=-750,000,000.
-	Nanos int64 `json:"nanos,omitempty"`
-
-	// Units: The whole units of the amount. For example if `currencyCode`
-	// is "USD", then 1 unit is one US dollar.
-	Units int64 `json:"units,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Money) MarshalJSON() ([]byte, error) {
-	type NoMethod Money
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ObjectId: An ObjectId specifies an object identifier (OID). These
 // provide context and describe types in ASN.1 messages.
 type ObjectId struct {
@@ -3415,6 +2173,37 @@ type PublicKey struct {
 
 func (s *PublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod PublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReconciliationOperationMetadata: Operation metadata returned by the
+// CLH during resource state reconciliation.
+type ReconciliationOperationMetadata struct {
+	// DeleteResource: If set to TRUE, the resource has to be deleted. When
+	// using this bit, the CLH should fail the operation.
+	DeleteResource bool `json:"deleteResource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeleteResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeleteResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ReconciliationOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4264,6 +3053,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4307,7 +3098,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4409,28 +3200,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4473,7 +3270,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4544,7 +3341,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4556,13 +3353,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4615,6 +3412,9 @@ type ProjectsLocationsCertificateAuthoritiesActivateCall struct {
 // Certificate Authority signs a certificate signing request from
 // FetchCertificateAuthorityCsr, this method can complete the activation
 // process.
+//
+// - name: The resource name for this CertificateAuthority in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Activate(name string, activatecertificateauthorityrequest *ActivateCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesActivateCall {
 	c := &ProjectsLocationsCertificateAuthoritiesActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4649,7 +3449,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesActivateCall) Header() http.Head
 
 func (c *ProjectsLocationsCertificateAuthoritiesActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4756,6 +3556,9 @@ type ProjectsLocationsCertificateAuthoritiesCreateCall struct {
 
 // Create: Create a new CertificateAuthority in a given Project and
 // Location.
+//
+// - parent: The resource name of the location associated with the
+//   CertificateAuthorities, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Create(parent string, certificateauthority *CertificateAuthority) *ProjectsLocationsCertificateAuthoritiesCreateCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4815,7 +3618,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsCertificateAuthoritiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4931,6 +3734,9 @@ type ProjectsLocationsCertificateAuthoritiesDisableCall struct {
 }
 
 // Disable: Disable a CertificateAuthority.
+//
+// - name: The resource name for this CertificateAuthority in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Disable(name string, disablecertificateauthorityrequest *DisableCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesDisableCall {
 	c := &ProjectsLocationsCertificateAuthoritiesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4965,7 +3771,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesDisableCall) Header() http.Heade
 
 func (c *ProjectsLocationsCertificateAuthoritiesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5071,6 +3877,9 @@ type ProjectsLocationsCertificateAuthoritiesEnableCall struct {
 }
 
 // Enable: Enable a CertificateAuthority.
+//
+// - name: The resource name for this CertificateAuthority in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Enable(name string, enablecertificateauthorityrequest *EnableCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesEnableCall {
 	c := &ProjectsLocationsCertificateAuthoritiesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5105,7 +3914,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesEnableCall) Header() http.Header
 
 func (c *ProjectsLocationsCertificateAuthoritiesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5216,6 +4025,9 @@ type ProjectsLocationsCertificateAuthoritiesFetchCall struct {
 // Certificate Authority, which could be another CertificateAuthority
 // resource, or could be an on-prem certificate authority. See also
 // ActivateCertificateAuthority.
+//
+// - name: The resource name for this CertificateAuthority in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Fetch(name string) *ProjectsLocationsCertificateAuthoritiesFetchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5259,7 +4071,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesFetchCall) Header() http.Header 
 
 func (c *ProjectsLocationsCertificateAuthoritiesFetchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5361,6 +4173,8 @@ type ProjectsLocationsCertificateAuthoritiesGetCall struct {
 }
 
 // Get: Returns a CertificateAuthority.
+//
+// - name: The name of the CertificateAuthority to get.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Get(name string) *ProjectsLocationsCertificateAuthoritiesGetCall {
 	c := &ProjectsLocationsCertificateAuthoritiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5404,7 +4218,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCertificateAuthoritiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5507,6 +4321,10 @@ type ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesService) GetIamPolicy(resource string) *ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5564,7 +4382,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall) Header() http.
 
 func (c *ProjectsLocationsCertificateAuthoritiesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5671,6 +4489,9 @@ type ProjectsLocationsCertificateAuthoritiesListCall struct {
 }
 
 // List: Lists CertificateAuthorities.
+//
+// - parent: The resource name of the location associated with the
+//   CertificateAuthorities, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) List(parent string) *ProjectsLocationsCertificateAuthoritiesListCall {
 	c := &ProjectsLocationsCertificateAuthoritiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5746,7 +4567,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCertificateAuthoritiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5890,6 +4711,9 @@ type ProjectsLocationsCertificateAuthoritiesPatchCall struct {
 }
 
 // Patch: Update a CertificateAuthority.
+//
+// - name: Output only. The resource name for this CertificateAuthority
+//   in the format `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Patch(name string, certificateauthority *CertificateAuthority) *ProjectsLocationsCertificateAuthoritiesPatchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5948,7 +4772,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsCertificateAuthoritiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6066,6 +4890,9 @@ type ProjectsLocationsCertificateAuthoritiesRestoreCall struct {
 
 // Restore: Restore a CertificateAuthority that is scheduled for
 // deletion.
+//
+// - name: The resource name for this CertificateAuthority in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) Restore(name string, restorecertificateauthorityrequest *RestoreCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesRestoreCall {
 	c := &ProjectsLocationsCertificateAuthoritiesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6100,7 +4927,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesRestoreCall) Header() http.Heade
 
 func (c *ProjectsLocationsCertificateAuthoritiesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6206,6 +5033,9 @@ type ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall struct {
 }
 
 // ScheduleDelete: Schedule a CertificateAuthority for deletion.
+//
+// - name: The resource name for this CertificateAuthority in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesService) ScheduleDelete(name string, scheduledeletecertificateauthorityrequest *ScheduleDeleteCertificateAuthorityRequest) *ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall {
 	c := &ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6240,7 +5070,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall) Header() htt
 
 func (c *ProjectsLocationsCertificateAuthoritiesScheduleDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6348,6 +5178,10 @@ type ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6382,7 +5216,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall) Header() http.
 
 func (c *ProjectsLocationsCertificateAuthoritiesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6493,6 +5327,10 @@ type ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall {
 	c := &ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6527,7 +5365,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall) Header()
 
 func (c *ProjectsLocationsCertificateAuthoritiesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6633,6 +5471,8 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall st
 }
 
 // Get: Returns a CertificateRevocationList.
+//
+// - name: The name of the CertificateRevocationList to get.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) Get(name string) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6676,7 +5516,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCal
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6779,6 +5619,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPoli
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) GetIamPolicy(resource string) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6836,7 +5680,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIam
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6943,6 +5787,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall s
 }
 
 // List: Lists CertificateRevocationLists.
+//
+// - parent: The resource name of the location associated with the
+//   CertificateRevocationLists, in the format
+//   `projects/*/locations/*/certificateauthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) List(parent string) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7019,7 +5867,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCa
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7163,6 +6011,11 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall 
 }
 
 // Patch: Update a CertificateRevocationList.
+//
+// - name: Output only. The resource path for this
+//   CertificateRevocationList in the format
+//   `projects/*/locations/*/certificateAuthorities/*/
+//   certificateRevocationLists/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) Patch(name string, certificaterevocationlist *CertificateRevocationList) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7221,7 +6074,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchC
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7340,6 +6193,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPoli
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7374,7 +6231,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIam
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7485,6 +6342,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPer
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7519,7 +6380,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIa
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7626,6 +6487,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall struct {
 
 // Create: Create a new Certificate in a given Project, Location from a
 // particular CertificateAuthority.
+//
+// - parent: The resource name of the location and CertificateAuthority
+//   associated with the Certificate, in the format
+//   `projects/*/locations/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Create(parent string, certificate *Certificate) *ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7687,7 +6552,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall) Header()
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7803,6 +6668,8 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesGetCall struct {
 }
 
 // Get: Returns a Certificate.
+//
+// - name: The name of the Certificate to get.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Get(name string) *ProjectsLocationsCertificateAuthoritiesCertificatesGetCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7846,7 +6713,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificatesGetCall) Header() ht
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7947,6 +6814,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesListCall struct {
 }
 
 // List: Lists Certificates.
+//
+// - parent: The resource name of the location associated with the
+//   Certificates, in the format
+//   `projects/*/locations/*/certificateauthorities/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) List(parent string) *ProjectsLocationsCertificateAuthoritiesCertificatesListCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8025,7 +6896,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificatesListCall) Header() h
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8169,6 +7040,10 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall struct {
 
 // Patch: Update a Certificate. Currently, the only field you can update
 // is the labels field.
+//
+// - name: Output only. The resource path for this Certificate in the
+//   format
+//   `projects/*/locations/*/certificateAuthorities/*/certificates/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8227,7 +7102,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall) Header() 
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8344,6 +7219,9 @@ type ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall struct {
 }
 
 // Revoke: Revoke a Certificate.
+//
+// - name: The resource name for this Certificate in the format
+//   `projects/*/locations/*/certificateAuthorities/*/certificates/*`.
 func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) Revoke(name string, revokecertificaterequest *RevokeCertificateRequest) *ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall {
 	c := &ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8378,7 +7256,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall) Header()
 
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8493,6 +7371,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8527,7 +7407,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8635,6 +7515,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8668,7 +7550,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8768,6 +7650,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8811,7 +7695,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8921,6 +7805,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8985,7 +7871,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9123,6 +8009,8 @@ type ProjectsLocationsReusableConfigsGetCall struct {
 }
 
 // Get: Returns a ReusableConfig.
+//
+// - name: The name of the ReusableConfigs to get.
 func (r *ProjectsLocationsReusableConfigsService) Get(name string) *ProjectsLocationsReusableConfigsGetCall {
 	c := &ProjectsLocationsReusableConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9166,7 +8054,7 @@ func (c *ProjectsLocationsReusableConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReusableConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9269,6 +8157,10 @@ type ProjectsLocationsReusableConfigsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsReusableConfigsService) GetIamPolicy(resource string) *ProjectsLocationsReusableConfigsGetIamPolicyCall {
 	c := &ProjectsLocationsReusableConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9326,7 +8218,7 @@ func (c *ProjectsLocationsReusableConfigsGetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsLocationsReusableConfigsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9433,6 +8325,9 @@ type ProjectsLocationsReusableConfigsListCall struct {
 }
 
 // List: Lists ReusableConfigs.
+//
+// - parent: The resource name of the location associated with the
+//   ReusableConfigs, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsReusableConfigsService) List(parent string) *ProjectsLocationsReusableConfigsListCall {
 	c := &ProjectsLocationsReusableConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9507,7 +8402,7 @@ func (c *ProjectsLocationsReusableConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReusableConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9652,6 +8547,10 @@ type ProjectsLocationsReusableConfigsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsReusableConfigsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsReusableConfigsSetIamPolicyCall {
 	c := &ProjectsLocationsReusableConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9686,7 +8585,7 @@ func (c *ProjectsLocationsReusableConfigsSetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsLocationsReusableConfigsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9797,6 +8696,10 @@ type ProjectsLocationsReusableConfigsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsReusableConfigsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsReusableConfigsTestIamPermissionsCall {
 	c := &ProjectsLocationsReusableConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9831,7 +8734,7 @@ func (c *ProjectsLocationsReusableConfigsTestIamPermissionsCall) Header() http.H
 
 func (c *ProjectsLocationsReusableConfigsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

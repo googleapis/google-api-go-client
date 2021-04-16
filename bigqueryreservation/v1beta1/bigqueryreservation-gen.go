@@ -86,7 +86,7 @@ const (
 	// View and manage your data in Google BigQuery
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -265,7 +265,7 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 type BiReservation struct {
 	// Name: The resource name of the singleton BI reservation. Reservation
 	// names have the form
-	// `projects/{project_id}/locations/{location_id}/bireservation`.
+	// `projects/{project_id}/locations/{location_id}/biReservation`.
 	Name string `json:"name,omitempty"`
 
 	// Size: Size of a reservation, in bytes.
@@ -412,37 +412,6 @@ type CapacityCommitment struct {
 
 func (s *CapacityCommitment) MarshalJSON() ([]byte, error) {
 	type NoMethod CapacityCommitment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CreateSlotPoolMetadata: The metadata for operation returned from
-// ReservationService.CreateSlotPool.
-type CreateSlotPoolMetadata struct {
-	// SlotPool: Resource name of the slot pool that is being created. E.g.,
-	// projects/myproject/locations/us-central1/reservations/foo/slotPools/12
-	// 3
-	SlotPool string `json:"slotPool,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SlotPool") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SlotPool") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CreateSlotPoolMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod CreateSlotPoolMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -654,6 +623,12 @@ type Reservation struct {
 	// capacity specified above at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
 
+	// MaxConcurrency: Maximum number of queries that are allowed to run
+	// concurrently in this reservation. Default value is 0 which means that
+	// maximum concurrency will be automatically set based on the
+	// reservation size.
+	MaxConcurrency int64 `json:"maxConcurrency,omitempty,string"`
+
 	// Name: The resource name of the reservation, e.g.,
 	// `projects/*/locations/*/reservations/team1-prod`.
 	Name string `json:"name,omitempty"`
@@ -857,6 +832,9 @@ type ProjectsLocationsGetBiReservationCall struct {
 }
 
 // GetBiReservation: Retrieves a BI reservation.
+//
+// - name: Name of the requested reservation, for example:
+//   `projects/{project_id}/locations/{location_id}/biReservation`.
 func (r *ProjectsLocationsService) GetBiReservation(name string) *ProjectsLocationsGetBiReservationCall {
 	c := &ProjectsLocationsGetBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -900,7 +878,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -971,7 +949,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/bireservation`",
+	//       "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/biReservation`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
 	//       "required": true,
@@ -1015,6 +993,9 @@ type ProjectsLocationsSearchAssignmentsCall struct {
 // here is `projects/*/locations/*`, instead of
 // `projects/*/locations/*reservations/*`. **Note** "-" cannot be used
 // for projects nor locations.
+//
+// - parent: The resource name of the admin project(containing project
+//   and location), e.g.: `projects/myproject/locations/US`.
 func (r *ProjectsLocationsService) SearchAssignments(parent string) *ProjectsLocationsSearchAssignmentsCall {
 	c := &ProjectsLocationsSearchAssignmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1081,7 +1062,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1224,6 +1205,10 @@ type ProjectsLocationsUpdateBiReservationCall struct {
 // exists with default size 0. In order to reserve BI capacity it needs
 // to be updated to an amount greater than 0. In order to release BI
 // capacity reservation size must be set to 0.
+//
+// - name: The resource name of the singleton BI reservation.
+//   Reservation names have the form
+//   `projects/{project_id}/locations/{location_id}/biReservation`.
 func (r *ProjectsLocationsService) UpdateBiReservation(name string, bireservation *BiReservation) *ProjectsLocationsUpdateBiReservationCall {
 	c := &ProjectsLocationsUpdateBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1265,7 +1250,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1338,7 +1323,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/bireservation`.",
+	//       "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/biReservation`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
 	//       "required": true,
@@ -1378,6 +1363,9 @@ type ProjectsLocationsCapacityCommitmentsCreateCall struct {
 }
 
 // Create: Creates a new capacity commitment resource.
+//
+// - parent: Resource name of the parent reservation. E.g.,
+//   `projects/myproject/locations/US`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsCreateCall {
 	c := &ProjectsLocationsCapacityCommitmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1420,7 +1408,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1533,6 +1521,9 @@ type ProjectsLocationsCapacityCommitmentsDeleteCall struct {
 // Delete: Deletes a capacity commitment. Attempting to delete capacity
 // commitment before its commitment_end_time will fail with the error
 // code `google.rpc.Code.FAILED_PRECONDITION`.
+//
+// - name: Resource name of the capacity commitment to delete. E.g.,
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Delete(name string) *ProjectsLocationsCapacityCommitmentsDeleteCall {
 	c := &ProjectsLocationsCapacityCommitmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1566,7 +1557,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1665,6 +1656,9 @@ type ProjectsLocationsCapacityCommitmentsGetCall struct {
 }
 
 // Get: Returns information about the capacity commitment.
+//
+// - name: Resource name of the capacity commitment to retrieve. E.g.,
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Get(name string) *ProjectsLocationsCapacityCommitmentsGetCall {
 	c := &ProjectsLocationsCapacityCommitmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1708,7 +1702,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1810,6 +1804,9 @@ type ProjectsLocationsCapacityCommitmentsListCall struct {
 }
 
 // List: Lists all the capacity commitments for the admin project.
+//
+// - parent: Resource name of the parent reservation. E.g.,
+//   `projects/myproject/locations/US`.
 func (r *ProjectsLocationsCapacityCommitmentsService) List(parent string) *ProjectsLocationsCapacityCommitmentsListCall {
 	c := &ProjectsLocationsCapacityCommitmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1867,7 +1864,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2005,6 +2002,9 @@ type ProjectsLocationsCapacityCommitmentsMergeCall struct {
 // commitment_end_time out of the to-be-merged capacity commitments.
 // Attempting to merge capacity commitments of different plan will fail
 // with the error code `google.rpc.Code.FAILED_PRECONDITION`.
+//
+// - parent: Parent resource that identifies admin project and location
+//   e.g., `projects/myproject/locations/us`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Merge(parent string, mergecapacitycommitmentsrequest *MergeCapacityCommitmentsRequest) *ProjectsLocationsCapacityCommitmentsMergeCall {
 	c := &ProjectsLocationsCapacityCommitmentsMergeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2039,7 +2039,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2150,6 +2150,9 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 // plan of a longer commitment period. Attempting to change to a plan
 // with shorter commitment period will fail with the error code
 // `google.rpc.Code.FAILED_PRECONDITION`.
+//
+// - name: Output only. The resource name of the capacity commitment,
+//   e.g., `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2191,7 +2194,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2309,6 +2312,9 @@ type ProjectsLocationsCapacityCommitmentsSplitCall struct {
 // 8000, you might split a 10000 capacity commitment into commitments of
 // 2000 and 8000. Then, you would change the plan of the first one to
 // `FLEX` and then delete it.
+//
+// - name: The resource name e.g.,:
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Split(name string, splitcapacitycommitmentrequest *SplitCapacityCommitmentRequest) *ProjectsLocationsCapacityCommitmentsSplitCall {
 	c := &ProjectsLocationsCapacityCommitmentsSplitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2343,7 +2349,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2450,6 +2456,8 @@ type ProjectsLocationsReservationsCreateCall struct {
 }
 
 // Create: Creates a new reservation resource.
+//
+// - parent: Project, location. E.g., `projects/myproject/locations/US`.
 func (r *ProjectsLocationsReservationsService) Create(parent string, reservation *Reservation) *ProjectsLocationsReservationsCreateCall {
 	c := &ProjectsLocationsReservationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2492,7 +2500,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2605,6 +2613,9 @@ type ProjectsLocationsReservationsDeleteCall struct {
 // Delete: Deletes a reservation. Returns
 // `google.rpc.Code.FAILED_PRECONDITION` when reservation has
 // assignments.
+//
+// - name: Resource name of the reservation to retrieve. E.g.,
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Delete(name string) *ProjectsLocationsReservationsDeleteCall {
 	c := &ProjectsLocationsReservationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2638,7 +2649,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2737,6 +2748,9 @@ type ProjectsLocationsReservationsGetCall struct {
 }
 
 // Get: Returns information about the reservation.
+//
+// - name: Resource name of the reservation to retrieve. E.g.,
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Get(name string) *ProjectsLocationsReservationsGetCall {
 	c := &ProjectsLocationsReservationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2780,7 +2794,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2883,6 +2897,9 @@ type ProjectsLocationsReservationsListCall struct {
 
 // List: Lists all the reservations for the project in the specified
 // location.
+//
+// - parent: The parent resource name containing project and location,
+//   e.g.: `projects/myproject/locations/US`.
 func (r *ProjectsLocationsReservationsService) List(parent string) *ProjectsLocationsReservationsListCall {
 	c := &ProjectsLocationsReservationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2950,7 +2967,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3089,6 +3106,9 @@ type ProjectsLocationsReservationsPatchCall struct {
 }
 
 // Patch: Updates an existing reservation resource.
+//
+// - name: The resource name of the reservation, e.g.,
+//   `projects/*/locations/*/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Patch(name string, reservation *Reservation) *ProjectsLocationsReservationsPatchCall {
 	c := &ProjectsLocationsReservationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3130,7 +3150,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3256,11 +3276,19 @@ type ProjectsLocationsReservationsAssignmentsCreateCall struct {
 // `organizationA` contains two projects, `project1` and `project2`. *
 // Assignments for all three entities (`organizationA`, `project1`, and
 // `project2`) could all be created and mapped to the same or different
-// reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user
-// does not have 'bigquery.admin' permissions on the project using the
-// reservation and the project that owns this reservation. Returns
+// reservations. "None" assignments represent an absence of the
+// assignment. Projects assigned to None use on-demand pricing. To
+// create a "None" assignment, use "none" as a reservation_id in the
+// parent. Example parent:
+// `projects/myproject/locations/US/reservations/none`. Returns
+// `google.rpc.Code.PERMISSION_DENIED` if user does not have
+// 'bigquery.admin' permissions on the project using the reservation and
+// the project that owns this reservation. Returns
 // `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment
 // does not match location of the reservation.
+//
+// - parent: The parent resource name of the assignment E.g.
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Create(parent string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsCreateCall {
 	c := &ProjectsLocationsReservationsAssignmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3295,7 +3323,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3359,7 +3387,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
+	//   "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. \"None\" assignments represent an absence of the assignment. Projects assigned to None use on-demand pricing. To create a \"None\" assignment, use \"none\" as a reservation_id in the parent. Example parent: `projects/myproject/locations/US/reservations/none`. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.create",
@@ -3409,6 +3437,10 @@ type ProjectsLocationsReservationsAssignmentsDeleteCall struct {
 // assignment ``. After said deletion, queries from `project1` will
 // still use `res1` while queries from `project2` will switch to use
 // on-demand mode.
+//
+// - name: Name of the resource, e.g.
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Delete(name string) *ProjectsLocationsReservationsAssignmentsDeleteCall {
 	c := &ProjectsLocationsReservationsAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3442,7 +3474,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3551,6 +3583,10 @@ type ProjectsLocationsReservationsAssignmentsListCall struct {
 // In that case all assignments belongs to the specified project and
 // location will be listed. **Note** "-" cannot be used for projects nor
 // locations.
+//
+// - parent: The parent resource name e.g.:
+//   `projects/myproject/locations/US/reservations/team1-prod` Or:
+//   `projects/myproject/locations/US/reservations/-`.
 func (r *ProjectsLocationsReservationsAssignmentsService) List(parent string) *ProjectsLocationsReservationsAssignmentsListCall {
 	c := &ProjectsLocationsReservationsAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3608,7 +3644,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3745,6 +3781,10 @@ type ProjectsLocationsReservationsAssignmentsMoveCall struct {
 // removing an existing assignment and recreating a new one by providing
 // a transactional change that ensures an assignee always has an
 // associated reservation.
+//
+// - name: The resource name of the assignment, e.g.
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Move(name string, moveassignmentrequest *MoveAssignmentRequest) *ProjectsLocationsReservationsAssignmentsMoveCall {
 	c := &ProjectsLocationsReservationsAssignmentsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3779,7 +3819,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

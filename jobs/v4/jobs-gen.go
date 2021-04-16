@@ -145,6 +145,7 @@ func (s *Service) userAgent() string {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Operations = NewProjectsOperationsService(s)
 	rs.Tenants = NewProjectsTenantsService(s)
 	return rs
 }
@@ -152,7 +153,18 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
+	Operations *ProjectsOperationsService
+
 	Tenants *ProjectsTenantsService
+}
+
+func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
+	rs := &ProjectsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsTenantsService(s *Service) *ProjectsTenantsService {
@@ -2468,13 +2480,17 @@ type LocationFilter struct {
 	// from. This field is ignored if `address` is provided.
 	LatLng *LatLng `json:"latLng,omitempty"`
 
-	// RegionCode: CLDR region code of the country/region of the address.
-	// This is used to address ambiguity of the user-input location, for
-	// example, "Liverpool" against "Liverpool, NY, US" or "Liverpool, UK".
-	// Set this field to bias location resolution toward a specific country
-	// or territory. If this field is not set, application behavior is
-	// biased toward the United States by default. See
-	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// RegionCode: CLDR region code of the country/region. This field may be
+	// used in two ways: 1) If telecommute preference is not set, this field
+	// is used address ambiguity of the user-input address. For example,
+	// "Liverpool" may refer to "Liverpool, NY, US" or "Liverpool, UK". This
+	// region code biases the address resolution toward a specific country
+	// or territory. If this field is not set, address resolution is biased
+	// toward the United States by default. 2) If telecommute preference is
+	// set to TELECOMMUTE_ALLOWED, the telecommute location filter will be
+	// limited to the region specified in this field. If this field is not
+	// set, the telecommute job locations will not be See
+	// https://unicode-org.github.io/cldr-staging/charts/latest/supplemental/territory_information.html
 	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
@@ -3626,6 +3642,155 @@ func (s *TimestampRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "jobs.projects.operations.get":
+
+type ProjectsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
+	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsOperationsGetCall) Context(ctx context.Context) *ProjectsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "jobs.projects.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v4/projects/{projectsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "jobs.projects.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v4/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/jobs"
+	//   ]
+	// }
+
+}
+
 // method id "jobs.projects.tenants.completeQuery":
 
 type ProjectsTenantsCompleteQueryCall struct {
@@ -3640,6 +3805,10 @@ type ProjectsTenantsCompleteQueryCall struct {
 // CompleteQuery: Completes the specified prefix with keyword
 // suggestions. Intended for use by a job search auto-complete search
 // box.
+//
+// - tenant: Resource name of tenant the completion is performed within.
+//   The format is "projects/{project_id}/tenants/{tenant_id}", for
+//   example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) CompleteQuery(tenant string) *ProjectsTenantsCompleteQueryCall {
 	c := &ProjectsTenantsCompleteQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tenant = tenant
@@ -3751,7 +3920,7 @@ func (c *ProjectsTenantsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3907,6 +4076,10 @@ type ProjectsTenantsCreateCall struct {
 }
 
 // Create: Creates a new tenant entity.
+//
+// - parent: Resource name of the project under which the tenant is
+//   created. The format is "projects/{project_id}", for example,
+//   "projects/foo".
 func (r *ProjectsTenantsService) Create(parent string, tenant *Tenant) *ProjectsTenantsCreateCall {
 	c := &ProjectsTenantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3941,7 +4114,7 @@ func (c *ProjectsTenantsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4047,6 +4220,10 @@ type ProjectsTenantsDeleteCall struct {
 }
 
 // Delete: Deletes specified tenant.
+//
+// - name: The resource name of the tenant to be deleted. The format is
+//   "projects/{project_id}/tenants/{tenant_id}", for example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) Delete(name string) *ProjectsTenantsDeleteCall {
 	c := &ProjectsTenantsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4080,7 +4257,7 @@ func (c *ProjectsTenantsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4179,6 +4356,10 @@ type ProjectsTenantsGetCall struct {
 }
 
 // Get: Retrieves specified tenant.
+//
+// - name: The resource name of the tenant to be retrieved. The format
+//   is "projects/{project_id}/tenants/{tenant_id}", for example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) Get(name string) *ProjectsTenantsGetCall {
 	c := &ProjectsTenantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4222,7 +4403,7 @@ func (c *ProjectsTenantsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4324,6 +4505,10 @@ type ProjectsTenantsListCall struct {
 }
 
 // List: Lists all tenants associated with the project.
+//
+// - parent: Resource name of the project under which the tenant is
+//   created. The format is "projects/{project_id}", for example,
+//   "projects/foo".
 func (r *ProjectsTenantsService) List(parent string) *ProjectsTenantsListCall {
 	c := &ProjectsTenantsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4382,7 +4567,7 @@ func (c *ProjectsTenantsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4516,6 +4701,11 @@ type ProjectsTenantsPatchCall struct {
 }
 
 // Patch: Updates specified tenant.
+//
+// - name: Required during tenant update. The resource name for a
+//   tenant. This is generated by the service when a tenant is created.
+//   The format is "projects/{project_id}/tenants/{tenant_id}", for
+//   example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsService) Patch(name string, tenant *Tenant) *ProjectsTenantsPatchCall {
 	c := &ProjectsTenantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4560,7 +4750,7 @@ func (c *ProjectsTenantsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4678,6 +4868,10 @@ type ProjectsTenantsClientEventsCreateCall struct {
 // (https://console.cloud.google.com/talent-solution/overview). Learn
 // more (https://cloud.google.com/talent-solution/docs/management-tools)
 // about self service tools.
+//
+// - parent: Resource name of the tenant under which the event is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}",
+//   for example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsClientEventsService) Create(parent string, clientevent *ClientEvent) *ProjectsTenantsClientEventsCreateCall {
 	c := &ProjectsTenantsClientEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4712,7 +4906,7 @@ func (c *ProjectsTenantsClientEventsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsClientEventsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4819,6 +5013,10 @@ type ProjectsTenantsCompaniesCreateCall struct {
 }
 
 // Create: Creates a new company entity.
+//
+// - parent: Resource name of the tenant under which the company is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}",
+//   for example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsCompaniesService) Create(parent string, company *Company) *ProjectsTenantsCompaniesCreateCall {
 	c := &ProjectsTenantsCompaniesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4853,7 +5051,7 @@ func (c *ProjectsTenantsCompaniesCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4960,6 +5158,10 @@ type ProjectsTenantsCompaniesDeleteCall struct {
 
 // Delete: Deletes specified company. Prerequisite: The company has no
 // jobs associated with it.
+//
+// - name: The resource name of the company to be deleted. The format is
+//   "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+//   for example, "projects/foo/tenants/bar/companies/baz".
 func (r *ProjectsTenantsCompaniesService) Delete(name string) *ProjectsTenantsCompaniesDeleteCall {
 	c := &ProjectsTenantsCompaniesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4993,7 +5195,7 @@ func (c *ProjectsTenantsCompaniesDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5092,6 +5294,11 @@ type ProjectsTenantsCompaniesGetCall struct {
 }
 
 // Get: Retrieves specified company.
+//
+// - name: The resource name of the company to be retrieved. The format
+//   is
+//   "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+//   for example, "projects/api-test-project/tenants/foo/companies/bar".
 func (r *ProjectsTenantsCompaniesService) Get(name string) *ProjectsTenantsCompaniesGetCall {
 	c := &ProjectsTenantsCompaniesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5135,7 +5342,7 @@ func (c *ProjectsTenantsCompaniesGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5237,6 +5444,10 @@ type ProjectsTenantsCompaniesListCall struct {
 }
 
 // List: Lists all companies associated with the project.
+//
+// - parent: Resource name of the tenant under which the company is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}",
+//   for example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsCompaniesService) List(parent string) *ProjectsTenantsCompaniesListCall {
 	c := &ProjectsTenantsCompaniesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5304,7 +5515,7 @@ func (c *ProjectsTenantsCompaniesListCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5443,6 +5654,12 @@ type ProjectsTenantsCompaniesPatchCall struct {
 }
 
 // Patch: Updates specified company.
+//
+// - name: Required during company update. The resource name for a
+//   company. This is generated by the service when a company is
+//   created. The format is
+//   "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+//   for example, "projects/foo/tenants/bar/companies/baz".
 func (r *ProjectsTenantsCompaniesService) Patch(name string, company *Company) *ProjectsTenantsCompaniesPatchCall {
 	c := &ProjectsTenantsCompaniesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5487,7 +5704,7 @@ func (c *ProjectsTenantsCompaniesPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5600,6 +5817,10 @@ type ProjectsTenantsJobsBatchCreateCall struct {
 }
 
 // BatchCreate: Begins executing a batch create jobs operation.
+//
+// - parent: The resource name of the tenant under which the job is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) BatchCreate(parent string, batchcreatejobsrequest *BatchCreateJobsRequest) *ProjectsTenantsJobsBatchCreateCall {
 	c := &ProjectsTenantsJobsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5634,7 +5855,7 @@ func (c *ProjectsTenantsJobsBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5741,6 +5962,11 @@ type ProjectsTenantsJobsBatchDeleteCall struct {
 }
 
 // BatchDelete: Begins executing a batch delete jobs operation.
+//
+// - parent: The resource name of the tenant under which the job is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar". The parent of all of the
+//   jobs specified in `names` must match this field.
 func (r *ProjectsTenantsJobsService) BatchDelete(parent string, batchdeletejobsrequest *BatchDeleteJobsRequest) *ProjectsTenantsJobsBatchDeleteCall {
 	c := &ProjectsTenantsJobsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5775,7 +6001,7 @@ func (c *ProjectsTenantsJobsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5882,6 +6108,10 @@ type ProjectsTenantsJobsBatchUpdateCall struct {
 }
 
 // BatchUpdate: Begins executing a batch update jobs operation.
+//
+// - parent: The resource name of the tenant under which the job is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) BatchUpdate(parent string, batchupdatejobsrequest *BatchUpdateJobsRequest) *ProjectsTenantsJobsBatchUpdateCall {
 	c := &ProjectsTenantsJobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5916,7 +6146,7 @@ func (c *ProjectsTenantsJobsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6024,6 +6254,10 @@ type ProjectsTenantsJobsCreateCall struct {
 
 // Create: Creates a new job. Typically, the job becomes searchable
 // within 10 seconds, but it may take up to 5 minutes.
+//
+// - parent: The resource name of the tenant under which the job is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) Create(parent string, job *Job) *ProjectsTenantsJobsCreateCall {
 	c := &ProjectsTenantsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6058,7 +6292,7 @@ func (c *ProjectsTenantsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6165,6 +6399,10 @@ type ProjectsTenantsJobsDeleteCall struct {
 
 // Delete: Deletes the specified job. Typically, the job becomes
 // unsearchable within 10 seconds, but it may take up to 5 minutes.
+//
+// - name: The resource name of the job to be deleted. The format is
+//   "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+//   example, "projects/foo/tenants/bar/jobs/baz".
 func (r *ProjectsTenantsJobsService) Delete(name string) *ProjectsTenantsJobsDeleteCall {
 	c := &ProjectsTenantsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6198,7 +6436,7 @@ func (c *ProjectsTenantsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6298,6 +6536,10 @@ type ProjectsTenantsJobsGetCall struct {
 
 // Get: Retrieves the specified job, whose status is OPEN or recently
 // EXPIRED within the last 90 days.
+//
+// - name: The resource name of the job to retrieve. The format is
+//   "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+//   example, "projects/foo/tenants/bar/jobs/baz".
 func (r *ProjectsTenantsJobsService) Get(name string) *ProjectsTenantsJobsGetCall {
 	c := &ProjectsTenantsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6341,7 +6583,7 @@ func (c *ProjectsTenantsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6443,6 +6685,10 @@ type ProjectsTenantsJobsListCall struct {
 }
 
 // List: Lists jobs by filter.
+//
+// - parent: The resource name of the tenant under which the job is
+//   created. The format is "projects/{project_id}/tenants/{tenant_id}".
+//   For example, "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) List(parent string) *ProjectsTenantsJobsListCall {
 	c := &ProjectsTenantsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6539,7 +6785,7 @@ func (c *ProjectsTenantsJobsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6699,6 +6945,13 @@ type ProjectsTenantsJobsPatchCall struct {
 // Patch: Updates specified job. Typically, updated contents become
 // visible in search results within 10 seconds, but it may take up to 5
 // minutes.
+//
+// - name: Required during job update. The resource name for the job.
+//   This is generated by the service when a job is created. The format
+//   is "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+//   example, "projects/foo/tenants/bar/jobs/baz". Use of this field in
+//   job queries and API calls is preferred over the use of
+//   requisition_id since this value is unique.
 func (r *ProjectsTenantsJobsService) Patch(name string, job *Job) *ProjectsTenantsJobsPatchCall {
 	c := &ProjectsTenantsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6743,7 +6996,7 @@ func (c *ProjectsTenantsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6858,6 +7111,10 @@ type ProjectsTenantsJobsSearchCall struct {
 // Search: Searches for jobs using the provided SearchJobsRequest. This
 // call constrains the visibility of jobs present in the database, and
 // only returns jobs that the caller has permission to search against.
+//
+// - parent: The resource name of the tenant to search within. The
+//   format is "projects/{project_id}/tenants/{tenant_id}". For example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) Search(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsTenantsJobsSearchCall {
 	c := &ProjectsTenantsJobsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6892,7 +7149,7 @@ func (c *ProjectsTenantsJobsSearchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7027,6 +7284,10 @@ type ProjectsTenantsJobsSearchForAlertCall struct {
 // specifically target passive job seekers. This call constrains the
 // visibility of jobs present in the database, and only returns jobs the
 // caller has permission to search against.
+//
+// - parent: The resource name of the tenant to search within. The
+//   format is "projects/{project_id}/tenants/{tenant_id}". For example,
+//   "projects/foo/tenants/bar".
 func (r *ProjectsTenantsJobsService) SearchForAlert(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsTenantsJobsSearchForAlertCall {
 	c := &ProjectsTenantsJobsSearchForAlertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7061,7 +7322,7 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchForAlertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

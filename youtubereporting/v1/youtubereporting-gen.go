@@ -1027,7 +1027,7 @@ func (c *JobsCreateCall) Header() http.Header {
 
 func (c *JobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1126,6 +1126,8 @@ type JobsDeleteCall struct {
 }
 
 // Delete: Deletes a job.
+//
+// - jobId: The ID of the job to delete.
 func (r *JobsService) Delete(jobId string) *JobsDeleteCall {
 	c := &JobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1168,7 +1170,7 @@ func (c *JobsDeleteCall) Header() http.Header {
 
 func (c *JobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1271,6 +1273,8 @@ type JobsGetCall struct {
 }
 
 // Get: Gets a job.
+//
+// - jobId: The ID of the job to retrieve.
 func (r *JobsService) Get(jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1323,7 +1327,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1505,7 +1509,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1638,6 +1642,9 @@ type JobsReportsGetCall struct {
 }
 
 // Get: Gets the metadata of a specific report.
+//
+// - jobId: The ID of the job.
+// - reportId: The ID of the report to retrieve.
 func (r *JobsReportsService) Get(jobId string, reportId string) *JobsReportsGetCall {
 	c := &JobsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1691,7 +1698,7 @@ func (c *JobsReportsGetCall) Header() http.Header {
 
 func (c *JobsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1806,6 +1813,8 @@ type JobsReportsListCall struct {
 
 // List: Lists reports created by a specific job. Returns NOT_FOUND if
 // the job does not exist.
+//
+// - jobId: The ID of the job.
 func (r *JobsReportsService) List(jobId string) *JobsReportsListCall {
 	c := &JobsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1898,7 +1907,7 @@ func (c *JobsReportsListCall) Header() http.Header {
 
 func (c *JobsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2055,6 +2064,8 @@ type MediaDownloadCall struct {
 
 // Download: Method for media download. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
+//
+// - resourceName: Name of the media that is being downloaded.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -2098,7 +2109,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2294,7 +2305,7 @@ func (c *ReportTypesListCall) Header() http.Header {
 
 func (c *ReportTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

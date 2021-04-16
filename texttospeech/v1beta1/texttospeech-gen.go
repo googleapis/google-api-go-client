@@ -81,7 +81,7 @@ const mtlsBasePath = "https://texttospeech.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -178,6 +178,9 @@ type AudioConfig struct {
 	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using
 	// G.711 PCMU/mu-law. Audio content returned as MULAW also contains a
 	// WAV header.
+	//   "ALAW" - 8-bit samples that compand 14-bit audio samples using
+	// G.711 PCMU/A-law. Audio content returned as ALAW also contains a WAV
+	// header.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
 	// EffectsProfileId: Optional. Input only. An identifier which selects
@@ -631,7 +634,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -730,12 +733,13 @@ func (r *VoicesService) List() *VoicesListCall {
 
 // LanguageCode sets the optional parameter "languageCode": Recommended.
 // BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-// If specified, the ListVoices call will only return voices that can be
+// If not specified, the API will return all supported voices. If
+// specified, the ListVoices call will only return voices that can be
 // used to synthesize this language_code. E.g. when specifying "en-NZ",
-// you will get supported "en-\*" voices; when specifying "no", you will
+// you will get supported "en-NZ" voices; when specifying "no", you will
 // get supported "no-\*" (Norwegian) and "nb-\*" (Norwegian Bokmal)
 // voices; specifying "zh" will also get supported "cmn-\*" voices;
-// specifying "zh-hk" will also get supported "yue-\*" voices.
+// specifying "zh-hk" will also get supported "yue-hk" voices.
 func (c *VoicesListCall) LanguageCode(languageCode string) *VoicesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -778,7 +782,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -844,7 +848,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. E.g. when specifying \"en-NZ\", you will get supported \"en-\\*\" voices; when specifying \"no\", you will get supported \"no-\\*\" (Norwegian) and \"nb-\\*\" (Norwegian Bokmal) voices; specifying \"zh\" will also get supported \"cmn-\\*\" voices; specifying \"zh-hk\" will also get supported \"yue-\\*\" voices.",
+	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If not specified, the API will return all supported voices. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. E.g. when specifying \"en-NZ\", you will get supported \"en-NZ\" voices; when specifying \"no\", you will get supported \"no-\\*\" (Norwegian) and \"nb-\\*\" (Norwegian Bokmal) voices; specifying \"zh\" will also get supported \"cmn-\\*\" voices; specifying \"zh-hk\" will also get supported \"yue-hk\" voices.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

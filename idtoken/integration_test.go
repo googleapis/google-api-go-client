@@ -2,9 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build integration
-
-package idtoken
+package idtoken_test
 
 import (
 	"context"
@@ -20,13 +18,16 @@ import (
 )
 
 const (
-	envCredentialFile = "API_GO_CLIENT_SA"
-	envTokenAudience  = "API_GO_CLIENT_TOKEN_AUDIENCE"
+	envCredentialFile = "GOOGLE_APPLICATION_CREDENTIALS"
+
+	aud = "http://example.com"
 )
 
 func TestNewTokenSource(t *testing.T) {
-	aud := os.Getenv(envTokenAudience)
-	ts, err := idtoken.NewTokenSource(context.Background(), aud, option.WithCredentialsFile(os.Getenv(envCredentialFile)))
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
+	ts, err := idtoken.NewTokenSource(context.Background(), "http://example.com", option.WithCredentialsFile(os.Getenv(envCredentialFile)))
 	if err != nil {
 		t.Fatalf("unable to create TokenSource: %v", err)
 	}
@@ -49,7 +50,9 @@ func TestNewTokenSource(t *testing.T) {
 }
 
 func TestNewClient_WithCredentialFile(t *testing.T) {
-	aud := os.Getenv(envTokenAudience)
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	client, err := idtoken.NewClient(context.Background(), aud, option.WithCredentialsFile(os.Getenv(envCredentialFile)))
 	if err != nil {
 		t.Fatalf("unable to create Client: %v", err)
@@ -68,7 +71,9 @@ func TestNewClient_WithCredentialFile(t *testing.T) {
 }
 
 func TestNewClient_WithCredentialJSON(t *testing.T) {
-	aud := os.Getenv(envTokenAudience)
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	ctx := context.Background()
 	creds, err := google.FindDefaultCredentials(ctx)
 	if err != nil {

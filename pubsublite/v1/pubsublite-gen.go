@@ -79,7 +79,7 @@ const mtlsBasePath = "https://pubsublite.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -735,6 +735,10 @@ type PartitionConfig struct {
 	Capacity *Capacity `json:"capacity,omitempty"`
 
 	// Count: The number of partitions in the topic. Must be at least 1.
+	// Once a topic has been created the number of partitions can be
+	// increased but not decreased. Message ordering is not guaranteed
+	// across a topic resize. For more information see
+	// https://cloud.google.com/pubsub/lite/docs/topics#scaling_capacity
 	Count int64 `json:"count,omitempty,string"`
 
 	// Scale: DEPRECATED: Use capacity instead which can express a superset
@@ -964,10 +968,22 @@ type AdminProjectsLocationsSubscriptionsCreateCall struct {
 }
 
 // Create: Creates a new subscription.
+//
+// - parent: The parent location in which to create the subscription.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsSubscriptionsService) Create(parent string, subscription *Subscription) *AdminProjectsLocationsSubscriptionsCreateCall {
 	c := &AdminProjectsLocationsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.subscription = subscription
+	return c
+}
+
+// SkipBacklog sets the optional parameter "skipBacklog": If true, the
+// newly created subscription will only receive messages published after
+// the subscription was created. Otherwise, the entire message backlog
+// will be received on the subscription. Defaults to false.
+func (c *AdminProjectsLocationsSubscriptionsCreateCall) SkipBacklog(skipBacklog bool) *AdminProjectsLocationsSubscriptionsCreateCall {
+	c.urlParams_.Set("skipBacklog", fmt.Sprint(skipBacklog))
 	return c
 }
 
@@ -1007,7 +1023,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1086,6 +1102,11 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Do(opts ...googleapi.Cal
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "skipBacklog": {
+	//       "description": "If true, the newly created subscription will only receive messages published after the subscription was created. Otherwise, the entire message backlog will be received on the subscription. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "subscriptionId": {
 	//       "description": "Required. The ID to use for the subscription, which will become the final component of the subscription's name. This value is structured like: `my-sub-name`.",
 	//       "location": "query",
@@ -1117,6 +1138,8 @@ type AdminProjectsLocationsSubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes the specified subscription.
+//
+// - name: The name of the subscription to delete.
 func (r *AdminProjectsLocationsSubscriptionsService) Delete(name string) *AdminProjectsLocationsSubscriptionsDeleteCall {
 	c := &AdminProjectsLocationsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1150,7 +1173,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1248,6 +1271,8 @@ type AdminProjectsLocationsSubscriptionsGetCall struct {
 }
 
 // Get: Returns the subscription configuration.
+//
+// - name: The name of the subscription whose configuration to return.
 func (r *AdminProjectsLocationsSubscriptionsService) Get(name string) *AdminProjectsLocationsSubscriptionsGetCall {
 	c := &AdminProjectsLocationsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1291,7 +1316,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1392,6 +1417,9 @@ type AdminProjectsLocationsSubscriptionsListCall struct {
 }
 
 // List: Returns the list of subscriptions for the given project.
+//
+// - parent: The parent whose subscriptions are to be listed. Structured
+//   like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsSubscriptionsService) List(parent string) *AdminProjectsLocationsSubscriptionsListCall {
 	c := &AdminProjectsLocationsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1454,7 +1482,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1587,6 +1615,10 @@ type AdminProjectsLocationsSubscriptionsPatchCall struct {
 }
 
 // Patch: Updates properties of the specified subscription.
+//
+// - name: The name of the subscription. Structured like:
+//   projects/{project_number}/locations/{location}/subscriptions/{subscr
+//   iption_id}.
 func (r *AdminProjectsLocationsSubscriptionsService) Patch(name string, subscription *Subscription) *AdminProjectsLocationsSubscriptionsPatchCall {
 	c := &AdminProjectsLocationsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1628,7 +1660,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1740,6 +1772,9 @@ type AdminProjectsLocationsTopicsCreateCall struct {
 }
 
 // Create: Creates a new topic.
+//
+// - parent: The parent location in which to create the topic.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsTopicsService) Create(parent string, topic *Topic) *AdminProjectsLocationsTopicsCreateCall {
 	c := &AdminProjectsLocationsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1782,7 +1817,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1892,6 +1927,8 @@ type AdminProjectsLocationsTopicsDeleteCall struct {
 }
 
 // Delete: Deletes the specified topic.
+//
+// - name: The name of the topic to delete.
 func (r *AdminProjectsLocationsTopicsService) Delete(name string) *AdminProjectsLocationsTopicsDeleteCall {
 	c := &AdminProjectsLocationsTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1925,7 +1962,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2023,6 +2060,8 @@ type AdminProjectsLocationsTopicsGetCall struct {
 }
 
 // Get: Returns the topic configuration.
+//
+// - name: The name of the topic whose configuration to return.
 func (r *AdminProjectsLocationsTopicsService) Get(name string) *AdminProjectsLocationsTopicsGetCall {
 	c := &AdminProjectsLocationsTopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2066,7 +2105,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2168,6 +2207,8 @@ type AdminProjectsLocationsTopicsGetPartitionsCall struct {
 
 // GetPartitions: Returns the partition information for the requested
 // topic.
+//
+// - name: The topic whose partition information to return.
 func (r *AdminProjectsLocationsTopicsService) GetPartitions(name string) *AdminProjectsLocationsTopicsGetPartitionsCall {
 	c := &AdminProjectsLocationsTopicsGetPartitionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2211,7 +2252,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2312,6 +2353,9 @@ type AdminProjectsLocationsTopicsListCall struct {
 }
 
 // List: Returns the list of topics for the given project.
+//
+// - parent: The parent whose topics are to be listed. Structured like
+//   `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsTopicsService) List(parent string) *AdminProjectsLocationsTopicsListCall {
 	c := &AdminProjectsLocationsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2372,7 +2416,7 @@ func (c *AdminProjectsLocationsTopicsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2505,6 +2549,9 @@ type AdminProjectsLocationsTopicsPatchCall struct {
 }
 
 // Patch: Updates properties of the specified topic.
+//
+// - name: The name of the topic. Structured like:
+//   projects/{project_number}/locations/{location}/topics/{topic_id}.
 func (r *AdminProjectsLocationsTopicsService) Patch(name string, topic *Topic) *AdminProjectsLocationsTopicsPatchCall {
 	c := &AdminProjectsLocationsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2546,7 +2593,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2658,6 +2705,8 @@ type AdminProjectsLocationsTopicsSubscriptionsListCall struct {
 }
 
 // List: Lists the subscriptions attached to the specified topic.
+//
+// - name: The name of the topic whose subscriptions to list.
 func (r *AdminProjectsLocationsTopicsSubscriptionsService) List(name string) *AdminProjectsLocationsTopicsSubscriptionsListCall {
 	c := &AdminProjectsLocationsTopicsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2720,7 +2769,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Header() http.Header
 
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2853,6 +2902,11 @@ type CursorProjectsLocationsSubscriptionsCursorsListCall struct {
 }
 
 // List: Returns all committed cursor information for a subscription.
+//
+// - parent: The subscription for which to retrieve cursors. Structured
+//   like
+//   `projects/{project_number}/locations/{location}/subscriptions/{subsc
+//   ription_id}`.
 func (r *CursorProjectsLocationsSubscriptionsCursorsService) List(parent string) *CursorProjectsLocationsSubscriptionsCursorsListCall {
 	c := &CursorProjectsLocationsSubscriptionsCursorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2914,7 +2968,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Header() http.Head
 
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3047,11 +3101,13 @@ type TopicStatsProjectsLocationsTopicsComputeHeadCursorCall struct {
 }
 
 // ComputeHeadCursor: Compute the head cursor for the partition. The
-// head cursor’s offset is guaranteed to be before or equal to all
-// messages which have not yet been acknowledged to be published, and
+// head cursor's offset is guaranteed to be less than or equal to all
+// messages which have not yet been acknowledged as published, and
 // greater than the offset of any message whose publish has already been
-// acknowledged. It is 0 if there have never been messages on the
+// acknowledged. It is zero if there have never been messages in the
 // partition.
+//
+// - topic: The topic for which we should compute the head cursor.
 func (r *TopicStatsProjectsLocationsTopicsService) ComputeHeadCursor(topic string, computeheadcursorrequest *ComputeHeadCursorRequest) *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall {
 	c := &TopicStatsProjectsLocationsTopicsComputeHeadCursorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -3086,7 +3142,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) Header() http.H
 
 func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3150,7 +3206,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Compute the head cursor for the partition. The head cursor’s offset is guaranteed to be before or equal to all messages which have not yet been acknowledged to be published, and greater than the offset of any message whose publish has already been acknowledged. It is 0 if there have never been messages on the partition.",
+	//   "description": "Compute the head cursor for the partition. The head cursor's offset is guaranteed to be less than or equal to all messages which have not yet been acknowledged as published, and greater than the offset of any message whose publish has already been acknowledged. It is zero if there have never been messages in the partition.",
 	//   "flatPath": "v1/topicStats/projects/{projectsId}/locations/{locationsId}/topics/{topicsId}:computeHeadCursor",
 	//   "httpMethod": "POST",
 	//   "id": "pubsublite.topicStats.projects.locations.topics.computeHeadCursor",
@@ -3193,6 +3249,8 @@ type TopicStatsProjectsLocationsTopicsComputeMessageStatsCall struct {
 
 // ComputeMessageStats: Compute statistics about a range of messages in
 // a given topic and partition.
+//
+// - topic: The topic for which we should compute message stats.
 func (r *TopicStatsProjectsLocationsTopicsService) ComputeMessageStats(topic string, computemessagestatsrequest *ComputeMessageStatsRequest) *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall {
 	c := &TopicStatsProjectsLocationsTopicsComputeMessageStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -3227,7 +3285,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Header() http
 
 func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -79,7 +79,7 @@ const mtlsBasePath = "https://accesscontextmanager.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -1838,7 +1838,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1932,6 +1932,9 @@ type AccessPoliciesDeleteCall struct {
 // Delete: Delete an AccessPolicy by resource name. The longrunning
 // Operation will have a successful status once the AccessPolicy has
 // been removed from long-lasting storage.
+//
+// - name: Resource name for the access policy to delete. Format
+//   `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Delete(name string) *AccessPoliciesDeleteCall {
 	c := &AccessPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1965,7 +1968,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2063,6 +2066,9 @@ type AccessPoliciesGetCall struct {
 }
 
 // Get: Get an AccessPolicy by name.
+//
+// - name: Resource name for the access policy to get. Format
+//   `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Get(name string) *AccessPoliciesGetCall {
 	c := &AccessPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2106,7 +2112,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2271,7 +2277,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2401,6 +2407,9 @@ type AccessPoliciesPatchCall struct {
 // AccessPolicy have propagated to long-lasting storage. Syntactic and
 // basic semantic errors will be returned in `metadata` as a BadRequest
 // proto.
+//
+// - name: Output only. Resource name of the `AccessPolicy`. Format:
+//   `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Patch(name string, accesspolicy *AccessPolicy) *AccessPoliciesPatchCall {
 	c := &AccessPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2442,7 +2451,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2557,6 +2566,9 @@ type AccessPoliciesAccessLevelsCreateCall struct {
 // RPC will have a successful status once the Access Level has
 // propagated to long-lasting storage. Access Levels containing errors
 // will result in an error response for the first error encountered.
+//
+// - parent: Resource name for the access policy which owns this Access
+//   Level. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesAccessLevelsService) Create(parent string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsCreateCall {
 	c := &AccessPoliciesAccessLevelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2591,7 +2603,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2698,6 +2710,9 @@ type AccessPoliciesAccessLevelsDeleteCall struct {
 // Delete: Delete an Access Level by resource name. The longrunning
 // operation from this RPC will have a successful status once the Access
 // Level has been removed from long-lasting storage.
+//
+// - name: Resource name for the Access Level. Format:
+//   `accessPolicies/{policy_id}/accessLevels/{access_level_id}`.
 func (r *AccessPoliciesAccessLevelsService) Delete(name string) *AccessPoliciesAccessLevelsDeleteCall {
 	c := &AccessPoliciesAccessLevelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2731,7 +2746,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2829,6 +2844,9 @@ type AccessPoliciesAccessLevelsGetCall struct {
 }
 
 // Get: Get an Access Level by resource name.
+//
+// - name: Resource name for the Access Level. Format:
+//   `accessPolicies/{policy_id}/accessLevels/{access_level_id}`.
 func (r *AccessPoliciesAccessLevelsService) Get(name string) *AccessPoliciesAccessLevelsGetCall {
 	c := &AccessPoliciesAccessLevelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2893,7 +2911,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3009,6 +3027,9 @@ type AccessPoliciesAccessLevelsListCall struct {
 }
 
 // List: List all Access Levels for an access policy.
+//
+// - parent: Resource name for the access policy to list Access Levels
+//   from. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesAccessLevelsService) List(parent string) *AccessPoliciesAccessLevelsListCall {
 	c := &AccessPoliciesAccessLevelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3085,7 +3106,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3237,6 +3258,12 @@ type AccessPoliciesAccessLevelsPatchCall struct {
 // Level have propagated to long-lasting storage. Access Levels
 // containing errors will result in an error response for the first
 // error encountered.
+//
+// - name: Resource name for the Access Level. The `short_name`
+//   component must begin with a letter and only include alphanumeric
+//   and '_'. Format:
+//   `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum
+//   length of the `short_name` component is 50 characters.
 func (r *AccessPoliciesAccessLevelsService) Patch(name string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsPatchCall {
 	c := &AccessPoliciesAccessLevelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3278,7 +3305,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3398,6 +3425,9 @@ type AccessPoliciesAccessLevelsReplaceAllCall struct {
 // existing Access Levels will not be affected. Operation.response field
 // will contain ReplaceAccessLevelsResponse. Removing Access Levels
 // contained in existing Service Perimeters will result in error.
+//
+// - parent: Resource name for the access policy which owns these Access
+//   Levels. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesAccessLevelsService) ReplaceAll(parent string, replaceaccesslevelsrequest *ReplaceAccessLevelsRequest) *AccessPoliciesAccessLevelsReplaceAllCall {
 	c := &AccessPoliciesAccessLevelsReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3432,7 +3462,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3549,6 +3579,10 @@ type AccessPoliciesServicePerimetersCommitCall struct {
 // successful, Operation.response field will contain
 // CommitServicePerimetersResponse. The `dry_run` and the `spec` fields
 // will be cleared after a successful commit operation.
+//
+// - parent: Resource name for the parent Access Policy which owns all
+//   Service Perimeters in scope for the commit operation. Format:
+//   `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) Commit(parent string, commitserviceperimetersrequest *CommitServicePerimetersRequest) *AccessPoliciesServicePerimetersCommitCall {
 	c := &AccessPoliciesServicePerimetersCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3583,7 +3617,7 @@ func (c *AccessPoliciesServicePerimetersCommitCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3693,6 +3727,9 @@ type AccessPoliciesServicePerimetersCreateCall struct {
 // propagated to long-lasting storage. Service Perimeters containing
 // errors will result in an error response for the first error
 // encountered.
+//
+// - parent: Resource name for the access policy which owns this Service
+//   Perimeter. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) Create(parent string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersCreateCall {
 	c := &AccessPoliciesServicePerimetersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3727,7 +3764,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3834,6 +3871,10 @@ type AccessPoliciesServicePerimetersDeleteCall struct {
 // Delete: Delete a Service Perimeter by resource name. The longrunning
 // operation from this RPC will have a successful status once the
 // Service Perimeter has been removed from long-lasting storage.
+//
+// - name: Resource name for the Service Perimeter. Format:
+//   `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}
+//   `.
 func (r *AccessPoliciesServicePerimetersService) Delete(name string) *AccessPoliciesServicePerimetersDeleteCall {
 	c := &AccessPoliciesServicePerimetersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3867,7 +3908,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3965,6 +4006,10 @@ type AccessPoliciesServicePerimetersGetCall struct {
 }
 
 // Get: Get a Service Perimeter by resource name.
+//
+// - name: Resource name for the Service Perimeter. Format:
+//   `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id
+//   }`.
 func (r *AccessPoliciesServicePerimetersService) Get(name string) *AccessPoliciesServicePerimetersGetCall {
 	c := &AccessPoliciesServicePerimetersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4008,7 +4053,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4109,6 +4154,9 @@ type AccessPoliciesServicePerimetersListCall struct {
 }
 
 // List: List all Service Perimeters for an access policy.
+//
+// - parent: Resource name for the access policy to list Service
+//   Perimeters from. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) List(parent string) *AccessPoliciesServicePerimetersListCall {
 	c := &AccessPoliciesServicePerimetersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4167,7 +4215,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4304,6 +4352,11 @@ type AccessPoliciesServicePerimetersPatchCall struct {
 // Service Perimeter have propagated to long-lasting storage. Service
 // Perimeter containing errors will result in an error response for the
 // first error encountered.
+//
+// - name: Resource name for the ServicePerimeter. The `short_name`
+//   component must begin with a letter and only include alphanumeric
+//   and '_'. Format:
+//   `accessPolicies/{policy_id}/servicePerimeters/{short_name}`.
 func (r *AccessPoliciesServicePerimetersService) Patch(name string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersPatchCall {
 	c := &AccessPoliciesServicePerimetersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4345,7 +4398,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4464,6 +4517,9 @@ type AccessPoliciesServicePerimetersReplaceAllCall struct {
 // the first error encountered. Replacement will be cancelled on error,
 // existing Service Perimeters will not be affected. Operation.response
 // field will contain ReplaceServicePerimetersResponse.
+//
+// - parent: Resource name for the access policy which owns these
+//   Service Perimeters. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) ReplaceAll(parent string, replaceserviceperimetersrequest *ReplaceServicePerimetersRequest) *AccessPoliciesServicePerimetersReplaceAllCall {
 	c := &AccessPoliciesServicePerimetersReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4498,7 +4554,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4613,6 +4669,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4647,7 +4705,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4755,6 +4813,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4788,7 +4848,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4888,6 +4948,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4931,7 +4993,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5041,6 +5103,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5105,7 +5169,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5247,6 +5311,8 @@ type OrganizationsGcpUserAccessBindingsCreateCall struct {
 // with the same group_key. Completion of this long-running operation
 // does not necessarily signify that the new binding is deployed onto
 // all affected users, which may take more time.
+//
+// - parent: Example: "organizations/256".
 func (r *OrganizationsGcpUserAccessBindingsService) Create(parent string, gcpuseraccessbinding *GcpUserAccessBinding) *OrganizationsGcpUserAccessBindingsCreateCall {
 	c := &OrganizationsGcpUserAccessBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5281,7 +5347,7 @@ func (c *OrganizationsGcpUserAccessBindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5389,6 +5455,9 @@ type OrganizationsGcpUserAccessBindingsDeleteCall struct {
 // long-running operation does not necessarily signify that the binding
 // deletion is deployed onto all affected users, which may take more
 // time.
+//
+// - name: Example:
+//   "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
 func (r *OrganizationsGcpUserAccessBindingsService) Delete(name string) *OrganizationsGcpUserAccessBindingsDeleteCall {
 	c := &OrganizationsGcpUserAccessBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5422,7 +5491,7 @@ func (c *OrganizationsGcpUserAccessBindingsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5520,6 +5589,9 @@ type OrganizationsGcpUserAccessBindingsGetCall struct {
 }
 
 // Get: Gets the GcpUserAccessBinding with the given name.
+//
+// - name: Example:
+//   "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
 func (r *OrganizationsGcpUserAccessBindingsService) Get(name string) *OrganizationsGcpUserAccessBindingsGetCall {
 	c := &OrganizationsGcpUserAccessBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5563,7 +5635,7 @@ func (c *OrganizationsGcpUserAccessBindingsGetCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5665,6 +5737,8 @@ type OrganizationsGcpUserAccessBindingsListCall struct {
 
 // List: Lists all GcpUserAccessBindings for a Google Cloud
 // organization.
+//
+// - parent: Example: "organizations/256".
 func (r *OrganizationsGcpUserAccessBindingsService) List(parent string) *OrganizationsGcpUserAccessBindingsListCall {
 	c := &OrganizationsGcpUserAccessBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5724,7 +5798,7 @@ func (c *OrganizationsGcpUserAccessBindingsListCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5861,6 +5935,13 @@ type OrganizationsGcpUserAccessBindingsPatchCall struct {
 // long-running operation does not necessarily signify that the changed
 // binding is deployed onto all affected users, which may take more
 // time.
+//
+// - name: Immutable. Assigned by the server during creation. The last
+//   segment has an arbitrary length and has only URI unreserved
+//   characters (as defined by RFC 3986 Section 2.3
+//   (https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
+//   specified by the client during creation. Example:
+//   "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
 func (r *OrganizationsGcpUserAccessBindingsService) Patch(name string, gcpuseraccessbinding *GcpUserAccessBinding) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c := &OrganizationsGcpUserAccessBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5904,7 +5985,7 @@ func (c *OrganizationsGcpUserAccessBindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

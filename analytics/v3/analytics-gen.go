@@ -5905,6 +5905,19 @@ type DataGaGetCall struct {
 }
 
 // Get: Returns Analytics data for a view (profile).
+//
+// - endDate: End date for fetching Analytics data. Request can should
+//   specify an end date formatted as YYYY-MM-DD, or as a relative date
+//   (e.g., today, yesterday, or 7daysAgo). The default value is
+//   yesterday.
+// - ids: Unique table ID for retrieving Analytics data. Table ID is of
+//   the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+// - metrics: A comma-separated list of Analytics metrics. E.g.,
+//   'ga:sessions,ga:pageviews'. At least one metric must be specified.
+// - startDate: Start date for fetching Analytics data. Requests can
+//   specify a start date formatted as YYYY-MM-DD, or as a relative date
+//   (e.g., today, yesterday, or 7daysAgo). The default value is
+//   7daysAgo.
 func (r *DataGaService) Get(ids string, startDate string, endDate string, metrics string) *DataGaGetCall {
 	c := &DataGaGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -6030,7 +6043,7 @@ func (c *DataGaGetCall) Header() http.Header {
 
 func (c *DataGaGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6221,6 +6234,19 @@ type DataMcfGetCall struct {
 
 // Get: Returns Analytics Multi-Channel Funnels data for a view
 // (profile).
+//
+// - endDate: End date for fetching Analytics data. Requests can specify
+//   a start date formatted as YYYY-MM-DD, or as a relative date (e.g.,
+//   today, yesterday, or 7daysAgo). The default value is 7daysAgo.
+// - ids: Unique table ID for retrieving Analytics data. Table ID is of
+//   the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+// - metrics: A comma-separated list of Multi-Channel Funnels metrics.
+//   E.g., 'mcf:totalConversions,mcf:totalConversionValue'. At least one
+//   metric must be specified.
+// - startDate: Start date for fetching Analytics data. Requests can
+//   specify a start date formatted as YYYY-MM-DD, or as a relative date
+//   (e.g., today, yesterday, or 7daysAgo). The default value is
+//   7daysAgo.
 func (r *DataMcfService) Get(ids string, startDate string, endDate string, metrics string) *DataMcfGetCall {
 	c := &DataMcfGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -6319,7 +6345,7 @@ func (c *DataMcfGetCall) Header() http.Header {
 
 func (c *DataMcfGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6486,6 +6512,11 @@ type DataRealtimeGetCall struct {
 }
 
 // Get: Returns real time data for a view (profile).
+//
+// - ids: Unique table ID for retrieving real time data. Table ID is of
+//   the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+// - metrics: A comma-separated list of real time metrics. E.g.,
+//   'rt:activeUsers'. At least one metric must be specified.
 func (r *DataRealtimeService) Get(ids string, metrics string) *DataRealtimeGetCall {
 	c := &DataRealtimeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -6560,7 +6591,7 @@ func (c *DataRealtimeGetCall) Header() http.Header {
 
 func (c *DataRealtimeGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6748,7 +6779,7 @@ func (c *ManagementAccountSummariesListCall) Header() http.Header {
 
 func (c *ManagementAccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6849,6 +6880,9 @@ type ManagementAccountUserLinksDeleteCall struct {
 }
 
 // Delete: Removes a user from the given account.
+//
+// - accountId: Account ID to delete the user link for.
+// - linkId: Link ID to delete the user link for.
 func (r *ManagementAccountUserLinksService) Delete(accountId string, linkId string) *ManagementAccountUserLinksDeleteCall {
 	c := &ManagementAccountUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6883,7 +6917,7 @@ func (c *ManagementAccountUserLinksDeleteCall) Header() http.Header {
 
 func (c *ManagementAccountUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6959,6 +6993,8 @@ type ManagementAccountUserLinksInsertCall struct {
 }
 
 // Insert: Adds a new user to the given account.
+//
+// - accountId: Account ID to create the user link for.
 func (r *ManagementAccountUserLinksService) Insert(accountId string, entityuserlink *EntityUserLink) *ManagementAccountUserLinksInsertCall {
 	c := &ManagementAccountUserLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6993,7 +7029,7 @@ func (c *ManagementAccountUserLinksInsertCall) Header() http.Header {
 
 func (c *ManagementAccountUserLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7097,6 +7133,8 @@ type ManagementAccountUserLinksListCall struct {
 }
 
 // List: Lists account-user links for a given account.
+//
+// - accountId: Account ID to retrieve the user links for.
 func (r *ManagementAccountUserLinksService) List(accountId string) *ManagementAccountUserLinksListCall {
 	c := &ManagementAccountUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7155,7 +7193,7 @@ func (c *ManagementAccountUserLinksListCall) Header() http.Header {
 
 func (c *ManagementAccountUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7270,6 +7308,9 @@ type ManagementAccountUserLinksUpdateCall struct {
 
 // Update: Updates permissions for an existing user on the given
 // account.
+//
+// - accountId: Account ID to update the account-user link for.
+// - linkId: Link ID to update the account-user link for.
 func (r *ManagementAccountUserLinksService) Update(accountId string, linkId string, entityuserlink *EntityUserLink) *ManagementAccountUserLinksUpdateCall {
 	c := &ManagementAccountUserLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7305,7 +7346,7 @@ func (c *ManagementAccountUserLinksUpdateCall) Header() http.Header {
 
 func (c *ManagementAccountUserLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7473,7 +7514,7 @@ func (c *ManagementAccountsListCall) Header() http.Header {
 
 func (c *ManagementAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7607,7 +7648,7 @@ func (c *ManagementClientIdHashClientIdCall) Header() http.Header {
 
 func (c *ManagementClientIdHashClientIdCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7699,6 +7740,10 @@ type ManagementCustomDataSourcesListCall struct {
 }
 
 // List: List custom data sources to which the user has access.
+//
+// - accountId: Account Id for the custom data sources to retrieve.
+// - webPropertyId: Web property Id for the custom data sources to
+//   retrieve.
 func (r *ManagementCustomDataSourcesService) List(accountId string, webPropertyId string) *ManagementCustomDataSourcesListCall {
 	c := &ManagementCustomDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7758,7 +7803,7 @@ func (c *ManagementCustomDataSourcesListCall) Header() http.Header {
 
 func (c *ManagementCustomDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7885,6 +7930,11 @@ type ManagementCustomDimensionsGetCall struct {
 }
 
 // Get: Get a custom dimension to which the user has access.
+//
+// - accountId: Account ID for the custom dimension to retrieve.
+// - customDimensionId: The ID of the custom dimension to retrieve.
+// - webPropertyId: Web property ID for the custom dimension to
+//   retrieve.
 func (r *ManagementCustomDimensionsService) Get(accountId string, webPropertyId string, customDimensionId string) *ManagementCustomDimensionsGetCall {
 	c := &ManagementCustomDimensionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7930,7 +7980,7 @@ func (c *ManagementCustomDimensionsGetCall) Header() http.Header {
 
 func (c *ManagementCustomDimensionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8047,6 +8097,9 @@ type ManagementCustomDimensionsInsertCall struct {
 }
 
 // Insert: Create a new custom dimension.
+//
+// - accountId: Account ID for the custom dimension to create.
+// - webPropertyId: Web property ID for the custom dimension to create.
 func (r *ManagementCustomDimensionsService) Insert(accountId string, webPropertyId string, customdimension *CustomDimension) *ManagementCustomDimensionsInsertCall {
 	c := &ManagementCustomDimensionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8082,7 +8135,7 @@ func (c *ManagementCustomDimensionsInsertCall) Header() http.Header {
 
 func (c *ManagementCustomDimensionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8195,6 +8248,10 @@ type ManagementCustomDimensionsListCall struct {
 }
 
 // List: Lists custom dimensions to which the user has access.
+//
+// - accountId: Account ID for the custom dimensions to retrieve.
+// - webPropertyId: Web property ID for the custom dimensions to
+//   retrieve.
 func (r *ManagementCustomDimensionsService) List(accountId string, webPropertyId string) *ManagementCustomDimensionsListCall {
 	c := &ManagementCustomDimensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8254,7 +8311,7 @@ func (c *ManagementCustomDimensionsListCall) Header() http.Header {
 
 func (c *ManagementCustomDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8378,6 +8435,11 @@ type ManagementCustomDimensionsPatchCall struct {
 
 // Patch: Updates an existing custom dimension. This method supports
 // patch semantics.
+//
+// - accountId: Account ID for the custom dimension to update.
+// - customDimensionId: Custom dimension ID for the custom dimension to
+//   update.
+// - webPropertyId: Web property ID for the custom dimension to update.
 func (r *ManagementCustomDimensionsService) Patch(accountId string, webPropertyId string, customDimensionId string, customdimension *CustomDimension) *ManagementCustomDimensionsPatchCall {
 	c := &ManagementCustomDimensionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8423,7 +8485,7 @@ func (c *ManagementCustomDimensionsPatchCall) Header() http.Header {
 
 func (c *ManagementCustomDimensionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8551,6 +8613,11 @@ type ManagementCustomDimensionsUpdateCall struct {
 }
 
 // Update: Updates an existing custom dimension.
+//
+// - accountId: Account ID for the custom dimension to update.
+// - customDimensionId: Custom dimension ID for the custom dimension to
+//   update.
+// - webPropertyId: Web property ID for the custom dimension to update.
 func (r *ManagementCustomDimensionsService) Update(accountId string, webPropertyId string, customDimensionId string, customdimension *CustomDimension) *ManagementCustomDimensionsUpdateCall {
 	c := &ManagementCustomDimensionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8596,7 +8663,7 @@ func (c *ManagementCustomDimensionsUpdateCall) Header() http.Header {
 
 func (c *ManagementCustomDimensionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8724,6 +8791,10 @@ type ManagementCustomMetricsGetCall struct {
 }
 
 // Get: Get a custom metric to which the user has access.
+//
+// - accountId: Account ID for the custom metric to retrieve.
+// - customMetricId: The ID of the custom metric to retrieve.
+// - webPropertyId: Web property ID for the custom metric to retrieve.
 func (r *ManagementCustomMetricsService) Get(accountId string, webPropertyId string, customMetricId string) *ManagementCustomMetricsGetCall {
 	c := &ManagementCustomMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8769,7 +8840,7 @@ func (c *ManagementCustomMetricsGetCall) Header() http.Header {
 
 func (c *ManagementCustomMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8886,6 +8957,9 @@ type ManagementCustomMetricsInsertCall struct {
 }
 
 // Insert: Create a new custom metric.
+//
+// - accountId: Account ID for the custom metric to create.
+// - webPropertyId: Web property ID for the custom dimension to create.
 func (r *ManagementCustomMetricsService) Insert(accountId string, webPropertyId string, custommetric *CustomMetric) *ManagementCustomMetricsInsertCall {
 	c := &ManagementCustomMetricsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8921,7 +8995,7 @@ func (c *ManagementCustomMetricsInsertCall) Header() http.Header {
 
 func (c *ManagementCustomMetricsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9034,6 +9108,9 @@ type ManagementCustomMetricsListCall struct {
 }
 
 // List: Lists custom metrics to which the user has access.
+//
+// - accountId: Account ID for the custom metrics to retrieve.
+// - webPropertyId: Web property ID for the custom metrics to retrieve.
 func (r *ManagementCustomMetricsService) List(accountId string, webPropertyId string) *ManagementCustomMetricsListCall {
 	c := &ManagementCustomMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9093,7 +9170,7 @@ func (c *ManagementCustomMetricsListCall) Header() http.Header {
 
 func (c *ManagementCustomMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9217,6 +9294,10 @@ type ManagementCustomMetricsPatchCall struct {
 
 // Patch: Updates an existing custom metric. This method supports patch
 // semantics.
+//
+// - accountId: Account ID for the custom metric to update.
+// - customMetricId: Custom metric ID for the custom metric to update.
+// - webPropertyId: Web property ID for the custom metric to update.
 func (r *ManagementCustomMetricsService) Patch(accountId string, webPropertyId string, customMetricId string, custommetric *CustomMetric) *ManagementCustomMetricsPatchCall {
 	c := &ManagementCustomMetricsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9262,7 +9343,7 @@ func (c *ManagementCustomMetricsPatchCall) Header() http.Header {
 
 func (c *ManagementCustomMetricsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9390,6 +9471,10 @@ type ManagementCustomMetricsUpdateCall struct {
 }
 
 // Update: Updates an existing custom metric.
+//
+// - accountId: Account ID for the custom metric to update.
+// - customMetricId: Custom metric ID for the custom metric to update.
+// - webPropertyId: Web property ID for the custom metric to update.
 func (r *ManagementCustomMetricsService) Update(accountId string, webPropertyId string, customMetricId string, custommetric *CustomMetric) *ManagementCustomMetricsUpdateCall {
 	c := &ManagementCustomMetricsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9435,7 +9520,7 @@ func (c *ManagementCustomMetricsUpdateCall) Header() http.Header {
 
 func (c *ManagementCustomMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9563,6 +9648,11 @@ type ManagementExperimentsDeleteCall struct {
 }
 
 // Delete: Delete an experiment.
+//
+// - accountId: Account ID to which the experiment belongs.
+// - experimentId: ID of the experiment to delete.
+// - profileId: View (Profile) ID to which the experiment belongs.
+// - webPropertyId: Web property ID to which the experiment belongs.
 func (r *ManagementExperimentsService) Delete(accountId string, webPropertyId string, profileId string, experimentId string) *ManagementExperimentsDeleteCall {
 	c := &ManagementExperimentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9599,7 +9689,7 @@ func (c *ManagementExperimentsDeleteCall) Header() http.Header {
 
 func (c *ManagementExperimentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9695,6 +9785,11 @@ type ManagementExperimentsGetCall struct {
 }
 
 // Get: Returns an experiment to which the user has access.
+//
+// - accountId: Account ID to retrieve the experiment for.
+// - experimentId: Experiment ID to retrieve the experiment for.
+// - profileId: View (Profile) ID to retrieve the experiment for.
+// - webPropertyId: Web property ID to retrieve the experiment for.
 func (r *ManagementExperimentsService) Get(accountId string, webPropertyId string, profileId string, experimentId string) *ManagementExperimentsGetCall {
 	c := &ManagementExperimentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9741,7 +9836,7 @@ func (c *ManagementExperimentsGetCall) Header() http.Header {
 
 func (c *ManagementExperimentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9868,6 +9963,10 @@ type ManagementExperimentsInsertCall struct {
 }
 
 // Insert: Create a new experiment.
+//
+// - accountId: Account ID to create the experiment for.
+// - profileId: View (Profile) ID to create the experiment for.
+// - webPropertyId: Web property ID to create the experiment for.
 func (r *ManagementExperimentsService) Insert(accountId string, webPropertyId string, profileId string, experiment *Experiment) *ManagementExperimentsInsertCall {
 	c := &ManagementExperimentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9904,7 +10003,7 @@ func (c *ManagementExperimentsInsertCall) Header() http.Header {
 
 func (c *ManagementExperimentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10027,6 +10126,10 @@ type ManagementExperimentsListCall struct {
 }
 
 // List: Lists experiments to which the user has access.
+//
+// - accountId: Account ID to retrieve experiments for.
+// - profileId: View (Profile) ID to retrieve experiments for.
+// - webPropertyId: Web property ID to retrieve experiments for.
 func (r *ManagementExperimentsService) List(accountId string, webPropertyId string, profileId string) *ManagementExperimentsListCall {
 	c := &ManagementExperimentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10087,7 +10190,7 @@ func (c *ManagementExperimentsListCall) Header() http.Header {
 
 func (c *ManagementExperimentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10224,6 +10327,11 @@ type ManagementExperimentsPatchCall struct {
 
 // Patch: Update an existing experiment. This method supports patch
 // semantics.
+//
+// - accountId: Account ID of the experiment to update.
+// - experimentId: Experiment ID of the experiment to update.
+// - profileId: View (Profile) ID of the experiment to update.
+// - webPropertyId: Web property ID of the experiment to update.
 func (r *ManagementExperimentsService) Patch(accountId string, webPropertyId string, profileId string, experimentId string, experiment *Experiment) *ManagementExperimentsPatchCall {
 	c := &ManagementExperimentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10261,7 +10369,7 @@ func (c *ManagementExperimentsPatchCall) Header() http.Header {
 
 func (c *ManagementExperimentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10393,6 +10501,11 @@ type ManagementExperimentsUpdateCall struct {
 }
 
 // Update: Update an existing experiment.
+//
+// - accountId: Account ID of the experiment to update.
+// - experimentId: Experiment ID of the experiment to update.
+// - profileId: View (Profile) ID of the experiment to update.
+// - webPropertyId: Web property ID of the experiment to update.
 func (r *ManagementExperimentsService) Update(accountId string, webPropertyId string, profileId string, experimentId string, experiment *Experiment) *ManagementExperimentsUpdateCall {
 	c := &ManagementExperimentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10430,7 +10543,7 @@ func (c *ManagementExperimentsUpdateCall) Header() http.Header {
 
 func (c *ManagementExperimentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10559,6 +10672,9 @@ type ManagementFiltersDeleteCall struct {
 }
 
 // Delete: Delete a filter.
+//
+// - accountId: Account ID to delete the filter for.
+// - filterId: ID of the filter to be deleted.
 func (r *ManagementFiltersService) Delete(accountId string, filterId string) *ManagementFiltersDeleteCall {
 	c := &ManagementFiltersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10593,7 +10709,7 @@ func (c *ManagementFiltersDeleteCall) Header() http.Header {
 
 func (c *ManagementFiltersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10698,6 +10814,9 @@ type ManagementFiltersGetCall struct {
 }
 
 // Get: Returns filters to which the user has access.
+//
+// - accountId: Account ID to retrieve filters for.
+// - filterId: Filter ID to retrieve filters for.
 func (r *ManagementFiltersService) Get(accountId string, filterId string) *ManagementFiltersGetCall {
 	c := &ManagementFiltersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10742,7 +10861,7 @@ func (c *ManagementFiltersGetCall) Header() http.Header {
 
 func (c *ManagementFiltersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10850,6 +10969,8 @@ type ManagementFiltersInsertCall struct {
 }
 
 // Insert: Create a new filter.
+//
+// - accountId: Account ID to create filter for.
 func (r *ManagementFiltersService) Insert(accountId string, filter *Filter) *ManagementFiltersInsertCall {
 	c := &ManagementFiltersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10884,7 +11005,7 @@ func (c *ManagementFiltersInsertCall) Header() http.Header {
 
 func (c *ManagementFiltersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10988,6 +11109,8 @@ type ManagementFiltersListCall struct {
 }
 
 // List: Lists all filters for an account
+//
+// - accountId: Account ID to retrieve filters for.
 func (r *ManagementFiltersService) List(accountId string) *ManagementFiltersListCall {
 	c := &ManagementFiltersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11046,7 +11169,7 @@ func (c *ManagementFiltersListCall) Header() http.Header {
 
 func (c *ManagementFiltersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11162,6 +11285,9 @@ type ManagementFiltersPatchCall struct {
 
 // Patch: Updates an existing filter. This method supports patch
 // semantics.
+//
+// - accountId: Account ID to which the filter belongs.
+// - filterId: ID of the filter to be updated.
 func (r *ManagementFiltersService) Patch(accountId string, filterId string, filter *Filter) *ManagementFiltersPatchCall {
 	c := &ManagementFiltersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11197,7 +11323,7 @@ func (c *ManagementFiltersPatchCall) Header() http.Header {
 
 func (c *ManagementFiltersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11310,6 +11436,9 @@ type ManagementFiltersUpdateCall struct {
 }
 
 // Update: Updates an existing filter.
+//
+// - accountId: Account ID to which the filter belongs.
+// - filterId: ID of the filter to be updated.
 func (r *ManagementFiltersService) Update(accountId string, filterId string, filter *Filter) *ManagementFiltersUpdateCall {
 	c := &ManagementFiltersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11345,7 +11474,7 @@ func (c *ManagementFiltersUpdateCall) Header() http.Header {
 
 func (c *ManagementFiltersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11460,6 +11589,11 @@ type ManagementGoalsGetCall struct {
 }
 
 // Get: Gets a goal to which the user has access.
+//
+// - accountId: Account ID to retrieve the goal for.
+// - goalId: Goal ID to retrieve the goal for.
+// - profileId: View (Profile) ID to retrieve the goal for.
+// - webPropertyId: Web property ID to retrieve the goal for.
 func (r *ManagementGoalsService) Get(accountId string, webPropertyId string, profileId string, goalId string) *ManagementGoalsGetCall {
 	c := &ManagementGoalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11506,7 +11640,7 @@ func (c *ManagementGoalsGetCall) Header() http.Header {
 
 func (c *ManagementGoalsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11632,6 +11766,10 @@ type ManagementGoalsInsertCall struct {
 }
 
 // Insert: Create a new goal.
+//
+// - accountId: Account ID to create the goal for.
+// - profileId: View (Profile) ID to create the goal for.
+// - webPropertyId: Web property ID to create the goal for.
 func (r *ManagementGoalsService) Insert(accountId string, webPropertyId string, profileId string, goal *Goal) *ManagementGoalsInsertCall {
 	c := &ManagementGoalsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11668,7 +11806,7 @@ func (c *ManagementGoalsInsertCall) Header() http.Header {
 
 func (c *ManagementGoalsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11790,6 +11928,16 @@ type ManagementGoalsListCall struct {
 }
 
 // List: Lists goals to which the user has access.
+//
+// - accountId: Account ID to retrieve goals for. Can either be a
+//   specific account ID or '~all', which refers to all the accounts
+//   that user has access to.
+// - profileId: View (Profile) ID to retrieve goals for. Can either be a
+//   specific view (profile) ID or '~all', which refers to all the views
+//   (profiles) that user has access to.
+// - webPropertyId: Web property ID to retrieve goals for. Can either be
+//   a specific web property ID or '~all', which refers to all the web
+//   properties that user has access to.
 func (r *ManagementGoalsService) List(accountId string, webPropertyId string, profileId string) *ManagementGoalsListCall {
 	c := &ManagementGoalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11850,7 +11998,7 @@ func (c *ManagementGoalsListCall) Header() http.Header {
 
 func (c *ManagementGoalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11984,6 +12132,11 @@ type ManagementGoalsPatchCall struct {
 
 // Patch: Updates an existing goal. This method supports patch
 // semantics.
+//
+// - accountId: Account ID to update the goal.
+// - goalId: Index of the goal to be updated.
+// - profileId: View (Profile) ID to update the goal.
+// - webPropertyId: Web property ID to update the goal.
 func (r *ManagementGoalsService) Patch(accountId string, webPropertyId string, profileId string, goalId string, goal *Goal) *ManagementGoalsPatchCall {
 	c := &ManagementGoalsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12021,7 +12174,7 @@ func (c *ManagementGoalsPatchCall) Header() http.Header {
 
 func (c *ManagementGoalsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12152,6 +12305,11 @@ type ManagementGoalsUpdateCall struct {
 }
 
 // Update: Updates an existing goal.
+//
+// - accountId: Account ID to update the goal.
+// - goalId: Index of the goal to be updated.
+// - profileId: View (Profile) ID to update the goal.
+// - webPropertyId: Web property ID to update the goal.
 func (r *ManagementGoalsService) Update(accountId string, webPropertyId string, profileId string, goalId string, goal *Goal) *ManagementGoalsUpdateCall {
 	c := &ManagementGoalsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12189,7 +12347,7 @@ func (c *ManagementGoalsUpdateCall) Header() http.Header {
 
 func (c *ManagementGoalsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12319,6 +12477,12 @@ type ManagementProfileFilterLinksDeleteCall struct {
 }
 
 // Delete: Delete a profile filter link.
+//
+// - accountId: Account ID to which the profile filter link belongs.
+// - linkId: ID of the profile filter link to delete.
+// - profileId: Profile ID to which the filter link belongs.
+// - webPropertyId: Web property Id to which the profile filter link
+//   belongs.
 func (r *ManagementProfileFilterLinksService) Delete(accountId string, webPropertyId string, profileId string, linkId string) *ManagementProfileFilterLinksDeleteCall {
 	c := &ManagementProfileFilterLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12355,7 +12519,7 @@ func (c *ManagementProfileFilterLinksDeleteCall) Header() http.Header {
 
 func (c *ManagementProfileFilterLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12454,6 +12618,11 @@ type ManagementProfileFilterLinksGetCall struct {
 }
 
 // Get: Returns a single profile filter link.
+//
+// - accountId: Account ID to retrieve profile filter link for.
+// - linkId: ID of the profile filter link.
+// - profileId: Profile ID to retrieve filter link for.
+// - webPropertyId: Web property Id to retrieve profile filter link for.
 func (r *ManagementProfileFilterLinksService) Get(accountId string, webPropertyId string, profileId string, linkId string) *ManagementProfileFilterLinksGetCall {
 	c := &ManagementProfileFilterLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12500,7 +12669,7 @@ func (c *ManagementProfileFilterLinksGetCall) Header() http.Header {
 
 func (c *ManagementProfileFilterLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12630,6 +12799,10 @@ type ManagementProfileFilterLinksInsertCall struct {
 }
 
 // Insert: Create a new profile filter link.
+//
+// - accountId: Account ID to create profile filter link for.
+// - profileId: Profile ID to create filter link for.
+// - webPropertyId: Web property Id to create profile filter link for.
 func (r *ManagementProfileFilterLinksService) Insert(accountId string, webPropertyId string, profileId string, profilefilterlink *ProfileFilterLink) *ManagementProfileFilterLinksInsertCall {
 	c := &ManagementProfileFilterLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12666,7 +12839,7 @@ func (c *ManagementProfileFilterLinksInsertCall) Header() http.Header {
 
 func (c *ManagementProfileFilterLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12791,6 +12964,14 @@ type ManagementProfileFilterLinksListCall struct {
 }
 
 // List: Lists all profile filter links for a profile.
+//
+// - accountId: Account ID to retrieve profile filter links for.
+// - profileId: Profile ID to retrieve filter links for. Can either be a
+//   specific profile ID or '~all', which refers to all the profiles
+//   that user has access to.
+// - webPropertyId: Web property Id for profile filter links for. Can
+//   either be a specific web property ID or '~all', which refers to all
+//   the web properties that user has access to.
 func (r *ManagementProfileFilterLinksService) List(accountId string, webPropertyId string, profileId string) *ManagementProfileFilterLinksListCall {
 	c := &ManagementProfileFilterLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12851,7 +13032,7 @@ func (c *ManagementProfileFilterLinksListCall) Header() http.Header {
 
 func (c *ManagementProfileFilterLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12985,6 +13166,11 @@ type ManagementProfileFilterLinksPatchCall struct {
 
 // Patch: Update an existing profile filter link. This method supports
 // patch semantics.
+//
+// - accountId: Account ID to which profile filter link belongs.
+// - linkId: ID of the profile filter link to be updated.
+// - profileId: Profile ID to which filter link belongs.
+// - webPropertyId: Web property Id to which profile filter link belongs.
 func (r *ManagementProfileFilterLinksService) Patch(accountId string, webPropertyId string, profileId string, linkId string, profilefilterlink *ProfileFilterLink) *ManagementProfileFilterLinksPatchCall {
 	c := &ManagementProfileFilterLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13022,7 +13208,7 @@ func (c *ManagementProfileFilterLinksPatchCall) Header() http.Header {
 
 func (c *ManagementProfileFilterLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13157,6 +13343,11 @@ type ManagementProfileFilterLinksUpdateCall struct {
 }
 
 // Update: Update an existing profile filter link.
+//
+// - accountId: Account ID to which profile filter link belongs.
+// - linkId: ID of the profile filter link to be updated.
+// - profileId: Profile ID to which filter link belongs.
+// - webPropertyId: Web property Id to which profile filter link belongs.
 func (r *ManagementProfileFilterLinksService) Update(accountId string, webPropertyId string, profileId string, linkId string, profilefilterlink *ProfileFilterLink) *ManagementProfileFilterLinksUpdateCall {
 	c := &ManagementProfileFilterLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13194,7 +13385,7 @@ func (c *ManagementProfileFilterLinksUpdateCall) Header() http.Header {
 
 func (c *ManagementProfileFilterLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13328,6 +13519,11 @@ type ManagementProfileUserLinksDeleteCall struct {
 }
 
 // Delete: Removes a user from the given view (profile).
+//
+// - accountId: Account ID to delete the user link for.
+// - linkId: Link ID to delete the user link for.
+// - profileId: View (Profile) ID to delete the user link for.
+// - webPropertyId: Web Property ID to delete the user link for.
 func (r *ManagementProfileUserLinksService) Delete(accountId string, webPropertyId string, profileId string, linkId string) *ManagementProfileUserLinksDeleteCall {
 	c := &ManagementProfileUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13364,7 +13560,7 @@ func (c *ManagementProfileUserLinksDeleteCall) Header() http.Header {
 
 func (c *ManagementProfileUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13458,6 +13654,10 @@ type ManagementProfileUserLinksInsertCall struct {
 }
 
 // Insert: Adds a new user to the given view (profile).
+//
+// - accountId: Account ID to create the user link for.
+// - profileId: View (Profile) ID to create the user link for.
+// - webPropertyId: Web Property ID to create the user link for.
 func (r *ManagementProfileUserLinksService) Insert(accountId string, webPropertyId string, profileId string, entityuserlink *EntityUserLink) *ManagementProfileUserLinksInsertCall {
 	c := &ManagementProfileUserLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13494,7 +13694,7 @@ func (c *ManagementProfileUserLinksInsertCall) Header() http.Header {
 
 func (c *ManagementProfileUserLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13616,6 +13816,14 @@ type ManagementProfileUserLinksListCall struct {
 }
 
 // List: Lists profile-user links for a given view (profile).
+//
+// - accountId: Account ID which the given view (profile) belongs to.
+// - profileId: View (Profile) ID to retrieve the profile-user links
+//   for. Can either be a specific profile ID or '~all', which refers to
+//   all the profiles that user has access to.
+// - webPropertyId: Web Property ID which the given view (profile)
+//   belongs to. Can either be a specific web property ID or '~all',
+//   which refers to all the web properties that user has access to.
 func (r *ManagementProfileUserLinksService) List(accountId string, webPropertyId string, profileId string) *ManagementProfileUserLinksListCall {
 	c := &ManagementProfileUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13676,7 +13884,7 @@ func (c *ManagementProfileUserLinksListCall) Header() http.Header {
 
 func (c *ManagementProfileUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13809,6 +14017,11 @@ type ManagementProfileUserLinksUpdateCall struct {
 
 // Update: Updates permissions for an existing user on the given view
 // (profile).
+//
+// - accountId: Account ID to update the user link for.
+// - linkId: Link ID to update the user link for.
+// - profileId: View (Profile ID) to update the user link for.
+// - webPropertyId: Web Property ID to update the user link for.
 func (r *ManagementProfileUserLinksService) Update(accountId string, webPropertyId string, profileId string, linkId string, entityuserlink *EntityUserLink) *ManagementProfileUserLinksUpdateCall {
 	c := &ManagementProfileUserLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13846,7 +14059,7 @@ func (c *ManagementProfileUserLinksUpdateCall) Header() http.Header {
 
 func (c *ManagementProfileUserLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13975,6 +14188,10 @@ type ManagementProfilesDeleteCall struct {
 }
 
 // Delete: Deletes a view (profile).
+//
+// - accountId: Account ID to delete the view (profile) for.
+// - profileId: ID of the view (profile) to be deleted.
+// - webPropertyId: Web property ID to delete the view (profile) for.
 func (r *ManagementProfilesService) Delete(accountId string, webPropertyId string, profileId string) *ManagementProfilesDeleteCall {
 	c := &ManagementProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14010,7 +14227,7 @@ func (c *ManagementProfilesDeleteCall) Header() http.Header {
 
 func (c *ManagementProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14096,6 +14313,10 @@ type ManagementProfilesGetCall struct {
 }
 
 // Get: Gets a view (profile) to which the user has access.
+//
+// - accountId: Account ID to retrieve the view (profile) for.
+// - profileId: View (Profile) ID to retrieve the view (profile) for.
+// - webPropertyId: Web property ID to retrieve the view (profile) for.
 func (r *ManagementProfilesService) Get(accountId string, webPropertyId string, profileId string) *ManagementProfilesGetCall {
 	c := &ManagementProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14141,7 +14362,7 @@ func (c *ManagementProfilesGetCall) Header() http.Header {
 
 func (c *ManagementProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14261,6 +14482,9 @@ type ManagementProfilesInsertCall struct {
 }
 
 // Insert: Create a new view (profile).
+//
+// - accountId: Account ID to create the view (profile) for.
+// - webPropertyId: Web property ID to create the view (profile) for.
 func (r *ManagementProfilesService) Insert(accountId string, webPropertyId string, profile *Profile) *ManagementProfilesInsertCall {
 	c := &ManagementProfilesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14296,7 +14520,7 @@ func (c *ManagementProfilesInsertCall) Header() http.Header {
 
 func (c *ManagementProfilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14409,6 +14633,13 @@ type ManagementProfilesListCall struct {
 }
 
 // List: Lists views (profiles) to which the user has access.
+//
+// - accountId: Account ID for the view (profiles) to retrieve. Can
+//   either be a specific account ID or '~all', which refers to all the
+//   accounts to which the user has access.
+// - webPropertyId: Web property ID for the views (profiles) to
+//   retrieve. Can either be a specific web property ID or '~all', which
+//   refers to all the web properties to which the user has access.
 func (r *ManagementProfilesService) List(accountId string, webPropertyId string) *ManagementProfilesListCall {
 	c := &ManagementProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14468,7 +14699,7 @@ func (c *ManagementProfilesListCall) Header() http.Header {
 
 func (c *ManagementProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14593,6 +14824,10 @@ type ManagementProfilesPatchCall struct {
 
 // Patch: Updates an existing view (profile). This method supports patch
 // semantics.
+//
+// - accountId: Account ID to which the view (profile) belongs.
+// - profileId: ID of the view (profile) to be updated.
+// - webPropertyId: Web property ID to which the view (profile) belongs.
 func (r *ManagementProfilesService) Patch(accountId string, webPropertyId string, profileId string, profile *Profile) *ManagementProfilesPatchCall {
 	c := &ManagementProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14629,7 +14864,7 @@ func (c *ManagementProfilesPatchCall) Header() http.Header {
 
 func (c *ManagementProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14751,6 +14986,10 @@ type ManagementProfilesUpdateCall struct {
 }
 
 // Update: Updates an existing view (profile).
+//
+// - accountId: Account ID to which the view (profile) belongs.
+// - profileId: ID of the view (profile) to be updated.
+// - webPropertyId: Web property ID to which the view (profile) belongs.
 func (r *ManagementProfilesService) Update(accountId string, webPropertyId string, profileId string, profile *Profile) *ManagementProfilesUpdateCall {
 	c := &ManagementProfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14787,7 +15026,7 @@ func (c *ManagementProfilesUpdateCall) Header() http.Header {
 
 func (c *ManagementProfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14908,6 +15147,12 @@ type ManagementRemarketingAudienceDeleteCall struct {
 }
 
 // Delete: Delete a remarketing audience.
+//
+// - accountId: Account ID to which the remarketing audience belongs.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   delete.
+// - webPropertyId: Web property ID to which the remarketing audience
+//   belongs.
 func (r *ManagementRemarketingAudienceService) Delete(accountId string, webPropertyId string, remarketingAudienceId string) *ManagementRemarketingAudienceDeleteCall {
 	c := &ManagementRemarketingAudienceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14943,7 +15188,7 @@ func (c *ManagementRemarketingAudienceDeleteCall) Header() http.Header {
 
 func (c *ManagementRemarketingAudienceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15029,6 +15274,12 @@ type ManagementRemarketingAudienceGetCall struct {
 }
 
 // Get: Gets a remarketing audience to which the user has access.
+//
+// - accountId: The account ID of the remarketing audience to retrieve.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   retrieve.
+// - webPropertyId: The web property ID of the remarketing audience to
+//   retrieve.
 func (r *ManagementRemarketingAudienceService) Get(accountId string, webPropertyId string, remarketingAudienceId string) *ManagementRemarketingAudienceGetCall {
 	c := &ManagementRemarketingAudienceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15074,7 +15325,7 @@ func (c *ManagementRemarketingAudienceGetCall) Header() http.Header {
 
 func (c *ManagementRemarketingAudienceGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15191,6 +15442,11 @@ type ManagementRemarketingAudienceInsertCall struct {
 }
 
 // Insert: Creates a new remarketing audience.
+//
+// - accountId: The account ID for which to create the remarketing
+//   audience.
+// - webPropertyId: Web property ID for which to create the remarketing
+//   audience.
 func (r *ManagementRemarketingAudienceService) Insert(accountId string, webPropertyId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceInsertCall {
 	c := &ManagementRemarketingAudienceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15226,7 +15482,7 @@ func (c *ManagementRemarketingAudienceInsertCall) Header() http.Header {
 
 func (c *ManagementRemarketingAudienceInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15339,6 +15595,10 @@ type ManagementRemarketingAudienceListCall struct {
 }
 
 // List: Lists remarketing audiences to which the user has access.
+//
+// - accountId: The account ID of the remarketing audiences to retrieve.
+// - webPropertyId: The web property ID of the remarketing audiences to
+//   retrieve.
 func (r *ManagementRemarketingAudienceService) List(accountId string, webPropertyId string) *ManagementRemarketingAudienceListCall {
 	c := &ManagementRemarketingAudienceListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15404,7 +15664,7 @@ func (c *ManagementRemarketingAudienceListCall) Header() http.Header {
 
 func (c *ManagementRemarketingAudienceListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15533,6 +15793,12 @@ type ManagementRemarketingAudiencePatchCall struct {
 
 // Patch: Updates an existing remarketing audience. This method supports
 // patch semantics.
+//
+// - accountId: The account ID of the remarketing audience to update.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   update.
+// - webPropertyId: The web property ID of the remarketing audience to
+//   update.
 func (r *ManagementRemarketingAudienceService) Patch(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudiencePatchCall {
 	c := &ManagementRemarketingAudiencePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15569,7 +15835,7 @@ func (c *ManagementRemarketingAudiencePatchCall) Header() http.Header {
 
 func (c *ManagementRemarketingAudiencePatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15691,6 +15957,12 @@ type ManagementRemarketingAudienceUpdateCall struct {
 }
 
 // Update: Updates an existing remarketing audience.
+//
+// - accountId: The account ID of the remarketing audience to update.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   update.
+// - webPropertyId: The web property ID of the remarketing audience to
+//   update.
 func (r *ManagementRemarketingAudienceService) Update(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceUpdateCall {
 	c := &ManagementRemarketingAudienceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15727,7 +15999,7 @@ func (c *ManagementRemarketingAudienceUpdateCall) Header() http.Header {
 
 func (c *ManagementRemarketingAudienceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15903,7 +16175,7 @@ func (c *ManagementSegmentsListCall) Header() http.Header {
 
 func (c *ManagementSegmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16007,6 +16279,11 @@ type ManagementUnsampledReportsDeleteCall struct {
 }
 
 // Delete: Deletes an unsampled report.
+//
+// - accountId: Account ID to delete the unsampled report for.
+// - profileId: View (Profile) ID to delete the unsampled report for.
+// - unsampledReportId: ID of the unsampled report to be deleted.
+// - webPropertyId: Web property ID to delete the unsampled reports for.
 func (r *ManagementUnsampledReportsService) Delete(accountId string, webPropertyId string, profileId string, unsampledReportId string) *ManagementUnsampledReportsDeleteCall {
 	c := &ManagementUnsampledReportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16043,7 +16320,7 @@ func (c *ManagementUnsampledReportsDeleteCall) Header() http.Header {
 
 func (c *ManagementUnsampledReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16138,6 +16415,11 @@ type ManagementUnsampledReportsGetCall struct {
 }
 
 // Get: Returns a single unsampled report.
+//
+// - accountId: Account ID to retrieve unsampled report for.
+// - profileId: View (Profile) ID to retrieve unsampled report for.
+// - unsampledReportId: ID of the unsampled report to retrieve.
+// - webPropertyId: Web property ID to retrieve unsampled reports for.
 func (r *ManagementUnsampledReportsService) Get(accountId string, webPropertyId string, profileId string, unsampledReportId string) *ManagementUnsampledReportsGetCall {
 	c := &ManagementUnsampledReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16184,7 +16466,7 @@ func (c *ManagementUnsampledReportsGetCall) Header() http.Header {
 
 func (c *ManagementUnsampledReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16311,6 +16593,10 @@ type ManagementUnsampledReportsInsertCall struct {
 }
 
 // Insert: Create a new unsampled report.
+//
+// - accountId: Account ID to create the unsampled report for.
+// - profileId: View (Profile) ID to create the unsampled report for.
+// - webPropertyId: Web property ID to create the unsampled report for.
 func (r *ManagementUnsampledReportsService) Insert(accountId string, webPropertyId string, profileId string, unsampledreport *UnsampledReport) *ManagementUnsampledReportsInsertCall {
 	c := &ManagementUnsampledReportsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16347,7 +16633,7 @@ func (c *ManagementUnsampledReportsInsertCall) Header() http.Header {
 
 func (c *ManagementUnsampledReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16470,6 +16756,13 @@ type ManagementUnsampledReportsListCall struct {
 }
 
 // List: Lists unsampled reports to which the user has access.
+//
+// - accountId: Account ID to retrieve unsampled reports for. Must be a
+//   specific account ID, ~all is not supported.
+// - profileId: View (Profile) ID to retrieve unsampled reports for.
+//   Must be a specific view (profile) ID, ~all is not supported.
+// - webPropertyId: Web property ID to retrieve unsampled reports for.
+//   Must be a specific web property ID, ~all is not supported.
 func (r *ManagementUnsampledReportsService) List(accountId string, webPropertyId string, profileId string) *ManagementUnsampledReportsListCall {
 	c := &ManagementUnsampledReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16530,7 +16823,7 @@ func (c *ManagementUnsampledReportsListCall) Header() http.Header {
 
 func (c *ManagementUnsampledReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16662,6 +16955,11 @@ type ManagementUploadsDeleteUploadDataCall struct {
 }
 
 // DeleteUploadData: Delete data associated with a previous upload.
+//
+// - accountId: Account Id for the uploads to be deleted.
+// - customDataSourceId: Custom data source Id for the uploads to be
+//   deleted.
+// - webPropertyId: Web property Id for the uploads to be deleted.
 func (r *ManagementUploadsService) DeleteUploadData(accountId string, webPropertyId string, customDataSourceId string, analyticsdataimportdeleteuploaddatarequest *AnalyticsDataimportDeleteUploadDataRequest) *ManagementUploadsDeleteUploadDataCall {
 	c := &ManagementUploadsDeleteUploadDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16698,7 +16996,7 @@ func (c *ManagementUploadsDeleteUploadDataCall) Header() http.Header {
 
 func (c *ManagementUploadsDeleteUploadDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16797,6 +17095,11 @@ type ManagementUploadsGetCall struct {
 }
 
 // Get: List uploads to which the user has access.
+//
+// - accountId: Account Id for the upload to retrieve.
+// - customDataSourceId: Custom data source Id for upload to retrieve.
+// - uploadId: Upload Id to retrieve.
+// - webPropertyId: Web property Id for the upload to retrieve.
 func (r *ManagementUploadsService) Get(accountId string, webPropertyId string, customDataSourceId string, uploadId string) *ManagementUploadsGetCall {
 	c := &ManagementUploadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16843,7 +17146,7 @@ func (c *ManagementUploadsGetCall) Header() http.Header {
 
 func (c *ManagementUploadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16974,6 +17277,10 @@ type ManagementUploadsListCall struct {
 }
 
 // List: List uploads to which the user has access.
+//
+// - accountId: Account Id for the uploads to retrieve.
+// - customDataSourceId: Custom data source Id for uploads to retrieve.
+// - webPropertyId: Web property Id for the uploads to retrieve.
 func (r *ManagementUploadsService) List(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsListCall {
 	c := &ManagementUploadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17034,7 +17341,7 @@ func (c *ManagementUploadsListCall) Header() http.Header {
 
 func (c *ManagementUploadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17170,6 +17477,11 @@ type ManagementUploadsUploadDataCall struct {
 }
 
 // UploadData: Upload data for a custom data source.
+//
+// - accountId: Account Id associated with the upload.
+// - customDataSourceId: Custom data source Id to which the data being
+//   uploaded belongs.
+// - webPropertyId: Web property UA-string associated with the upload.
 func (r *ManagementUploadsService) UploadData(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsUploadDataCall {
 	c := &ManagementUploadsUploadDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17244,7 +17556,7 @@ func (c *ManagementUploadsUploadDataCall) Header() http.Header {
 
 func (c *ManagementUploadsUploadDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17405,6 +17717,11 @@ type ManagementWebPropertyAdWordsLinksDeleteCall struct {
 }
 
 // Delete: Deletes a web property-Google Ads link.
+//
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property Google Ads link ID.
+// - webPropertyId: Web property ID to delete the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Delete(accountId string, webPropertyId string, webPropertyAdWordsLinkId string) *ManagementWebPropertyAdWordsLinksDeleteCall {
 	c := &ManagementWebPropertyAdWordsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17440,7 +17757,7 @@ func (c *ManagementWebPropertyAdWordsLinksDeleteCall) Header() http.Header {
 
 func (c *ManagementWebPropertyAdWordsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17527,6 +17844,11 @@ type ManagementWebPropertyAdWordsLinksGetCall struct {
 
 // Get: Returns a web property-Google Ads link to which the user has
 // access.
+//
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
+// - webPropertyId: Web property ID to retrieve the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Get(accountId string, webPropertyId string, webPropertyAdWordsLinkId string) *ManagementWebPropertyAdWordsLinksGetCall {
 	c := &ManagementWebPropertyAdWordsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17572,7 +17894,7 @@ func (c *ManagementWebPropertyAdWordsLinksGetCall) Header() http.Header {
 
 func (c *ManagementWebPropertyAdWordsLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17689,6 +18011,10 @@ type ManagementWebPropertyAdWordsLinksInsertCall struct {
 }
 
 // Insert: Creates a webProperty-Google Ads link.
+//
+// - accountId: ID of the Google Analytics account to create the link
+//   for.
+// - webPropertyId: Web property ID to create the link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Insert(accountId string, webPropertyId string, entityadwordslink *EntityAdWordsLink) *ManagementWebPropertyAdWordsLinksInsertCall {
 	c := &ManagementWebPropertyAdWordsLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17724,7 +18050,7 @@ func (c *ManagementWebPropertyAdWordsLinksInsertCall) Header() http.Header {
 
 func (c *ManagementWebPropertyAdWordsLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17837,6 +18163,11 @@ type ManagementWebPropertyAdWordsLinksListCall struct {
 }
 
 // List: Lists webProperty-Google Ads links for a given web property.
+//
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyId: Web property ID to retrieve the Google Ads links
+//   for.
 func (r *ManagementWebPropertyAdWordsLinksService) List(accountId string, webPropertyId string) *ManagementWebPropertyAdWordsLinksListCall {
 	c := &ManagementWebPropertyAdWordsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17896,7 +18227,7 @@ func (c *ManagementWebPropertyAdWordsLinksListCall) Header() http.Header {
 
 func (c *ManagementWebPropertyAdWordsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18021,6 +18352,11 @@ type ManagementWebPropertyAdWordsLinksPatchCall struct {
 
 // Patch: Updates an existing webProperty-Google Ads link. This method
 // supports patch semantics.
+//
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
+// - webPropertyId: Web property ID to retrieve the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Patch(accountId string, webPropertyId string, webPropertyAdWordsLinkId string, entityadwordslink *EntityAdWordsLink) *ManagementWebPropertyAdWordsLinksPatchCall {
 	c := &ManagementWebPropertyAdWordsLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18057,7 +18393,7 @@ func (c *ManagementWebPropertyAdWordsLinksPatchCall) Header() http.Header {
 
 func (c *ManagementWebPropertyAdWordsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18179,6 +18515,11 @@ type ManagementWebPropertyAdWordsLinksUpdateCall struct {
 }
 
 // Update: Updates an existing webProperty-Google Ads link.
+//
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
+// - webPropertyId: Web property ID to retrieve the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Update(accountId string, webPropertyId string, webPropertyAdWordsLinkId string, entityadwordslink *EntityAdWordsLink) *ManagementWebPropertyAdWordsLinksUpdateCall {
 	c := &ManagementWebPropertyAdWordsLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18215,7 +18556,7 @@ func (c *ManagementWebPropertyAdWordsLinksUpdateCall) Header() http.Header {
 
 func (c *ManagementWebPropertyAdWordsLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18336,6 +18677,9 @@ type ManagementWebpropertiesGetCall struct {
 }
 
 // Get: Gets a web property to which the user has access.
+//
+// - accountId: Account ID to retrieve the web property for.
+// - webPropertyId: ID to retrieve the web property for.
 func (r *ManagementWebpropertiesService) Get(accountId string, webPropertyId string) *ManagementWebpropertiesGetCall {
 	c := &ManagementWebpropertiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18380,7 +18724,7 @@ func (c *ManagementWebpropertiesGetCall) Header() http.Header {
 
 func (c *ManagementWebpropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18492,6 +18836,8 @@ type ManagementWebpropertiesInsertCall struct {
 // Insert: Create a new property if the account has fewer than 20
 // properties. Web properties are visible in the Google Analytics
 // interface only if they have at least one profile.
+//
+// - accountId: Account ID to create the web property for.
 func (r *ManagementWebpropertiesService) Insert(accountId string, webproperty *Webproperty) *ManagementWebpropertiesInsertCall {
 	c := &ManagementWebpropertiesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18526,7 +18872,7 @@ func (c *ManagementWebpropertiesInsertCall) Header() http.Header {
 
 func (c *ManagementWebpropertiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18630,6 +18976,10 @@ type ManagementWebpropertiesListCall struct {
 }
 
 // List: Lists web properties to which the user has access.
+//
+// - accountId: Account ID to retrieve web properties for. Can either be
+//   a specific account ID or '~all', which refers to all the accounts
+//   that user has access to.
 func (r *ManagementWebpropertiesService) List(accountId string) *ManagementWebpropertiesListCall {
 	c := &ManagementWebpropertiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18688,7 +19038,7 @@ func (c *ManagementWebpropertiesListCall) Header() http.Header {
 
 func (c *ManagementWebpropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18804,6 +19154,9 @@ type ManagementWebpropertiesPatchCall struct {
 
 // Patch: Updates an existing web property. This method supports patch
 // semantics.
+//
+// - accountId: Account ID to which the web property belongs.
+// - webPropertyId: Web property ID.
 func (r *ManagementWebpropertiesService) Patch(accountId string, webPropertyId string, webproperty *Webproperty) *ManagementWebpropertiesPatchCall {
 	c := &ManagementWebpropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18839,7 +19192,7 @@ func (c *ManagementWebpropertiesPatchCall) Header() http.Header {
 
 func (c *ManagementWebpropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18952,6 +19305,9 @@ type ManagementWebpropertiesUpdateCall struct {
 }
 
 // Update: Updates an existing web property.
+//
+// - accountId: Account ID to which the web property belongs.
+// - webPropertyId: Web property ID.
 func (r *ManagementWebpropertiesService) Update(accountId string, webPropertyId string, webproperty *Webproperty) *ManagementWebpropertiesUpdateCall {
 	c := &ManagementWebpropertiesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18987,7 +19343,7 @@ func (c *ManagementWebpropertiesUpdateCall) Header() http.Header {
 
 func (c *ManagementWebpropertiesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19100,6 +19456,10 @@ type ManagementWebpropertyUserLinksDeleteCall struct {
 }
 
 // Delete: Removes a user from the given web property.
+//
+// - accountId: Account ID to delete the user link for.
+// - linkId: Link ID to delete the user link for.
+// - webPropertyId: Web Property ID to delete the user link for.
 func (r *ManagementWebpropertyUserLinksService) Delete(accountId string, webPropertyId string, linkId string) *ManagementWebpropertyUserLinksDeleteCall {
 	c := &ManagementWebpropertyUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -19135,7 +19495,7 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) Header() http.Header {
 
 func (c *ManagementWebpropertyUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19220,6 +19580,9 @@ type ManagementWebpropertyUserLinksInsertCall struct {
 }
 
 // Insert: Adds a new user to the given web property.
+//
+// - accountId: Account ID to create the user link for.
+// - webPropertyId: Web Property ID to create the user link for.
 func (r *ManagementWebpropertyUserLinksService) Insert(accountId string, webPropertyId string, entityuserlink *EntityUserLink) *ManagementWebpropertyUserLinksInsertCall {
 	c := &ManagementWebpropertyUserLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -19255,7 +19618,7 @@ func (c *ManagementWebpropertyUserLinksInsertCall) Header() http.Header {
 
 func (c *ManagementWebpropertyUserLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19368,6 +19731,11 @@ type ManagementWebpropertyUserLinksListCall struct {
 }
 
 // List: Lists webProperty-user links for a given web property.
+//
+// - accountId: Account ID which the given web property belongs to.
+// - webPropertyId: Web Property ID for the webProperty-user links to
+//   retrieve. Can either be a specific web property ID or '~all', which
+//   refers to all the web properties that user has access to.
 func (r *ManagementWebpropertyUserLinksService) List(accountId string, webPropertyId string) *ManagementWebpropertyUserLinksListCall {
 	c := &ManagementWebpropertyUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -19427,7 +19795,7 @@ func (c *ManagementWebpropertyUserLinksListCall) Header() http.Header {
 
 func (c *ManagementWebpropertyUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19551,6 +19919,10 @@ type ManagementWebpropertyUserLinksUpdateCall struct {
 
 // Update: Updates permissions for an existing user on the given web
 // property.
+//
+// - accountId: Account ID to update the account-user link for.
+// - linkId: Link ID to update the account-user link for.
+// - webPropertyId: Web property ID to update the account-user link for.
 func (r *ManagementWebpropertyUserLinksService) Update(accountId string, webPropertyId string, linkId string, entityuserlink *EntityUserLink) *ManagementWebpropertyUserLinksUpdateCall {
 	c := &ManagementWebpropertyUserLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -19587,7 +19959,7 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) Header() http.Header {
 
 func (c *ManagementWebpropertyUserLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19707,6 +20079,9 @@ type MetadataColumnsListCall struct {
 }
 
 // List: Lists all columns for a report type
+//
+// - reportType: Report type. Allowed Values: 'ga'. Where 'ga'
+//   corresponds to the Core Reporting API.
 func (r *MetadataColumnsService) List(reportType string) *MetadataColumnsListCall {
 	c := &MetadataColumnsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportType = reportType
@@ -19750,7 +20125,7 @@ func (c *MetadataColumnsListCall) Header() http.Header {
 
 func (c *MetadataColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19884,7 +20259,7 @@ func (c *ProvisioningCreateAccountTicketCall) Header() http.Header {
 
 func (c *ProvisioningCreateAccountTicketCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20006,7 +20381,7 @@ func (c *ProvisioningCreateAccountTreeCall) Header() http.Header {
 
 func (c *ProvisioningCreateAccountTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20128,7 +20503,7 @@ func (c *UserDeletionUserDeletionRequestUpsertCall) Header() http.Header {
 
 func (c *UserDeletionUserDeletionRequestUpsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

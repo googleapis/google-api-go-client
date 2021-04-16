@@ -83,7 +83,7 @@ const mtlsBasePath = "https://genomics.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage Genomics data
@@ -2078,7 +2078,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2178,6 +2178,8 @@ type ProjectsOperationsCancelCall struct {
 // or the operation completed despite cancellation. Authorization
 // requires the following Google IAM (https://cloud.google.com/iam)
 // permission: * `genomics.operations.cancel`
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2212,7 +2214,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2323,6 +2325,8 @@ type ProjectsOperationsGetCall struct {
 // recommended by the API service. Authorization requires the following
 // Google IAM (https://cloud.google.com/iam) permission: *
 // `genomics.operations.get`
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2366,7 +2370,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,6 +2475,8 @@ type ProjectsOperationsListCall struct {
 // request. Authorization requires the following Google IAM
 // (https://cloud.google.com/iam) permission: *
 // `genomics.operations.list`
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2554,7 +2560,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2694,6 +2700,9 @@ type ProjectsWorkersCheckInCall struct {
 
 // CheckIn: The worker uses this method to retrieve the assigned
 // operation and provide periodic status updates.
+//
+// - id: The VM identity token for authenticating the VM instance.
+//   https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
 func (r *ProjectsWorkersService) CheckIn(id string, checkinrequest *CheckInRequest) *ProjectsWorkersCheckInCall {
 	c := &ProjectsWorkersCheckInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -2728,7 +2737,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2836,6 +2845,9 @@ type WorkersCheckInCall struct {
 
 // CheckIn: The worker uses this method to retrieve the assigned
 // operation and provide periodic status updates.
+//
+// - id: The VM identity token for authenticating the VM instance.
+//   https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
 func (r *WorkersService) CheckIn(id string, checkinrequest *CheckInRequest) *WorkersCheckInCall {
 	c := &WorkersCheckInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -2870,7 +2882,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         }
       }
     }
@@ -542,7 +542,7 @@
       }
     }
   },
-  "revision": "20210213",
+  "revision": "20210326",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2003,7 +2003,7 @@
       "type": "object"
     },
     "Service": {
-      "description": "`Service` is the root object of Google service configuration schema. It describes basic information about a service, such as the name and the title, and delegates other aspects to sub-sections. Each sub-section is either a proto message or a repeated proto message that configures a specific aspect, such as auth. See each proto message definition for details. Example: type: google.api.Service config_version: 3 name: calendar.googleapis.com title: Google Calendar API apis: - name: google.calendar.v3.Calendar authentication: providers: - id: google_calendar_auth jwks_uri: https://www.googleapis.com/oauth2/v1/certs issuer: https://securetoken.google.com rules: - selector: \"*\" requirements: provider_id: google_calendar_auth",
+      "description": "`Service` is the root object of Google service configuration schema. It describes basic information about a service, such as the name and the title, and delegates other aspects to sub-sections. Each sub-section is either a proto message or a repeated proto message that configures a specific aspect, such as auth. See each proto message definition for details. Example: type: google.api.Service name: calendar.googleapis.com title: Google Calendar API apis: - name: google.calendar.v3.Calendar authentication: providers: - id: google_calendar_auth jwks_uri: https://www.googleapis.com/oauth2/v1/certs issuer: https://securetoken.google.com rules: - selector: \"*\" requirements: provider_id: google_calendar_auth",
       "id": "Service",
       "properties": {
         "apis": {
@@ -2026,7 +2026,7 @@
           "description": "Billing configuration."
         },
         "configVersion": {
-          "description": "Deprecated. The service config compiler always sets this field to `3`.",
+          "description": "Obsolete. Do not use. This field has no semantic meaning. The service config compiler always sets this field to `3`.",
           "format": "uint32",
           "type": "integer"
         },

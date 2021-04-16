@@ -802,7 +802,7 @@ func (s *DatabaseFlags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DatabaseInstance: A Cloud SQL instance resource. Next field: 36
+// DatabaseInstance: A Cloud SQL instance resource.
 type DatabaseInstance struct {
 	// BackendType:  *SECOND_GEN*: Cloud SQL database instance. *EXTERNAL*:
 	// A database server that is not managed by Google. This property is
@@ -830,8 +830,8 @@ type DatabaseInstance struct {
 	// DatabaseVersion: The database engine type and version. The
 	// *databaseVersion* field cannot be changed after instance creation.
 	// MySQL instances: *MYSQL_8_0*, *MYSQL_5_7* (default), or *MYSQL_5_6*.
-	// PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11* or
-	// *POSTGRES_12* (default). SQL Server instances:
+	// PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11*,
+	// *POSTGRES_12*, or *POSTGRES_13* (default). SQL Server instances:
 	// *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*,
 	// *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.
 	//
@@ -941,8 +941,8 @@ type DatabaseInstance struct {
 	// RootPassword: Initial root password. Use only on creation.
 	RootPassword string `json:"rootPassword,omitempty"`
 
-	// SatisfiesPzs: The status indicating if instance satisfies physical
-	// zone separation. Reserved for future use.
+	// SatisfiesPzs: The status indicating if instance satisfiesPzs.
+	// Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ScheduledMaintenance: The start time of any upcoming scheduled
@@ -974,11 +974,10 @@ type DatabaseInstance struct {
 	// be one of the following. *SQL_INSTANCE_STATE_UNSPECIFIED*: The state
 	// of the instance is unknown. *RUNNABLE*: The instance is running, or
 	// has been stopped by owner. *SUSPENDED*: The instance is not
-	// available, for example due to problems with billing. for example due
-	// to problems with billing. *PENDING_DELETE*: The instance is being
-	// deleted. *PENDING_CREATE*: The instance is being created.
-	// *MAINTENANCE*: The instance is down for maintenance. *FAILED*: The
-	// instance creation failed.
+	// available, for example due to problems with billing.
+	// *PENDING_DELETE*: The instance is being deleted. *PENDING_CREATE*:
+	// The instance is being created. *MAINTENANCE*: The instance is down
+	// for maintenance. *FAILED*: The instance creation failed.
 	//
 	// Possible values:
 	//   "SQL_INSTANCE_STATE_UNSPECIFIED" - The state of the instance is
@@ -1365,7 +1364,8 @@ type ExportContext struct {
 	// over this property. *PostgreSQL instances:* You must specify one
 	// database to be exported. If *fileType* is *CSV*, this database must
 	// match the one specified in the *csvExportOptions.selectQuery*
-	// property.
+	// property. *SQL Server instances:* You must specify one database to be
+	// exported, and the *fileType* must be *BAK*.
 	Databases []string `json:"databases,omitempty"`
 
 	// FileType: The file type for the specified uri. *SQL*: The file
@@ -1619,7 +1619,7 @@ type Flag struct {
 	//   "STRING" - String type flag.
 	//   "INTEGER" - Integer type flag.
 	//   "NONE" - Flag type used for a server startup option.
-	//   "MYSQL_TIMEZONE_OFFSET" - Type introduced specically for MySQL
+	//   "MYSQL_TIMEZONE_OFFSET" - Type introduced specially for MySQL
 	// TimeZone offset. Accept a string value with the format [-12:59,
 	// 13:00].
 	//   "FLOAT" - Float type flag.
@@ -1854,7 +1854,8 @@ type InsightsConfig struct {
 	// QueryStringLength: Maximum query length stored in bytes. Default
 	// value: 1024 bytes. Range: 256-4500 bytes. Query length more than this
 	// field value will be truncated to this value. When unset, query length
-	// will be the default value.
+	// will be the default value. Changing query length will restart the
+	// database.
 	QueryStringLength int64 `json:"queryStringLength,omitempty"`
 
 	// RecordApplicationTags: Whether Query Insights will record application
@@ -2528,7 +2529,7 @@ func (s *OnPremisesConfiguration) MarshalJSON() ([]byte, error) {
 
 // Operation: An Operation resource. For successful operations that
 // return an Operation resource, only the fields relevant to the
-// operation are populated in the resource. Next field: 18
+// operation are populated in the resource.
 type Operation struct {
 	// BackupContext: The context for backup operation, if applicable.
 	BackupContext *BackupContext `json:"backupContext,omitempty"`
@@ -3076,8 +3077,7 @@ type Settings struct {
 	StorageAutoResizeLimit int64 `json:"storageAutoResizeLimit,omitempty,string"`
 
 	// Tier: The tier (or machine type) for this instance, for example
-	// *db-n1-standard-1* (MySQL instances) or *db-custom-1-3840*
-	// (PostgreSQL instances).
+	// *db-custom-1-3840* .
 	Tier string `json:"tier,omitempty"`
 
 	// UserLabels: User-provided labels, represented as a dictionary where
@@ -3141,12 +3141,13 @@ func (s *SqlActiveDirectoryConfig) MarshalJSON() ([]byte, error) {
 }
 
 // SqlExternalSyncSettingError: External primary instance migration
-// setting error.
+// setting error/warning.
 type SqlExternalSyncSettingError struct {
 	// Detail: Additional information about the error encountered.
 	Detail string `json:"detail,omitempty"`
 
-	// Kind: This is always *sql#migrationSettingError*.
+	// Kind: Can be *sql#externalSyncSettingError* or
+	// *sql#externalSyncSettingWarning*.
 	Kind string `json:"kind,omitempty"`
 
 	// Type: Identifies the specific error that occurred.
@@ -3251,6 +3252,9 @@ type SqlInstancesVerifyExternalSyncSettingsResponse struct {
 
 	// Kind: This is always *sql#migrationSettingErrorList*.
 	Kind string `json:"kind,omitempty"`
+
+	// Warnings: List of migration warnings.
+	Warnings []*SqlExternalSyncSettingError `json:"warnings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3625,7 +3629,7 @@ type Tier struct {
 	Region []string `json:"region,omitempty"`
 
 	// Tier: An identifier for the machine type, for example,
-	// db-n1-standard-1. For related information, see Pricing.
+	// db-custom-1-3840. For related information, see Pricing.
 	Tier string `json:"tier,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskQuota") to
@@ -3837,6 +3841,12 @@ type BackupRunsDeleteCall struct {
 }
 
 // Delete: Deletes the backup taken by a backup run.
+//
+// - id: The ID of the Backup Run to delete. To find a Backup Run ID,
+//   use the list method.
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) Delete(project string, instance string, id int64) *BackupRunsDeleteCall {
 	c := &BackupRunsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3872,7 +3882,7 @@ func (c *BackupRunsDeleteCall) Header() http.Header {
 
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3989,6 +3999,11 @@ type BackupRunsGetCall struct {
 }
 
 // Get: Retrieves a resource containing information about a backup run.
+//
+// - id: The ID of this Backup Run.
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) Get(project string, instance string, id int64) *BackupRunsGetCall {
 	c := &BackupRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4034,7 +4049,7 @@ func (c *BackupRunsGetCall) Header() http.Header {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4154,6 +4169,10 @@ type BackupRunsInsertCall struct {
 
 // Insert: Creates a new backup run on demand. This method is applicable
 // only to Second Generation instances.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) Insert(project string, instance string, backuprun *BackupRun) *BackupRunsInsertCall {
 	c := &BackupRunsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4189,7 +4208,7 @@ func (c *BackupRunsInsertCall) Header() http.Header {
 
 func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4306,6 +4325,10 @@ type BackupRunsListCall struct {
 // List: Lists all backup runs associated with a given instance and
 // configuration in the reverse chronological order of the backup
 // initiation time.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) List(project string, instance string) *BackupRunsListCall {
 	c := &BackupRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4365,7 +4388,7 @@ func (c *BackupRunsListCall) Header() http.Header {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4507,6 +4530,11 @@ type DatabasesDeleteCall struct {
 }
 
 // Delete: Deletes a database from a Cloud SQL instance.
+//
+// - database: Name of the database to be deleted in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Delete(project string, instance string, database string) *DatabasesDeleteCall {
 	c := &DatabasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4542,7 +4570,7 @@ func (c *DatabasesDeleteCall) Header() http.Header {
 
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4659,6 +4687,11 @@ type DatabasesGetCall struct {
 
 // Get: Retrieves a resource containing information about a database
 // inside a Cloud SQL instance.
+//
+// - database: Name of the database in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Get(project string, instance string, database string) *DatabasesGetCall {
 	c := &DatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4704,7 +4737,7 @@ func (c *DatabasesGetCall) Header() http.Header {
 
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4823,6 +4856,10 @@ type DatabasesInsertCall struct {
 
 // Insert: Inserts a resource containing information about a database
 // inside a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Insert(project string, instance string, database *Database) *DatabasesInsertCall {
 	c := &DatabasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4858,7 +4895,7 @@ func (c *DatabasesInsertCall) Header() http.Header {
 
 func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4973,6 +5010,10 @@ type DatabasesListCall struct {
 }
 
 // List: Lists databases in the specified Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) List(project string, instance string) *DatabasesListCall {
 	c := &DatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5017,7 +5058,7 @@ func (c *DatabasesListCall) Header() http.Header {
 
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5130,6 +5171,11 @@ type DatabasesPatchCall struct {
 // Patch: Partially updates a resource containing information about a
 // database inside a Cloud SQL instance. This method supports patch
 // semantics.
+//
+// - database: Name of the database to be updated in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Patch(project string, instance string, database string, database2 *Database) *DatabasesPatchCall {
 	c := &DatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5166,7 +5212,7 @@ func (c *DatabasesPatchCall) Header() http.Header {
 
 func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5291,6 +5337,11 @@ type DatabasesUpdateCall struct {
 
 // Update: Updates a resource containing information about a database
 // inside a Cloud SQL instance.
+//
+// - database: Name of the database to be updated in the instance.
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *DatabasesService) Update(project string, instance string, database string, database2 *Database) *DatabasesUpdateCall {
 	c := &DatabasesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5327,7 +5378,7 @@ func (c *DatabasesUpdateCall) Header() http.Header {
 
 func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5498,7 +5549,7 @@ func (c *FlagsListCall) Header() http.Header {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5597,6 +5648,10 @@ type InstancesAddServerCaCall struct {
 // rotation. If a CA version was previously added but never used in a
 // certificate rotation, this operation replaces that version. There
 // cannot be more than one CA version waiting to be rotated in.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) AddServerCa(project string, instance string) *InstancesAddServerCaCall {
 	c := &InstancesAddServerCaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5631,7 +5686,7 @@ func (c *InstancesAddServerCaCall) Header() http.Header {
 
 func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5739,6 +5794,11 @@ type InstancesCloneCall struct {
 
 // Clone: Creates a Cloud SQL instance as a clone of the source
 // instance. Using this operation might cause your instance to restart.
+//
+// - instance: The ID of the Cloud SQL instance to be cloned (source).
+//   This does not include the project ID.
+// - project: Project ID of the source as well as the clone Cloud SQL
+//   instance.
 func (r *InstancesService) Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5774,7 +5834,7 @@ func (c *InstancesCloneCall) Header() http.Header {
 
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5888,6 +5948,11 @@ type InstancesDeleteCall struct {
 }
 
 // Delete: Deletes a Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance to be
+//   deleted.
 func (r *InstancesService) Delete(project string, instance string) *InstancesDeleteCall {
 	c := &InstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5922,7 +5987,7 @@ func (c *InstancesDeleteCall) Header() http.Header {
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6030,6 +6095,9 @@ type InstancesDemoteMasterCall struct {
 
 // DemoteMaster: Demotes the stand-alone instance to be a Cloud SQL read
 // replica for an external database server.
+//
+// - instance: Cloud SQL instance name.
+// - project: ID of the project that contains the instance.
 func (r *InstancesService) DemoteMaster(project string, instance string, instancesdemotemasterrequest *InstancesDemoteMasterRequest) *InstancesDemoteMasterCall {
 	c := &InstancesDemoteMasterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6065,7 +6133,7 @@ func (c *InstancesDemoteMasterCall) Header() http.Header {
 
 func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6181,6 +6249,11 @@ type InstancesExportCall struct {
 
 // Export: Exports data from a Cloud SQL instance to a Cloud Storage
 // bucket as a SQL dump or CSV file.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance to be
+//   exported.
 func (r *InstancesService) Export(project string, instance string, instancesexportrequest *InstancesExportRequest) *InstancesExportCall {
 	c := &InstancesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6216,7 +6289,7 @@ func (c *InstancesExportCall) Header() http.Header {
 
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6331,6 +6404,10 @@ type InstancesFailoverCall struct {
 
 // Failover: Failover the instance to its failover replica instance.
 // Using this operation might cause your instance to restart.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) Failover(project string, instance string, instancesfailoverrequest *InstancesFailoverRequest) *InstancesFailoverCall {
 	c := &InstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6366,7 +6443,7 @@ func (c *InstancesFailoverCall) Header() http.Header {
 
 func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6482,6 +6559,10 @@ type InstancesGetCall struct {
 
 // Get: Retrieves a resource containing information about a Cloud SQL
 // instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Get(project string, instance string) *InstancesGetCall {
 	c := &InstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6526,7 +6607,7 @@ func (c *InstancesGetCall) Header() http.Header {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6637,6 +6718,10 @@ type InstancesImportCall struct {
 
 // Import: Imports data into a Cloud SQL instance from a SQL dump or CSV
 // file in Cloud Storage.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Import(project string, instance string, instancesimportrequest *InstancesImportRequest) *InstancesImportCall {
 	c := &InstancesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6672,7 +6757,7 @@ func (c *InstancesImportCall) Header() http.Header {
 
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6785,6 +6870,9 @@ type InstancesInsertCall struct {
 }
 
 // Insert: Creates a new Cloud SQL instance.
+//
+// - project: Project ID of the project to which the newly created Cloud
+//   SQL instances should belong.
 func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInstance) *InstancesInsertCall {
 	c := &InstancesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6819,7 +6907,7 @@ func (c *InstancesInsertCall) Header() http.Header {
 
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6925,6 +7013,9 @@ type InstancesListCall struct {
 }
 
 // List: Lists instances under a given project.
+//
+// - project: Project ID of the project for which to list Cloud SQL
+//   instances.
 func (r *InstancesService) List(project string) *InstancesListCall {
 	c := &InstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6997,7 +7088,7 @@ func (c *InstancesListCall) Header() http.Header {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7140,6 +7231,10 @@ type InstancesListServerCasCall struct {
 // CA that was used to sign the certificate that is currently in use, a
 // CA that has been added but not yet used to sign a certificate, and a
 // CA used to sign a certificate that has previously rotated out.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) ListServerCas(project string, instance string) *InstancesListServerCasCall {
 	c := &InstancesListServerCasCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7184,7 +7279,7 @@ func (c *InstancesListServerCasCall) Header() http.Header {
 
 func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7295,6 +7390,10 @@ type InstancesPatchCall struct {
 
 // Patch: Updates settings of a Cloud SQL instance. This method supports
 // patch semantics.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Patch(project string, instance string, databaseinstance *DatabaseInstance) *InstancesPatchCall {
 	c := &InstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7330,7 +7429,7 @@ func (c *InstancesPatchCall) Header() http.Header {
 
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7446,6 +7545,9 @@ type InstancesPromoteReplicaCall struct {
 // PromoteReplica: Promotes the read replica instance to be a
 // stand-alone Cloud SQL instance. Using this operation might cause your
 // instance to restart.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) PromoteReplica(project string, instance string) *InstancesPromoteReplicaCall {
 	c := &InstancesPromoteReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7480,7 +7582,7 @@ func (c *InstancesPromoteReplicaCall) Header() http.Header {
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7587,6 +7689,10 @@ type InstancesResetSslConfigCall struct {
 
 // ResetSslConfig: Deletes all client certificates and generates a new
 // server SSL certificate for the instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) ResetSslConfig(project string, instance string) *InstancesResetSslConfigCall {
 	c := &InstancesResetSslConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7621,7 +7727,7 @@ func (c *InstancesResetSslConfigCall) Header() http.Header {
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7727,6 +7833,11 @@ type InstancesRestartCall struct {
 }
 
 // Restart: Restarts a Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance to be
+//   restarted.
 func (r *InstancesService) Restart(project string, instance string) *InstancesRestartCall {
 	c := &InstancesRestartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7761,7 +7872,7 @@ func (c *InstancesRestartCall) Header() http.Header {
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7869,6 +7980,10 @@ type InstancesRestoreBackupCall struct {
 
 // RestoreBackup: Restores a backup of a Cloud SQL instance. Using this
 // operation might cause your instance to restart.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) RestoreBackup(project string, instance string, instancesrestorebackuprequest *InstancesRestoreBackupRequest) *InstancesRestoreBackupCall {
 	c := &InstancesRestoreBackupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7904,7 +8019,7 @@ func (c *InstancesRestoreBackupCall) Header() http.Header {
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8021,6 +8136,10 @@ type InstancesRotateServerCaCall struct {
 // RotateServerCa: Rotates the server certificate to one signed by the
 // Certificate Authority (CA) version previously added with the
 // addServerCA method.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) RotateServerCa(project string, instance string, instancesrotateservercarequest *InstancesRotateServerCaRequest) *InstancesRotateServerCaCall {
 	c := &InstancesRotateServerCaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8056,7 +8175,7 @@ func (c *InstancesRotateServerCaCall) Header() http.Header {
 
 func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8170,6 +8289,9 @@ type InstancesStartReplicaCall struct {
 }
 
 // StartReplica: Starts the replication in the read replica instance.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) StartReplica(project string, instance string) *InstancesStartReplicaCall {
 	c := &InstancesStartReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8204,7 +8326,7 @@ func (c *InstancesStartReplicaCall) Header() http.Header {
 
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8310,6 +8432,9 @@ type InstancesStopReplicaCall struct {
 }
 
 // StopReplica: Stops the replication in the read replica instance.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the read replica.
 func (r *InstancesService) StopReplica(project string, instance string) *InstancesStopReplicaCall {
 	c := &InstancesStopReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8344,7 +8469,7 @@ func (c *InstancesStopReplicaCall) Header() http.Header {
 
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8450,7 +8575,12 @@ type InstancesTruncateLogCall struct {
 	header_                     http.Header
 }
 
-// TruncateLog: Truncate MySQL general and slow query log tables
+// TruncateLog: Truncate MySQL general and slow query log tables MySQL
+// only.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the Cloud SQL project.
 func (r *InstancesService) TruncateLog(project string, instance string, instancestruncatelogrequest *InstancesTruncateLogRequest) *InstancesTruncateLogCall {
 	c := &InstancesTruncateLogCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8486,7 +8616,7 @@ func (c *InstancesTruncateLogCall) Header() http.Header {
 
 func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8551,7 +8681,7 @@ func (c *InstancesTruncateLogCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Truncate MySQL general and slow query log tables",
+	//   "description": "Truncate MySQL general and slow query log tables MySQL only.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/truncateLog",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.truncateLog",
@@ -8602,6 +8732,10 @@ type InstancesUpdateCall struct {
 
 // Update: Updates settings of a Cloud SQL instance. Using this
 // operation might cause your instance to restart.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *InstancesService) Update(project string, instance string, databaseinstance *DatabaseInstance) *InstancesUpdateCall {
 	c := &InstancesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8637,7 +8771,7 @@ func (c *InstancesUpdateCall) Header() http.Header {
 
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8753,6 +8887,9 @@ type OperationsGetCall struct {
 
 // Get: Retrieves an instance operation that has been performed on an
 // instance.
+//
+// - operation: Instance operation ID.
+// - project: Project ID of the project that contains the instance.
 func (r *OperationsService) Get(project string, operation string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8797,7 +8934,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8908,6 +9045,8 @@ type OperationsListCall struct {
 // List: Lists all instance operations that have been performed on the
 // given Cloud SQL instance in the reverse chronological order of the
 // start time.
+//
+// - project: Project ID of the project that contains the instance.
 func (r *OperationsService) List(project string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8973,7 +9112,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9113,6 +9252,10 @@ type ProjectsInstancesRescheduleMaintenanceCall struct {
 
 // RescheduleMaintenance: Reschedules the maintenance on the given
 // instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: ID of the project that contains the instance.
 func (r *ProjectsInstancesService) RescheduleMaintenance(project string, instance string, sqlinstancesreschedulemaintenancerequestbody *SqlInstancesRescheduleMaintenanceRequestBody) *ProjectsInstancesRescheduleMaintenanceCall {
 	c := &ProjectsInstancesRescheduleMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9148,7 +9291,7 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9262,6 +9405,10 @@ type ProjectsInstancesStartExternalSyncCall struct {
 }
 
 // StartExternalSync: Start External primary instance migration.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: ID of the project that contains the instance.
 func (r *ProjectsInstancesService) StartExternalSync(project string, instance string) *ProjectsInstancesStartExternalSyncCall {
 	c := &ProjectsInstancesStartExternalSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9317,7 +9464,7 @@ func (c *ProjectsInstancesStartExternalSyncCall) Header() http.Header {
 
 func (c *ProjectsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9444,6 +9591,10 @@ type ProjectsInstancesVerifyExternalSyncSettingsCall struct {
 
 // VerifyExternalSyncSettings: Verify External primary instance external
 // sync settings.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *ProjectsInstancesService) VerifyExternalSyncSettings(project string, instance string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
 	c := &ProjectsInstancesVerifyExternalSyncSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9499,7 +9650,7 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
 
 func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9631,6 +9782,10 @@ type SslCertsCreateEphemeralCall struct {
 // the provided public key and signed by a private key specific to the
 // target instance. Users may use the certificate to authenticate as
 // themselves when connecting to the database.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the Cloud SQL project.
 func (r *SslCertsService) CreateEphemeral(project string, instance string, sslcertscreateephemeralrequest *SslCertsCreateEphemeralRequest) *SslCertsCreateEphemeralCall {
 	c := &SslCertsCreateEphemeralCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9666,7 +9821,7 @@ func (c *SslCertsCreateEphemeralCall) Header() http.Header {
 
 func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9782,6 +9937,11 @@ type SslCertsDeleteCall struct {
 
 // Delete: Deletes the SSL certificate. For First Generation instances,
 // the certificate remains valid until the instance is restarted.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
+// - sha1Fingerprint: Sha1 FingerPrint.
 func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprint string) *SslCertsDeleteCall {
 	c := &SslCertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9817,7 +9977,7 @@ func (c *SslCertsDeleteCall) Header() http.Header {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9935,6 +10095,11 @@ type SslCertsGetCall struct {
 // Get: Retrieves a particular SSL certificate. Does not include the
 // private key (required for usage). The private key must be saved from
 // the response to initial creation.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
+// - sha1Fingerprint: Sha1 FingerPrint.
 func (r *SslCertsService) Get(project string, instance string, sha1Fingerprint string) *SslCertsGetCall {
 	c := &SslCertsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9980,7 +10145,7 @@ func (c *SslCertsGetCall) Header() http.Header {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10100,6 +10265,10 @@ type SslCertsInsertCall struct {
 // Insert: Creates an SSL certificate and returns it along with the
 // private key and server certificate authority. The new certificate
 // will not be usable until the instance is restarted.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *SslCertsService) Insert(project string, instance string, sslcertsinsertrequest *SslCertsInsertRequest) *SslCertsInsertCall {
 	c := &SslCertsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10135,7 +10304,7 @@ func (c *SslCertsInsertCall) Header() http.Header {
 
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10250,6 +10419,10 @@ type SslCertsListCall struct {
 }
 
 // List: Lists all of the current SSL certificates for the instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *SslCertsService) List(project string, instance string) *SslCertsListCall {
 	c := &SslCertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10294,7 +10467,7 @@ func (c *SslCertsListCall) Header() http.Header {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10403,7 +10576,9 @@ type TiersListCall struct {
 }
 
 // List: Lists all available machine types (tiers) for Cloud SQL, for
-// example, db-n1-standard-1. For related information, see Pricing.
+// example, db-custom-1-3840. For related information, see Pricing.
+//
+// - project: Project ID of the project for which to list tiers.
 func (r *TiersService) List(project string) *TiersListCall {
 	c := &TiersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10447,7 +10622,7 @@ func (c *TiersListCall) Header() http.Header {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10509,7 +10684,7 @@ func (c *TiersListCall) Do(opts ...googleapi.CallOption) (*TiersListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all available machine types (tiers) for Cloud SQL, for example, db-n1-standard-1. For related information, see Pricing.",
+	//   "description": "Lists all available machine types (tiers) for Cloud SQL, for example, db-custom-1-3840. For related information, see Pricing.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/tiers",
 	//   "httpMethod": "GET",
 	//   "id": "sql.tiers.list",
@@ -10548,6 +10723,10 @@ type UsersDeleteCall struct {
 }
 
 // Delete: Deletes a user from a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) Delete(project string, instance string) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10596,7 +10775,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10713,6 +10892,10 @@ type UsersInsertCall struct {
 }
 
 // Insert: Creates a new user in a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) Insert(project string, instance string, user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10748,7 +10931,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10863,6 +11046,10 @@ type UsersListCall struct {
 }
 
 // List: Lists users in the specified Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) List(project string, instance string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -10907,7 +11094,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11017,6 +11204,10 @@ type UsersUpdateCall struct {
 }
 
 // Update: Updates an existing user in a Cloud SQL instance.
+//
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
 func (r *UsersService) Update(project string, instance string, user *User) *UsersUpdateCall {
 	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -11066,7 +11257,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

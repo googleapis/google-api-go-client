@@ -86,8 +86,8 @@ const (
 	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
-	// View and manage Google Drive files and folders that you have opened
-	// or created with this app
+	// See, edit, create, and delete only the specific Google Drive files
+	// you use with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
 	// See and download all your Google Drive files
@@ -1628,7 +1628,7 @@ func (s *BatchClearValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 // BatchClearValuesRequest: The request for clearing more than one range
 // of values in a spreadsheet.
 type BatchClearValuesRequest struct {
-	// Ranges: The ranges to clear, in A1 notation.
+	// Ranges: The ranges to clear, in A1 or R1C1 notation.
 	Ranges []string `json:"ranges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ranges") to
@@ -2619,7 +2619,7 @@ type BubbleChartSpec struct {
 	// fully transparent and 1 is fully opaque.
 	BubbleOpacity float64 `json:"bubbleOpacity,omitempty"`
 
-	// BubbleSizes: The data contianing the bubble sizes. Bubble sizes are
+	// BubbleSizes: The data containing the bubble sizes. Bubble sizes are
 	// used to draw the bubbles at different sizes relative to each other.
 	// If specified, group_ids must also be specified. This field is
 	// optional.
@@ -2653,7 +2653,7 @@ type BubbleChartSpec struct {
 	//   "INSIDE_LEGEND" - The legend is rendered inside the chart area.
 	LegendPosition string `json:"legendPosition,omitempty"`
 
-	// Series: The data contianing the bubble y-values. These values locate
+	// Series: The data containing the bubble y-values. These values locate
 	// the bubbles in the chart vertically.
 	Series *ChartData `json:"series,omitempty"`
 
@@ -3152,7 +3152,7 @@ func (s *ChartCustomNumberFormatOptions) MarshalJSON() ([]byte, error) {
 // ChartData: The data included in a domain or series.
 type ChartData struct {
 	// AggregateType: The aggregation type for the series of a data source
-	// chart. Not supported for regular charts.
+	// chart. Only supported for data source charts.
 	//
 	// Possible values:
 	//   "CHART_AGGREGATE_TYPE_UNSPECIFIED" - Default value, do not use.
@@ -3169,7 +3169,7 @@ type ChartData struct {
 	ColumnReference *DataSourceColumnReference `json:"columnReference,omitempty"`
 
 	// GroupRule: The rule to group the data by if the ChartData backs the
-	// domain of a data source chart. Not supported for regular charts.
+	// domain of a data source chart. Only supported for data source charts.
 	GroupRule *ChartGroupRule `json:"groupRule,omitempty"`
 
 	// SourceRange: The source ranges of the data.
@@ -3587,19 +3587,19 @@ func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
 
 // Color: Represents a color in the RGBA color space. This
 // representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness; for example,
+// representations in various languages over compactness. For example,
 // the fields of this representation can be trivially provided to the
-// constructor of "java.awt.Color" in Java; it can also be trivially
-// provided to UIColor's "+colorWithRed:green:blue:alpha" method in iOS;
+// constructor of `java.awt.Color` in Java; it can also be trivially
+// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
 // and, with just a little work, it can be easily formatted into a CSS
-// "rgba()" string in JavaScript, as well. Note: this proto does not
-// carry information about the absolute color space that should be used
-// to interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications SHOULD assume the sRGB color space.
-// Note: when color equality needs to be decided, implementations,
-// unless documented otherwise, will treat two colors to be equal if all
-// their red, green, blue and alpha values each differ by at most 1e-5.
-// Example (Java): import com.google.type.Color; // ... public static
+// `rgba()` string in JavaScript. This reference page doesn't carry
+// information about the absolute color space that should be used to
+// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
+// etc.). By default, applications should assume the sRGB color space.
+// When color equality needs to be decided, implementations, unless
+// documented otherwise, treat two colors as equal if all their red,
+// green, blue, and alpha values each differ by at most 1e-5. Example
+// (Java): import com.google.type.Color; // ... public static
 // java.awt.Color fromProto(Color protocolor) { float alpha =
 // protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
 // return new java.awt.Color( protocolor.getRed(),
@@ -3628,27 +3628,27 @@ func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
 // || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac =
 // rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green
 // = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255);
-// if (!('alpha' in rgb_color)) { return rgbToCssColor_(red, green,
+// if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor_ = function(red,
-// green, blue) { var rgbNumber = new Number((red << 16) | (green << 8)
-// | blue); var hexString = rgbNumber.toString(16); var missingZeros = 6
-// - hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
+// blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
+// hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
 // resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type Color struct {
 	// Alpha: The fraction of this color that should be applied to the
 	// pixel. That is, the final pixel color is defined by the equation:
-	// pixel color = alpha * (this color) + (1.0 - alpha) * (background
-	// color) This means that a value of 1.0 corresponds to a solid color,
+	// `pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)` This means that a value of 1.0 corresponds to a solid color,
 	// whereas a value of 0.0 corresponds to a completely transparent color.
 	// This uses a wrapper message rather than a simple float scalar so that
 	// it is possible to distinguish between a default value and the value
-	// being unset. If omitted, this color object is to be rendered as a
-	// solid color (as if the alpha value had been explicitly given with a
-	// value of 1.0).
+	// being unset. If omitted, this color object is rendered as a solid
+	// color (as if the alpha value had been explicitly given a value of
+	// 1.0).
 	Alpha float64 `json:"alpha,omitempty"`
 
 	// Blue: The amount of blue in the color as a value in the interval [0,
@@ -7287,6 +7287,34 @@ func (s *LineStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Link: An external or local reference.
+type Link struct {
+	// Uri: The link identifier.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Link) MarshalJSON() ([]byte, error) {
+	type NoMethod Link
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ManualRule: Allows you to manually organize the values in a source
 // data column into buckets with names of your choosing. For example, a
 // pivot table that aggregates population by state:
@@ -7976,7 +8004,7 @@ type PivotGroup struct {
 
 	// RepeatHeadings: True if the headings in this pivot group should be
 	// repeated. This is only valid for row groupings and is ignored by
-	// columns. By default, we minimize repitition of headings by not
+	// columns. By default, we minimize repetition of headings by not
 	// showing higher level headings where they are the same. For example,
 	// even though the third row below corresponds to "Q1 Mar", "Q1" is not
 	// shown because it is redundant with previous rows. Setting
@@ -9807,6 +9835,13 @@ type TextFormat struct {
 	// Italic: True if the text is italicized.
 	Italic bool `json:"italic,omitempty"`
 
+	// Link: The link destination of the text, if any. Setting a link in a
+	// format run will clear an existing cell-level link. When a link is
+	// set, the text foreground color will be set to the default link color
+	// and the text will be underlined. If these fields are modified in the
+	// same request, those values will be used instead of the link defaults.
+	Link *Link `json:"link,omitempty"`
+
 	// Strikethrough: True if the text has a strikethrough.
 	Strikethrough bool `json:"strikethrough,omitempty"`
 
@@ -11552,6 +11587,8 @@ type SpreadsheetsBatchUpdateCall struct {
 // Your changes may be altered with respect to collaborator changes. If
 // there are no collaborators, the spreadsheet should reflect your
 // changes.
+//
+// - spreadsheetId: The spreadsheet to apply the updates to.
 func (r *SpreadsheetsService) BatchUpdate(spreadsheetId string, batchupdatespreadsheetrequest *BatchUpdateSpreadsheetRequest) *SpreadsheetsBatchUpdateCall {
 	c := &SpreadsheetsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -11586,7 +11623,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11726,7 +11763,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11832,6 +11869,8 @@ type SpreadsheetsGetCall struct {
 // specified. Limiting the range will return only the portions of the
 // spreadsheet that intersect the requested ranges. Ranges are specified
 // using A1 notation.
+//
+// - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) Get(spreadsheetId string) *SpreadsheetsGetCall {
 	c := &SpreadsheetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -11890,7 +11929,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12017,6 +12056,8 @@ type SpreadsheetsGetByDataFilterCall struct {
 // a field mask is set, the `includeGridData` parameter is ignored For
 // large spreadsheets, it is recommended to retrieve only the specific
 // fields of the spreadsheet that you want.
+//
+// - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) GetByDataFilter(spreadsheetId string, getspreadsheetbydatafilterrequest *GetSpreadsheetByDataFilterRequest) *SpreadsheetsGetByDataFilterCall {
 	c := &SpreadsheetsGetByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12051,7 +12092,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12161,6 +12202,9 @@ type SpreadsheetsDeveloperMetadataGetCall struct {
 // Get: Returns the developer metadata with the specified ID. The caller
 // must specify the spreadsheet ID and the developer metadata's unique
 // metadataId.
+//
+// - metadataId: The ID of the developer metadata to retrieve.
+// - spreadsheetId: The ID of the spreadsheet to retrieve metadata from.
 func (r *SpreadsheetsDeveloperMetadataService) Get(spreadsheetId string, metadataId int64) *SpreadsheetsDeveloperMetadataGetCall {
 	c := &SpreadsheetsDeveloperMetadataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12205,7 +12249,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12322,6 +12366,8 @@ type SpreadsheetsDeveloperMetadataSearchCall struct {
 // represents a location in a spreadsheet, this will return all
 // developer metadata associated with locations intersecting that
 // region.
+//
+// - spreadsheetId: The ID of the spreadsheet to retrieve metadata from.
 func (r *SpreadsheetsDeveloperMetadataService) Search(spreadsheetId string, searchdevelopermetadatarequest *SearchDeveloperMetadataRequest) *SpreadsheetsDeveloperMetadataSearchCall {
 	c := &SpreadsheetsDeveloperMetadataSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12356,7 +12402,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12465,6 +12511,10 @@ type SpreadsheetsSheetsCopyToCall struct {
 
 // CopyTo: Copies a single sheet from a spreadsheet to another
 // spreadsheet. Returns the properties of the newly created sheet.
+//
+// - sheetId: The ID of the sheet to copy.
+// - spreadsheetId: The ID of the spreadsheet containing the sheet to
+//   copy.
 func (r *SpreadsheetsSheetsService) CopyTo(spreadsheetId string, sheetId int64, copysheettoanotherspreadsheetrequest *CopySheetToAnotherSpreadsheetRequest) *SpreadsheetsSheetsCopyToCall {
 	c := &SpreadsheetsSheetsCopyToCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12500,7 +12550,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12627,6 +12677,10 @@ type SpreadsheetsValuesAppendCall struct {
 // `valueInputOption` only controls how the input data will be added to
 // the sheet (column-wise or row-wise), it does not influence what cell
 // the data starts being written to.
+//
+// - range: The A1 notation of a range to search for a logical table of
+//   data. Values are appended after the last row of the table.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesAppendCall {
 	c := &SpreadsheetsValuesAppendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12747,7 +12801,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12926,6 +12980,8 @@ type SpreadsheetsValuesBatchClearCall struct {
 // The caller must specify the spreadsheet ID and one or more ranges.
 // Only values are cleared -- all other properties of the cell (such as
 // formatting, data validation, etc..) are kept.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClear(spreadsheetId string, batchclearvaluesrequest *BatchClearValuesRequest) *SpreadsheetsValuesBatchClearCall {
 	c := &SpreadsheetsValuesBatchClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12960,7 +13016,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13071,6 +13127,8 @@ type SpreadsheetsValuesBatchClearByDataFilterCall struct {
 // more DataFilters. Ranges matching any of the specified data filters
 // will be cleared. Only values are cleared -- all other properties of
 // the cell (such as formatting, data validation, etc..) are kept.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchClearByDataFilter(spreadsheetId string, batchclearvaluesbydatafilterrequest *BatchClearValuesByDataFilterRequest) *SpreadsheetsValuesBatchClearByDataFilterCall {
 	c := &SpreadsheetsValuesBatchClearByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13105,7 +13163,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13214,6 +13272,8 @@ type SpreadsheetsValuesBatchGetCall struct {
 
 // BatchGet: Returns one or more ranges of values from a spreadsheet.
 // The caller must specify the spreadsheet ID and one or more ranges.
+//
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *SpreadsheetsValuesBatchGetCall {
 	c := &SpreadsheetsValuesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13260,8 +13320,8 @@ func (c *SpreadsheetsValuesBatchGetCall) MajorDimension(majorDimension string) *
 	return c
 }
 
-// Ranges sets the optional parameter "ranges": The A1 notation of the
-// values to retrieve.
+// Ranges sets the optional parameter "ranges": The A1 notation or R1C1
+// notation of the range to retrieve values from.
 func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.SetMulti("ranges", append([]string{}, ranges...))
 	return c
@@ -13325,7 +13385,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13424,7 +13484,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "ranges": {
-	//       "description": "The A1 notation of the values to retrieve.",
+	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -13481,6 +13541,8 @@ type SpreadsheetsValuesBatchGetByDataFilterCall struct {
 // the specified data filters. The caller must specify the spreadsheet
 // ID and one or more DataFilters. Ranges that match any of the data
 // filters in the request will be returned.
+//
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) BatchGetByDataFilter(spreadsheetId string, batchgetvaluesbydatafilterrequest *BatchGetValuesByDataFilterRequest) *SpreadsheetsValuesBatchGetByDataFilterCall {
 	c := &SpreadsheetsValuesBatchGetByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13515,7 +13577,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13625,6 +13687,8 @@ type SpreadsheetsValuesBatchUpdateCall struct {
 // BatchUpdate: Sets values in one or more ranges of a spreadsheet. The
 // caller must specify the spreadsheet ID, a valueInputOption, and one
 // or more ValueRanges.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchUpdate(spreadsheetId string, batchupdatevaluesrequest *BatchUpdateValuesRequest) *SpreadsheetsValuesBatchUpdateCall {
 	c := &SpreadsheetsValuesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13659,7 +13723,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13768,6 +13832,8 @@ type SpreadsheetsValuesBatchUpdateByDataFilterCall struct {
 // BatchUpdateByDataFilter: Sets values in one or more ranges of a
 // spreadsheet. The caller must specify the spreadsheet ID, a
 // valueInputOption, and one or more DataFilterValueRanges.
+//
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) BatchUpdateByDataFilter(spreadsheetId string, batchupdatevaluesbydatafilterrequest *BatchUpdateValuesByDataFilterRequest) *SpreadsheetsValuesBatchUpdateByDataFilterCall {
 	c := &SpreadsheetsValuesBatchUpdateByDataFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13802,7 +13868,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13914,6 +13980,9 @@ type SpreadsheetsValuesClearCall struct {
 // spreadsheet ID and range. Only values are cleared -- all other
 // properties of the cell (such as formatting, data validation, etc..)
 // are kept.
+//
+// - range: The A1 notation or R1C1 notation of the values to clear.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Clear(spreadsheetId string, range_ string, clearvaluesrequest *ClearValuesRequest) *SpreadsheetsValuesClearCall {
 	c := &SpreadsheetsValuesClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -13949,7 +14018,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14024,7 +14093,7 @@ func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearVa
 	//   ],
 	//   "parameters": {
 	//     "range": {
-	//       "description": "The A1 notation of the values to clear.",
+	//       "description": "The A1 notation or R1C1 notation of the values to clear.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14066,6 +14135,10 @@ type SpreadsheetsValuesGetCall struct {
 
 // Get: Returns a range of values from a spreadsheet. The caller must
 // specify the spreadsheet ID and a range.
+//
+// - range: The A1 notation or R1C1 notation of the range to retrieve
+//   values from.
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *SpreadsheetsValuesGetCall {
 	c := &SpreadsheetsValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14171,7 +14244,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14272,7 +14345,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of the values to retrieve.",
+	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14328,6 +14401,9 @@ type SpreadsheetsValuesUpdateCall struct {
 
 // Update: Sets values in a range of a spreadsheet. The caller must
 // specify the spreadsheet ID, range, and a valueInputOption.
+//
+// - range: The A1 notation of the values to update.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesUpdateCall {
 	c := &SpreadsheetsValuesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14438,7 +14514,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

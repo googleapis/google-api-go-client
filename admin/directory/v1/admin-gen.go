@@ -83,6 +83,13 @@ const mtlsBasePath = "https://admin.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See, add, edit, and permanently delete the printers that your
+	// organization can use with Chrome
+	AdminChromePrintersScope = "https://www.googleapis.com/auth/admin.chrome.printers"
+
+	// See the printers that your organization can use with Chrome
+	AdminChromePrintersReadonlyScope = "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+
 	// View and manage customer related information
 	AdminDirectoryCustomerScope = "https://www.googleapis.com/auth/admin.directory.customer"
 
@@ -149,7 +156,7 @@ const (
 	// View user aliases on your domain
 	AdminDirectoryUserAliasReadonlyScope = "https://www.googleapis.com/auth/admin.directory.user.alias.readonly"
 
-	// View users on your domain
+	// See info about users on your domain
 	AdminDirectoryUserReadonlyScope = "https://www.googleapis.com/auth/admin.directory.user.readonly"
 
 	// Manage data access permissions for users on your domain
@@ -161,13 +168,15 @@ const (
 	// View user schemas on your domain
 	AdminDirectoryUserschemaReadonlyScope = "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/admin.chrome.printers",
+		"https://www.googleapis.com/auth/admin.chrome.printers.readonly",
 		"https://www.googleapis.com/auth/admin.directory.customer",
 		"https://www.googleapis.com/auth/admin.directory.customer.readonly",
 		"https://www.googleapis.com/auth/admin.directory.device.chromeos",
@@ -374,10 +383,34 @@ type CustomerDevicesChromeosCommandsService struct {
 
 func NewCustomersService(s *Service) *CustomersService {
 	rs := &CustomersService{s: s}
+	rs.Chrome = NewCustomersChromeService(s)
 	return rs
 }
 
 type CustomersService struct {
+	s *Service
+
+	Chrome *CustomersChromeService
+}
+
+func NewCustomersChromeService(s *Service) *CustomersChromeService {
+	rs := &CustomersChromeService{s: s}
+	rs.Printers = NewCustomersChromePrintersService(s)
+	return rs
+}
+
+type CustomersChromeService struct {
+	s *Service
+
+	Printers *CustomersChromePrintersService
+}
+
+func NewCustomersChromePrintersService(s *Service) *CustomersChromePrintersService {
+	rs := &CustomersChromePrintersService{s: s}
+	return rs
+}
+
+type CustomersChromePrintersService struct {
 	s *Service
 }
 
@@ -756,6 +789,184 @@ type Asps struct {
 
 func (s *Asps) MarshalJSON() ([]byte, error) {
 	type NoMethod Asps
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuxiliaryMessage: Auxiliary message about issues with printers or
+// settings. Example: {message_type:AUXILIARY_MESSAGE_WARNING,
+// field_mask:make_and_model, message:"Given printer is invalid or no
+// longer supported."}
+type AuxiliaryMessage struct {
+	// AuxiliaryMessage: Human readable message in English. Example: "Given
+	// printer is invalid or no longer supported."
+	AuxiliaryMessage string `json:"auxiliaryMessage,omitempty"`
+
+	// FieldMask: Field that this message concerns.
+	FieldMask string `json:"fieldMask,omitempty"`
+
+	// Severity: Message severity
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Message type unspecified.
+	//   "SEVERITY_INFO" - Message of severity: info.
+	//   "SEVERITY_WARNING" - Message of severity: warning.
+	//   "SEVERITY_ERROR" - Message of severity: error.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuxiliaryMessage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuxiliaryMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod AuxiliaryMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreatePrintersRequest: Request for adding new printers in batch.
+type BatchCreatePrintersRequest struct {
+	// Requests: A list of Printers to be created. Max 50 at a time.
+	Requests []*CreatePrinterRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreatePrintersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreatePrintersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreatePrintersResponse: Response for adding new printers in
+// batch.
+type BatchCreatePrintersResponse struct {
+	// Failures: A list of create failures. Printer IDs are not populated,
+	// as printer were not created.
+	Failures []*FailureInfo `json:"failures,omitempty"`
+
+	// Printers: A list of successfully created printers with their IDs
+	// populated.
+	Printers []*Printer `json:"printers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Failures") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Failures") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreatePrintersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreatePrintersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeletePrintersRequest: Request for deleting existing printers in
+// batch.
+type BatchDeletePrintersRequest struct {
+	// PrinterIds: A list of Printer.id that should be deleted. Max 100 at a
+	// time.
+	PrinterIds []string `json:"printerIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrinterIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrinterIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeletePrintersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePrintersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeletePrintersResponse: Response for deleting existing printers
+// in batch.
+type BatchDeletePrintersResponse struct {
+	// FailedPrinters: A list of update failures.
+	FailedPrinters []*FailureInfo `json:"failedPrinters,omitempty"`
+
+	// PrinterIds: A list of Printer.id that were successfully deleted.
+	PrinterIds []string `json:"printerIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedPrinters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedPrinters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeletePrintersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePrintersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1304,6 +1515,10 @@ type ChromeOsDevice struct {
 	// last login time.
 	RecentUsers []*RecentUsers `json:"recentUsers,omitempty"`
 
+	// ScreenshotFiles: List of screenshot files to download. Type is always
+	// "SCREENSHOT_FILE". (Read-only)
+	ScreenshotFiles []*ChromeOsDeviceScreenshotFiles `json:"screenshotFiles,omitempty"`
+
 	// SerialNumber: The Chrome device serial number entered when the device
 	// was enabled. This value is the same as the Admin console's *Serial
 	// Number* in the *Chrome OS Devices* tab.
@@ -1577,6 +1792,42 @@ func (s *ChromeOsDeviceLastKnownNetwork) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ChromeOsDeviceScreenshotFiles struct {
+	// CreateTime: Date and time the file was created
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DownloadUrl: File download URL
+	DownloadUrl string `json:"downloadUrl,omitempty"`
+
+	// Name: File name
+	Name string `json:"name,omitempty"`
+
+	// Type: File type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceScreenshotFiles) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceScreenshotFiles
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ChromeOsDeviceSystemRamFreeReports struct {
 	// ReportTime: Date and time the report was received.
 	ReportTime string `json:"reportTime,omitempty"`
@@ -1751,6 +2002,40 @@ type ChromeOsMoveDevicesToOu struct {
 
 func (s *ChromeOsMoveDevicesToOu) MarshalJSON() ([]byte, error) {
 	type NoMethod ChromeOsMoveDevicesToOu
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreatePrinterRequest: Request for adding a new printer.
+type CreatePrinterRequest struct {
+	// Parent: Required. The name of the customer. Format:
+	// customers/{customer_id}
+	Parent string `json:"parent,omitempty"`
+
+	// Printer: Required. A printer to create. If you want to place the
+	// printer under particular OU then populate printer.org_unit_id filed.
+	// Otherwise the printer will be placed under root OU.
+	Printer *Printer `json:"printer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreatePrinterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreatePrinterRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2266,6 +2551,144 @@ func (s *Domains2) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// FailureInfo: Info about failures
+type FailureInfo struct {
+	// ErrorCode: Canonical code for why the update failed to apply.
+	//
+	// Possible values:
+	//   "OK" - Not an error; returned on success HTTP Mapping: 200 OK
+	//   "CANCELLED" - The operation was cancelled, typically by the caller.
+	// HTTP Mapping: 499 Client Closed Request
+	//   "UNKNOWN" - Unknown error. For example, this error may be returned
+	// when a `Status` value received from another address space belongs to
+	// an error space that is not known in this address space. Also errors
+	// raised by APIs that do not return enough error information may be
+	// converted to this error. HTTP Mapping: 500 Internal Server Error
+	//   "INVALID_ARGUMENT" - The client specified an invalid argument. Note
+	// that this differs from `FAILED_PRECONDITION`. `INVALID_ARGUMENT`
+	// indicates arguments that are problematic regardless of the state of
+	// the system (e.g., a malformed file name). HTTP Mapping: 400 Bad
+	// Request
+	//   "DEADLINE_EXCEEDED" - The deadline expired before the operation
+	// could complete. For operations that change the state of the system,
+	// this error may be returned even if the operation has completed
+	// successfully. For example, a successful response from a server could
+	// have been delayed long enough for the deadline to expire. HTTP
+	// Mapping: 504 Gateway Timeout
+	//   "NOT_FOUND" - Some requested entity (e.g., file or directory) was
+	// not found. Note to server developers: if a request is denied for an
+	// entire class of users, such as gradual feature rollout or
+	// undocumented allowlist, `NOT_FOUND` may be used. If a request is
+	// denied for some users within a class of users, such as user-based
+	// access control, `PERMISSION_DENIED` must be used. HTTP Mapping: 404
+	// Not Found
+	//   "ALREADY_EXISTS" - The entity that a client attempted to create
+	// (e.g., file or directory) already exists. HTTP Mapping: 409 Conflict
+	//   "PERMISSION_DENIED" - The caller does not have permission to
+	// execute the specified operation. `PERMISSION_DENIED` must not be used
+	// for rejections caused by exhausting some resource (use
+	// `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED`
+	// must not be used if the caller can not be identified (use
+	// `UNAUTHENTICATED` instead for those errors). This error code does not
+	// imply the request is valid or the requested entity exists or
+	// satisfies other pre-conditions. HTTP Mapping: 403 Forbidden
+	//   "UNAUTHENTICATED" - The request does not have valid authentication
+	// credentials for the operation. HTTP Mapping: 401 Unauthorized
+	//   "RESOURCE_EXHAUSTED" - Some resource has been exhausted, perhaps a
+	// per-user quota, or perhaps the entire file system is out of space.
+	// HTTP Mapping: 429 Too Many Requests
+	//   "FAILED_PRECONDITION" - The operation was rejected because the
+	// system is not in a state required for the operation's execution. For
+	// example, the directory to be deleted is non-empty, an rmdir operation
+	// is applied to a non-directory, etc. Service implementors can use the
+	// following guidelines to decide between `FAILED_PRECONDITION`,
+	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
+	// retry just the failing call. (b) Use `ABORTED` if the client should
+	// retry at a higher level (e.g., when a client-specified test-and-set
+	// fails, indicating the client should restart a read-modify-write
+	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
+	// retry until the system state has been explicitly fixed. E.g., if an
+	// "rmdir" fails because the directory is non-empty,
+	// `FAILED_PRECONDITION` should be returned since the client should not
+	// retry unless the files are deleted from the directory. HTTP Mapping:
+	// 400 Bad Request
+	//   "ABORTED" - The operation was aborted, typically due to a
+	// concurrency issue such as a sequencer check failure or transaction
+	// abort. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 409 Conflict
+	//   "OUT_OF_RANGE" - The operation was attempted past the valid range.
+	// E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`,
+	// this error indicates a problem that may be fixed if the system state
+	// changes. For example, a 32-bit file system will generate
+	// `INVALID_ARGUMENT` if asked to read at an offset that is not in the
+	// range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to
+	// read from an offset past the current file size. There is a fair bit
+	// of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We
+	// recommend using `OUT_OF_RANGE` (the more specific error) when it
+	// applies so that callers who are iterating through a space can easily
+	// look for an `OUT_OF_RANGE` error to detect when they are done. HTTP
+	// Mapping: 400 Bad Request
+	//   "UNIMPLEMENTED" - The operation is not implemented or is not
+	// supported/enabled in this service. HTTP Mapping: 501 Not Implemented
+	//   "INTERNAL" - Internal errors. This means that some invariants
+	// expected by the underlying system have been broken. This error code
+	// is reserved for serious errors. HTTP Mapping: 500 Internal Server
+	// Error
+	//   "UNAVAILABLE" - The service is currently unavailable. This is most
+	// likely a transient condition, which can be corrected by retrying with
+	// a backoff. Note that it is not always safe to retry non-idempotent
+	// operations. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 503 Service Unavailable
+	//   "DATA_LOSS" - Unrecoverable data loss or corruption. HTTP Mapping:
+	// 500 Internal Server Error
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// ErrorMessage: Failure reason message.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Printer: Failed printer.
+	Printer *Printer `json:"printer,omitempty"`
+
+	// PrinterId: Id of a failed printer.
+	PrinterId string `json:"printerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FailureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod FailureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Feature: JSON template for Feature object in Directory API.
 type Feature struct {
 	// Etags: ETag of the resource.
@@ -2521,6 +2944,86 @@ type Groups struct {
 
 func (s *Groups) MarshalJSON() ([]byte, error) {
 	type NoMethod Groups
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPrinterModelsResponse: Response for listing allowed printer
+// models.
+type ListPrinterModelsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PrinterModels: Printer models that are currently allowed to be
+	// configured for ChromeOs. Some printers may be added or removed over
+	// time.
+	PrinterModels []*PrinterModel `json:"printerModels,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPrinterModelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrinterModelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPrintersResponse: Response for listing printers.
+type ListPrintersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Printers: List of printers. If `org_unit_id` was given in the
+	// request, then only printers visible for this OU will be returned. If
+	// `org_unit_id` was given in the request, then all printers will be
+	// returned.
+	Printers []*Printer `json:"printers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPrintersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrintersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3099,6 +3602,108 @@ type OrgUnits struct {
 
 func (s *OrgUnits) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgUnits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Printer: Printer configuration.
+type Printer struct {
+	// AuxiliaryMessages: Output only. Auxiliary messages about issues with
+	// the printer configuration if any.
+	AuxiliaryMessages []*AuxiliaryMessage `json:"auxiliaryMessages,omitempty"`
+
+	// CreateTime: Output only. Time when printer was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Editable. Description of printer.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Editable. Name of printer.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Id of the printer. (During printer creation leave empty)
+	Id string `json:"id,omitempty"`
+
+	// MakeAndModel: Editable. Make and model of printer. e.g. Lexmark
+	// MS610de Value must be in format as seen in ListPrinterModels
+	// response.
+	MakeAndModel string `json:"makeAndModel,omitempty"`
+
+	// Name: The resource name of the Printer object, in the format
+	// customers/{customer-id}/printers/{printer-id} (During printer
+	// creation leave empty)
+	Name string `json:"name,omitempty"`
+
+	// OrgUnitId: Organization Unit that owns this printer (Only can be set
+	// during Printer creation)
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// Uri: Editable. Printer URI.
+	Uri string `json:"uri,omitempty"`
+
+	// UseDriverlessConfig: Editable. flag to use driverless configuration
+	// or not. If it's set to be true, make_and_model can be ignored
+	UseDriverlessConfig bool `json:"useDriverlessConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryMessages")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuxiliaryMessages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Printer) MarshalJSON() ([]byte, error) {
+	type NoMethod Printer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrinterModel: Printer manufacturer and model
+type PrinterModel struct {
+	// DisplayName: Display name. eq. "Brother MFC-8840D"
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MakeAndModel: Make and model as represented in "make_and_model" field
+	// in Printer object. eq. "brother mfc-8840d"
+	MakeAndModel string `json:"makeAndModel,omitempty"`
+
+	// Manufacturer: Manufacturer. eq. "Brother"
+	Manufacturer string `json:"manufacturer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrinterModel) MarshalJSON() ([]byte, error) {
+	type NoMethod PrinterModel
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4962,6 +5567,11 @@ type AspsDeleteCall struct {
 }
 
 // Delete: Delete an ASP issued by a user.
+//
+// - codeId: The unique ID of the ASP to be deleted.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *AspsService) Delete(userKey string, codeId int64) *AspsDeleteCall {
 	c := &AspsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -4996,7 +5606,7 @@ func (c *AspsDeleteCall) Header() http.Header {
 
 func (c *AspsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5075,6 +5685,11 @@ type AspsGetCall struct {
 }
 
 // Get: Get information about an ASP issued by a user.
+//
+// - codeId: The unique ID of the ASP.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *AspsService) Get(userKey string, codeId int64) *AspsGetCall {
 	c := &AspsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -5119,7 +5734,7 @@ func (c *AspsGetCall) Header() http.Header {
 
 func (c *AspsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5228,6 +5843,10 @@ type AspsListCall struct {
 }
 
 // List: List the ASPs issued by a user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *AspsService) List(userKey string) *AspsListCall {
 	c := &AspsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -5271,7 +5890,7 @@ func (c *AspsListCall) Header() http.Header {
 
 func (c *AspsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5403,7 +6022,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5483,6 +6102,15 @@ type ChromeosdevicesActionCall struct {
 // error. For more information about deprovisioning and disabling
 // devices, visit the help center
 // (https://support.google.com/chrome/a/answer/3523633).
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID of the device. The `resourceId`s are
+//   returned in the response from the chromeosdevices.list
+//   (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Action(customerId string, resourceId string, chromeosdeviceaction *ChromeOsDeviceAction) *ChromeosdevicesActionCall {
 	c := &ChromeosdevicesActionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -5518,7 +6146,7 @@ func (c *ChromeosdevicesActionCall) Header() http.Header {
 
 func (c *ChromeosdevicesActionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5604,6 +6232,15 @@ type ChromeosdevicesGetCall struct {
 }
 
 // Get: Retrieves a Chrome OS device's properties.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - deviceId: The unique ID of the device. The `deviceId`s are returned
+//   in the response from the chromeosdevices.list
+//   (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Get(customerId string, deviceId string) *ChromeosdevicesGetCall {
 	c := &ChromeosdevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -5616,7 +6253,6 @@ func (r *ChromeosdevicesService) Get(customerId string, deviceId string) *Chrome
 // subset.
 //
 // Possible values:
-//   "PROJECTION_UNDEFINED"
 //   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
 //   "FULL" - Includes all metadata fields
@@ -5662,7 +6298,7 @@ func (c *ChromeosdevicesGetCall) Header() http.Header {
 
 func (c *ChromeosdevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5749,12 +6385,10 @@ func (c *ChromeosdevicesGetCall) Do(opts ...googleapi.CallOption) (*ChromeOsDevi
 	//     "projection": {
 	//       "description": "Determines whether the response contains the full list of properties or only a subset.",
 	//       "enum": [
-	//         "PROJECTION_UNDEFINED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
 	//         "Includes all metadata fields"
 	//       ],
@@ -5787,6 +6421,12 @@ type ChromeosdevicesListCall struct {
 
 // List: Retrieves a paginated list of Chrome OS devices within an
 // account.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *ChromeosdevicesService) List(customerId string) *ChromeosdevicesListCall {
 	c := &ChromeosdevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -5804,7 +6444,6 @@ func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesL
 // for sorting results.
 //
 // Possible values:
-//   "orderByUndefined"
 //   "annotatedLocation" - Chrome device location as annotated by the
 // administrator.
 //   "annotatedUser" - Chromebook user as annotated by administrator.
@@ -5843,7 +6482,6 @@ func (c *ChromeosdevicesListCall) PageToken(pageToken string) *ChromeosdevicesLi
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "PROJECTION_UNDEFINED"
 //   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
 //   "FULL" - Includes all metadata fields
@@ -5865,7 +6503,6 @@ func (c *ChromeosdevicesListCall) Query(query string) *ChromeosdevicesListCall {
 // `orderBy` parameter.
 //
 // Possible values:
-//   "SORT_ORDER_UNDEFINED"
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" - Descending order.
 func (c *ChromeosdevicesListCall) SortOrder(sortOrder string) *ChromeosdevicesListCall {
@@ -5910,7 +6547,7 @@ func (c *ChromeosdevicesListCall) Header() http.Header {
 
 func (c *ChromeosdevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5997,7 +6634,6 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//     "orderBy": {
 	//       "description": "Device property to use for sorting results.",
 	//       "enum": [
-	//         "orderByUndefined",
 	//         "annotatedLocation",
 	//         "annotatedUser",
 	//         "lastSync",
@@ -6007,7 +6643,6 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//         "supportEndDate"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Chrome device location as annotated by the administrator.",
 	//         "Chromebook user as annotated by administrator.",
 	//         "The date and time the Chrome device was last synchronized with the policy settings in the Admin console.",
@@ -6032,12 +6667,10 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "PROJECTION_UNDEFINED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
 	//         "Includes all metadata fields"
 	//       ],
@@ -6052,12 +6685,10 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//     "sortOrder": {
 	//       "description": "Whether to return results in ascending or descending order. Must be used with the `orderBy` parameter.",
 	//       "enum": [
-	//         "SORT_ORDER_UNDEFINED",
 	//         "ASCENDING",
 	//         "DESCENDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Ascending order.",
 	//         "Descending order."
 	//       ],
@@ -6111,6 +6742,9 @@ type ChromeosdevicesMoveDevicesToOuCall struct {
 
 // MoveDevicesToOu: Move or insert multiple Chrome OS devices to an
 // organizational unit. You can move up to 50 devices at once.
+//
+// - customerId: Immutable ID of the Google Workspace account.
+// - orgUnitPath: Full path of the target organizational unit or its ID.
 func (r *ChromeosdevicesService) MoveDevicesToOu(customerId string, orgUnitPath string, chromeosmovedevicestoou *ChromeOsMoveDevicesToOu) *ChromeosdevicesMoveDevicesToOuCall {
 	c := &ChromeosdevicesMoveDevicesToOuCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6146,7 +6780,7 @@ func (c *ChromeosdevicesMoveDevicesToOuCall) Header() http.Header {
 
 func (c *ChromeosdevicesMoveDevicesToOuCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6234,6 +6868,15 @@ type ChromeosdevicesPatchCall struct {
 // `annotatedUser`, `annotatedLocation`, `notes`, `orgUnitPath`, or
 // `annotatedAssetId`. This method supports patch semantics
 // (/admin-sdk/directory/v1/guides/performance#patch).
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - deviceId: The unique ID of the device. The `deviceId`s are returned
+//   in the response from the chromeosdevices.list
+//   (/admin-sdk/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chromeosdevice *ChromeOsDevice) *ChromeosdevicesPatchCall {
 	c := &ChromeosdevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6246,7 +6889,6 @@ func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chrom
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "PROJECTION_UNDEFINED"
 //   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
 //   "FULL" - Includes all metadata fields
@@ -6282,7 +6924,7 @@ func (c *ChromeosdevicesPatchCall) Header() http.Header {
 
 func (c *ChromeosdevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6371,12 +7013,10 @@ func (c *ChromeosdevicesPatchCall) Do(opts ...googleapi.CallOption) (*ChromeOsDe
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "PROJECTION_UNDEFINED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
 	//         "Includes all metadata fields"
 	//       ],
@@ -6413,6 +7053,15 @@ type ChromeosdevicesUpdateCall struct {
 // Update: Updates a device's updatable properties, such as
 // `annotatedUser`, `annotatedLocation`, `notes`, `orgUnitPath`, or
 // `annotatedAssetId`.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - deviceId: The unique ID of the device. The `deviceId`s are returned
+//   in the response from the chromeosdevices.list
+//   (/admin-sdk/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chromeosdevice *ChromeOsDevice) *ChromeosdevicesUpdateCall {
 	c := &ChromeosdevicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6425,7 +7074,6 @@ func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chro
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "PROJECTION_UNDEFINED"
 //   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
 //   "FULL" - Includes all metadata fields
@@ -6461,7 +7109,7 @@ func (c *ChromeosdevicesUpdateCall) Header() http.Header {
 
 func (c *ChromeosdevicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6550,12 +7198,10 @@ func (c *ChromeosdevicesUpdateCall) Do(opts ...googleapi.CallOption) (*ChromeOsD
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "PROJECTION_UNDEFINED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
 	//         "Includes all metadata fields"
 	//       ],
@@ -6590,6 +7236,10 @@ type CustomerDevicesChromeosIssueCommandCall struct {
 }
 
 // IssueCommand: Issues a command for the device to execute.
+//
+// - customerId: Immutable. Immutable ID of the Google Workspace
+//   account.
+// - deviceId: Immutable. Immutable ID of Chrome OS Device.
 func (r *CustomerDevicesChromeosService) IssueCommand(customerId string, deviceId string, directorychromeosdevicesissuecommandrequest *DirectoryChromeosdevicesIssueCommandRequest) *CustomerDevicesChromeosIssueCommandCall {
 	c := &CustomerDevicesChromeosIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6625,7 +7275,7 @@ func (c *CustomerDevicesChromeosIssueCommandCall) Header() http.Header {
 
 func (c *CustomerDevicesChromeosIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6742,6 +7392,11 @@ type CustomerDevicesChromeosCommandsGetCall struct {
 }
 
 // Get: Gets command data a specific command issued to the device.
+//
+// - commandId: Immutable. Immutable ID of Chrome OS Device Command.
+// - customerId: Immutable. Immutable ID of the Google Workspace
+//   account.
+// - deviceId: Immutable. Immutable ID of Chrome OS Device.
 func (r *CustomerDevicesChromeosCommandsService) Get(customerId string, deviceId string, commandId int64) *CustomerDevicesChromeosCommandsGetCall {
 	c := &CustomerDevicesChromeosCommandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6787,7 +7442,7 @@ func (c *CustomerDevicesChromeosCommandsGetCall) Header() http.Header {
 
 func (c *CustomerDevicesChromeosCommandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6905,6 +7560,8 @@ type CustomersGetCall struct {
 }
 
 // Get: Retrieves a customer.
+//
+// - customerKey: Id of the customer to be retrieved.
 func (r *CustomersService) Get(customerKey string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerKey = customerKey
@@ -6948,7 +7605,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7049,6 +7706,8 @@ type CustomersPatchCall struct {
 }
 
 // Patch: Patch Customers via Apiary Patch Orchestration
+//
+// - customerKey: Id of the customer to be updated.
 func (r *CustomersService) Patch(customerKey string, customer *Customer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerKey = customerKey
@@ -7083,7 +7742,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7188,6 +7847,8 @@ type CustomersUpdateCall struct {
 }
 
 // Update: Updates a customer.
+//
+// - customerKey: Id of the customer to be updated.
 func (r *CustomersService) Update(customerKey string, customer *Customer) *CustomersUpdateCall {
 	c := &CustomersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerKey = customerKey
@@ -7222,7 +7883,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7315,6 +7976,1316 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 
 }
 
+// method id "admin.customers.chrome.printers.batchCreatePrinters":
+
+type CustomersChromePrintersBatchCreatePrintersCall struct {
+	s                          *Service
+	parent                     string
+	batchcreateprintersrequest *BatchCreatePrintersRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchCreatePrinters: Creates printers under given Organization Unit.
+//
+// - parent: The name of the customer. Format: customers/{customer_id}.
+func (r *CustomersChromePrintersService) BatchCreatePrinters(parent string, batchcreateprintersrequest *BatchCreatePrintersRequest) *CustomersChromePrintersBatchCreatePrintersCall {
+	c := &CustomersChromePrintersBatchCreatePrintersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchcreateprintersrequest = batchcreateprintersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Fields(s ...googleapi.Field) *CustomersChromePrintersBatchCreatePrintersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Context(ctx context.Context) *CustomersChromePrintersBatchCreatePrintersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersBatchCreatePrintersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreateprintersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers:batchCreatePrinters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.batchCreatePrinters" call.
+// Exactly one of *BatchCreatePrintersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchCreatePrintersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Do(opts ...googleapi.CallOption) (*BatchCreatePrintersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchCreatePrintersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates printers under given Organization Unit.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:batchCreatePrinters",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printers.batchCreatePrinters",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the customer. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers:batchCreatePrinters",
+	//   "request": {
+	//     "$ref": "BatchCreatePrintersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchCreatePrintersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.batchDeletePrinters":
+
+type CustomersChromePrintersBatchDeletePrintersCall struct {
+	s                          *Service
+	parent                     string
+	batchdeleteprintersrequest *BatchDeletePrintersRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchDeletePrinters: Deletes printers in batch.
+//
+// - parent: The name of the customer. Format: customers/{customer_id}.
+func (r *CustomersChromePrintersService) BatchDeletePrinters(parent string, batchdeleteprintersrequest *BatchDeletePrintersRequest) *CustomersChromePrintersBatchDeletePrintersCall {
+	c := &CustomersChromePrintersBatchDeletePrintersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchdeleteprintersrequest = batchdeleteprintersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Fields(s ...googleapi.Field) *CustomersChromePrintersBatchDeletePrintersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Context(ctx context.Context) *CustomersChromePrintersBatchDeletePrintersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersBatchDeletePrintersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeleteprintersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers:batchDeletePrinters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.batchDeletePrinters" call.
+// Exactly one of *BatchDeletePrintersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchDeletePrintersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Do(opts ...googleapi.CallOption) (*BatchDeletePrintersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchDeletePrintersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes printers in batch.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:batchDeletePrinters",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printers.batchDeletePrinters",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the customer. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers:batchDeletePrinters",
+	//   "request": {
+	//     "$ref": "BatchDeletePrintersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchDeletePrintersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.create":
+
+type CustomersChromePrintersCreateCall struct {
+	s          *Service
+	parent     string
+	printer    *Printer
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a printer under given Organization Unit.
+//
+// - parent: The name of the customer. Format: customers/{customer_id}.
+func (r *CustomersChromePrintersService) Create(parent string, printer *Printer) *CustomersChromePrintersCreateCall {
+	c := &CustomersChromePrintersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.printer = printer
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersCreateCall) Fields(s ...googleapi.Field) *CustomersChromePrintersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersCreateCall) Context(ctx context.Context) *CustomersChromePrintersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.printer)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.create" call.
+// Exactly one of *Printer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Printer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersCreateCall) Do(opts ...googleapi.CallOption) (*Printer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Printer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a printer under given Organization Unit.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printers.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the customer. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers",
+	//   "request": {
+	//     "$ref": "Printer"
+	//   },
+	//   "response": {
+	//     "$ref": "Printer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.delete":
+
+type CustomersChromePrintersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a `Printer`.
+//
+// - name: The name of the printer to be updated. Format:
+//   customers/{customer_id}/chrome/printers/{printer_id}.
+func (r *CustomersChromePrintersService) Delete(name string) *CustomersChromePrintersDeleteCall {
+	c := &CustomersChromePrintersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersDeleteCall) Fields(s ...googleapi.Field) *CustomersChromePrintersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersDeleteCall) Context(ctx context.Context) *CustomersChromePrintersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a `Printer`.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "admin.customers.chrome.printers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the printer to be updated. Format: customers/{customer_id}/chrome/printers/{printer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.get":
+
+type CustomersChromePrintersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a `Printer` resource (printer's config).
+//
+// - name: The name of the printer to retrieve. Format:
+//   customers/{customer_id}/chrome/printers/{printer_id}.
+func (r *CustomersChromePrintersService) Get(name string) *CustomersChromePrintersGetCall {
+	c := &CustomersChromePrintersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersGetCall) Fields(s ...googleapi.Field) *CustomersChromePrintersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintersGetCall) IfNoneMatch(entityTag string) *CustomersChromePrintersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersGetCall) Context(ctx context.Context) *CustomersChromePrintersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.get" call.
+// Exactly one of *Printer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Printer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersGetCall) Do(opts ...googleapi.CallOption) (*Printer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Printer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a `Printer` resource (printer's config).",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the printer to retrieve. Format: customers/{customer_id}/chrome/printers/{printer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "response": {
+	//     "$ref": "Printer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers",
+	//     "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.list":
+
+type CustomersChromePrintersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List printers configs.
+//
+// - parent: The name of the customer who owns this collection of
+//   printers. Format: customers/{customer_id}.
+func (r *CustomersChromePrintersService) List(parent string) *CustomersChromePrintersListCall {
+	c := &CustomersChromePrintersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Search query. Search
+// syntax is shared between this api and Admin Console printers pages.
+func (c *CustomersChromePrintersListCall) Filter(filter string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": Organization Unit
+// that we want to list the printers for. When org_unit is not present
+// in the request then all printers of the customer are returned (or
+// filtered). When org_unit is present in the request then only printers
+// available to this OU will be returned (owned or inherited). You may
+// see if printer is owned or inherited for this OU by looking at
+// Printer.org_unit_id.
+func (c *CustomersChromePrintersListCall) OrgUnitId(orgUnitId string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of objects to return. The service may return fewer than this value.
+func (c *CustomersChromePrintersListCall) PageSize(pageSize int64) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous call.
+func (c *CustomersChromePrintersListCall) PageToken(pageToken string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersListCall) Fields(s ...googleapi.Field) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintersListCall) IfNoneMatch(entityTag string) *CustomersChromePrintersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersListCall) Context(ctx context.Context) *CustomersChromePrintersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.list" call.
+// Exactly one of *ListPrintersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListPrintersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersListCall) Do(opts ...googleapi.CallOption) (*ListPrintersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPrintersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List printers configs.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Search query. Search syntax is shared between this api and Admin Console printers pages.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "Organization Unit that we want to list the printers for. When org_unit is not present in the request then all printers of the customer are returned (or filtered). When org_unit is present in the request then only printers available to this OU will be returned (owned or inherited). You may see if printer is owned or inherited for this OU by looking at Printer.org_unit_id.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of objects to return. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the customer who owns this collection of printers. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers",
+	//   "response": {
+	//     "$ref": "ListPrintersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers",
+	//     "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersChromePrintersListCall) Pages(ctx context.Context, f func(*ListPrintersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "admin.customers.chrome.printers.listPrinterModels":
+
+type CustomersChromePrintersListPrinterModelsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListPrinterModels: Lists the supported printer models.
+//
+// - parent: The name of the customer who owns this collection of
+//   printers. Format: customers/{customer_id}.
+func (r *CustomersChromePrintersService) ListPrinterModels(parent string) *CustomersChromePrintersListPrinterModelsCall {
+	c := &CustomersChromePrintersListPrinterModelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filer to list only
+// models by a given manufacturer in format: "manufacturer:Brother".
+// Search syntax is shared between this api and Admin Console printers
+// pages.
+func (c *CustomersChromePrintersListPrinterModelsCall) Filter(filter string) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of objects to return. The service may return fewer than this value.
+func (c *CustomersChromePrintersListPrinterModelsCall) PageSize(pageSize int64) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous call.
+func (c *CustomersChromePrintersListPrinterModelsCall) PageToken(pageToken string) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersListPrinterModelsCall) Fields(s ...googleapi.Field) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintersListPrinterModelsCall) IfNoneMatch(entityTag string) *CustomersChromePrintersListPrinterModelsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersListPrinterModelsCall) Context(ctx context.Context) *CustomersChromePrintersListPrinterModelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersListPrinterModelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersListPrinterModelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers:listPrinterModels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.listPrinterModels" call.
+// Exactly one of *ListPrinterModelsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPrinterModelsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersListPrinterModelsCall) Do(opts ...googleapi.CallOption) (*ListPrinterModelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPrinterModelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the supported printer models.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:listPrinterModels",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printers.listPrinterModels",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filer to list only models by a given manufacturer in format: \"manufacturer:Brother\". Search syntax is shared between this api and Admin Console printers pages.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of objects to return. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the customer who owns this collection of printers. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers:listPrinterModels",
+	//   "response": {
+	//     "$ref": "ListPrinterModelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers",
+	//     "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersChromePrintersListPrinterModelsCall) Pages(ctx context.Context, f func(*ListPrinterModelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "admin.customers.chrome.printers.patch":
+
+type CustomersChromePrintersPatchCall struct {
+	s          *Service
+	name       string
+	printer    *Printer
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a `Printer` resource.
+//
+// - name: The resource name of the Printer object, in the format
+//   customers/{customer-id}/printers/{printer-id} (During printer
+//   creation leave empty).
+func (r *CustomersChromePrintersService) Patch(name string, printer *Printer) *CustomersChromePrintersPatchCall {
+	c := &CustomersChromePrintersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.printer = printer
+	return c
+}
+
+// ClearMask sets the optional parameter "clearMask": The list of fields
+// to be cleared. Note, some of the fields are read only and cannot be
+// updated. Values for not specified fields will be patched.
+func (c *CustomersChromePrintersPatchCall) ClearMask(clearMask string) *CustomersChromePrintersPatchCall {
+	c.urlParams_.Set("clearMask", clearMask)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. Note, some of the fields are read only and
+// cannot be updated. Values for not specified fields will be patched.
+func (c *CustomersChromePrintersPatchCall) UpdateMask(updateMask string) *CustomersChromePrintersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersPatchCall) Fields(s ...googleapi.Field) *CustomersChromePrintersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersPatchCall) Context(ctx context.Context) *CustomersChromePrintersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.printer)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.patch" call.
+// Exactly one of *Printer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Printer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersPatchCall) Do(opts ...googleapi.CallOption) (*Printer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Printer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a `Printer` resource.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "admin.customers.chrome.printers.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "clearMask": {
+	//       "description": "The list of fields to be cleared. Note, some of the fields are read only and cannot be updated. Values for not specified fields will be patched.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource name of the Printer object, in the format customers/{customer-id}/printers/{printer-id} (During printer creation leave empty)",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. Note, some of the fields are read only and cannot be updated. Values for not specified fields will be patched.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "request": {
+	//     "$ref": "Printer"
+	//   },
+	//   "response": {
+	//     "$ref": "Printer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
 // method id "directory.domainAliases.delete":
 
 type DomainAliasesDeleteCall struct {
@@ -7327,6 +9298,9 @@ type DomainAliasesDeleteCall struct {
 }
 
 // Delete: Deletes a domain Alias of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - domainAliasName: Name of domain alias to be retrieved.
 func (r *DomainAliasesService) Delete(customer string, domainAliasName string) *DomainAliasesDeleteCall {
 	c := &DomainAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7361,7 +9335,7 @@ func (c *DomainAliasesDeleteCall) Header() http.Header {
 
 func (c *DomainAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7439,6 +9413,9 @@ type DomainAliasesGetCall struct {
 }
 
 // Get: Retrieves a domain alias of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - domainAliasName: Name of domain alias to be retrieved.
 func (r *DomainAliasesService) Get(customer string, domainAliasName string) *DomainAliasesGetCall {
 	c := &DomainAliasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7483,7 +9460,7 @@ func (c *DomainAliasesGetCall) Header() http.Header {
 
 func (c *DomainAliasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7592,6 +9569,8 @@ type DomainAliasesInsertCall struct {
 }
 
 // Insert: Inserts a domain alias of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *DomainAliasesService) Insert(customer string, domainalias *DomainAlias) *DomainAliasesInsertCall {
 	c := &DomainAliasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7626,7 +9605,7 @@ func (c *DomainAliasesInsertCall) Header() http.Header {
 
 func (c *DomainAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7731,6 +9710,8 @@ type DomainAliasesListCall struct {
 }
 
 // List: Lists the domain aliases of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *DomainAliasesService) List(customer string) *DomainAliasesListCall {
 	c := &DomainAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7781,7 +9762,7 @@ func (c *DomainAliasesListCall) Header() http.Header {
 
 func (c *DomainAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7887,6 +9868,9 @@ type DomainsDeleteCall struct {
 }
 
 // Delete: Deletes a domain of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - domainName: Name of domain to be deleted.
 func (r *DomainsService) Delete(customer string, domainName string) *DomainsDeleteCall {
 	c := &DomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7921,7 +9905,7 @@ func (c *DomainsDeleteCall) Header() http.Header {
 
 func (c *DomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7999,6 +9983,9 @@ type DomainsGetCall struct {
 }
 
 // Get: Retrieves a domain of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - domainName: Name of domain to be retrieved.
 func (r *DomainsService) Get(customer string, domainName string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -8043,7 +10030,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8152,6 +10139,8 @@ type DomainsInsertCall struct {
 }
 
 // Insert: Inserts a domain of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *DomainsService) Insert(customer string, domains *Domains) *DomainsInsertCall {
 	c := &DomainsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -8186,7 +10175,7 @@ func (c *DomainsInsertCall) Header() http.Header {
 
 func (c *DomainsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8291,6 +10280,8 @@ type DomainsListCall struct {
 }
 
 // List: Lists the domains of the customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *DomainsService) List(customer string) *DomainsListCall {
 	c := &DomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -8334,7 +10325,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8434,6 +10425,9 @@ type GroupsDeleteCall struct {
 }
 
 // Delete: Deletes a group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Delete(groupKey string) *GroupsDeleteCall {
 	c := &GroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -8467,7 +10461,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8536,6 +10530,9 @@ type GroupsGetCall struct {
 }
 
 // Get: Retrieves a group's properties.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Get(groupKey string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -8579,7 +10576,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8712,7 +10709,7 @@ func (c *GroupsInsertCall) Header() http.Header {
 
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8841,7 +10838,6 @@ func (c *GroupsListCall) MaxResults(maxResults int64) *GroupsListCall {
 // sorting results
 //
 // Possible values:
-//   "orderByUndefined"
 //   "email" - Email of the group.
 func (c *GroupsListCall) OrderBy(orderBy string) *GroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -8868,7 +10864,6 @@ func (c *GroupsListCall) Query(query string) *GroupsListCall {
 // also used
 //
 // Possible values:
-//   "SORT_ORDER_UNDEFINED"
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" - Descending order.
 func (c *GroupsListCall) SortOrder(sortOrder string) *GroupsListCall {
@@ -8922,7 +10917,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9008,11 +11003,9 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//     "orderBy": {
 	//       "description": "Column to use for sorting results",
 	//       "enum": [
-	//         "orderByUndefined",
 	//         "email"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Email of the group."
 	//       ],
 	//       "location": "query",
@@ -9031,12 +11024,10 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//     "sortOrder": {
 	//       "description": "Whether to return results in ascending or descending order. Only of use when orderBy is also used",
 	//       "enum": [
-	//         "SORT_ORDER_UNDEFINED",
 	//         "ASCENDING",
 	//         "DESCENDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Ascending order.",
 	//         "Descending order."
 	//       ],
@@ -9095,6 +11086,9 @@ type GroupsPatchCall struct {
 
 // Patch: Updates a group's properties. This method supports patch
 // semantics (/admin-sdk/directory/v1/guides/performance#patch).
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Patch(groupKey string, group *Group) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9129,7 +11123,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9234,6 +11228,9 @@ type GroupsUpdateCall struct {
 }
 
 // Update: Updates a group's properties.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Update(groupKey string, group *Group) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9268,7 +11265,7 @@ func (c *GroupsUpdateCall) Header() http.Header {
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9373,6 +11370,10 @@ type GroupsAliasesDeleteCall struct {
 }
 
 // Delete: Removes an alias.
+//
+// - alias: The alias to be removed.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsAliasesService) Delete(groupKey string, alias string) *GroupsAliasesDeleteCall {
 	c := &GroupsAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9407,7 +11408,7 @@ func (c *GroupsAliasesDeleteCall) Header() http.Header {
 
 func (c *GroupsAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9484,6 +11485,9 @@ type GroupsAliasesInsertCall struct {
 }
 
 // Insert: Adds an alias for the group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsAliasesService) Insert(groupKey string, alias *Alias) *GroupsAliasesInsertCall {
 	c := &GroupsAliasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9518,7 +11522,7 @@ func (c *GroupsAliasesInsertCall) Header() http.Header {
 
 func (c *GroupsAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9623,6 +11627,9 @@ type GroupsAliasesListCall struct {
 }
 
 // List: Lists all aliases for a group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsAliasesService) List(groupKey string) *GroupsAliasesListCall {
 	c := &GroupsAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9666,7 +11673,7 @@ func (c *GroupsAliasesListCall) Header() http.Header {
 
 func (c *GroupsAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9767,6 +11774,13 @@ type MembersDeleteCall struct {
 }
 
 // Delete: Removes a member from a group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Delete(groupKey string, memberKey string) *MembersDeleteCall {
 	c := &MembersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9801,7 +11815,7 @@ func (c *MembersDeleteCall) Header() http.Header {
 
 func (c *MembersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9880,6 +11894,13 @@ type MembersGetCall struct {
 }
 
 // Get: Retrieves a group member's properties.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Get(groupKey string, memberKey string) *MembersGetCall {
 	c := &MembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -9924,7 +11945,7 @@ func (c *MembersGetCall) Header() http.Header {
 
 func (c *MembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10037,6 +12058,11 @@ type MembersHasMemberCall struct {
 
 // HasMember: Checks whether the given user is a member of the group.
 // Membership can be direct or nested.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the user member in the API request. The value
+//   can be the user's primary email address, alias, or unique ID.
 func (r *MembersService) HasMember(groupKey string, memberKey string) *MembersHasMemberCall {
 	c := &MembersHasMemberCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -10081,7 +12107,7 @@ func (c *MembersHasMemberCall) Header() http.Header {
 
 func (c *MembersHasMemberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10192,6 +12218,9 @@ type MembersInsertCall struct {
 }
 
 // Insert: Adds a user to the specified group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *MembersService) Insert(groupKey string, member *Member) *MembersInsertCall {
 	c := &MembersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -10226,7 +12255,7 @@ func (c *MembersInsertCall) Header() http.Header {
 
 func (c *MembersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10332,6 +12361,9 @@ type MembersListCall struct {
 }
 
 // List: Retrieves a paginated list of all members in a group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *MembersService) List(groupKey string) *MembersListCall {
 	c := &MembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -10405,7 +12437,7 @@ func (c *MembersListCall) Header() http.Header {
 
 func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10555,6 +12587,13 @@ type MembersPatchCall struct {
 // Patch: Updates the membership properties of a user in the specified
 // group. This method supports patch semantics
 // (/admin-sdk/directory/v1/guides/performance#patch).
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Patch(groupKey string, memberKey string, member *Member) *MembersPatchCall {
 	c := &MembersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -10590,7 +12629,7 @@ func (c *MembersPatchCall) Header() http.Header {
 
 func (c *MembersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10705,6 +12744,13 @@ type MembersUpdateCall struct {
 }
 
 // Update: Updates the membership of a user in the specified group.
+//
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Update(groupKey string, memberKey string, member *Member) *MembersUpdateCall {
 	c := &MembersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -10740,7 +12786,7 @@ func (c *MembersUpdateCall) Header() http.Header {
 
 func (c *MembersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10856,6 +12902,14 @@ type MobiledevicesActionCall struct {
 
 // Action: Takes an action that affects a mobile device. For example,
 // remotely wiping a device.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID the API service uses to identify the
+//   mobile device.
 func (r *MobiledevicesService) Action(customerId string, resourceId string, mobiledeviceaction *MobileDeviceAction) *MobiledevicesActionCall {
 	c := &MobiledevicesActionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -10891,7 +12945,7 @@ func (c *MobiledevicesActionCall) Header() http.Header {
 
 func (c *MobiledevicesActionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10977,6 +13031,14 @@ type MobiledevicesDeleteCall struct {
 }
 
 // Delete: Removes a mobile device.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID the API service uses to identify the
+//   mobile device.
 func (r *MobiledevicesService) Delete(customerId string, resourceId string) *MobiledevicesDeleteCall {
 	c := &MobiledevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -11011,7 +13073,7 @@ func (c *MobiledevicesDeleteCall) Header() http.Header {
 
 func (c *MobiledevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11089,6 +13151,14 @@ type MobiledevicesGetCall struct {
 }
 
 // Get: Retrieves a mobile device's properties.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID the API service uses to identify the
+//   mobile device.
 func (r *MobiledevicesService) Get(customerId string, resourceId string) *MobiledevicesGetCall {
 	c := &MobiledevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -11100,7 +13170,6 @@ func (r *MobiledevicesService) Get(customerId string, resourceId string) *Mobile
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "PROJECTION_UNDEFINED"
 //   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // model, status, type, and status)
 //   "FULL" - Includes all metadata fields
@@ -11146,7 +13215,7 @@ func (c *MobiledevicesGetCall) Header() http.Header {
 
 func (c *MobiledevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11227,12 +13296,10 @@ func (c *MobiledevicesGetCall) Do(opts ...googleapi.CallOption) (*MobileDevice, 
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "PROJECTION_UNDEFINED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Includes only the basic metadata fields (e.g., deviceId, model, status, type, and status)",
 	//         "Includes all metadata fields"
 	//       ],
@@ -11272,6 +13339,12 @@ type MobiledevicesListCall struct {
 
 // List: Retrieves a paginated list of all mobile devices for an
 // account.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *MobiledevicesService) List(customerId string) *MobiledevicesListCall {
 	c := &MobiledevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -11289,7 +13362,6 @@ func (c *MobiledevicesListCall) MaxResults(maxResults int64) *MobiledevicesListC
 // for sorting results.
 //
 // Possible values:
-//   "orderByUndefined"
 //   "deviceId" - The serial number for a Google Sync mobile device. For
 // Android devices, this is a software generated unique identifier.
 //   "email" - The device owner's email address.
@@ -11315,7 +13387,6 @@ func (c *MobiledevicesListCall) PageToken(pageToken string) *MobiledevicesListCa
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "PROJECTION_UNDEFINED"
 //   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // model, status, type, and status)
 //   "FULL" - Includes all metadata fields
@@ -11337,7 +13408,6 @@ func (c *MobiledevicesListCall) Query(query string) *MobiledevicesListCall {
 // `orderBy` parameter.
 //
 // Possible values:
-//   "SORT_ORDER_UNDEFINED"
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" - Descending order.
 func (c *MobiledevicesListCall) SortOrder(sortOrder string) *MobiledevicesListCall {
@@ -11382,7 +13452,7 @@ func (c *MobiledevicesListCall) Header() http.Header {
 
 func (c *MobiledevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11470,7 +13540,6 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 	//     "orderBy": {
 	//       "description": "Device property to use for sorting results.",
 	//       "enum": [
-	//         "orderByUndefined",
 	//         "deviceId",
 	//         "email",
 	//         "lastSync",
@@ -11481,7 +13550,6 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 	//         "type"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "The serial number for a Google Sync mobile device. For Android devices, this is a software generated unique identifier.",
 	//         "The device owner's email address.",
 	//         "Last policy settings sync date time of the device.",
@@ -11502,12 +13570,10 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "PROJECTION_UNDEFINED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Includes only the basic metadata fields (e.g., deviceId, model, status, type, and status)",
 	//         "Includes all metadata fields"
 	//       ],
@@ -11522,12 +13588,10 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 	//     "sortOrder": {
 	//       "description": "Whether to return results in ascending or descending order. Must be used with the `orderBy` parameter.",
 	//       "enum": [
-	//         "SORT_ORDER_UNDEFINED",
 	//         "ASCENDING",
 	//         "DESCENDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Ascending order.",
 	//         "Descending order."
 	//       ],
@@ -11581,6 +13645,14 @@ type OrgunitsDeleteCall struct {
 }
 
 // Delete: Removes an organizational unit.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit or its unique
+//   ID.
 func (r *OrgunitsService) Delete(customerId string, orgUnitPath string) *OrgunitsDeleteCall {
 	c := &OrgunitsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -11622,7 +13694,7 @@ func (c *OrgunitsDeleteCall) Header() http.Header {
 
 func (c *OrgunitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11706,6 +13778,14 @@ type OrgunitsGetCall struct {
 }
 
 // Get: Retrieves an organizational unit.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit or its unique
+//   ID.
 func (r *OrgunitsService) Get(customerId string, orgUnitPath string) *OrgunitsGetCall {
 	c := &OrgunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -11757,7 +13837,7 @@ func (c *OrgunitsGetCall) Header() http.Header {
 
 func (c *OrgunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11872,6 +13952,12 @@ type OrgunitsInsertCall struct {
 }
 
 // Insert: Adds an organizational unit.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *OrgunitsService) Insert(customerId string, orgunit *OrgUnit) *OrgunitsInsertCall {
 	c := &OrgunitsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -11906,7 +13992,7 @@ func (c *OrgunitsInsertCall) Header() http.Header {
 
 func (c *OrgunitsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12011,6 +14097,12 @@ type OrgunitsListCall struct {
 }
 
 // List: Retrieves a list of all organizational units for an account.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *OrgunitsService) List(customerId string) *OrgunitsListCall {
 	c := &OrgunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -12029,7 +14121,6 @@ func (c *OrgunitsListCall) OrgUnitPath(orgUnitPath string) *OrgunitsListCall {
 // sub-organizations or just immediate children.
 //
 // Possible values:
-//   "typeUndefined"
 //   "all" - All sub-organizational units.
 //   "children" - Immediate children only (default).
 func (c *OrgunitsListCall) Type(type_ string) *OrgunitsListCall {
@@ -12074,7 +14165,7 @@ func (c *OrgunitsListCall) Header() http.Header {
 
 func (c *OrgunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12159,12 +14250,10 @@ func (c *OrgunitsListCall) Do(opts ...googleapi.CallOption) (*OrgUnits, error) {
 	//     "type": {
 	//       "description": "Whether to return all sub-organizations or just immediate children.",
 	//       "enum": [
-	//         "typeUndefined",
 	//         "all",
 	//         "children"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "All sub-organizational units.",
 	//         "Immediate children only (default)."
 	//       ],
@@ -12198,6 +14287,14 @@ type OrgunitsPatchCall struct {
 
 // Patch: Updates an organizational unit. This method supports patch
 // semantics (/admin-sdk/directory/v1/guides/performance#patch)
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit or its unique
+//   ID.
 func (r *OrgunitsService) Patch(customerId string, orgUnitPath string, orgunit *OrgUnit) *OrgunitsPatchCall {
 	c := &OrgunitsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -12240,7 +14337,7 @@ func (c *OrgunitsPatchCall) Header() http.Header {
 
 func (c *OrgunitsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12360,6 +14457,14 @@ type OrgunitsUpdateCall struct {
 }
 
 // Update: Updates an organizational unit.
+//
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit or its unique
+//   ID.
 func (r *OrgunitsService) Update(customerId string, orgUnitPath string, orgunit *OrgUnit) *OrgunitsUpdateCall {
 	c := &OrgunitsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -12402,7 +14507,7 @@ func (c *OrgunitsUpdateCall) Header() http.Header {
 
 func (c *OrgunitsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12521,6 +14626,8 @@ type PrivilegesListCall struct {
 }
 
 // List: Retrieves a paginated list of all privileges for a customer.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *PrivilegesService) List(customer string) *PrivilegesListCall {
 	c := &PrivilegesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -12564,7 +14671,7 @@ func (c *PrivilegesListCall) Header() http.Header {
 
 func (c *PrivilegesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12665,6 +14772,11 @@ type ResourcesBuildingsDeleteCall struct {
 }
 
 // Delete: Deletes a building.
+//
+// - buildingId: The id of the building to delete.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Delete(customer string, buildingId string) *ResourcesBuildingsDeleteCall {
 	c := &ResourcesBuildingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -12699,7 +14811,7 @@ func (c *ResourcesBuildingsDeleteCall) Header() http.Header {
 
 func (c *ResourcesBuildingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12777,6 +14889,11 @@ type ResourcesBuildingsGetCall struct {
 }
 
 // Get: Retrieves a building.
+//
+// - buildingId: The unique ID of the building to retrieve.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Get(customer string, buildingId string) *ResourcesBuildingsGetCall {
 	c := &ResourcesBuildingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -12821,7 +14938,7 @@ func (c *ResourcesBuildingsGetCall) Header() http.Header {
 
 func (c *ResourcesBuildingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12930,6 +15047,10 @@ type ResourcesBuildingsInsertCall struct {
 }
 
 // Insert: Inserts a building.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Insert(customer string, building *Building) *ResourcesBuildingsInsertCall {
 	c := &ResourcesBuildingsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -12941,7 +15062,6 @@ func (r *ResourcesBuildingsService) Insert(customer string, building *Building) 
 // Source from which Building.coordinates are derived.
 //
 // Possible values:
-//   "COORDINATES_SOURCE_UNDEFINED"
 //   "CLIENT_SPECIFIED" - Building.coordinates are set to the
 // coordinates included in the request.
 //   "RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
@@ -12981,7 +15101,7 @@ func (c *ResourcesBuildingsInsertCall) Header() http.Header {
 
 func (c *ResourcesBuildingsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13057,13 +15177,11 @@ func (c *ResourcesBuildingsInsertCall) Do(opts ...googleapi.CallOption) (*Buildi
 	//       "default": "SOURCE_UNSPECIFIED",
 	//       "description": "Source from which Building.coordinates are derived.",
 	//       "enum": [
-	//         "COORDINATES_SOURCE_UNDEFINED",
 	//         "CLIENT_SPECIFIED",
 	//         "RESOLVED_FROM_ADDRESS",
 	//         "SOURCE_UNSPECIFIED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Building.coordinates are set to the coordinates included in the request.",
 	//         "Building.coordinates are automatically populated based on the postal address.",
 	//         "Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided."
@@ -13104,6 +15222,10 @@ type ResourcesBuildingsListCall struct {
 }
 
 // List: Retrieves a list of buildings for an account.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) List(customer string) *ResourcesBuildingsListCall {
 	c := &ResourcesBuildingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -13161,7 +15283,7 @@ func (c *ResourcesBuildingsListCall) Header() http.Header {
 
 func (c *ResourcesBuildingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13297,6 +15419,11 @@ type ResourcesBuildingsPatchCall struct {
 }
 
 // Patch: Patches a building via Apiary Patch Orchestration.
+//
+// - buildingId: The id of the building to update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Patch(customer string, buildingId string, building *Building) *ResourcesBuildingsPatchCall {
 	c := &ResourcesBuildingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -13309,7 +15436,6 @@ func (r *ResourcesBuildingsService) Patch(customer string, buildingId string, bu
 // Source from which Building.coordinates are derived.
 //
 // Possible values:
-//   "COORDINATES_SOURCE_UNDEFINED"
 //   "CLIENT_SPECIFIED" - Building.coordinates are set to the
 // coordinates included in the request.
 //   "RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
@@ -13349,7 +15475,7 @@ func (c *ResourcesBuildingsPatchCall) Header() http.Header {
 
 func (c *ResourcesBuildingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13433,13 +15559,11 @@ func (c *ResourcesBuildingsPatchCall) Do(opts ...googleapi.CallOption) (*Buildin
 	//       "default": "SOURCE_UNSPECIFIED",
 	//       "description": "Source from which Building.coordinates are derived.",
 	//       "enum": [
-	//         "COORDINATES_SOURCE_UNDEFINED",
 	//         "CLIENT_SPECIFIED",
 	//         "RESOLVED_FROM_ADDRESS",
 	//         "SOURCE_UNSPECIFIED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Building.coordinates are set to the coordinates included in the request.",
 	//         "Building.coordinates are automatically populated based on the postal address.",
 	//         "Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided."
@@ -13481,6 +15605,11 @@ type ResourcesBuildingsUpdateCall struct {
 }
 
 // Update: Updates a building.
+//
+// - buildingId: The id of the building to update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Update(customer string, buildingId string, building *Building) *ResourcesBuildingsUpdateCall {
 	c := &ResourcesBuildingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -13493,7 +15622,6 @@ func (r *ResourcesBuildingsService) Update(customer string, buildingId string, b
 // Source from which Building.coordinates are derived.
 //
 // Possible values:
-//   "COORDINATES_SOURCE_UNDEFINED"
 //   "CLIENT_SPECIFIED" - Building.coordinates are set to the
 // coordinates included in the request.
 //   "RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
@@ -13533,7 +15661,7 @@ func (c *ResourcesBuildingsUpdateCall) Header() http.Header {
 
 func (c *ResourcesBuildingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13617,13 +15745,11 @@ func (c *ResourcesBuildingsUpdateCall) Do(opts ...googleapi.CallOption) (*Buildi
 	//       "default": "SOURCE_UNSPECIFIED",
 	//       "description": "Source from which Building.coordinates are derived.",
 	//       "enum": [
-	//         "COORDINATES_SOURCE_UNDEFINED",
 	//         "CLIENT_SPECIFIED",
 	//         "RESOLVED_FROM_ADDRESS",
 	//         "SOURCE_UNSPECIFIED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Building.coordinates are set to the coordinates included in the request.",
 	//         "Building.coordinates are automatically populated based on the postal address.",
 	//         "Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided."
@@ -13664,6 +15790,12 @@ type ResourcesCalendarsDeleteCall struct {
 }
 
 // Delete: Deletes a calendar resource.
+//
+// - calendarResourceId: The unique ID of the calendar resource to
+//   delete.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Delete(customer string, calendarResourceId string) *ResourcesCalendarsDeleteCall {
 	c := &ResourcesCalendarsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -13698,7 +15830,7 @@ func (c *ResourcesCalendarsDeleteCall) Header() http.Header {
 
 func (c *ResourcesCalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13776,6 +15908,12 @@ type ResourcesCalendarsGetCall struct {
 }
 
 // Get: Retrieves a calendar resource.
+//
+// - calendarResourceId: The unique ID of the calendar resource to
+//   retrieve.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Get(customer string, calendarResourceId string) *ResourcesCalendarsGetCall {
 	c := &ResourcesCalendarsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -13820,7 +15958,7 @@ func (c *ResourcesCalendarsGetCall) Header() http.Header {
 
 func (c *ResourcesCalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13929,6 +16067,10 @@ type ResourcesCalendarsInsertCall struct {
 }
 
 // Insert: Inserts a calendar resource.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Insert(customer string, calendarresource *CalendarResource) *ResourcesCalendarsInsertCall {
 	c := &ResourcesCalendarsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -13963,7 +16105,7 @@ func (c *ResourcesCalendarsInsertCall) Header() http.Header {
 
 func (c *ResourcesCalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14068,6 +16210,10 @@ type ResourcesCalendarsListCall struct {
 }
 
 // List: Retrieves a list of calendar resources for an account.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) List(customer string) *ResourcesCalendarsListCall {
 	c := &ResourcesCalendarsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -14155,7 +16301,7 @@ func (c *ResourcesCalendarsListCall) Header() http.Header {
 
 func (c *ResourcesCalendarsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14301,6 +16447,12 @@ type ResourcesCalendarsPatchCall struct {
 }
 
 // Patch: Patches a calendar resource via Apiary Patch Orchestration.
+//
+// - calendarResourceId: The unique ID of the calendar resource to
+//   update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Patch(customer string, calendarResourceId string, calendarresource *CalendarResource) *ResourcesCalendarsPatchCall {
 	c := &ResourcesCalendarsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -14336,7 +16488,7 @@ func (c *ResourcesCalendarsPatchCall) Header() http.Header {
 
 func (c *ResourcesCalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14452,6 +16604,12 @@ type ResourcesCalendarsUpdateCall struct {
 // Update: Updates a calendar resource. This method supports patch
 // semantics, meaning you only need to include the fields you wish to
 // update. Fields that are not present in the request will be preserved.
+//
+// - calendarResourceId: The unique ID of the calendar resource to
+//   update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Update(customer string, calendarResourceId string, calendarresource *CalendarResource) *ResourcesCalendarsUpdateCall {
 	c := &ResourcesCalendarsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -14487,7 +16645,7 @@ func (c *ResourcesCalendarsUpdateCall) Header() http.Header {
 
 func (c *ResourcesCalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14600,6 +16758,11 @@ type ResourcesFeaturesDeleteCall struct {
 }
 
 // Delete: Deletes a feature.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to delete.
 func (r *ResourcesFeaturesService) Delete(customer string, featureKey string) *ResourcesFeaturesDeleteCall {
 	c := &ResourcesFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -14634,7 +16797,7 @@ func (c *ResourcesFeaturesDeleteCall) Header() http.Header {
 
 func (c *ResourcesFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14712,6 +16875,11 @@ type ResourcesFeaturesGetCall struct {
 }
 
 // Get: Retrieves a feature.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to retrieve.
 func (r *ResourcesFeaturesService) Get(customer string, featureKey string) *ResourcesFeaturesGetCall {
 	c := &ResourcesFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -14756,7 +16924,7 @@ func (c *ResourcesFeaturesGetCall) Header() http.Header {
 
 func (c *ResourcesFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14865,6 +17033,10 @@ type ResourcesFeaturesInsertCall struct {
 }
 
 // Insert: Inserts a feature.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesFeaturesService) Insert(customer string, feature *Feature) *ResourcesFeaturesInsertCall {
 	c := &ResourcesFeaturesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -14899,7 +17071,7 @@ func (c *ResourcesFeaturesInsertCall) Header() http.Header {
 
 func (c *ResourcesFeaturesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15004,6 +17176,10 @@ type ResourcesFeaturesListCall struct {
 }
 
 // List: Retrieves a list of features for an account.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesFeaturesService) List(customer string) *ResourcesFeaturesListCall {
 	c := &ResourcesFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15061,7 +17237,7 @@ func (c *ResourcesFeaturesListCall) Header() http.Header {
 
 func (c *ResourcesFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15197,6 +17373,11 @@ type ResourcesFeaturesPatchCall struct {
 }
 
 // Patch: Patches a feature via Apiary Patch Orchestration.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to update.
 func (r *ResourcesFeaturesService) Patch(customer string, featureKey string, feature *Feature) *ResourcesFeaturesPatchCall {
 	c := &ResourcesFeaturesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15232,7 +17413,7 @@ func (c *ResourcesFeaturesPatchCall) Header() http.Header {
 
 func (c *ResourcesFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15346,6 +17527,11 @@ type ResourcesFeaturesRenameCall struct {
 }
 
 // Rename: Renames a feature.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - oldName: The unique ID of the feature to rename.
 func (r *ResourcesFeaturesService) Rename(customer string, oldName string, featurerename *FeatureRename) *ResourcesFeaturesRenameCall {
 	c := &ResourcesFeaturesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15381,7 +17567,7 @@ func (c *ResourcesFeaturesRenameCall) Header() http.Header {
 
 func (c *ResourcesFeaturesRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15467,6 +17653,11 @@ type ResourcesFeaturesUpdateCall struct {
 }
 
 // Update: Updates a feature.
+//
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to update.
 func (r *ResourcesFeaturesService) Update(customer string, featureKey string, feature *Feature) *ResourcesFeaturesUpdateCall {
 	c := &ResourcesFeaturesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15502,7 +17693,7 @@ func (c *ResourcesFeaturesUpdateCall) Header() http.Header {
 
 func (c *ResourcesFeaturesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15615,6 +17806,9 @@ type RoleAssignmentsDeleteCall struct {
 }
 
 // Delete: Deletes a role assignment.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - roleAssignmentId: Immutable ID of the role assignment.
 func (r *RoleAssignmentsService) Delete(customer string, roleAssignmentId string) *RoleAssignmentsDeleteCall {
 	c := &RoleAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15649,7 +17843,7 @@ func (c *RoleAssignmentsDeleteCall) Header() http.Header {
 
 func (c *RoleAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15727,6 +17921,9 @@ type RoleAssignmentsGetCall struct {
 }
 
 // Get: Retrieve a role assignment.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - roleAssignmentId: Immutable ID of the role assignment.
 func (r *RoleAssignmentsService) Get(customer string, roleAssignmentId string) *RoleAssignmentsGetCall {
 	c := &RoleAssignmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15771,7 +17968,7 @@ func (c *RoleAssignmentsGetCall) Header() http.Header {
 
 func (c *RoleAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15880,6 +18077,8 @@ type RoleAssignmentsInsertCall struct {
 }
 
 // Insert: Creates a role assignment.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *RoleAssignmentsService) Insert(customer string, roleassignment *RoleAssignment) *RoleAssignmentsInsertCall {
 	c := &RoleAssignmentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15914,7 +18113,7 @@ func (c *RoleAssignmentsInsertCall) Header() http.Header {
 
 func (c *RoleAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16019,6 +18218,8 @@ type RoleAssignmentsListCall struct {
 }
 
 // List: Retrieves a paginated list of all roleAssignments.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *RoleAssignmentsService) List(customer string) *RoleAssignmentsListCall {
 	c := &RoleAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16092,7 +18293,7 @@ func (c *RoleAssignmentsListCall) Header() http.Header {
 
 func (c *RoleAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16237,6 +18438,9 @@ type RolesDeleteCall struct {
 }
 
 // Delete: Deletes a role.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - roleId: Immutable ID of the role.
 func (r *RolesService) Delete(customer string, roleId string) *RolesDeleteCall {
 	c := &RolesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16271,7 +18475,7 @@ func (c *RolesDeleteCall) Header() http.Header {
 
 func (c *RolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16349,6 +18553,9 @@ type RolesGetCall struct {
 }
 
 // Get: Retrieves a role.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - roleId: Immutable ID of the role.
 func (r *RolesService) Get(customer string, roleId string) *RolesGetCall {
 	c := &RolesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16393,7 +18600,7 @@ func (c *RolesGetCall) Header() http.Header {
 
 func (c *RolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16502,6 +18709,8 @@ type RolesInsertCall struct {
 }
 
 // Insert: Creates a role.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *RolesService) Insert(customer string, role *Role) *RolesInsertCall {
 	c := &RolesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16536,7 +18745,7 @@ func (c *RolesInsertCall) Header() http.Header {
 
 func (c *RolesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16641,6 +18850,8 @@ type RolesListCall struct {
 }
 
 // List: Retrieves a paginated list of all the roles in a domain.
+//
+// - customer: Immutable ID of the Google Workspace account.
 func (r *RolesService) List(customer string) *RolesListCall {
 	c := &RolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16698,7 +18909,7 @@ func (c *RolesListCall) Header() http.Header {
 
 func (c *RolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16834,6 +19045,9 @@ type RolesPatchCall struct {
 }
 
 // Patch: Patch role via Apiary Patch Orchestration
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - roleId: Immutable ID of the role.
 func (r *RolesService) Patch(customer string, roleId string, role *Role) *RolesPatchCall {
 	c := &RolesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16869,7 +19083,7 @@ func (c *RolesPatchCall) Header() http.Header {
 
 func (c *RolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16983,6 +19197,9 @@ type RolesUpdateCall struct {
 }
 
 // Update: Updates a role.
+//
+// - customer: Immutable ID of the Google Workspace account.
+// - roleId: Immutable ID of the role.
 func (r *RolesService) Update(customer string, roleId string, role *Role) *RolesUpdateCall {
 	c := &RolesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17018,7 +19235,7 @@ func (c *RolesUpdateCall) Header() http.Header {
 
 func (c *RolesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17131,6 +19348,9 @@ type SchemasDeleteCall struct {
 }
 
 // Delete: Delete schema
+//
+// - customerId: Immutable ID of the Google Workspace account.
+// - schemaKey: Name or immutable ID of the schema.
 func (r *SchemasService) Delete(customerId string, schemaKey string) *SchemasDeleteCall {
 	c := &SchemasDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -17165,7 +19385,7 @@ func (c *SchemasDeleteCall) Header() http.Header {
 
 func (c *SchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17243,6 +19463,9 @@ type SchemasGetCall struct {
 }
 
 // Get: Retrieve schema
+//
+// - customerId: Immutable ID of the Google Workspace account.
+// - schemaKey: Name or immutable ID of the schema.
 func (r *SchemasService) Get(customerId string, schemaKey string) *SchemasGetCall {
 	c := &SchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -17287,7 +19510,7 @@ func (c *SchemasGetCall) Header() http.Header {
 
 func (c *SchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17396,6 +19619,8 @@ type SchemasInsertCall struct {
 }
 
 // Insert: Create schema.
+//
+// - customerId: Immutable ID of the Google Workspace account.
 func (r *SchemasService) Insert(customerId string, schema *Schema) *SchemasInsertCall {
 	c := &SchemasInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -17430,7 +19655,7 @@ func (c *SchemasInsertCall) Header() http.Header {
 
 func (c *SchemasInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17535,6 +19760,8 @@ type SchemasListCall struct {
 }
 
 // List: Retrieve all schemas for a customer
+//
+// - customerId: Immutable ID of the Google Workspace account.
 func (r *SchemasService) List(customerId string) *SchemasListCall {
 	c := &SchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -17578,7 +19805,7 @@ func (c *SchemasListCall) Header() http.Header {
 
 func (c *SchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17680,6 +19907,9 @@ type SchemasPatchCall struct {
 }
 
 // Patch: Patch Schema via Apiary Patch Orchestration
+//
+// - customerId: Immutable ID of the Google Workspace account.
+// - schemaKey: Name or immutable ID of the schema.
 func (r *SchemasService) Patch(customerId string, schemaKey string, schema *Schema) *SchemasPatchCall {
 	c := &SchemasPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -17715,7 +19945,7 @@ func (c *SchemasPatchCall) Header() http.Header {
 
 func (c *SchemasPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17829,6 +20059,9 @@ type SchemasUpdateCall struct {
 }
 
 // Update: Update schema
+//
+// - customerId: Immutable ID of the Google Workspace account.
+// - schemaKey: Name or immutable ID of the schema.
 func (r *SchemasService) Update(customerId string, schemaKey string, schema *Schema) *SchemasUpdateCall {
 	c := &SchemasUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -17864,7 +20097,7 @@ func (c *SchemasUpdateCall) Header() http.Header {
 
 func (c *SchemasUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17977,6 +20210,11 @@ type TokensDeleteCall struct {
 }
 
 // Delete: Delete all access tokens issued by a user for an application.
+//
+// - clientId: The Client ID of the application the token is issued to.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TokensService) Delete(userKey string, clientId string) *TokensDeleteCall {
 	c := &TokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -18011,7 +20249,7 @@ func (c *TokensDeleteCall) Header() http.Header {
 
 func (c *TokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18089,6 +20327,11 @@ type TokensGetCall struct {
 }
 
 // Get: Get information about an access token issued by a user.
+//
+// - clientId: The Client ID of the application the token is issued to.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TokensService) Get(userKey string, clientId string) *TokensGetCall {
 	c := &TokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -18133,7 +20376,7 @@ func (c *TokensGetCall) Header() http.Header {
 
 func (c *TokensGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18242,6 +20485,10 @@ type TokensListCall struct {
 
 // List: Returns the set of tokens specified user has issued to 3rd
 // party applications.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TokensService) List(userKey string) *TokensListCall {
 	c := &TokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -18285,7 +20532,7 @@ func (c *TokensListCall) Header() http.Header {
 
 func (c *TokensListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18384,6 +20631,10 @@ type TwoStepVerificationTurnOffCall struct {
 }
 
 // TurnOff: Turn off 2-Step Verification for user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TwoStepVerificationService) TurnOff(userKey string) *TwoStepVerificationTurnOffCall {
 	c := &TwoStepVerificationTurnOffCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -18417,7 +20668,7 @@ func (c *TwoStepVerificationTurnOffCall) Header() http.Header {
 
 func (c *TwoStepVerificationTurnOffCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18485,6 +20736,10 @@ type UsersDeleteCall struct {
 }
 
 // Delete: Deletes a user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Delete(userKey string) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -18518,7 +20773,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18587,6 +20842,10 @@ type UsersGetCall struct {
 }
 
 // Get: Retrieves a user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Get(userKey string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -18605,7 +20864,6 @@ func (c *UsersGetCall) CustomFieldMask(customFieldMask string) *UsersGetCall {
 // fields to fetch for this user.
 //
 // Possible values:
-//   "projectionUndefined"
 //   "basic" (default) - Do not include any custom fields for the user.
 //   "custom" - Include custom fields from schemas requested in
 // `customFieldMask`.
@@ -18622,7 +20880,6 @@ func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
 // .
 //
 // Possible values:
-//   "view_type_undefined"
 //   "admin_view" (default) - Results include both administrator-only
 // and domain-public fields for the user.
 //   "domain_public" - Results only include fields for the user that are
@@ -18669,7 +20926,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18748,13 +21005,11 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//       "default": "basic",
 	//       "description": "What subset of fields to fetch for this user.",
 	//       "enum": [
-	//         "projectionUndefined",
 	//         "basic",
 	//         "custom",
 	//         "full"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Do not include any custom fields for the user.",
 	//         "Include custom fields from schemas requested in `customFieldMask`.",
 	//         "Include all fields associated with this user."
@@ -18772,12 +21027,10 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//       "default": "admin_view",
 	//       "description": "Whether to fetch the administrator-only or domain-wide public view of the user. For more information, see [Retrieve a user as a non-administrator](/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).",
 	//       "enum": [
-	//         "view_type_undefined",
 	//         "admin_view",
 	//         "domain_public"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Results include both administrator-only and domain-public fields for the user.",
 	//         "Results only include fields for the user that are publicly visible to other users in the domain."
 	//       ],
@@ -18841,7 +21094,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18968,6 +21221,20 @@ func (c *UsersListCall) Domain(domain string) *UsersListCall {
 	return c
 }
 
+// Event sets the optional parameter "event": Event on which
+// subscription is intended (if subscribing)
+//
+// Possible values:
+//   "add" - User Created Event
+//   "delete" - User Deleted Event
+//   "makeAdmin" - User Admin Status Change Event
+//   "undelete" - User Undeleted Event
+//   "update" - User Updated Event
+func (c *UsersListCall) Event(event string) *UsersListCall {
+	c.urlParams_.Set("event", event)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
@@ -18979,7 +21246,6 @@ func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
 // sorting results.
 //
 // Possible values:
-//   "orderByUndefined"
 //   "email" - Primary email of the user.
 //   "familyName" - User's family name.
 //   "givenName" - User's given name.
@@ -18999,7 +21265,6 @@ func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
 // fields to fetch for this user.
 //
 // Possible values:
-//   "projectionUndefined"
 //   "basic" (default) - Do not include any custom fields for the user.
 //   "custom" - Include custom fields from schemas requested in
 // `customFieldMask`.
@@ -19028,7 +21293,6 @@ func (c *UsersListCall) ShowDeleted(showDeleted string) *UsersListCall {
 // results in ascending or descending order.
 //
 // Possible values:
-//   "SORT_ORDER_UNDEFINED"
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" - Descending order.
 func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
@@ -19043,7 +21307,6 @@ func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 // .
 //
 // Possible values:
-//   "view_type_undefined"
 //   "admin_view" (default) - Results include both administrator-only
 // and domain-public fields for the user.
 //   "domain_public" - Results only include fields for the user that are
@@ -19090,7 +21353,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19170,6 +21433,25 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "event": {
+	//       "description": "Event on which subscription is intended (if subscribing)",
+	//       "enum": [
+	//         "add",
+	//         "delete",
+	//         "makeAdmin",
+	//         "undelete",
+	//         "update"
+	//       ],
+	//       "enumDescriptions": [
+	//         "User Created Event",
+	//         "User Deleted Event",
+	//         "User Admin Status Change Event",
+	//         "User Undeleted Event",
+	//         "User Updated Event"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "default": "100",
 	//       "description": "Maximum number of results to return.",
@@ -19182,13 +21464,11 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//     "orderBy": {
 	//       "description": "Property to use for sorting results.",
 	//       "enum": [
-	//         "orderByUndefined",
 	//         "email",
 	//         "familyName",
 	//         "givenName"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Primary email of the user.",
 	//         "User's family name.",
 	//         "User's given name."
@@ -19205,13 +21485,11 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//       "default": "basic",
 	//       "description": "What subset of fields to fetch for this user.",
 	//       "enum": [
-	//         "projectionUndefined",
 	//         "basic",
 	//         "custom",
 	//         "full"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Do not include any custom fields for the user.",
 	//         "Include custom fields from schemas requested in `customFieldMask`.",
 	//         "Include all fields associated with this user."
@@ -19232,12 +21510,10 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//     "sortOrder": {
 	//       "description": "Whether to return results in ascending or descending order.",
 	//       "enum": [
-	//         "SORT_ORDER_UNDEFINED",
 	//         "ASCENDING",
 	//         "DESCENDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Ascending order.",
 	//         "Descending order."
 	//       ],
@@ -19248,12 +21524,10 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//       "default": "admin_view",
 	//       "description": "Whether to fetch the administrator-only or domain-wide public view of the user. For more information, see [Retrieve a user as a non-administrator](/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).",
 	//       "enum": [
-	//         "view_type_undefined",
 	//         "admin_view",
 	//         "domain_public"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Results include both administrator-only and domain-public fields for the user.",
 	//         "Results only include fields for the user that are publicly visible to other users in the domain."
 	//       ],
@@ -19307,6 +21581,10 @@ type UsersMakeAdminCall struct {
 }
 
 // MakeAdmin: Makes a user a super administrator.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) MakeAdmin(userKey string, usermakeadmin *UserMakeAdmin) *UsersMakeAdminCall {
 	c := &UsersMakeAdminCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -19341,7 +21619,7 @@ func (c *UsersMakeAdminCall) Header() http.Header {
 
 func (c *UsersMakeAdminCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19422,6 +21700,10 @@ type UsersPatchCall struct {
 // better performance. This method is unable to clear fields that
 // contain repeated objects (`addresses`, `phones`, etc). Use the update
 // method instead.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Patch(userKey string, user *User) *UsersPatchCall {
 	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -19456,7 +21738,7 @@ func (c *UsersPatchCall) Header() http.Header {
 
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19562,6 +21844,10 @@ type UsersSignOutCall struct {
 // SignOut: Sign a user out of all web and device sessions and reset
 // their sign-in cookies. User will have to sign in by authenticating
 // again.
+//
+// - userKey: Identifies the target user in the API request. The value
+//   can be the user's primary email address, alias email address, or
+//   unique user ID.
 func (r *UsersService) SignOut(userKey string) *UsersSignOutCall {
 	c := &UsersSignOutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -19595,7 +21881,7 @@ func (c *UsersSignOutCall) Header() http.Header {
 
 func (c *UsersSignOutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19664,6 +21950,8 @@ type UsersUndeleteCall struct {
 }
 
 // Undelete: Undeletes a deleted user.
+//
+// - userKey: The immutable id of the user.
 func (r *UsersService) Undelete(userKey string, userundelete *UserUndelete) *UsersUndeleteCall {
 	c := &UsersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -19698,7 +21986,7 @@ func (c *UsersUndeleteCall) Header() http.Header {
 
 func (c *UsersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19778,6 +22066,10 @@ type UsersUpdateCall struct {
 // you only need to include the fields you wish to update. Fields that
 // are not present in the request will be preserved, and fields set to
 // `null` will be cleared.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Update(userKey string, user *User) *UsersUpdateCall {
 	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -19812,7 +22104,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19949,7 +22241,6 @@ func (c *UsersWatchCall) Domain(domain string) *UsersWatchCall {
 // Event sets the optional parameter "event": Events to watch for.
 //
 // Possible values:
-//   "eventTypeUnspecified"
 //   "add" - User Created Event
 //   "delete" - User Deleted Event
 //   "makeAdmin" - User Admin Status Change Event
@@ -19971,7 +22262,6 @@ func (c *UsersWatchCall) MaxResults(maxResults int64) *UsersWatchCall {
 // sorting results
 //
 // Possible values:
-//   "orderByUnspecified"
 //   "email" - Primary email of the user.
 //   "familyName" - User's family name.
 //   "givenName" - User's given name.
@@ -19991,7 +22281,6 @@ func (c *UsersWatchCall) PageToken(pageToken string) *UsersWatchCall {
 // fields to fetch for this user.
 //
 // Possible values:
-//   "projectionUnspecified"
 //   "basic" (default) - Do not include any custom fields for the user.
 //   "custom" - Include custom fields from schemas mentioned in
 // customFieldMask.
@@ -20020,7 +22309,6 @@ func (c *UsersWatchCall) ShowDeleted(showDeleted string) *UsersWatchCall {
 // results in ascending or descending order.
 //
 // Possible values:
-//   "sortOrderUnspecified"
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" - Descending order.
 func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
@@ -20071,7 +22359,7 @@ func (c *UsersWatchCall) Header() http.Header {
 
 func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20156,7 +22444,6 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     "event": {
 	//       "description": "Events to watch for.",
 	//       "enum": [
-	//         "eventTypeUnspecified",
 	//         "add",
 	//         "delete",
 	//         "makeAdmin",
@@ -20164,7 +22451,6 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//         "update"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "User Created Event",
 	//         "User Deleted Event",
 	//         "User Admin Status Change Event",
@@ -20186,13 +22472,11 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     "orderBy": {
 	//       "description": "Column to use for sorting results",
 	//       "enum": [
-	//         "orderByUnspecified",
 	//         "email",
 	//         "familyName",
 	//         "givenName"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Primary email of the user.",
 	//         "User's family name.",
 	//         "User's given name."
@@ -20209,13 +22493,11 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "default": "basic",
 	//       "description": "What subset of fields to fetch for this user.",
 	//       "enum": [
-	//         "projectionUnspecified",
 	//         "basic",
 	//         "custom",
 	//         "full"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Do not include any custom fields for the user.",
 	//         "Include custom fields from schemas mentioned in customFieldMask.",
 	//         "Include all fields associated with this user."
@@ -20236,12 +22518,10 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     "sortOrder": {
 	//       "description": "Whether to return results in ascending or descending order.",
 	//       "enum": [
-	//         "sortOrderUnspecified",
 	//         "ASCENDING",
 	//         "DESCENDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Ascending order.",
 	//         "Descending order."
 	//       ],
@@ -20291,6 +22571,11 @@ type UsersAliasesDeleteCall struct {
 }
 
 // Delete: Removes an alias.
+//
+// - alias: The alias to be removed.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersAliasesService) Delete(userKey string, alias string) *UsersAliasesDeleteCall {
 	c := &UsersAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20325,7 +22610,7 @@ func (c *UsersAliasesDeleteCall) Header() http.Header {
 
 func (c *UsersAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20403,6 +22688,10 @@ type UsersAliasesInsertCall struct {
 }
 
 // Insert: Adds an alias.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersAliasesService) Insert(userKey string, alias *Alias) *UsersAliasesInsertCall {
 	c := &UsersAliasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20437,7 +22726,7 @@ func (c *UsersAliasesInsertCall) Header() http.Header {
 
 func (c *UsersAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20543,6 +22832,10 @@ type UsersAliasesListCall struct {
 }
 
 // List: Lists all aliases for a user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersAliasesService) List(userKey string) *UsersAliasesListCall {
 	c := &UsersAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20586,7 +22879,7 @@ func (c *UsersAliasesListCall) Header() http.Header {
 
 func (c *UsersAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20689,6 +22982,8 @@ type UsersAliasesWatchCall struct {
 }
 
 // Watch: Watch for changes in users list.
+//
+// - userKey: Email or immutable ID of the user.
 func (r *UsersAliasesService) Watch(userKey string, channel *Channel) *UsersAliasesWatchCall {
 	c := &UsersAliasesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20699,7 +22994,6 @@ func (r *UsersAliasesService) Watch(userKey string, channel *Channel) *UsersAlia
 // Event sets the optional parameter "event": Events to watch for.
 //
 // Possible values:
-//   "eventUndefined"
 //   "add" - Alias Created Event
 //   "delete" - Alias Deleted Event
 func (c *UsersAliasesWatchCall) Event(event string) *UsersAliasesWatchCall {
@@ -20734,7 +23028,7 @@ func (c *UsersAliasesWatchCall) Header() http.Header {
 
 func (c *UsersAliasesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20809,12 +23103,10 @@ func (c *UsersAliasesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, erro
 	//     "event": {
 	//       "description": "Events to watch for.",
 	//       "enum": [
-	//         "eventUndefined",
 	//         "add",
 	//         "delete"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Alias Created Event",
 	//         "Alias Deleted Event"
 	//       ],
@@ -20856,6 +23148,10 @@ type UsersPhotosDeleteCall struct {
 }
 
 // Delete: Removes the user's photo.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Delete(userKey string) *UsersPhotosDeleteCall {
 	c := &UsersPhotosDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20889,7 +23185,7 @@ func (c *UsersPhotosDeleteCall) Header() http.Header {
 
 func (c *UsersPhotosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20958,6 +23254,10 @@ type UsersPhotosGetCall struct {
 }
 
 // Get: Retrieves the user's photo.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Get(userKey string) *UsersPhotosGetCall {
 	c := &UsersPhotosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21001,7 +23301,7 @@ func (c *UsersPhotosGetCall) Header() http.Header {
 
 func (c *UsersPhotosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21103,6 +23403,10 @@ type UsersPhotosPatchCall struct {
 
 // Patch: Adds a photo for the user. This method supports patch
 // semantics (/admin-sdk/directory/v1/guides/performance#patch).
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Patch(userKey string, userphoto *UserPhoto) *UsersPhotosPatchCall {
 	c := &UsersPhotosPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21137,7 +23441,7 @@ func (c *UsersPhotosPatchCall) Header() http.Header {
 
 func (c *UsersPhotosPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21242,6 +23546,10 @@ type UsersPhotosUpdateCall struct {
 }
 
 // Update: Adds a photo for the user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Update(userKey string, userphoto *UserPhoto) *UsersPhotosUpdateCall {
 	c := &UsersPhotosUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21276,7 +23584,7 @@ func (c *UsersPhotosUpdateCall) Header() http.Header {
 
 func (c *UsersPhotosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21380,6 +23688,8 @@ type VerificationCodesGenerateCall struct {
 }
 
 // Generate: Generate new backup verification codes for the user.
+//
+// - userKey: Email or immutable ID of the user.
 func (r *VerificationCodesService) Generate(userKey string) *VerificationCodesGenerateCall {
 	c := &VerificationCodesGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21413,7 +23723,7 @@ func (c *VerificationCodesGenerateCall) Header() http.Header {
 
 func (c *VerificationCodesGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21482,6 +23792,8 @@ type VerificationCodesInvalidateCall struct {
 
 // Invalidate: Invalidate the current backup verification codes for the
 // user.
+//
+// - userKey: Email or immutable ID of the user.
 func (r *VerificationCodesService) Invalidate(userKey string) *VerificationCodesInvalidateCall {
 	c := &VerificationCodesInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21515,7 +23827,7 @@ func (c *VerificationCodesInvalidateCall) Header() http.Header {
 
 func (c *VerificationCodesInvalidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21585,6 +23897,10 @@ type VerificationCodesListCall struct {
 
 // List: Returns the current set of valid backup verification codes for
 // the specified user.
+//
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *VerificationCodesService) List(userKey string) *VerificationCodesListCall {
 	c := &VerificationCodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21628,7 +23944,7 @@ func (c *VerificationCodesListCall) Header() http.Header {
 
 func (c *VerificationCodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

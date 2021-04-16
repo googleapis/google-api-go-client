@@ -79,7 +79,7 @@ const mtlsBasePath = "https://documentai.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -537,6 +537,42 @@ func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
+// long running operation metadata for set default processor version
+// method.
+type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse:
+// Response message for set default processor version method.
+type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse struct {
+}
+
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata: The
 // metadata that represents a processor version being created.
 type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata struct {
@@ -906,15 +942,15 @@ type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Human review state is unspecified. Most
 	// likely due to an internal error.
-	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document.
-	// This can happen because human review is not enabled on the processor
-	// or the processing request has been set to skip this document.
-	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
-	// triggered and passed, so no review is needed.
-	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
-	// and the document is under review.
-	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
-	// review, see the [state_message] for details.
+	//   "SKIPPED" - Human review is skipped for the document. This can
+	// happen because human review is not enabled on the processor or the
+	// processing request has been set to skip this document.
+	//   "VALIDATION_PASSED" - Human review validation is triggered and
+	// passed, so no review is needed.
+	//   "IN_PROGRESS" - Human review validation is triggered and the
+	// document is under review.
+	//   "ERROR" - Some error happened during triggering human review, see
+	// the [state_message] for details.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: A message providing more details about the human review
@@ -1076,9 +1112,9 @@ func (s *GoogleCloudDocumentaiV1beta1BoundingPoly) MarshalJSON() ([]byte, error)
 // for collaboration between users and Document Understanding AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta1Document struct {
-	// Content: Inline document content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure binary
-	// representation, whereas JSON representations use base64.
+	// Content: Optional. Inline document content, represented as a stream
+	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
 	// Entities: A list of entities detected on Document.text. For document
@@ -1107,7 +1143,8 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// message is not specified.
 	ShardInfo *GoogleCloudDocumentaiV1beta1DocumentShardInfo `json:"shardInfo,omitempty"`
 
-	// Text: UTF-8 encoded text in reading order from the document.
+	// Text: Optional. UTF-8 encoded text in reading order from the
+	// document.
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: A list of text corrections made to [Document.text]. This
@@ -1118,13 +1155,9 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta1DocumentStyle `json:"textStyles,omitempty"`
 
-	// Translations: A list of translations on Document.text. For document
-	// shards, translations in this list may cross shard boundaries.
-	Translations []*GoogleCloudDocumentaiV1beta1DocumentTranslation `json:"translations,omitempty"`
-
-	// Uri: Currently supports Google Cloud Storage URI of the form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See Google Cloud Storage Request URIs
+	// Uri: Optional. Currently supports Google Cloud Storage URI of the
+	// form `gs://bucket_name/object_name`. Object versioning is not
+	// supported. See Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	Uri string `json:"uri,omitempty"`
 
@@ -1163,11 +1196,11 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// list for this document.
 	Id string `json:"id,omitempty"`
 
-	// MentionId: Deprecated. Use `id` field instead.
+	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Text value in the document e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value in the document e.g. `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -1191,8 +1224,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// de-identification purposes.
 	Redacted bool `json:"redacted,omitempty"`
 
-	// TextAnchor: Provenance of the entity. Text anchor indexing into the
-	// Document.text.
+	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing
+	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
 
 	// Type: Entity type from a schema e.g. `Address`.
@@ -1241,6 +1274,10 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	// AddressValue: Postal address. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
+
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
 
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
@@ -2122,8 +2159,9 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	//   "REPLACE" - Explicitly replaces the element(s) identified by
 	// `parents`.
 	//   "EVAL_REQUESTED" - Element is requested for human review.
-	//   "EVAL_APPROVED" - Element is review and approved at human review,
-	// confidence will be set to 1.0
+	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
+	// confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -2509,50 +2547,6 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentTextChange) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta1DocumentTranslation: A translation of the
-// text segment.
-type GoogleCloudDocumentaiV1beta1DocumentTranslation struct {
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Provenance: The history of this annotation.
-	Provenance []*GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
-
-	// TextAnchor: Provenance of the translation. Text anchor indexing into
-	// the Document.text. There can only be a single
-	// `TextAnchor.text_segments` element. If the start and end index of the
-	// text segment are the same, the text change is inserted before that
-	// index.
-	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
-
-	// TranslatedText: Text translated into the target language.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta1DocumentTranslation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta1DocumentTranslation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1beta1GcsDestination: The Google Cloud Storage
 // location where the output file will be written to.
 type GoogleCloudDocumentaiV1beta1GcsDestination struct {
@@ -2653,7 +2647,7 @@ type GoogleCloudDocumentaiV1beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -2829,7 +2823,7 @@ type GoogleCloudDocumentaiV1beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -2924,9 +2918,9 @@ func (s *GoogleCloudDocumentaiV1beta2BoundingPoly) MarshalJSON() ([]byte, error)
 // for collaboration between users and Document Understanding AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta2Document struct {
-	// Content: Inline document content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure binary
-	// representation, whereas JSON representations use base64.
+	// Content: Optional. Inline document content, represented as a stream
+	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
 	// Entities: A list of entities detected on Document.text. For document
@@ -2958,7 +2952,8 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// message is not specified.
 	ShardInfo *GoogleCloudDocumentaiV1beta2DocumentShardInfo `json:"shardInfo,omitempty"`
 
-	// Text: UTF-8 encoded text in reading order from the document.
+	// Text: Optional. UTF-8 encoded text in reading order from the
+	// document.
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: A list of text corrections made to [Document.text]. This
@@ -2969,13 +2964,9 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta2DocumentStyle `json:"textStyles,omitempty"`
 
-	// Translations: A list of translations on Document.text. For document
-	// shards, translations in this list may cross shard boundaries.
-	Translations []*GoogleCloudDocumentaiV1beta2DocumentTranslation `json:"translations,omitempty"`
-
-	// Uri: Currently supports Google Cloud Storage URI of the form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See Google Cloud Storage Request URIs
+	// Uri: Optional. Currently supports Google Cloud Storage URI of the
+	// form `gs://bucket_name/object_name`. Object versioning is not
+	// supported. See Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	Uri string `json:"uri,omitempty"`
 
@@ -3014,11 +3005,11 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// list for this document.
 	Id string `json:"id,omitempty"`
 
-	// MentionId: Deprecated. Use `id` field instead.
+	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Text value in the document e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value in the document e.g. `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -3042,8 +3033,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// de-identification purposes.
 	Redacted bool `json:"redacted,omitempty"`
 
-	// TextAnchor: Provenance of the entity. Text anchor indexing into the
-	// Document.text.
+	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing
+	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
 
 	// Type: Entity type from a schema e.g. `Address`.
@@ -3092,6 +3083,10 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	// AddressValue: Postal address. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
+
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
 
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
@@ -4028,8 +4023,9 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	//   "REPLACE" - Explicitly replaces the element(s) identified by
 	// `parents`.
 	//   "EVAL_REQUESTED" - Element is requested for human review.
-	//   "EVAL_APPROVED" - Element is review and approved at human review,
-	// confidence will be set to 1.0
+	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
+	// confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -4415,50 +4411,6 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentTextChange) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta2DocumentTranslation: A translation of the
-// text segment.
-type GoogleCloudDocumentaiV1beta2DocumentTranslation struct {
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Provenance: The history of this annotation.
-	Provenance []*GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
-
-	// TextAnchor: Provenance of the translation. Text anchor indexing into
-	// the Document.text. There can only be a single
-	// `TextAnchor.text_segments` element. If the start and end index of the
-	// text segment are the same, the text change is inserted before that
-	// index.
-	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
-
-	// TranslatedText: Text translated into the target language.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta2DocumentTranslation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta2DocumentTranslation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1beta2GcsDestination: The Google Cloud Storage
 // location where the output file will be written to.
 type GoogleCloudDocumentaiV1beta2GcsDestination struct {
@@ -4565,7 +4517,7 @@ type GoogleCloudDocumentaiV1beta2NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -4741,7 +4693,7 @@ type GoogleCloudDocumentaiV1beta2Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -4763,6 +4715,40 @@ type GoogleCloudDocumentaiV1beta2Vertex struct {
 
 func (s *GoogleCloudDocumentaiV1beta2Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2Vertex
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig: The common
+// config to specify a set of documents used as input.
+type GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig struct {
+	// GcsDocuments: The set of documents individually specified on Cloud
+	// Storage.
+	GcsDocuments *GoogleCloudDocumentaiV1beta3GcsDocuments `json:"gcsDocuments,omitempty"`
+
+	// GcsPrefix: The set of documents that match the specified Cloud
+	// Storage [gcs_prefix].
+	GcsPrefix *GoogleCloudDocumentaiV1beta3GcsPrefix `json:"gcsPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDocuments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDocuments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4885,7 +4871,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	InputConfigs []*GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig `json:"inputConfigs,omitempty"`
 
 	// InputDocuments: The input documents for batch process.
-	InputDocuments *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig `json:"inputDocuments,omitempty"`
+	InputDocuments *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig `json:"inputDocuments,omitempty"`
 
 	// OutputConfig: The overall output config for batch process.
 	OutputConfig *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig `json:"outputConfig,omitempty"`
@@ -5076,9 +5062,9 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // for collaboration between users and Document Understanding AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta3Document struct {
-	// Content: Inline document content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure binary
-	// representation, whereas JSON representations use base64.
+	// Content: Optional. Inline document content, represented as a stream
+	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
 	// Entities: A list of entities detected on Document.text. For document
@@ -5107,7 +5093,8 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// message is not specified.
 	ShardInfo *GoogleCloudDocumentaiV1beta3DocumentShardInfo `json:"shardInfo,omitempty"`
 
-	// Text: UTF-8 encoded text in reading order from the document.
+	// Text: Optional. UTF-8 encoded text in reading order from the
+	// document.
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: A list of text corrections made to [Document.text]. This
@@ -5118,13 +5105,9 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta3DocumentStyle `json:"textStyles,omitempty"`
 
-	// Translations: A list of translations on Document.text. For document
-	// shards, translations in this list may cross shard boundaries.
-	Translations []*GoogleCloudDocumentaiV1beta3DocumentTranslation `json:"translations,omitempty"`
-
-	// Uri: Currently supports Google Cloud Storage URI of the form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See Google Cloud Storage Request URIs
+	// Uri: Optional. Currently supports Google Cloud Storage URI of the
+	// form `gs://bucket_name/object_name`. Object versioning is not
+	// supported. See Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	Uri string `json:"uri,omitempty"`
 
@@ -5163,11 +5146,11 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// list for this document.
 	Id string `json:"id,omitempty"`
 
-	// MentionId: Deprecated. Use `id` field instead.
+	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Text value in the document e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value in the document e.g. `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -5191,8 +5174,8 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// de-identification purposes.
 	Redacted bool `json:"redacted,omitempty"`
 
-	// TextAnchor: Provenance of the entity. Text anchor indexing into the
-	// Document.text.
+	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing
+	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
 
 	// Type: Entity type from a schema e.g. `Address`.
@@ -5241,6 +5224,10 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	// AddressValue: Postal address. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
+
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
 
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
@@ -6182,8 +6169,9 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenance struct {
 	//   "REPLACE" - Explicitly replaces the element(s) identified by
 	// `parents`.
 	//   "EVAL_REQUESTED" - Element is requested for human review.
-	//   "EVAL_APPROVED" - Element is review and approved at human review,
-	// confidence will be set to 1.0
+	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
+	// confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -6569,28 +6557,16 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentTextChange) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DocumentTranslation: A translation of the
-// text segment.
-type GoogleCloudDocumentaiV1beta3DocumentTranslation struct {
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
+// GoogleCloudDocumentaiV1beta3GcsDocument: Specifies a document stored
+// on Cloud Storage.
+type GoogleCloudDocumentaiV1beta3GcsDocument struct {
+	// GcsUri: The Cloud Storage object uri.
+	GcsUri string `json:"gcsUri,omitempty"`
 
-	// Provenance: The history of this annotation.
-	Provenance []*GoogleCloudDocumentaiV1beta3DocumentProvenance `json:"provenance,omitempty"`
+	// MimeType: An IANA MIME type (RFC6838) of the content.
+	MimeType string `json:"mimeType,omitempty"`
 
-	// TextAnchor: Provenance of the translation. Text anchor indexing into
-	// the Document.text. There can only be a single
-	// `TextAnchor.text_segments` element. If the start and end index of the
-	// text segment are the same, the text change is inserted before that
-	// index.
-	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
-
-	// TranslatedText: Text translated into the target language.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6598,7 +6574,65 @@ type GoogleCloudDocumentaiV1beta3DocumentTranslation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3GcsDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GcsDocument
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3GcsDocuments: Specifies a set of
+// documents on Cloud Storage.
+type GoogleCloudDocumentaiV1beta3GcsDocuments struct {
+	// Documents: The list of documents.
+	Documents []*GoogleCloudDocumentaiV1beta3GcsDocument `json:"documents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Documents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3GcsDocuments) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GcsDocuments
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3GcsPrefix: Specifies all documents on
+// Cloud Storage with a common prefix.
+type GoogleCloudDocumentaiV1beta3GcsPrefix struct {
+	// GcsUriPrefix: The URI prefix.
+	GcsUriPrefix string `json:"gcsUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsUriPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsUriPrefix") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -6607,8 +6641,8 @@ type GoogleCloudDocumentaiV1beta3DocumentTranslation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentTranslation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3DocumentTranslation
+func (s *GoogleCloudDocumentaiV1beta3GcsPrefix) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GcsPrefix
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6628,15 +6662,15 @@ type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Human review state is unspecified. Most
 	// likely due to an internal error.
-	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document.
-	// This can happen because human review is not enabled on the processor
-	// or the processing request has been set to skip this document.
-	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
-	// triggered and passed, so no review is needed.
-	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
-	// and the document is under review.
-	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
-	// review, see the [state_message] for details.
+	//   "SKIPPED" - Human review is skipped for the document. This can
+	// happen because human review is not enabled on the processor or the
+	// processing request has been set to skip this document.
+	//   "VALIDATION_PASSED" - Human review validation is triggered and
+	// passed, so no review is needed.
+	//   "IN_PROGRESS" - Human review validation is triggered and the
+	// document is under review.
+	//   "ERROR" - Some error happened during triggering human review, see
+	// the [state_message] for details.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: A message providing more details about the human review
@@ -6675,7 +6709,7 @@ type GoogleCloudDocumentaiV1beta3NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -6956,7 +6990,7 @@ type GoogleCloudDocumentaiV1beta3Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -7187,19 +7221,19 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
 // representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness; for example,
+// representations in various languages over compactness. For example,
 // the fields of this representation can be trivially provided to the
-// constructor of "java.awt.Color" in Java; it can also be trivially
-// provided to UIColor's "+colorWithRed:green:blue:alpha" method in iOS;
+// constructor of `java.awt.Color` in Java; it can also be trivially
+// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
 // and, with just a little work, it can be easily formatted into a CSS
-// "rgba()" string in JavaScript, as well. Note: this proto does not
-// carry information about the absolute color space that should be used
-// to interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications SHOULD assume the sRGB color space.
-// Note: when color equality needs to be decided, implementations,
-// unless documented otherwise, will treat two colors to be equal if all
-// their red, green, blue and alpha values each differ by at most 1e-5.
-// Example (Java): import com.google.type.Color; // ... public static
+// `rgba()` string in JavaScript. This reference page doesn't carry
+// information about the absolute color space that should be used to
+// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
+// etc.). By default, applications should assume the sRGB color space.
+// When color equality needs to be decided, implementations, unless
+// documented otherwise, treat two colors as equal if all their red,
+// green, blue, and alpha values each differ by at most 1e-5. Example
+// (Java): import com.google.type.Color; // ... public static
 // java.awt.Color fromProto(Color protocolor) { float alpha =
 // protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
 // return new java.awt.Color( protocolor.getRed(),
@@ -7228,27 +7262,27 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac =
 // rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green
 // = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255);
-// if (!('alpha' in rgb_color)) { return rgbToCssColor_(red, green,
+// if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor_ = function(red,
-// green, blue) { var rgbNumber = new Number((red << 16) | (green << 8)
-// | blue); var hexString = rgbNumber.toString(16); var missingZeros = 6
-// - hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
+// blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
+// hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
 // resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
 	// pixel. That is, the final pixel color is defined by the equation:
-	// pixel color = alpha * (this color) + (1.0 - alpha) * (background
-	// color) This means that a value of 1.0 corresponds to a solid color,
+	// `pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)` This means that a value of 1.0 corresponds to a solid color,
 	// whereas a value of 0.0 corresponds to a completely transparent color.
 	// This uses a wrapper message rather than a simple float scalar so that
 	// it is possible to distinguish between a default value and the value
-	// being unset. If omitted, this color object is to be rendered as a
-	// solid color (as if the alpha value had been explicitly given with a
-	// value of 1.0).
+	// being unset. If omitted, this color object is rendered as a solid
+	// color (as if the alpha value had been explicitly given a value of
+	// 1.0).
 	Alpha float64 `json:"alpha,omitempty"`
 
 	// Blue: The amount of blue in the color as a value in the interval [0,
@@ -7635,6 +7669,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7678,7 +7714,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7780,28 +7816,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7844,7 +7886,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7917,7 +7959,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7929,13 +7971,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7986,6 +8028,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8029,7 +8073,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8131,6 +8175,11 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8165,7 +8214,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8238,7 +8287,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -8271,6 +8320,13 @@ type ProjectsLocationsProcessorsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8305,7 +8361,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8380,7 +8436,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -8414,6 +8470,9 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 
 // ReviewDocument: Send a document for Human Review. The input document
 // should be processed by the specified processor.
+//
+// - humanReviewConfig: The resource name of the HumanReviewConfig that
+//   the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1beta3reviewdocumentrequest *GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -8448,7 +8507,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8555,6 +8614,11 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8589,7 +8653,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8662,7 +8726,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
 	//       "required": true,
@@ -8695,6 +8759,13 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8729,7 +8800,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8804,7 +8875,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
 	//       "required": true,

@@ -721,6 +721,40 @@ func (s *CustomerSessionStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CustomerSettings: Represents settings at a customer level.
+type CustomerSettings struct {
+	// VpcSettings: VPC SC settings for the customer. If update_mask is
+	// empty then this field will be updated based on UpdateCustomerSettings
+	// request.
+	VpcSettings *VPCSettings `json:"vpcSettings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "VpcSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VpcSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type CustomerUserStats struct {
 	// Date: Date for which session stats were calculated. Stats calculated
 	// on the next day close to midnight are returned.
@@ -6391,6 +6425,36 @@ func (s *UploadItemRef) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type VPCSettings struct {
+	// Project: The resource name of the GCP Project to be used for VPC SC
+	// policy check. VPC security settings on this project will be honored
+	// for Cloud Search APIs after project_name has been updated through
+	// CustomerService. Format: projects/{project_id}
+	Project string `json:"project,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Project") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Project") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VPCSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod VPCSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Value: Definition of a single value with generic type.
 type Value struct {
 	BooleanValue bool `json:"booleanValue,omitempty"`
@@ -6492,6 +6556,8 @@ type DebugDatasourcesItemsCheckAccessCall struct {
 
 // CheckAccess: Checks whether an item is accessible by specified
 // principal. **Note:** This API requires an admin account to execute.
+//
+// - name: Item name, format: datasources/{source_id}/items/{item_id}.
 func (r *DebugDatasourcesItemsService) CheckAccess(name string, principal *Principal) *DebugDatasourcesItemsCheckAccessCall {
 	c := &DebugDatasourcesItemsCheckAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6534,7 +6600,7 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsCheckAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6648,6 +6714,8 @@ type DebugDatasourcesItemsSearchByViewUrlCall struct {
 // SearchByViewUrl: Fetches the item whose viewUrl exactly matches that
 // of the URL provided in the request. **Note:** This API requires an
 // admin account to execute.
+//
+// - name: Source name, format: datasources/{source_id}.
 func (r *DebugDatasourcesItemsService) SearchByViewUrl(name string, searchitemsbyviewurlrequest *SearchItemsByViewUrlRequest) *DebugDatasourcesItemsSearchByViewUrlCall {
 	c := &DebugDatasourcesItemsSearchByViewUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6682,7 +6750,7 @@ func (c *DebugDatasourcesItemsSearchByViewUrlCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsSearchByViewUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6811,6 +6879,9 @@ type DebugDatasourcesItemsUnmappedidsListCall struct {
 
 // List: List all unmapped identities for a specific item. **Note:**
 // This API requires an admin account to execute.
+//
+// - parent: The name of the item, in the following format:
+//   datasources/{source_id}/items/{ID}.
 func (r *DebugDatasourcesItemsUnmappedidsService) List(parent string) *DebugDatasourcesItemsUnmappedidsListCall {
 	c := &DebugDatasourcesItemsUnmappedidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6876,7 +6947,7 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugDatasourcesItemsUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7017,6 +7088,9 @@ type DebugIdentitysourcesItemsListForunmappedidentityCall struct {
 // ListForunmappedidentity: Lists names of items associated with an
 // unmapped identity. **Note:** This API requires an admin account to
 // execute.
+//
+// - parent: The name of the identity source, in the following format:
+//   identitysources/{source_id}}.
 func (r *DebugIdentitysourcesItemsService) ListForunmappedidentity(parent string) *DebugIdentitysourcesItemsListForunmappedidentityCall {
 	c := &DebugIdentitysourcesItemsListForunmappedidentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7094,7 +7168,7 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Header() http.Hea
 
 func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7244,6 +7318,9 @@ type DebugIdentitysourcesUnmappedidsListCall struct {
 
 // List: Lists unmapped user identities for an identity source.
 // **Note:** This API requires an admin account to execute.
+//
+// - parent: The name of the identity source, in the following format:
+//   identitysources/{source_id}.
 func (r *DebugIdentitysourcesUnmappedidsService) List(parent string) *DebugIdentitysourcesUnmappedidsListCall {
 	c := &DebugIdentitysourcesUnmappedidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7330,7 +7407,7 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Header() http.Header {
 
 func (c *DebugIdentitysourcesUnmappedidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7490,6 +7567,9 @@ type IndexingDatasourcesDeleteSchemaCall struct {
 
 // DeleteSchema: Deletes the schema of a data source. **Note:** This API
 // requires an admin or service account to execute.
+//
+// - name: Name of the data source to delete Schema. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesService) DeleteSchema(name string) *IndexingDatasourcesDeleteSchemaCall {
 	c := &IndexingDatasourcesDeleteSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7531,7 +7611,7 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesDeleteSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7637,6 +7717,9 @@ type IndexingDatasourcesGetSchemaCall struct {
 
 // GetSchema: Gets the schema of a data source. **Note:** This API
 // requires an admin or service account to execute.
+//
+// - name: Name of the data source to get Schema. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesService) GetSchema(name string) *IndexingDatasourcesGetSchemaCall {
 	c := &IndexingDatasourcesGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7688,7 +7771,7 @@ func (c *IndexingDatasourcesGetSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesGetSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7799,6 +7882,9 @@ type IndexingDatasourcesUpdateSchemaCall struct {
 // not perform incremental updates to the schema. Instead, this method
 // updates the schema by overwriting the entire schema. **Note:** This
 // API requires an admin or service account to execute.
+//
+// - name: Name of the data source to update Schema. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesService) UpdateSchema(name string, updateschemarequest *UpdateSchemaRequest) *IndexingDatasourcesUpdateSchemaCall {
 	c := &IndexingDatasourcesUpdateSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7833,7 +7919,7 @@ func (c *IndexingDatasourcesUpdateSchemaCall) Header() http.Header {
 
 func (c *IndexingDatasourcesUpdateSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7942,6 +8028,9 @@ type IndexingDatasourcesItemsDeleteCall struct {
 // Delete: Deletes Item resource for the specified resource name. This
 // API requires an admin or service account to execute. The service
 // account used is the one whitelisted in the corresponding data source.
+//
+// - name: Name of the item to delete. Format:
+//   datasources/{source_id}/items/{item_id}.
 func (r *IndexingDatasourcesItemsService) Delete(name string) *IndexingDatasourcesItemsDeleteCall {
 	c := &IndexingDatasourcesItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8018,7 +8107,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8151,6 +8240,9 @@ type IndexingDatasourcesItemsDeleteQueueItemsCall struct {
 // for deleting stale items. This API requires an admin or service
 // account to execute. The service account used is the one whitelisted
 // in the corresponding data source.
+//
+// - name: Name of the Data Source to delete items in a queue. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) DeleteQueueItems(name string, deletequeueitemsrequest *DeleteQueueItemsRequest) *IndexingDatasourcesItemsDeleteQueueItemsCall {
 	c := &IndexingDatasourcesItemsDeleteQueueItemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8185,7 +8277,7 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8294,6 +8386,9 @@ type IndexingDatasourcesItemsGetCall struct {
 // Get: Gets Item resource by item name. This API requires an admin or
 // service account to execute. The service account used is the one
 // whitelisted in the corresponding data source.
+//
+// - name: Name of the item to get info. Format:
+//   datasources/{source_id}/items/{item_id}.
 func (r *IndexingDatasourcesItemsService) Get(name string) *IndexingDatasourcesItemsGetCall {
 	c := &IndexingDatasourcesItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8353,7 +8448,7 @@ func (c *IndexingDatasourcesItemsGetCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8470,6 +8565,10 @@ type IndexingDatasourcesItemsIndexCall struct {
 // Search index. This API requires an admin or service account to
 // execute. The service account used is the one whitelisted in the
 // corresponding data source.
+//
+// - name: Name of the Item. Format:
+//   datasources/{source_id}/items/{item_id} This is a required field.
+//   The maximum length is 1536 characters.
 func (r *IndexingDatasourcesItemsService) Index(name string, indexitemrequest *IndexItemRequest) *IndexingDatasourcesItemsIndexCall {
 	c := &IndexingDatasourcesItemsIndexCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8504,7 +8603,7 @@ func (c *IndexingDatasourcesItemsIndexCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8613,6 +8712,9 @@ type IndexingDatasourcesItemsListCall struct {
 // List: Lists all or a subset of Item resources. This API requires an
 // admin or service account to execute. The service account used is the
 // one whitelisted in the corresponding data source.
+//
+// - name: Name of the Data Source to list Items. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) List(name string) *IndexingDatasourcesItemsListCall {
 	c := &IndexingDatasourcesItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8700,7 +8802,7 @@ func (c *IndexingDatasourcesItemsListCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8860,6 +8962,9 @@ type IndexingDatasourcesItemsPollCall struct {
 // called. This API requires an admin or service account to execute. The
 // service account used is the one whitelisted in the corresponding data
 // source.
+//
+// - name: Name of the Data Source to poll items. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) Poll(name string, pollitemsrequest *PollItemsRequest) *IndexingDatasourcesItemsPollCall {
 	c := &IndexingDatasourcesItemsPollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8894,7 +8999,7 @@ func (c *IndexingDatasourcesItemsPollCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9003,6 +9108,10 @@ type IndexingDatasourcesItemsPushCall struct {
 // Push: Pushes an item onto a queue for later polling and updating.
 // This API requires an admin or service account to execute. The service
 // account used is the one whitelisted in the corresponding data source.
+//
+// - name: Name of the item to push into the indexing queue. Format:
+//   datasources/{source_id}/items/{ID} This is a required field. The
+//   maximum length is 1536 characters.
 func (r *IndexingDatasourcesItemsService) Push(name string, pushitemrequest *PushItemRequest) *IndexingDatasourcesItemsPushCall {
 	c := &IndexingDatasourcesItemsPushCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9037,7 +9146,7 @@ func (c *IndexingDatasourcesItemsPushCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsPushCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9148,6 +9257,9 @@ type IndexingDatasourcesItemsUnreserveCall struct {
 // indexing queue after a connector has been restarted. This API
 // requires an admin or service account to execute. The service account
 // used is the one whitelisted in the corresponding data source.
+//
+// - name: Name of the Data Source to unreserve all items. Format:
+//   datasources/{source_id}.
 func (r *IndexingDatasourcesItemsService) Unreserve(name string, unreserveitemsrequest *UnreserveItemsRequest) *IndexingDatasourcesItemsUnreserveCall {
 	c := &IndexingDatasourcesItemsUnreserveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9182,7 +9294,7 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUnreserveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9293,6 +9405,10 @@ type IndexingDatasourcesItemsUploadCall struct {
 // within an index request. This API requires an admin or service
 // account to execute. The service account used is the one whitelisted
 // in the corresponding data source.
+//
+// - name: Name of the Item to start a resumable upload. Format:
+//   datasources/{source_id}/items/{item_id}. The maximum length is 1536
+//   bytes.
 func (r *IndexingDatasourcesItemsService) Upload(name string, startuploaditemrequest *StartUploadItemRequest) *IndexingDatasourcesItemsUploadCall {
 	c := &IndexingDatasourcesItemsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9327,7 +9443,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Header() http.Header {
 
 func (c *IndexingDatasourcesItemsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9449,6 +9565,9 @@ type MediaUploadCall struct {
 // information, see Create a content connector using the REST API
 // (https://developers.google.com/cloud-search/docs/guides/content-connector#rest).
 // **Note:** This API requires a service account to execute.
+//
+// - resourceName: Name of the media that is being downloaded. See
+//   ReadRequest.resource_name.
 func (r *MediaService) Upload(resourceName string, media *Media) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -9522,7 +9641,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9671,6 +9790,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9714,7 +9835,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9829,6 +9950,8 @@ type OperationsLroListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsLroService) List(name string) *OperationsLroListCall {
 	c := &OperationsLroListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9893,7 +10016,7 @@ func (c *OperationsLroListCall) Header() http.Header {
 
 func (c *OperationsLroListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10076,7 +10199,7 @@ func (c *QuerySearchCall) Header() http.Header {
 
 func (c *QuerySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10207,7 +10330,7 @@ func (c *QuerySuggestCall) Header() http.Header {
 
 func (c *QuerySuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10401,7 +10524,7 @@ func (c *QuerySourcesListCall) Header() http.Header {
 
 func (c *QuerySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10525,6 +10648,284 @@ func (c *QuerySourcesListCall) Pages(ctx context.Context, f func(*ListQuerySourc
 	}
 }
 
+// method id "cloudsearch.settings.getCustomer":
+
+type SettingsGetCustomerCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCustomer: Get customer settings. **Note:** This API requires an
+// admin account to execute.
+func (r *SettingsService) GetCustomer() *SettingsGetCustomerCall {
+	c := &SettingsGetCustomerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SettingsGetCustomerCall) Fields(s ...googleapi.Field) *SettingsGetCustomerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SettingsGetCustomerCall) IfNoneMatch(entityTag string) *SettingsGetCustomerCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SettingsGetCustomerCall) Context(ctx context.Context) *SettingsGetCustomerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SettingsGetCustomerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SettingsGetCustomerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/settings/customer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.settings.getCustomer" call.
+// Exactly one of *CustomerSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CustomerSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SettingsGetCustomerCall) Do(opts ...googleapi.CallOption) (*CustomerSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomerSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get customer settings. **Note:** This API requires an admin account to execute.",
+	//   "flatPath": "v1/settings/customer",
+	//   "httpMethod": "GET",
+	//   "id": "cloudsearch.settings.getCustomer",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/settings/customer",
+	//   "response": {
+	//     "$ref": "CustomerSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.settings",
+	//     "https://www.googleapis.com/auth/cloud_search.settings.indexing"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.settings.updateCustomer":
+
+type SettingsUpdateCustomerCall struct {
+	s                *Service
+	customersettings *CustomerSettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateCustomer: Update customer settings. **Note:** This API requires
+// an admin account to execute.
+func (r *SettingsService) UpdateCustomer(customersettings *CustomerSettings) *SettingsUpdateCustomerCall {
+	c := &SettingsUpdateCustomerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customersettings = customersettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Update mask to
+// control which fields get updated. If you specify a field in the
+// update_mask but don't specify its value here, that field will be
+// cleared. If the mask is not present or empty, all fields will be
+// updated. Currently supported field paths: vpc_settings and
+// audit_logging_settings
+func (c *SettingsUpdateCustomerCall) UpdateMask(updateMask string) *SettingsUpdateCustomerCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SettingsUpdateCustomerCall) Fields(s ...googleapi.Field) *SettingsUpdateCustomerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SettingsUpdateCustomerCall) Context(ctx context.Context) *SettingsUpdateCustomerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SettingsUpdateCustomerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SettingsUpdateCustomerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customersettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/settings/customer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.settings.updateCustomer" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SettingsUpdateCustomerCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update customer settings. **Note:** This API requires an admin account to execute.",
+	//   "flatPath": "v1/settings/customer",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudsearch.settings.updateCustomer",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "updateMask": {
+	//       "description": "Update mask to control which fields get updated. If you specify a field in the update_mask but don't specify its value here, that field will be cleared. If the mask is not present or empty, all fields will be updated. Currently supported field paths: vpc_settings and audit_logging_settings",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/settings/customer",
+	//   "request": {
+	//     "$ref": "CustomerSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.settings",
+	//     "https://www.googleapis.com/auth/cloud_search.settings.indexing"
+	//   ]
+	// }
+
+}
+
 // method id "cloudsearch.settings.datasources.create":
 
 type SettingsDatasourcesCreateCall struct {
@@ -10570,7 +10971,7 @@ func (c *SettingsDatasourcesCreateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10665,6 +11066,8 @@ type SettingsDatasourcesDeleteCall struct {
 
 // Delete: Deletes a datasource. **Note:** This API requires an admin
 // account to execute.
+//
+// - name: Name of the datasource. Format: datasources/{source_id}.
 func (r *SettingsDatasourcesService) Delete(name string) *SettingsDatasourcesDeleteCall {
 	c := &SettingsDatasourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10706,7 +11109,7 @@ func (c *SettingsDatasourcesDeleteCall) Header() http.Header {
 
 func (c *SettingsDatasourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10812,6 +11215,9 @@ type SettingsDatasourcesGetCall struct {
 
 // Get: Gets a datasource. **Note:** This API requires an admin account
 // to execute.
+//
+// - name: Name of the datasource resource. Format:
+//   datasources/{source_id}.
 func (r *SettingsDatasourcesService) Get(name string) *SettingsDatasourcesGetCall {
 	c := &SettingsDatasourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10863,7 +11269,7 @@ func (c *SettingsDatasourcesGetCall) Header() http.Header {
 
 func (c *SettingsDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11036,7 +11442,7 @@ func (c *SettingsDatasourcesListCall) Header() http.Header {
 
 func (c *SettingsDatasourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11165,6 +11571,10 @@ type SettingsDatasourcesUpdateCall struct {
 
 // Update: Updates a datasource. **Note:** This API requires an admin
 // account to execute.
+//
+// - name: Name of the datasource resource. Format:
+//   datasources/{source_id}. The name is ignored when creating a
+//   datasource.
 func (r *SettingsDatasourcesService) Update(name string, updatedatasourcerequest *UpdateDataSourceRequest) *SettingsDatasourcesUpdateCall {
 	c := &SettingsDatasourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11199,7 +11609,7 @@ func (c *SettingsDatasourcesUpdateCall) Header() http.Header {
 
 func (c *SettingsDatasourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11340,7 +11750,7 @@ func (c *SettingsSearchapplicationsCreateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11435,6 +11845,9 @@ type SettingsSearchapplicationsDeleteCall struct {
 
 // Delete: Deletes a search application. **Note:** This API requires an
 // admin account to execute.
+//
+// - name: The name of the search application to be deleted. Format:
+//   applications/{application_id}.
 func (r *SettingsSearchapplicationsService) Delete(name string) *SettingsSearchapplicationsDeleteCall {
 	c := &SettingsSearchapplicationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11476,7 +11889,7 @@ func (c *SettingsSearchapplicationsDeleteCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11582,6 +11995,9 @@ type SettingsSearchapplicationsGetCall struct {
 
 // Get: Gets the specified search application. **Note:** This API
 // requires an admin account to execute.
+//
+// - name: Name of the search application. Format:
+//   searchapplications/{application_id}.
 func (r *SettingsSearchapplicationsService) Get(name string) *SettingsSearchapplicationsGetCall {
 	c := &SettingsSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11633,7 +12049,7 @@ func (c *SettingsSearchapplicationsGetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11806,7 +12222,7 @@ func (c *SettingsSearchapplicationsListCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11936,6 +12352,9 @@ type SettingsSearchapplicationsResetCall struct {
 // Reset: Resets a search application to default settings. This will
 // return an empty response. **Note:** This API requires an admin
 // account to execute.
+//
+// - name: The name of the search application to be reset. Format:
+//   applications/{application_id}.
 func (r *SettingsSearchapplicationsService) Reset(name string, resetsearchapplicationrequest *ResetSearchApplicationRequest) *SettingsSearchapplicationsResetCall {
 	c := &SettingsSearchapplicationsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11970,7 +12389,7 @@ func (c *SettingsSearchapplicationsResetCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12079,6 +12498,9 @@ type SettingsSearchapplicationsUpdateCall struct {
 
 // Update: Updates a search application. **Note:** This API requires an
 // admin account to execute.
+//
+// - name: Name of the Search Application. Format:
+//   searchapplications/{application_id}.
 func (r *SettingsSearchapplicationsService) Update(name string, searchapplication *SearchApplication) *SettingsSearchapplicationsUpdateCall {
 	c := &SettingsSearchapplicationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12113,7 +12535,7 @@ func (c *SettingsSearchapplicationsUpdateCall) Header() http.Header {
 
 func (c *SettingsSearchapplicationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12307,7 +12729,7 @@ func (c *StatsGetIndexCall) Header() http.Header {
 
 func (c *StatsGetIndexCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12518,7 +12940,7 @@ func (c *StatsGetQueryCall) Header() http.Header {
 
 func (c *StatsGetQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12730,7 +13152,7 @@ func (c *StatsGetSessionCall) Header() http.Header {
 
 func (c *StatsGetSessionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12941,7 +13363,7 @@ func (c *StatsGetUserCall) Header() http.Header {
 
 func (c *StatsGetUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13069,6 +13491,9 @@ type StatsIndexDatasourcesGetCall struct {
 
 // Get: Gets indexed item statistics for a single data source. **Note:**
 // This API requires a standard end user account to execute.
+//
+// - name: The resource id of the data source to retrieve statistics
+//   for, in the following format: "datasources/{source_id}".
 func (r *StatsIndexDatasourcesService) Get(name string) *StatsIndexDatasourcesGetCall {
 	c := &StatsIndexDatasourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13154,7 +13579,7 @@ func (c *StatsIndexDatasourcesGetCall) Header() http.Header {
 
 func (c *StatsIndexDatasourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13294,6 +13719,9 @@ type StatsQuerySearchapplicationsGetCall struct {
 
 // Get: Get the query statistics for search application. **Note:** This
 // API requires a standard end user account to execute.
+//
+// - name: The resource id of the search application query stats, in the
+//   following format: searchapplications/{application_id}.
 func (r *StatsQuerySearchapplicationsService) Get(name string) *StatsQuerySearchapplicationsGetCall {
 	c := &StatsQuerySearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13379,7 +13807,7 @@ func (c *StatsQuerySearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsQuerySearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13521,6 +13949,9 @@ type StatsSessionSearchapplicationsGetCall struct {
 // Get: Get the # of search sessions, % of successful sessions with a
 // click query statistics for search application. **Note:** This API
 // requires a standard end user account to execute.
+//
+// - name: The resource id of the search application session stats, in
+//   the following format: searchapplications/{application_id}.
 func (r *StatsSessionSearchapplicationsService) Get(name string) *StatsSessionSearchapplicationsGetCall {
 	c := &StatsSessionSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13606,7 +14037,7 @@ func (c *StatsSessionSearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsSessionSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13748,6 +14179,9 @@ type StatsUserSearchapplicationsGetCall struct {
 
 // Get: Get the users statistics for search application. **Note:** This
 // API requires a standard end user account to execute.
+//
+// - name: The resource id of the search application session stats, in
+//   the following format: searchapplications/{application_id}.
 func (r *StatsUserSearchapplicationsService) Get(name string) *StatsUserSearchapplicationsGetCall {
 	c := &StatsUserSearchapplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13833,7 +14267,7 @@ func (c *StatsUserSearchapplicationsGetCall) Header() http.Header {
 
 func (c *StatsUserSearchapplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -83,7 +83,7 @@ const mtlsBasePath = "https://deploymentmanager.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -3086,6 +3086,9 @@ type CompositeTypesDeleteCall struct {
 }
 
 // Delete: Deletes a composite type.
+//
+// - compositeType: The name of the type for this request.
+// - project: The project ID for this request.
 func (r *CompositeTypesService) Delete(project string, compositeType string) *CompositeTypesDeleteCall {
 	c := &CompositeTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3120,7 +3123,7 @@ func (c *CompositeTypesDeleteCall) Header() http.Header {
 
 func (c *CompositeTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3229,6 +3232,9 @@ type CompositeTypesGetCall struct {
 }
 
 // Get: Gets information about a specific composite type.
+//
+// - compositeType: The name of the composite type for this request.
+// - project: The project ID for this request.
 func (r *CompositeTypesService) Get(project string, compositeType string) *CompositeTypesGetCall {
 	c := &CompositeTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3273,7 +3279,7 @@ func (c *CompositeTypesGetCall) Header() http.Header {
 
 func (c *CompositeTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3386,6 +3392,8 @@ type CompositeTypesInsertCall struct {
 }
 
 // Insert: Creates a composite type.
+//
+// - project: The project ID for this request.
 func (r *CompositeTypesService) Insert(project string, compositetype *CompositeType) *CompositeTypesInsertCall {
 	c := &CompositeTypesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3420,7 +3428,7 @@ func (c *CompositeTypesInsertCall) Header() http.Header {
 
 func (c *CompositeTypesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3527,6 +3535,8 @@ type CompositeTypesListCall struct {
 }
 
 // List: Lists all composite types for Deployment Manager.
+//
+// - project: The project ID for this request.
 func (r *CompositeTypesService) List(project string) *CompositeTypesListCall {
 	c := &CompositeTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3626,7 +3636,7 @@ func (c *CompositeTypesListCall) Header() http.Header {
 
 func (c *CompositeTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3775,6 +3785,9 @@ type CompositeTypesPatchCall struct {
 }
 
 // Patch: Patches a composite type.
+//
+// - compositeType: The name of the composite type for this request.
+// - project: The project ID for this request.
 func (r *CompositeTypesService) Patch(project string, compositeType string, compositetype *CompositeType) *CompositeTypesPatchCall {
 	c := &CompositeTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3810,7 +3823,7 @@ func (c *CompositeTypesPatchCall) Header() http.Header {
 
 func (c *CompositeTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3927,6 +3940,9 @@ type CompositeTypesUpdateCall struct {
 }
 
 // Update: Updates a composite type.
+//
+// - compositeType: The name of the composite type for this request.
+// - project: The project ID for this request.
 func (r *CompositeTypesService) Update(project string, compositeType string, compositetype *CompositeType) *CompositeTypesUpdateCall {
 	c := &CompositeTypesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3962,7 +3978,7 @@ func (c *CompositeTypesUpdateCall) Header() http.Header {
 
 func (c *CompositeTypesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4080,6 +4096,9 @@ type DeploymentsCancelPreviewCall struct {
 
 // CancelPreview: Cancels and removes the preview currently associated
 // with the deployment.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *DeploymentsService) CancelPreview(project string, deployment string, deploymentscancelpreviewrequest *DeploymentsCancelPreviewRequest) *DeploymentsCancelPreviewCall {
 	c := &DeploymentsCancelPreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4115,7 +4134,7 @@ func (c *DeploymentsCancelPreviewCall) Header() http.Header {
 
 func (c *DeploymentsCancelPreviewCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4232,6 +4251,9 @@ type DeploymentsDeleteCall struct {
 
 // Delete: Deletes a deployment and all of the resources in the
 // deployment.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *DeploymentsService) Delete(project string, deployment string) *DeploymentsDeleteCall {
 	c := &DeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4277,7 +4299,7 @@ func (c *DeploymentsDeleteCall) Header() http.Header {
 
 func (c *DeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4399,6 +4421,9 @@ type DeploymentsGetCall struct {
 }
 
 // Get: Gets information about a specific deployment.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *DeploymentsService) Get(project string, deployment string) *DeploymentsGetCall {
 	c := &DeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4443,7 +4468,7 @@ func (c *DeploymentsGetCall) Header() http.Header {
 
 func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4558,6 +4583,9 @@ type DeploymentsGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the access control policy for a resource. May be
 // empty if no such policy or resource exists.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
 func (r *DeploymentsService) GetIamPolicy(project string, resource string) *DeploymentsGetIamPolicyCall {
 	c := &DeploymentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4609,7 +4637,7 @@ func (c *DeploymentsGetIamPolicyCall) Header() http.Header {
 
 func (c *DeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4727,6 +4755,8 @@ type DeploymentsInsertCall struct {
 
 // Insert: Creates a deployment and all of the resources described by
 // the deployment manifest.
+//
+// - project: The project ID for this request.
 func (r *DeploymentsService) Insert(project string, deployment *Deployment) *DeploymentsInsertCall {
 	c := &DeploymentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4787,7 +4817,7 @@ func (c *DeploymentsInsertCall) Header() http.Header {
 
 func (c *DeploymentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4915,6 +4945,8 @@ type DeploymentsListCall struct {
 }
 
 // List: Lists all deployments for a given project.
+//
+// - project: The project ID for this request.
 func (r *DeploymentsService) List(project string) *DeploymentsListCall {
 	c := &DeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5014,7 +5046,7 @@ func (c *DeploymentsListCall) Header() http.Header {
 
 func (c *DeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5164,6 +5196,9 @@ type DeploymentsPatchCall struct {
 
 // Patch: Patches a deployment and all of the resources described by the
 // deployment manifest.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *DeploymentsService) Patch(project string, deployment string, deployment2 *Deployment) *DeploymentsPatchCall {
 	c := &DeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5238,7 +5273,7 @@ func (c *DeploymentsPatchCall) Header() http.Header {
 
 func (c *DeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5392,6 +5427,9 @@ type DeploymentsSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
 func (r *DeploymentsService) SetIamPolicy(project string, resource string, globalsetpolicyrequest *GlobalSetPolicyRequest) *DeploymentsSetIamPolicyCall {
 	c := &DeploymentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5427,7 +5465,7 @@ func (c *DeploymentsSetIamPolicyCall) Header() http.Header {
 
 func (c *DeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5546,6 +5584,9 @@ type DeploymentsStopCall struct {
 // Stop: Stops an ongoing operation. This does not roll back any work
 // that has already been completed, but prevents any new work from being
 // started.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *DeploymentsService) Stop(project string, deployment string, deploymentsstoprequest *DeploymentsStopRequest) *DeploymentsStopCall {
 	c := &DeploymentsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5581,7 +5622,7 @@ func (c *DeploymentsStopCall) Header() http.Header {
 
 func (c *DeploymentsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5699,6 +5740,9 @@ type DeploymentsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified resource.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
 func (r *DeploymentsService) TestIamPermissions(project string, resource string, testpermissionsrequest *TestPermissionsRequest) *DeploymentsTestIamPermissionsCall {
 	c := &DeploymentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5734,7 +5778,7 @@ func (c *DeploymentsTestIamPermissionsCall) Header() http.Header {
 
 func (c *DeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5852,6 +5896,9 @@ type DeploymentsUpdateCall struct {
 
 // Update: Updates a deployment and all of the resources described by
 // the deployment manifest.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *DeploymentsService) Update(project string, deployment string, deployment2 *Deployment) *DeploymentsUpdateCall {
 	c := &DeploymentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5926,7 +5973,7 @@ func (c *DeploymentsUpdateCall) Header() http.Header {
 
 func (c *DeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6080,6 +6127,10 @@ type ManifestsGetCall struct {
 }
 
 // Get: Gets information about a specific manifest.
+//
+// - deployment: The name of the deployment for this request.
+// - manifest: The name of the manifest for this request.
+// - project: The project ID for this request.
 func (r *ManifestsService) Get(project string, deployment string, manifest string) *ManifestsGetCall {
 	c := &ManifestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6125,7 +6176,7 @@ func (c *ManifestsGetCall) Header() http.Header {
 
 func (c *ManifestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6248,6 +6299,9 @@ type ManifestsListCall struct {
 }
 
 // List: Lists all manifests for a given deployment.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *ManifestsService) List(project string, deployment string) *ManifestsListCall {
 	c := &ManifestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6348,7 +6402,7 @@ func (c *ManifestsListCall) Header() http.Header {
 
 func (c *ManifestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6506,6 +6560,9 @@ type OperationsGetCall struct {
 }
 
 // Get: Gets information about a specific operation.
+//
+// - operation: The name of the operation for this request.
+// - project: The project ID for this request.
 func (r *OperationsService) Get(project string, operation string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6550,7 +6607,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6662,6 +6719,8 @@ type OperationsListCall struct {
 }
 
 // List: Lists all operations for a project.
+//
+// - project: The project ID for this request.
 func (r *OperationsService) List(project string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6761,7 +6820,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,6 +6970,10 @@ type ResourcesGetCall struct {
 }
 
 // Get: Gets information about a single resource.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
+// - resource: The name of the resource for this request.
 func (r *ResourcesService) Get(project string, deployment string, resource string) *ResourcesGetCall {
 	c := &ResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6956,7 +7019,7 @@ func (c *ResourcesGetCall) Header() http.Header {
 
 func (c *ResourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7078,6 +7141,9 @@ type ResourcesListCall struct {
 }
 
 // List: Lists all resources in a given deployment.
+//
+// - deployment: The name of the deployment for this request.
+// - project: The project ID for this request.
 func (r *ResourcesService) List(project string, deployment string) *ResourcesListCall {
 	c := &ResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7178,7 +7244,7 @@ func (c *ResourcesListCall) Header() http.Header {
 
 func (c *ResourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7335,6 +7401,9 @@ type TypeProvidersDeleteCall struct {
 }
 
 // Delete: Deletes a type provider.
+//
+// - project: The project ID for this request.
+// - typeProvider: The name of the type provider for this request.
 func (r *TypeProvidersService) Delete(project string, typeProvider string) *TypeProvidersDeleteCall {
 	c := &TypeProvidersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7369,7 +7438,7 @@ func (c *TypeProvidersDeleteCall) Header() http.Header {
 
 func (c *TypeProvidersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7478,6 +7547,9 @@ type TypeProvidersGetCall struct {
 }
 
 // Get: Gets information about a specific type provider.
+//
+// - project: The project ID for this request.
+// - typeProvider: The name of the type provider for this request.
 func (r *TypeProvidersService) Get(project string, typeProvider string) *TypeProvidersGetCall {
 	c := &TypeProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7522,7 +7594,7 @@ func (c *TypeProvidersGetCall) Header() http.Header {
 
 func (c *TypeProvidersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7637,6 +7709,10 @@ type TypeProvidersGetTypeCall struct {
 }
 
 // GetType: Gets a type info for a type provided by a TypeProvider.
+//
+// - project: The project ID for this request.
+// - type: The name of the type provider type for this request.
+// - typeProvider: The name of the type provider for this request.
 func (r *TypeProvidersService) GetType(project string, typeProvider string, type_ string) *TypeProvidersGetTypeCall {
 	c := &TypeProvidersGetTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7682,7 +7758,7 @@ func (c *TypeProvidersGetTypeCall) Header() http.Header {
 
 func (c *TypeProvidersGetTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7803,6 +7879,8 @@ type TypeProvidersInsertCall struct {
 }
 
 // Insert: Creates a type provider.
+//
+// - project: The project ID for this request.
 func (r *TypeProvidersService) Insert(project string, typeprovider *TypeProvider) *TypeProvidersInsertCall {
 	c := &TypeProvidersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7837,7 +7915,7 @@ func (c *TypeProvidersInsertCall) Header() http.Header {
 
 func (c *TypeProvidersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7944,6 +8022,8 @@ type TypeProvidersListCall struct {
 }
 
 // List: Lists all resource type providers for Deployment Manager.
+//
+// - project: The project ID for this request.
 func (r *TypeProvidersService) List(project string) *TypeProvidersListCall {
 	c := &TypeProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8043,7 +8123,7 @@ func (c *TypeProvidersListCall) Header() http.Header {
 
 func (c *TypeProvidersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8192,6 +8272,9 @@ type TypeProvidersListTypesCall struct {
 }
 
 // ListTypes: Lists all the type info for a TypeProvider.
+//
+// - project: The project ID for this request.
+// - typeProvider: The name of the type provider for this request.
 func (r *TypeProvidersService) ListTypes(project string, typeProvider string) *TypeProvidersListTypesCall {
 	c := &TypeProvidersListTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8292,7 +8375,7 @@ func (c *TypeProvidersListTypesCall) Header() http.Header {
 
 func (c *TypeProvidersListTypesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8450,6 +8533,9 @@ type TypeProvidersPatchCall struct {
 }
 
 // Patch: Patches a type provider.
+//
+// - project: The project ID for this request.
+// - typeProvider: The name of the type provider for this request.
 func (r *TypeProvidersService) Patch(project string, typeProvider string, typeprovider *TypeProvider) *TypeProvidersPatchCall {
 	c := &TypeProvidersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8485,7 +8571,7 @@ func (c *TypeProvidersPatchCall) Header() http.Header {
 
 func (c *TypeProvidersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8602,6 +8688,9 @@ type TypeProvidersUpdateCall struct {
 }
 
 // Update: Updates a type provider.
+//
+// - project: The project ID for this request.
+// - typeProvider: The name of the type provider for this request.
 func (r *TypeProvidersService) Update(project string, typeProvider string, typeprovider *TypeProvider) *TypeProvidersUpdateCall {
 	c := &TypeProvidersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8637,7 +8726,7 @@ func (c *TypeProvidersUpdateCall) Header() http.Header {
 
 func (c *TypeProvidersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8753,6 +8842,8 @@ type TypesListCall struct {
 }
 
 // List: Lists all resource types for Deployment Manager.
+//
+// - project: The project ID for this request.
 func (r *TypesService) List(project string) *TypesListCall {
 	c := &TypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8852,7 +8943,7 @@ func (c *TypesListCall) Header() http.Header {
 
 func (c *TypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

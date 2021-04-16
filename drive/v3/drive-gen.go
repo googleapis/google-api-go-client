@@ -89,8 +89,8 @@ const (
 	// Drive
 	DriveAppdataScope = "https://www.googleapis.com/auth/drive.appdata"
 
-	// View and manage Google Drive files and folders that you have opened
-	// or created with this app
+	// See, edit, create, and delete only the specific Google Drive files
+	// you use with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
 	// View and manage metadata of files in your Google Drive
@@ -615,7 +615,9 @@ type Channel struct {
 	// notification delivered over this channel. Optional.
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of delivery mechanism used for this channel.
+	// Type: The type of delivery mechanism used for this channel. Valid
+	// values are "web_hook" (or "webhook"). Both values refer to a channel
+	// where Http requests are used to deliver messages.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3018,7 +3020,7 @@ func (c *AboutGetCall) Header() http.Header {
 
 func (c *AboutGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3181,7 +3183,7 @@ func (c *ChangesGetStartPageTokenCall) Header() http.Header {
 
 func (c *ChangesGetStartPageTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3295,6 +3297,11 @@ type ChangesListCall struct {
 }
 
 // List: Lists the changes for a user or shared drive.
+//
+// - pageToken: The token for continuing a previous list request on the
+//   next page. This should be set to the value of 'nextPageToken' from
+//   the previous response or to the response from the getStartPageToken
+//   method.
 func (r *ChangesService) List(pageToken string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
@@ -3437,7 +3444,7 @@ func (c *ChangesListCall) Header() http.Header {
 
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3611,6 +3618,11 @@ type ChangesWatchCall struct {
 }
 
 // Watch: Subscribes to changes for a user.
+//
+// - pageToken: The token for continuing a previous list request on the
+//   next page. This should be set to the value of 'nextPageToken' from
+//   the previous response or to the response from the getStartPageToken
+//   method.
 func (r *ChangesService) Watch(pageToken string, channel *Channel) *ChangesWatchCall {
 	c := &ChangesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
@@ -3744,7 +3756,7 @@ func (c *ChangesWatchCall) Header() http.Header {
 
 func (c *ChangesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3957,7 +3969,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4026,6 +4038,8 @@ type CommentsCreateCall struct {
 }
 
 // Create: Creates a new comment on a file.
+//
+// - fileId: The ID of the file.
 func (r *CommentsService) Create(fileId string, comment *Comment) *CommentsCreateCall {
 	c := &CommentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4060,7 +4074,7 @@ func (c *CommentsCreateCall) Header() http.Header {
 
 func (c *CommentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4165,6 +4179,9 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Deletes a comment.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *CommentsService) Delete(fileId string, commentId string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4199,7 +4216,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4277,6 +4294,9 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets a comment by ID.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4329,7 +4349,7 @@ func (c *CommentsGetCall) Header() http.Header {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4444,6 +4464,8 @@ type CommentsListCall struct {
 }
 
 // List: Lists a file's comments.
+//
+// - fileId: The ID of the file.
 func (r *CommentsService) List(fileId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4518,7 +4540,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4666,6 +4688,9 @@ type CommentsUpdateCall struct {
 }
 
 // Update: Updates a comment with patch semantics.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *CommentsService) Update(fileId string, commentId string, comment *Comment) *CommentsUpdateCall {
 	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -4701,7 +4726,7 @@ func (c *CommentsUpdateCall) Header() http.Header {
 
 func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4813,6 +4838,13 @@ type DrivesCreateCall struct {
 }
 
 // Create: Creates a new shared drive.
+//
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+//   this user's request for idempotent creation of a shared drive. A
+//   repeated request by the same user and with the same request ID will
+//   avoid creating duplicates by attempting to create the same shared
+//   drive. If the shared drive already exists a 409 error will be
+//   returned.
 func (r *DrivesService) Create(requestId string, drive *Drive) *DrivesCreateCall {
 	c := &DrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -4847,7 +4879,7 @@ func (c *DrivesCreateCall) Header() http.Header {
 
 func (c *DrivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4948,6 +4980,8 @@ type DrivesDeleteCall struct {
 
 // Delete: Permanently deletes a shared drive for which the user is an
 // organizer. The shared drive cannot contain any untrashed items.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Delete(driveId string) *DrivesDeleteCall {
 	c := &DrivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -4981,7 +5015,7 @@ func (c *DrivesDeleteCall) Header() http.Header {
 
 func (c *DrivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5049,6 +5083,8 @@ type DrivesGetCall struct {
 }
 
 // Get: Gets a shared drive's metadata by ID.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Get(driveId string) *DrivesGetCall {
 	c := &DrivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5101,7 +5137,7 @@ func (c *DrivesGetCall) Header() http.Header {
 
 func (c *DrivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5206,6 +5242,8 @@ type DrivesHideCall struct {
 }
 
 // Hide: Hides a shared drive from the default view.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Hide(driveId string) *DrivesHideCall {
 	c := &DrivesHideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5239,7 +5277,7 @@ func (c *DrivesHideCall) Header() http.Header {
 
 func (c *DrivesHideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5406,7 +5444,7 @@ func (c *DrivesListCall) Header() http.Header {
 
 func (c *DrivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5539,6 +5577,8 @@ type DrivesUnhideCall struct {
 }
 
 // Unhide: Restores a shared drive to the default view.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Unhide(driveId string) *DrivesUnhideCall {
 	c := &DrivesUnhideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5572,7 +5612,7 @@ func (c *DrivesUnhideCall) Header() http.Header {
 
 func (c *DrivesUnhideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5668,6 +5708,8 @@ type DrivesUpdateCall struct {
 }
 
 // Update: Updates the metadate for a shared drive.
+//
+// - driveId: The ID of the shared drive.
 func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
 	c := &DrivesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.driveId = driveId
@@ -5711,7 +5753,7 @@ func (c *DrivesUpdateCall) Header() http.Header {
 
 func (c *DrivesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5822,6 +5864,8 @@ type FilesCopyCall struct {
 
 // Copy: Creates a copy of a file and applies any requested updates with
 // patch semantics. Folders cannot be copied.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 	c := &FilesCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -5916,7 +5960,7 @@ func (c *FilesCopyCall) Header() http.Header {
 
 func (c *FilesCopyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6203,7 +6247,7 @@ func (c *FilesCreateCall) Header() http.Header {
 
 func (c *FilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6391,6 +6435,8 @@ type FilesDeleteCall struct {
 // it to the trash. If the file belongs to a shared drive the user must
 // be an organizer on the parent. If the target is a folder, all
 // descendants owned by the user are also deleted.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
 	c := &FilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6448,7 +6494,7 @@ func (c *FilesDeleteCall) Header() http.Header {
 
 func (c *FilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6575,7 +6621,7 @@ func (c *FilesEmptyTrashCall) Header() http.Header {
 
 func (c *FilesEmptyTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6639,6 +6685,9 @@ type FilesExportCall struct {
 // Export: Exports a Google Doc to the requested MIME type and returns
 // the exported content. Please note that the exported content is
 // limited to 10MB.
+//
+// - fileId: The ID of the file.
+// - mimeType: The MIME type of the format requested for this export.
 func (r *FilesService) Export(fileId string, mimeType string) *FilesExportCall {
 	c := &FilesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6683,7 +6732,7 @@ func (c *FilesExportCall) Header() http.Header {
 
 func (c *FilesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6837,7 +6886,7 @@ func (c *FilesGenerateIdsCall) Header() http.Header {
 
 func (c *FilesGenerateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6941,6 +6990,8 @@ type FilesGetCall struct {
 }
 
 // Get: Gets a file's metadata or content by ID.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Get(fileId string) *FilesGetCall {
 	c := &FilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -7017,7 +7068,7 @@ func (c *FilesGetCall) Header() http.Header {
 
 func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7330,7 +7381,7 @@ func (c *FilesListCall) Header() http.Header {
 
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7533,6 +7584,8 @@ type FilesUpdateCall struct {
 
 // Update: Updates a file's metadata and/or content. This method
 // supports patch semantics.
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {
 	c := &FilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -7677,7 +7730,7 @@ func (c *FilesUpdateCall) Header() http.Header {
 
 func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7880,6 +7933,8 @@ type FilesWatchCall struct {
 }
 
 // Watch: Subscribes to changes to a file
+//
+// - fileId: The ID of the file.
 func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 	c := &FilesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -7947,7 +8002,7 @@ func (c *FilesWatchCall) Header() http.Header {
 
 func (c *FilesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8100,6 +8155,8 @@ type PermissionsCreateCall struct {
 }
 
 // Create: Creates a permission for a file or shared drive.
+//
+// - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
 	c := &PermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8204,7 +8261,7 @@ func (c *PermissionsCreateCall) Header() http.Header {
 
 func (c *PermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8355,6 +8412,9 @@ type PermissionsDeleteCall struct {
 }
 
 // Delete: Deletes a permission.
+//
+// - fileId: The ID of the file or shared drive.
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Delete(fileId string, permissionId string) *PermissionsDeleteCall {
 	c := &PermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8414,7 +8474,7 @@ func (c *PermissionsDeleteCall) Header() http.Header {
 
 func (c *PermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8510,6 +8570,9 @@ type PermissionsGetCall struct {
 }
 
 // Get: Gets a permission by ID.
+//
+// - fileId: The ID of the file.
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Get(fileId string, permissionId string) *PermissionsGetCall {
 	c := &PermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8579,7 +8642,7 @@ func (c *PermissionsGetCall) Header() http.Header {
 
 func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8709,6 +8772,8 @@ type PermissionsListCall struct {
 }
 
 // List: Lists a file's or shared drive's permissions.
+//
+// - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) List(fileId string) *PermissionsListCall {
 	c := &PermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8803,7 +8868,7 @@ func (c *PermissionsListCall) Header() http.Header {
 
 func (c *PermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8965,6 +9030,9 @@ type PermissionsUpdateCall struct {
 }
 
 // Update: Updates a permission with patch semantics.
+//
+// - fileId: The ID of the file or shared drive.
+// - permissionId: The ID of the permission.
 func (r *PermissionsService) Update(fileId string, permissionId string, permission *Permission) *PermissionsUpdateCall {
 	c := &PermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9041,7 +9109,7 @@ func (c *PermissionsUpdateCall) Header() http.Header {
 
 func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9185,6 +9253,9 @@ type RepliesCreateCall struct {
 }
 
 // Create: Creates a new reply to a comment.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *RepliesService) Create(fileId string, commentId string, reply *Reply) *RepliesCreateCall {
 	c := &RepliesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9220,7 +9291,7 @@ func (c *RepliesCreateCall) Header() http.Header {
 
 func (c *RepliesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9334,6 +9405,10 @@ type RepliesDeleteCall struct {
 }
 
 // Delete: Deletes a reply.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
+// - replyId: The ID of the reply.
 func (r *RepliesService) Delete(fileId string, commentId string, replyId string) *RepliesDeleteCall {
 	c := &RepliesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9369,7 +9444,7 @@ func (c *RepliesDeleteCall) Header() http.Header {
 
 func (c *RepliesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9456,6 +9531,10 @@ type RepliesGetCall struct {
 }
 
 // Get: Gets a reply by ID.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
+// - replyId: The ID of the reply.
 func (r *RepliesService) Get(fileId string, commentId string, replyId string) *RepliesGetCall {
 	c := &RepliesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9509,7 +9588,7 @@ func (c *RepliesGetCall) Header() http.Header {
 
 func (c *RepliesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9633,6 +9712,9 @@ type RepliesListCall struct {
 }
 
 // List: Lists a comment's replies.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
 func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall {
 	c := &RepliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9700,7 +9782,7 @@ func (c *RepliesListCall) Header() http.Header {
 
 func (c *RepliesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9852,6 +9934,10 @@ type RepliesUpdateCall struct {
 }
 
 // Update: Updates a reply with patch semantics.
+//
+// - commentId: The ID of the comment.
+// - fileId: The ID of the file.
+// - replyId: The ID of the reply.
 func (r *RepliesService) Update(fileId string, commentId string, replyId string, reply *Reply) *RepliesUpdateCall {
 	c := &RepliesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9888,7 +9974,7 @@ func (c *RepliesUpdateCall) Header() http.Header {
 
 func (c *RepliesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10012,6 +10098,9 @@ type RevisionsDeleteCall struct {
 // revisions for files with binary content in Google Drive, like images
 // or videos. Revisions for other files, like Google Docs or Sheets, and
 // the last remaining file version can't be deleted.
+//
+// - fileId: The ID of the file.
+// - revisionId: The ID of the revision.
 func (r *RevisionsService) Delete(fileId string, revisionId string) *RevisionsDeleteCall {
 	c := &RevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10046,7 +10135,7 @@ func (c *RevisionsDeleteCall) Header() http.Header {
 
 func (c *RevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10125,6 +10214,9 @@ type RevisionsGetCall struct {
 }
 
 // Get: Gets a revision's metadata or content by ID.
+//
+// - fileId: The ID of the file.
+// - revisionId: The ID of the revision.
 func (r *RevisionsService) Get(fileId string, revisionId string) *RevisionsGetCall {
 	c := &RevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10178,7 +10270,7 @@ func (c *RevisionsGetCall) Header() http.Header {
 
 func (c *RevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10315,6 +10407,8 @@ type RevisionsListCall struct {
 }
 
 // List: Lists a file's revisions.
+//
+// - fileId: The ID of the file.
 func (r *RevisionsService) List(fileId string) *RevisionsListCall {
 	c := &RevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10373,7 +10467,7 @@ func (c *RevisionsListCall) Header() http.Header {
 
 func (c *RevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10514,6 +10608,9 @@ type RevisionsUpdateCall struct {
 }
 
 // Update: Updates a revision with patch semantics.
+//
+// - fileId: The ID of the file.
+// - revisionId: The ID of the revision.
 func (r *RevisionsService) Update(fileId string, revisionId string, revision *Revision) *RevisionsUpdateCall {
 	c := &RevisionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10549,7 +10646,7 @@ func (c *RevisionsUpdateCall) Header() http.Header {
 
 func (c *RevisionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10662,6 +10759,13 @@ type TeamdrivesCreateCall struct {
 }
 
 // Create: Deprecated use drives.create instead.
+//
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+//   this user's request for idempotent creation of a Team Drive. A
+//   repeated request by the same user and with the same request ID will
+//   avoid creating duplicates by attempting to create the same Team
+//   Drive. If the Team Drive already exists a 409 error will be
+//   returned.
 func (r *TeamdrivesService) Create(requestId string, teamdrive *TeamDrive) *TeamdrivesCreateCall {
 	c := &TeamdrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -10696,7 +10800,7 @@ func (c *TeamdrivesCreateCall) Header() http.Header {
 
 func (c *TeamdrivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10796,6 +10900,8 @@ type TeamdrivesDeleteCall struct {
 }
 
 // Delete: Deprecated use drives.delete instead.
+//
+// - teamDriveId: The ID of the Team Drive.
 func (r *TeamdrivesService) Delete(teamDriveId string) *TeamdrivesDeleteCall {
 	c := &TeamdrivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -10829,7 +10935,7 @@ func (c *TeamdrivesDeleteCall) Header() http.Header {
 
 func (c *TeamdrivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10897,6 +11003,8 @@ type TeamdrivesGetCall struct {
 }
 
 // Get: Deprecated use drives.get instead.
+//
+// - teamDriveId: The ID of the Team Drive.
 func (r *TeamdrivesService) Get(teamDriveId string) *TeamdrivesGetCall {
 	c := &TeamdrivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -10949,7 +11057,7 @@ func (c *TeamdrivesGetCall) Header() http.Header {
 
 func (c *TeamdrivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11126,7 +11234,7 @@ func (c *TeamdrivesListCall) Header() http.Header {
 
 func (c *TeamdrivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11260,6 +11368,8 @@ type TeamdrivesUpdateCall struct {
 }
 
 // Update: Deprecated use drives.update instead
+//
+// - teamDriveId: The ID of the Team Drive.
 func (r *TeamdrivesService) Update(teamDriveId string, teamdrive *TeamDrive) *TeamdrivesUpdateCall {
 	c := &TeamdrivesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -11303,7 +11413,7 @@ func (c *TeamdrivesUpdateCall) Header() http.Header {
 
 func (c *TeamdrivesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

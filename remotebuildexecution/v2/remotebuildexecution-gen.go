@@ -79,7 +79,7 @@ const mtlsBasePath = "https://remotebuildexecution.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -223,14 +223,23 @@ type BuildBazelRemoteExecutionV2Action struct {
 	// referred to, MUST be in the ContentAddressableStorage.
 	InputRootDigest *BuildBazelRemoteExecutionV2Digest `json:"inputRootDigest,omitempty"`
 
-	// OutputNodeProperties: List of required supported NodeProperty keys.
-	// In order to ensure that equivalent `Action`s always hash to the same
-	// value, the supported node properties MUST be lexicographically sorted
-	// by name. Sorting of strings is done by code point, equivalently, by
-	// the UTF-8 bytes. The interpretation of these properties is
-	// server-dependent. If a property is not recognized by the server, the
-	// server will return an `INVALID_ARGUMENT` error.
-	OutputNodeProperties []string `json:"outputNodeProperties,omitempty"`
+	// Platform: The optional platform requirements for the execution
+	// environment. The server MAY choose to execute the action on any
+	// worker satisfying the requirements, so the client SHOULD ensure that
+	// running the action on any such worker will have the same result. A
+	// detailed lexicon for this can be found in the accompanying
+	// platform.md. New in version 2.2: clients SHOULD set these platform
+	// properties as well as those in the Command. Servers SHOULD prefer
+	// those set here.
+	Platform *BuildBazelRemoteExecutionV2Platform `json:"platform,omitempty"`
+
+	// Salt: An optional additional salt value used to place this `Action`
+	// into a separate cache namespace from other instances having the same
+	// field contents. This salt typically comes from operational
+	// configuration specific to sources such as repo and service
+	// configuration, and allows disowning an entire set of ActionResults
+	// that might have been poisoned by buggy software or tool failures.
+	Salt string `json:"salt,omitempty"`
 
 	// Timeout: A timeout after which the execution should be killed. If the
 	// timeout is absent, then the client is specifying that the execution
@@ -301,7 +310,10 @@ func (s *BuildBazelRemoteExecutionV2ActionCacheUpdateCapabilities) MarshalJSON()
 }
 
 // BuildBazelRemoteExecutionV2ActionResult: An ActionResult represents
-// the result of an Action being run.
+// the result of an Action being run. It is advised that at least one
+// field (for example `ActionResult.execution_metadata.Worker`) have a
+// non-default value, to ensure that the serialized value is non-empty,
+// which can then be used as a basic data sanity check.
 type BuildBazelRemoteExecutionV2ActionResult struct {
 	// ExecutionMetadata: The details of the execution that originally
 	// produced this result.
@@ -701,6 +713,10 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	// .
 	//   "SHA384" - The SHA-384 digest function.
 	//   "SHA512" - The SHA-512 digest function.
+	//   "MURMUR3" - Murmur3 128-bit digest function, x64 variant. Note that
+	// this is not a cryptographic hash function and its collision
+	// properties are not strongly guaranteed. See
+	// https://github.com/aappleby/smhasher/wiki/MurmurHash3 .
 	DigestFunction []string `json:"digestFunction,omitempty"`
 
 	// MaxBatchTotalSizeBytes: Maximum total size of blobs to be
@@ -708,6 +724,17 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	// is set, although in practice there will always be a message size
 	// limitation of the protocol in use, e.g. GRPC.
 	MaxBatchTotalSizeBytes int64 `json:"maxBatchTotalSizeBytes,omitempty,string"`
+
+	// SupportedCompressor: Compressors supported by the "compressed-blobs"
+	// bytestream resources. Servers MUST support identity/no-compression,
+	// even if it is not listed here. Note that this does not imply which if
+	// any compressors are supported by the server at the gRPC level.
+	//
+	// Possible values:
+	//   "IDENTITY" - No compression. Servers and clients MUST always
+	// support this, and do not need to advertise it.
+	//   "ZSTD" - Zstandard compression.
+	SupportedCompressor []string `json:"supportedCompressor,omitempty"`
 
 	// SymlinkAbsolutePathStrategy: Whether absolute symlink targets are
 	// supported.
@@ -812,6 +839,17 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// `output_paths` instead.
 	OutputFiles []string `json:"outputFiles,omitempty"`
 
+	// OutputNodeProperties: A list of keys for node properties the client
+	// expects to retrieve for output files and directories. Keys are either
+	// names of string-based NodeProperty or names of fields in
+	// NodeProperties. In order to ensure that equivalent `Action`s always
+	// hash to the same value, the node properties MUST be lexicographically
+	// sorted by name. Sorting of strings is done by code point,
+	// equivalently, by the UTF-8 bytes. The interpretation of string-based
+	// properties is server-dependent. If a property is not recognized by
+	// the server, the server will return an `INVALID_ARGUMENT`.
+	OutputNodeProperties []string `json:"outputNodeProperties,omitempty"`
+
 	// OutputPaths: A list of the output paths that the client expects to
 	// retrieve from the action. Only the listed paths will be returned to
 	// the client as output. The type of the output (file or directory) is
@@ -839,7 +877,9 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// The server MAY choose to execute the action on any worker satisfying
 	// the requirements, so the client SHOULD ensure that running the action
 	// on any such worker will have the same result. A detailed lexicon for
-	// this can be found in the accompanying platform.md.
+	// this can be found in the accompanying platform.md. DEPRECATED as of
+	// v2.2: platform properties are now specified directly in the action.
+	// See documentation note in the Action for migration.
 	Platform *BuildBazelRemoteExecutionV2Platform `json:"platform,omitempty"`
 
 	// WorkingDirectory: The working directory, relative to the input root,
@@ -1000,8 +1040,7 @@ type BuildBazelRemoteExecutionV2Directory struct {
 	// Files: The files in the directory.
 	Files []*BuildBazelRemoteExecutionV2FileNode `json:"files,omitempty"`
 
-	// NodeProperties: The node properties of the Directory.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Symlinks: The symlinks in the directory.
 	Symlinks []*BuildBazelRemoteExecutionV2SymlinkNode `json:"symlinks,omitempty"`
@@ -1080,12 +1119,14 @@ type BuildBazelRemoteExecutionV2ExecuteOperationMetadata struct {
 	//   "COMPLETED" - Finished execution.
 	Stage string `json:"stage,omitempty"`
 
-	// StderrStreamName: If set, the client can use this name with
-	// ByteStream.Read to stream the standard error.
+	// StderrStreamName: If set, the client can use this resource name with
+	// ByteStream.Read to stream the standard error from the endpoint
+	// hosting streamed responses.
 	StderrStreamName string `json:"stderrStreamName,omitempty"`
 
-	// StdoutStreamName: If set, the client can use this name with
-	// ByteStream.Read to stream the standard output.
+	// StdoutStreamName: If set, the client can use this resource name with
+	// ByteStream.Read to stream the standard output from the endpoint
+	// hosting streamed responses.
 	StdoutStreamName string `json:"stdoutStreamName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionDigest") to
@@ -1228,6 +1269,11 @@ func (s *BuildBazelRemoteExecutionV2ExecuteResponse) MarshalJSON() ([]byte, erro
 // BuildBazelRemoteExecutionV2ExecutedActionMetadata:
 // ExecutedActionMetadata contains details about a completed execution.
 type BuildBazelRemoteExecutionV2ExecutedActionMetadata struct {
+	// AuxiliaryMetadata: Details that are specific to the kind of worker
+	// used. For example, on POSIX-like systems this could contain a message
+	// with getrusage(2) statistics.
+	AuxiliaryMetadata []googleapi.RawMessage `json:"auxiliaryMetadata,omitempty"`
+
 	// ExecutionCompletedTimestamp: When the worker completed executing the
 	// action command.
 	ExecutionCompletedTimestamp string `json:"executionCompletedTimestamp,omitempty"`
@@ -1265,22 +1311,21 @@ type BuildBazelRemoteExecutionV2ExecutedActionMetadata struct {
 	// WorkerStartTimestamp: When the worker received the action.
 	WorkerStartTimestamp string `json:"workerStartTimestamp,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ExecutionCompletedTimestamp") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ExecutionCompletedTimestamp") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuxiliaryMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1306,6 +1351,10 @@ type BuildBazelRemoteExecutionV2ExecutionCapabilities struct {
 	// .
 	//   "SHA384" - The SHA-384 digest function.
 	//   "SHA512" - The SHA-512 digest function.
+	//   "MURMUR3" - Murmur3 128-bit digest function, x64 variant. Note that
+	// this is not a cryptographic hash function and its collision
+	// properties are not strongly guaranteed. See
+	// https://github.com/aappleby/smhasher/wiki/MurmurHash3 .
 	DigestFunction string `json:"digestFunction,omitempty"`
 
 	// ExecEnabled: Whether remote execution is enabled for the particular
@@ -1392,8 +1441,7 @@ type BuildBazelRemoteExecutionV2FileNode struct {
 	// Name: The name of the file.
 	Name string `json:"name,omitempty"`
 
-	// NodeProperties: The node properties of the FileNode.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Digest") to
 	// unconditionally include in API requests. By default, fields with
@@ -1558,6 +1606,42 @@ func (s *BuildBazelRemoteExecutionV2LogFile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BuildBazelRemoteExecutionV2NodeProperties: Node properties for
+// FileNodes, DirectoryNodes, and SymlinkNodes. The server is
+// responsible for specifying the properties that it accepts.
+type BuildBazelRemoteExecutionV2NodeProperties struct {
+	// Mtime: The file's last modification timestamp.
+	Mtime string `json:"mtime,omitempty"`
+
+	// Properties: A list of string-based NodeProperties.
+	Properties []*BuildBazelRemoteExecutionV2NodeProperty `json:"properties,omitempty"`
+
+	// UnixMode: The UNIX file mode, e.g., 0755.
+	UnixMode int64 `json:"unixMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mtime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mtime") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildBazelRemoteExecutionV2NodeProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildBazelRemoteExecutionV2NodeProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BuildBazelRemoteExecutionV2NodeProperty: A single property for
 // FileNodes, DirectoryNodes, and SymlinkNodes. The server is
 // responsible for specifying the property `name`s that it accepts. If
@@ -1647,9 +1731,7 @@ type BuildBazelRemoteExecutionV2OutputFile struct {
 	// IsExecutable: True if file is executable, false otherwise.
 	IsExecutable bool `json:"isExecutable,omitempty"`
 
-	// NodeProperties: The supported node properties of the OutputFile, if
-	// requested by the Action.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Path: The full path of the file relative to the working directory,
 	// including the filename. The path separator is a forward slash `/`.
@@ -1685,9 +1767,7 @@ func (s *BuildBazelRemoteExecutionV2OutputFile) MarshalJSON() ([]byte, error) {
 // `ActionResult`. `OutputSymlink` is binary-compatible with
 // `SymlinkNode`.
 type BuildBazelRemoteExecutionV2OutputSymlink struct {
-	// NodeProperties: The supported node properties of the OutputSymlink,
-	// if requested by the Action.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Path: The full path of the symlink relative to the working directory,
 	// including the filename. The path separator is a forward slash `/`.
@@ -1699,8 +1779,7 @@ type BuildBazelRemoteExecutionV2OutputSymlink struct {
 	// forward slash `/`. The target path can be relative to the parent
 	// directory of the symlink or it can be an absolute path starting with
 	// `/`. Support for absolute paths can be checked using the Capabilities
-	// API. The canonical form forbids the substrings `/./` and `//` in the
-	// target path. `..` components are allowed anywhere in the target path.
+	// API. `..` components are allowed anywhere in the target path.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NodeProperties") to
@@ -1776,7 +1855,10 @@ func (s *BuildBazelRemoteExecutionV2Platform) MarshalJSON() ([]byte, error) {
 // performed may require an exact match with the worker's OS. The server
 // MAY use the `value` of one or more properties to determine how it
 // sets up the execution environment, such as by making specific system
-// files available to the worker.
+// files available to the worker. Both names and values are typically
+// case-sensitive. Note that the platform is implicitly part of the
+// action digest, so even tiny changes in the names or values (like
+// changing case) may result in different action cache entries.
 type BuildBazelRemoteExecutionV2PlatformProperty struct {
 	// Name: The property name.
 	Name string `json:"name,omitempty"`
@@ -1808,8 +1890,8 @@ func (s *BuildBazelRemoteExecutionV2PlatformProperty) MarshalJSON() ([]byte, err
 }
 
 // BuildBazelRemoteExecutionV2PriorityCapabilities: Allowed values for
-// priority in ResultsCachePolicy Used for querying both cache and
-// execution valid priority ranges.
+// priority in ResultsCachePolicy and ExecutionPolicy Used for querying
+// both cache and execution valid priority ranges.
 type BuildBazelRemoteExecutionV2PriorityCapabilities struct {
 	Priorities []*BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange `json:"priorities,omitempty"`
 
@@ -1839,8 +1921,12 @@ func (s *BuildBazelRemoteExecutionV2PriorityCapabilities) MarshalJSON() ([]byte,
 // BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange:
 // Supported range of priorities, including boundaries.
 type BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange struct {
+	// MaxPriority: The maximum numeric value for this priority range, which
+	// represents the least urgent task or shortest retained item.
 	MaxPriority int64 `json:"maxPriority,omitempty"`
 
+	// MinPriority: The minimum numeric value for this priority range, which
+	// represents the most urgent task or longest retained item.
 	MinPriority int64 `json:"minPriority,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxPriority") to
@@ -1884,10 +1970,28 @@ type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// Execution API are used in order to compile foo.cc.
 	ActionId string `json:"actionId,omitempty"`
 
+	// ActionMnemonic: A brief description of the kind of action, for
+	// example, CppCompile or GoLink. There is no standard agreed set of
+	// values for this, and they are expected to vary between different
+	// client tools.
+	ActionMnemonic string `json:"actionMnemonic,omitempty"`
+
+	// ConfigurationId: An identifier for the configuration in which the
+	// target was built, e.g. for differentiating building host tools or
+	// different target platforms. There is no expectation that this value
+	// will have any particular structure, or equality across invocations,
+	// though some client tools may offer these guarantees.
+	ConfigurationId string `json:"configurationId,omitempty"`
+
 	// CorrelatedInvocationsId: An identifier to tie multiple tool
 	// invocations together. For example, runs of foo_test, bar_test and
 	// baz_test on a post-submit of a given patch.
 	CorrelatedInvocationsId string `json:"correlatedInvocationsId,omitempty"`
+
+	// TargetId: An identifier for the target which produced this action. No
+	// guarantees are made around how many actions may relate to a single
+	// target.
+	TargetId string `json:"targetId,omitempty"`
 
 	// ToolDetails: The details for the tool invoking the requests.
 	ToolDetails *BuildBazelRemoteExecutionV2ToolDetails `json:"toolDetails,omitempty"`
@@ -2010,15 +2114,18 @@ type BuildBazelRemoteExecutionV2SymlinkNode struct {
 	// Name: The name of the symlink.
 	Name string `json:"name,omitempty"`
 
-	// NodeProperties: The node properties of the SymlinkNode.
-	NodeProperties []*BuildBazelRemoteExecutionV2NodeProperty `json:"nodeProperties,omitempty"`
+	NodeProperties *BuildBazelRemoteExecutionV2NodeProperties `json:"nodeProperties,omitempty"`
 
 	// Target: The target path of the symlink. The path separator is a
 	// forward slash `/`. The target path can be relative to the parent
 	// directory of the symlink or it can be an absolute path starting with
 	// `/`. Support for absolute paths can be checked using the Capabilities
-	// API. The canonical form forbids the substrings `/./` and `//` in the
-	// target path. `..` components are allowed anywhere in the target path.
+	// API. `..` components are allowed anywhere in the target path as
+	// logical canonicalization may lead to different behavior in the
+	// presence of directory symlinks (e.g. `foo/../bar` may not be the same
+	// as `bar`). To reduce potential cache misses, canonicalization is
+	// still recommended where this is possible without impacting
+	// correctness.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2161,6 +2268,9 @@ func (s *BuildBazelSemverSemVer) MarshalJSON() ([]byte, error) {
 // contains the various duration metrics tracked when a bot performs a
 // command.
 type GoogleDevtoolsRemotebuildbotCommandDurations struct {
+	// CasRelease: The time spent to release the CAS blobs used by the task.
+	CasRelease string `json:"casRelease,omitempty"`
+
 	// CmWaitForAssignment: The time spent waiting for Container Manager to
 	// assign an asynchronous container for execution.
 	CmWaitForAssignment string `json:"cmWaitForAssignment,omitempty"`
@@ -2204,21 +2314,20 @@ type GoogleDevtoolsRemotebuildbotCommandDurations struct {
 	// begins.
 	UploadStartTime string `json:"uploadStartTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CmWaitForAssignment")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CasRelease") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CmWaitForAssignment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CasRelease") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2236,8 +2345,8 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	// task execution.
 	//
 	// Possible values:
-	//   "NONE" - Container Manager is disabled or not running for this
-	// execution.
+	//   "CONFIG_NONE" - Container Manager is disabled or not running for
+	// this execution.
 	//   "CONFIG_MATCH" - Container Manager is enabled and there was a
 	// matching container available for use during execution.
 	//   "CONFIG_MISMATCH" - Container Manager is enabled, but there was no
@@ -2259,6 +2368,42 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 
 	// NumWarnings: The number of warnings reported.
 	NumWarnings uint64 `json:"numWarnings,omitempty,string"`
+
+	// OutputLocation: Indicates whether output files and/or output
+	// directories were found relative to the execution root or to the user
+	// provided work directory or both or none.
+	//
+	// Possible values:
+	//   "LOCATION_UNDEFINED" - Location is set to LOCATION_UNDEFINED for
+	// tasks where the working directorty is not specified or is identical
+	// to the execution root directory.
+	//   "LOCATION_NONE" - No output files or directories were found neither
+	// relative to the execution root directory nor relative to the working
+	// directory.
+	//   "LOCATION_EXEC_ROOT_RELATIVE" - Output files or directories were
+	// found relative to the execution root directory but not relative to
+	// the working directory.
+	//   "LOCATION_WORKING_DIR_RELATIVE" - Output files or directories were
+	// found relative to the working directory but not relative to the
+	// execution root directory.
+	//   "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE" - Output files or
+	// directories were found both relative to the execution root directory
+	// and relative to the working directory.
+	//   "LOCATION_EXEC_ROOT_RELATIVE_OUTPUT_OUTSIDE_WORKING_DIR" - Output
+	// files or directories were found relative to the execution root
+	// directory but not relative to the working directory. In addition at
+	// least one output file or directory was found outside of the working
+	// directory such that a working-directory-relative-path would have
+	// needed to start with a `..`.
+	//
+	// "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE_OUTPUT_OUTSIDE_WORKING_DI
+	// R" - Output files or directories were found both relative to the
+	// execution root directory and relative to the working directory. In
+	// addition at least one exec-root-relative output file or directory was
+	// found outside of the working directory such that a
+	// working-directory-relative-path would have needed to start with a
+	// `..`.
+	OutputLocation string `json:"outputLocation,omitempty"`
 
 	// UsedAsyncContainer: Indicates whether an asynchronous container was
 	// used for execution.
@@ -2374,6 +2519,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// overlay mount because of too many levels of symbolic links.
 	//   "LOCAL_CONTAINER_MANAGER_NOT_RUNNING" - The local Container Manager
 	// is not running.
+	//   "DOCKER_IMAGE_VPCSC_PERMISSION_DENIED" - Docker failed because a
+	// request was denied by the organization's policy.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -4022,9 +4169,18 @@ type ActionResultsGetCall struct {
 // Get: Retrieve a cached execution result. Implementations SHOULD
 // ensure that any blobs referenced from the ContentAddressableStorage
 // are available at the time of returning the ActionResult and will be
-// for some period of time afterwards. The TTLs of the referenced blobs
-// SHOULD be increased if necessary and applicable. Errors: *
+// for some period of time afterwards. The lifetimes of the referenced
+// blobs SHOULD be increased if necessary and applicable. Errors: *
 // `NOT_FOUND`: The requested `ActionResult` is not in the cache.
+//
+// - hash: The hash. In the case of SHA-256, it will always be a
+//   lowercase hex string exactly 64 characters long.
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
+// - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes int64) *ActionResultsGetCall {
 	c := &ActionResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4035,7 +4191,8 @@ func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes i
 
 // InlineOutputFiles sets the optional parameter "inlineOutputFiles": A
 // hint to the server to inline the contents of the listed output files.
-// Each path needs to exactly match one path in `output_files` in the
+// Each path needs to exactly match one file path in either
+// `output_paths` or `output_files` (DEPRECATED since v2.1) in the
 // Command message.
 func (c *ActionResultsGetCall) InlineOutputFiles(inlineOutputFiles ...string) *ActionResultsGetCall {
 	c.urlParams_.SetMulti("inlineOutputFiles", append([]string{}, inlineOutputFiles...))
@@ -4093,7 +4250,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4158,7 +4315,7 @@ func (c *ActionResultsGetCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a cached execution result. Implementations SHOULD ensure that any blobs referenced from the ContentAddressableStorage are available at the time of returning the ActionResult and will be for some period of time afterwards. The TTLs of the referenced blobs SHOULD be increased if necessary and applicable. Errors: * `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
+	//   "description": "Retrieve a cached execution result. Implementations SHOULD ensure that any blobs referenced from the ContentAddressableStorage are available at the time of returning the ActionResult and will be for some period of time afterwards. The lifetimes of the referenced blobs SHOULD be increased if necessary and applicable. Errors: * `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
 	//   "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
 	//   "httpMethod": "GET",
 	//   "id": "remotebuildexecution.actionResults.get",
@@ -4175,7 +4332,7 @@ func (c *ActionResultsGetCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	//       "type": "string"
 	//     },
 	//     "inlineOutputFiles": {
-	//       "description": "A hint to the server to inline the contents of the listed output files. Each path needs to exactly match one path in `output_files` in the Command message.",
+	//       "description": "A hint to the server to inline the contents of the listed output files. Each path needs to exactly match one file path in either `output_paths` or `output_files` (DEPRECATED since v2.1) in the Command message.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -4233,11 +4390,22 @@ type ActionResultsUpdateCall struct {
 // to perform access control based on the type of action, and to assist
 // with client debugging, the client MUST first upload the Action that
 // produced the result, along with its Command, into the
-// `ContentAddressableStorage`. Errors: * `INVALID_ARGUMENT`: One or
-// more arguments are invalid. * `FAILED_PRECONDITION`: One or more
-// errors occurred in updating the action result, such as a missing
-// command or action. * `RESOURCE_EXHAUSTED`: There is insufficient
-// storage space to add the entry to the cache.
+// `ContentAddressableStorage`. Server implementations MAY modify the
+// `UpdateActionResultRequest.action_result` and return an equivalent
+// value. Errors: * `INVALID_ARGUMENT`: One or more arguments are
+// invalid. * `FAILED_PRECONDITION`: One or more errors occurred in
+// updating the action result, such as a missing command or action. *
+// `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the
+// entry to the cache.
+//
+// - hash: The hash. In the case of SHA-256, it will always be a
+//   lowercase hex string exactly 64 characters long.
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
+// - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Update(instanceName string, hash string, sizeBytes int64, buildbazelremoteexecutionv2actionresult *BuildBazelRemoteExecutionV2ActionResult) *ActionResultsUpdateCall {
 	c := &ActionResultsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4288,7 +4456,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4355,7 +4523,7 @@ func (c *ActionResultsUpdateCall) Do(opts ...googleapi.CallOption) (*BuildBazelR
 	}
 	return ret, nil
 	// {
-	//   "description": "Upload a new execution result. In order to allow the server to perform access control based on the type of action, and to assist with client debugging, the client MUST first upload the Action that produced the result, along with its Command, into the `ContentAddressableStorage`. Errors: * `INVALID_ARGUMENT`: One or more arguments are invalid. * `FAILED_PRECONDITION`: One or more errors occurred in updating the action result, such as a missing command or action. * `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the entry to the cache.",
+	//   "description": "Upload a new execution result. In order to allow the server to perform access control based on the type of action, and to assist with client debugging, the client MUST first upload the Action that produced the result, along with its Command, into the `ContentAddressableStorage`. Server implementations MAY modify the `UpdateActionResultRequest.action_result` and return an equivalent value. Errors: * `INVALID_ARGUMENT`: One or more arguments are invalid. * `FAILED_PRECONDITION`: One or more errors occurred in updating the action result, such as a missing command or action. * `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the entry to the cache.",
 	//   "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
 	//   "httpMethod": "PUT",
 	//   "id": "remotebuildexecution.actionResults.update",
@@ -4460,7 +4628,17 @@ type ActionsExecuteCall struct {
 // additionally send a PreconditionFailure error detail where, for each
 // requested blob not present in the CAS, there is a `Violation` with a
 // `type` of `MISSING` and a `subject` of "blobs/{hash}/{size}"
-// indicating the digest of the missing blob.
+// indicating the digest of the missing blob. The server does not need
+// to guarantee that a call to this method leads to at most one
+// execution of the action. The server MAY execute the action multiple
+// times, potentially in parallel. These redundant executions MAY
+// continue to run, even if the operation is completed.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *ActionsService) Execute(instanceName string, buildbazelremoteexecutionv2executerequest *BuildBazelRemoteExecutionV2ExecuteRequest) *ActionsExecuteCall {
 	c := &ActionsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4495,7 +4673,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4559,7 +4737,7 @@ func (c *ActionsExecuteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Execute an action remotely. In order to execute an action, the client must first upload all of the inputs, the Command to run, and the Action into the ContentAddressableStorage. It then calls `Execute` with an `action_digest` referring to them. The server will run the action and eventually return the result. The input `Action`'s fields MUST meet the various canonicalization requirements specified in the documentation for their types so that it has the same digest as other logically equivalent `Action`s. The server MAY enforce the requirements and return errors if a non-canonical input is received. It MAY also proceed without verifying some or all of the requirements, such as for performance reasons. If the server does not verify the requirement, then it will treat the `Action` as distinct from another logically equivalent action if they hash differently. Returns a stream of google.longrunning.Operation messages describing the resulting execution, with eventual `response` ExecuteResponse. The `metadata` on the operation is of type ExecuteOperationMetadata. If the client remains connected after the first response is returned after the server, then updates are streamed as if the client had called WaitExecution until the execution completes or the request reaches an error. The operation can also be queried using Operations API. The server NEED NOT implement other methods or functionality of the Operations API. Errors discovered during creation of the `Operation` will be reported as gRPC Status errors, while errors that occurred while running the action will be reported in the `status` field of the `ExecuteResponse`. The server MUST NOT set the `error` field of the `Operation` proto. The possible errors include: * `INVALID_ARGUMENT`: One or more arguments are invalid. * `FAILED_PRECONDITION`: One or more errors occurred in setting up the action requested, such as a missing input or command or no worker being available. The client may be able to fix the errors and retry. * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to run the action. * `UNAVAILABLE`: Due to a transient condition, such as all workers being occupied (and the server does not support a queue), the action could not be started. The client should retry. * `INTERNAL`: An internal error occurred in the execution engine or the worker. * `DEADLINE_EXCEEDED`: The execution timed out. * `CANCELLED`: The operation was cancelled by the client. This status is only possible if the server implements the Operations API CancelOperation method, and it was called for the current execution. In the case of a missing input or command, the server SHOULD additionally send a PreconditionFailure error detail where, for each requested blob not present in the CAS, there is a `Violation` with a `type` of `MISSING` and a `subject` of `\"blobs/{hash}/{size}\"` indicating the digest of the missing blob.",
+	//   "description": "Execute an action remotely. In order to execute an action, the client must first upload all of the inputs, the Command to run, and the Action into the ContentAddressableStorage. It then calls `Execute` with an `action_digest` referring to them. The server will run the action and eventually return the result. The input `Action`'s fields MUST meet the various canonicalization requirements specified in the documentation for their types so that it has the same digest as other logically equivalent `Action`s. The server MAY enforce the requirements and return errors if a non-canonical input is received. It MAY also proceed without verifying some or all of the requirements, such as for performance reasons. If the server does not verify the requirement, then it will treat the `Action` as distinct from another logically equivalent action if they hash differently. Returns a stream of google.longrunning.Operation messages describing the resulting execution, with eventual `response` ExecuteResponse. The `metadata` on the operation is of type ExecuteOperationMetadata. If the client remains connected after the first response is returned after the server, then updates are streamed as if the client had called WaitExecution until the execution completes or the request reaches an error. The operation can also be queried using Operations API. The server NEED NOT implement other methods or functionality of the Operations API. Errors discovered during creation of the `Operation` will be reported as gRPC Status errors, while errors that occurred while running the action will be reported in the `status` field of the `ExecuteResponse`. The server MUST NOT set the `error` field of the `Operation` proto. The possible errors include: * `INVALID_ARGUMENT`: One or more arguments are invalid. * `FAILED_PRECONDITION`: One or more errors occurred in setting up the action requested, such as a missing input or command or no worker being available. The client may be able to fix the errors and retry. * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to run the action. * `UNAVAILABLE`: Due to a transient condition, such as all workers being occupied (and the server does not support a queue), the action could not be started. The client should retry. * `INTERNAL`: An internal error occurred in the execution engine or the worker. * `DEADLINE_EXCEEDED`: The execution timed out. * `CANCELLED`: The operation was cancelled by the client. This status is only possible if the server implements the Operations API CancelOperation method, and it was called for the current execution. In the case of a missing input or command, the server SHOULD additionally send a PreconditionFailure error detail where, for each requested blob not present in the CAS, there is a `Violation` with a `type` of `MISSING` and a `subject` of `\"blobs/{hash}/{size}\"` indicating the digest of the missing blob. The server does not need to guarantee that a call to this method leads to at most one execution of the action. The server MAY execute the action multiple times, potentially in parallel. These redundant executions MAY continue to run, even if the operation is completed.",
 	//   "flatPath": "v2/{v2Id}/actions:execute",
 	//   "httpMethod": "POST",
 	//   "id": "remotebuildexecution.actions.execute",
@@ -4610,6 +4788,12 @@ type BlobsBatchReadCall struct {
 // Errors: * `INVALID_ARGUMENT`: The client attempted to read more than
 // the server supported limit. Every error on individual read will be
 // returned in the corresponding digest status.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchRead(instanceName string, buildbazelremoteexecutionv2batchreadblobsrequest *BuildBazelRemoteExecutionV2BatchReadBlobsRequest) *BlobsBatchReadCall {
 	c := &BlobsBatchReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4644,7 +4828,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4763,6 +4947,12 @@ type BlobsBatchUpdateCall struct {
 // following errors, additionally: * `RESOURCE_EXHAUSTED`: There is
 // insufficient disk quota to store the blob. * `INVALID_ARGUMENT`: The
 // Digest does not match the provided data.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchUpdate(instanceName string, buildbazelremoteexecutionv2batchupdateblobsrequest *BuildBazelRemoteExecutionV2BatchUpdateBlobsRequest) *BlobsBatchUpdateCall {
 	c := &BlobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4797,7 +4987,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4907,8 +5097,14 @@ type BlobsFindMissingCall struct {
 // FindMissing: Determine if blobs are present in the CAS. Clients can
 // use this API before uploading blobs to determine which ones are
 // already present in the CAS and do not need to be uploaded again.
-// Servers SHOULD increase the TTLs of the referenced blobs if necessary
-// and applicable. There are no method-specific errors.
+// Servers SHOULD increase the lifetimes of the referenced blobs if
+// necessary and applicable. There are no method-specific errors.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) FindMissing(instanceName string, buildbazelremoteexecutionv2findmissingblobsrequest *BuildBazelRemoteExecutionV2FindMissingBlobsRequest) *BlobsFindMissingCall {
 	c := &BlobsFindMissingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4943,7 +5139,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5009,7 +5205,7 @@ func (c *BlobsFindMissingCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	}
 	return ret, nil
 	// {
-	//   "description": "Determine if blobs are present in the CAS. Clients can use this API before uploading blobs to determine which ones are already present in the CAS and do not need to be uploaded again. Servers SHOULD increase the TTLs of the referenced blobs if necessary and applicable. There are no method-specific errors.",
+	//   "description": "Determine if blobs are present in the CAS. Clients can use this API before uploading blobs to determine which ones are already present in the CAS and do not need to be uploaded again. Servers SHOULD increase the lifetimes of the referenced blobs if necessary and applicable. There are no method-specific errors.",
 	//   "flatPath": "v2/{v2Id}/blobs:findMissing",
 	//   "httpMethod": "POST",
 	//   "id": "remotebuildexecution.blobs.findMissing",
@@ -5066,6 +5262,15 @@ type BlobsGetTreeCall struct {
 // part of the tree is missing from the CAS, the server will return the
 // portion present and omit the rest. Errors: * `NOT_FOUND`: The
 // requested tree root is not present in the CAS.
+//
+// - hash: The hash. In the case of SHA-256, it will always be a
+//   lowercase hex string exactly 64 characters long.
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
+// - sizeBytes: The size of the blob, in bytes.
 func (r *BlobsService) GetTree(instanceName string, hash string, sizeBytes int64) *BlobsGetTreeCall {
 	c := &BlobsGetTreeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5131,7 +5336,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5289,6 +5494,8 @@ type OperationsWaitExecutionCall struct {
 // with the completed operation. The server MAY choose to stream
 // additional updates as execution progresses, such as to provide an
 // update as to the state of the execution.
+//
+// - name: The name of the Operation returned by Execute.
 func (r *OperationsService) WaitExecution(name string, buildbazelremoteexecutionv2waitexecutionrequest *BuildBazelRemoteExecutionV2WaitExecutionRequest) *OperationsWaitExecutionCall {
 	c := &OperationsWaitExecutionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5323,7 +5530,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5435,6 +5642,12 @@ type V2GetCapabilitiesCall struct {
 // ExecutionCapabilities. * Execution only endpoints should return
 // ExecutionCapabilities. * CAS + Action Cache only endpoints should
 // return CacheCapabilities.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *V2Service) GetCapabilities(instanceName string) *V2GetCapabilitiesCall {
 	c := &V2GetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5478,7 +5691,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

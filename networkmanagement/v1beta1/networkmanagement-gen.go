@@ -79,7 +79,7 @@ const mtlsBasePath = "https://networkmanagement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -226,6 +226,14 @@ type AbortInfo struct {
 	//   "TRACE_TOO_LONG" - Aborted because the number of steps in the trace
 	// exceeding a certain limit which may be caused by routing loop.
 	//   "INTERNAL_ERROR" - Aborted due to internal server error.
+	//   "SOURCE_ENDPOINT_NOT_FOUND" - Aborted because the source endpoint
+	// could not be found.
+	//   "MISMATCHED_SOURCE_NETWORK" - Aborted because the source network
+	// does not match the source endpoint.
+	//   "DESTINATION_ENDPOINT_NOT_FOUND" - Aborted because the destination
+	// endpoint could not be found.
+	//   "MISMATCHED_DESTINATION_NETWORK" - Aborted because the destination
+	// network does not match the destination endpoint.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the abort.
@@ -353,8 +361,6 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	BindingId string `json:"bindingId,omitempty"`
-
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
@@ -403,7 +409,7 @@ type Binding struct {
 	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BindingId") to
+	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -411,7 +417,7 @@ type Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BindingId") to include in
+	// NullFields is a list of field names (e.g. "Condition") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -626,31 +632,34 @@ type DropInfo struct {
 	// Possible values:
 	//   "CAUSE_UNSPECIFIED" - Cause is unspecified.
 	//   "UNKNOWN_EXTERNAL_ADDRESS" - Destination external address cannot be
-	// resolved to a known target.
+	// resolved to a known target. If the address is used in a GCP project,
+	// provide the project ID as test input.
 	//   "FOREIGN_IP_DISALLOWED" - a Compute Engine instance can only send
 	// or receive a packet with a foreign IP if ip_forward is enabled.
-	//   "FIREWALL_RULE" - Dropped due to a firewall rule unless allowed due
-	// to connection tracking.
+	//   "FIREWALL_RULE" - Dropped due to a firewall rule, unless allowed
+	// due to connection tracking.
 	//   "NO_ROUTE" - Dropped due to no routes.
 	//   "ROUTE_BLACKHOLE" - Dropped due to invalid route. Route's next hop
 	// is a blackhole.
 	//   "ROUTE_WRONG_NETWORK" - Packet is sent to a wrong (unintended)
-	// network. Example: user traces a packet from VM1:Network1 to
+	// network. Example: you trace a packet from VM1:Network1 to
 	// VM2:Network2, however, the route configured in Network1 sends the
 	// packet destined for VM2's IP addresss to Network3.
 	//   "PRIVATE_TRAFFIC_TO_INTERNET" - Packet with internal destination
 	// address sent to Internet gateway.
 	//   "PRIVATE_GOOGLE_ACCESS_DISALLOWED" - Instance with only an internal
-	// IP tries to access Google API and Services, and private Google access
+	// IP tries to access Google API and Services, but private Google access
 	// is not enabled.
 	//   "NO_EXTERNAL_ADDRESS" - Instance with only internal IP tries to
 	// access external hosts, but Cloud NAT is not enabled in the subnet,
 	// unless special configurations on a VM allows this connection. See
 	// [Special Configurations for VM
 	// instances](https://cloud.google.com/vpc/docs/special-configurations)
-	// for details.
+	// for more details.
 	//   "UNKNOWN_INTERNAL_ADDRESS" - Destination internal address cannot be
-	// resolved to a known target.
+	// resolved to a known target. If this is a shared VPC scenario, verify
+	// if the service project ID is provided as test input. Otherwise,
+	// verify if the IP address is being used in the project.
 	//   "FORWARDING_RULE_MISMATCH" - Forwarding rule's protocol and ports
 	// do not match the packet header.
 	//   "FORWARDING_RULE_NO_INSTANCES" - Forwarding rule does not have
@@ -681,6 +690,11 @@ type DropInfo struct {
 	// Kubernetes Engine Service.
 	//   "DROPPED_INSIDE_CLOUD_SQL_SERVICE" - Packet was dropped inside
 	// Cloud SQL Service.
+	//   "GOOGLE_MANAGED_SERVICE_NO_PEERING" - Packet was dropped as there
+	// is no peering between the originating network and the Google Managed
+	// Services Network.
+	//   "CLOUD_SQL_INSTANCE_NO_IP_ADDRESS" - Packet was dropped because
+	// Cloud SQL instance has neither private nor public IP address.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -907,8 +921,9 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FirewallInfo: For display only. Metadata associated with a Compute
-// Engine firewall rule.
+// FirewallInfo: For display only. Metadata associated with a VPC
+// firewall rule, an implied VPC firewall rule, or a hierarchical
+// firewall policy rule.
 type FirewallInfo struct {
 	// Action: Possible values: ALLOW, DENY
 	Action string `json:"action,omitempty"`
@@ -916,23 +931,48 @@ type FirewallInfo struct {
 	// Direction: Possible values: INGRESS, EGRESS
 	Direction string `json:"direction,omitempty"`
 
-	// DisplayName: Name of a Compute Engine firewall rule.
+	// DisplayName: The display name of the VPC firewall rule. This field is
+	// not applicable to hierarchical firewall policy rules.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// NetworkUri: URI of a Compute Engine network.
+	// FirewallRuleType: The firewall rule's type.
+	//
+	// Possible values:
+	//   "FIREWALL_RULE_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "HIERARCHICAL_FIREWALL_POLICY_RULE" - Hierarchical firewall policy
+	// rule. For details, see [Hierarchical firewall policies
+	// overview](https://cloud.google.com/vpc/docs/firewall-policies).
+	//   "VPC_FIREWALL_RULE" - VPC firewall rule. For details, see [VPC
+	// firewall rules
+	// overview](https://cloud.google.com/vpc/docs/firewalls).
+	//   "IMPLIED_VPC_FIREWALL_RULE" - Implied VPC firewall rule. For
+	// details, see [Implied
+	// rules](https://cloud.google.com/vpc/docs/firewalls#default_firewall_ru
+	// les).
+	FirewallRuleType string `json:"firewallRuleType,omitempty"`
+
+	// NetworkUri: The URI of the VPC network that the firewall rule is
+	// associated with. This field is not applicable to hierarchical
+	// firewall policy rules.
 	NetworkUri string `json:"networkUri,omitempty"`
 
-	// Priority: Priority of the firewall rule.
+	// Policy: The hierarchical firewall policy that this rule is associated
+	// with. This field is not applicable to VPC firewall rules.
+	Policy string `json:"policy,omitempty"`
+
+	// Priority: The priority of the firewall rule.
 	Priority int64 `json:"priority,omitempty"`
 
-	// TargetServiceAccounts: Target service accounts of the firewall rule.
+	// TargetServiceAccounts: The target service accounts specified by the
+	// firewall rule.
 	TargetServiceAccounts []string `json:"targetServiceAccounts,omitempty"`
 
-	// TargetTags: Target tags of the firewall rule.
+	// TargetTags: The target tags defined by the VPC firewall rule. This
+	// field is not applicable to hierarchical firewall policy rules.
 	TargetTags []string `json:"targetTags,omitempty"`
 
-	// Uri: URI of a Compute Engine firewall rule. Implied default rule does
-	// not have URI.
+	// Uri: The URI of the VPC firewall rule. This field is not applicable
+	// to implied firewall rules or hierarchical firewall policy rules.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -970,7 +1010,7 @@ type ForwardInfo struct {
 	//   "TARGET_UNSPECIFIED" - Target not specified.
 	//   "PEERING_VPC" - Forwarded to a VPC peering network.
 	//   "VPN_GATEWAY" - Forwarded to a Cloud VPN gateway.
-	//   "INTERCONNECT" - Forwarded to an Cloud Interconnect connection.
+	//   "INTERCONNECT" - Forwarded to a Cloud Interconnect connection.
 	//   "GKE_MASTER" - Forwarded to a Google Kubernetes Engine Container
 	// cluster master.
 	//   "IMPORTED_CUSTOM_ROUTE_NEXT_HOP" - Forwarded to the next hop of a
@@ -1727,55 +1767,54 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProbingDetails: The details of probing from the latest run.
+// ProbingDetails: Results of active probing from the last run of the
+// test.
 type ProbingDetails struct {
-	// AbortCause: Causes that the probing was aborted.
+	// AbortCause: The reason probing was aborted.
 	//
 	// Possible values:
-	//   "PROBING_ABORT_CAUSE_UNSPECIFIED" - Abort reason unspecified.
-	//   "PERMISSION_DENIED" - Aborted because the user lacks the permission
-	// to access all or part of the network configurations required to run
-	// the test.
-	//   "NO_SOURCE_LOCATION" - Aborted because no valid source endpoint is
-	// derived from the input test request.
+	//   "PROBING_ABORT_CAUSE_UNSPECIFIED" - No reason was specified.
+	//   "PERMISSION_DENIED" - The user lacks permission to access some of
+	// the network resources required to run the test.
+	//   "NO_SOURCE_LOCATION" - No valid source endpoint could be derived
+	// from the request.
 	AbortCause string `json:"abortCause,omitempty"`
 
-	// EndpointInfo: Derived from the test input. The actual source and
-	// destination endpoint where the probing was run.
+	// EndpointInfo: The source and destination endpoints derived from the
+	// test input and used for active probing.
 	EndpointInfo *EndpointInfo `json:"endpointInfo,omitempty"`
 
-	// Error: The details of an internal failure or a cancellation of
-	// reachability analysis.
+	// Error: Details about an internal failure or the cancellation of
+	// active probing.
 	Error *Status `json:"error,omitempty"`
 
-	// ProbingLatency: One way probing latency distribution. The latency is
-	// measured as duration of packet traversal of Google Cloud network,
-	// from source to destination endpoint.
+	// ProbingLatency: Latency as measured by active probing in one
+	// direction: from the source to the destination endpoint.
 	ProbingLatency *LatencyDistribution `json:"probingLatency,omitempty"`
 
-	// Result: The overall reachability result of the test.
+	// Result: The overall result of active probing.
 	//
 	// Possible values:
-	//   "PROBING_RESULT_UNSPECIFIED" - Result is not specified.
-	//   "REACHABLE" - 95% or more packets originating from source reached
+	//   "PROBING_RESULT_UNSPECIFIED" - No result was specified.
+	//   "REACHABLE" - At least 95% of packets reached the destination.
+	//   "UNREACHABLE" - No packets reached the destination.
+	//   "REACHABILITY_INCONSISTENT" - Less than 95% of packets reached the
 	// destination.
-	//   "UNREACHABLE" - No packet originating from source reached
-	// destination.
-	//   "REACHABILITY_INCONSISTENT" - Less than 95% packets originating
-	// from source reached destination.
-	//   "UNDETERMINED" - The reachability could not be determined. Possible
-	// reasons are: * Analysis is aborted due to permission error. User does
-	// not have read permission to the projects listed in the test. *
-	// Analysis is aborted due to internal errors.
+	//   "UNDETERMINED" - Reachability could not be determined. Possible
+	// reasons are: * The user lacks permission to access some of the
+	// network resources required to run the test. * No valid source
+	// endpoint could be derived from the request. * An internal error
+	// occurred.
 	Result string `json:"result,omitempty"`
 
 	// SentProbeCount: Number of probes sent.
 	SentProbeCount int64 `json:"sentProbeCount,omitempty"`
 
-	// SuccessfulProbeCount: Number of probes that reached destination.
+	// SuccessfulProbeCount: Number of probes that reached the destination.
 	SuccessfulProbeCount int64 `json:"successfulProbeCount,omitempty"`
 
-	// VerifyTime: The time the reachability state was verified.
+	// VerifyTime: The time that reachability was assessed through active
+	// probing.
 	VerifyTime string `json:"verifyTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AbortCause") to
@@ -1801,32 +1840,35 @@ func (s *ProbingDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReachabilityDetails: The details of reachability state from the
-// latest run.
+// ReachabilityDetails: Results of the configuration analysis from the
+// last run of the test.
 type ReachabilityDetails struct {
 	// Error: The details of a failure or a cancellation of reachability
 	// analysis.
 	Error *Status `json:"error,omitempty"`
 
-	// Result: The overall reachability result of the test.
+	// Result: The overall result of the test's configuration analysis.
 	//
 	// Possible values:
-	//   "RESULT_UNSPECIFIED" - Result is not specified.
-	//   "REACHABLE" - Packet originating from source is expected to reach
-	// destination.
-	//   "UNREACHABLE" - Packet originating from source is expected to be
-	// dropped before reaching destination.
-	//   "AMBIGUOUS" - If the source and destination endpoint does not
-	// uniquely identify the test location in the network, and the
-	// reachability result contains multiple traces with mixed reachable and
-	// unreachable states, then this result is returned.
-	//   "UNDETERMINED" - The reachability could not be determined. Possible
-	// reasons are: * Analysis is aborted due to permission error. User does
-	// not have read permission to the projects listed in the test. *
-	// Analysis is aborted due to internal errors. * Analysis is partially
-	// complete based on configurations where the user has permission. The
-	// Final state indicates that the packet is forwarded to another network
-	// where the user has no permission to access the configurations.
+	//   "RESULT_UNSPECIFIED" - No result was specified.
+	//   "REACHABLE" - Possible scenarios are: * The configuration analysis
+	// determined that a packet originating from the source is expected to
+	// reach the destination. * The analysis didn't complete because the
+	// user lacks permission for some of the resources in the trace.
+	// However, at the time the user's permission became insufficient, the
+	// trace had been successful so far.
+	//   "UNREACHABLE" - A packet originating from the source is expected to
+	// be dropped before reaching the destination.
+	//   "AMBIGUOUS" - The source and destination endpoints do not uniquely
+	// identify the test location in the network, and the reachability
+	// result contains multiple traces. For some traces, a packet could be
+	// delivered, and for others, it would not be.
+	//   "UNDETERMINED" - The configuration analysis did not complete.
+	// Possible reasons are: * A permissions error occurred--for example,
+	// the user might not have read permission for all of the resources
+	// named in the test. * An internal error occurred. * The analyzer
+	// received an invalid or unsupported argument or was unable to identify
+	// a known endpoint.
 	Result string `json:"result,omitempty"`
 
 	// Traces: Result may contain a list of traces if a test has multiple
@@ -1834,7 +1876,7 @@ type ReachabilityDetails struct {
 	// load balancer with multiple backends.
 	Traces []*Trace `json:"traces,omitempty"`
 
-	// VerifyTime: The time the reachability state was verified.
+	// VerifyTime: The time of the configuration analysis.
 	VerifyTime string `json:"verifyTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
@@ -1896,7 +1938,7 @@ type RouteInfo struct {
 	//   "NEXT_HOP_VPN_GATEWAY" - Next hop is a VPN Gateway. This scenario
 	// only happens when tracing connectivity from an on-premises network to
 	// GCP through a VPN. The analysis simulates a packet departing from the
-	// on-premises network through a VPN tunnel and arrives at a Cloud VPN
+	// on-premises network through a VPN tunnel and arriving at a Cloud VPN
 	// gateway.
 	//   "NEXT_HOP_INTERNET_GATEWAY" - Next hop is an internet gateway.
 	//   "NEXT_HOP_BLACKHOLE" - Next hop is blackhole; that is, the next hop
@@ -2054,7 +2096,7 @@ type Step struct {
 	Drop *DropInfo `json:"drop,omitempty"`
 
 	// Endpoint: Display info of the source and destination under analysis.
-	// The endpiont info in an intermediate state may differ with the
+	// The endpoint info in an intermediate state may differ with the
 	// initial input, as it might be modified by state like NAT, or
 	// Connection Proxy.
 	Endpoint *EndpointInfo `json:"endpoint,omitempty"`
@@ -2128,10 +2170,10 @@ type Step struct {
 	//   "NAT" - Transition state: packet header translated.
 	//   "PROXY_CONNECTION" - Transition state: original connection is
 	// terminated and a new proxied connection is initiated.
-	//   "DELIVER" - Final state: packet delivered.
-	//   "DROP" - Final state: packet dropped.
-	//   "FORWARD" - Final state: packet forwarded to a network with an
-	// unknown configuration.
+	//   "DELIVER" - Final state: packet could be delivered.
+	//   "DROP" - Final state: packet could be dropped.
+	//   "FORWARD" - Final state: packet could be forwarded to a network
+	// with an unknown configuration.
 	//   "ABORT" - Final state: analysis is aborted.
 	//   "VIEWER_PERMISSION_MISSING" - Special state: viewer of the test
 	// result does not have permission to see the configuration in this
@@ -2233,13 +2275,13 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Trace: Trace represents one simulated packet forwarding path. - Each
-// trace contains multiple ordered steps. - Each step is in a particular
-// state and has an associated configuration. - State is categorized as
-// a final or non-final state. - Each final state has a reason
-// associated with it. - Each trace must end with a final state (the
-// last step). |---------------------Trace----------------------|
-// Step1(State) Step2(State) --- StepN(State(final))
+// Trace: Trace represents one simulated packet forwarding path. * Each
+// trace contains multiple ordered Steps. * Each step is in a particular
+// state with associated configuration. * State is categorized as final
+// or non-final states. * Each final state has a reason associated. *
+// Each trace must end with a final state (the last step). ```
+// |---------------------Trace----------------------| Step1(State)
+// Step2(State) --- StepN(State(final)) ```
 type Trace struct {
 	// EndpointInfo: Derived from the source and destination endpoints
 	// definition, and validated by the data plane model. If there are
@@ -2396,6 +2438,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2439,7 +2483,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2541,28 +2585,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2605,7 +2655,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2676,7 +2726,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2688,13 +2738,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2752,6 +2802,9 @@ type ProjectsLocationsGlobalConnectivityTestsCreateCall struct {
 // If the endpoint specifications in `ConnectivityTest` are incomplete,
 // the reachability result returns a value of AMBIGUOUS. For more
 // information, see the Connectivity Test documentation.
+//
+// - parent: The parent resource of the Connectivity Test to create:
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Create(parent string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsCreateCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2797,7 +2850,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2907,6 +2960,9 @@ type ProjectsLocationsGlobalConnectivityTestsDeleteCall struct {
 }
 
 // Delete: Deletes a specific `ConnectivityTest`.
+//
+// - name: Connectivity Test resource name using the form:
+//   `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Delete(name string) *ProjectsLocationsGlobalConnectivityTestsDeleteCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2940,7 +2996,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3038,6 +3094,9 @@ type ProjectsLocationsGlobalConnectivityTestsGetCall struct {
 }
 
 // Get: Gets the details of a specific Connectivity Test.
+//
+// - name: `ConnectivityTest` resource name using the form:
+//   `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Get(name string) *ProjectsLocationsGlobalConnectivityTestsGetCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3081,7 +3140,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3184,6 +3243,10 @@ type ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3241,7 +3304,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3348,6 +3411,9 @@ type ProjectsLocationsGlobalConnectivityTestsListCall struct {
 }
 
 // List: Lists all Connectivity Tests owned by a project.
+//
+// - parent: The parent resource of the Connectivity Tests:
+//   `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) List(parent string) *ProjectsLocationsGlobalConnectivityTestsListCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3429,7 +3495,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsGlobalConnectivityTestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3583,6 +3649,9 @@ type ProjectsLocationsGlobalConnectivityTestsPatchCall struct {
 // specifications in `ConnectivityTest` are incomplete, the reachability
 // result returns a value of `AMBIGUOUS`. See the documentation in
 // `ConnectivityTest` for for more details.
+//
+// - name: Unique name of the resource using the form:
+//   `projects/{project_id}/locations/global/connectivityTests/{test}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Patch(name string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsPatchCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3625,7 +3694,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3745,6 +3814,9 @@ type ProjectsLocationsGlobalConnectivityTestsRerunCall struct {
 // example, specified resources are deleted in the network, or you lost
 // read permissions to the network configurations of listed projects),
 // then the reachability result returns a value of `UNKNOWN`.
+//
+// - name: Connectivity Test resource name using the form:
+//   `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Rerun(name string, rerunconnectivitytestrequest *RerunConnectivityTestRequest) *ProjectsLocationsGlobalConnectivityTestsRerunCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsRerunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3779,7 +3851,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3887,6 +3959,10 @@ type ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3921,7 +3997,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4032,6 +4108,10 @@ type ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4066,7 +4146,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4181,6 +4261,8 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsGlobalOperationsCancelCall {
 	c := &ProjectsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4215,7 +4297,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4323,6 +4405,8 @@ type ProjectsLocationsGlobalOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsGlobalOperationsService) Delete(name string) *ProjectsLocationsGlobalOperationsDeleteCall {
 	c := &ProjectsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4356,7 +4440,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4456,6 +4540,8 @@ type ProjectsLocationsGlobalOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsGlobalOperationsService) Get(name string) *ProjectsLocationsGlobalOperationsGetCall {
 	c := &ProjectsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4499,7 +4585,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4609,6 +4695,8 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
 	c := &ProjectsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4673,7 +4761,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

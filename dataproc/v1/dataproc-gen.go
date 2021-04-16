@@ -81,7 +81,7 @@ const mtlsBasePath = "https://dataproc.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -689,6 +689,13 @@ type ClusterConfig struct {
 	// for all instances in a cluster.
 	GceClusterConfig *GceClusterConfig `json:"gceClusterConfig,omitempty"`
 
+	// GkeClusterConfig: Optional. BETA. The Kubernetes Engine config for
+	// Dataproc clusters deployed to Kubernetes. Setting this is considered
+	// mutually exclusive with Compute Engine-based options such as
+	// gce_cluster_config, master_config, worker_config,
+	// secondary_worker_config, and autoscaling_config.
+	GkeClusterConfig *GkeClusterConfig `json:"gkeClusterConfig,omitempty"`
+
 	// InitializationActions: Optional. Commands to execute on each node
 	// after config is completed. By default, executables are run on master
 	// and all worker nodes. You can test a node's role metadata to run an
@@ -974,6 +981,10 @@ type ClusterStatus struct {
 	//   "DELETING" - The cluster is being deleted. It cannot be used.
 	//   "UPDATING" - The cluster is being updated. It continues to accept
 	// and process jobs.
+	//   "STOPPING" - The cluster is being stopped. It cannot be used.
+	//   "STOPPED" - The cluster is currently stopped. It is not ready for
+	// use.
+	//   "STARTING" - The cluster is being started. It is not ready for use.
 	State string `json:"state,omitempty"`
 
 	// StateStartTime: Output only. Time when this state was entered (see
@@ -1430,6 +1441,36 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GkeClusterConfig: The GKE config for this cluster.
+type GkeClusterConfig struct {
+	// NamespacedGkeDeploymentTarget: Optional. A target for the deployment.
+	NamespacedGkeDeploymentTarget *NamespacedGkeDeploymentTarget `json:"namespacedGkeDeploymentTarget,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NamespacedGkeDeploymentTarget") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "NamespacedGkeDeploymentTarget") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HadoopJob: A Dataproc job for running Apache Hadoop MapReduce
 // (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
 // jobs on Apache Hadoop YARN
@@ -1549,6 +1590,37 @@ type HiveJob struct {
 
 func (s *HiveJob) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityConfig: Identity related configuration, including service
+// account based secure multi-tenancy user mappings.
+type IdentityConfig struct {
+	// UserServiceAccountMapping: Required. Map of user to service account.
+	UserServiceAccountMapping map[string]string `json:"userServiceAccountMapping,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "UserServiceAccountMapping") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "UserServiceAccountMapping") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1704,7 +1776,8 @@ type InstanceGroupConfig struct {
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NumInstances: Optional. The number of VM instances in the instance
-	// group. For master instance groups, must be set to 1.
+	// group. For HA cluster master_config groups, must be set to 3. For
+	// standard cluster master_config groups, must be set to 1.
 	NumInstances int64 `json:"numInstances,omitempty"`
 
 	// Preemptibility: Optional. Specifies the preemptibility of the
@@ -2632,6 +2705,42 @@ func (s *MetastoreConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NamespacedGkeDeploymentTarget: A full, namespace-isolated deployment
+// target for an existing GKE cluster.
+type NamespacedGkeDeploymentTarget struct {
+	// ClusterNamespace: Optional. A namespace within the GKE cluster to
+	// deploy into.
+	ClusterNamespace string `json:"clusterNamespace,omitempty"`
+
+	// TargetGkeCluster: Optional. The target GKE cluster to deploy to.
+	// Format:
+	// 'projects/{project}/locations/{location}/clusters/{cluster_id}'
+	TargetGkeCluster string `json:"targetGkeCluster,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterNamespace") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterNamespace") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NamespacedGkeDeploymentTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod NamespacedGkeDeploymentTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeGroupAffinity: Node Group Affinity for clusters using sole-tenant
 // node groups.
 type NodeGroupAffinity struct {
@@ -3256,10 +3365,14 @@ func (s *ReservationAffinity) MarshalJSON() ([]byte, error) {
 // SecurityConfig: Security related configuration, including encryption,
 // Kerberos, etc.
 type SecurityConfig struct {
+	// IdentityConfig: Optional. Identity related configuration, including
+	// service account based secure multi-tenancy user mappings.
+	IdentityConfig *IdentityConfig `json:"identityConfig,omitempty"`
+
 	// KerberosConfig: Optional. Kerberos related configuration.
 	KerberosConfig *KerberosConfig `json:"kerberosConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KerberosConfig") to
+	// ForceSendFields is a list of field names (e.g. "IdentityConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3267,7 +3380,7 @@ type SecurityConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KerberosConfig") to
+	// NullFields is a list of field names (e.g. "IdentityConfig") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -3377,7 +3490,9 @@ type SoftwareConfig struct {
 	// component is not supported in the Dataproc 2.0 image. The 2.0 image
 	// is pre-installed with Miniconda.
 	//   "DOCKER" - Docker
+	//   "DRUID" - The Druid query engine. (beta)
 	//   "FLINK" - Flink
+	//   "HBASE" - HBase. (beta)
 	//   "HIVE_WEBHCAT" - The Hive Web HCatalog (the REST service for
 	// accessing HCatalog).
 	//   "JUPYTER" - The Jupyter Notebook.
@@ -4291,6 +4406,15 @@ type ProjectsLocationsAutoscalingPoliciesCreateCall struct {
 }
 
 // Create: Creates new autoscaling policy.
+//
+// - parent: The "resource name" of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.create, the resource name of
+//   the region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.autoscalingPolicies.create, the resource name of
+//   the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsLocationsAutoscalingPoliciesService) Create(parent string, autoscalingpolicy *AutoscalingPolicy) *ProjectsLocationsAutoscalingPoliciesCreateCall {
 	c := &ProjectsLocationsAutoscalingPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4325,7 +4449,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4431,6 +4555,16 @@ type ProjectsLocationsAutoscalingPoliciesDeleteCall struct {
 
 // Delete: Deletes an autoscaling policy. It is an error to delete an
 // autoscaling policy that is in use by one or more clusters.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.delete, the resource name of
+//   the policy has the following format:
+//   projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_i
+//   d} For projects.locations.autoscalingPolicies.delete, the resource
+//   name of the policy has the following format:
+//   projects/{project_id}/locations/{location}/autoscalingPolicies/{poli
+//   cy_id}.
 func (r *ProjectsLocationsAutoscalingPoliciesService) Delete(name string) *ProjectsLocationsAutoscalingPoliciesDeleteCall {
 	c := &ProjectsLocationsAutoscalingPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4464,7 +4598,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4562,6 +4696,16 @@ type ProjectsLocationsAutoscalingPoliciesGetCall struct {
 }
 
 // Get: Retrieves autoscaling policy.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.get, the resource name of the
+//   policy has the following format:
+//   projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_i
+//   d} For projects.locations.autoscalingPolicies.get, the resource
+//   name of the policy has the following format:
+//   projects/{project_id}/locations/{location}/autoscalingPolicies/{poli
+//   cy_id}.
 func (r *ProjectsLocationsAutoscalingPoliciesService) Get(name string) *ProjectsLocationsAutoscalingPoliciesGetCall {
 	c := &ProjectsLocationsAutoscalingPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4605,7 +4749,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4708,6 +4852,10 @@ type ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4742,7 +4890,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsAutoscalingPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4848,6 +4996,15 @@ type ProjectsLocationsAutoscalingPoliciesListCall struct {
 }
 
 // List: Lists autoscaling policies in the project.
+//
+// - parent: The "resource name" of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.list, the resource name of the
+//   region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.autoscalingPolicies.list, the resource name of
+//   the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsLocationsAutoscalingPoliciesService) List(parent string) *ProjectsLocationsAutoscalingPoliciesListCall {
 	c := &ProjectsLocationsAutoscalingPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4906,7 +5063,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5041,6 +5198,10 @@ type ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5075,7 +5236,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsAutoscalingPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5186,6 +5347,10 @@ type ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsAutoscalingPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5220,7 +5385,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsAutoscalingPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5327,6 +5492,17 @@ type ProjectsLocationsAutoscalingPoliciesUpdateCall struct {
 
 // Update: Updates (replaces) autoscaling policy.Disabled check for
 // update_mask, because all updates will be full replacements.
+//
+// - name: Output only. The "resource name" of the autoscaling policy,
+//   as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies, the resource name of the
+//   policy has the following format:
+//   projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_i
+//   d} For projects.locations.autoscalingPolicies, the resource name of
+//   the policy has the following format:
+//   projects/{project_id}/locations/{location}/autoscalingPolicies/{poli
+//   cy_id}.
 func (r *ProjectsLocationsAutoscalingPoliciesService) Update(name string, autoscalingpolicy *AutoscalingPolicy) *ProjectsLocationsAutoscalingPoliciesUpdateCall {
 	c := &ProjectsLocationsAutoscalingPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5361,7 +5537,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAutoscalingPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5467,6 +5643,15 @@ type ProjectsLocationsWorkflowTemplatesCreateCall struct {
 }
 
 // Create: Creates new workflow template.
+//
+// - parent: The resource name of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates,create, the resource name of the
+//   region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.workflowTemplates.create, the resource name of
+//   the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsLocationsWorkflowTemplatesService) Create(parent string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesCreateCall {
 	c := &ProjectsLocationsWorkflowTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5501,7 +5686,7 @@ func (c *ProjectsLocationsWorkflowTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5607,6 +5792,16 @@ type ProjectsLocationsWorkflowTemplatesDeleteCall struct {
 
 // Delete: Deletes a workflow template. It does not cancel in-progress
 // workflows.
+//
+// - name: The resource name of the workflow template, as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates.delete, the resource name of the
+//   template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates.instantiate, the
+//   resource name of the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsLocationsWorkflowTemplatesService) Delete(name string) *ProjectsLocationsWorkflowTemplatesDeleteCall {
 	c := &ProjectsLocationsWorkflowTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5648,7 +5843,7 @@ func (c *ProjectsLocationsWorkflowTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5753,6 +5948,16 @@ type ProjectsLocationsWorkflowTemplatesGetCall struct {
 
 // Get: Retrieves the latest workflow template.Can retrieve previously
 // instantiated template by specifying optional version parameter.
+//
+// - name: The resource name of the workflow template, as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates.get, the resource name of the
+//   template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates.get, the resource name
+//   of the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsLocationsWorkflowTemplatesService) Get(name string) *ProjectsLocationsWorkflowTemplatesGetCall {
 	c := &ProjectsLocationsWorkflowTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5804,7 +6009,7 @@ func (c *ProjectsLocationsWorkflowTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5913,6 +6118,10 @@ type ProjectsLocationsWorkflowTemplatesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsWorkflowTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5947,7 +6156,7 @@ func (c *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsLocationsWorkflowTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6063,6 +6272,16 @@ type ProjectsLocationsWorkflowTemplatesInstantiateCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - name: The resource name of the workflow template, as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates.instantiate, the resource name
+//   of the template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates.instantiate, the
+//   resource name of the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsLocationsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsLocationsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6097,7 +6316,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateCall) Header() http.Header
 
 func (c *ProjectsLocationsWorkflowTemplatesInstantiateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6215,6 +6434,15 @@ type ProjectsLocationsWorkflowTemplatesInstantiateInlineCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - parent: The resource name of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates,instantiateinline, the resource
+//   name of the region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.workflowTemplates.instantiateinline, the
+//   resource name of the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsLocationsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6261,7 +6489,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) Header() http.
 
 func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6372,6 +6600,15 @@ type ProjectsLocationsWorkflowTemplatesListCall struct {
 }
 
 // List: Lists workflows that match the specified filter in the request.
+//
+// - parent: The resource name of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates,list, the resource name of the
+//   region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.workflowTemplates.list, the resource name of the
+//   location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsLocationsWorkflowTemplatesService) List(parent string) *ProjectsLocationsWorkflowTemplatesListCall {
 	c := &ProjectsLocationsWorkflowTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6429,7 +6666,7 @@ func (c *ProjectsLocationsWorkflowTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6564,6 +6801,10 @@ type ProjectsLocationsWorkflowTemplatesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsWorkflowTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6598,7 +6839,7 @@ func (c *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsLocationsWorkflowTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6709,6 +6950,10 @@ type ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsWorkflowTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6743,7 +6988,7 @@ func (c *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall) Header() http
 
 func (c *ProjectsLocationsWorkflowTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6850,6 +7095,16 @@ type ProjectsLocationsWorkflowTemplatesUpdateCall struct {
 
 // Update: Updates (replaces) workflow template. The updated template
 // must contain version that matches the current server version.
+//
+// - name: Output only. The resource name of the workflow template, as
+//   described in https://cloud.google.com/apis/design/resource_names.
+//   For projects.regions.workflowTemplates, the resource name of the
+//   template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates, the resource name of
+//   the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsLocationsWorkflowTemplatesService) Update(name string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesUpdateCall {
 	c := &ProjectsLocationsWorkflowTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6884,7 +7139,7 @@ func (c *ProjectsLocationsWorkflowTemplatesUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6990,6 +7245,15 @@ type ProjectsRegionsAutoscalingPoliciesCreateCall struct {
 }
 
 // Create: Creates new autoscaling policy.
+//
+// - parent: The "resource name" of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.create, the resource name of
+//   the region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.autoscalingPolicies.create, the resource name of
+//   the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsRegionsAutoscalingPoliciesService) Create(parent string, autoscalingpolicy *AutoscalingPolicy) *ProjectsRegionsAutoscalingPoliciesCreateCall {
 	c := &ProjectsRegionsAutoscalingPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7024,7 +7288,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7130,6 +7394,16 @@ type ProjectsRegionsAutoscalingPoliciesDeleteCall struct {
 
 // Delete: Deletes an autoscaling policy. It is an error to delete an
 // autoscaling policy that is in use by one or more clusters.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.delete, the resource name of
+//   the policy has the following format:
+//   projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_i
+//   d} For projects.locations.autoscalingPolicies.delete, the resource
+//   name of the policy has the following format:
+//   projects/{project_id}/locations/{location}/autoscalingPolicies/{poli
+//   cy_id}.
 func (r *ProjectsRegionsAutoscalingPoliciesService) Delete(name string) *ProjectsRegionsAutoscalingPoliciesDeleteCall {
 	c := &ProjectsRegionsAutoscalingPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7163,7 +7437,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7261,6 +7535,16 @@ type ProjectsRegionsAutoscalingPoliciesGetCall struct {
 }
 
 // Get: Retrieves autoscaling policy.
+//
+// - name: The "resource name" of the autoscaling policy, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.get, the resource name of the
+//   policy has the following format:
+//   projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_i
+//   d} For projects.locations.autoscalingPolicies.get, the resource
+//   name of the policy has the following format:
+//   projects/{project_id}/locations/{location}/autoscalingPolicies/{poli
+//   cy_id}.
 func (r *ProjectsRegionsAutoscalingPoliciesService) Get(name string) *ProjectsRegionsAutoscalingPoliciesGetCall {
 	c := &ProjectsRegionsAutoscalingPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7304,7 +7588,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7407,6 +7691,10 @@ type ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall {
 	c := &ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7441,7 +7729,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsRegionsAutoscalingPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7547,6 +7835,15 @@ type ProjectsRegionsAutoscalingPoliciesListCall struct {
 }
 
 // List: Lists autoscaling policies in the project.
+//
+// - parent: The "resource name" of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies.list, the resource name of the
+//   region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.autoscalingPolicies.list, the resource name of
+//   the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsRegionsAutoscalingPoliciesService) List(parent string) *ProjectsRegionsAutoscalingPoliciesListCall {
 	c := &ProjectsRegionsAutoscalingPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7605,7 +7902,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7740,6 +8037,10 @@ type ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall {
 	c := &ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7774,7 +8075,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall) Header() http.Heade
 
 func (c *ProjectsRegionsAutoscalingPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7885,6 +8186,10 @@ type ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsAutoscalingPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall {
 	c := &ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7919,7 +8224,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall) Header() http
 
 func (c *ProjectsRegionsAutoscalingPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8026,6 +8331,17 @@ type ProjectsRegionsAutoscalingPoliciesUpdateCall struct {
 
 // Update: Updates (replaces) autoscaling policy.Disabled check for
 // update_mask, because all updates will be full replacements.
+//
+// - name: Output only. The "resource name" of the autoscaling policy,
+//   as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.autoscalingPolicies, the resource name of the
+//   policy has the following format:
+//   projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_i
+//   d} For projects.locations.autoscalingPolicies, the resource name of
+//   the policy has the following format:
+//   projects/{project_id}/locations/{location}/autoscalingPolicies/{poli
+//   cy_id}.
 func (r *ProjectsRegionsAutoscalingPoliciesService) Update(name string, autoscalingpolicy *AutoscalingPolicy) *ProjectsRegionsAutoscalingPoliciesUpdateCall {
 	c := &ProjectsRegionsAutoscalingPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8060,7 +8376,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesUpdateCall) Header() http.Header {
 
 func (c *ProjectsRegionsAutoscalingPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8169,6 +8485,10 @@ type ProjectsRegionsClustersCreateCall struct {
 // Create: Creates a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+//
+// - projectId: The ID of the Google Cloud Platform project that the
+//   cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Create(projectId string, region string, cluster *Cluster) *ProjectsRegionsClustersCreateCall {
 	c := &ProjectsRegionsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8219,7 +8539,7 @@ func (c *ProjectsRegionsClustersCreateCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8340,6 +8660,11 @@ type ProjectsRegionsClustersDeleteCall struct {
 // Delete: Deletes a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project that the
+//   cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Delete(projectId string, region string, clusterName string) *ProjectsRegionsClustersDeleteCall {
 	c := &ProjectsRegionsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8398,7 +8723,7 @@ func (c *ProjectsRegionsClustersDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8528,6 +8853,11 @@ type ProjectsRegionsClustersDiagnoseCall struct {
 // After the operation completes, Operation.response contains
 // DiagnoseClusterResults
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project that the
+//   cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Diagnose(projectId string, region string, clusterName string, diagnoseclusterrequest *DiagnoseClusterRequest) *ProjectsRegionsClustersDiagnoseCall {
 	c := &ProjectsRegionsClustersDiagnoseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8564,7 +8894,7 @@ func (c *ProjectsRegionsClustersDiagnoseCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersDiagnoseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8687,6 +9017,11 @@ type ProjectsRegionsClustersGetCall struct {
 }
 
 // Get: Gets the resource representation for a cluster in a project.
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project that the
+//   cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Get(projectId string, region string, clusterName string) *ProjectsRegionsClustersGetCall {
 	c := &ProjectsRegionsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8732,7 +9067,7 @@ func (c *ProjectsRegionsClustersGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8850,6 +9185,10 @@ type ProjectsRegionsClustersGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsClustersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsClustersGetIamPolicyCall {
 	c := &ProjectsRegionsClustersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8884,7 +9223,7 @@ func (c *ProjectsRegionsClustersGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8994,6 +9333,11 @@ type ProjectsRegionsClustersInjectCredentialsCall struct {
 // InjectCredentials: Inject encrypted credentials into all of the VMs
 // in a cluster.The target cluster must be a personal auth cluster
 // assigned to the user who is issuing the RPC.
+//
+// - cluster: The cluster, in the form clusters/.
+// - project: The ID of the Google Cloud Platform project the cluster
+//   belongs to, of the form projects/.
+// - region: The region containing the cluster, of the form regions/.
 func (r *ProjectsRegionsClustersService) InjectCredentials(project string, region string, cluster string, injectcredentialsrequest *InjectCredentialsRequest) *ProjectsRegionsClustersInjectCredentialsCall {
 	c := &ProjectsRegionsClustersInjectCredentialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9030,7 +9374,7 @@ func (c *ProjectsRegionsClustersInjectCredentialsCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersInjectCredentialsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9156,6 +9500,10 @@ type ProjectsRegionsClustersListCall struct {
 
 // List: Lists all regions/{region}/clusters in a project
 // alphabetically.
+//
+// - projectId: The ID of the Google Cloud Platform project that the
+//   cluster belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) List(projectId string, region string) *ProjectsRegionsClustersListCall {
 	c := &ProjectsRegionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9232,7 +9580,7 @@ func (c *ProjectsRegionsClustersListCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9381,6 +9729,11 @@ type ProjectsRegionsClustersPatchCall struct {
 // Patch: Updates a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
 // (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project the cluster
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, clusterName string, cluster *Cluster) *ProjectsRegionsClustersPatchCall {
 	c := &ProjectsRegionsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9468,7 +9821,7 @@ func (c *ProjectsRegionsClustersPatchCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9608,6 +9961,10 @@ type ProjectsRegionsClustersSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsClustersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsClustersSetIamPolicyCall {
 	c := &ProjectsRegionsClustersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9642,7 +9999,7 @@ func (c *ProjectsRegionsClustersSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9750,6 +10107,11 @@ type ProjectsRegionsClustersStartCall struct {
 }
 
 // Start: Starts a cluster in a project.
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project the cluster
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Start(projectId string, region string, clusterName string, startclusterrequest *StartClusterRequest) *ProjectsRegionsClustersStartCall {
 	c := &ProjectsRegionsClustersStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9786,7 +10148,7 @@ func (c *ProjectsRegionsClustersStartCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9909,6 +10271,11 @@ type ProjectsRegionsClustersStopCall struct {
 }
 
 // Stop: Stops a cluster in a project.
+//
+// - clusterName: The cluster name.
+// - projectId: The ID of the Google Cloud Platform project the cluster
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsClustersService) Stop(projectId string, region string, clusterName string, stopclusterrequest *StopClusterRequest) *ProjectsRegionsClustersStopCall {
 	c := &ProjectsRegionsClustersStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9945,7 +10312,7 @@ func (c *ProjectsRegionsClustersStopCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10071,6 +10438,10 @@ type ProjectsRegionsClustersTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsClustersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsClustersTestIamPermissionsCall {
 	c := &ProjectsRegionsClustersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10105,7 +10476,7 @@ func (c *ProjectsRegionsClustersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsRegionsClustersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10217,6 +10588,11 @@ type ProjectsRegionsJobsCancelCall struct {
 // (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/list)
 // or regions/{region}/jobs.get
 // (https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Cancel(projectId string, region string, jobId string, canceljobrequest *CancelJobRequest) *ProjectsRegionsJobsCancelCall {
 	c := &ProjectsRegionsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10253,7 +10629,7 @@ func (c *ProjectsRegionsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10376,6 +10752,11 @@ type ProjectsRegionsJobsDeleteCall struct {
 
 // Delete: Deletes the job from the project. If the job is active, the
 // delete fails, and the response returns FAILED_PRECONDITION.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Delete(projectId string, region string, jobId string) *ProjectsRegionsJobsDeleteCall {
 	c := &ProjectsRegionsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10411,7 +10792,7 @@ func (c *ProjectsRegionsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10526,6 +10907,11 @@ type ProjectsRegionsJobsGetCall struct {
 }
 
 // Get: Gets the resource representation for a job in a project.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Get(projectId string, region string, jobId string) *ProjectsRegionsJobsGetCall {
 	c := &ProjectsRegionsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10571,7 +10957,7 @@ func (c *ProjectsRegionsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10689,6 +11075,10 @@ type ProjectsRegionsJobsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsJobsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsJobsGetIamPolicyCall {
 	c := &ProjectsRegionsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10723,7 +11113,7 @@ func (c *ProjectsRegionsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10830,6 +11220,10 @@ type ProjectsRegionsJobsListCall struct {
 }
 
 // List: Lists regions/{region}/jobs in a project.
+//
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) List(projectId string, region string) *ProjectsRegionsJobsListCall {
 	c := &ProjectsRegionsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10924,7 +11318,7 @@ func (c *ProjectsRegionsJobsListCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11091,6 +11485,11 @@ type ProjectsRegionsJobsPatchCall struct {
 }
 
 // Patch: Updates a job in a project.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Patch(projectId string, region string, jobId string, job *Job) *ProjectsRegionsJobsPatchCall {
 	c := &ProjectsRegionsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11138,7 +11537,7 @@ func (c *ProjectsRegionsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11267,6 +11666,10 @@ type ProjectsRegionsJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsJobsSetIamPolicyCall {
 	c := &ProjectsRegionsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11301,7 +11704,7 @@ func (c *ProjectsRegionsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11408,6 +11811,10 @@ type ProjectsRegionsJobsSubmitCall struct {
 }
 
 // Submit: Submits a job to a cluster.
+//
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) Submit(projectId string, region string, submitjobrequest *SubmitJobRequest) *ProjectsRegionsJobsSubmitCall {
 	c := &ProjectsRegionsJobsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11443,7 +11850,7 @@ func (c *ProjectsRegionsJobsSubmitCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11557,6 +11964,10 @@ type ProjectsRegionsJobsSubmitAsOperationCall struct {
 }
 
 // SubmitAsOperation: Submits job to a cluster.
+//
+// - projectId: The ID of the Google Cloud Platform project that the job
+//   belongs to.
+// - region: The Dataproc region in which to handle the request.
 func (r *ProjectsRegionsJobsService) SubmitAsOperation(projectId string, region string, submitjobrequest *SubmitJobRequest) *ProjectsRegionsJobsSubmitAsOperationCall {
 	c := &ProjectsRegionsJobsSubmitAsOperationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11592,7 +12003,7 @@ func (c *ProjectsRegionsJobsSubmitAsOperationCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsSubmitAsOperationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11710,6 +12121,10 @@ type ProjectsRegionsJobsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsJobsTestIamPermissionsCall {
 	c := &ProjectsRegionsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11744,7 +12159,7 @@ func (c *ProjectsRegionsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsRegionsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11858,6 +12273,8 @@ type ProjectsRegionsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // Code.CANCELLED.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsRegionsOperationsService) Cancel(name string) *ProjectsRegionsOperationsCancelCall {
 	c := &ProjectsRegionsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11891,7 +12308,7 @@ func (c *ProjectsRegionsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11991,6 +12408,8 @@ type ProjectsRegionsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns google.rpc.Code.UNIMPLEMENTED.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsRegionsOperationsService) Delete(name string) *ProjectsRegionsOperationsDeleteCall {
 	c := &ProjectsRegionsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12024,7 +12443,7 @@ func (c *ProjectsRegionsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12124,6 +12543,8 @@ type ProjectsRegionsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsRegionsOperationsService) Get(name string) *ProjectsRegionsOperationsGetCall {
 	c := &ProjectsRegionsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12167,7 +12588,7 @@ func (c *ProjectsRegionsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12270,6 +12691,10 @@ type ProjectsRegionsOperationsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsOperationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsOperationsGetIamPolicyCall {
 	c := &ProjectsRegionsOperationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12304,7 +12729,7 @@ func (c *ProjectsRegionsOperationsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12419,6 +12844,8 @@ type ProjectsRegionsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsRegionsOperationsService) List(name string) *ProjectsRegionsOperationsListCall {
 	c := &ProjectsRegionsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12483,7 +12910,7 @@ func (c *ProjectsRegionsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12623,6 +13050,10 @@ type ProjectsRegionsOperationsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsOperationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsOperationsSetIamPolicyCall {
 	c := &ProjectsRegionsOperationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12657,7 +13088,7 @@ func (c *ProjectsRegionsOperationsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12768,6 +13199,10 @@ type ProjectsRegionsOperationsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsOperationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsOperationsTestIamPermissionsCall {
 	c := &ProjectsRegionsOperationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12802,7 +13237,7 @@ func (c *ProjectsRegionsOperationsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsRegionsOperationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12908,6 +13343,15 @@ type ProjectsRegionsWorkflowTemplatesCreateCall struct {
 }
 
 // Create: Creates new workflow template.
+//
+// - parent: The resource name of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates,create, the resource name of the
+//   region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.workflowTemplates.create, the resource name of
+//   the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsRegionsWorkflowTemplatesService) Create(parent string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesCreateCall {
 	c := &ProjectsRegionsWorkflowTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12942,7 +13386,7 @@ func (c *ProjectsRegionsWorkflowTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13048,6 +13492,16 @@ type ProjectsRegionsWorkflowTemplatesDeleteCall struct {
 
 // Delete: Deletes a workflow template. It does not cancel in-progress
 // workflows.
+//
+// - name: The resource name of the workflow template, as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates.delete, the resource name of the
+//   template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates.instantiate, the
+//   resource name of the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsRegionsWorkflowTemplatesService) Delete(name string) *ProjectsRegionsWorkflowTemplatesDeleteCall {
 	c := &ProjectsRegionsWorkflowTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13089,7 +13543,7 @@ func (c *ProjectsRegionsWorkflowTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13194,6 +13648,16 @@ type ProjectsRegionsWorkflowTemplatesGetCall struct {
 
 // Get: Retrieves the latest workflow template.Can retrieve previously
 // instantiated template by specifying optional version parameter.
+//
+// - name: The resource name of the workflow template, as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates.get, the resource name of the
+//   template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates.get, the resource name
+//   of the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsRegionsWorkflowTemplatesService) Get(name string) *ProjectsRegionsWorkflowTemplatesGetCall {
 	c := &ProjectsRegionsWorkflowTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13245,7 +13709,7 @@ func (c *ProjectsRegionsWorkflowTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13354,6 +13818,10 @@ type ProjectsRegionsWorkflowTemplatesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall {
 	c := &ProjectsRegionsWorkflowTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13388,7 +13856,7 @@ func (c *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsRegionsWorkflowTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13504,6 +13972,16 @@ type ProjectsRegionsWorkflowTemplatesInstantiateCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - name: The resource name of the workflow template, as described in
+//   https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates.instantiate, the resource name
+//   of the template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates.instantiate, the
+//   resource name of the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsRegionsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsRegionsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13538,7 +14016,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesInstantiateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13656,6 +14134,15 @@ type ProjectsRegionsWorkflowTemplatesInstantiateInlineCall struct {
 // Also see Using WorkflowMetadata
 // (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
 // successful completion, Operation.response will be Empty.
+//
+// - parent: The resource name of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates,instantiateinline, the resource
+//   name of the region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.workflowTemplates.instantiateinline, the
+//   resource name of the location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsRegionsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13702,7 +14189,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) Header() http.He
 
 func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13813,6 +14300,15 @@ type ProjectsRegionsWorkflowTemplatesListCall struct {
 }
 
 // List: Lists workflows that match the specified filter in the request.
+//
+// - parent: The resource name of the region or location, as described
+//   in https://cloud.google.com/apis/design/resource_names. For
+//   projects.regions.workflowTemplates,list, the resource name of the
+//   region has the following format:
+//   projects/{project_id}/regions/{region} For
+//   projects.locations.workflowTemplates.list, the resource name of the
+//   location has the following format:
+//   projects/{project_id}/locations/{location}.
 func (r *ProjectsRegionsWorkflowTemplatesService) List(parent string) *ProjectsRegionsWorkflowTemplatesListCall {
 	c := &ProjectsRegionsWorkflowTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13870,7 +14366,7 @@ func (c *ProjectsRegionsWorkflowTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14005,6 +14501,10 @@ type ProjectsRegionsWorkflowTemplatesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall {
 	c := &ProjectsRegionsWorkflowTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14039,7 +14539,7 @@ func (c *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsRegionsWorkflowTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14150,6 +14650,10 @@ type ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsRegionsWorkflowTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall {
 	c := &ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14184,7 +14688,7 @@ func (c *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall) Header() http.H
 
 func (c *ProjectsRegionsWorkflowTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14291,6 +14795,16 @@ type ProjectsRegionsWorkflowTemplatesUpdateCall struct {
 
 // Update: Updates (replaces) workflow template. The updated template
 // must contain version that matches the current server version.
+//
+// - name: Output only. The resource name of the workflow template, as
+//   described in https://cloud.google.com/apis/design/resource_names.
+//   For projects.regions.workflowTemplates, the resource name of the
+//   template has the following format:
+//   projects/{project_id}/regions/{region}/workflowTemplates/{template_i
+//   d} For projects.locations.workflowTemplates, the resource name of
+//   the template has the following format:
+//   projects/{project_id}/locations/{location}/workflowTemplates/{templa
+//   te_id}.
 func (r *ProjectsRegionsWorkflowTemplatesService) Update(name string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesUpdateCall {
 	c := &ProjectsRegionsWorkflowTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14325,7 +14839,7 @@ func (c *ProjectsRegionsWorkflowTemplatesUpdateCall) Header() http.Header {
 
 func (c *ProjectsRegionsWorkflowTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

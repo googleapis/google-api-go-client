@@ -736,6 +736,168 @@ func (s *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaChangeHistoryChange: A description of a
+// change to a single Google Analytics resource.
+type GoogleAnalyticsAdminV1alphaChangeHistoryChange struct {
+	// Action: The type of action that changed this resource.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Action type unknown or not specified.
+	//   "CREATED" - Resource was created in this change.
+	//   "UPDATED" - Resource was updated in this change.
+	//   "DELETED" - Resource was deleted in this change.
+	Action string `json:"action,omitempty"`
+
+	// Resource: Resource name of the resource whose changes are described
+	// by this entry.
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceAfterChange: Resource contents from after the change was
+	// made. If this resource was deleted in this change, this field will be
+	// missing.
+	ResourceAfterChange *GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource `json:"resourceAfterChange,omitempty"`
+
+	// ResourceBeforeChange: Resource contents from before the change was
+	// made. If this resource was created in this change, this field will be
+	// missing.
+	ResourceBeforeChange *GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource `json:"resourceBeforeChange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaChangeHistoryChange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaChangeHistoryChange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource:
+// A snapshot of a resource as before or after the result of a change in
+// change history.
+type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct {
+	// Account: A snapshot of an Account resource in change history.
+	Account *GoogleAnalyticsAdminV1alphaAccount `json:"account,omitempty"`
+
+	// AndroidAppDataStream: A snapshot of an AndroidAppDataStream resource
+	// in change history.
+	AndroidAppDataStream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream `json:"androidAppDataStream,omitempty"`
+
+	// FirebaseLink: A snapshot of a FirebaseLink resource in change
+	// history.
+	FirebaseLink *GoogleAnalyticsAdminV1alphaFirebaseLink `json:"firebaseLink,omitempty"`
+
+	// GoogleAdsLink: A snapshot of a GoogleAdsLink resource in change
+	// history.
+	GoogleAdsLink *GoogleAnalyticsAdminV1alphaGoogleAdsLink `json:"googleAdsLink,omitempty"`
+
+	// IosAppDataStream: A snapshot of an IosAppDataStream resource in
+	// change history.
+	IosAppDataStream *GoogleAnalyticsAdminV1alphaIosAppDataStream `json:"iosAppDataStream,omitempty"`
+
+	// Property: A snapshot of a Property resource in change history.
+	Property *GoogleAnalyticsAdminV1alphaProperty `json:"property,omitempty"`
+
+	// WebDataStream: A snapshot of a WebDataStream resource in change
+	// history.
+	WebDataStream *GoogleAnalyticsAdminV1alphaWebDataStream `json:"webDataStream,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Account") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Account") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaChangeHistoryEvent: A set of changes
+// within a Google Analytics account or its child properties that
+// resulted from the same cause. Common causes would be updates made in
+// the Google Analytics UI, changes from customer support, or automatic
+// Google Analytics system changes.
+type GoogleAnalyticsAdminV1alphaChangeHistoryEvent struct {
+	// ActorType: The type of actor that made this change.
+	//
+	// Possible values:
+	//   "ACTOR_TYPE_UNSPECIFIED" - Unknown or unspecified actor type.
+	//   "USER" - Changes made by the user specified in actor_email.
+	//   "SYSTEM" - Changes made by the Google Analytics system.
+	//   "SUPPORT" - Changes made by Google Analytics support team staff.
+	ActorType string `json:"actorType,omitempty"`
+
+	// ChangeTime: Time when change was made.
+	ChangeTime string `json:"changeTime,omitempty"`
+
+	// Changes: A list of changes made in this change history event that fit
+	// the filters specified in SearchChangeHistoryEventsRequest.
+	Changes []*GoogleAnalyticsAdminV1alphaChangeHistoryChange `json:"changes,omitempty"`
+
+	// ChangesFiltered: If true, then the list of changes returned was
+	// filtered, and does not represent all changes that occurred in this
+	// event.
+	ChangesFiltered bool `json:"changesFiltered,omitempty"`
+
+	// Id: ID of this change history event. This ID is unique across Google
+	// Analytics.
+	Id string `json:"id,omitempty"`
+
+	// UserActorEmail: Email address of the Google account that made the
+	// change. This will be a valid email address if the actor field is set
+	// to USER, and empty otherwise. Google accounts that have been deleted
+	// will cause an error.
+	UserActorEmail string `json:"userActorEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActorType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActorType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaChangeHistoryEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaChangeHistoryEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaCreateUserLinkRequest: Request message for
 // CreateUserLink RPC. Users can have multiple email addresses
 // associated with their Google account, and one of these email
@@ -1538,14 +1700,19 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	// "USD", "EUR", "JPY"
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Deleted: Output only. Indicates whether this Property is soft-deleted
-	// or not. Deleted properties are excluded from List results unless
-	// specifically requested.
-	Deleted bool `json:"deleted,omitempty"`
+	// DeleteTime: Output only. If set, the time at which this property was
+	// trashed. If not set, then this property is not currently in the trash
+	// can.
+	DeleteTime string `json:"deleteTime,omitempty"`
 
 	// DisplayName: Required. Human-readable display name for this property.
 	// The max allowed display name length is 100 UTF-16 code units.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// ExpireTime: Output only. If set, the time at which this trashed
+	// property will be permanently deleted. If not set, then this property
+	// is not currently in the trash can and is not slated to be deleted.
+	ExpireTime string `json:"expireTime,omitempty"`
 
 	// IndustryCategory: Industry associated with this property Example:
 	// AUTOMOTIVE, FOOD_AND_DRINK
@@ -1589,12 +1756,12 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	// Format: accounts/{account} Example: "accounts/100"
 	Parent string `json:"parent,omitempty"`
 
-	// TimeZone: Reporting Time Zone, used as the day boundary for reports,
-	// regardless of where the data originates. If the time zone honors DST,
-	// Analytics will automatically adjust for the changes. NOTE: Changing
-	// the time zone only affects data going forward, and is not applied
-	// retroactively. Format: https://www.iana.org/time-zones Example:
-	// "America/Los_Angeles"
+	// TimeZone: Required. Reporting Time Zone, used as the day boundary for
+	// reports, regardless of where the data originates. If the time zone
+	// honors DST, Analytics will automatically adjust for the changes.
+	// NOTE: Changing the time zone only affects data going forward, and is
+	// not applied retroactively. Format: https://www.iana.org/time-zones
+	// Example: "America/Los_Angeles"
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// UpdateTime: Output only. Time when entity payload fields were last
@@ -1726,6 +1893,126 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest: Request
+// message for SearchChangeHistoryEvents RPC.
+type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
+	// Action: Optional. If set, only return changes that match one or more
+	// of these types of actions.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Action type unknown or not specified.
+	//   "CREATED" - Resource was created in this change.
+	//   "UPDATED" - Resource was updated in this change.
+	//   "DELETED" - Resource was deleted in this change.
+	Action []string `json:"action,omitempty"`
+
+	// ActorEmail: Optional. If set, only return changes if they are made by
+	// a user in this list.
+	ActorEmail []string `json:"actorEmail,omitempty"`
+
+	// EarliestChangeTime: Optional. If set, only return changes made after
+	// this time (inclusive).
+	EarliestChangeTime string `json:"earliestChangeTime,omitempty"`
+
+	// LatestChangeTime: Optional. If set, only return changes made before
+	// this time (inclusive).
+	LatestChangeTime string `json:"latestChangeTime,omitempty"`
+
+	// PageSize: Optional. The maximum number of ChangeHistoryEvent items to
+	// return. The service may return fewer than this value, even if there
+	// are additional pages. If unspecified, at most 50 items will be
+	// returned. The maximum value is 200 (higher values will be coerced to
+	// the maximum).
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token, received from a previous
+	// `SearchChangeHistoryEvents` call. Provide this to retrieve the
+	// subsequent page. When paginating, all other parameters provided to
+	// `SearchChangeHistoryEvents` must match the call that provided the
+	// page token.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// Property: Optional. Resource name for a child property. If set, only
+	// return changes made to this property or its child resources.
+	Property string `json:"property,omitempty"`
+
+	// ResourceType: Optional. If set, only return changes if they are for a
+	// resource that matches at least one of these types.
+	//
+	// Possible values:
+	//   "CHANGE_HISTORY_RESOURCE_TYPE_UNSPECIFIED" - Resource type unknown
+	// or not specified.
+	//   "ACCOUNT" - Account resource
+	//   "PROPERTY" - Property resource
+	//   "WEB_DATA_STREAM" - WebDataStream resource
+	//   "ANDROID_APP_DATA_STREAM" - AndroidAppDataStream resource
+	//   "IOS_APP_DATA_STREAM" - IosAppDataStream resource
+	//   "FIREBASE_LINK" - FirebaseLink resource
+	//   "GOOGLE_ADS_LINK" - GoogleAdsLink resource
+	ResourceType []string `json:"resourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse:
+// Response message for SearchAccounts RPC.
+type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse struct {
+	// ChangeHistoryEvents: Results that were accessible to the caller.
+	ChangeHistoryEvents []*GoogleAnalyticsAdminV1alphaChangeHistoryEvent `json:"changeHistoryEvents,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangeHistoryEvents")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChangeHistoryEvents") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1949,7 +2236,7 @@ func (c *AccountSummariesListCall) Header() http.Header {
 
 func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2080,6 +2367,9 @@ type AccountsDeleteCall struct {
 // UserLinks) will be permanently purged.
 // https://support.google.com/analytics/answer/6154772 Returns an error
 // if the target is not found.
+//
+// - name: The name of the Account to soft-delete. Format:
+//   accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2113,7 +2403,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2211,6 +2501,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Lookup for a single Account.
+//
+// - name: The name of the account to lookup. Format: accounts/{account}
+//   Example: "accounts/100".
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2254,7 +2547,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2358,6 +2651,10 @@ type AccountsGetDataSharingSettingsCall struct {
 
 // GetDataSharingSettings: Get data sharing settings on an account. Data
 // sharing settings are singletons.
+//
+// - name: The name of the settings to lookup. Format:
+//   accounts/{account}/dataSharingSettings Example:
+//   "accounts/1000/dataSharingSettings".
 func (r *AccountsService) GetDataSharingSettings(name string) *AccountsGetDataSharingSettingsCall {
 	c := &AccountsGetDataSharingSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2401,7 +2698,7 @@ func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 
 func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2578,7 +2875,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2707,6 +3004,9 @@ type AccountsPatchCall struct {
 }
 
 // Patch: Updates an account.
+//
+// - name: Output only. Resource name of this account. Format:
+//   accounts/{account} Example: "accounts/100".
 func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount *GoogleAnalyticsAdminV1alphaAccount) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2715,7 +3015,8 @@ func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount 
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
@@ -2750,7 +3051,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2831,7 +3132,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2895,7 +3196,7 @@ func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 
 func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2979,6 +3280,174 @@ func (c *AccountsProvisionAccountTicketCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "analyticsadmin.accounts.searchChangeHistoryEvents":
+
+type AccountsSearchChangeHistoryEventsCall struct {
+	s                                                           *Service
+	account                                                     string
+	googleanalyticsadminv1alphasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// SearchChangeHistoryEvents: Searches through all changes to an account
+// or its children given the specified set of filters.
+//
+// - account: The account resource for which to return change history
+//   resources.
+func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyticsadminv1alphasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest) *AccountsSearchChangeHistoryEventsCall {
+	c := &AccountsSearchChangeHistoryEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.account = account
+	c.googleanalyticsadminv1alphasearchchangehistoryeventsrequest = googleanalyticsadminv1alphasearchchangehistoryeventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsSearchChangeHistoryEventsCall) Fields(s ...googleapi.Field) *AccountsSearchChangeHistoryEventsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsSearchChangeHistoryEventsCall) Context(ctx context.Context) *AccountsSearchChangeHistoryEventsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsSearchChangeHistoryEventsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsSearchChangeHistoryEventsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphasearchchangehistoryeventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+account}:searchChangeHistoryEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"account": c.account,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.accounts.searchChangeHistoryEvents" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsSearchChangeHistoryEventsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches through all changes to an account or its children given the specified set of filters.",
+	//   "flatPath": "v1alpha/accounts/{accountsId}:searchChangeHistoryEvents",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.accounts.searchChangeHistoryEvents",
+	//   "parameterOrder": [
+	//     "account"
+	//   ],
+	//   "parameters": {
+	//     "account": {
+	//       "description": "Required. The account resource for which to return change history resources.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+account}:searchChangeHistoryEvents",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsSearchChangeHistoryEventsCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleanalyticsadminv1alphasearchchangehistoryeventsrequest.PageToken = pt }(c.googleanalyticsadminv1alphasearchchangehistoryeventsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleanalyticsadminv1alphasearchchangehistoryeventsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "analyticsadmin.accounts.userLinks.audit":
 
 type AccountsUserLinksAuditCall struct {
@@ -2997,6 +3466,8 @@ type AccountsUserLinksAuditCall struct {
 // property directly with the DeleteUserLink command. They have to be
 // removed from the group/etc that gives them permissions, which is
 // currently only usable/discoverable in the GA or GMP UIs.
+//
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) Audit(parent string, googleanalyticsadminv1alphaaudituserlinksrequest *GoogleAnalyticsAdminV1alphaAuditUserLinksRequest) *AccountsUserLinksAuditCall {
 	c := &AccountsUserLinksAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3031,7 +3502,7 @@ func (c *AccountsUserLinksAuditCall) Header() http.Header {
 
 func (c *AccountsUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3163,6 +3634,11 @@ type AccountsUserLinksBatchCreateCall struct {
 // BatchCreate: Creates information about multiple users' links to an
 // account or property. This method is transactional. If any UserLink
 // cannot be created, none of the UserLinks will be created.
+//
+// - parent: The account or property that all user links in the request
+//   are for. This field is required. The parent field in the
+//   CreateUserLinkRequest messages must either be empty or match this
+//   field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchCreate(parent string, googleanalyticsadminv1alphabatchcreateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest) *AccountsUserLinksBatchCreateCall {
 	c := &AccountsUserLinksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3197,7 +3673,7 @@ func (c *AccountsUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3307,6 +3783,10 @@ type AccountsUserLinksBatchDeleteCall struct {
 
 // BatchDelete: Deletes information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all values for user link names to delete
+//   must match this field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchDelete(parent string, googleanalyticsadminv1alphabatchdeleteuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest) *AccountsUserLinksBatchDeleteCall {
 	c := &AccountsUserLinksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3341,7 +3821,7 @@ func (c *AccountsUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3448,6 +3928,10 @@ type AccountsUserLinksBatchGetCall struct {
 
 // BatchGet: Gets information about multiple users' links to an account
 // or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all provided values for the 'names' field
+//   must match this field. Example format: accounts/1234.
 func (r *AccountsUserLinksService) BatchGet(parent string) *AccountsUserLinksBatchGetCall {
 	c := &AccountsUserLinksBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3499,7 +3983,7 @@ func (c *AccountsUserLinksBatchGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3610,6 +4094,11 @@ type AccountsUserLinksBatchUpdateCall struct {
 
 // BatchUpdate: Updates information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent field in the UpdateUserLinkRequest messages
+//   must either be empty or match this field. Example format:
+//   accounts/1234.
 func (r *AccountsUserLinksService) BatchUpdate(parent string, googleanalyticsadminv1alphabatchupdateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest) *AccountsUserLinksBatchUpdateCall {
 	c := &AccountsUserLinksBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3644,7 +4133,7 @@ func (c *AccountsUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3756,6 +4245,8 @@ type AccountsUserLinksCreateCall struct {
 // with the specified email already has permissions on the account or
 // property, then the user's existing permissions will be unioned with
 // the permissions specified in the new UserLink.
+//
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) Create(parent string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *AccountsUserLinksCreateCall {
 	c := &AccountsUserLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3798,7 +4289,7 @@ func (c *AccountsUserLinksCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3909,6 +4400,8 @@ type AccountsUserLinksDeleteCall struct {
 }
 
 // Delete: Deletes a user link on an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Delete(name string) *AccountsUserLinksDeleteCall {
 	c := &AccountsUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3942,7 +4435,7 @@ func (c *AccountsUserLinksDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4040,6 +4533,8 @@ type AccountsUserLinksGetCall struct {
 }
 
 // Get: Gets information about a user's link to an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Get(name string) *AccountsUserLinksGetCall {
 	c := &AccountsUserLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4083,7 +4578,7 @@ func (c *AccountsUserLinksGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4186,6 +4681,8 @@ type AccountsUserLinksListCall struct {
 }
 
 // List: Lists all user links on an account or property.
+//
+// - parent: Example format: accounts/1234.
 func (r *AccountsUserLinksService) List(parent string) *AccountsUserLinksListCall {
 	c := &AccountsUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4248,7 +4745,7 @@ func (c *AccountsUserLinksListCall) Header() http.Header {
 
 func (c *AccountsUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4384,6 +4881,8 @@ type AccountsUserLinksPatchCall struct {
 }
 
 // Patch: Updates a user link on an account or property.
+//
+// - name: Example format: properties/1234/userLinks/5678.
 func (r *AccountsUserLinksService) Patch(name string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *AccountsUserLinksPatchCall {
 	c := &AccountsUserLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4418,7 +4917,7 @@ func (c *AccountsUserLinksPatchCall) Header() http.Header {
 
 func (c *AccountsUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4558,7 +5057,7 @@ func (c *PropertiesCreateCall) Header() http.Header {
 
 func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4658,6 +5157,9 @@ type PropertiesDeleteCall struct {
 // UserLinks) will be permanently purged.
 // https://support.google.com/analytics/answer/6154772 Returns an error
 // if the target is not found, or is not an GA4 Property.
+//
+// - name: The name of the Property to soft-delete. Format:
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Delete(name string) *PropertiesDeleteCall {
 	c := &PropertiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4691,7 +5193,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4713,13 +5215,14 @@ func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "analyticsadmin.properties.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+// Exactly one of *GoogleAnalyticsAdminV1alphaProperty or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1alphaProperty.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaProperty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4738,7 +5241,7 @@ func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleProtobufEmpty{
+	ret := &GoogleAnalyticsAdminV1alphaProperty{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4768,7 +5271,7 @@ func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	//   },
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
+	//     "$ref": "GoogleAnalyticsAdminV1alphaProperty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
@@ -4789,6 +5292,9 @@ type PropertiesGetCall struct {
 }
 
 // Get: Lookup for a single "GA4" Property.
+//
+// - name: The name of the property to lookup. Format:
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Get(name string) *PropertiesGetCall {
 	c := &PropertiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4832,7 +5338,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5024,7 +5530,7 @@ func (c *PropertiesListCall) Header() http.Header {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5158,6 +5664,9 @@ type PropertiesPatchCall struct {
 }
 
 // Patch: Updates a property.
+//
+// - name: Output only. Resource name of this property. Format:
+//   properties/{property_id} Example: "properties/1000".
 func (r *PropertiesService) Patch(name string, googleanalyticsadminv1alphaproperty *GoogleAnalyticsAdminV1alphaProperty) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5166,7 +5675,8 @@ func (r *PropertiesService) Patch(name string, googleanalyticsadminv1alphaproper
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesPatchCall) UpdateMask(updateMask string) *PropertiesPatchCall {
@@ -5201,7 +5711,7 @@ func (c *PropertiesPatchCall) Header() http.Header {
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5282,7 +5792,7 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytics
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5319,6 +5829,9 @@ type PropertiesAndroidAppDataStreamsCreateCall struct {
 // sure your property is linked to a Firebase project. Then, use the
 // Firebase API to create a Firebase app, which will also create an
 // appropriate data stream in Analytics (may take up to 24 hours).
+//
+// - parent: The parent resource where this android app data stream will
+//   be created. Format: properties/123.
 func (r *PropertiesAndroidAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsCreateCall {
 	c := &PropertiesAndroidAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5353,7 +5866,7 @@ func (c *PropertiesAndroidAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5460,6 +5973,10 @@ type PropertiesAndroidAppDataStreamsDeleteCall struct {
 }
 
 // Delete: Deletes an android app stream on a property.
+//
+// - name: The name of the android app data stream to delete. Format:
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/123/androidAppDataStreams/456".
 func (r *PropertiesAndroidAppDataStreamsService) Delete(name string) *PropertiesAndroidAppDataStreamsDeleteCall {
 	c := &PropertiesAndroidAppDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5493,7 +6010,7 @@ func (c *PropertiesAndroidAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5591,6 +6108,10 @@ type PropertiesAndroidAppDataStreamsGetCall struct {
 }
 
 // Get: Lookup for a single AndroidAppDataStream
+//
+// - name: The name of the android app data stream to lookup. Format:
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/123/androidAppDataStreams/456".
 func (r *PropertiesAndroidAppDataStreamsService) Get(name string) *PropertiesAndroidAppDataStreamsGetCall {
 	c := &PropertiesAndroidAppDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5634,7 +6155,7 @@ func (c *PropertiesAndroidAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5741,6 +6262,10 @@ type PropertiesAndroidAppDataStreamsListCall struct {
 // property. Android app streams will be excluded if the caller does not
 // have access. Returns an empty list if no relevant android app streams
 // are found.
+//
+// - parent: The name of the parent property. For example, to limit
+//   results to app streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesAndroidAppDataStreamsService) List(parent string) *PropertiesAndroidAppDataStreamsListCall {
 	c := &PropertiesAndroidAppDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5803,7 +6328,7 @@ func (c *PropertiesAndroidAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5940,6 +6465,10 @@ type PropertiesAndroidAppDataStreamsPatchCall struct {
 }
 
 // Patch: Updates an android app stream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/androidAppDataStreams/{stream_id} Example:
+//   "properties/1000/androidAppDataStreams/2000".
 func (r *PropertiesAndroidAppDataStreamsService) Patch(name string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsPatchCall {
 	c := &PropertiesAndroidAppDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5948,7 +6477,8 @@ func (r *PropertiesAndroidAppDataStreamsService) Patch(name string, googleanalyt
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesAndroidAppDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesAndroidAppDataStreamsPatchCall {
@@ -5983,7 +6513,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6065,7 +6595,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6098,6 +6628,8 @@ type PropertiesFirebaseLinksCreateCall struct {
 
 // Create: Creates a FirebaseLink. Properties can have at most one
 // FirebaseLink.
+//
+// - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) Create(parent string, googleanalyticsadminv1alphafirebaselink *GoogleAnalyticsAdminV1alphaFirebaseLink) *PropertiesFirebaseLinksCreateCall {
 	c := &PropertiesFirebaseLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6132,7 +6664,7 @@ func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6238,6 +6770,10 @@ type PropertiesFirebaseLinksDeleteCall struct {
 }
 
 // Delete: Deletes a FirebaseLink on a property
+//
+// - name: Format:
+//   properties/{property_id}/firebaseLinks/{firebase_link_id} Example:
+//   properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Delete(name string) *PropertiesFirebaseLinksDeleteCall {
 	c := &PropertiesFirebaseLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6271,7 +6807,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6370,6 +6906,8 @@ type PropertiesFirebaseLinksListCall struct {
 
 // List: Lists FirebaseLinks on a property. Properties can have at most
 // one FirebaseLink.
+//
+// - parent: Format: properties/{property_id} Example: properties/1234.
 func (r *PropertiesFirebaseLinksService) List(parent string) *PropertiesFirebaseLinksListCall {
 	c := &PropertiesFirebaseLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6433,7 +6971,7 @@ func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6569,6 +7107,9 @@ type PropertiesFirebaseLinksPatchCall struct {
 }
 
 // Patch: Updates a FirebaseLink on a property
+//
+// - name: Output only. Example format:
+//   properties/1234/firebaseLinks/5678.
 func (r *PropertiesFirebaseLinksService) Patch(name string, googleanalyticsadminv1alphafirebaselink *GoogleAnalyticsAdminV1alphaFirebaseLink) *PropertiesFirebaseLinksPatchCall {
 	c := &PropertiesFirebaseLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6577,7 +7118,8 @@ func (r *PropertiesFirebaseLinksService) Patch(name string, googleanalyticsadmin
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesFirebaseLinksPatchCall) UpdateMask(updateMask string) *PropertiesFirebaseLinksPatchCall {
@@ -6612,7 +7154,7 @@ func (c *PropertiesFirebaseLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +7235,7 @@ func (c *PropertiesFirebaseLinksPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6725,6 +7267,8 @@ type PropertiesGoogleAdsLinksCreateCall struct {
 }
 
 // Create: Creates a GoogleAdsLink.
+//
+// - parent: Example format: properties/1234.
 func (r *PropertiesGoogleAdsLinksService) Create(parent string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksCreateCall {
 	c := &PropertiesGoogleAdsLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6759,7 +7303,7 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6866,6 +7410,8 @@ type PropertiesGoogleAdsLinksDeleteCall struct {
 }
 
 // Delete: Deletes a GoogleAdsLink on a property
+//
+// - name: Example format: properties/1234/googleAdsLinks/5678.
 func (r *PropertiesGoogleAdsLinksService) Delete(name string) *PropertiesGoogleAdsLinksDeleteCall {
 	c := &PropertiesGoogleAdsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6899,7 +7445,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6997,6 +7543,8 @@ type PropertiesGoogleAdsLinksListCall struct {
 }
 
 // List: Lists GoogleAdsLinks on a property.
+//
+// - parent: Example format: properties/1234.
 func (r *PropertiesGoogleAdsLinksService) List(parent string) *PropertiesGoogleAdsLinksListCall {
 	c := &PropertiesGoogleAdsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7059,7 +7607,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7195,6 +7743,10 @@ type PropertiesGoogleAdsLinksPatchCall struct {
 }
 
 // Patch: Updates a GoogleAdsLink on a property
+//
+// - name: Output only. Format:
+//   properties/{propertyId}/googleAdsLinks/{googleAdsLinkId} Note:
+//   googleAdsLinkId is not the Google Ads customer ID.
 func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadminv1alphagoogleadslink *GoogleAnalyticsAdminV1alphaGoogleAdsLink) *PropertiesGoogleAdsLinksPatchCall {
 	c := &PropertiesGoogleAdsLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7203,7 +7755,8 @@ func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadmi
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesGoogleAdsLinksPatchCall) UpdateMask(updateMask string) *PropertiesGoogleAdsLinksPatchCall {
@@ -7238,7 +7791,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7320,7 +7873,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7357,6 +7910,9 @@ type PropertiesIosAppDataStreamsCreateCall struct {
 // your property is linked to a Firebase project. Then, use the Firebase
 // API to create a Firebase app, which will also create an appropriate
 // data stream in Analytics (may take up to 24 hours).
+//
+// - parent: The parent resource where this ios app data stream will be
+//   created. Format: properties/123.
 func (r *PropertiesIosAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsCreateCall {
 	c := &PropertiesIosAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7391,7 +7947,7 @@ func (c *PropertiesIosAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7498,6 +8054,10 @@ type PropertiesIosAppDataStreamsDeleteCall struct {
 }
 
 // Delete: Deletes an iOS app stream on a property.
+//
+// - name: The name of the iOS app data stream to delete. Format:
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/123/iosAppDataStreams/456".
 func (r *PropertiesIosAppDataStreamsService) Delete(name string) *PropertiesIosAppDataStreamsDeleteCall {
 	c := &PropertiesIosAppDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7531,7 +8091,7 @@ func (c *PropertiesIosAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7629,6 +8189,10 @@ type PropertiesIosAppDataStreamsGetCall struct {
 }
 
 // Get: Lookup for a single IosAppDataStream
+//
+// - name: The name of the iOS app data stream to lookup. Format:
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/123/iosAppDataStreams/456".
 func (r *PropertiesIosAppDataStreamsService) Get(name string) *PropertiesIosAppDataStreamsGetCall {
 	c := &PropertiesIosAppDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7672,7 +8236,7 @@ func (c *PropertiesIosAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7779,6 +8343,10 @@ type PropertiesIosAppDataStreamsListCall struct {
 // property. iOS app data streams will be excluded if the caller does
 // not have access. Returns an empty list if no relevant iOS app data
 // streams are found.
+//
+// - parent: The name of the parent property. For example, to list
+//   results of app streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesIosAppDataStreamsService) List(parent string) *PropertiesIosAppDataStreamsListCall {
 	c := &PropertiesIosAppDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7841,7 +8409,7 @@ func (c *PropertiesIosAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7978,6 +8546,10 @@ type PropertiesIosAppDataStreamsPatchCall struct {
 }
 
 // Patch: Updates an iOS app stream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/iosAppDataStreams/{stream_id} Example:
+//   "properties/1000/iosAppDataStreams/2000".
 func (r *PropertiesIosAppDataStreamsService) Patch(name string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsPatchCall {
 	c := &PropertiesIosAppDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7986,7 +8558,8 @@ func (r *PropertiesIosAppDataStreamsService) Patch(name string, googleanalyticsa
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesIosAppDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesIosAppDataStreamsPatchCall {
@@ -8021,7 +8594,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8103,7 +8676,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8141,6 +8714,8 @@ type PropertiesUserLinksAuditCall struct {
 // property directly with the DeleteUserLink command. They have to be
 // removed from the group/etc that gives them permissions, which is
 // currently only usable/discoverable in the GA or GMP UIs.
+//
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) Audit(parent string, googleanalyticsadminv1alphaaudituserlinksrequest *GoogleAnalyticsAdminV1alphaAuditUserLinksRequest) *PropertiesUserLinksAuditCall {
 	c := &PropertiesUserLinksAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8175,7 +8750,7 @@ func (c *PropertiesUserLinksAuditCall) Header() http.Header {
 
 func (c *PropertiesUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8307,6 +8882,11 @@ type PropertiesUserLinksBatchCreateCall struct {
 // BatchCreate: Creates information about multiple users' links to an
 // account or property. This method is transactional. If any UserLink
 // cannot be created, none of the UserLinks will be created.
+//
+// - parent: The account or property that all user links in the request
+//   are for. This field is required. The parent field in the
+//   CreateUserLinkRequest messages must either be empty or match this
+//   field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchCreate(parent string, googleanalyticsadminv1alphabatchcreateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest) *PropertiesUserLinksBatchCreateCall {
 	c := &PropertiesUserLinksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8341,7 +8921,7 @@ func (c *PropertiesUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8451,6 +9031,10 @@ type PropertiesUserLinksBatchDeleteCall struct {
 
 // BatchDelete: Deletes information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all values for user link names to delete
+//   must match this field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchDelete(parent string, googleanalyticsadminv1alphabatchdeleteuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest) *PropertiesUserLinksBatchDeleteCall {
 	c := &PropertiesUserLinksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8485,7 +9069,7 @@ func (c *PropertiesUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8592,6 +9176,10 @@ type PropertiesUserLinksBatchGetCall struct {
 
 // BatchGet: Gets information about multiple users' links to an account
 // or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent of all provided values for the 'names' field
+//   must match this field. Example format: accounts/1234.
 func (r *PropertiesUserLinksService) BatchGet(parent string) *PropertiesUserLinksBatchGetCall {
 	c := &PropertiesUserLinksBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8643,7 +9231,7 @@ func (c *PropertiesUserLinksBatchGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8754,6 +9342,11 @@ type PropertiesUserLinksBatchUpdateCall struct {
 
 // BatchUpdate: Updates information about multiple users' links to an
 // account or property.
+//
+// - parent: The account or property that all user links in the request
+//   are for. The parent field in the UpdateUserLinkRequest messages
+//   must either be empty or match this field. Example format:
+//   accounts/1234.
 func (r *PropertiesUserLinksService) BatchUpdate(parent string, googleanalyticsadminv1alphabatchupdateuserlinksrequest *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest) *PropertiesUserLinksBatchUpdateCall {
 	c := &PropertiesUserLinksBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8788,7 +9381,7 @@ func (c *PropertiesUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8900,6 +9493,8 @@ type PropertiesUserLinksCreateCall struct {
 // with the specified email already has permissions on the account or
 // property, then the user's existing permissions will be unioned with
 // the permissions specified in the new UserLink.
+//
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) Create(parent string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *PropertiesUserLinksCreateCall {
 	c := &PropertiesUserLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8942,7 +9537,7 @@ func (c *PropertiesUserLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9053,6 +9648,8 @@ type PropertiesUserLinksDeleteCall struct {
 }
 
 // Delete: Deletes a user link on an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Delete(name string) *PropertiesUserLinksDeleteCall {
 	c := &PropertiesUserLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9086,7 +9683,7 @@ func (c *PropertiesUserLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9184,6 +9781,8 @@ type PropertiesUserLinksGetCall struct {
 }
 
 // Get: Gets information about a user's link to an account or property.
+//
+// - name: Example format: accounts/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Get(name string) *PropertiesUserLinksGetCall {
 	c := &PropertiesUserLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9227,7 +9826,7 @@ func (c *PropertiesUserLinksGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9330,6 +9929,8 @@ type PropertiesUserLinksListCall struct {
 }
 
 // List: Lists all user links on an account or property.
+//
+// - parent: Example format: accounts/1234.
 func (r *PropertiesUserLinksService) List(parent string) *PropertiesUserLinksListCall {
 	c := &PropertiesUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9392,7 +9993,7 @@ func (c *PropertiesUserLinksListCall) Header() http.Header {
 
 func (c *PropertiesUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9528,6 +10129,8 @@ type PropertiesUserLinksPatchCall struct {
 }
 
 // Patch: Updates a user link on an account or property.
+//
+// - name: Example format: properties/1234/userLinks/5678.
 func (r *PropertiesUserLinksService) Patch(name string, googleanalyticsadminv1alphauserlink *GoogleAnalyticsAdminV1alphaUserLink) *PropertiesUserLinksPatchCall {
 	c := &PropertiesUserLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9562,7 +10165,7 @@ func (c *PropertiesUserLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9670,6 +10273,9 @@ type PropertiesWebDataStreamsCreateCall struct {
 
 // Create: Creates a web stream with the specified location and
 // attributes.
+//
+// - parent: The parent resource where this web data stream will be
+//   created. Format: properties/123.
 func (r *PropertiesWebDataStreamsService) Create(parent string, googleanalyticsadminv1alphawebdatastream *GoogleAnalyticsAdminV1alphaWebDataStream) *PropertiesWebDataStreamsCreateCall {
 	c := &PropertiesWebDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9704,7 +10310,7 @@ func (c *PropertiesWebDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9811,6 +10417,10 @@ type PropertiesWebDataStreamsDeleteCall struct {
 }
 
 // Delete: Deletes a web stream on a property.
+//
+// - name: The name of the web data stream to delete. Format:
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/123/webDataStreams/456".
 func (r *PropertiesWebDataStreamsService) Delete(name string) *PropertiesWebDataStreamsDeleteCall {
 	c := &PropertiesWebDataStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9844,7 +10454,7 @@ func (c *PropertiesWebDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9942,6 +10552,10 @@ type PropertiesWebDataStreamsGetCall struct {
 }
 
 // Get: Lookup for a single WebDataStream
+//
+// - name: The name of the web data stream to lookup. Format:
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/123/webDataStreams/456".
 func (r *PropertiesWebDataStreamsService) Get(name string) *PropertiesWebDataStreamsGetCall {
 	c := &PropertiesWebDataStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9985,7 +10599,7 @@ func (c *PropertiesWebDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10091,6 +10705,11 @@ type PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall struct {
 // GetEnhancedMeasurementSettings: Returns the singleton enhanced
 // measurement settings for this web stream. Note that the stream must
 // enable enhanced measurement for these settings to take effect.
+//
+// - name: The name of the settings to lookup. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
+//   entSettings Example:
+//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
 func (r *PropertiesWebDataStreamsService) GetEnhancedMeasurementSettings(name string) *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall {
 	c := &PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10134,7 +10753,7 @@ func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Header() ht
 
 func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10240,6 +10859,11 @@ type PropertiesWebDataStreamsGetGlobalSiteTagCall struct {
 
 // GetGlobalSiteTag: Returns the Site Tag for the specified web stream.
 // Site Tags are immutable singletons.
+//
+// - name: The name of the site tag to lookup. Note that site tags are
+//   singletons and do not have unique IDs. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/globalSiteTag
+//   Example: "properties/123/webDataStreams/456/globalSiteTag".
 func (r *PropertiesWebDataStreamsService) GetGlobalSiteTag(name string) *PropertiesWebDataStreamsGetGlobalSiteTagCall {
 	c := &PropertiesWebDataStreamsGetGlobalSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10283,7 +10907,7 @@ func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10390,6 +11014,10 @@ type PropertiesWebDataStreamsListCall struct {
 // property. Web data streams will be excluded if the caller does not
 // have access. Returns an empty list if no relevant web data streams
 // are found.
+//
+// - parent: The name of the parent property. For example, to list
+//   results of web streams under the property with Id 123:
+//   "properties/123".
 func (r *PropertiesWebDataStreamsService) List(parent string) *PropertiesWebDataStreamsListCall {
 	c := &PropertiesWebDataStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10452,7 +11080,7 @@ func (c *PropertiesWebDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10588,6 +11216,10 @@ type PropertiesWebDataStreamsPatchCall struct {
 }
 
 // Patch: Updates a web stream on a property.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/webDataStreams/{stream_id} Example:
+//   "properties/1000/webDataStreams/2000".
 func (r *PropertiesWebDataStreamsService) Patch(name string, googleanalyticsadminv1alphawebdatastream *GoogleAnalyticsAdminV1alphaWebDataStream) *PropertiesWebDataStreamsPatchCall {
 	c := &PropertiesWebDataStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10596,7 +11228,8 @@ func (r *PropertiesWebDataStreamsService) Patch(name string, googleanalyticsadmi
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesWebDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesWebDataStreamsPatchCall {
@@ -10631,7 +11264,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10713,7 +11346,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10747,6 +11380,11 @@ type PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall struct {
 // UpdateEnhancedMeasurementSettings: Updates the singleton enhanced
 // measurement settings for this web stream. Note that the stream must
 // enable enhanced measurement for these settings to take effect.
+//
+// - name: Output only. Resource name of this Data Stream. Format:
+//   properties/{property_id}/webDataStreams/{stream_id}/enhancedMeasurem
+//   entSettings Example:
+//   "properties/1000/webDataStreams/2000/enhancedMeasurementSettings".
 func (r *PropertiesWebDataStreamsService) UpdateEnhancedMeasurementSettings(name string, googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
 	c := &PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10755,7 +11393,8 @@ func (r *PropertiesWebDataStreamsService) UpdateEnhancedMeasurementSettings(name
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) UpdateMask(updateMask string) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
@@ -10790,7 +11429,7 @@ func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Header()
 
 func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10873,7 +11512,7 @@ func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Do(opts 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

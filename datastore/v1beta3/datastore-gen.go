@@ -85,7 +85,7 @@ const mtlsBasePath = "https://datastore.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your Google Cloud Datastore data
@@ -2217,6 +2217,8 @@ type ProjectsAllocateIdsCall struct {
 
 // AllocateIds: Allocates IDs for the given keys, which is useful for
 // referencing an entity before it is inserted.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) AllocateIds(projectId string, allocateidsrequest *AllocateIdsRequest) *ProjectsAllocateIdsCall {
 	c := &ProjectsAllocateIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2251,7 +2253,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2357,6 +2359,8 @@ type ProjectsBeginTransactionCall struct {
 }
 
 // BeginTransaction: Begins a new transaction.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) BeginTransaction(projectId string, begintransactionrequest *BeginTransactionRequest) *ProjectsBeginTransactionCall {
 	c := &ProjectsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2391,7 +2395,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2498,6 +2502,8 @@ type ProjectsCommitCall struct {
 
 // Commit: Commits a transaction, optionally creating, deleting or
 // modifying some entities.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Commit(projectId string, commitrequest *CommitRequest) *ProjectsCommitCall {
 	c := &ProjectsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2532,7 +2538,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,6 +2644,8 @@ type ProjectsLookupCall struct {
 }
 
 // Lookup: Looks up entities by key.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Lookup(projectId string, lookuprequest *LookupRequest) *ProjectsLookupCall {
 	c := &ProjectsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2672,7 +2680,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2779,6 +2787,8 @@ type ProjectsReserveIdsCall struct {
 
 // ReserveIds: Prevents the supplied keys' IDs from being auto-allocated
 // by Cloud Datastore.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) ReserveIds(projectId string, reserveidsrequest *ReserveIdsRequest) *ProjectsReserveIdsCall {
 	c := &ProjectsReserveIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2813,7 +2823,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2919,6 +2929,8 @@ type ProjectsRollbackCall struct {
 }
 
 // Rollback: Rolls back a transaction.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) Rollback(projectId string, rollbackrequest *RollbackRequest) *ProjectsRollbackCall {
 	c := &ProjectsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2953,7 +2965,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3059,6 +3071,8 @@ type ProjectsRunQueryCall struct {
 }
 
 // RunQuery: Queries for entities.
+//
+// - projectId: The ID of the project against which to make the request.
 func (r *ProjectsService) RunQuery(projectId string, runqueryrequest *RunQueryRequest) *ProjectsRunQueryCall {
 	c := &ProjectsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3093,7 +3107,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

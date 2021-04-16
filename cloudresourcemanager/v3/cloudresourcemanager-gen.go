@@ -83,7 +83,7 @@ const mtlsBasePath = "https://cloudresourcemanager.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -124,8 +124,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Folders = NewFoldersService(s)
 	s.Liens = NewLiensService(s)
 	s.Operations = NewOperationsService(s)
+	s.Organizations = NewOrganizationsService(s)
+	s.Projects = NewProjectsService(s)
 	s.TagBindings = NewTagBindingsService(s)
 	s.TagKeys = NewTagKeysService(s)
 	s.TagValues = NewTagValuesService(s)
@@ -137,9 +140,15 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Folders *FoldersService
+
 	Liens *LiensService
 
 	Operations *OperationsService
+
+	Organizations *OrganizationsService
+
+	Projects *ProjectsService
 
 	TagBindings *TagBindingsService
 
@@ -153,6 +162,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
 }
 
 func NewLiensService(s *Service) *LiensService {
@@ -170,6 +188,24 @@ func NewOperationsService(s *Service) *OperationsService {
 }
 
 type OperationsService struct {
+	s *Service
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	return rs
+}
+
+type ProjectsService struct {
 	s *Service
 }
 
@@ -462,6 +498,83 @@ func (s *CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation) M
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateFolderMetadata: Metadata pertaining to the Folder creation
+// process.
+type CreateFolderMetadata struct {
+	// DisplayName: The display name of the folder.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Parent: The resource name of the folder or organization we are
+	// creating the folder under.
+	Parent string `json:"parent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateFolderMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateFolderMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateProjectMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by CreateProject. It
+// provides insight for when significant phases of Project creation have
+// completed.
+type CreateProjectMetadata struct {
+	// CreateTime: Creation time of the project creation workflow.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Gettable: True if the project can be retrieved using `GetProject`. No
+	// other operations on the project are guaranteed to work until the
+	// project creation is complete.
+	Gettable bool `json:"gettable,omitempty"`
+
+	// Ready: True if the project creation process is complete.
+	Ready bool `json:"ready,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateProjectMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateProjectMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateTagBindingMetadata: Runtime operation information for creating
+// a TagValue.
+type CreateTagBindingMetadata struct {
+}
+
 // CreateTagKeyMetadata: Runtime operation information for creating a
 // TagKey.
 type CreateTagKeyMetadata struct {
@@ -470,6 +583,26 @@ type CreateTagKeyMetadata struct {
 // CreateTagValueMetadata: Runtime operation information for creating a
 // TagValue.
 type CreateTagValueMetadata struct {
+}
+
+// DeleteFolderMetadata: A status object which is used as the `metadata`
+// field for the `Operation` returned by `DeleteFolder`.
+type DeleteFolderMetadata struct {
+}
+
+// DeleteOrganizationMetadata: A status object which is used as the
+// `metadata` field for the operation returned by DeleteOrganization.
+type DeleteOrganizationMetadata struct {
+}
+
+// DeleteProjectMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by `DeleteProject`.
+type DeleteProjectMetadata struct {
+}
+
+// DeleteTagBindingMetadata: Runtime operation information for deleting
+// a TagBinding.
+type DeleteTagBindingMetadata struct {
 }
 
 // DeleteTagKeyMetadata: Runtime operation information for deleting a
@@ -550,6 +683,79 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Folder: A folder in an organization's resource hierarchy, used to
+// organize that organization's resources.
+type Folder struct {
+	// CreateTime: Output only. Timestamp when the folder was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. Timestamp when the folder was requested to
+	// be deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: The folder's display name. A folder's display name must
+	// be unique amongst its siblings. For example, no two folders with the
+	// same parent can share the same display name. The display name must
+	// start and end with a letter or digit, may contain letters, digits,
+	// spaces, hyphens and underscores and can be no longer than 30
+	// characters. This is captured by the regular expression:
+	// `[\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?`.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. A checksum computed by the server based on the
+	// current value of the folder resource. This may be sent on update and
+	// delete requests to ensure the client has an up-to-date value before
+	// proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name of the folder. Its format is
+	// `folders/{folder_id}`, for example: "folders/1234".
+	Name string `json:"name,omitempty"`
+
+	// Parent: Required. The folder's parent's resource name. Updates to the
+	// folder's parent must be performed using MoveFolder.
+	Parent string `json:"parent,omitempty"`
+
+	// State: Output only. The lifecycle state of the folder. Updates to the
+	// state must be performed using DeleteFolder and UndeleteFolder.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETE_REQUESTED" - The folder has been marked for deletion by the
+	// user.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the folder was last modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Folder) MarshalJSON() ([]byte, error) {
+	type NoMethod Folder
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -775,6 +981,43 @@ func (s *Lien) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListFoldersResponse: The ListFolders response message.
+type ListFoldersResponse struct {
+	// Folders: A possibly paginated list of folders that are direct
+	// descendants of the specified parent resource.
+	Folders []*Folder `json:"folders,omitempty"`
+
+	// NextPageToken: A pagination token returned from a previous call to
+	// `ListFolders` that indicates from where listing should continue.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListFoldersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFoldersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListLiensResponse: The response message for Liens.ListLiens.
 type ListLiensResponse struct {
 	// Liens: A list of Liens.
@@ -811,12 +1054,62 @@ func (s *ListLiensResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListProjectsResponse: A page of the response received from the
+// ListProjects method. A paginated response where more pages are
+// available has `next_page_token` set. This token can be used in a
+// subsequent request to retrieve the next request page. NOTE: A
+// response may contain fewer elements than the request `page_size` and
+// still have a `next_page_token`.
+type ListProjectsResponse struct {
+	// NextPageToken: Pagination token. If the result set is too large to
+	// fit in a single response, this token is returned. It encodes the
+	// position of the current result cursor. Feeding this value into a new
+	// list request with the `page_token` parameter gives the next page of
+	// the results. When `next_page_token` is not filled in, there is no
+	// next page and the list returned is the last page in the result set.
+	// Pagination tokens have a limited lifetime.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Projects: The list of Projects under the parent. This list can be
+	// paginated.
+	Projects []*Project `json:"projects,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListProjectsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListProjectsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListTagBindingsResponse: The ListTagBindings response.
 type ListTagBindingsResponse struct {
-	// NextPageToken: A pagination token returned from a previous call to
-	// `ListTagBindings` that indicates from where listing should continue.
-	// This is currently not used, but the server may at any point start
-	// supplying a valid token.
+	// NextPageToken: Pagination token. If the result set is too large to
+	// fit in a single response, this token is returned. It encodes the
+	// position of the current result cursor. Feeding this value into a new
+	// list request with the `page_token` parameter gives the next page of
+	// the results. When `next_page_token` is not filled in, there is no
+	// next page and the list returned is the last page in the result set.
+	// Pagination tokens have a limited lifetime.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TagBindings: A possibly paginated list of TagBindings for the
@@ -853,9 +1146,7 @@ func (s *ListTagBindingsResponse) MarshalJSON() ([]byte, error) {
 // ListTagKeysResponse: The ListTagKeys response message.
 type ListTagKeysResponse struct {
 	// NextPageToken: A pagination token returned from a previous call to
-	// `ListTagKeys` that indicates from where listing should continue. This
-	// is currently not used, but the server may at any point start
-	// supplying a valid token.
+	// `ListTagKeys` that indicates from where listing should continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TagKeys: List of TagKeys that live under the specified parent in the
@@ -928,6 +1219,108 @@ func (s *ListTagValuesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MoveFolderMetadata: Metadata pertaining to the folder move process.
+type MoveFolderMetadata struct {
+	// DestinationParent: The resource name of the folder or organization to
+	// move the folder to.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// DisplayName: The display name of the folder.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// SourceParent: The resource name of the folder's parent.
+	SourceParent string `json:"sourceParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationParent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveFolderMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveFolderMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MoveFolderRequest: The MoveFolder request message.
+type MoveFolderRequest struct {
+	// DestinationParent: Required. The resource name of the folder or
+	// organization which should be the folder's new parent. Must be of the
+	// form `folders/{folder_id}` or `organizations/{org_id}`.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationParent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveFolderRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveFolderRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MoveProjectMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by MoveProject.
+type MoveProjectMetadata struct {
+}
+
+// MoveProjectRequest: The request sent to MoveProject method.
+type MoveProjectRequest struct {
+	// DestinationParent: Required. The new parent to move the Project
+	// under.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationParent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveProjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveProjectRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -986,6 +1379,79 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Organization: The root node in the resource hierarchy to which a
+// particular entity's (a company, for example) resources belong.
+type Organization struct {
+	// CreateTime: Output only. Timestamp when the Organization was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. Timestamp when the Organization was
+	// requested for deletion.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DirectoryCustomerId: Immutable. The G Suite / Workspace customer id
+	// used in the Directory API.
+	DirectoryCustomerId string `json:"directoryCustomerId,omitempty"`
+
+	// DisplayName: Output only. A human-readable string that refers to the
+	// organization in the Google Cloud Console. This string is set by the
+	// server and cannot be changed. The string will be set to the primary
+	// domain (for example, "google.com") of the Google Workspace customer
+	// that owns the organization.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. A checksum computed by the server based on the
+	// current value of the Organization resource. This may be sent on
+	// update and delete requests to ensure the client has an up-to-date
+	// value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name of the organization. This is the
+	// organization's relative path in the API. Its format is
+	// "organizations/[organization_id]". For example, "organizations/1234".
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The organization's current lifecycle state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. This is only useful for
+	// distinguishing unset values.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETE_REQUESTED" - The organization has been marked for deletion
+	// by the user.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the Organization was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Organization) MarshalJSON() ([]byte, error) {
+	type NoMethod Organization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1094,6 +1560,99 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Project: A project is a high-level Google Cloud entity. It is a
+// container for ACLs, APIs, App Engine Apps, VMs, and other Google
+// Cloud Platform resources.
+type Project struct {
+	// CreateTime: Output only. Creation time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. The time at which this resource was
+	// requested for deletion.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: Optional. A user-assigned display name of the project.
+	// When present it must be between 4 to 30 characters. Allowed
+	// characters are: lowercase and uppercase letters, numbers, hyphen,
+	// single-quote, double-quote, space, and exclamation point. Example:
+	// `My Project`
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. A checksum computed by the server based on the
+	// current value of the Project resource. This may be sent on update and
+	// delete requests to ensure the client has an up-to-date value before
+	// proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. The labels associated with this project. Label keys
+	// must be between 1 and 63 characters long and must conform to the
+	// following regular expression: \a-z\ (\[-a-z0-9\]*\[a-z0-9\])?. Label
+	// values must be between 0 and 63 characters long and must conform to
+	// the regular expression (\a-z\ (\[-a-z0-9\]*\[a-z0-9\])?)?. No more
+	// than 256 labels can be associated with a given resource. Clients
+	// should store labels in a representation such as JSON that does not
+	// depend on specific characters being disallowed. Example:
+	// "myBusinessDimension" : "businessValue"
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The unique resource name of the project. It is an
+	// int64 generated number prefixed by "projects/". Example:
+	// `projects/415104041262`
+	Name string `json:"name,omitempty"`
+
+	// Parent: Optional. A reference to a parent Resource. eg.,
+	// `organizations/123` or `folders/876`.
+	Parent string `json:"parent,omitempty"`
+
+	// ProjectId: Immutable. The unique, user-assigned id of the project. It
+	// must be 6 to 30 lowercase ASCII letters, digits, or hyphens. It must
+	// start with a letter. Trailing hyphens are prohibited. Example:
+	// `tokyo-rain-123`
+	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. The project lifecycle state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. This is only used/useful
+	// for distinguishing unset values.
+	//   "ACTIVE" - The normal and active state.
+	//   "DELETE_REQUESTED" - The project has been marked for deletion by
+	// the user (by invoking DeleteProject) or by the system (Google Cloud
+	// Platform). This can generally be reversed by invoking
+	// UndeleteProject.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The most recent time this resource was
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Project) MarshalJSON() ([]byte, error) {
+	type NoMethod Project
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProjectCreationStatus: A status object which is used as the
 // `metadata` field for the Operation returned by CreateProject. It
 // provides insight for when significant phases of Project creation have
@@ -1129,6 +1688,130 @@ type ProjectCreationStatus struct {
 
 func (s *ProjectCreationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectCreationStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchFoldersResponse: The response message for searching folders.
+type SearchFoldersResponse struct {
+	// Folders: A possibly paginated folder search results. the specified
+	// parent resource.
+	Folders []*Folder `json:"folders,omitempty"`
+
+	// NextPageToken: A pagination token returned from a previous call to
+	// `SearchFolders` that indicates from where searching should continue.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchFoldersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchFoldersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchOrganizationsResponse: The response returned from the
+// `SearchOrganizations` method.
+type SearchOrganizationsResponse struct {
+	// NextPageToken: A pagination token to be used to retrieve the next
+	// page of results. If the result is too large to fit within the page
+	// size specified in the request, this field will be set with a token
+	// that can be used to fetch the next page of results. If this field is
+	// empty, it indicates that this response contains the last page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Organizations: The list of Organizations that matched the search
+	// query, possibly paginated.
+	Organizations []*Organization `json:"organizations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchOrganizationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchOrganizationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchProjectsResponse: A page of the response received from the
+// SearchProjects method. A paginated response where more pages are
+// available has `next_page_token` set. This token can be used in a
+// subsequent request to retrieve the next request page.
+type SearchProjectsResponse struct {
+	// NextPageToken: Pagination token. If the result set is too large to
+	// fit in a single response, this token is returned. It encodes the
+	// position of the current result cursor. Feeding this value into a new
+	// list request with the `page_token` parameter gives the next page of
+	// the results. When `next_page_token` is not filled in, there is no
+	// next page and the list returned is the last page in the result set.
+	// Pagination tokens have a limited lifetime.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Projects: The list of Projects that matched the list filter query.
+	// This list can be paginated.
+	Projects []*Project `json:"projects,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchProjectsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchProjectsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1452,6 +2135,40 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UndeleteFolderMetadata: A status object which is used as the
+// `metadata` field for the `Operation` returned by `UndeleteFolder`.
+type UndeleteFolderMetadata struct {
+}
+
+// UndeleteFolderRequest: The UndeleteFolder request message.
+type UndeleteFolderRequest struct {
+}
+
+// UndeleteOrganizationMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UndeleteOrganization.
+type UndeleteOrganizationMetadata struct {
+}
+
+// UndeleteProjectMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by `UndeleteProject`.
+type UndeleteProjectMetadata struct {
+}
+
+// UndeleteProjectRequest: The request sent to the UndeleteProject
+// method.
+type UndeleteProjectRequest struct {
+}
+
+// UpdateFolderMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by UpdateFolder.
+type UpdateFolderMetadata struct {
+}
+
+// UpdateProjectMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UpdateProject.
+type UpdateProjectMetadata struct {
+}
+
 // UpdateTagKeyMetadata: Runtime operation information for updating a
 // TagKey.
 type UpdateTagKeyMetadata struct {
@@ -1460,6 +2177,1786 @@ type UpdateTagKeyMetadata struct {
 // UpdateTagValueMetadata: Runtime operation information for updating a
 // TagValue.
 type UpdateTagValueMetadata struct {
+}
+
+// method id "cloudresourcemanager.folders.create":
+
+type FoldersCreateCall struct {
+	s          *Service
+	folder     *Folder
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a folder in the resource hierarchy. Returns an
+// `Operation` which can be used to track the progress of the folder
+// creation workflow. Upon success, the `Operation.response` field will
+// be populated with the created Folder. In order to succeed, the
+// addition of this new folder must not violate the folder naming,
+// height, or fanout constraints. + The folder's `display_name` must be
+// distinct from all other folders that share its parent. + The addition
+// of the folder must not cause the active folder hierarchy to exceed a
+// height of 10. Note, the full active + deleted folder hierarchy is
+// allowed to reach a height of 20; this provides additional headroom
+// when moving folders that contain deleted folders. + The addition of
+// the folder must not cause the total number of folders under its
+// parent to exceed 300. If the operation fails due to a folder
+// constraint violation, some errors may be returned by the
+// `CreateFolder` request, with status code `FAILED_PRECONDITION` and an
+// error description. Other folder constraint violations will be
+// communicated in the `Operation`, with the specific
+// `PreconditionFailure` returned in the details list in the
+// `Operation.error` field. The caller must have
+// `resourcemanager.folders.create` permission on the identified parent.
+func (r *FoldersService) Create(folder *Folder) *FoldersCreateCall {
+	c := &FoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersCreateCall) Fields(s ...googleapi.Field) *FoldersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersCreateCall) Context(ctx context.Context) *FoldersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/folders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a folder in the resource hierarchy. Returns an `Operation` which can be used to track the progress of the folder creation workflow. Upon success, the `Operation.response` field will be populated with the created Folder. In order to succeed, the addition of this new folder must not violate the folder naming, height, or fanout constraints. + The folder's `display_name` must be distinct from all other folders that share its parent. + The addition of the folder must not cause the active folder hierarchy to exceed a height of 10. Note, the full active + deleted folder hierarchy is allowed to reach a height of 20; this provides additional headroom when moving folders that contain deleted folders. + The addition of the folder must not cause the total number of folders under its parent to exceed 300. If the operation fails due to a folder constraint violation, some errors may be returned by the `CreateFolder` request, with status code `FAILED_PRECONDITION` and an error description. Other folder constraint violations will be communicated in the `Operation`, with the specific `PreconditionFailure` returned in the details list in the `Operation.error` field. The caller must have `resourcemanager.folders.create` permission on the identified parent.",
+	//   "flatPath": "v3/folders",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.folders.create",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v3/folders",
+	//   "request": {
+	//     "$ref": "Folder"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.delete":
+
+type FoldersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Requests deletion of a folder. The folder is moved into the
+// DELETE_REQUESTED state immediately, and is deleted approximately 30
+// days later. This method may only be called on an empty folder, where
+// a folder is empty if it doesn't contain any folders or projects in
+// the ACTIVE state. If called on a folder in DELETE_REQUESTED state the
+// operation will result in a no-op success. The caller must have
+// `resourcemanager.folders.delete` permission on the identified folder.
+//
+// - name: The resource name of the folder to be deleted. Must be of the
+//   form `folders/{folder_id}`.
+func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
+	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersDeleteCall) Fields(s ...googleapi.Field) *FoldersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersDeleteCall) Context(ctx context.Context) *FoldersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Requests deletion of a folder. The folder is moved into the DELETE_REQUESTED state immediately, and is deleted approximately 30 days later. This method may only be called on an empty folder, where a folder is empty if it doesn't contain any folders or projects in the ACTIVE state. If called on a folder in DELETE_REQUESTED state the operation will result in a no-op success. The caller must have `resourcemanager.folders.delete` permission on the identified folder.",
+	//   "flatPath": "v3/folders/{foldersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudresourcemanager.folders.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the folder to be deleted. Must be of the form `folders/{folder_id}`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.get":
+
+type FoldersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a folder identified by the supplied resource name.
+// Valid folder resource names have the format `folders/{folder_id}`
+// (for example, `folders/1234`). The caller must have
+// `resourcemanager.folders.get` permission on the identified folder.
+//
+// - name: The resource name of the folder to retrieve. Must be of the
+//   form `folders/{folder_id}`.
+func (r *FoldersService) Get(name string) *FoldersGetCall {
+	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetCall) Fields(s ...googleapi.Field) *FoldersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetCall) IfNoneMatch(entityTag string) *FoldersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetCall) Context(ctx context.Context) *FoldersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.get" call.
+// Exactly one of *Folder or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Folder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a folder identified by the supplied resource name. Valid folder resource names have the format `folders/{folder_id}` (for example, `folders/1234`). The caller must have `resourcemanager.folders.get` permission on the identified folder.",
+	//   "flatPath": "v3/folders/{foldersId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.folders.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the folder to retrieve. Must be of the form `folders/{folder_id}`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Folder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.getIamPolicy":
+
+type FoldersGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a folder. The
+// returned policy may be empty if no such policy or resource exists.
+// The `resource` field should be the folder's resource name, for
+// example: "folders/1234". The caller must have
+// `resourcemanager.folders.getIamPolicy` permission on the identified
+// folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
+	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetIamPolicyCall) Fields(s ...googleapi.Field) *FoldersGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetIamPolicyCall) Context(ctx context.Context) *FoldersGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a folder. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the folder's resource name, for example: \"folders/1234\". The caller must have `resourcemanager.folders.getIamPolicy` permission on the identified folder.",
+	//   "flatPath": "v3/folders/{foldersId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.folders.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.list":
+
+type FoldersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the folders that are direct descendants of supplied
+// parent resource. `list()` provides a strongly consistent view of the
+// folders underneath the specified parent resource. `list()` returns
+// folders sorted based upon the (ascending) lexical ordering of their
+// display_name. The caller must have `resourcemanager.folders.list`
+// permission on the identified parent.
+func (r *FoldersService) List() *FoldersListCall {
+	c := &FoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of folders to return in the response. If unspecified, server picks an
+// appropriate default.
+func (c *FoldersListCall) PageSize(pageSize int64) *FoldersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `ListFolders` that indicates where
+// this listing should continue from.
+func (c *FoldersListCall) PageToken(pageToken string) *FoldersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. The resource
+// name of the organization or folder whose folders are being listed.
+// Must be of the form `folders/{folder_id}` or
+// `organizations/{org_id}`. Access to this method is controlled by
+// checking the `resourcemanager.folders.list` permission on the
+// `parent`.
+func (c *FoldersListCall) Parent(parent string) *FoldersListCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Controls
+// whether folders in the DELETE_REQUESTED state should be returned.
+// Defaults to false.
+func (c *FoldersListCall) ShowDeleted(showDeleted bool) *FoldersListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersListCall) Fields(s ...googleapi.Field) *FoldersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersListCall) IfNoneMatch(entityTag string) *FoldersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersListCall) Context(ctx context.Context) *FoldersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/folders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.list" call.
+// Exactly one of *ListFoldersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListFoldersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListFoldersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the folders that are direct descendants of supplied parent resource. `list()` provides a strongly consistent view of the folders underneath the specified parent resource. `list()` returns folders sorted based upon the (ascending) lexical ordering of their display_name. The caller must have `resourcemanager.folders.list` permission on the identified parent.",
+	//   "flatPath": "v3/folders",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.folders.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of folders to return in the response. If unspecified, server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to `ListFolders` that indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the organization or folder whose folders are being listed. Must be of the form `folders/{folder_id}` or `organizations/{org_id}`. Access to this method is controlled by checking the `resourcemanager.folders.list` permission on the `parent`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Optional. Controls whether folders in the DELETE_REQUESTED state should be returned. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v3/folders",
+	//   "response": {
+	//     "$ref": "ListFoldersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersListCall) Pages(ctx context.Context, f func(*ListFoldersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudresourcemanager.folders.move":
+
+type FoldersMoveCall struct {
+	s                 *Service
+	name              string
+	movefolderrequest *MoveFolderRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Move: Moves a folder under a new resource parent. Returns an
+// `Operation` which can be used to track the progress of the folder
+// move workflow. Upon success, the `Operation.response` field will be
+// populated with the moved folder. Upon failure, a
+// `FolderOperationError` categorizing the failure cause will be
+// returned - if the failure occurs synchronously then the
+// `FolderOperationError` will be returned in the `Status.details`
+// field. If it occurs asynchronously, then the FolderOperation will be
+// returned in the `Operation.error` field. In addition, the
+// `Operation.metadata` field will be populated with a `FolderOperation`
+// message as an aid to stateless clients. Folder moves will be rejected
+// if they violate either the naming, height, or fanout constraints
+// described in the CreateFolder documentation. The caller must have
+// `resourcemanager.folders.move` permission on the folder's current and
+// proposed new parent.
+//
+// - name: The resource name of the Folder to move. Must be of the form
+//   folders/{folder_id}.
+func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
+	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.movefolderrequest = movefolderrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersMoveCall) Fields(s ...googleapi.Field) *FoldersMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersMoveCall) Context(ctx context.Context) *FoldersMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.movefolderrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.move" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Moves a folder under a new resource parent. Returns an `Operation` which can be used to track the progress of the folder move workflow. Upon success, the `Operation.response` field will be populated with the moved folder. Upon failure, a `FolderOperationError` categorizing the failure cause will be returned - if the failure occurs synchronously then the `FolderOperationError` will be returned in the `Status.details` field. If it occurs asynchronously, then the FolderOperation will be returned in the `Operation.error` field. In addition, the `Operation.metadata` field will be populated with a `FolderOperation` message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height, or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.",
+	//   "flatPath": "v3/folders/{foldersId}:move",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.folders.move",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Folder to move. Must be of the form folders/{folder_id}",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}:move",
+	//   "request": {
+	//     "$ref": "MoveFolderRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.patch":
+
+type FoldersPatchCall struct {
+	s          *Service
+	name       string
+	folder     *Folder
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a folder, changing its `display_name`. Changes to the
+// folder `display_name` will be rejected if they violate either the
+// `display_name` formatting rules or the naming constraints described
+// in the CreateFolder documentation. The folder's `display_name` must
+// start and end with a letter or digit, may contain letters, digits,
+// spaces, hyphens and underscores and can be between 3 and 30
+// characters. This is captured by the regular expression:
+// `\p{L}\p{N}{1,28}[\p{L}\p{N}]`. The caller must have
+// `resourcemanager.folders.update` permission on the identified folder.
+// If the update fails due to the unique name constraint then a
+// `PreconditionFailure` explaining this violation will be returned in
+// the Status.details field.
+//
+// - name: Output only. The resource name of the folder. Its format is
+//   `folders/{folder_id}`, for example: "folders/1234".
+func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
+	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.folder = folder
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Fields
+// to be updated. Only the `display_name` can be updated.
+func (c *FoldersPatchCall) UpdateMask(updateMask string) *FoldersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersPatchCall) Fields(s ...googleapi.Field) *FoldersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersPatchCall) Context(ctx context.Context) *FoldersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a folder, changing its `display_name`. Changes to the folder `display_name` will be rejected if they violate either the `display_name` formatting rules or the naming constraints described in the CreateFolder documentation. The folder's `display_name` must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be between 3 and 30 characters. This is captured by the regular expression: `\\p{L}\\p{N}{1,28}[\\p{L}\\p{N}]`. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a `PreconditionFailure` explaining this violation will be returned in the Status.details field.",
+	//   "flatPath": "v3/folders/{foldersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudresourcemanager.folders.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of the folder. Its format is `folders/{folder_id}`, for example: \"folders/1234\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Fields to be updated. Only the `display_name` can be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "request": {
+	//     "$ref": "Folder"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.search":
+
+type FoldersSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Search for folders that match specific filter criteria.
+// `search()` provides an eventually consistent view of the folders a
+// user has access to which meet the specified filter criteria. This
+// will only return folders on which the caller has the permission
+// `resourcemanager.folders.get`.
+func (r *FoldersService) Search() *FoldersSearchCall {
+	c := &FoldersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of folders to return in the response. If unspecified, server picks an
+// appropriate default.
+func (c *FoldersSearchCall) PageSize(pageSize int64) *FoldersSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `SearchFolders` that indicates from
+// where search should continue.
+func (c *FoldersSearchCall) PageToken(pageToken string) *FoldersSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Query sets the optional parameter "query": Search criteria used to
+// select the folders to return. If no search criteria is specified then
+// all accessible folders will be returned. Query expressions can be
+// used to restrict results based upon displayName, state and parent,
+// where the operators `=` (`:`) `NOT`, `AND` and `OR` can be used along
+// with the suffix wildcard symbol `*`. The `displayName` field in a
+// query expression should use escaped quotes for values that include
+// whitespace to prevent unexpected behavior. | Field | Description |
+// |-------------------------|----------------------------------------|
+// | displayName | Filters by displayName. | | parent | Filters by
+// parent (for example: folders/123). | | state, lifecycleState |
+// Filters by state. | Some example queries are: * Query
+// `displayName=Test*` returns Folder resources whose display name
+// starts with "Test". * Query `state=ACTIVE` returns Folder resources
+// with `state` set to `ACTIVE`. * Query `parent=folders/123` returns
+// Folder resources that have `folders/123` as a parent resource. *
+// Query `parent=folders/123 AND state=ACTIVE` returns active Folder
+// resources that have `folders/123` as a parent resource. * Query
+// `displayName=\\"Test String\\" returns Folder resources with display
+// names that include both "Test" and "String".
+func (c *FoldersSearchCall) Query(query string) *FoldersSearchCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSearchCall) Fields(s ...googleapi.Field) *FoldersSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSearchCall) IfNoneMatch(entityTag string) *FoldersSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSearchCall) Context(ctx context.Context) *FoldersSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/folders:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.search" call.
+// Exactly one of *SearchFoldersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SearchFoldersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersSearchCall) Do(opts ...googleapi.CallOption) (*SearchFoldersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchFoldersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Search for folders that match specific filter criteria. `search()` provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.",
+	//   "flatPath": "v3/folders:search",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.folders.search",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of folders to return in the response. If unspecified, server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to `SearchFolders` that indicates from where search should continue.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "Optional. Search criteria used to select the folders to return. If no search criteria is specified then all accessible folders will be returned. Query expressions can be used to restrict results based upon displayName, state and parent, where the operators `=` (`:`) `NOT`, `AND` and `OR` can be used along with the suffix wildcard symbol `*`. The `displayName` field in a query expression should use escaped quotes for values that include whitespace to prevent unexpected behavior. | Field | Description | |-------------------------|----------------------------------------| | displayName | Filters by displayName. | | parent | Filters by parent (for example: folders/123). | | state, lifecycleState | Filters by state. | Some example queries are: * Query `displayName=Test*` returns Folder resources whose display name starts with \"Test\". * Query `state=ACTIVE` returns Folder resources with `state` set to `ACTIVE`. * Query `parent=folders/123` returns Folder resources that have `folders/123` as a parent resource. * Query `parent=folders/123 AND state=ACTIVE` returns active Folder resources that have `folders/123` as a parent resource. * Query `displayName=\\\\\"Test String\\\\\"` returns Folder resources with display names that include both \"Test\" and \"String\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/folders:search",
+	//   "response": {
+	//     "$ref": "SearchFoldersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSearchCall) Pages(ctx context.Context, f func(*SearchFoldersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudresourcemanager.folders.setIamPolicy":
+
+type FoldersSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on a folder, replacing
+// any existing policy. The `resource` field should be the folder's
+// resource name, for example: "folders/1234". The caller must have
+// `resourcemanager.folders.setIamPolicy` permission on the identified
+// folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
+	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSetIamPolicyCall) Fields(s ...googleapi.Field) *FoldersSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSetIamPolicyCall) Context(ctx context.Context) *FoldersSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on a folder, replacing any existing policy. The `resource` field should be the folder's resource name, for example: \"folders/1234\". The caller must have `resourcemanager.folders.setIamPolicy` permission on the identified folder.",
+	//   "flatPath": "v3/folders/{foldersId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.folders.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.testIamPermissions":
+
+type FoldersTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified folder. The `resource` field should be the folder's
+// resource name, for example: "folders/1234". There are no permissions
+// required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
+	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersTestIamPermissionsCall) Fields(s ...googleapi.Field) *FoldersTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersTestIamPermissionsCall) Context(ctx context.Context) *FoldersTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified folder. The `resource` field should be the folder's resource name, for example: \"folders/1234\". There are no permissions required for making this API call.",
+	//   "flatPath": "v3/folders/{foldersId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.folders.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.folders.undelete":
+
+type FoldersUndeleteCall struct {
+	s                     *Service
+	name                  string
+	undeletefolderrequest *UndeleteFolderRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Undelete: Cancels the deletion request for a folder. This method may
+// be called on a folder in any state. If the folder is in the ACTIVE
+// state the result will be a no-op success. In order to succeed, the
+// folder's parent must be in the ACTIVE state. In addition,
+// reintroducing the folder into the tree must not violate folder
+// naming, height, and fanout constraints described in the CreateFolder
+// documentation. The caller must have
+// `resourcemanager.folders.undelete` permission on the identified
+// folder.
+//
+// - name: The resource name of the folder to undelete. Must be of the
+//   form `folders/{folder_id}`.
+func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
+	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeletefolderrequest = undeletefolderrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersUndeleteCall) Fields(s ...googleapi.Field) *FoldersUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersUndeleteCall) Context(ctx context.Context) *FoldersUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletefolderrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.undelete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancels the deletion request for a folder. This method may be called on a folder in any state. If the folder is in the ACTIVE state the result will be a no-op success. In order to succeed, the folder's parent must be in the ACTIVE state. In addition, reintroducing the folder into the tree must not violate folder naming, height, and fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.undelete` permission on the identified folder.",
+	//   "flatPath": "v3/folders/{foldersId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.folders.undelete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the folder to undelete. Must be of the form `folders/{folder_id}`.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteFolderRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudresourcemanager.liens.create":
@@ -1510,7 +4007,7 @@ func (c *LiensCreateCall) Header() http.Header {
 
 func (c *LiensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1606,6 +4103,8 @@ type LiensDeleteCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.updateLiens`.
+//
+// - name: The name/identifier of the Lien to delete.
 func (r *LiensService) Delete(nameid string) *LiensDeleteCall {
 	c := &LiensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1639,7 +4138,7 @@ func (c *LiensDeleteCall) Header() http.Header {
 
 func (c *LiensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1739,9 +4238,10 @@ type LiensGetCall struct {
 
 // Get: Retrieve a Lien by `name`. Callers of this method will require
 // permission on the `parent` resource. For example, a Lien with a
-// `parent` of `projects/1234` requires permission requires permission
-// `resourcemanager.projects.get` or
-// `resourcemanager.projects.updateLiens`.
+// `parent` of `projects/1234` requires permission
+// `resourcemanager.projects.get`
+//
+// - name: The name/identifier of the Lien.
 func (r *LiensService) Get(nameid string) *LiensGetCall {
 	c := &LiensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1785,7 +4285,7 @@ func (c *LiensGetCall) Header() http.Header {
 
 func (c *LiensGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1847,7 +4347,7 @@ func (c *LiensGetCall) Do(opts ...googleapi.CallOption) (*Lien, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a Lien by `name`. Callers of this method will require permission on the `parent` resource. For example, a Lien with a `parent` of `projects/1234` requires permission requires permission `resourcemanager.projects.get` or `resourcemanager.projects.updateLiens`.",
+	//   "description": "Retrieve a Lien by `name`. Callers of this method will require permission on the `parent` resource. For example, a Lien with a `parent` of `projects/1234` requires permission `resourcemanager.projects.get`",
 	//   "flatPath": "v3/liens/{liensId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.liens.get",
@@ -1956,7 +4456,7 @@ func (c *LiensListCall) Header() http.Header {
 
 func (c *LiensListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2085,6 +4585,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2128,7 +4630,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2218,6 +4720,2591 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 
 }
 
+// method id "cloudresourcemanager.organizations.get":
+
+type OrganizationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Fetches an organization resource identified by the specified
+// resource name.
+//
+// - name: The resource name of the Organization to fetch. This is the
+//   organization's relative path in the API, formatted as
+//   "organizations/[organizationId]". For example,
+//   "organizations/1234".
+func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
+	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetCall) Fields(s ...googleapi.Field) *OrganizationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetCall) IfNoneMatch(entityTag string) *OrganizationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetCall) Context(ctx context.Context) *OrganizationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.get" call.
+// Exactly one of *Organization or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Organization.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Organization{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches an organization resource identified by the specified resource name.",
+	//   "flatPath": "v3/organizations/{organizationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.organizations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Organization to fetch. This is the organization's relative path in the API, formatted as \"organizations/[organizationId]\". For example, \"organizations/1234\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Organization"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.getIamPolicy":
+
+type OrganizationsGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for an organization
+// resource. The policy may be empty if no such policy or resource
+// exists. The `resource` field should be the organization's resource
+// name, for example: "organizations/123". Authorization requires the
+// IAM permission `resourcemanager.organizations.getIamPolicy` on the
+// specified organization.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
+	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetIamPolicyCall) Context(ctx context.Context) *OrganizationsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for an organization resource. The policy may be empty if no such policy or resource exists. The `resource` field should be the organization's resource name, for example: \"organizations/123\". Authorization requires the IAM permission `resourcemanager.organizations.getIamPolicy` on the specified organization.",
+	//   "flatPath": "v3/organizations/{organizationsId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.organizations.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.search":
+
+type OrganizationsSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Searches organization resources that are visible to the user
+// and satisfy the specified filter. This method returns organizations
+// in an unspecified order. New organizations do not necessarily appear
+// at the end of the results, and may take a small amount of time to
+// appear. Search will only return organizations on which the user has
+// the permission `resourcemanager.organizations.get`
+func (r *OrganizationsService) Search() *OrganizationsSearchCall {
+	c := &OrganizationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of organizations to return in the response. If unspecified, server
+// picks an appropriate default.
+func (c *OrganizationsSearchCall) PageSize(pageSize int64) *OrganizationsSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `SearchOrganizations` that indicates
+// from where listing should continue.
+func (c *OrganizationsSearchCall) PageToken(pageToken string) *OrganizationsSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Query sets the optional parameter "query": An optional query string
+// used to filter the Organizations to return in the response. Query
+// rules are case-insensitive. | Field | Description |
+// |------------------|--------------------------------------------| |
+// directoryCustomerId, owner.directoryCustomerId | Filters by directory
+// customer id. | | domain | Filters by domain. | Organizations may be
+// queried by `directoryCustomerId` or by `domain`, where the domain is
+// a G Suite domain, for example: * Query
+// `directorycustomerid:123456789` returns Organization resources with
+// `owner.directory_customer_id` equal to `123456789`. * Query
+// `domain:google.com` returns Organization resources corresponding to
+// the domain `google.com`.
+func (c *OrganizationsSearchCall) Query(query string) *OrganizationsSearchCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSearchCall) Fields(s ...googleapi.Field) *OrganizationsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSearchCall) IfNoneMatch(entityTag string) *OrganizationsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSearchCall) Context(ctx context.Context) *OrganizationsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/organizations:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.search" call.
+// Exactly one of *SearchOrganizationsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchOrganizationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchOrganizationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchOrganizationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches organization resources that are visible to the user and satisfy the specified filter. This method returns organizations in an unspecified order. New organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get`",
+	//   "flatPath": "v3/organizations:search",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.organizations.search",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of organizations to return in the response. If unspecified, server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to `SearchOrganizations` that indicates from where listing should continue.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "Optional. An optional query string used to filter the Organizations to return in the response. Query rules are case-insensitive. | Field | Description | |------------------|--------------------------------------------| | directoryCustomerId, owner.directoryCustomerId | Filters by directory customer id. | | domain | Filters by domain. | Organizations may be queried by `directoryCustomerId` or by `domain`, where the domain is a G Suite domain, for example: * Query `directorycustomerid:123456789` returns Organization resources with `owner.directory_customer_id` equal to `123456789`. * Query `domain:google.com` returns Organization resources corresponding to the domain `google.com`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/organizations:search",
+	//   "response": {
+	//     "$ref": "SearchOrganizationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSearchCall) Pages(ctx context.Context, f func(*SearchOrganizationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudresourcemanager.organizations.setIamPolicy":
+
+type OrganizationsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on an organization
+// resource. Replaces any existing policy. The `resource` field should
+// be the organization's resource name, for example:
+// "organizations/123". Authorization requires the IAM permission
+// `resourcemanager.organizations.setIamPolicy` on the specified
+// organization.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
+	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSetIamPolicyCall) Context(ctx context.Context) *OrganizationsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on an organization resource. Replaces any existing policy. The `resource` field should be the organization's resource name, for example: \"organizations/123\". Authorization requires the IAM permission `resourcemanager.organizations.setIamPolicy` on the specified organization.",
+	//   "flatPath": "v3/organizations/{organizationsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.organizations.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.testIamPermissions":
+
+type OrganizationsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns the permissions that a caller has on the
+// specified organization. The `resource` field should be the
+// organization's resource name, for example: "organizations/123". There
+// are no permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
+	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the permissions that a caller has on the specified organization. The `resource` field should be the organization's resource name, for example: \"organizations/123\". There are no permissions required for making this API call.",
+	//   "flatPath": "v3/organizations/{organizationsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.organizations.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.create":
+
+type ProjectsCreateCall struct {
+	s          *Service
+	project    *Project
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Request that a new project be created. The result is an
+// `Operation` which can be used to track the creation process. This
+// process usually takes a few seconds, but can sometimes take much
+// longer. The tracking `Operation` is automatically deleted after a few
+// hours, so there is no need to call `DeleteOperation`.
+func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
+	c := &ProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsCreateCall) Fields(s ...googleapi.Field) *ProjectsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsCreateCall) Context(ctx context.Context) *ProjectsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.project)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/projects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request that a new project be created. The result is an `Operation` which can be used to track the creation process. This process usually takes a few seconds, but can sometimes take much longer. The tracking `Operation` is automatically deleted after a few hours, so there is no need to call `DeleteOperation`.",
+	//   "flatPath": "v3/projects",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.create",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v3/projects",
+	//   "request": {
+	//     "$ref": "Project"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.delete":
+
+type ProjectsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Marks the project identified by the specified `name` (for
+// example, `projects/415104041262`) for deletion. This method will only
+// affect the project if it has a lifecycle state of ACTIVE. This method
+// changes the Project's lifecycle state from ACTIVE to
+// DELETE_REQUESTED. The deletion starts at an unspecified time, at
+// which point the Project is no longer accessible. Until the deletion
+// completes, you can check the lifecycle state checked by retrieving
+// the project with GetProject, and the project remains visible to
+// ListProjects. However, you cannot update the project. After the
+// deletion completes, the project is not retrievable by the GetProject,
+// ListProjects, and SearchProjects methods. This method behaves
+// idempotently, such that deleting a `DELETE_REQUESTED` project will
+// not cause an error, but also won't do anything. The caller must have
+// `resourcemanager.projects.delete` permissions for this project.
+//
+// - name: The name of the Project (for example,
+//   `projects/415104041262`).
+func (r *ProjectsService) Delete(name string) *ProjectsDeleteCall {
+	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeleteCall) Context(ctx context.Context) *ProjectsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Marks the project identified by the specified `name` (for example, `projects/415104041262`) for deletion. This method will only affect the project if it has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the Project is no longer accessible. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with GetProject, and the project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the project is not retrievable by the GetProject, ListProjects, and SearchProjects methods. This method behaves idempotently, such that deleting a `DELETE_REQUESTED` project will not cause an error, but also won't do anything. The caller must have `resourcemanager.projects.delete` permissions for this project.",
+	//   "flatPath": "v3/projects/{projectsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudresourcemanager.projects.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the Project (for example, `projects/415104041262`).",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.get":
+
+type ProjectsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the project identified by the specified `name` (for
+// example, `projects/415104041262`). The caller must have
+// `resourcemanager.projects.get` permission for this project.
+//
+// - name: The name of the project (for example,
+//   `projects/415104041262`).
+func (r *ProjectsService) Get(name string) *ProjectsGetCall {
+	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetCall) IfNoneMatch(entityTag string) *ProjectsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetCall) Context(ctx context.Context) *ProjectsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.get" call.
+// Exactly one of *Project or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Project.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Project{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the project identified by the specified `name` (for example, `projects/415104041262`). The caller must have `resourcemanager.projects.get` permission for this project.",
+	//   "flatPath": "v3/projects/{projectsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.projects.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the project (for example, `projects/415104041262`).",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Project"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.getIamPolicy":
+
+type ProjectsGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Returns the IAM access control policy for the specified
+// project. Permission is denied if the policy or the resource do not
+// exist.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
+	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetIamPolicyCall) Context(ctx context.Context) *ProjectsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the IAM access control policy for the specified project. Permission is denied if the policy or the resource do not exist.",
+	//   "flatPath": "v3/projects/{projectsId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.list":
+
+type ProjectsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists projects that are direct children of the specified folder
+// or organization resource. `list()` provides a strongly consistent
+// view of the projects underneath the specified parent resource.
+// `list()` returns projects sorted based upon the (ascending) lexical
+// ordering of their `display_name`. The caller must have
+// `resourcemanager.projects.list` permission on the identified parent.
+func (r *ProjectsService) List() *ProjectsListCall {
+	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of projects to return in the response. The server can return fewer
+// projects than requested. If unspecified, server picks an appropriate
+// default.
+func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to ListProjects that indicates from
+// where listing should continue.
+func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. The name of
+// the parent resource to list projects under. For example, setting this
+// field to 'folders/1234' would list all projects directly under that
+// folder.
+func (c *ProjectsListCall) Parent(parent string) *ProjectsListCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Indicate that
+// projects in the `DELETE_REQUESTED` state should also be returned.
+// Normally only `ACTIVE` projects are returned.
+func (c *ProjectsListCall) ShowDeleted(showDeleted bool) *ProjectsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsListCall) IfNoneMatch(entityTag string) *ProjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/projects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.list" call.
+// Exactly one of *ListProjectsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListProjectsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ListProjectsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListProjectsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists projects that are direct children of the specified folder or organization resource. `list()` provides a strongly consistent view of the projects underneath the specified parent resource. `list()` returns projects sorted based upon the (ascending) lexical ordering of their `display_name`. The caller must have `resourcemanager.projects.list` permission on the identified parent.",
+	//   "flatPath": "v3/projects",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.projects.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to ListProjects that indicates from where listing should continue.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource to list projects under. For example, setting this field to 'folders/1234' would list all projects directly under that folder.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Optional. Indicate that projects in the `DELETE_REQUESTED` state should also be returned. Normally only `ACTIVE` projects are returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v3/projects",
+	//   "response": {
+	//     "$ref": "ListProjectsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsListCall) Pages(ctx context.Context, f func(*ListProjectsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudresourcemanager.projects.move":
+
+type ProjectsMoveCall struct {
+	s                  *Service
+	name               string
+	moveprojectrequest *MoveProjectRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Move: Move a project to another place in your resource hierarchy,
+// under a new resource parent. Returns an operation which can be used
+// to track the process of the project move workflow. Upon success, the
+// `Operation.response` field will be populated with the moved project.
+// The caller must have `resourcemanager.projects.update` permission on
+// the project and have `resourcemanager.projects.move` permission on
+// the project's current and proposed new parent.
+//
+// - name: The name of the project to move.
+func (r *ProjectsService) Move(name string, moveprojectrequest *MoveProjectRequest) *ProjectsMoveCall {
+	c := &ProjectsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.moveprojectrequest = moveprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsMoveCall) Fields(s ...googleapi.Field) *ProjectsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsMoveCall) Context(ctx context.Context) *ProjectsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moveprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.move" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Move a project to another place in your resource hierarchy, under a new resource parent. Returns an operation which can be used to track the process of the project move workflow. Upon success, the `Operation.response` field will be populated with the moved project. The caller must have `resourcemanager.projects.update` permission on the project and have `resourcemanager.projects.move` permission on the project's current and proposed new parent. ",
+	//   "flatPath": "v3/projects/{projectsId}:move",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.move",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the project to move.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}:move",
+	//   "request": {
+	//     "$ref": "MoveProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.patch":
+
+type ProjectsPatchCall struct {
+	s          *Service
+	name       string
+	project    *Project
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the `display_name` and labels of the project
+// identified by the specified `name` (for example,
+// `projects/415104041262`). Deleting all labels requires an update mask
+// for labels field. The caller must have
+// `resourcemanager.projects.update` permission for this project.
+//
+// - name: Output only. The unique resource name of the project. It is
+//   an int64 generated number prefixed by "projects/". Example:
+//   `projects/415104041262`.
+func (r *ProjectsService) Patch(name string, project *Project) *ProjectsPatchCall {
+	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.project = project
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": An update mask
+// to selectively update fields.
+func (c *ProjectsPatchCall) UpdateMask(updateMask string) *ProjectsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPatchCall) Fields(s ...googleapi.Field) *ProjectsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPatchCall) Context(ctx context.Context) *ProjectsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.project)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the `display_name` and labels of the project identified by the specified `name` (for example, `projects/415104041262`). Deleting all labels requires an update mask for labels field. The caller must have `resourcemanager.projects.update` permission for this project.",
+	//   "flatPath": "v3/projects/{projectsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudresourcemanager.projects.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The unique resource name of the project. It is an int64 generated number prefixed by \"projects/\". Example: `projects/415104041262`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. An update mask to selectively update fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "request": {
+	//     "$ref": "Project"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.search":
+
+type ProjectsSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Search for projects that the caller has both
+// `resourcemanager.projects.get` permission on, and also satisfy the
+// specified query. This method returns projects in an unspecified
+// order. This method is eventually consistent with project mutations;
+// this means that a newly created project may not appear in the results
+// or recent updates to an existing project may not be reflected in the
+// results. To retrieve the latest state of a project, use the
+// GetProject method.
+func (r *ProjectsService) Search() *ProjectsSearchCall {
+	c := &ProjectsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of projects to return in the response. The server can return fewer
+// projects than requested. If unspecified, server picks an appropriate
+// default.
+func (c *ProjectsSearchCall) PageSize(pageSize int64) *ProjectsSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to ListProjects that indicates from
+// where listing should continue.
+func (c *ProjectsSearchCall) PageToken(pageToken string) *ProjectsSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Query sets the optional parameter "query": A query string for
+// searching for projects that the caller has
+// `resourcemanager.projects.get` permission to. If multiple fields are
+// included in the query, the it will return results that match any of
+// the fields. Some eligible fields are: | Field | Description |
+// |-------------------------|-------------------------------------------
+// ---| | displayName, name | Filters by displayName. | | parent |
+// Project's parent (for example: folders/123, organizations/*). Prefer
+// parent field over parent.type and parent.id.| | parent.type |
+// Parent's type: `folder` or `organization`. | | parent.id | Parent's
+// id number (for example: 123) | | id, projectId | Filters by
+// projectId. | | state, lifecycleState | Filters by state. | | labels |
+// Filters by label name or value. | | labels.\ (where *key* is the name
+// of a label) | Filters by label name.| Search expressions are case
+// insensitive. Some examples queries: | Query | Description |
+// |------------------|--------------------------------------------------
+// ---| | name:how* | The project's name starts with "how". | |
+// name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL |
+// Equivalent to above. | | NAME:howl | Equivalent to above. | |
+// labels.color:* | The project has the label `color`. | |
+// labels.color:red | The project's label `color` has the value `red`. |
+// | labels.color:red labels.size:big | The project's label `color` has
+// the value `red` and its label `size` has the value `big`.| If no
+// query is specified, the call will return projects for which the user
+// has the `resourcemanager.projects.get` permission.
+func (c *ProjectsSearchCall) Query(query string) *ProjectsSearchCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSearchCall) Fields(s ...googleapi.Field) *ProjectsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSearchCall) IfNoneMatch(entityTag string) *ProjectsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSearchCall) Context(ctx context.Context) *ProjectsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/projects:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.search" call.
+// Exactly one of *SearchProjectsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SearchProjectsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSearchCall) Do(opts ...googleapi.CallOption) (*SearchProjectsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchProjectsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Search for projects that the caller has both `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.",
+	//   "flatPath": "v3/projects:search",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.projects.search",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A pagination token returned from a previous call to ListProjects that indicates from where listing should continue.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, the it will return results that match any of the fields. Some eligible fields are: | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent (for example: folders/123, organizations/*). Prefer parent field over parent.type and parent.id.| | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (for example: 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels.\\ (where *key* is the name of a label) | Filters by label name.| Search expressions are case insensitive. Some examples queries: | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` and its label `size` has the value `big`.| If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/projects:search",
+	//   "response": {
+	//     "$ref": "SearchProjectsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSearchCall) Pages(ctx context.Context, f func(*SearchProjectsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudresourcemanager.projects.setIamPolicy":
+
+type ProjectsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the IAM access control policy for the specified
+// project. CAUTION: This method will replace the existing policy, and
+// cannot be used to append additional IAM settings. Note: Removing
+// service accounts from policies or changing their roles can render
+// services completely inoperable. It is important to understand how the
+// service account is being used before removing or updating its roles.
+// The following constraints apply when using `setIamPolicy()`: +
+// Project does not support `allUsers` and `allAuthenticatedUsers` as
+// `members` in a `Binding` of a `Policy`. + The owner role can be
+// granted to a `user`, `serviceAccount`, or a group that is part of an
+// organization. For example, group@myownpersonaldomain.com could be
+// added as an owner to a project in the myownpersonaldomain.com
+// organization, but not the examplepetstore.com organization. + Service
+// accounts can be made owners of a project directly without any
+// restrictions. However, to be added as an owner, a user must be
+// invited using the Cloud Platform console and must accept the
+// invitation. + A user cannot be granted the owner role using
+// `setIamPolicy()`. The user must be granted the owner role using the
+// Cloud Platform Console and must explicitly accept the invitation. +
+// Invitations to grant the owner role cannot be sent using
+// `setIamPolicy()`; they must be sent only using the Cloud Platform
+// Console. + Membership changes that leave the project without any
+// owners that have accepted the Terms of Service (ToS) will be
+// rejected. + If the project is not part of an organization, there must
+// be at least one owner who has accepted the Terms of Service (ToS)
+// agreement in the policy. Calling `setIamPolicy()` to remove the last
+// ToS-accepted owner from the policy will fail. This restriction also
+// applies to legacy projects that no longer have owners who have
+// accepted the ToS. Edits to IAM policies will be rejected until the
+// lack of a ToS-accepting owner is rectified. + Calling this method
+// requires enabling the App Engine Admin API.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
+	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSetIamPolicyCall) Context(ctx context.Context) *ProjectsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the IAM access control policy for the specified project. CAUTION: This method will replace the existing policy, and cannot be used to append additional IAM settings. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles. The following constraints apply when using `setIamPolicy()`: + Project does not support `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The owner role can be granted to a `user`, `serviceAccount`, or a group that is part of an organization. For example, group@myownpersonaldomain.com could be added as an owner to a project in the myownpersonaldomain.com organization, but not the examplepetstore.com organization. + Service accounts can be made owners of a project directly without any restrictions. However, to be added as an owner, a user must be invited using the Cloud Platform console and must accept the invitation. + A user cannot be granted the owner role using `setIamPolicy()`. The user must be granted the owner role using the Cloud Platform Console and must explicitly accept the invitation. + Invitations to grant the owner role cannot be sent using `setIamPolicy()`; they must be sent only using the Cloud Platform Console. + Membership changes that leave the project without any owners that have accepted the Terms of Service (ToS) will be rejected. + If the project is not part of an organization, there must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner from the policy will fail. This restriction also applies to legacy projects that no longer have owners who have accepted the ToS. Edits to IAM policies will be rejected until the lack of a ToS-accepting owner is rectified. + Calling this method requires enabling the App Engine Admin API.",
+	//   "flatPath": "v3/projects/{projectsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.testIamPermissions":
+
+type ProjectsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified project.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
+	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified project.",
+	//   "flatPath": "v3/projects/{projectsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.projects.undelete":
+
+type ProjectsUndeleteCall struct {
+	s                      *Service
+	name                   string
+	undeleteprojectrequest *UndeleteProjectRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Undelete: Restores the project identified by the specified `name`
+// (for example, `projects/415104041262`). You can only use this method
+// for a project that has a lifecycle state of DELETE_REQUESTED. After
+// deletion starts, the project cannot be restored. The caller must have
+// `resourcemanager.projects.undelete` permission for this project.
+//
+// - name: The name of the project (for example,
+//   `projects/415104041262`). Required.
+func (r *ProjectsService) Undelete(name string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
+	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeleteprojectrequest = undeleteprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUndeleteCall) Fields(s ...googleapi.Field) *ProjectsUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUndeleteCall) Context(ctx context.Context) *ProjectsUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeleteprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.projects.undelete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Restores the project identified by the specified `name` (for example, `projects/415104041262`). You can only use this method for a project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, the project cannot be restored. The caller must have `resourcemanager.projects.undelete` permission for this project.",
+	//   "flatPath": "v3/projects/{projectsId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.projects.undelete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the project (for example, `projects/415104041262`). Required.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "cloudresourcemanager.tagBindings.create":
 
 type TagBindingsCreateCall struct {
@@ -2271,7 +7358,7 @@ func (c *TagBindingsCreateCall) Header() http.Header {
 
 func (c *TagBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2369,6 +7456,11 @@ type TagBindingsDeleteCall struct {
 }
 
 // Delete: Deletes a TagBinding.
+//
+// - name: The name of the TagBinding. This is a String of the form:
+//   `tagBindings/{id}` (e.g.
+//   `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F
+//   123/tagValues/456`).
 func (r *TagBindingsService) Delete(name string) *TagBindingsDeleteCall {
 	c := &TagBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2402,7 +7494,7 @@ func (c *TagBindingsDeleteCall) Header() http.Header {
 
 func (c *TagBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2508,9 +7600,9 @@ func (r *TagBindingsService) List() *TagBindingsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of TagBindings to return in the response. This is currently not used
-// by the server and will return the full page even if a size is
-// specified.
+// of TagBindings to return in the response. The server allows a maximum
+// of 300 TagBindings to return. If unspecified, the server will use 100
+// as the default.
 func (c *TagBindingsListCall) PageSize(pageSize int64) *TagBindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2570,7 +7662,7 @@ func (c *TagBindingsListCall) Header() http.Header {
 
 func (c *TagBindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2636,7 +7728,7 @@ func (c *TagBindingsListCall) Do(opts ...googleapi.CallOption) (*ListTagBindings
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of TagBindings to return in the response. This is currently not used by the server and will return the full page even if a size is specified.",
+	//       "description": "Optional. The maximum number of TagBindings to return in the response. The server allows a maximum of 300 TagBindings to return. If unspecified, the server will use 100 as the default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2740,7 +7832,7 @@ func (c *TagKeysCreateCall) Header() http.Header {
 
 func (c *TagKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2839,6 +7931,10 @@ type TagKeysDeleteCall struct {
 
 // Delete: Deletes a TagKey. The TagKey cannot be deleted if it has any
 // child TagValues.
+//
+// - name: The resource name of a TagKey to be deleted in the format
+//   `tagKeys/123`. The TagKey cannot be a parent of any existing
+//   TagValues or it will not be deleted successfully.
 func (r *TagKeysService) Delete(name string) *TagKeysDeleteCall {
 	c := &TagKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2888,7 +7984,7 @@ func (c *TagKeysDeleteCall) Header() http.Header {
 
 func (c *TagKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2998,6 +8094,9 @@ type TagKeysGetCall struct {
 // Get: Retrieves a TagKey. This method will return `PERMISSION_DENIED`
 // if the key does not exist or the user does not have permission to
 // view it.
+//
+// - name: A resource name in the format `tagKeys/{id}`, such as
+//   `tagKeys/123`.
 func (r *TagKeysService) Get(name string) *TagKeysGetCall {
 	c := &TagKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3041,7 +8140,7 @@ func (c *TagKeysGetCall) Header() http.Header {
 
 func (c *TagKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3148,6 +8247,10 @@ type TagKeysGetIamPolicyCall struct {
 // example, "tagKeys/1234". The caller must have
 // `cloudresourcemanager.googleapis.com/tagKeys.getIamPolicy` permission
 // on the specified TagKey.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagKeysService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagKeysGetIamPolicyCall {
 	c := &TagKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3182,7 +8285,7 @@ func (c *TagKeysGetIamPolicyCall) Header() http.Header {
 
 func (c *TagKeysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3294,9 +8397,9 @@ func (r *TagKeysService) List() *TagKeysListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of TagKeys to return in the response. This is currently not used by
-// the server and will return the full page even if a size is specified
-// currently.
+// of TagKeys to return in the response. The server allows a maximum of
+// 300 TagKeys to return. If unspecified, the server will use 100 as the
+// default.
 func (c *TagKeysListCall) PageSize(pageSize int64) *TagKeysListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3304,8 +8407,7 @@ func (c *TagKeysListCall) PageSize(pageSize int64) *TagKeysListCall {
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // returned from a previous call to `ListTagKey` that indicates where
-// this listing should continue from. This is currently not used by the
-// server.
+// this listing should continue from.
 func (c *TagKeysListCall) PageToken(pageToken string) *TagKeysListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3356,7 +8458,7 @@ func (c *TagKeysListCall) Header() http.Header {
 
 func (c *TagKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3422,13 +8524,13 @@ func (c *TagKeysListCall) Do(opts ...googleapi.CallOption) (*ListTagKeysResponse
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of TagKeys to return in the response. This is currently not used by the server and will return the full page even if a size is specified currently.",
+	//       "description": "Optional. The maximum number of TagKeys to return in the response. The server allows a maximum of 300 TagKeys to return. If unspecified, the server will use 100 as the default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A pagination token returned from a previous call to `ListTagKey` that indicates where this listing should continue from. This is currently not used by the server.",
+	//       "description": "Optional. A pagination token returned from a previous call to `ListTagKey` that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3483,6 +8585,10 @@ type TagKeysPatchCall struct {
 }
 
 // Patch: Updates the attributes of the TagKey resource.
+//
+// - name: Immutable. The resource name for a TagKey. Must be in the
+//   format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated
+//   numeric id for the TagKey.
 func (r *TagKeysService) Patch(name string, tagkey *TagKey) *TagKeysPatchCall {
 	c := &TagKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3534,7 +8640,7 @@ func (c *TagKeysPatchCall) Header() http.Header {
 
 func (c *TagKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3655,6 +8761,10 @@ type TagKeysSetIamPolicyCall struct {
 // resource name. For example, "tagKeys/1234". The caller must have
 // `resourcemanager.tagKeys.setIamPolicy` permission on the identified
 // tagValue.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagKeysSetIamPolicyCall {
 	c := &TagKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3689,7 +8799,7 @@ func (c *TagKeysSetIamPolicyCall) Header() http.Header {
 
 func (c *TagKeysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3798,6 +8908,10 @@ type TagKeysTestIamPermissionsCall struct {
 // specified TagKey. The `resource` field should be the TagKey's
 // resource name. For example, "tagKeys/1234". There are no permissions
 // required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TagKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagKeysTestIamPermissionsCall {
 	c := &TagKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3832,7 +8946,7 @@ func (c *TagKeysTestIamPermissionsCall) Header() http.Header {
 
 func (c *TagKeysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3981,7 +9095,7 @@ func (c *TagValuesCreateCall) Header() http.Header {
 
 func (c *TagValuesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4080,6 +9194,9 @@ type TagValuesDeleteCall struct {
 
 // Delete: Deletes a TagValue. The TagValue cannot have any bindings
 // when it is deleted.
+//
+// - name: Resource name for TagValue to be deleted in the format
+//   tagValues/456.
 func (r *TagValuesService) Delete(name string) *TagValuesDeleteCall {
 	c := &TagValuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4129,7 +9246,7 @@ func (c *TagValuesDeleteCall) Header() http.Header {
 
 func (c *TagValuesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4239,6 +9356,9 @@ type TagValuesGetCall struct {
 // Get: Retrieves TagValue. If the TagValue or namespaced name does not
 // exist, or if the user does not have permission to view it, this
 // method will return `PERMISSION_DENIED`.
+//
+// - name: Resource name for TagValue to be fetched in the format
+//   `tagValues/456`.
 func (r *TagValuesService) Get(name string) *TagValuesGetCall {
 	c := &TagValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4282,7 +9402,7 @@ func (c *TagValuesGetCall) Header() http.Header {
 
 func (c *TagValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4390,6 +9510,10 @@ type TagValuesGetIamPolicyCall struct {
 // `cloudresourcemanager.googleapis.com/tagValues.getIamPolicy`
 // permission on the identified TagValue to get the access control
 // policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagValuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagValuesGetIamPolicyCall {
 	c := &TagValuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4424,7 +9548,7 @@ func (c *TagValuesGetIamPolicyCall) Header() http.Header {
 
 func (c *TagValuesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4536,9 +9660,9 @@ func (r *TagValuesService) List() *TagValuesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of TagValues to return in the response. This is currently not used by
-// the server and will return the full page even if a size is specified
-// currently.
+// of TagValues to return in the response. The server allows a maximum
+// of 300 TagValues to return. If unspecified, the server will use 100
+// as the default.
 func (c *TagValuesListCall) PageSize(pageSize int64) *TagValuesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4546,8 +9670,7 @@ func (c *TagValuesListCall) PageSize(pageSize int64) *TagValuesListCall {
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // returned from a previous call to `ListTagValues` that indicates where
-// this listing should continue from. This is currently not used by the
-// server.
+// this listing should continue from.
 func (c *TagValuesListCall) PageToken(pageToken string) *TagValuesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4598,7 +9721,7 @@ func (c *TagValuesListCall) Header() http.Header {
 
 func (c *TagValuesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4664,13 +9787,13 @@ func (c *TagValuesListCall) Do(opts ...googleapi.CallOption) (*ListTagValuesResp
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of TagValues to return in the response. This is currently not used by the server and will return the full page even if a size is specified currently.",
+	//       "description": "Optional. The maximum number of TagValues to return in the response. The server allows a maximum of 300 TagValues to return. If unspecified, the server will use 100 as the default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A pagination token returned from a previous call to `ListTagValues` that indicates where this listing should continue from. This is currently not used by the server.",
+	//       "description": "Optional. A pagination token returned from a previous call to `ListTagValues` that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4725,6 +9848,9 @@ type TagValuesPatchCall struct {
 }
 
 // Patch: Updates the attributes of the TagValue resource.
+//
+// - name: Immutable. Resource name for TagValue in the format
+//   `tagValues/456`.
 func (r *TagValuesService) Patch(name string, tagvalue *TagValue) *TagValuesPatchCall {
 	c := &TagValuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4774,7 +9900,7 @@ func (c *TagValuesPatchCall) Header() http.Header {
 
 func (c *TagValuesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4895,6 +10021,10 @@ type TagValuesSetIamPolicyCall struct {
 // resource name. For example: `tagValues/1234`. The caller must have
 // `resourcemanager.tagValues.setIamPolicy` permission on the identified
 // tagValue.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagValuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagValuesSetIamPolicyCall {
 	c := &TagValuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4929,7 +10059,7 @@ func (c *TagValuesSetIamPolicyCall) Header() http.Header {
 
 func (c *TagValuesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5038,6 +10168,10 @@ type TagValuesTestIamPermissionsCall struct {
 // specified TagValue. The `resource` field should be the TagValue's
 // resource name. For example: `tagValues/1234`. There are no
 // permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TagValuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagValuesTestIamPermissionsCall {
 	c := &TagValuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5072,7 +10206,7 @@ func (c *TagValuesTestIamPermissionsCall) Header() http.Header {
 
 func (c *TagValuesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

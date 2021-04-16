@@ -83,7 +83,7 @@ const mtlsBasePath = "https://servicemanagement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -1416,10 +1416,6 @@ func (s *Diagnostic) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DisableServiceResponse: Operation payload for DisableService method.
-type DisableServiceResponse struct {
-}
-
 // Documentation: `Documentation` provides the information for
 // describing a service. Example: documentation: summary: > The Google
 // Calendar API gives access to most calendar features. pages: - name:
@@ -1546,38 +1542,6 @@ type DocumentationRule struct {
 
 func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentationRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// EnableServiceRequest: Request message for EnableService method.
-type EnableServiceRequest struct {
-	// ConsumerId: Required. The identity of consumer resource which service
-	// enablement will be applied to. The Google Service Management
-	// implementation accepts the following forms: - "project:" Note: this
-	// is made compatible with
-	// google.api.servicecontrol.v1.Operation.consumer_id.
-	ConsumerId string `json:"consumerId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConsumerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *EnableServiceRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod EnableServiceRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3952,9 +3916,9 @@ func (s *Rollout) MarshalJSON() ([]byte, error) {
 // sub-section is either a proto message or a repeated proto message
 // that configures a specific aspect, such as auth. See each proto
 // message definition for details. Example: type: google.api.Service
-// config_version: 3 name: calendar.googleapis.com title: Google
-// Calendar API apis: - name: google.calendar.v3.Calendar
-// authentication: providers: - id: google_calendar_auth jwks_uri:
+// name: calendar.googleapis.com title: Google Calendar API apis: -
+// name: google.calendar.v3.Calendar authentication: providers: - id:
+// google_calendar_auth jwks_uri:
 // https://www.googleapis.com/oauth2/v1/certs issuer:
 // https://securetoken.google.com rules: - selector: "*" requirements:
 // provider_id: google_calendar_auth
@@ -3976,8 +3940,8 @@ type Service struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: Deprecated. The service config compiler always sets
-	// this field to `3`.
+	// ConfigVersion: Obsolete. Do not use. This field has no semantic
+	// meaning. The service config compiler always sets this field to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -4765,6 +4729,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4808,7 +4774,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4992,7 +4958,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5161,7 +5127,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5257,6 +5223,10 @@ type ServicesDeleteCall struct {
 // service to the `Soft-Delete` state for 30 days. Within this period,
 // service producers may call UndeleteService to restore the service.
 // After 30 days, the service will be permanently deleted. Operation
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesService) Delete(serviceName string) *ServicesDeleteCall {
 	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5290,7 +5260,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5376,149 +5346,6 @@ func (c *ServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 
 }
 
-// method id "servicemanagement.services.enable":
-
-type ServicesEnableCall struct {
-	s                    *APIService
-	serviceName          string
-	enableservicerequest *EnableServiceRequest
-	urlParams_           gensupport.URLParams
-	ctx_                 context.Context
-	header_              http.Header
-}
-
-// Enable: Enables a service for a project, so it can be used for the
-// project. See Cloud Auth Guide
-// (https://cloud.google.com/docs/authentication) for more information.
-// Operation
-func (r *ServicesService) Enable(serviceName string, enableservicerequest *EnableServiceRequest) *ServicesEnableCall {
-	c := &ServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.serviceName = serviceName
-	c.enableservicerequest = enableservicerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ServicesEnableCall) Fields(s ...googleapi.Field) *ServicesEnableCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ServicesEnableCall) Context(ctx context.Context) *ServicesEnableCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ServicesEnableCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enableservicerequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/services/{serviceName}:enable")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"serviceName": c.serviceName,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "servicemanagement.services.enable" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Enables a service for a project, so it can be used for the project. See [Cloud Auth Guide](https://cloud.google.com/docs/authentication) for more information. Operation",
-	//   "flatPath": "v1/services/{serviceName}:enable",
-	//   "httpMethod": "POST",
-	//   "id": "servicemanagement.services.enable",
-	//   "parameterOrder": [
-	//     "serviceName"
-	//   ],
-	//   "parameters": {
-	//     "serviceName": {
-	//       "description": "Required. Name of the service to enable. Specifying an unknown service name will cause the request to fail.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/services/{serviceName}:enable",
-	//   "request": {
-	//     "$ref": "EnableServiceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
-	//   ]
-	// }
-
-}
-
 // method id "servicemanagement.services.generateConfigReport":
 
 type ServicesGenerateConfigReportCall struct {
@@ -5572,7 +5399,7 @@ func (c *ServicesGenerateConfigReportCall) Header() http.Header {
 
 func (c *ServicesGenerateConfigReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5667,6 +5494,10 @@ type ServicesGetCall struct {
 
 // Get: Gets a managed service. Authentication is required unless the
 // service is public.
+//
+// - serviceName: The name of the service. See the `ServiceManager`
+//   overview for naming requirements. For example:
+//   `example.googleapis.com`.
 func (r *ServicesService) Get(serviceName string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5710,7 +5541,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5814,6 +5645,10 @@ type ServicesGetConfigCall struct {
 
 // GetConfig: Gets a service configuration (version) for a managed
 // service.
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesService) GetConfig(serviceName string) *ServicesGetConfigCall {
 	c := &ServicesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5879,7 +5714,7 @@ func (c *ServicesGetConfigCall) Header() http.Header {
 
 func (c *ServicesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6002,6 +5837,10 @@ type ServicesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ServicesGetIamPolicyCall {
 	c := &ServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6036,7 +5875,7 @@ func (c *ServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6221,7 +6060,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6357,6 +6196,10 @@ type ServicesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesSetIamPolicyCall {
 	c := &ServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6391,7 +6234,7 @@ func (c *ServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6503,6 +6346,10 @@ type ServicesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ServicesTestIamPermissionsCall {
 	c := &ServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6537,7 +6384,7 @@ func (c *ServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6648,6 +6495,10 @@ type ServicesUndeleteCall struct {
 // restores the service using the configuration at the time the service
 // was deleted. The target service must exist and must have been deleted
 // within the last 30 days. Operation
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesService) Undelete(serviceName string) *ServicesUndeleteCall {
 	c := &ServicesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6681,7 +6532,7 @@ func (c *ServicesUndeleteCall) Header() http.Header {
 
 func (c *ServicesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6784,6 +6635,10 @@ type ServicesConfigsCreateCall struct {
 // CreateServiceRollout. Only the 100 most recent service configurations
 // and ones referenced by existing rollouts are kept for each service.
 // The rest will be deleted eventually.
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Create(serviceName string, service *Service) *ServicesConfigsCreateCall {
 	c := &ServicesConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6818,7 +6673,7 @@ func (c *ServicesConfigsCreateCall) Header() http.Header {
 
 func (c *ServicesConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6925,6 +6780,13 @@ type ServicesConfigsGetCall struct {
 }
 
 // Get: Gets a service configuration (version) for a managed service.
+//
+// - configId: The id of the service configuration resource. This field
+//   must be specified for the server to return all fields, including
+//   `SourceInfo`.
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Get(serviceName string, configId string) *ServicesConfigsGetCall {
 	c := &ServicesConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6983,7 +6845,7 @@ func (c *ServicesConfigsGetCall) Header() http.Header {
 
 func (c *ServicesConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7108,6 +6970,10 @@ type ServicesConfigsListCall struct {
 
 // List: Lists the history of the service configuration for a managed
 // service, from the newest to the oldest.
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesConfigsService) List(serviceName string) *ServicesConfigsListCall {
 	c := &ServicesConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7166,7 +7032,7 @@ func (c *ServicesConfigsListCall) Header() http.Header {
 
 func (c *ServicesConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7308,6 +7174,10 @@ type ServicesConfigsSubmitCall struct {
 // CreateServiceRollout. Only the 100 most recent configuration sources
 // and ones referenced by existing service configurtions are kept for
 // each service. The rest will be deleted eventually. Operation
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Submit(serviceName string, submitconfigsourcerequest *SubmitConfigSourceRequest) *ServicesConfigsSubmitCall {
 	c := &ServicesConfigsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7342,7 +7212,7 @@ func (c *ServicesConfigsSubmitCall) Header() http.Header {
 
 func (c *ServicesConfigsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7450,6 +7320,10 @@ type ServicesConsumersGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ServicesConsumersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ServicesConsumersGetIamPolicyCall {
 	c := &ServicesConsumersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7484,7 +7358,7 @@ func (c *ServicesConsumersGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7595,6 +7469,10 @@ type ServicesConsumersSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ServicesConsumersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesConsumersSetIamPolicyCall {
 	c := &ServicesConsumersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7629,7 +7507,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7741,6 +7619,10 @@ type ServicesConsumersTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ServicesConsumersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ServicesConsumersTestIamPermissionsCall {
 	c := &ServicesConsumersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7775,7 +7657,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesConsumersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7893,6 +7775,10 @@ type ServicesRolloutsCreateCall struct {
 // (in any state) and the last 10 successful (if not already part of the
 // set of 100 most recent) rollouts are kept for each service. The rest
 // will be deleted eventually. Operation
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) Create(serviceName string, rollout *Rollout) *ServicesRolloutsCreateCall {
 	c := &ServicesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7927,7 +7813,7 @@ func (c *ServicesRolloutsCreateCall) Header() http.Header {
 
 func (c *ServicesRolloutsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8034,6 +7920,11 @@ type ServicesRolloutsGetCall struct {
 }
 
 // Get: Gets a service configuration rollout.
+//
+// - rolloutId: The id of the rollout resource.
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) Get(serviceName string, rolloutId string) *ServicesRolloutsGetCall {
 	c := &ServicesRolloutsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -8078,7 +7969,7 @@ func (c *ServicesRolloutsGetCall) Header() http.Header {
 
 func (c *ServicesRolloutsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8190,6 +8081,10 @@ type ServicesRolloutsListCall struct {
 
 // List: Lists the history of the service configuration rollouts for a
 // managed service, from the newest to the oldest.
+//
+// - serviceName: The name of the service. See the overview
+//   (/service-management/overview) for naming requirements. For
+//   example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) List(serviceName string) *ServicesRolloutsListCall {
 	c := &ServicesRolloutsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -8260,7 +8155,7 @@ func (c *ServicesRolloutsListCall) Header() http.Header {
 
 func (c *ServicesRolloutsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -85,7 +85,7 @@ const mtlsBasePath = "https://spanner.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Administer your Spanner databases
@@ -291,6 +291,10 @@ type Backup struct {
 	// `projects//instances//databases/`.
 	Database string `json:"database,omitempty"`
 
+	// EncryptionInfo: Output only. The encryption information for the
+	// backup.
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
+
 	// ExpireTime: Required for the CreateBackup operation. The expiration
 	// time of the backup, with microseconds granularity that must be at
 	// least 6 hours and at most 366 days from the time the CreateBackup
@@ -475,6 +479,12 @@ type BeginTransactionRequest struct {
 	// Options: Required. Options for the new transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
 
+	// RequestOptions: Common options for this request. Priority is ignored
+	// for this request. Setting the priority in this request_options struct
+	// will not do anything. To set the priority for a transaction, set it
+	// on the reads and writes that are part of this transaction instead.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -621,6 +631,9 @@ type CommitRequest struct {
 	// commits. All mutations are applied atomically, in the order they
 	// appear in this list.
 	Mutations []*Mutation `json:"mutations,omitempty"`
+
+	// RequestOptions: Common options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 
 	// ReturnCommitStats: If `true`, then statistics related to the
 	// transaction will be included in the CommitResponse. Default value is
@@ -822,6 +835,11 @@ type CreateDatabaseRequest struct {
 	// ` ``).
 	CreateStatement string `json:"createStatement,omitempty"`
 
+	// EncryptionConfig: Optional. The encryption configuration for the
+	// database. If this field is not specified, Cloud Spanner will
+	// encrypt/decrypt all data at rest using Google default encryption.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
 	// ExtraStatements: Optional. A list of DDL statements to run inside the
 	// newly created database. Statements can create tables, indexes, etc.
 	// These statements execute atomically with the creation of the
@@ -970,6 +988,21 @@ type Database struct {
 	// initiate the recovery.
 	EarliestVersionTime string `json:"earliestVersionTime,omitempty"`
 
+	// EncryptionConfig: Output only. For databases that are using customer
+	// managed encryption, this field contains the encryption configuration
+	// for the database. For databases that are using Google default or
+	// other types of encryption, this field is empty.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
+	// EncryptionInfo: Output only. For databases that are using customer
+	// managed encryption, this field contains the encryption information
+	// for the database, such as encryption state and the Cloud KMS key
+	// versions that are in use. For databases that are using Google default
+	// or other types of encryption, this field is empty. This field is
+	// propagated lazily from the backend. There might be a delay from when
+	// a key version is being used and when it appears in this field.
+	EncryptionInfo []*EncryptionInfo `json:"encryptionInfo,omitempty"`
+
 	// Name: Required. The name of the database. Values are of the form
 	// `projects//instances//databases/`, where `` is as specified in the
 	// `CREATE DATABASE` statement. This name can be passed to other API
@@ -1076,8 +1109,92 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: Encryption configuration for a Cloud Spanner
+// database.
+type EncryptionConfig struct {
+	// KmsKeyName: The Cloud KMS key to be used for encrypting and
+	// decrypting the database. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EncryptionInfo: Encryption information for a Cloud Spanner database
+// or backup.
+type EncryptionInfo struct {
+	// EncryptionStatus: Output only. If present, the status of a recent
+	// encrypt/decrypt call on underlying data for this database or backup.
+	// Regardless of status, data is always encrypted at rest.
+	EncryptionStatus *Status `json:"encryptionStatus,omitempty"`
+
+	// EncryptionType: Output only. The type of encryption.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Encryption type was not specified, though data
+	// at rest remains encrypted.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - The data is encrypted at rest with a
+	// key that is fully managed by Google. No key version or status will be
+	// populated. This is the default state.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - The data is encrypted at rest with
+	// a key that is managed by the customer. The active version of the key.
+	// `kms_key_version` will be populated, and `encryption_status` may be
+	// populated.
+	EncryptionType string `json:"encryptionType,omitempty"`
+
+	// KmsKeyVersion: Output only. A Cloud KMS key version that is being
+	// used to protect the database or backup.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
 type ExecuteBatchDmlRequest struct {
+	// RequestOptions: Common options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+
 	// Seqno: Required. A per-transaction sequence number used to identify
 	// this request. This field makes each request idempotent such that if
 	// the request is received multiple times, at most one will succeed. The
@@ -1102,7 +1219,7 @@ type ExecuteBatchDmlRequest struct {
 	// ID or begin a new transaction.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Seqno") to
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1110,12 +1227,13 @@ type ExecuteBatchDmlRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Seqno") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1227,6 +1345,9 @@ type ExecuteSqlRequest struct {
 	// QueryOptions: Query optimizer configuration to use for the given
 	// query.
 	QueryOptions *QueryOptions `json:"queryOptions,omitempty"`
+
+	// RequestOptions: Common options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 
 	// ResumeToken: If this request is resuming a previously interrupted SQL
 	// statement execution, `resume_token` should be copied from the last
@@ -2724,37 +2845,55 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // QueryOptions: Query optimizer configuration.
 type QueryOptions struct {
+	// OptimizerStatisticsPackage: An option to control the selection of
+	// optimizer statistics package. This parameter allows individual
+	// queries to use a different query optimizer statistics package.
+	// Specifying `latest` as a value instructs Cloud Spanner to use the
+	// latest generated statistics package. If not specified, Cloud Spanner
+	// uses the statistics package set at the database level options, or the
+	// latest package if the database option is not set. The statistics
+	// package requested by the query has to be exempt from garbage
+	// collection. This can be achieved with the following DDL statement:
+	// ``` ALTER STATISTICS SET OPTIONS (allow_gc=false) ``` The list of
+	// available statistics packages can be queried from
+	// `INFORMATION_SCHEMA.SPANNER_STATISTICS`. Executing a SQL statement
+	// with an invalid optimizer statistics package or with a statistics
+	// package that allows garbage collection fails with an
+	// `INVALID_ARGUMENT` error.
+	OptimizerStatisticsPackage string `json:"optimizerStatisticsPackage,omitempty"`
+
 	// OptimizerVersion: An option to control the selection of optimizer
 	// version. This parameter allows individual queries to pick different
-	// query optimizer versions. Specifying "latest" as a value instructs
+	// query optimizer versions. Specifying `latest` as a value instructs
 	// Cloud Spanner to use the latest supported query optimizer version. If
-	// not specified, Cloud Spanner uses optimizer version set at the
+	// not specified, Cloud Spanner uses the optimizer version set at the
 	// database level options. Any other positive integer (from the list of
 	// supported optimizer versions) overrides the default optimizer version
 	// for query execution. The list of supported optimizer versions can be
 	// queried from SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS. Executing a
-	// SQL statement with an invalid optimizer version will fail with a
-	// syntax error (`INVALID_ARGUMENT`) status. See
+	// SQL statement with an invalid optimizer version fails with an
+	// `INVALID_ARGUMENT` error. See
 	// https://cloud.google.com/spanner/docs/query-optimizer/manage-query-optimizer
 	// for more information on managing the query optimizer. The
 	// `optimizer_version` statement hint has precedence over this setting.
 	OptimizerVersion string `json:"optimizerVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OptimizerVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "OptimizerStatisticsPackage") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OptimizerVersion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "OptimizerStatisticsPackage") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2905,6 +3044,9 @@ type ReadRequest struct {
 	// partition_token.
 	PartitionToken string `json:"partitionToken,omitempty"`
 
+	// RequestOptions: Common options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+
 	// ResumeToken: If this request is resuming a previously interrupted
 	// read, `resume_token` should be copied from the last PartialResultSet
 	// yielded before the interruption. Doing this enables the new read to
@@ -3002,6 +3144,105 @@ func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RequestOptions: Common request options for various APIs.
+type RequestOptions struct {
+	// Priority: Priority for the request.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - `PRIORITY_UNSPECIFIED` is equivalent to
+	// `PRIORITY_HIGH`.
+	//   "PRIORITY_LOW" - This specifies that the request is low priority.
+	//   "PRIORITY_MEDIUM" - This specifies that the request is medium
+	// priority.
+	//   "PRIORITY_HIGH" - This specifies that the request is high priority.
+	Priority string `json:"priority,omitempty"`
+
+	// RequestTag: A per-request tag which can be applied to queries or
+	// reads, used for statistics collection. Both request_tag and
+	// transaction_tag can be specified for a read or query that belongs to
+	// a transaction. This field is ignored for requests where it's not
+	// applicable (e.g. CommitRequest). `request_tag` must be a valid
+	// identifier of the form: `a-zA-Z` between 2 and 64 characters in
+	// length
+	RequestTag string `json:"requestTag,omitempty"`
+
+	// TransactionTag: A tag used for statistics collection about this
+	// transaction. Both request_tag and transaction_tag can be specified
+	// for a read or query that belongs to a transaction. The value of
+	// transaction_tag should be the same for all requests belonging to the
+	// same transaction. If this request doesn’t belong to any
+	// transaction, transaction_tag will be ignored. `transaction_tag` must
+	// be a valid identifier of the format: `a-zA-Z{0,49}`
+	TransactionTag string `json:"transactionTag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Priority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreDatabaseEncryptionConfig: Encryption configuration for the
+// restored database.
+type RestoreDatabaseEncryptionConfig struct {
+	// EncryptionType: Required. The encryption type of the restored
+	// database.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+	//   "USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION" - This is the default
+	// option when encryption_config is not specified.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+	// specified, `kms_key_name` must must contain a valid Cloud KMS key.
+	EncryptionType string `json:"encryptionType,omitempty"`
+
+	// KmsKeyName: Optional. The Cloud KMS key that will be used to
+	// encrypt/decrypt the restored database. This field should be set only
+	// when encryption_type is `CUSTOMER_MANAGED_ENCRYPTION`. Values are of
+	// the form `projects//locations//keyRings//cryptoKeys/`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreDatabaseEncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreDatabaseEncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RestoreDatabaseMetadata: Metadata type for the long-running operation
 // returned by RestoreDatabase.
 type RestoreDatabaseMetadata struct {
@@ -3081,6 +3322,14 @@ type RestoreDatabaseRequest struct {
 	// to `parent` forms the full database name of the form
 	// `projects//instances//databases/`.
 	DatabaseId string `json:"databaseId,omitempty"`
+
+	// EncryptionConfig: Optional. An encryption configuration describing
+	// the encryption type and key resources in Cloud KMS used to
+	// encrypt/decrypt the database to restore to. If this field is not
+	// specified, the restored database will use the same encryption
+	// configuration as the backup by default, namely encryption_type =
+	// `USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION`.
+	EncryptionConfig *RestoreDatabaseEncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Backup") to
 	// unconditionally include in API requests. By default, fields with
@@ -3990,6 +4239,15 @@ type UpdateDatabaseDdlMetadata struct {
 	// Database: The database being modified.
 	Database string `json:"database,omitempty"`
 
+	// Progress: The progress of the UpdateDatabaseDdl operations.
+	// Currently, only index creation statements will have a continuously
+	// updating progress. For non-index creation statements, `progress[i]`
+	// will have start time and end time populated with commit timestamp of
+	// operation, as well as a progress of 100% once the operation has
+	// completed. `progress[i]` is the operation progress for
+	// `statements[i]`.
+	Progress []*OperationProgress `json:"progress,omitempty"`
+
 	// Statements: For an update this list contains all the statements. For
 	// an individual statement, this list contains only that statement.
 	Statements []string `json:"statements,omitempty"`
@@ -4209,6 +4467,9 @@ type ProjectsInstanceConfigsGetCall struct {
 }
 
 // Get: Gets information about a particular instance configuration.
+//
+// - name: The name of the requested instance configuration. Values are
+//   of the form `projects//instanceConfigs/`.
 func (r *ProjectsInstanceConfigsService) Get(name string) *ProjectsInstanceConfigsGetCall {
 	c := &ProjectsInstanceConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4252,7 +4513,7 @@ func (c *ProjectsInstanceConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4355,6 +4616,10 @@ type ProjectsInstanceConfigsListCall struct {
 
 // List: Lists the supported instance configurations for a given
 // project.
+//
+// - parent: The name of the project for which a list of supported
+//   instance configurations is requested. Values are of the form
+//   `projects/`.
 func (r *ProjectsInstanceConfigsService) List(parent string) *ProjectsInstanceConfigsListCall {
 	c := &ProjectsInstanceConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4414,7 +4679,7 @@ func (c *ProjectsInstanceConfigsListCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4566,6 +4831,9 @@ type ProjectsInstancesCreateCall struct {
 // and can be used to track creation of the instance. The metadata field
 // type is CreateInstanceMetadata. The response field type is Instance,
 // if successful.
+//
+// - parent: The name of the project in which to create the instance.
+//   Values are of the form `projects/`.
 func (r *ProjectsInstancesService) Create(parent string, createinstancerequest *CreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4600,7 +4868,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4710,6 +4978,9 @@ type ProjectsInstancesDeleteCall struct {
 // resources. Soon afterward: * The instance and *all of its databases*
 // immediately and irrevocably disappear from the API. All data in the
 // databases is permanently deleted.
+//
+// - name: The name of the instance to be deleted. Values are of the
+//   form `projects//instances/`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4743,7 +5014,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4842,6 +5113,9 @@ type ProjectsInstancesGetCall struct {
 }
 
 // Get: Gets information about a particular instance.
+//
+// - name: The name of the requested instance. Values are of the form
+//   `projects//instances/`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4893,7 +5167,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5004,6 +5278,11 @@ type ProjectsInstancesGetIamPolicyCall struct {
 // resource. Returns an empty policy if an instance exists but does not
 // have a policy set. Authorization requires
 // `spanner.instances.getIamPolicy` on resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being retrieved. The format is `projects//instances/` for
+//   instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesGetIamPolicyCall {
 	c := &ProjectsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5038,7 +5317,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5145,6 +5424,9 @@ type ProjectsInstancesListCall struct {
 }
 
 // List: Lists all instances in the given project.
+//
+// - parent: The name of the project for which a list of instances is
+//   requested. Values are of the form `projects/`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5230,7 +5512,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5397,6 +5679,11 @@ type ProjectsInstancesPatchCall struct {
 // UpdateInstanceMetadata. The response field type is Instance, if
 // successful. Authorization requires `spanner.instances.update`
 // permission on resource name.
+//
+// - name: A unique identifier for the instance, which cannot be changed
+//   after the instance is created. Values are of the form
+//   `projects//instances/a-z*[a-z0-9]`. The final segment of the name
+//   must be between 2 and 64 characters in length.
 func (r *ProjectsInstancesService) Patch(nameid string, updateinstancerequest *UpdateInstanceRequest) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5431,7 +5718,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5540,6 +5827,11 @@ type ProjectsInstancesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on an instance resource.
 // Replaces any existing policy. Authorization requires
 // `spanner.instances.setIamPolicy` on resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being set. The format is `projects//instances/` for instance
+//   resources and `projects//instances//databases/` for databases
+//   resources.
 func (r *ProjectsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesSetIamPolicyCall {
 	c := &ProjectsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5574,7 +5866,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5685,6 +5977,11 @@ type ProjectsInstancesTestIamPermissionsCall struct {
 // Cloud Spanner instance resource will result in a NOT_FOUND error if
 // the user has `spanner.instances.list` permission on the containing
 // Google Cloud Project. Otherwise returns an empty set of permissions.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which
+//   permissions are being tested. The format is `projects//instances/`
+//   for instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTestIamPermissionsCall {
 	c := &ProjectsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5719,7 +6016,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5834,6 +6131,9 @@ type ProjectsInstancesBackupOperationsListCall struct {
 // operations. Operations returned are ordered by
 // `operation.metadata.value.progress.start_time` in descending order
 // starting from the most recently started operation.
+//
+// - parent: The instance of the backup operations. Values are of the
+//   form `projects//instances/`.
 func (r *ProjectsInstancesBackupOperationsService) List(parent string) *ProjectsInstancesBackupOperationsListCall {
 	c := &ProjectsInstancesBackupOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5927,7 +6227,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6074,6 +6374,12 @@ type ProjectsInstancesBackupsCreateCall struct {
 // and delete the backup. There can be only one pending backup creation
 // per database. Backup creation of different databases can run
 // concurrently.
+//
+// - parent: The name of the instance in which the backup will be
+//   created. This must be the same instance that contains the database
+//   the backup will be created from. The backup will be stored in the
+//   location(s) specified in the instance configuration of this
+//   instance. Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
 	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6086,6 +6392,35 @@ func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) 
 // the full backup name of the form `projects//instances//backups/`.
 func (c *ProjectsInstancesBackupsCreateCall) BackupId(backupId string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.Set("backupId", backupId)
+	return c
+}
+
+// EncryptionConfigEncryptionType sets the optional parameter
+// "encryptionConfig.encryptionType": Required. The encryption type of
+// the backup.
+//
+// Possible values:
+//   "ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+//   "USE_DATABASE_ENCRYPTION" - Use the same encryption configuration
+// as the database. This is the default option when encryption_config is
+// empty. For example, if the database is using
+// `Customer_Managed_Encryption`, the backup will be using the same
+// Cloud KMS key as the database.
+//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
+//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+// specified, `kms_key_name` must contain a valid Cloud KMS key.
+func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigEncryptionType(encryptionConfigEncryptionType string) *ProjectsInstancesBackupsCreateCall {
+	c.urlParams_.Set("encryptionConfig.encryptionType", encryptionConfigEncryptionType)
+	return c
+}
+
+// EncryptionConfigKmsKeyName sets the optional parameter
+// "encryptionConfig.kmsKeyName": The Cloud KMS key that will be used to
+// protect the backup. This field should be set only when
+// encryption_type is `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the
+// form `projects//locations//keyRings//cryptoKeys/`.
+func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyName(encryptionConfigKmsKeyName string) *ProjectsInstancesBackupsCreateCall {
+	c.urlParams_.Set("encryptionConfig.kmsKeyName", encryptionConfigKmsKeyName)
 	return c
 }
 
@@ -6116,7 +6451,7 @@ func (c *ProjectsInstancesBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6193,6 +6528,28 @@ func (c *ProjectsInstancesBackupsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "encryptionConfig.encryptionType": {
+	//       "description": "Required. The encryption type of the backup.",
+	//       "enum": [
+	//         "ENCRYPTION_TYPE_UNSPECIFIED",
+	//         "USE_DATABASE_ENCRYPTION",
+	//         "GOOGLE_DEFAULT_ENCRYPTION",
+	//         "CUSTOMER_MANAGED_ENCRYPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified. Do not use.",
+	//         "Use the same encryption configuration as the database. This is the default option when encryption_config is empty. For example, if the database is using `Customer_Managed_Encryption`, the backup will be using the same Cloud KMS key as the database.",
+	//         "Use Google default encryption.",
+	//         "Use customer managed encryption. If specified, `kms_key_name` must contain a valid Cloud KMS key."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "encryptionConfig.kmsKeyName": {
+	//       "description": "Optional. The Cloud KMS key that will be used to protect the backup. This field should be set only when encryption_type is `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form `projects//locations//keyRings//cryptoKeys/`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The name of the instance in which the backup will be created. This must be the same instance that contains the database the backup will be created from. The backup will be stored in the location(s) specified in the instance configuration of this instance. Values are of the form `projects//instances/`.",
 	//       "location": "path",
@@ -6227,6 +6584,9 @@ type ProjectsInstancesBackupsDeleteCall struct {
 }
 
 // Delete: Deletes a pending or completed Backup.
+//
+// - name: Name of the backup to delete. Values are of the form
+//   `projects//instances//backups/`.
 func (r *ProjectsInstancesBackupsService) Delete(name string) *ProjectsInstancesBackupsDeleteCall {
 	c := &ProjectsInstancesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6260,7 +6620,7 @@ func (c *ProjectsInstancesBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6359,6 +6719,9 @@ type ProjectsInstancesBackupsGetCall struct {
 }
 
 // Get: Gets metadata on a pending or completed Backup.
+//
+// - name: Name of the backup. Values are of the form
+//   `projects//instances//backups/`.
 func (r *ProjectsInstancesBackupsService) Get(name string) *ProjectsInstancesBackupsGetCall {
 	c := &ProjectsInstancesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6402,7 +6765,7 @@ func (c *ProjectsInstancesBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6509,6 +6872,11 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being retrieved. The format is `projects//instances/` for
+//   instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6543,7 +6911,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6652,6 +7020,9 @@ type ProjectsInstancesBackupsListCall struct {
 // List: Lists completed and pending backups. Backups returned are
 // ordered by `create_time` in descending order, starting from the most
 // recent `create_time`.
+//
+// - parent: The instance to list backups from. Values are of the form
+//   `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstancesBackupsListCall {
 	c := &ProjectsInstancesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6740,7 +7111,7 @@ func (c *ProjectsInstancesBackupsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6879,6 +7250,15 @@ type ProjectsInstancesBackupsPatchCall struct {
 }
 
 // Patch: Updates a pending or completed Backup.
+//
+// - name: Output only for the CreateBackup operation. Required for the
+//   UpdateBackup operation. A globally unique identifier for the backup
+//   which cannot be changed. Values are of the form
+//   `projects//instances//backups/a-z*[a-z0-9]` The final segment of
+//   the name must be between 2 and 60 characters in length. The backup
+//   is stored in the location(s) specified in the instance
+//   configuration of the instance containing the backup, identified by
+//   the prefix of the backup name of the form `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesBackupsPatchCall {
 	c := &ProjectsInstancesBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6924,7 +7304,7 @@ func (c *ProjectsInstancesBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7041,6 +7421,11 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being set. The format is `projects//instances/` for instance
+//   resources and `projects//instances//databases/` for databases
+//   resources.
 func (r *ProjectsInstancesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7075,7 +7460,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7189,6 +7574,11 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 // permissions. Calling this method on a backup that does not exist will
 // result in a NOT_FOUND error if the user has `spanner.backups.list`
 // permission on the containing instance.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which
+//   permissions are being tested. The format is `projects//instances/`
+//   for instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7223,7 +7613,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7338,6 +7728,8 @@ type ProjectsInstancesBackupsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsInstancesBackupsOperationsService) Cancel(name string) *ProjectsInstancesBackupsOperationsCancelCall {
 	c := &ProjectsInstancesBackupsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7371,7 +7763,7 @@ func (c *ProjectsInstancesBackupsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7472,6 +7864,8 @@ type ProjectsInstancesBackupsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsInstancesBackupsOperationsService) Delete(name string) *ProjectsInstancesBackupsOperationsDeleteCall {
 	c := &ProjectsInstancesBackupsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7505,7 +7899,7 @@ func (c *ProjectsInstancesBackupsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7606,6 +8000,8 @@ type ProjectsInstancesBackupsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsInstancesBackupsOperationsService) Get(name string) *ProjectsInstancesBackupsOperationsGetCall {
 	c := &ProjectsInstancesBackupsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7649,7 +8045,7 @@ func (c *ProjectsInstancesBackupsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7760,6 +8156,8 @@ type ProjectsInstancesBackupsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesBackupsOperationsService) List(name string) *ProjectsInstancesBackupsOperationsListCall {
 	c := &ProjectsInstancesBackupsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7824,7 +8222,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7968,6 +8366,9 @@ type ProjectsInstancesDatabaseOperationsListCall struct {
 // describes the type of the metadata. Operations returned include those
 // that have completed/failed/canceled within the last 7 days, and
 // pending operations.
+//
+// - parent: The instance of the database operations. Values are of the
+//   form `projects//instances/`.
 func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *ProjectsInstancesDatabaseOperationsListCall {
 	c := &ProjectsInstancesDatabaseOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8062,7 +8463,7 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabaseOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8205,6 +8606,9 @@ type ProjectsInstancesDatabasesCreateCall struct {
 // the format `/operations/` and can be used to track preparation of the
 // database. The metadata field type is CreateDatabaseMetadata. The
 // response field type is Database, if successful.
+//
+// - parent: The name of the instance that will serve the new database.
+//   Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) Create(parent string, createdatabaserequest *CreateDatabaseRequest) *ProjectsInstancesDatabasesCreateCall {
 	c := &ProjectsInstancesDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8239,7 +8643,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8347,6 +8751,8 @@ type ProjectsInstancesDatabasesDropDatabaseCall struct {
 // DropDatabase: Drops (aka deletes) a Cloud Spanner database. Completed
 // backups for the database will be retained according to their
 // `expire_time`.
+//
+// - database: The database to be dropped.
 func (r *ProjectsInstancesDatabasesService) DropDatabase(database string) *ProjectsInstancesDatabasesDropDatabaseCall {
 	c := &ProjectsInstancesDatabasesDropDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -8380,7 +8786,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesDropDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8479,6 +8885,9 @@ type ProjectsInstancesDatabasesGetCall struct {
 }
 
 // Get: Gets the state of a Cloud Spanner database.
+//
+// - name: The name of the requested database. Values are of the form
+//   `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) Get(name string) *ProjectsInstancesDatabasesGetCall {
 	c := &ProjectsInstancesDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8522,7 +8931,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8626,6 +9035,9 @@ type ProjectsInstancesDatabasesGetDdlCall struct {
 // GetDdl: Returns the schema of a Cloud Spanner database as a list of
 // formatted DDL statements. This method does not show pending schema
 // updates, those may be queried using the Operations API.
+//
+// - database: The database whose schema we wish to get. Values are of
+//   the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) GetDdl(database string) *ProjectsInstancesDatabasesGetDdlCall {
 	c := &ProjectsInstancesDatabasesGetDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -8669,7 +9081,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8776,6 +9188,11 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being retrieved. The format is `projects//instances/` for
+//   instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesDatabasesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesGetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8810,7 +9227,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8917,6 +9334,9 @@ type ProjectsInstancesDatabasesListCall struct {
 }
 
 // List: Lists Cloud Spanner databases.
+//
+// - parent: The instance whose databases should be listed. Values are
+//   of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) List(parent string) *ProjectsInstancesDatabasesListCall {
 	c := &ProjectsInstancesDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8976,7 +9396,7 @@ func (c *ProjectsInstancesDatabasesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9122,6 +9542,11 @@ type ProjectsInstancesDatabasesRestoreCall struct {
 // completes, a new restore operation can be initiated, without waiting
 // for the optimize operation associated with the first restore to
 // complete.
+//
+// - parent: The name of the instance in which to create the restored
+//   database. This instance must be in the same project and have the
+//   same instance configuration as the instance containing the source
+//   backup. Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) Restore(parent string, restoredatabaserequest *RestoreDatabaseRequest) *ProjectsInstancesDatabasesRestoreCall {
 	c := &ProjectsInstancesDatabasesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9156,7 +9581,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9267,6 +9692,11 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//   is being set. The format is `projects//instances/` for instance
+//   resources and `projects//instances//databases/` for databases
+//   resources.
 func (r *ProjectsInstancesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesSetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9301,7 +9731,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9415,6 +9845,11 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 // permissions. Calling this method on a backup that does not exist will
 // result in a NOT_FOUND error if the user has `spanner.backups.list`
 // permission on the containing instance.
+//
+// - resource: REQUIRED: The Cloud Spanner resource for which
+//   permissions are being tested. The format is `projects//instances/`
+//   for instance resources and `projects//instances//databases/` for
+//   database resources.
 func (r *ProjectsInstancesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesTestIamPermissionsCall {
 	c := &ProjectsInstancesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9449,7 +9884,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9561,6 +9996,8 @@ type ProjectsInstancesDatabasesUpdateDdlCall struct {
 // `/operations/` and can be used to track execution of the schema
 // change(s). The metadata field type is UpdateDatabaseDdlMetadata. The
 // operation has no response.
+//
+// - database: The database to update.
 func (r *ProjectsInstancesDatabasesService) UpdateDdl(database string, updatedatabaseddlrequest *UpdateDatabaseDdlRequest) *ProjectsInstancesDatabasesUpdateDdlCall {
 	c := &ProjectsInstancesDatabasesUpdateDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -9595,7 +10032,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesUpdateDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9710,6 +10147,8 @@ type ProjectsInstancesDatabasesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsInstancesDatabasesOperationsService) Cancel(name string) *ProjectsInstancesDatabasesOperationsCancelCall {
 	c := &ProjectsInstancesDatabasesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9743,7 +10182,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9844,6 +10283,8 @@ type ProjectsInstancesDatabasesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsInstancesDatabasesOperationsService) Delete(name string) *ProjectsInstancesDatabasesOperationsDeleteCall {
 	c := &ProjectsInstancesDatabasesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9877,7 +10318,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9978,6 +10419,8 @@ type ProjectsInstancesDatabasesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsInstancesDatabasesOperationsService) Get(name string) *ProjectsInstancesDatabasesOperationsGetCall {
 	c := &ProjectsInstancesDatabasesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10021,7 +10464,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10132,6 +10575,8 @@ type ProjectsInstancesDatabasesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesDatabasesOperationsService) List(name string) *ProjectsInstancesDatabasesOperationsListCall {
 	c := &ProjectsInstancesDatabasesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10196,7 +10641,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10337,6 +10782,8 @@ type ProjectsInstancesDatabasesSessionsBatchCreateCall struct {
 // BatchCreate: Creates multiple new sessions. This API can be used to
 // initialize a session cache on the clients. See https://goo.gl/TgSFN2
 // for best practices on session cache management.
+//
+// - database: The database in which the new sessions are created.
 func (r *ProjectsInstancesDatabasesSessionsService) BatchCreate(database string, batchcreatesessionsrequest *BatchCreateSessionsRequest) *ProjectsInstancesDatabasesSessionsBatchCreateCall {
 	c := &ProjectsInstancesDatabasesSessionsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -10371,7 +10818,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Header() http.Header
 
 func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10480,6 +10927,8 @@ type ProjectsInstancesDatabasesSessionsBeginTransactionCall struct {
 // BeginTransaction: Begins a new transaction. This step can often be
 // skipped: Read, ExecuteSql and Commit can begin a new transaction as a
 // side-effect.
+//
+// - session: The session in which the transaction runs.
 func (r *ProjectsInstancesDatabasesSessionsService) BeginTransaction(session string, begintransactionrequest *BeginTransactionRequest) *ProjectsInstancesDatabasesSessionsBeginTransactionCall {
 	c := &ProjectsInstancesDatabasesSessionsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -10514,7 +10963,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Header() http.H
 
 func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10632,6 +11081,9 @@ type ProjectsInstancesDatabasesSessionsCommitCall struct {
 // Spanner has lost track of the transaction outcome and we recommend
 // that you perform another read from the database to see the state of
 // things as they are now.
+//
+// - session: The session in which the transaction to be committed is
+//   running.
 func (r *ProjectsInstancesDatabasesSessionsService) Commit(session string, commitrequest *CommitRequest) *ProjectsInstancesDatabasesSessionsCommitCall {
 	c := &ProjectsInstancesDatabasesSessionsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -10666,7 +11118,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10785,6 +11237,8 @@ type ProjectsInstancesDatabasesSessionsCreateCall struct {
 // for more than an hour. If a session is deleted, requests to it return
 // `NOT_FOUND`. Idle sessions can be kept alive by sending a trivial SQL
 // query periodically, e.g., "SELECT 1".
+//
+// - database: The database in which the new session is created.
 func (r *ProjectsInstancesDatabasesSessionsService) Create(database string, createsessionrequest *CreateSessionRequest) *ProjectsInstancesDatabasesSessionsCreateCall {
 	c := &ProjectsInstancesDatabasesSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -10819,7 +11273,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10927,6 +11381,8 @@ type ProjectsInstancesDatabasesSessionsDeleteCall struct {
 // Delete: Ends a session, releasing server resources associated with
 // it. This will asynchronously trigger cancellation of any operations
 // that are running with this session.
+//
+// - name: The name of the session to delete.
 func (r *ProjectsInstancesDatabasesSessionsService) Delete(name string) *ProjectsInstancesDatabasesSessionsDeleteCall {
 	c := &ProjectsInstancesDatabasesSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10960,7 +11416,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11067,6 +11523,9 @@ type ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall struct {
 // this field to determine whether an error occurred. Execution stops
 // after the first failed statement; the remaining statements are not
 // executed.
+//
+// - session: The session in which the DML statements should be
+//   performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteBatchDml(session string, executebatchdmlrequest *ExecuteBatchDmlRequest) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11101,7 +11560,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.He
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11215,6 +11674,8 @@ type ProjectsInstancesDatabasesSessionsExecuteSqlCall struct {
 // application should restart the transaction from the beginning. See
 // Transaction for more details. Larger result sets can be fetched in
 // streaming fashion by calling ExecuteStreamingSql instead.
+//
+// - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteSqlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11249,7 +11710,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11359,6 +11820,8 @@ type ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall struct {
 // as a stream. Unlike ExecuteSql, there is no limit on the size of the
 // returned result set. However, no individual row in the result set can
 // exceed 100 MiB, and no column value can exceed 10 MiB.
+//
+// - session: The session in which the SQL query should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteStreamingSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11393,7 +11856,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Header() htt
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11502,6 +11965,8 @@ type ProjectsInstancesDatabasesSessionsGetCall struct {
 // Get: Gets a session. Returns `NOT_FOUND` if the session does not
 // exist. This is mainly useful for determining whether a session is
 // still alive.
+//
+// - name: The name of the session to retrieve.
 func (r *ProjectsInstancesDatabasesSessionsService) Get(name string) *ProjectsInstancesDatabasesSessionsGetCall {
 	c := &ProjectsInstancesDatabasesSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11545,7 +12010,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11647,6 +12112,8 @@ type ProjectsInstancesDatabasesSessionsListCall struct {
 }
 
 // List: Lists all sessions in a given database.
+//
+// - database: The database in which to list sessions.
 func (r *ProjectsInstancesDatabasesSessionsService) List(database string) *ProjectsInstancesDatabasesSessionsListCall {
 	c := &ProjectsInstancesDatabasesSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -11718,7 +12185,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11867,6 +12334,8 @@ type ProjectsInstancesDatabasesSessionsPartitionQueryCall struct {
 // becomes too old. When any of these happen, it is not possible to
 // resume the query, and the whole operation must be restarted from the
 // beginning.
+//
+// - session: The session used to create the partitions.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionQuery(session string, partitionqueryrequest *PartitionQueryRequest) *ProjectsInstancesDatabasesSessionsPartitionQueryCall {
 	c := &ProjectsInstancesDatabasesSessionsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11901,7 +12370,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Header() http.Hea
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12020,6 +12489,8 @@ type ProjectsInstancesDatabasesSessionsPartitionReadCall struct {
 // transaction, or becomes too old. When any of these happen, it is not
 // possible to resume the read, and the whole operation must be
 // restarted from the beginning.
+//
+// - session: The session used to create the partitions.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionRead(session string, partitionreadrequest *PartitionReadRequest) *ProjectsInstancesDatabasesSessionsPartitionReadCall {
 	c := &ProjectsInstancesDatabasesSessionsPartitionReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12054,7 +12525,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12169,6 +12640,8 @@ type ProjectsInstancesDatabasesSessionsReadCall struct {
 // restart the transaction from the beginning. See Transaction for more
 // details. Larger result sets can be yielded in streaming fashion by
 // calling StreamingRead instead.
+//
+// - session: The session in which the read should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) Read(session string, readrequest *ReadRequest) *ProjectsInstancesDatabasesSessionsReadCall {
 	c := &ProjectsInstancesDatabasesSessionsReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12203,7 +12676,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12315,6 +12788,9 @@ type ProjectsInstancesDatabasesSessionsRollbackCall struct {
 // commit. `Rollback` returns `OK` if it successfully aborts the
 // transaction, the transaction was already aborted, or the transaction
 // is not found. `Rollback` never returns `ABORTED`.
+//
+// - session: The session in which the transaction to roll back is
+//   running.
 func (r *ProjectsInstancesDatabasesSessionsService) Rollback(session string, rollbackrequest *RollbackRequest) *ProjectsInstancesDatabasesSessionsRollbackCall {
 	c := &ProjectsInstancesDatabasesSessionsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12349,7 +12825,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12459,6 +12935,8 @@ type ProjectsInstancesDatabasesSessionsStreamingReadCall struct {
 // Unlike Read, there is no limit on the size of the returned result
 // set. However, no individual row in the result set can exceed 100 MiB,
 // and no column value can exceed 10 MiB.
+//
+// - session: The session in which the read should be performed.
 func (r *ProjectsInstancesDatabasesSessionsService) StreamingRead(session string, readrequest *ReadRequest) *ProjectsInstancesDatabasesSessionsStreamingReadCall {
 	c := &ProjectsInstancesDatabasesSessionsStreamingReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12493,7 +12971,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12608,6 +13086,8 @@ type ProjectsInstancesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsInstancesOperationsService) Cancel(name string) *ProjectsInstancesOperationsCancelCall {
 	c := &ProjectsInstancesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12641,7 +13121,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12742,6 +13222,8 @@ type ProjectsInstancesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsInstancesOperationsService) Delete(name string) *ProjectsInstancesOperationsDeleteCall {
 	c := &ProjectsInstancesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12775,7 +13257,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12876,6 +13358,8 @@ type ProjectsInstancesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsInstancesOperationsService) Get(name string) *ProjectsInstancesOperationsGetCall {
 	c := &ProjectsInstancesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12919,7 +13403,7 @@ func (c *ProjectsInstancesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13030,6 +13514,8 @@ type ProjectsInstancesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesOperationsService) List(name string) *ProjectsInstancesOperationsListCall {
 	c := &ProjectsInstancesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13094,7 +13580,7 @@ func (c *ProjectsInstancesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210409")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

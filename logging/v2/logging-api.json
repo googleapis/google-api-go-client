@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/cloud-platform.read-only": {
           "description": "View your data across Google Cloud Platform services"
@@ -386,7 +386,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -398,13 +398,13 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service will select a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1449,7 +1449,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1461,13 +1461,13 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service will select a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -2178,7 +2178,7 @@
           ],
           "parameters": {
             "filter": {
-              "description": "The standard list filter.",
+              "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
               "location": "query",
               "type": "string"
             },
@@ -2190,13 +2190,13 @@
               "type": "string"
             },
             "pageSize": {
-              "description": "The standard list page size.",
+              "description": "The maximum number of results to return. If not set, the service will select a default.",
               "format": "int32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "The standard list page token.",
+              "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
               "location": "query",
               "type": "string"
             }
@@ -2956,7 +2956,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -2968,13 +2968,13 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service will select a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -3848,7 +3848,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -3860,13 +3860,13 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service will select a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -4934,7 +4934,7 @@
       }
     }
   },
-  "revision": "20210122",
+  "revision": "20210325",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -5469,7 +5469,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. A set of user-defined (key, value) data that provides additional information about the log entry.",
+          "description": "Optional. A set of user-defined (key, value) data that provides additional information about the log entry.Cloud Logging truncates label keys that exceed 512 B and label values that exceed 64 KB upon their associated log entry being written. The truncation is indicated by an ellipsis at the end of the character string.",
           "type": "object"
         },
         "logName": {
@@ -5478,7 +5478,7 @@
         },
         "metadata": {
           "$ref": "MonitoredResourceMetadata",
-          "description": "Output only. Deprecated. Additional metadata about the monitored resource.Only k8s_container, k8s_pod, and k8s_node MonitoredResources have this field populated for GKE versions older than 1.12.6. For GKE versions 1.12.6 and above, the metadata field has been deprecated. The Kubernetes pod labels that used to be in metadata.userLabels will now be present in the labels field with a key prefix of k8s-pod/. The system labels that were present in the metadata.systemLabels field will no longer be available in the LogEntry.",
+          "description": "Output only. Deprecated. Additional metadata about the monitored resource.Only k8s_container, k8s_pod, and k8s_node MonitoredResources have this field populated for GKE versions older than 1.12.6. For GKE versions 1.12.6 and above, the metadata field has been deprecated. The Kubernetes pod labels that used to be in metadata.userLabels will now be present in the labels field with a key prefix of k8s-pod/. The system labels that were present in the metadata.systemLabels field will no longer be available in the log entry.",
           "readOnly": true
         },
         "operation": {

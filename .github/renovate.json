@@ -9,5 +9,10 @@
     ],
     "commitMessagePrefix": "chore(all): ",
     "commitMessageAction": "update",
-    "groupName": "all"
+    "groupName": "all",
+    "force": {
+      "constraints": {
+        "go": "1.16"
+      }
+    }
 }

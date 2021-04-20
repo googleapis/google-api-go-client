@@ -33,17 +33,16 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"google.golang.org/api/idtoken"
+	"google.golang.org/api/option"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
-	"time"
 
 	"google.golang.org/api/dns/v1"
-	"google.golang.org/api/idtoken"
-	"google.golang.org/api/option"
 )
 
 const (
@@ -231,4 +230,3 @@ func TestURLBasedCredentials(t *testing.T) {
 		},
 	})
 }
-

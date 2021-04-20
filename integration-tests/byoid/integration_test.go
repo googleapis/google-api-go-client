@@ -33,7 +33,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"golang.org/x/oauth2/google"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -42,6 +41,8 @@ import (
 	"os"
 	"regexp"
 	"testing"
+
+	"golang.org/x/oauth2/google"
 
 	"google.golang.org/api/dns/v1"
 	"google.golang.org/api/idtoken"
@@ -54,7 +55,6 @@ const (
 	envAudienceAWS  = "GCLOUD_TESTS_GOLANG_AUDIENCE_AWS"
 	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
 )
-
 
 var (
 	oidcAudience string
@@ -186,8 +186,8 @@ type config struct {
 }
 
 type credentialSource struct {
-	File string `json:"file,omitempty"`
-	URL     string            `json:"url,omitempty"`
+	File                        string `json:"file,omitempty"`
+	URL                         string `json:"url,omitempty"`
 	EnvironmentID               string `json:"environment_id,omitempty"`
 	RegionalCredVerificationURL string `json:"regional_cred_verification_url,omitempty"`
 }

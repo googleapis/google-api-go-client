@@ -55,24 +55,6 @@ const (
 	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
 )
 
-// The following are specifically for AWS integration tests.
-const (
-	// AWS Signature Version 4 signing algorithm identifier.
-	awsAlgorithm = "AWS4-HMAC-SHA256"
-
-	// The termination string for the AWS credential scope value as defined in
-	// https://docs.aws.amazon.com/general/latest/gr/sigv4-create-string-to-sign.html
-	awsRequestType = "aws4_request"
-
-	// The AWS authorization header name for the security session token if available.
-	awsSecurityTokenHeader = "x-amz-security-token"
-
-	// The AWS authorization header name for the auto-generated date.
-	awsDateHeader = "x-amz-date"
-
-	awsTimeFormatLong  = "20060102T150405Z"
-	awsTimeFormatShort = "20060102"
-)
 
 var (
 	oidcAudience string
@@ -205,14 +187,9 @@ type config struct {
 
 type credentialSource struct {
 	File string `json:"file,omitempty"`
-
 	URL     string            `json:"url,omitempty"`
-	Headers map[string]string `json:"headers,omitempty"`
-
 	EnvironmentID               string `json:"environment_id,omitempty"`
-	RegionURL                   string `json:"region_url"`
 	RegionalCredVerificationURL string `json:"regional_cred_verification_url,omitempty"`
-	Format                      string `json:"format,omitempty"`
 }
 
 // Tests to make sure File based external credentials continues to work.

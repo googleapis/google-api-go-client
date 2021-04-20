@@ -47,7 +47,7 @@ gcloud beta iam workload-identity-pools providers create-oidc $oidc_provider_id 
     --workload-identity-pool=$pool_id \
     --issuer-uri="https://accounts.google.com" \
     --location="global" \
-    --attribute-mapp`ing="google.subject=assertion.sub"
+    --attribute-mapping="google.subject=assertion.sub"
 
 # Create the AWS Provider.
 gcloud beta iam workload-identity-pools providers create-aws $aws_provider_id \

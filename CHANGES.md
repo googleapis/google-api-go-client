@@ -1,5 +1,13 @@
 # Changes
 
+## [0.45.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.44.0...v0.45.0) (2021-04-20)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#979](https://www.github.com/googleapis/google-api-go-client/issues/979) [#977](https://www.github.com/googleapis/google-api-go-client/issues/977) [#976](https://www.github.com/googleapis/google-api-go-client/issues/976) [#974](https://www.github.com/googleapis/google-api-go-client/issues/974)
+* **transport:** configure HTTP/2 ReadIdleTimeout ([#882](https://www.github.com/googleapis/google-api-go-client/issues/882)) ([c2ff762](https://www.github.com/googleapis/google-api-go-client/commit/c2ff762ec2c036284f19bba2b67b66d49c63a663))
+
 ## [0.44.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.43.0...v0.44.0) (2021-04-07)
 
 

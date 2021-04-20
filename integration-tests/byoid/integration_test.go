@@ -33,27 +33,52 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"google.golang.org/api/idtoken"
-	"google.golang.org/api/option"
+	"golang.org/x/oauth2/google"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
+	neturl "net/url"
 	"os"
+	"regexp"
 	"testing"
 
 	"google.golang.org/api/dns/v1"
+	"google.golang.org/api/idtoken"
+	"google.golang.org/api/option"
 )
 
 const (
 	envCredentials  = "GCLOUD_TESTS_GOLANG_KEY"
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
+	envAudienceAWS  = "GCLOUD_TESTS_GOLANG_AUDIENCE_AWS"
 	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
+)
+
+// The following are specifically for AWS integration tests.
+const (
+	// AWS Signature Version 4 signing algorithm identifier.
+	awsAlgorithm = "AWS4-HMAC-SHA256"
+
+	// The termination string for the AWS credential scope value as defined in
+	// https://docs.aws.amazon.com/general/latest/gr/sigv4-create-string-to-sign.html
+	awsRequestType = "aws4_request"
+
+	// The AWS authorization header name for the security session token if available.
+	awsSecurityTokenHeader = "x-amz-security-token"
+
+	// The AWS authorization header name for the auto-generated date.
+	awsDateHeader = "x-amz-date"
+
+	awsTimeFormatLong  = "20060102T150405Z"
+	awsTimeFormatShort = "20060102"
 )
 
 var (
 	oidcAudience string
+	awsAudience  string
 	oidcToken    string
+	awsToken     string
 	clientID     string
 	projectID    string
 )
@@ -74,6 +99,12 @@ func TestMain(m *testing.M) {
 	if oidcAudience == "" {
 		log.Fatalf("Please set %s to the OIDC Audience", envAudienceOIDC)
 	}
+
+	awsAudience = os.Getenv(envAudienceAWS)
+	if awsAudience == "" {
+		log.Fatalf("Please set %s to the AWS Audience", envAudienceAWS)
+	}
+
 	var err error
 
 	clientID, err = getClientID(keyFileName)
@@ -227,6 +258,87 @@ func TestURLBasedCredentials(t *testing.T) {
 		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
 		CredentialSource: credentialSource{
 			URL: ts.URL,
+		},
+	})
+}
+
+// Tests to make sure AWS based external credentials work properly.
+func TestAWSBasedCredentials(t *testing.T) {
+	data := neturl.Values{}
+	data.Set("audience", clientID)
+	data.Set("includeEmail", "true")
+
+	client, err := google.DefaultClient(context.Background(), "https://www.googleapis.com/auth/cloud-platform")
+	resp, err := client.PostForm(fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIdToken", clientID), data)
+	if resp.StatusCode != 200 {
+		t.Errorf("byoid: failed to get Google ID token for AWS test: %v", err)
+	}
+
+	var res map[string]interface{}
+
+	json.NewDecoder(resp.Body).Decode(&res)
+
+	token, ok := res["token"]
+	if !ok {
+		t.Errorf("byoid: Didn't receieve an ID token back from generateIDToken")
+	}
+
+	data = neturl.Values{}
+	data.Set("Action", "AssumeRoleWithWebIdentity")
+	data.Set("Version", "2011-06-15")
+	data.Set("DurationSeconds", "3600")
+	data.Set("RoleSessionName", os.Getenv("GCLOUD_TESTS_GOLANG_AWS_ROLE_NAME"))
+	data.Set("RoleArn", os.Getenv("GCLOUD_TESTS_GOLANG_AWS_ROLE_ID"))
+	data.Set("WebIdentityToken", token.(string))
+
+	resp, err = http.PostForm("https://sts.amazonaws.com/", data)
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Errorf("byoid: failed to parse response body from AWS: %v", err)
+	}
+
+	bodyString := string(bodyBytes)
+
+	// Using regex instead of loading the full XML response because I only need a few fields.
+	SessTok := regexp.MustCompile("<SessionToken>(.*)</SessionToken>")
+	SecAccKey := regexp.MustCompile("<SecretAccessKey>(.*)</SecretAccessKey>")
+	AccKeyID := regexp.MustCompile("<AccessKeyId>(.*)</AccessKeyId>")
+
+	if result := SessTok.FindStringSubmatch(bodyString); len(result) == 2 {
+		currSessTokEnv := os.Getenv("AWS_SESSION_TOKEN")
+		os.Setenv("AWS_SESSION_TOKEN", result[1])
+		defer os.Setenv("AWS_SESSION_TOKEN", currSessTokEnv)
+	} else {
+		t.Errorf("byoid: could not find session token in response from AWS")
+	}
+	if result := SecAccKey.FindStringSubmatch(bodyString); len(result) == 2 {
+		currSecAccKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
+		os.Setenv("AWS_SECRET_ACCESS_KEY", result[1])
+		defer os.Setenv("AWS_SECRET_ACCESS_KEY", currSecAccKey)
+	} else {
+		t.Errorf("byoid: could not find secret access key in response from AWS")
+	}
+	if result := AccKeyID.FindStringSubmatch(bodyString); len(result) == 2 {
+		currAccKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
+		os.Setenv("AWS_ACCESS_KEY_ID", result[1])
+		defer os.Setenv("AWS_ACCESS_KEY_ID", currAccKeyID)
+	} else {
+		t.Errorf("byoid: could not find access key ID in response from AWS")
+	}
+
+	currRegion := os.Getenv("AWS_REGION")
+	os.Setenv("AWS_REGION", "us-east-1")
+	defer os.Setenv("AWS_REGION", currRegion)
+
+	testBYOID(t, config{
+		Type:                           "external_account",
+		Audience:                       awsAudience,
+		SubjectTokenType:               "urn:ietf:params:aws:token-type:aws4_request",
+		TokenURL:                       "https://sts.googleapis.com/v1/token",
+		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
+		CredentialSource: credentialSource{
+			EnvironmentID:               "aws1",
+			RegionalCredVerificationURL: "https://sts.us-east-1.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
 		},
 	})
 }

@@ -33,14 +33,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"google.golang.org/api/idtoken"
-	"google.golang.org/api/option"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
+
+	"google.golang.org/api/idtoken"
+	"google.golang.org/api/option"
 
 	"google.golang.org/api/dns/v1"
 )

@@ -1431,12 +1431,7 @@ type PackageData struct {
 	// Package: The package being analysed for vulnerabilities
 	Package string `json:"package,omitempty"`
 
-	// ProjectId: The projectId of the package to which this data belongs.
-	// Most of Drydock's code does not set or use this field. This is added
-	// specifically so we can group packages by projects and decide whether
-	// or not to apply NVD data to the packages belonging to a specific
-	// project.
-	ProjectId string `json:"projectId,omitempty"`
+	Unused string `json:"unused,omitempty"`
 
 	// Version: The version of the package being analysed
 	Version string `json:"version,omitempty"`
@@ -2199,7 +2194,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2334,7 +2329,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2479,7 +2474,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2655,7 +2650,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2845,7 +2840,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2986,7 +2981,7 @@ func (c *ProjectsLocationsScansAnalyzePackagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansAnalyzePackagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3154,7 +3149,7 @@ func (c *ProjectsLocationsScansVulnerabilitiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansVulnerabilitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

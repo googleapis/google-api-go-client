@@ -226,6 +226,14 @@ type AbortInfo struct {
 	//   "TRACE_TOO_LONG" - Aborted because the number of steps in the trace
 	// exceeding a certain limit which may be caused by routing loop.
 	//   "INTERNAL_ERROR" - Aborted due to internal server error.
+	//   "SOURCE_ENDPOINT_NOT_FOUND" - Aborted because the source endpoint
+	// could not be found.
+	//   "MISMATCHED_SOURCE_NETWORK" - Aborted because the source network
+	// does not match the source endpoint.
+	//   "DESTINATION_ENDPOINT_NOT_FOUND" - Aborted because the destination
+	// endpoint could not be found.
+	//   "MISMATCHED_DESTINATION_NETWORK" - Aborted because the destination
+	// network does not match the destination endpoint.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the abort.
@@ -429,6 +437,51 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CloudSQLInstanceInfo: For display only. Metadata associated with a
+// Cloud SQL instance.
+type CloudSQLInstanceInfo struct {
+	// DisplayName: Name of a Cloud SQL instance.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExternalIp: External IP address of Cloud SQL instance.
+	ExternalIp string `json:"externalIp,omitempty"`
+
+	// InternalIp: Internal IP address of Cloud SQL instance.
+	InternalIp string `json:"internalIp,omitempty"`
+
+	// NetworkUri: URI of a Cloud SQL instance network or empty string if
+	// instance does not have one.
+	NetworkUri string `json:"networkUri,omitempty"`
+
+	// Region: Region in which the Cloud SQL instance is running.
+	Region string `json:"region,omitempty"`
+
+	// Uri: URI of a Cloud SQL instance.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSQLInstanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLInstanceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConnectivityTest: A Connectivity Test for a network reachability
 // analysis.
 type ConnectivityTest struct {
@@ -539,6 +592,8 @@ type DeliverInfo struct {
 	//   "INSTANCE" - Target is a Compute Engine instance.
 	//   "INTERNET" - Target is the Internet.
 	//   "GOOGLE_API" - Target is a Google API.
+	//   "GKE_MASTER" - Target is a Google Kubernetes Engine cluster master.
+	//   "CLOUD_SQL_INSTANCE" - Target is a Cloud SQL instance.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -573,8 +628,8 @@ type DropInfo struct {
 	//   "UNKNOWN_EXTERNAL_ADDRESS" - Destination external address cannot be
 	// resolved to a known target. If the address is used in a GCP project,
 	// provide the project ID as test input.
-	//   "FOREIGN_IP_DISALLOWED" - A Compute Engine instance can send or
-	// receive a packet with a foreign IP only if ip_forward is enabled.
+	//   "FOREIGN_IP_DISALLOWED" - A Compute Engine instance can only send
+	// or receive a packet with a foreign IP if ip_forward is enabled.
 	//   "FIREWALL_RULE" - Dropped due to a firewall rule, unless allowed
 	// due to connection tracking.
 	//   "NO_ROUTE" - Dropped due to no routes.
@@ -587,13 +642,14 @@ type DropInfo struct {
 	//   "PRIVATE_TRAFFIC_TO_INTERNET" - Packet with internal destination
 	// address sent to Internet gateway.
 	//   "PRIVATE_GOOGLE_ACCESS_DISALLOWED" - Instance with only an internal
-	// IP tries to access Google API and Services, and private Google access
+	// IP tries to access Google API and Services, but private Google access
 	// is not enabled.
 	//   "NO_EXTERNAL_ADDRESS" - Instance with only internal IP tries to
 	// access external hosts, but Cloud NAT is not enabled in the subnet,
 	// unless special configurations on a VM allows this connection. See
 	// [Special Configurations for VM
-	// instances](/vpc/docs/special-configurations) for details.
+	// instances](https://cloud.google.com/vpc/docs/special-configurations)
+	// for more details.
 	//   "UNKNOWN_INTERNAL_ADDRESS" - Destination internal address cannot be
 	// resolved to a known target. If this is a shared VPC scenario, verify
 	// if the service project ID is provided as test input. Otherwise,
@@ -606,18 +662,33 @@ type DropInfo struct {
 	// block the health check probes to the backends and cause the backends
 	// to be unavailable for traffic from the load balancer. See [Health
 	// check firewall
-	// rules](/load-balancing/docs/health-checks#firewall_rules) for more
-	// details.
+	// rules](https://cloud.google.com/load-balancing/docs/health-checks#fire
+	// wall_rules) for more details.
 	//   "INSTANCE_NOT_RUNNING" - Packet is sent from or to a Compute Engine
 	// instance that is not in a running state.
 	//   "TRAFFIC_TYPE_BLOCKED" - The type of traffic is blocked and the
 	// user cannot configure a firewall rule to enable it. See [Always
-	// blocked traffic](/vpc/docs/firewalls#blockedtraffic) for more
-	// details.
-	//   "GKE_MASTER_UNAUTHORIZED_ACCESS" - Access to GKE master's endpoint
-	// is not authorized. See [Access to the cluster
-	// endpoints](/docs/how-to/private-clusters#access_to_the_cluster_endpoin
-	// ts) for more details.
+	// blocked
+	// traffic](https://cloud.google.com/vpc/docs/firewalls#blockedtraffic)
+	// for more details.
+	//   "GKE_MASTER_UNAUTHORIZED_ACCESS" - Access to Google Kubernetes
+	// Engine cluster master's endpoint is not authorized. See [Access to
+	// the cluster
+	// endpoints](https://cloud.google.com/kubernetes-engine/docs/how-to/priv
+	// ate-clusters#access_to_the_cluster_endpoints) for more details.
+	//   "CLOUD_SQL_INSTANCE_UNAUTHORIZED_ACCESS" - Access to the Cloud SQL
+	// instance endpoint is not authorized. See [Authorizing with authorized
+	// networks](https://cloud.google.com/sql/docs/mysql/authorize-networks)
+	// for more details.
+	//   "DROPPED_INSIDE_GKE_SERVICE" - Packet was dropped inside Google
+	// Kubernetes Engine Service.
+	//   "DROPPED_INSIDE_CLOUD_SQL_SERVICE" - Packet was dropped inside
+	// Cloud SQL Service.
+	//   "GOOGLE_MANAGED_SERVICE_NO_PEERING" - Packet was dropped because
+	// there is no peering between the originating network and the Google
+	// Managed Services Network.
+	//   "CLOUD_SQL_INSTANCE_NO_IP_ADDRESS" - Packet was dropped because the
+	// Cloud SQL instance has neither a private nor a public IP address.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -929,6 +1000,7 @@ type ForwardInfo struct {
 	// cluster master.
 	//   "IMPORTED_CUSTOM_ROUTE_NEXT_HOP" - Forwarded to the next hop of a
 	// custom route imported from a peering VPC.
+	//   "CLOUD_SQL_INSTANCE" - Forwarded to a Cloud SQL Instance.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -999,6 +1071,47 @@ type ForwardingRuleInfo struct {
 
 func (s *ForwardingRuleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ForwardingRuleInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GKEMasterInfo: For display only. Metadata associated with a Google
+// Kubernetes Engine cluster master.
+type GKEMasterInfo struct {
+	// ClusterNetworkUri: URI of a Google Kubernetes Engine cluster network.
+	ClusterNetworkUri string `json:"clusterNetworkUri,omitempty"`
+
+	// ClusterUri: URI of a Google Kubernetes Engine cluster.
+	ClusterUri string `json:"clusterUri,omitempty"`
+
+	// ExternalIp: External IP address of a Google Kubernetes Engine cluster
+	// master.
+	ExternalIp string `json:"externalIp,omitempty"`
+
+	// InternalIp: Internal IP address of a Google Kubernetes Engine cluster
+	// master.
+	InternalIp string `json:"internalIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterNetworkUri")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterNetworkUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GKEMasterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GKEMasterInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1673,7 +1786,7 @@ type RouteInfo struct {
 	//   "NEXT_HOP_INTERCONNECT" - Next hop is an interconnect.
 	//   "NEXT_HOP_VPN_TUNNEL" - Next hop is a VPN tunnel.
 	//   "NEXT_HOP_VPN_GATEWAY" - Next hop is a VPN Gateway. This scenario
-	// happens only when tracing connectivity from an on-premises network to
+	// only happens when tracing connectivity from an on-premises network to
 	// GCP through a VPN. The analysis simulates a packet departing from the
 	// on-premises network through a VPN tunnel and arriving at a Cloud VPN
 	// gateway.
@@ -1693,7 +1806,7 @@ type RouteInfo struct {
 	//   "ROUTE_TYPE_UNSPECIFIED" - Unspecified type. Default value.
 	//   "SUBNET" - Route is a subnet route automatically created by the
 	// system.
-	//   "STATIC" - Static route created by the user, including the default
+	//   "STATIC" - Static route created by the user including the default
 	// route to the Internet.
 	//   "DYNAMIC" - Dynamic route exchanged between BGP peers.
 	//   "PEERING_SUBNET" - A subnet route received from peering network.
@@ -1819,6 +1932,9 @@ type Step struct {
 	// CausesDrop: This is a step that leads to the final state Drop.
 	CausesDrop bool `json:"causesDrop,omitempty"`
 
+	// CloudSqlInstance: Display info of a Cloud SQL instance.
+	CloudSqlInstance *CloudSQLInstanceInfo `json:"cloudSqlInstance,omitempty"`
+
 	// Deliver: Display info of the final state "deliver" and reason.
 	Deliver *DeliverInfo `json:"deliver,omitempty"`
 
@@ -1843,6 +1959,9 @@ type Step struct {
 
 	// ForwardingRule: Display info of a Compute Engine forwarding rule.
 	ForwardingRule *ForwardingRuleInfo `json:"forwardingRule,omitempty"`
+
+	// GkeMaster: Display info of a Google Kubernetes Engine cluster master.
+	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
 
 	// Instance: Display info of a Compute Engine instance.
 	Instance *InstanceInfo `json:"instance,omitempty"`
@@ -1873,6 +1992,12 @@ type Step struct {
 	// from a VPC or on-premises network with internal source IP. If the
 	// source is a VPC network visible to the user, a NetworkInfo will be
 	// populated with details of the network.
+	//   "START_FROM_GKE_MASTER" - Initial state: packet originating from a
+	// Google Kubernetes Engine cluster master. A GKEMasterInfo will be
+	// populated with starting instance info.
+	//   "START_FROM_CLOUD_SQL_INSTANCE" - Initial state: packet originating
+	// from a Cloud SQL instance. A CloudSQLInstanceInfo will be populated
+	// with starting instance info.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify
 	// ingress firewall rule.
 	//   "APPLY_EGRESS_FIREWALL_RULE" - Config checking state: verify egress
@@ -1896,7 +2021,7 @@ type Step struct {
 	//   "PROXY_CONNECTION" - Transition state: original connection is
 	// terminated and a new proxied connection is initiated.
 	//   "DELIVER" - Final state: packet could be delivered.
-	//   "DROP" - Final state: packet coud be dropped.
+	//   "DROP" - Final state: packet could be dropped.
 	//   "FORWARD" - Final state: packet could be forwarded to a network
 	// with an unknown configuration.
 	//   "ABORT" - Final state: analysis is aborted.
@@ -2001,7 +2126,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Trace: Trace represents one simulated packet forwarding path. * Each
-// trace contains multiple ordered Steps. * Each step is in a particular
+// trace contains multiple ordered steps. * Each step is in a particular
 // state with associated configuration. * State is categorized as final
 // or non-final states. * Each final state has a reason associated. *
 // Each trace must end with a final state (the last step). ```
@@ -2208,7 +2333,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2329,7 +2454,7 @@ func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsList
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2380,7 +2505,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2463,7 +2588,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2575,7 +2700,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2721,7 +2846,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2865,7 +2990,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3029,7 +3154,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3220,7 +3345,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsGlobalConnectivityTestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3419,7 +3544,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3576,7 +3701,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3722,7 +3847,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3871,7 +3996,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4022,7 +4147,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4165,7 +4290,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4310,7 +4435,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4486,7 +4611,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

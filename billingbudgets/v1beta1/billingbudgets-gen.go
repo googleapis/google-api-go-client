@@ -404,11 +404,11 @@ func (s *GoogleCloudBillingBudgetsV1beta1CustomPeriod) MarshalJSON() ([]byte, er
 // limiting the scope of the cost to calculate.
 type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// CalendarPeriod: Optional. Specifies to track usage for recurring
-	// calendar period. E.g. Assume that CalendarPeriod.QUARTER is set. The
-	// budget will track usage from April 1 to June 30, when current
-	// calendar month is April, May, June. After that, it will track usage
-	// from July 1 to September 30 when current calendar month is July,
-	// August, September, and so on.
+	// calendar period. For example, assume that CalendarPeriod.QUARTER is
+	// set. The budget will track usage from April 1 to June 30, when the
+	// current calendar month is April, May, June. After that, it will track
+	// usage from July 1 to September 30 when the current calendar month is
+	// July, August, September, so on.
 	//
 	// Possible values:
 	//   "CALENDAR_PERIOD_UNSPECIFIED"
@@ -422,10 +422,10 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// CreditTypes: Optional. If Filter.credit_types_treatment is
 	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be
 	// subtracted from gross cost to determine the spend for threshold
-	// calculations. If Filter.credit_types_treatment is **not**
-	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See a list of
-	// acceptable credit type values
+	// calculations. See a list of acceptable credit type values
 	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#credits-type).
+	// If Filter.credit_types_treatment is **not**
+	// INCLUDE_SPECIFIED_CREDITS, this field must be empty.
 	CreditTypes []string `json:"creditTypes,omitempty"`
 
 	// CreditTypesTreatment: Optional. If not set, default behavior is
@@ -437,13 +437,16 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// gross cost to determine the spend for threshold calculations.
 	//   "EXCLUDE_ALL_CREDITS" - All types of credit are added to the net
 	// cost to determine the spend for threshold calculations.
-	//   "INCLUDE_SPECIFIED_CREDITS" - Credit types specified in the
-	// credit_types field are subtracted from the gross cost to determine
-	// the spend for threshold calculations.
+	//   "INCLUDE_SPECIFIED_CREDITS" - [Credit
+	// types](https://cloud.google.com/billing/docs/how-to/export-data-bigque
+	// ry-tables#credits-type) specified in the credit_types field are
+	// subtracted from the gross cost to determine the spend for threshold
+	// calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 
 	// CustomPeriod: Optional. Specifies to track usage from any start date
-	// (required) to any end date (optional).
+	// (required) to any end date (optional). This time period is static, it
+	// does not recur.
 	CustomPeriod *GoogleCloudBillingBudgetsV1beta1CustomPeriod `json:"customPeriod,omitempty"`
 
 	// Labels: Optional. A single label and value pair specifying that usage
@@ -800,7 +803,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -943,7 +946,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1091,7 +1094,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1260,7 +1263,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1437,7 +1440,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

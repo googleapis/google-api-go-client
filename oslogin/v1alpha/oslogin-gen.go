@@ -438,8 +438,8 @@ func (c *UsersGetLoginProfileCall) SystemId(systemId string) *UsersGetLoginProfi
 // to retrieve security keys information.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - The default login profile view. The API
-// defaults to the BASIC view.
+//   "LOGIN_PROFILE_VIEW_UNSPECIFIED" - The default login profile view.
+// The API defaults to the BASIC view.
 //   "BASIC" - Includes POSIX and SSH key information.
 //   "SECURITY_KEY" - Include security key information for the user.
 func (c *UsersGetLoginProfileCall) View(view string) *UsersGetLoginProfileCall {
@@ -484,7 +484,7 @@ func (c *UsersGetLoginProfileCall) Header() http.Header {
 
 func (c *UsersGetLoginProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -589,7 +589,7 @@ func (c *UsersGetLoginProfileCall) Do(opts ...googleapi.CallOption) (*LoginProfi
 	//     "view": {
 	//       "description": "The view configures whether to retrieve security keys information.",
 	//       "enum": [
-	//         "VIEW_UNSPECIFIED",
+	//         "LOGIN_PROFILE_VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "SECURITY_KEY"
 	//       ],
@@ -650,8 +650,8 @@ func (c *UsersImportSshPublicKeyCall) ProjectId(projectId string) *UsersImportSs
 // to retrieve security keys information.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - The default login profile view. The API
-// defaults to the BASIC view.
+//   "LOGIN_PROFILE_VIEW_UNSPECIFIED" - The default login profile view.
+// The API defaults to the BASIC view.
 //   "BASIC" - Includes POSIX and SSH key information.
 //   "SECURITY_KEY" - Include security key information for the user.
 func (c *UsersImportSshPublicKeyCall) View(view string) *UsersImportSshPublicKeyCall {
@@ -686,7 +686,7 @@ func (c *UsersImportSshPublicKeyCall) Header() http.Header {
 
 func (c *UsersImportSshPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -773,7 +773,7 @@ func (c *UsersImportSshPublicKeyCall) Do(opts ...googleapi.CallOption) (*ImportS
 	//     "view": {
 	//       "description": "The view configures whether to retrieve security keys information.",
 	//       "enum": [
-	//         "VIEW_UNSPECIFIED",
+	//         "LOGIN_PROFILE_VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "SECURITY_KEY"
 	//       ],
@@ -864,7 +864,7 @@ func (c *UsersProjectsDeleteCall) Header() http.Header {
 
 func (c *UsersProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1014,7 +1014,7 @@ func (c *UsersSshPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1160,7 +1160,7 @@ func (c *UsersSshPublicKeysGetCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1308,7 +1308,7 @@ func (c *UsersSshPublicKeysPatchCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210410")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

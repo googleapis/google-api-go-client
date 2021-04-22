@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudcommerceprocurement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -200,7 +200,9 @@ type Account struct {
 	// purchase if the billing account is suspended, for example.
 	//
 	// Possible values:
-	//   "ACCOUNT_STATE_UNSPECIFIED" - Sentinel value, do not use.
+	//   "ACCOUNT_STATE_UNSPECIFIED" - Default state of the account. It's
+	// only set to this value when the account is first created and has not
+	// been initialized.
 	//   "ACCOUNT_ACTIVATION_REQUESTED" - The customer has requested the
 	// creation of the account resource, and the provider notification
 	// message is dispatched. This state has been deprecated, as accounts
@@ -429,7 +431,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Entitlement: Represents a procured product of a customer. Next Id: 17
+// Entitlement: Represents a procured product of a customer. Next Id: 24
 type Entitlement struct {
 	// Account: Output only. The resource name of the account that this
 	// entitlement is based on, if any.
@@ -460,17 +462,37 @@ type Entitlement struct {
 	// `providers/{provider_id}/entitlements/{entitlement_id}`.
 	Name string `json:"name,omitempty"`
 
+	// NewPendingOffer: Output only. The name of the offer the entitlement
+	// is switching to upon a pending plan change. Only exists if the
+	// pending plan change is moving to an offer. Format:
+	// 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR
+	// 'projects/{project}/services/{service}/standardOffers/{offer-id}',
+	// depending on whether the offer is private or public.
+	NewPendingOffer string `json:"newPendingOffer,omitempty"`
+
 	// NewPendingPlan: Output only. The identifier of the pending new plan.
 	// Required if the product has plans and the entitlement has a pending
 	// plan change.
 	NewPendingPlan string `json:"newPendingPlan,omitempty"`
+
+	// Offer: Output only. The name of the offer that was procured. Field is
+	// empty if order was not made using an offer. Format:
+	// 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR
+	// 'projects/{project}/services/{service}/standardOffers/{offer-id}',
+	// depending on whether the offer is private or public.
+	Offer string `json:"offer,omitempty"`
+
+	// OfferEndTime: Output only. End time for the Offer association
+	// corresponding to this entitlement. The field is only populated if the
+	// entitlement is currently associated with an Offer.
+	OfferEndTime string `json:"offerEndTime,omitempty"`
 
 	// Plan: Output only. The identifier of the plan that was procured.
 	// Required if the product has plans.
 	Plan string `json:"plan,omitempty"`
 
 	// Product: Output only. The identifier of the entity that was
-	// purchased. This may actually represent a product or a quote.
+	// purchased. This may actually represent a product, quote, or offer.
 	Product string `json:"product,omitempty"`
 
 	// ProductExternalName: Output only. The identifier of the product that
@@ -490,7 +512,9 @@ type Entitlement struct {
 	// State: Output only. The state of the entitlement.
 	//
 	// Possible values:
-	//   "ENTITLEMENT_STATE_UNSPECIFIED" - Sentinel value. Do not use.
+	//   "ENTITLEMENT_STATE_UNSPECIFIED" - Default state of the entitlement.
+	// It's only set to this value when the entitlement is first created and
+	// has not been initialized.
 	//   "ENTITLEMENT_ACTIVATION_REQUESTED" - Indicates that the entitlement
 	// is being created and the backend has sent a notification to the
 	// provider for the activation approval. If the provider approves, then
@@ -550,10 +574,10 @@ type Entitlement struct {
 
 	// UsageReportingId: Output only. The consumerId to use when reporting
 	// usage through the Service Control API. See the consumerId field at
-	// [Reporting
-	// Metrics](https://cloud.google.com/service-control/reporting-metrics)
-	// for more details. This field is present only if the product has
-	// usage-based billing configured.
+	// Reporting Metrics
+	// (https://cloud.google.com/service-control/reporting-metrics) for more
+	// details. This field is present only if the product has usage-based
+	// billing configured.
 	UsageReportingId string `json:"usageReportingId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -803,7 +827,9 @@ type ProvidersAccountsApproveCall struct {
 	header_               http.Header
 }
 
-// Approve: Grant an approval on an Account.
+// Approve: Grants an approval on an Account.
+//
+// - name: The resource name of the account.
 func (r *ProvidersAccountsService) Approve(name string, approveaccountrequest *ApproveAccountRequest) *ProvidersAccountsApproveCall {
 	c := &ProvidersAccountsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -838,7 +864,7 @@ func (c *ProvidersAccountsApproveCall) Header() http.Header {
 
 func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -902,7 +928,7 @@ func (c *ProvidersAccountsApproveCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Grant an approval on an Account.",
+	//   "description": "Grants an approval on an Account.",
 	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:approve",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.accounts.approve",
@@ -943,7 +969,9 @@ type ProvidersAccountsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a requested Account resource.
+// Get: Gets a requested Account resource.
+//
+// - name: The name of the account to retrieve.
 func (r *ProvidersAccountsService) Get(name string) *ProvidersAccountsGetCall {
 	c := &ProvidersAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -987,7 +1015,7 @@ func (c *ProvidersAccountsGetCall) Header() http.Header {
 
 func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1049,7 +1077,7 @@ func (c *ProvidersAccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a requested Account resource.",
+	//   "description": "Gets a requested Account resource.",
 	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudcommerceprocurement.providers.accounts.get",
@@ -1087,7 +1115,9 @@ type ProvidersAccountsListCall struct {
 	header_      http.Header
 }
 
-// List: List Accounts that the provider has access to.
+// List: Lists Accounts that the provider has access to.
+//
+// - parent: The parent resource name.
 func (r *ProvidersAccountsService) List(parent string) *ProvidersAccountsListCall {
 	c := &ProvidersAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1145,7 +1175,7 @@ func (c *ProvidersAccountsListCall) Header() http.Header {
 
 func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1207,7 +1237,7 @@ func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccou
 	}
 	return ret, nil
 	// {
-	//   "description": "List Accounts that the provider has access to.",
+	//   "description": "Lists Accounts that the provider has access to.",
 	//   "flatPath": "v1/providers/{providersId}/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "cloudcommerceprocurement.providers.accounts.list",
@@ -1277,7 +1307,9 @@ type ProvidersAccountsRejectCall struct {
 	header_              http.Header
 }
 
-// Reject: Reject an approval on an Account.
+// Reject: Rejects an approval on an Account.
+//
+// - name: The resource name of the account.
 func (r *ProvidersAccountsService) Reject(name string, rejectaccountrequest *RejectAccountRequest) *ProvidersAccountsRejectCall {
 	c := &ProvidersAccountsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1312,7 +1344,7 @@ func (c *ProvidersAccountsRejectCall) Header() http.Header {
 
 func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1376,7 +1408,7 @@ func (c *ProvidersAccountsRejectCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Reject an approval on an Account.",
+	//   "description": "Rejects an approval on an Account.",
 	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:reject",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.accounts.reject",
@@ -1417,9 +1449,11 @@ type ProvidersAccountsResetCall struct {
 	header_             http.Header
 }
 
-// Reset: Reset an Account and cancel all associated Entitlements.
+// Reset: Resets an Account and cancel all associated Entitlements.
 // Partner can only reset accounts they own rather than customer
 // accounts.
+//
+// - name: The resource name of the account.
 func (r *ProvidersAccountsService) Reset(name string, resetaccountrequest *ResetAccountRequest) *ProvidersAccountsResetCall {
 	c := &ProvidersAccountsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1454,7 +1488,7 @@ func (c *ProvidersAccountsResetCall) Header() http.Header {
 
 func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1518,7 +1552,7 @@ func (c *ProvidersAccountsResetCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Reset an Account and cancel all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.",
+	//   "description": "Resets an Account and cancel all associated Entitlements. Partner can only reset accounts they own rather than customer accounts.",
 	//   "flatPath": "v1/providers/{providersId}/accounts/{accountsId}:reset",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.accounts.reset",
@@ -1559,10 +1593,12 @@ type ProvidersEntitlementsApproveCall struct {
 	header_                   http.Header
 }
 
-// Approve: Approve an entitlement that is in the
+// Approve: Approves an entitlement that is in the
 // EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method
 // is invoked by the provider to approve the creation of the entitlement
 // resource.
+//
+// - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) Approve(name string, approveentitlementrequest *ApproveEntitlementRequest) *ProvidersEntitlementsApproveCall {
 	c := &ProvidersEntitlementsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1597,7 +1633,7 @@ func (c *ProvidersEntitlementsApproveCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1661,7 +1697,7 @@ func (c *ProvidersEntitlementsApproveCall) Do(opts ...googleapi.CallOption) (*Em
 	}
 	return ret, nil
 	// {
-	//   "description": "Approve an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.",
+	//   "description": "Approves an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to approve the creation of the entitlement resource.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:approve",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.approve",
@@ -1702,10 +1738,12 @@ type ProvidersEntitlementsApprovePlanChangeCall struct {
 	header_                             http.Header
 }
 
-// ApprovePlanChange: Approve an entitlement plan change that is in the
+// ApprovePlanChange: Approves an entitlement plan change that is in the
 // EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This
 // method is invoked by the provider to approve the plan change on the
 // entitlement resource.
+//
+// - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) ApprovePlanChange(name string, approveentitlementplanchangerequest *ApproveEntitlementPlanChangeRequest) *ProvidersEntitlementsApprovePlanChangeCall {
 	c := &ProvidersEntitlementsApprovePlanChangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1740,7 +1778,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1804,7 +1842,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Approve an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.",
+	//   "description": "Approves an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to approve the plan change on the entitlement resource.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:approvePlanChange",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.approvePlanChange",
@@ -1845,7 +1883,9 @@ type ProvidersEntitlementsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a requested Entitlement resource.
+// Get: Gets a requested Entitlement resource.
+//
+// - name: The name of the entitlement to retrieve.
 func (r *ProvidersEntitlementsService) Get(name string) *ProvidersEntitlementsGetCall {
 	c := &ProvidersEntitlementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1889,7 +1929,7 @@ func (c *ProvidersEntitlementsGetCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1951,7 +1991,7 @@ func (c *ProvidersEntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitl
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a requested Entitlement resource.",
+	//   "description": "Gets a requested Entitlement resource.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.get",
@@ -1989,7 +2029,9 @@ type ProvidersEntitlementsListCall struct {
 	header_      http.Header
 }
 
-// List: List Entitlements for which the provider has read access.
+// List: Lists Entitlements for which the provider has read access.
+//
+// - parent: The parent resource name.
 func (r *ProvidersEntitlementsService) List(parent string) *ProvidersEntitlementsListCall {
 	c := &ProvidersEntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2001,7 +2043,9 @@ func (r *ProvidersEntitlementsService) List(parent string) *ProvidersEntitlement
 // match a selected set of attributes with string values. For example
 // `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and
 // `plan!=foo-plan`. Supported query attributes are * `account` *
-// `product_external_name` * `quote_external_name` * `plan` *
+// `customer_billing_account` with value in the format of:
+// `billingAccounts/{id}` * `product_external_name` *
+// `quote_external_name` * `offer` * `new_pending_offer` * `plan` *
 // `newPendingPlan` or `new_pending_plan` * `state` *
 // `consumers.project` Note that the consumers match works on repeated
 // structures, so equality (`consumers.project=projects/123456789`) is
@@ -2077,7 +2121,7 @@ func (c *ProvidersEntitlementsListCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2139,7 +2183,7 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 	}
 	return ret, nil
 	// {
-	//   "description": "List Entitlements for which the provider has read access.",
+	//   "description": "Lists Entitlements for which the provider has read access.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements",
 	//   "httpMethod": "GET",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.list",
@@ -2148,7 +2192,7 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter that can be used to limit the list request. The filter is a query string that can match a selected set of attributes with string values. For example `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and `plan!=foo-plan`. Supported query attributes are * `account` * `product_external_name` * `quote_external_name` * `plan` * `newPendingPlan` or `new_pending_plan` * `state` * `consumers.project` Note that the consumers match works on repeated structures, so equality (`consumers.project=projects/123456789`) is not supported. Set membership can be expressed with the `:` operator. For example, `consumers.project:projects/123456789` finds entitlements with at least one consumer with project field equal to `projects/123456789`. Also note that the state name match is case-insensitive and query can omit the prefix \"ENTITLEMENT_\". For example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`. If the query contains some special characters other than letters, underscore, or digits, the phrase must be quoted with double quotes. For example, `product=\"providerId:productId\"`, where the product name needs to be quoted because it contains special character colon. Queries can be combined with `AND`, `OR`, and `NOT` to form more complex queries. They can also be grouped to force a desired evaluation order. For example, `state=active AND (account=E-1234 OR account=5678) AND NOT (product=foo-product)`. Connective `AND` can be omitted between two predicates. For example `account=E-1234 state=active` is equivalent to `account=E-1234 AND state=active`.",
+	//       "description": "The filter that can be used to limit the list request. The filter is a query string that can match a selected set of attributes with string values. For example `account=E-1234-5678-ABCD-EFGH`, `state=pending_cancellation`, and `plan!=foo-plan`. Supported query attributes are * `account` * `customer_billing_account` with value in the format of: `billingAccounts/{id}` * `product_external_name` * `quote_external_name` * `offer` * `new_pending_offer` * `plan` * `newPendingPlan` or `new_pending_plan` * `state` * `consumers.project` Note that the consumers match works on repeated structures, so equality (`consumers.project=projects/123456789`) is not supported. Set membership can be expressed with the `:` operator. For example, `consumers.project:projects/123456789` finds entitlements with at least one consumer with project field equal to `projects/123456789`. Also note that the state name match is case-insensitive and query can omit the prefix \"ENTITLEMENT_\". For example, `state=active` is equivalent to `state=ENTITLEMENT_ACTIVE`. If the query contains some special characters other than letters, underscore, or digits, the phrase must be quoted with double quotes. For example, `product=\"providerId:productId\"`, where the product name needs to be quoted because it contains special character colon. Queries can be combined with `AND`, `OR`, and `NOT` to form more complex queries. They can also be grouped to force a desired evaluation order. For example, `state=active AND (account=E-1234 OR account=5678) AND NOT (product=foo-product)`. Connective `AND` can be omitted between two predicates. For example `account=E-1234 state=active` is equivalent to `account=E-1234 AND state=active`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2215,6 +2259,8 @@ type ProvidersEntitlementsPatchCall struct {
 }
 
 // Patch: Updates an existing Entitlement.
+//
+// - name: The name of the entitlement to update.
 func (r *ProvidersEntitlementsService) Patch(name string, entitlement *Entitlement) *ProvidersEntitlementsPatchCall {
 	c := &ProvidersEntitlementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2224,8 +2270,8 @@ func (r *ProvidersEntitlementsService) Patch(name string, entitlement *Entitleme
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
 // that applies to the resource. See the [FieldMask definition]
-// (https://developers.google.com/protocol-buffers/docs/reference/google.
-// protobuf#fieldmask) for more details.
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask)
+// for more details.
 func (c *ProvidersEntitlementsPatchCall) UpdateMask(updateMask string) *ProvidersEntitlementsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2258,7 +2304,7 @@ func (c *ProvidersEntitlementsPatchCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2369,10 +2415,12 @@ type ProvidersEntitlementsRejectCall struct {
 	header_                  http.Header
 }
 
-// Reject: Reject an entitlement that is in the
+// Reject: Rejects an entitlement that is in the
 // EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method
 // is invoked by the provider to reject the creation of the entitlement
 // resource.
+//
+// - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) Reject(name string, rejectentitlementrequest *RejectEntitlementRequest) *ProvidersEntitlementsRejectCall {
 	c := &ProvidersEntitlementsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2407,7 +2455,7 @@ func (c *ProvidersEntitlementsRejectCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,7 +2519,7 @@ func (c *ProvidersEntitlementsRejectCall) Do(opts ...googleapi.CallOption) (*Emp
 	}
 	return ret, nil
 	// {
-	//   "description": "Reject an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.",
+	//   "description": "Rejects an entitlement that is in the EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED state. This method is invoked by the provider to reject the creation of the entitlement resource.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:reject",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.reject",
@@ -2512,10 +2560,12 @@ type ProvidersEntitlementsRejectPlanChangeCall struct {
 	header_                            http.Header
 }
 
-// RejectPlanChange: Reject an entitlement plan change that is in the
+// RejectPlanChange: Rejects an entitlement plan change that is in the
 // EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This
 // method is invoked by the provider to reject the plan change on the
 // entitlement resource.
+//
+// - name: The resource name of the entitlement.
 func (r *ProvidersEntitlementsService) RejectPlanChange(name string, rejectentitlementplanchangerequest *RejectEntitlementPlanChangeRequest) *ProvidersEntitlementsRejectPlanChangeCall {
 	c := &ProvidersEntitlementsRejectPlanChangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2550,7 +2600,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2614,7 +2664,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Reject an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.",
+	//   "description": "Rejects an entitlement plan change that is in the EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL state. This method is invoked by the provider to reject the plan change on the entitlement resource.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:rejectPlanChange",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.rejectPlanChange",
@@ -2655,8 +2705,10 @@ type ProvidersEntitlementsSuspendCall struct {
 	header_                   http.Header
 }
 
-// Suspend: Request suspension of an active Entitlement. This is not yet
-// supported.
+// Suspend: Requests suspension of an active Entitlement. This is not
+// yet supported.
+//
+// - name: The name of the entitlement to suspend.
 func (r *ProvidersEntitlementsService) Suspend(name string, suspendentitlementrequest *SuspendEntitlementRequest) *ProvidersEntitlementsSuspendCall {
 	c := &ProvidersEntitlementsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2691,7 +2743,7 @@ func (c *ProvidersEntitlementsSuspendCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2755,7 +2807,7 @@ func (c *ProvidersEntitlementsSuspendCall) Do(opts ...googleapi.CallOption) (*Em
 	}
 	return ret, nil
 	// {
-	//   "description": "Request suspension of an active Entitlement. This is not yet supported.",
+	//   "description": "Requests suspension of an active Entitlement. This is not yet supported.",
 	//   "flatPath": "v1/providers/{providersId}/entitlements/{entitlementsId}:suspend",
 	//   "httpMethod": "POST",
 	//   "id": "cloudcommerceprocurement.providers.entitlements.suspend",

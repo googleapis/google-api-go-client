@@ -85,7 +85,7 @@ const mtlsBasePath = "https://logging.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -1242,18 +1242,18 @@ type ListLogEntriesRequest struct {
 	ProjectIds []string `json:"projectIds,omitempty"`
 
 	// ResourceNames: Required. Names of one or more parent resources from
-	// which to retrieve log entries: "projects/[PROJECT_ID]"
-	// "organizations/[ORGANIZATION_ID]"
-	// "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" May
-	// alternatively be one or more views
-	// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
-	// _ID
-	// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
-	// iews/VIEW_ID
-	// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
-	// T_ID/views/VIEW_ID
-	// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
-	// DProjects listed in the project_ids field are added to this list.
+	// which to retrieve log entries: projects/[PROJECT_ID]
+	// organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID]
+	// folders/[FOLDER_ID]May alternatively be one or more views:
+	// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+	// s/[VIEW_ID]
+	// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+	// T_ID]/views/[VIEW_ID]
+	// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+	// BUCKET_ID]/views/[VIEW_ID]
+	// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+	// [VIEW_ID]Projects listed in the project_ids field are added to this
+	// list.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -1600,6 +1600,14 @@ type LogBucket struct {
 	// where logs are actually stored. Once a bucket has been created, the
 	// location can not be changed.
 	Name string `json:"name,omitempty"`
+
+	// RestrictedFields: Log entry field paths that are denied access in
+	// this bucket. The following fields and their children are eligible:
+	// textPayload, jsonPayload, protoPayload, httpRequest, labels,
+	// sourceLocation. Restricting a repeated field will restrict all
+	// values. Adding a parent will block all child fields e.g. foo.bar will
+	// block foo.bar.baz.
+	RestrictedFields []string `json:"restrictedFields,omitempty"`
 
 	// RetentionDays: Logs will be retained by default for this amount of
 	// time, after which they will automatically be deleted. The minimum
@@ -3052,18 +3060,17 @@ type TailLogEntriesRequest struct {
 	Filter string `json:"filter,omitempty"`
 
 	// ResourceNames: Required. Name of a parent resource from which to
-	// retrieve log entries: "projects/[PROJECT_ID]"
-	// "organizations/[ORGANIZATION_ID]"
-	// "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" May
-	// alternatively be one or more views:
-	// "projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIE
-	// W_ID"
-	// "organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
-	// views/VIEW_ID"
-	// "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCK
-	// ET_ID/views/VIEW_ID"
-	// "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_
-	// ID"
+	// retrieve log entries: projects/[PROJECT_ID]
+	// organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID]
+	// folders/[FOLDER_ID]May alternatively be one or more views:
+	// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+	// s/[VIEW_ID]
+	// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+	// T_ID]/views/[VIEW_ID]
+	// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+	// BUCKET_ID]/views/[VIEW_ID]
+	// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+	// [VIEW_ID]
 	ResourceNames []string `json:"resourceNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BufferWindow") to
@@ -3174,16 +3181,16 @@ type WriteLogEntriesRequest struct {
 
 	// LogName: Optional. A default log resource name that is assigned to
 	// all log entries in entries that do not specify a value for log_name:
-	// "projects/[PROJECT_ID]/logs/[LOG_ID]"
-	// "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
-	// "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]"
-	// "folders/[FOLDER_ID]/logs/[LOG_ID]" [LOG_ID] must be URL-encoded. For
+	// projects/[PROJECT_ID]/logs/[LOG_ID]
+	// organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+	// billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+	// folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
 	// example: "projects/my-project-id/logs/syslog"
-	// "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Fa
-	// ctivity" The permission logging.logEntries.create is needed on each
-	// project, organization, billing account, or folder that is receiving
-	// new log entries, whether the resource is specified in logName or in
-	// an individual log entry.
+	// "organizations/123/logs/cloudaudit.googleapis.com%2Factivity" The
+	// permission logging.logEntries.create is needed on each project,
+	// organization, billing account, or folder that is receiving new log
+	// entries, whether the resource is specified in logName or in an
+	// individual log entry.
 	LogName string `json:"logName,omitempty"`
 
 	// PartialSuccess: Optional. Whether valid entries should be written
@@ -3243,6 +3250,16 @@ type BillingAccountsBucketsGetCall struct {
 }
 
 // Get: Gets a bucket.
+//
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *BillingAccountsBucketsService) Get(name string) *BillingAccountsBucketsGetCall {
 	c := &BillingAccountsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3286,7 +3303,7 @@ func (c *BillingAccountsBucketsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3390,6 +3407,12 @@ type BillingAccountsBucketsViewsGetCall struct {
 }
 
 // Get: Gets a view.
+//
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *BillingAccountsBucketsViewsService) Get(name string) *BillingAccountsBucketsViewsGetCall {
 	c := &BillingAccountsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3433,7 +3456,7 @@ func (c *BillingAccountsBucketsViewsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3539,6 +3562,11 @@ type BillingAccountsExclusionsCreateCall struct {
 // Create: Creates a new exclusion in a specified parent resource. Only
 // log entries belonging to that resource can be excluded. You can have
 // up to 10 exclusions in a resource.
+//
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *BillingAccountsExclusionsService) Create(parent string, logexclusion *LogExclusion) *BillingAccountsExclusionsCreateCall {
 	c := &BillingAccountsExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3573,7 +3601,7 @@ func (c *BillingAccountsExclusionsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3679,6 +3707,13 @@ type BillingAccountsExclusionsDeleteCall struct {
 }
 
 // Delete: Deletes an exclusion.
+//
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *BillingAccountsExclusionsService) Delete(name string) *BillingAccountsExclusionsDeleteCall {
 	c := &BillingAccountsExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3712,7 +3747,7 @@ func (c *BillingAccountsExclusionsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3811,6 +3846,13 @@ type BillingAccountsExclusionsGetCall struct {
 }
 
 // Get: Gets the description of an exclusion.
+//
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *BillingAccountsExclusionsService) Get(name string) *BillingAccountsExclusionsGetCall {
 	c := &BillingAccountsExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3854,7 +3896,7 @@ func (c *BillingAccountsExclusionsGetCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3958,6 +4000,10 @@ type BillingAccountsExclusionsListCall struct {
 }
 
 // List: Lists all the exclusions in a parent resource.
+//
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *BillingAccountsExclusionsService) List(parent string) *BillingAccountsExclusionsListCall {
 	c := &BillingAccountsExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4020,7 +4066,7 @@ func (c *BillingAccountsExclusionsListCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4156,6 +4202,13 @@ type BillingAccountsExclusionsPatchCall struct {
 }
 
 // Patch: Changes one or more properties of an existing exclusion.
+//
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *BillingAccountsExclusionsService) Patch(name string, logexclusion *LogExclusion) *BillingAccountsExclusionsPatchCall {
 	c := &BillingAccountsExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4202,7 +4255,7 @@ func (c *BillingAccountsExclusionsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4315,6 +4368,8 @@ type BillingAccountsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *BillingAccountsLocationsService) Get(name string) *BillingAccountsLocationsGetCall {
 	c := &BillingAccountsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4358,7 +4413,7 @@ func (c *BillingAccountsLocationsGetCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4463,6 +4518,9 @@ type BillingAccountsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLocationsListCall {
 	c := &BillingAccountsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4479,7 +4537,7 @@ func (c *BillingAccountsLocationsListCall) Filter(filter string) *BillingAccount
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *BillingAccountsLocationsListCall) PageSize(pageSize int64) *BillingAccountsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4530,7 +4588,7 @@ func (c *BillingAccountsLocationsListCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4613,7 +4671,7 @@ func (c *BillingAccountsLocationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4672,6 +4730,10 @@ type BillingAccountsLocationsBucketsCreateCall struct {
 
 // Create: Creates a bucket that can be used to store log entries. Once
 // a bucket has been created, the region cannot be changed.
+//
+// - parent: The resource in which to create the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" Example:
+//   "projects/my-logging-project/locations/global".
 func (r *BillingAccountsLocationsBucketsService) Create(parent string, logbucket *LogBucket) *BillingAccountsLocationsBucketsCreateCall {
 	c := &BillingAccountsLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4715,7 +4777,7 @@ func (c *BillingAccountsLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4828,6 +4890,16 @@ type BillingAccountsLocationsBucketsDeleteCall struct {
 // Delete: Deletes a bucket. Moves the bucket to the DELETE_REQUESTED
 // state. After 7 days, the bucket will be purged and all logs in the
 // bucket will be permanently deleted.
+//
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *BillingAccountsLocationsBucketsService) Delete(name string) *BillingAccountsLocationsBucketsDeleteCall {
 	c := &BillingAccountsLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4861,7 +4933,7 @@ func (c *BillingAccountsLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4960,6 +5032,14 @@ type BillingAccountsLocationsBucketsListCall struct {
 }
 
 // List: Lists buckets.
+//
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *BillingAccountsLocationsBucketsService) List(parent string) *BillingAccountsLocationsBucketsListCall {
 	c := &BillingAccountsLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5022,7 +5102,7 @@ func (c *BillingAccountsLocationsBucketsListCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5163,6 +5243,18 @@ type BillingAccountsLocationsBucketsPatchCall struct {
 // is locked, FAILED_PRECONDITION will be returned.If the bucket has a
 // LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
 // returned.A buckets region may not be modified after it is created.
+//
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
+//    Also requires permission "resourcemanager.projects.updateLiens" to
+//   set the locked property.
 func (r *BillingAccountsLocationsBucketsService) Patch(name string, logbucket *LogBucket) *BillingAccountsLocationsBucketsPatchCall {
 	c := &BillingAccountsLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5209,7 +5301,7 @@ func (c *BillingAccountsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5323,6 +5415,16 @@ type BillingAccountsLocationsBucketsUndeleteCall struct {
 
 // Undelete: Undeletes a bucket. A bucket that has been deleted may be
 // undeleted within the grace period of 7 days.
+//
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *BillingAccountsLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *BillingAccountsLocationsBucketsUndeleteCall {
 	c := &BillingAccountsLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5357,7 +5459,7 @@ func (c *BillingAccountsLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5465,6 +5567,12 @@ type BillingAccountsLocationsBucketsViewsCreateCall struct {
 
 // Create: Creates a view over logs in a bucket. A bucket may contain a
 // maximum of 50 views.
+//
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-logging-project/locations/my-location/buckets/my-bucket
+//   ".
 func (r *BillingAccountsLocationsBucketsViewsService) Create(parent string, logview *LogView) *BillingAccountsLocationsBucketsViewsCreateCall {
 	c := &BillingAccountsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5506,7 +5614,7 @@ func (c *BillingAccountsLocationsBucketsViewsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5617,6 +5725,12 @@ type BillingAccountsLocationsBucketsViewsDeleteCall struct {
 }
 
 // Delete: Deletes a view from a bucket.
+//
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *BillingAccountsLocationsBucketsViewsService) Delete(name string) *BillingAccountsLocationsBucketsViewsDeleteCall {
 	c := &BillingAccountsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5650,7 +5764,7 @@ func (c *BillingAccountsLocationsBucketsViewsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5749,6 +5863,9 @@ type BillingAccountsLocationsBucketsViewsListCall struct {
 }
 
 // List: Lists views on a bucket.
+//
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *BillingAccountsLocationsBucketsViewsService) List(parent string) *BillingAccountsLocationsBucketsViewsListCall {
 	c := &BillingAccountsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5811,7 +5928,7 @@ func (c *BillingAccountsLocationsBucketsViewsListCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5948,6 +6065,12 @@ type BillingAccountsLocationsBucketsViewsPatchCall struct {
 
 // Patch: Updates a view. This method replaces the following fields in
 // the existing view with values from the new view: filter.
+//
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *BillingAccountsLocationsBucketsViewsService) Patch(name string, logview *LogView) *BillingAccountsLocationsBucketsViewsPatchCall {
 	c := &BillingAccountsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5994,7 +6117,7 @@ func (c *BillingAccountsLocationsBucketsViewsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6110,6 +6233,14 @@ type BillingAccountsLogsDeleteCall struct {
 // written shortly before the delete operation might not be deleted.
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
+//
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog".For more information
+//   about log names, see LogEntry.
 func (r *BillingAccountsLogsService) Delete(logName string) *BillingAccountsLogsDeleteCall {
 	c := &BillingAccountsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -6143,7 +6274,7 @@ func (c *BillingAccountsLogsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6211,7 +6342,7 @@ func (c *BillingAccountsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   ],
 	//   "parameters": {
 	//     "logName": {
-	//       "description": "Required. The resource name of the log to delete: \"projects/[PROJECT_ID]/logs/[LOG_ID]\" \"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\" \"folders/[FOLDER_ID]/logs/[LOG_ID]\" [LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
+	//       "description": "Required. The resource name of the log to delete: projects/[PROJECT_ID]/logs/[LOG_ID] organizations/[ORGANIZATION_ID]/logs/[LOG_ID] billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID] folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\".For more information about log names, see LogEntry.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/logs/[^/]+$",
 	//       "required": true,
@@ -6243,6 +6374,10 @@ type BillingAccountsLogsListCall struct {
 
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
+//
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *BillingAccountsLogsService) List(parent string) *BillingAccountsLogsListCall {
 	c := &BillingAccountsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6270,16 +6405,16 @@ func (c *BillingAccountsLogsListCall) PageToken(pageToken string) *BillingAccoun
 
 // ResourceNames sets the optional parameter "resourceNames": The
 // resource name that owns the logs:
-// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
-// _ID
-// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
-// iews/VIEW_ID
-// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
-// T_ID/views/VIEW_ID
-// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
-// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
-// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
-// "folders/FOLDER_ID"
+// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+// s/[VIEW_ID]
+// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+// T_ID]/views/[VIEW_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+// BUCKET_ID]/views/[VIEW_ID]
+// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+// [VIEW_ID]To support legacy queries, it could also be:
+// projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
 func (c *BillingAccountsLogsListCall) ResourceNames(resourceNames ...string) *BillingAccountsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -6322,7 +6457,7 @@ func (c *BillingAccountsLogsListCall) Header() http.Header {
 
 func (c *BillingAccountsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6404,14 +6539,14 @@ func (c *BillingAccountsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" ",
+	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6468,6 +6603,11 @@ type BillingAccountsSinksCreateCall struct {
 // immediately, unless the sink's writer_identity is not permitted to
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
+//
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *BillingAccountsSinksCreateCall {
 	c := &BillingAccountsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6518,7 +6658,7 @@ func (c *BillingAccountsSinksCreateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6630,6 +6770,14 @@ type BillingAccountsSinksDeleteCall struct {
 
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
+//
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *BillingAccountsSinksService) Delete(sinkNameid string) *BillingAccountsSinksDeleteCall {
 	c := &BillingAccountsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -6663,7 +6811,7 @@ func (c *BillingAccountsSinksDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6762,6 +6910,13 @@ type BillingAccountsSinksGetCall struct {
 }
 
 // Get: Gets a sink.
+//
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *BillingAccountsSinksService) Get(sinkName string) *BillingAccountsSinksGetCall {
 	c := &BillingAccountsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -6805,7 +6960,7 @@ func (c *BillingAccountsSinksGetCall) Header() http.Header {
 
 func (c *BillingAccountsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6909,6 +7064,10 @@ type BillingAccountsSinksListCall struct {
 }
 
 // List: Lists sinks.
+//
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *BillingAccountsSinksService) List(parent string) *BillingAccountsSinksListCall {
 	c := &BillingAccountsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6971,7 +7130,7 @@ func (c *BillingAccountsSinksListCall) Header() http.Header {
 
 func (c *BillingAccountsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7110,6 +7269,14 @@ type BillingAccountsSinksPatchCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *BillingAccountsSinksService) Patch(sinkNameid string, logsink *LogSink) *BillingAccountsSinksPatchCall {
 	c := &BillingAccountsSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -7174,7 +7341,7 @@ func (c *BillingAccountsSinksPatchCall) Header() http.Header {
 
 func (c *BillingAccountsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7295,6 +7462,14 @@ type BillingAccountsSinksUpdateCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink) *BillingAccountsSinksUpdateCall {
 	c := &BillingAccountsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -7359,7 +7534,7 @@ func (c *BillingAccountsSinksUpdateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7512,7 +7687,7 @@ func (c *EntriesListCall) Header() http.Header {
 
 func (c *EntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7662,7 +7837,7 @@ func (c *EntriesTailCall) Header() http.Header {
 
 func (c *EntriesTailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7795,7 +7970,7 @@ func (c *EntriesWriteCall) Header() http.Header {
 
 func (c *EntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7892,6 +8067,11 @@ type ExclusionsCreateCall struct {
 // Create: Creates a new exclusion in a specified parent resource. Only
 // log entries belonging to that resource can be excluded. You can have
 // up to 10 exclusions in a resource.
+//
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *ExclusionsService) Create(parent string, logexclusion *LogExclusion) *ExclusionsCreateCall {
 	c := &ExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7926,7 +8106,7 @@ func (c *ExclusionsCreateCall) Header() http.Header {
 
 func (c *ExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8032,6 +8212,13 @@ type ExclusionsDeleteCall struct {
 }
 
 // Delete: Deletes an exclusion.
+//
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *ExclusionsService) Delete(name string) *ExclusionsDeleteCall {
 	c := &ExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8065,7 +8252,7 @@ func (c *ExclusionsDeleteCall) Header() http.Header {
 
 func (c *ExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8164,6 +8351,13 @@ type ExclusionsGetCall struct {
 }
 
 // Get: Gets the description of an exclusion.
+//
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *ExclusionsService) Get(name string) *ExclusionsGetCall {
 	c := &ExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8207,7 +8401,7 @@ func (c *ExclusionsGetCall) Header() http.Header {
 
 func (c *ExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8311,6 +8505,10 @@ type ExclusionsListCall struct {
 }
 
 // List: Lists all the exclusions in a parent resource.
+//
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *ExclusionsService) List(parent string) *ExclusionsListCall {
 	c := &ExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8373,7 +8571,7 @@ func (c *ExclusionsListCall) Header() http.Header {
 
 func (c *ExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8509,6 +8707,13 @@ type ExclusionsPatchCall struct {
 }
 
 // Patch: Changes one or more properties of an existing exclusion.
+//
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *ExclusionsService) Patch(name string, logexclusion *LogExclusion) *ExclusionsPatchCall {
 	c := &ExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8555,7 +8760,7 @@ func (c *ExclusionsPatchCall) Header() http.Header {
 
 func (c *ExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8670,6 +8875,11 @@ type FoldersExclusionsCreateCall struct {
 // Create: Creates a new exclusion in a specified parent resource. Only
 // log entries belonging to that resource can be excluded. You can have
 // up to 10 exclusions in a resource.
+//
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *FoldersExclusionsService) Create(parent string, logexclusion *LogExclusion) *FoldersExclusionsCreateCall {
 	c := &FoldersExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8704,7 +8914,7 @@ func (c *FoldersExclusionsCreateCall) Header() http.Header {
 
 func (c *FoldersExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8810,6 +9020,13 @@ type FoldersExclusionsDeleteCall struct {
 }
 
 // Delete: Deletes an exclusion.
+//
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *FoldersExclusionsService) Delete(name string) *FoldersExclusionsDeleteCall {
 	c := &FoldersExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8843,7 +9060,7 @@ func (c *FoldersExclusionsDeleteCall) Header() http.Header {
 
 func (c *FoldersExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8942,6 +9159,13 @@ type FoldersExclusionsGetCall struct {
 }
 
 // Get: Gets the description of an exclusion.
+//
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *FoldersExclusionsService) Get(name string) *FoldersExclusionsGetCall {
 	c := &FoldersExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8985,7 +9209,7 @@ func (c *FoldersExclusionsGetCall) Header() http.Header {
 
 func (c *FoldersExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9089,6 +9313,10 @@ type FoldersExclusionsListCall struct {
 }
 
 // List: Lists all the exclusions in a parent resource.
+//
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *FoldersExclusionsService) List(parent string) *FoldersExclusionsListCall {
 	c := &FoldersExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9151,7 +9379,7 @@ func (c *FoldersExclusionsListCall) Header() http.Header {
 
 func (c *FoldersExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9287,6 +9515,13 @@ type FoldersExclusionsPatchCall struct {
 }
 
 // Patch: Changes one or more properties of an existing exclusion.
+//
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *FoldersExclusionsService) Patch(name string, logexclusion *LogExclusion) *FoldersExclusionsPatchCall {
 	c := &FoldersExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9333,7 +9568,7 @@ func (c *FoldersExclusionsPatchCall) Header() http.Header {
 
 func (c *FoldersExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9446,6 +9681,8 @@ type FoldersLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *FoldersLocationsService) Get(name string) *FoldersLocationsGetCall {
 	c := &FoldersLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9489,7 +9726,7 @@ func (c *FoldersLocationsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9594,6 +9831,9 @@ type FoldersLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
 	c := &FoldersLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9610,7 +9850,7 @@ func (c *FoldersLocationsListCall) Filter(filter string) *FoldersLocationsListCa
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *FoldersLocationsListCall) PageSize(pageSize int64) *FoldersLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9661,7 +9901,7 @@ func (c *FoldersLocationsListCall) Header() http.Header {
 
 func (c *FoldersLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9744,7 +9984,7 @@ func (c *FoldersLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocati
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9803,6 +10043,10 @@ type FoldersLocationsBucketsCreateCall struct {
 
 // Create: Creates a bucket that can be used to store log entries. Once
 // a bucket has been created, the region cannot be changed.
+//
+// - parent: The resource in which to create the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" Example:
+//   "projects/my-logging-project/locations/global".
 func (r *FoldersLocationsBucketsService) Create(parent string, logbucket *LogBucket) *FoldersLocationsBucketsCreateCall {
 	c := &FoldersLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9846,7 +10090,7 @@ func (c *FoldersLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9959,6 +10203,16 @@ type FoldersLocationsBucketsDeleteCall struct {
 // Delete: Deletes a bucket. Moves the bucket to the DELETE_REQUESTED
 // state. After 7 days, the bucket will be purged and all logs in the
 // bucket will be permanently deleted.
+//
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *FoldersLocationsBucketsService) Delete(name string) *FoldersLocationsBucketsDeleteCall {
 	c := &FoldersLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9992,7 +10246,7 @@ func (c *FoldersLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10091,6 +10345,16 @@ type FoldersLocationsBucketsGetCall struct {
 }
 
 // Get: Gets a bucket.
+//
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *FoldersLocationsBucketsService) Get(name string) *FoldersLocationsBucketsGetCall {
 	c := &FoldersLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10134,7 +10398,7 @@ func (c *FoldersLocationsBucketsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10238,6 +10502,14 @@ type FoldersLocationsBucketsListCall struct {
 }
 
 // List: Lists buckets.
+//
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *FoldersLocationsBucketsService) List(parent string) *FoldersLocationsBucketsListCall {
 	c := &FoldersLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10300,7 +10572,7 @@ func (c *FoldersLocationsBucketsListCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10441,6 +10713,18 @@ type FoldersLocationsBucketsPatchCall struct {
 // is locked, FAILED_PRECONDITION will be returned.If the bucket has a
 // LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
 // returned.A buckets region may not be modified after it is created.
+//
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
+//    Also requires permission "resourcemanager.projects.updateLiens" to
+//   set the locked property.
 func (r *FoldersLocationsBucketsService) Patch(name string, logbucket *LogBucket) *FoldersLocationsBucketsPatchCall {
 	c := &FoldersLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10487,7 +10771,7 @@ func (c *FoldersLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10601,6 +10885,16 @@ type FoldersLocationsBucketsUndeleteCall struct {
 
 // Undelete: Undeletes a bucket. A bucket that has been deleted may be
 // undeleted within the grace period of 7 days.
+//
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *FoldersLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *FoldersLocationsBucketsUndeleteCall {
 	c := &FoldersLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10635,7 +10929,7 @@ func (c *FoldersLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10743,6 +11037,12 @@ type FoldersLocationsBucketsViewsCreateCall struct {
 
 // Create: Creates a view over logs in a bucket. A bucket may contain a
 // maximum of 50 views.
+//
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-logging-project/locations/my-location/buckets/my-bucket
+//   ".
 func (r *FoldersLocationsBucketsViewsService) Create(parent string, logview *LogView) *FoldersLocationsBucketsViewsCreateCall {
 	c := &FoldersLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10784,7 +11084,7 @@ func (c *FoldersLocationsBucketsViewsCreateCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10895,6 +11195,12 @@ type FoldersLocationsBucketsViewsDeleteCall struct {
 }
 
 // Delete: Deletes a view from a bucket.
+//
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *FoldersLocationsBucketsViewsService) Delete(name string) *FoldersLocationsBucketsViewsDeleteCall {
 	c := &FoldersLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10928,7 +11234,7 @@ func (c *FoldersLocationsBucketsViewsDeleteCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11027,6 +11333,12 @@ type FoldersLocationsBucketsViewsGetCall struct {
 }
 
 // Get: Gets a view.
+//
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *FoldersLocationsBucketsViewsService) Get(name string) *FoldersLocationsBucketsViewsGetCall {
 	c := &FoldersLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11070,7 +11382,7 @@ func (c *FoldersLocationsBucketsViewsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11174,6 +11486,9 @@ type FoldersLocationsBucketsViewsListCall struct {
 }
 
 // List: Lists views on a bucket.
+//
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *FoldersLocationsBucketsViewsService) List(parent string) *FoldersLocationsBucketsViewsListCall {
 	c := &FoldersLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11236,7 +11551,7 @@ func (c *FoldersLocationsBucketsViewsListCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11373,6 +11688,12 @@ type FoldersLocationsBucketsViewsPatchCall struct {
 
 // Patch: Updates a view. This method replaces the following fields in
 // the existing view with values from the new view: filter.
+//
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *FoldersLocationsBucketsViewsService) Patch(name string, logview *LogView) *FoldersLocationsBucketsViewsPatchCall {
 	c := &FoldersLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11419,7 +11740,7 @@ func (c *FoldersLocationsBucketsViewsPatchCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11535,6 +11856,14 @@ type FoldersLogsDeleteCall struct {
 // written shortly before the delete operation might not be deleted.
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
+//
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog".For more information
+//   about log names, see LogEntry.
 func (r *FoldersLogsService) Delete(logName string) *FoldersLogsDeleteCall {
 	c := &FoldersLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -11568,7 +11897,7 @@ func (c *FoldersLogsDeleteCall) Header() http.Header {
 
 func (c *FoldersLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11636,7 +11965,7 @@ func (c *FoldersLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	//   ],
 	//   "parameters": {
 	//     "logName": {
-	//       "description": "Required. The resource name of the log to delete: \"projects/[PROJECT_ID]/logs/[LOG_ID]\" \"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\" \"folders/[FOLDER_ID]/logs/[LOG_ID]\" [LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
+	//       "description": "Required. The resource name of the log to delete: projects/[PROJECT_ID]/logs/[LOG_ID] organizations/[ORGANIZATION_ID]/logs/[LOG_ID] billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID] folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\".For more information about log names, see LogEntry.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/logs/[^/]+$",
 	//       "required": true,
@@ -11668,6 +11997,10 @@ type FoldersLogsListCall struct {
 
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
+//
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *FoldersLogsService) List(parent string) *FoldersLogsListCall {
 	c := &FoldersLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11695,16 +12028,16 @@ func (c *FoldersLogsListCall) PageToken(pageToken string) *FoldersLogsListCall {
 
 // ResourceNames sets the optional parameter "resourceNames": The
 // resource name that owns the logs:
-// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
-// _ID
-// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
-// iews/VIEW_ID
-// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
-// T_ID/views/VIEW_ID
-// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
-// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
-// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
-// "folders/FOLDER_ID"
+// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+// s/[VIEW_ID]
+// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+// T_ID]/views/[VIEW_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+// BUCKET_ID]/views/[VIEW_ID]
+// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+// [VIEW_ID]To support legacy queries, it could also be:
+// projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
 func (c *FoldersLogsListCall) ResourceNames(resourceNames ...string) *FoldersLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -11747,7 +12080,7 @@ func (c *FoldersLogsListCall) Header() http.Header {
 
 func (c *FoldersLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11829,14 +12162,14 @@ func (c *FoldersLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespons
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" ",
+	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -11893,6 +12226,11 @@ type FoldersSinksCreateCall struct {
 // immediately, unless the sink's writer_identity is not permitted to
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
+//
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSinksCreateCall {
 	c := &FoldersSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11943,7 +12281,7 @@ func (c *FoldersSinksCreateCall) Header() http.Header {
 
 func (c *FoldersSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12055,6 +12393,14 @@ type FoldersSinksDeleteCall struct {
 
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
+//
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *FoldersSinksService) Delete(sinkNameid string) *FoldersSinksDeleteCall {
 	c := &FoldersSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -12088,7 +12434,7 @@ func (c *FoldersSinksDeleteCall) Header() http.Header {
 
 func (c *FoldersSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12187,6 +12533,13 @@ type FoldersSinksGetCall struct {
 }
 
 // Get: Gets a sink.
+//
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *FoldersSinksService) Get(sinkName string) *FoldersSinksGetCall {
 	c := &FoldersSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -12230,7 +12583,7 @@ func (c *FoldersSinksGetCall) Header() http.Header {
 
 func (c *FoldersSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12334,6 +12687,10 @@ type FoldersSinksListCall struct {
 }
 
 // List: Lists sinks.
+//
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *FoldersSinksService) List(parent string) *FoldersSinksListCall {
 	c := &FoldersSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12396,7 +12753,7 @@ func (c *FoldersSinksListCall) Header() http.Header {
 
 func (c *FoldersSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12535,6 +12892,14 @@ type FoldersSinksPatchCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *FoldersSinksService) Patch(sinkNameid string, logsink *LogSink) *FoldersSinksPatchCall {
 	c := &FoldersSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -12599,7 +12964,7 @@ func (c *FoldersSinksPatchCall) Header() http.Header {
 
 func (c *FoldersSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12720,6 +13085,14 @@ type FoldersSinksUpdateCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *FoldersSinksUpdateCall {
 	c := &FoldersSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -12784,7 +13157,7 @@ func (c *FoldersSinksUpdateCall) Header() http.Header {
 
 func (c *FoldersSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12902,6 +13275,8 @@ type LocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *LocationsService) Get(name string) *LocationsGetCall {
 	c := &LocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12945,7 +13320,7 @@ func (c *LocationsGetCall) Header() http.Header {
 
 func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13050,6 +13425,9 @@ type LocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *LocationsService) List(name string) *LocationsListCall {
 	c := &LocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13066,7 +13444,7 @@ func (c *LocationsListCall) Filter(filter string) *LocationsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *LocationsListCall) PageSize(pageSize int64) *LocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -13117,7 +13495,7 @@ func (c *LocationsListCall) Header() http.Header {
 
 func (c *LocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13200,7 +13578,7 @@ func (c *LocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResp
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -13259,6 +13637,10 @@ type LocationsBucketsCreateCall struct {
 
 // Create: Creates a bucket that can be used to store log entries. Once
 // a bucket has been created, the region cannot be changed.
+//
+// - parent: The resource in which to create the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" Example:
+//   "projects/my-logging-project/locations/global".
 func (r *LocationsBucketsService) Create(parent string, logbucket *LogBucket) *LocationsBucketsCreateCall {
 	c := &LocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13302,7 +13684,7 @@ func (c *LocationsBucketsCreateCall) Header() http.Header {
 
 func (c *LocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13415,6 +13797,16 @@ type LocationsBucketsDeleteCall struct {
 // Delete: Deletes a bucket. Moves the bucket to the DELETE_REQUESTED
 // state. After 7 days, the bucket will be purged and all logs in the
 // bucket will be permanently deleted.
+//
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *LocationsBucketsService) Delete(name string) *LocationsBucketsDeleteCall {
 	c := &LocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13448,7 +13840,7 @@ func (c *LocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *LocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13547,6 +13939,16 @@ type LocationsBucketsGetCall struct {
 }
 
 // Get: Gets a bucket.
+//
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *LocationsBucketsService) Get(name string) *LocationsBucketsGetCall {
 	c := &LocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13590,7 +13992,7 @@ func (c *LocationsBucketsGetCall) Header() http.Header {
 
 func (c *LocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13694,6 +14096,14 @@ type LocationsBucketsListCall struct {
 }
 
 // List: Lists buckets.
+//
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *LocationsBucketsService) List(parent string) *LocationsBucketsListCall {
 	c := &LocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13756,7 +14166,7 @@ func (c *LocationsBucketsListCall) Header() http.Header {
 
 func (c *LocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13897,6 +14307,18 @@ type LocationsBucketsPatchCall struct {
 // is locked, FAILED_PRECONDITION will be returned.If the bucket has a
 // LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
 // returned.A buckets region may not be modified after it is created.
+//
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
+//    Also requires permission "resourcemanager.projects.updateLiens" to
+//   set the locked property.
 func (r *LocationsBucketsService) Patch(name string, logbucket *LogBucket) *LocationsBucketsPatchCall {
 	c := &LocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13943,7 +14365,7 @@ func (c *LocationsBucketsPatchCall) Header() http.Header {
 
 func (c *LocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14057,6 +14479,16 @@ type LocationsBucketsUndeleteCall struct {
 
 // Undelete: Undeletes a bucket. A bucket that has been deleted may be
 // undeleted within the grace period of 7 days.
+//
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *LocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *LocationsBucketsUndeleteCall {
 	c := &LocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14091,7 +14523,7 @@ func (c *LocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *LocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14199,6 +14631,12 @@ type LocationsBucketsViewsCreateCall struct {
 
 // Create: Creates a view over logs in a bucket. A bucket may contain a
 // maximum of 50 views.
+//
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-logging-project/locations/my-location/buckets/my-bucket
+//   ".
 func (r *LocationsBucketsViewsService) Create(parent string, logview *LogView) *LocationsBucketsViewsCreateCall {
 	c := &LocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14240,7 +14678,7 @@ func (c *LocationsBucketsViewsCreateCall) Header() http.Header {
 
 func (c *LocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14351,6 +14789,12 @@ type LocationsBucketsViewsDeleteCall struct {
 }
 
 // Delete: Deletes a view from a bucket.
+//
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *LocationsBucketsViewsService) Delete(name string) *LocationsBucketsViewsDeleteCall {
 	c := &LocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14384,7 +14828,7 @@ func (c *LocationsBucketsViewsDeleteCall) Header() http.Header {
 
 func (c *LocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14483,6 +14927,12 @@ type LocationsBucketsViewsGetCall struct {
 }
 
 // Get: Gets a view.
+//
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *LocationsBucketsViewsService) Get(name string) *LocationsBucketsViewsGetCall {
 	c := &LocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14526,7 +14976,7 @@ func (c *LocationsBucketsViewsGetCall) Header() http.Header {
 
 func (c *LocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14630,6 +15080,9 @@ type LocationsBucketsViewsListCall struct {
 }
 
 // List: Lists views on a bucket.
+//
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *LocationsBucketsViewsService) List(parent string) *LocationsBucketsViewsListCall {
 	c := &LocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14692,7 +15145,7 @@ func (c *LocationsBucketsViewsListCall) Header() http.Header {
 
 func (c *LocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14829,6 +15282,12 @@ type LocationsBucketsViewsPatchCall struct {
 
 // Patch: Updates a view. This method replaces the following fields in
 // the existing view with values from the new view: filter.
+//
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *LocationsBucketsViewsService) Patch(name string, logview *LogView) *LocationsBucketsViewsPatchCall {
 	c := &LocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14875,7 +15334,7 @@ func (c *LocationsBucketsViewsPatchCall) Header() http.Header {
 
 func (c *LocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14991,6 +15450,14 @@ type LogsDeleteCall struct {
 // written shortly before the delete operation might not be deleted.
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
+//
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog".For more information
+//   about log names, see LogEntry.
 func (r *LogsService) Delete(logName string) *LogsDeleteCall {
 	c := &LogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -15024,7 +15491,7 @@ func (c *LogsDeleteCall) Header() http.Header {
 
 func (c *LogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15092,7 +15559,7 @@ func (c *LogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "logName": {
-	//       "description": "Required. The resource name of the log to delete: \"projects/[PROJECT_ID]/logs/[LOG_ID]\" \"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\" \"folders/[FOLDER_ID]/logs/[LOG_ID]\" [LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
+	//       "description": "Required. The resource name of the log to delete: projects/[PROJECT_ID]/logs/[LOG_ID] organizations/[ORGANIZATION_ID]/logs/[LOG_ID] billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID] folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\".For more information about log names, see LogEntry.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/logs/[^/]+$",
 	//       "required": true,
@@ -15124,6 +15591,10 @@ type LogsListCall struct {
 
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
+//
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *LogsService) List(parent string) *LogsListCall {
 	c := &LogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15151,16 +15622,16 @@ func (c *LogsListCall) PageToken(pageToken string) *LogsListCall {
 
 // ResourceNames sets the optional parameter "resourceNames": The
 // resource name that owns the logs:
-// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
-// _ID
-// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
-// iews/VIEW_ID
-// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
-// T_ID/views/VIEW_ID
-// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
-// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
-// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
-// "folders/FOLDER_ID"
+// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+// s/[VIEW_ID]
+// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+// T_ID]/views/[VIEW_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+// BUCKET_ID]/views/[VIEW_ID]
+// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+// [VIEW_ID]To support legacy queries, it could also be:
+// projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
 func (c *LogsListCall) ResourceNames(resourceNames ...string) *LogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -15203,7 +15674,7 @@ func (c *LogsListCall) Header() http.Header {
 
 func (c *LogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15285,14 +15756,14 @@ func (c *LogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsResponse, erro
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" ",
+	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -15406,7 +15877,7 @@ func (c *MonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *MonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15538,6 +16009,16 @@ type OrganizationsGetCmekSettingsCall struct {
 // Logs Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
+//
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" Example:
+//   "organizations/12345/cmekSettings".Note: CMEK for the Logs Router
+//   can currently only be configured for GCP organizations. Once
+//   configured, it applies to all projects and folders in the GCP
+//   organization.
 func (r *OrganizationsService) GetCmekSettings(name string) *OrganizationsGetCmekSettingsCall {
 	c := &OrganizationsGetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15581,7 +16062,7 @@ func (c *OrganizationsGetCmekSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15694,6 +16175,16 @@ type OrganizationsUpdateCmekSettingsCall struct {
 // or 3) access to the key is disabled.See Enabling CMEK for Logs Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
+//
+// - name: The resource name for the CMEK settings to update.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" Example:
+//   "organizations/12345/cmekSettings".Note: CMEK for the Logs Router
+//   can currently only be configured for GCP organizations. Once
+//   configured, it applies to all projects and folders in the GCP
+//   organization.
 func (r *OrganizationsService) UpdateCmekSettings(name string, cmeksettings *CmekSettings) *OrganizationsUpdateCmekSettingsCall {
 	c := &OrganizationsUpdateCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15738,7 +16229,7 @@ func (c *OrganizationsUpdateCmekSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15853,6 +16344,11 @@ type OrganizationsExclusionsCreateCall struct {
 // Create: Creates a new exclusion in a specified parent resource. Only
 // log entries belonging to that resource can be excluded. You can have
 // up to 10 exclusions in a resource.
+//
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *OrganizationsExclusionsService) Create(parent string, logexclusion *LogExclusion) *OrganizationsExclusionsCreateCall {
 	c := &OrganizationsExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15887,7 +16383,7 @@ func (c *OrganizationsExclusionsCreateCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15993,6 +16489,13 @@ type OrganizationsExclusionsDeleteCall struct {
 }
 
 // Delete: Deletes an exclusion.
+//
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *OrganizationsExclusionsService) Delete(name string) *OrganizationsExclusionsDeleteCall {
 	c := &OrganizationsExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16026,7 +16529,7 @@ func (c *OrganizationsExclusionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16125,6 +16628,13 @@ type OrganizationsExclusionsGetCall struct {
 }
 
 // Get: Gets the description of an exclusion.
+//
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *OrganizationsExclusionsService) Get(name string) *OrganizationsExclusionsGetCall {
 	c := &OrganizationsExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16168,7 +16678,7 @@ func (c *OrganizationsExclusionsGetCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16272,6 +16782,10 @@ type OrganizationsExclusionsListCall struct {
 }
 
 // List: Lists all the exclusions in a parent resource.
+//
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *OrganizationsExclusionsService) List(parent string) *OrganizationsExclusionsListCall {
 	c := &OrganizationsExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16334,7 +16848,7 @@ func (c *OrganizationsExclusionsListCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16470,6 +16984,13 @@ type OrganizationsExclusionsPatchCall struct {
 }
 
 // Patch: Changes one or more properties of an existing exclusion.
+//
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *OrganizationsExclusionsService) Patch(name string, logexclusion *LogExclusion) *OrganizationsExclusionsPatchCall {
 	c := &OrganizationsExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16516,7 +17037,7 @@ func (c *OrganizationsExclusionsPatchCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16629,6 +17150,8 @@ type OrganizationsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *OrganizationsLocationsService) Get(name string) *OrganizationsLocationsGetCall {
 	c := &OrganizationsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16672,7 +17195,7 @@ func (c *OrganizationsLocationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16777,6 +17300,9 @@ type OrganizationsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocationsListCall {
 	c := &OrganizationsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16793,7 +17319,7 @@ func (c *OrganizationsLocationsListCall) Filter(filter string) *OrganizationsLoc
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *OrganizationsLocationsListCall) PageSize(pageSize int64) *OrganizationsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -16844,7 +17370,7 @@ func (c *OrganizationsLocationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16927,7 +17453,7 @@ func (c *OrganizationsLocationsListCall) Do(opts ...googleapi.CallOption) (*List
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -16986,6 +17512,10 @@ type OrganizationsLocationsBucketsCreateCall struct {
 
 // Create: Creates a bucket that can be used to store log entries. Once
 // a bucket has been created, the region cannot be changed.
+//
+// - parent: The resource in which to create the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" Example:
+//   "projects/my-logging-project/locations/global".
 func (r *OrganizationsLocationsBucketsService) Create(parent string, logbucket *LogBucket) *OrganizationsLocationsBucketsCreateCall {
 	c := &OrganizationsLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17029,7 +17559,7 @@ func (c *OrganizationsLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17142,6 +17672,16 @@ type OrganizationsLocationsBucketsDeleteCall struct {
 // Delete: Deletes a bucket. Moves the bucket to the DELETE_REQUESTED
 // state. After 7 days, the bucket will be purged and all logs in the
 // bucket will be permanently deleted.
+//
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *OrganizationsLocationsBucketsService) Delete(name string) *OrganizationsLocationsBucketsDeleteCall {
 	c := &OrganizationsLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17175,7 +17715,7 @@ func (c *OrganizationsLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17274,6 +17814,16 @@ type OrganizationsLocationsBucketsGetCall struct {
 }
 
 // Get: Gets a bucket.
+//
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *OrganizationsLocationsBucketsService) Get(name string) *OrganizationsLocationsBucketsGetCall {
 	c := &OrganizationsLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17317,7 +17867,7 @@ func (c *OrganizationsLocationsBucketsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17421,6 +17971,14 @@ type OrganizationsLocationsBucketsListCall struct {
 }
 
 // List: Lists buckets.
+//
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *OrganizationsLocationsBucketsService) List(parent string) *OrganizationsLocationsBucketsListCall {
 	c := &OrganizationsLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17483,7 +18041,7 @@ func (c *OrganizationsLocationsBucketsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17624,6 +18182,18 @@ type OrganizationsLocationsBucketsPatchCall struct {
 // is locked, FAILED_PRECONDITION will be returned.If the bucket has a
 // LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
 // returned.A buckets region may not be modified after it is created.
+//
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
+//    Also requires permission "resourcemanager.projects.updateLiens" to
+//   set the locked property.
 func (r *OrganizationsLocationsBucketsService) Patch(name string, logbucket *LogBucket) *OrganizationsLocationsBucketsPatchCall {
 	c := &OrganizationsLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17670,7 +18240,7 @@ func (c *OrganizationsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17784,6 +18354,16 @@ type OrganizationsLocationsBucketsUndeleteCall struct {
 
 // Undelete: Undeletes a bucket. A bucket that has been deleted may be
 // undeleted within the grace period of 7 days.
+//
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *OrganizationsLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *OrganizationsLocationsBucketsUndeleteCall {
 	c := &OrganizationsLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17818,7 +18398,7 @@ func (c *OrganizationsLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17926,6 +18506,12 @@ type OrganizationsLocationsBucketsViewsCreateCall struct {
 
 // Create: Creates a view over logs in a bucket. A bucket may contain a
 // maximum of 50 views.
+//
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-logging-project/locations/my-location/buckets/my-bucket
+//   ".
 func (r *OrganizationsLocationsBucketsViewsService) Create(parent string, logview *LogView) *OrganizationsLocationsBucketsViewsCreateCall {
 	c := &OrganizationsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17967,7 +18553,7 @@ func (c *OrganizationsLocationsBucketsViewsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18078,6 +18664,12 @@ type OrganizationsLocationsBucketsViewsDeleteCall struct {
 }
 
 // Delete: Deletes a view from a bucket.
+//
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *OrganizationsLocationsBucketsViewsService) Delete(name string) *OrganizationsLocationsBucketsViewsDeleteCall {
 	c := &OrganizationsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18111,7 +18703,7 @@ func (c *OrganizationsLocationsBucketsViewsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18210,6 +18802,12 @@ type OrganizationsLocationsBucketsViewsGetCall struct {
 }
 
 // Get: Gets a view.
+//
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *OrganizationsLocationsBucketsViewsService) Get(name string) *OrganizationsLocationsBucketsViewsGetCall {
 	c := &OrganizationsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18253,7 +18851,7 @@ func (c *OrganizationsLocationsBucketsViewsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18357,6 +18955,9 @@ type OrganizationsLocationsBucketsViewsListCall struct {
 }
 
 // List: Lists views on a bucket.
+//
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *OrganizationsLocationsBucketsViewsService) List(parent string) *OrganizationsLocationsBucketsViewsListCall {
 	c := &OrganizationsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18419,7 +19020,7 @@ func (c *OrganizationsLocationsBucketsViewsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18556,6 +19157,12 @@ type OrganizationsLocationsBucketsViewsPatchCall struct {
 
 // Patch: Updates a view. This method replaces the following fields in
 // the existing view with values from the new view: filter.
+//
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *OrganizationsLocationsBucketsViewsService) Patch(name string, logview *LogView) *OrganizationsLocationsBucketsViewsPatchCall {
 	c := &OrganizationsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18602,7 +19209,7 @@ func (c *OrganizationsLocationsBucketsViewsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18718,6 +19325,14 @@ type OrganizationsLogsDeleteCall struct {
 // written shortly before the delete operation might not be deleted.
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
+//
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog".For more information
+//   about log names, see LogEntry.
 func (r *OrganizationsLogsService) Delete(logName string) *OrganizationsLogsDeleteCall {
 	c := &OrganizationsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -18751,7 +19366,7 @@ func (c *OrganizationsLogsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18819,7 +19434,7 @@ func (c *OrganizationsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "logName": {
-	//       "description": "Required. The resource name of the log to delete: \"projects/[PROJECT_ID]/logs/[LOG_ID]\" \"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\" \"folders/[FOLDER_ID]/logs/[LOG_ID]\" [LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
+	//       "description": "Required. The resource name of the log to delete: projects/[PROJECT_ID]/logs/[LOG_ID] organizations/[ORGANIZATION_ID]/logs/[LOG_ID] billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID] folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\".For more information about log names, see LogEntry.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/logs/[^/]+$",
 	//       "required": true,
@@ -18851,6 +19466,10 @@ type OrganizationsLogsListCall struct {
 
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
+//
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *OrganizationsLogsService) List(parent string) *OrganizationsLogsListCall {
 	c := &OrganizationsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18878,16 +19497,16 @@ func (c *OrganizationsLogsListCall) PageToken(pageToken string) *OrganizationsLo
 
 // ResourceNames sets the optional parameter "resourceNames": The
 // resource name that owns the logs:
-// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
-// _ID
-// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
-// iews/VIEW_ID
-// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
-// T_ID/views/VIEW_ID
-// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
-// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
-// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
-// "folders/FOLDER_ID"
+// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+// s/[VIEW_ID]
+// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+// T_ID]/views/[VIEW_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+// BUCKET_ID]/views/[VIEW_ID]
+// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+// [VIEW_ID]To support legacy queries, it could also be:
+// projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
 func (c *OrganizationsLogsListCall) ResourceNames(resourceNames ...string) *OrganizationsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -18930,7 +19549,7 @@ func (c *OrganizationsLogsListCall) Header() http.Header {
 
 func (c *OrganizationsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19012,14 +19631,14 @@ func (c *OrganizationsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" ",
+	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -19076,6 +19695,11 @@ type OrganizationsSinksCreateCall struct {
 // immediately, unless the sink's writer_identity is not permitted to
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
+//
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *OrganizationsSinksCreateCall {
 	c := &OrganizationsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19126,7 +19750,7 @@ func (c *OrganizationsSinksCreateCall) Header() http.Header {
 
 func (c *OrganizationsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19238,6 +19862,14 @@ type OrganizationsSinksDeleteCall struct {
 
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
+//
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *OrganizationsSinksService) Delete(sinkNameid string) *OrganizationsSinksDeleteCall {
 	c := &OrganizationsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -19271,7 +19903,7 @@ func (c *OrganizationsSinksDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19370,6 +20002,13 @@ type OrganizationsSinksGetCall struct {
 }
 
 // Get: Gets a sink.
+//
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *OrganizationsSinksService) Get(sinkName string) *OrganizationsSinksGetCall {
 	c := &OrganizationsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -19413,7 +20052,7 @@ func (c *OrganizationsSinksGetCall) Header() http.Header {
 
 func (c *OrganizationsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19517,6 +20156,10 @@ type OrganizationsSinksListCall struct {
 }
 
 // List: Lists sinks.
+//
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *OrganizationsSinksService) List(parent string) *OrganizationsSinksListCall {
 	c := &OrganizationsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19579,7 +20222,7 @@ func (c *OrganizationsSinksListCall) Header() http.Header {
 
 func (c *OrganizationsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19718,6 +20361,14 @@ type OrganizationsSinksPatchCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *OrganizationsSinksService) Patch(sinkNameid string, logsink *LogSink) *OrganizationsSinksPatchCall {
 	c := &OrganizationsSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -19782,7 +20433,7 @@ func (c *OrganizationsSinksPatchCall) Header() http.Header {
 
 func (c *OrganizationsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19903,6 +20554,14 @@ type OrganizationsSinksUpdateCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) *OrganizationsSinksUpdateCall {
 	c := &OrganizationsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -19967,7 +20626,7 @@ func (c *OrganizationsSinksUpdateCall) Header() http.Header {
 
 func (c *OrganizationsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20087,6 +20746,11 @@ type ProjectsExclusionsCreateCall struct {
 // Create: Creates a new exclusion in a specified parent resource. Only
 // log entries belonging to that resource can be excluded. You can have
 // up to 10 exclusions in a resource.
+//
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *ProjectsExclusionsService) Create(parent string, logexclusion *LogExclusion) *ProjectsExclusionsCreateCall {
 	c := &ProjectsExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20121,7 +20785,7 @@ func (c *ProjectsExclusionsCreateCall) Header() http.Header {
 
 func (c *ProjectsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20227,6 +20891,13 @@ type ProjectsExclusionsDeleteCall struct {
 }
 
 // Delete: Deletes an exclusion.
+//
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *ProjectsExclusionsService) Delete(name string) *ProjectsExclusionsDeleteCall {
 	c := &ProjectsExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20260,7 +20931,7 @@ func (c *ProjectsExclusionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20359,6 +21030,13 @@ type ProjectsExclusionsGetCall struct {
 }
 
 // Get: Gets the description of an exclusion.
+//
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *ProjectsExclusionsService) Get(name string) *ProjectsExclusionsGetCall {
 	c := &ProjectsExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20402,7 +21080,7 @@ func (c *ProjectsExclusionsGetCall) Header() http.Header {
 
 func (c *ProjectsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20506,6 +21184,10 @@ type ProjectsExclusionsListCall struct {
 }
 
 // List: Lists all the exclusions in a parent resource.
+//
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *ProjectsExclusionsService) List(parent string) *ProjectsExclusionsListCall {
 	c := &ProjectsExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20568,7 +21250,7 @@ func (c *ProjectsExclusionsListCall) Header() http.Header {
 
 func (c *ProjectsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20704,6 +21386,13 @@ type ProjectsExclusionsPatchCall struct {
 }
 
 // Patch: Changes one or more properties of an existing exclusion.
+//
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
+//   "projects/my-project-id/exclusions/my-exclusion-id".
 func (r *ProjectsExclusionsService) Patch(name string, logexclusion *LogExclusion) *ProjectsExclusionsPatchCall {
 	c := &ProjectsExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20750,7 +21439,7 @@ func (c *ProjectsExclusionsPatchCall) Header() http.Header {
 
 func (c *ProjectsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20863,6 +21552,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20906,7 +21597,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21011,6 +21702,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21027,7 +21721,7 @@ func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsList
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -21078,7 +21772,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21161,7 +21855,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -21220,6 +21914,10 @@ type ProjectsLocationsBucketsCreateCall struct {
 
 // Create: Creates a bucket that can be used to store log entries. Once
 // a bucket has been created, the region cannot be changed.
+//
+// - parent: The resource in which to create the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" Example:
+//   "projects/my-logging-project/locations/global".
 func (r *ProjectsLocationsBucketsService) Create(parent string, logbucket *LogBucket) *ProjectsLocationsBucketsCreateCall {
 	c := &ProjectsLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21263,7 +21961,7 @@ func (c *ProjectsLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21376,6 +22074,16 @@ type ProjectsLocationsBucketsDeleteCall struct {
 // Delete: Deletes a bucket. Moves the bucket to the DELETE_REQUESTED
 // state. After 7 days, the bucket will be purged and all logs in the
 // bucket will be permanently deleted.
+//
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *ProjectsLocationsBucketsService) Delete(name string) *ProjectsLocationsBucketsDeleteCall {
 	c := &ProjectsLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21409,7 +22117,7 @@ func (c *ProjectsLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21508,6 +22216,16 @@ type ProjectsLocationsBucketsGetCall struct {
 }
 
 // Get: Gets a bucket.
+//
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *ProjectsLocationsBucketsService) Get(name string) *ProjectsLocationsBucketsGetCall {
 	c := &ProjectsLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21551,7 +22269,7 @@ func (c *ProjectsLocationsBucketsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21655,6 +22373,14 @@ type ProjectsLocationsBucketsListCall struct {
 }
 
 // List: Lists buckets.
+//
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *ProjectsLocationsBucketsService) List(parent string) *ProjectsLocationsBucketsListCall {
 	c := &ProjectsLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21717,7 +22443,7 @@ func (c *ProjectsLocationsBucketsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21858,6 +22584,18 @@ type ProjectsLocationsBucketsPatchCall struct {
 // is locked, FAILED_PRECONDITION will be returned.If the bucket has a
 // LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
 // returned.A buckets region may not be modified after it is created.
+//
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
+//    Also requires permission "resourcemanager.projects.updateLiens" to
+//   set the locked property.
 func (r *ProjectsLocationsBucketsService) Patch(name string, logbucket *LogBucket) *ProjectsLocationsBucketsPatchCall {
 	c := &ProjectsLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21904,7 +22642,7 @@ func (c *ProjectsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22018,6 +22756,16 @@ type ProjectsLocationsBucketsUndeleteCall struct {
 
 // Undelete: Undeletes a bucket. A bucket that has been deleted may be
 // undeleted within the grace period of 7 days.
+//
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id".
 func (r *ProjectsLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *ProjectsLocationsBucketsUndeleteCall {
 	c := &ProjectsLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22052,7 +22800,7 @@ func (c *ProjectsLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22160,6 +22908,12 @@ type ProjectsLocationsBucketsViewsCreateCall struct {
 
 // Create: Creates a view over logs in a bucket. A bucket may contain a
 // maximum of 50 views.
+//
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   Example:
+//   "projects/my-logging-project/locations/my-location/buckets/my-bucket
+//   ".
 func (r *ProjectsLocationsBucketsViewsService) Create(parent string, logview *LogView) *ProjectsLocationsBucketsViewsCreateCall {
 	c := &ProjectsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22201,7 +22955,7 @@ func (c *ProjectsLocationsBucketsViewsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22312,6 +23066,12 @@ type ProjectsLocationsBucketsViewsDeleteCall struct {
 }
 
 // Delete: Deletes a view from a bucket.
+//
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *ProjectsLocationsBucketsViewsService) Delete(name string) *ProjectsLocationsBucketsViewsDeleteCall {
 	c := &ProjectsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22345,7 +23105,7 @@ func (c *ProjectsLocationsBucketsViewsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22444,6 +23204,12 @@ type ProjectsLocationsBucketsViewsGetCall struct {
 }
 
 // Get: Gets a view.
+//
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *ProjectsLocationsBucketsViewsService) Get(name string) *ProjectsLocationsBucketsViewsGetCall {
 	c := &ProjectsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22487,7 +23253,7 @@ func (c *ProjectsLocationsBucketsViewsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22591,6 +23357,9 @@ type ProjectsLocationsBucketsViewsListCall struct {
 }
 
 // List: Lists views on a bucket.
+//
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *ProjectsLocationsBucketsViewsService) List(parent string) *ProjectsLocationsBucketsViewsListCall {
 	c := &ProjectsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22653,7 +23422,7 @@ func (c *ProjectsLocationsBucketsViewsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22790,6 +23559,12 @@ type ProjectsLocationsBucketsViewsPatchCall struct {
 
 // Patch: Updates a view. This method replaces the following fields in
 // the existing view with values from the new view: filter.
+//
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" Example:
+//   "projects/my-project-id/locations/my-location/buckets/my-bucket-id/v
+//   iews/my-view-id".
 func (r *ProjectsLocationsBucketsViewsService) Patch(name string, logview *LogView) *ProjectsLocationsBucketsViewsPatchCall {
 	c := &ProjectsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22836,7 +23611,7 @@ func (c *ProjectsLocationsBucketsViewsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22952,6 +23727,14 @@ type ProjectsLogsDeleteCall struct {
 // written shortly before the delete operation might not be deleted.
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
+//
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog".For more information
+//   about log names, see LogEntry.
 func (r *ProjectsLogsService) Delete(logName string) *ProjectsLogsDeleteCall {
 	c := &ProjectsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -22985,7 +23768,7 @@ func (c *ProjectsLogsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23053,7 +23836,7 @@ func (c *ProjectsLogsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//   ],
 	//   "parameters": {
 	//     "logName": {
-	//       "description": "Required. The resource name of the log to delete: \"projects/[PROJECT_ID]/logs/[LOG_ID]\" \"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\" \"folders/[FOLDER_ID]/logs/[LOG_ID]\" [LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
+	//       "description": "Required. The resource name of the log to delete: projects/[PROJECT_ID]/logs/[LOG_ID] organizations/[ORGANIZATION_ID]/logs/[LOG_ID] billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID] folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\".For more information about log names, see LogEntry.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/logs/[^/]+$",
 	//       "required": true,
@@ -23085,6 +23868,10 @@ type ProjectsLogsListCall struct {
 
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
+//
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *ProjectsLogsService) List(parent string) *ProjectsLogsListCall {
 	c := &ProjectsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23112,16 +23899,16 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 
 // ResourceNames sets the optional parameter "resourceNames": The
 // resource name that owns the logs:
-// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
-// _ID
-// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
-// iews/VIEW_ID
-// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
-// T_ID/views/VIEW_ID
-// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
-// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
-// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
-// "folders/FOLDER_ID"
+// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
+// s/[VIEW_ID]
+// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
+// T_ID]/views/[VIEW_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+// BUCKET_ID]/views/[VIEW_ID]
+// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
+// [VIEW_ID]To support legacy queries, it could also be:
+// projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
 func (c *ProjectsLogsListCall) ResourceNames(resourceNames ...string) *ProjectsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -23164,7 +23951,7 @@ func (c *ProjectsLogsListCall) Header() http.Header {
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23246,14 +24033,14 @@ func (c *ProjectsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" ",
+	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -23306,6 +24093,10 @@ type ProjectsMetricsCreateCall struct {
 }
 
 // Create: Creates a logs-based metric.
+//
+// - parent: The resource name of the project in which to create the
+//   metric: "projects/[PROJECT_ID]" The new metric must be provided in
+//   the request.
 func (r *ProjectsMetricsService) Create(parent string, logmetric *LogMetric) *ProjectsMetricsCreateCall {
 	c := &ProjectsMetricsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23340,7 +24131,7 @@ func (c *ProjectsMetricsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23447,6 +24238,9 @@ type ProjectsMetricsDeleteCall struct {
 }
 
 // Delete: Deletes a logs-based metric.
+//
+// - metricName: The resource name of the metric to delete:
+//   "projects/[PROJECT_ID]/metrics/[METRIC_ID]".
 func (r *ProjectsMetricsService) Delete(metricName string) *ProjectsMetricsDeleteCall {
 	c := &ProjectsMetricsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metricName = metricName
@@ -23480,7 +24274,7 @@ func (c *ProjectsMetricsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23580,6 +24374,9 @@ type ProjectsMetricsGetCall struct {
 }
 
 // Get: Gets a logs-based metric.
+//
+// - metricName: The resource name of the desired metric:
+//   "projects/[PROJECT_ID]/metrics/[METRIC_ID]".
 func (r *ProjectsMetricsService) Get(metricName string) *ProjectsMetricsGetCall {
 	c := &ProjectsMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metricName = metricName
@@ -23623,7 +24420,7 @@ func (c *ProjectsMetricsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23727,6 +24524,9 @@ type ProjectsMetricsListCall struct {
 }
 
 // List: Lists logs-based metrics.
+//
+// - parent: The name of the project containing the metrics:
+//   "projects/[PROJECT_ID]".
 func (r *ProjectsMetricsService) List(parent string) *ProjectsMetricsListCall {
 	c := &ProjectsMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23789,7 +24589,7 @@ func (c *ProjectsMetricsListCall) Header() http.Header {
 
 func (c *ProjectsMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23925,6 +24725,12 @@ type ProjectsMetricsUpdateCall struct {
 }
 
 // Update: Creates or updates a logs-based metric.
+//
+// - metricName: The resource name of the metric to update:
+//   "projects/[PROJECT_ID]/metrics/[METRIC_ID]" The updated metric must
+//   be provided in the request and it's name field must be the same as
+//   [METRIC_ID] If the metric does not exist in [PROJECT_ID], then a
+//   new metric is created.
 func (r *ProjectsMetricsService) Update(metricName string, logmetric *LogMetric) *ProjectsMetricsUpdateCall {
 	c := &ProjectsMetricsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metricName = metricName
@@ -23959,7 +24765,7 @@ func (c *ProjectsMetricsUpdateCall) Header() http.Header {
 
 func (c *ProjectsMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24071,6 +24877,11 @@ type ProjectsSinksCreateCall struct {
 // immediately, unless the sink's writer_identity is not permitted to
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
+//
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *ProjectsSinksCreateCall {
 	c := &ProjectsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24121,7 +24932,7 @@ func (c *ProjectsSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24233,6 +25044,14 @@ type ProjectsSinksDeleteCall struct {
 
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
+//
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *ProjectsSinksService) Delete(sinkNameid string) *ProjectsSinksDeleteCall {
 	c := &ProjectsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -24266,7 +25085,7 @@ func (c *ProjectsSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24365,6 +25184,13 @@ type ProjectsSinksGetCall struct {
 }
 
 // Get: Gets a sink.
+//
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *ProjectsSinksService) Get(sinkName string) *ProjectsSinksGetCall {
 	c := &ProjectsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -24408,7 +25234,7 @@ func (c *ProjectsSinksGetCall) Header() http.Header {
 
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24512,6 +25338,10 @@ type ProjectsSinksListCall struct {
 }
 
 // List: Lists sinks.
+//
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *ProjectsSinksService) List(parent string) *ProjectsSinksListCall {
 	c := &ProjectsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24574,7 +25404,7 @@ func (c *ProjectsSinksListCall) Header() http.Header {
 
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24713,6 +25543,14 @@ type ProjectsSinksPatchCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *ProjectsSinksService) Patch(sinkNameid string, logsink *LogSink) *ProjectsSinksPatchCall {
 	c := &ProjectsSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -24777,7 +25615,7 @@ func (c *ProjectsSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24898,6 +25736,14 @@ type ProjectsSinksUpdateCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *ProjectsSinksUpdateCall {
 	c := &ProjectsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -24962,7 +25808,7 @@ func (c *ProjectsSinksUpdateCall) Header() http.Header {
 
 func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25084,6 +25930,11 @@ type SinksCreateCall struct {
 // immediately, unless the sink's writer_identity is not permitted to
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
+//
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+//   Examples: "projects/my-logging-project", "organizations/123456789".
 func (r *SinksService) Create(parent string, logsink *LogSink) *SinksCreateCall {
 	c := &SinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25134,7 +25985,7 @@ func (c *SinksCreateCall) Header() http.Header {
 
 func (c *SinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25246,6 +26097,14 @@ type SinksDeleteCall struct {
 
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
+//
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *SinksService) Delete(sinkNameid string) *SinksDeleteCall {
 	c := &SinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -25279,7 +26138,7 @@ func (c *SinksDeleteCall) Header() http.Header {
 
 func (c *SinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25378,6 +26237,13 @@ type SinksGetCall struct {
 }
 
 // Get: Gets a sink.
+//
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *SinksService) Get(sinkName string) *SinksGetCall {
 	c := &SinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -25421,7 +26287,7 @@ func (c *SinksGetCall) Header() http.Header {
 
 func (c *SinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25525,6 +26391,10 @@ type SinksListCall struct {
 }
 
 // List: Lists sinks.
+//
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *SinksService) List(parent string) *SinksListCall {
 	c := &SinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25587,7 +26457,7 @@ func (c *SinksListCall) Header() http.Header {
 
 func (c *SinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25726,6 +26596,14 @@ type SinksUpdateCall struct {
 // the existing sink with values from the new sink: destination, and
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
+//
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example:
+//   "projects/my-project-id/sinks/my-sink-id".
 func (r *SinksService) Update(sinkNameid string, logsink *LogSink) *SinksUpdateCall {
 	c := &SinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -25790,7 +26668,7 @@ func (c *SinksUpdateCall) Header() http.Header {
 
 func (c *SinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25914,6 +26792,16 @@ type V2GetCmekSettingsCall struct {
 // Logs Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
+//
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" Example:
+//   "organizations/12345/cmekSettings".Note: CMEK for the Logs Router
+//   can currently only be configured for GCP organizations. Once
+//   configured, it applies to all projects and folders in the GCP
+//   organization.
 func (r *V2Service) GetCmekSettings(name string) *V2GetCmekSettingsCall {
 	c := &V2GetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25957,7 +26845,7 @@ func (c *V2GetCmekSettingsCall) Header() http.Header {
 
 func (c *V2GetCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26070,6 +26958,16 @@ type V2UpdateCmekSettingsCall struct {
 // or 3) access to the key is disabled.See Enabling CMEK for Logs Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
+//
+// - name: The resource name for the CMEK settings to update.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" Example:
+//   "organizations/12345/cmekSettings".Note: CMEK for the Logs Router
+//   can currently only be configured for GCP organizations. Once
+//   configured, it applies to all projects and folders in the GCP
+//   organization.
 func (r *V2Service) UpdateCmekSettings(name string, cmeksettings *CmekSettings) *V2UpdateCmekSettingsCall {
 	c := &V2UpdateCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26114,7 +27012,7 @@ func (c *V2UpdateCmekSettingsCall) Header() http.Header {
 
 func (c *V2UpdateCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

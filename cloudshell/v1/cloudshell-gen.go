@@ -707,6 +707,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -741,7 +743,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -849,6 +851,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -882,7 +886,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -982,6 +986,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1025,7 +1031,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1135,6 +1141,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1199,7 +1207,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1340,6 +1348,9 @@ type UsersEnvironmentsAddPublicKeyCall struct {
 // clients with the corresponding private key to connect to that
 // environment via SSH. If a key with the same content already exists,
 // this will error with ALREADY_EXISTS.
+//
+// - environment: Environment this key should be added to, e.g.
+//   `users/me/environments/default`.
 func (r *UsersEnvironmentsService) AddPublicKey(environment string, addpublickeyrequest *AddPublicKeyRequest) *UsersEnvironmentsAddPublicKeyCall {
 	c := &UsersEnvironmentsAddPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -1374,7 +1385,7 @@ func (c *UsersEnvironmentsAddPublicKeyCall) Header() http.Header {
 
 func (c *UsersEnvironmentsAddPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1483,6 +1494,10 @@ type UsersEnvironmentsAuthorizeCall struct {
 // of a user. When this completes, the environment will be authorized to
 // run various Google Cloud command line tools without requiring the
 // user to manually authenticate.
+//
+// - name: Name of the resource that should receive the credentials, for
+//   example `users/me/environments/default` or
+//   `users/someone@example.com/environments/default`.
 func (r *UsersEnvironmentsService) Authorize(name string, authorizeenvironmentrequest *AuthorizeEnvironmentRequest) *UsersEnvironmentsAuthorizeCall {
 	c := &UsersEnvironmentsAuthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1517,7 +1532,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Header() http.Header {
 
 func (c *UsersEnvironmentsAuthorizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1624,6 +1639,10 @@ type UsersEnvironmentsGetCall struct {
 
 // Get: Gets an environment. Returns NOT_FOUND if the environment does
 // not exist.
+//
+// - name: Name of the requested resource, for example
+//   `users/me/environments/default` or
+//   `users/someone@example.com/environments/default`.
 func (r *UsersEnvironmentsService) Get(name string) *UsersEnvironmentsGetCall {
 	c := &UsersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1667,7 +1686,7 @@ func (c *UsersEnvironmentsGetCall) Header() http.Header {
 
 func (c *UsersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1771,6 +1790,9 @@ type UsersEnvironmentsRemovePublicKeyCall struct {
 // Clients will no longer be able to connect to the environment using
 // the corresponding private key. If a key with the same content is not
 // present, this will error with NOT_FOUND.
+//
+// - environment: Environment this key should be removed from, e.g.
+//   `users/me/environments/default`.
 func (r *UsersEnvironmentsService) RemovePublicKey(environment string, removepublickeyrequest *RemovePublicKeyRequest) *UsersEnvironmentsRemovePublicKeyCall {
 	c := &UsersEnvironmentsRemovePublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -1805,7 +1827,7 @@ func (c *UsersEnvironmentsRemovePublicKeyCall) Header() http.Header {
 
 func (c *UsersEnvironmentsRemovePublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1917,6 +1939,10 @@ type UsersEnvironmentsStartCall struct {
 // Once the environment has finished starting and is ready to accept
 // connections, the operation will contain a StartEnvironmentResponse in
 // its response field.
+//
+// - name: Name of the resource that should be started, for example
+//   `users/me/environments/default` or
+//   `users/someone@example.com/environments/default`.
 func (r *UsersEnvironmentsService) Start(name string, startenvironmentrequest *StartEnvironmentRequest) *UsersEnvironmentsStartCall {
 	c := &UsersEnvironmentsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1951,7 +1977,7 @@ func (c *UsersEnvironmentsStartCall) Header() http.Header {
 
 func (c *UsersEnvironmentsStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -23,10 +23,6 @@
 //
 // Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
-//
-//   serviceusageService, err := serviceusage.NewService(ctx, option.WithScopes(serviceusage.ServiceManagementScope))
-//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   serviceusageService, err := serviceusage.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -85,20 +81,12 @@ const mtlsBasePath = "https://serviceusage.mtls.googleapis.com/"
 const (
 	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-
-	// View your data across Google Cloud Platform services
-	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
-
-	// Manage your Google API service configuration
-	ServiceManagementScope = "https://www.googleapis.com/auth/service.management"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
-		"https://www.googleapis.com/auth/cloud-platform.read-only",
-		"https://www.googleapis.com/auth/service.management",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -171,18 +159,18 @@ type ServicesService struct {
 // AdminQuotaPolicy: Quota policy created by quota administrator.
 type AdminQuotaPolicy struct {
 	// Container: The cloud resource container at which the quota policy is
-	// created. The format is {container_type}/{container_number}
+	// created. The format is `{container_type}/{container_number}`
 	Container string `json:"container,omitempty"`
 
 	// Dimensions:  If this map is nonempty, then this policy applies only
 	// to specific values for dimensions defined in the limit unit. For
-	// example, an policy on a limit with the unit 1/{project}/{region}
-	// could contain an entry with the key "region" and the value
-	// "us-east-1"; the policy is only applied to quota consumed in that
-	// region. This map has the following restrictions: * If "region"
-	// appears as a key, its value must be a valid Cloud region. * If "zone"
+	// example, an policy on a limit with the unit `1/{project}/{region}`
+	// could contain an entry with the key `region` and the value
+	// `us-east-1`; the policy is only applied to quota consumed in that
+	// region. This map has the following restrictions: * If `region`
+	// appears as a key, its value must be a valid Cloud region. * If `zone`
 	// appears as a key, its value must be a valid Cloud zone. * Keys other
-	// than "region" or "zone" are not valid.
+	// than `region` or `zone` are not valid.
 	Dimensions map[string]string `json:"dimensions,omitempty"`
 
 	// Metric: The name of the metric to which this policy applies. An
@@ -429,12 +417,14 @@ func (s *AuthRequirement) MarshalJSON() ([]byte, error) {
 }
 
 // Authentication: `Authentication` defines the authentication
-// configuration for an API. Example for an API targeted for external
-// use: name: calendar.googleapis.com authentication: providers: - id:
+// configuration for API methods provided by an API service. Example:
+// name: calendar.googleapis.com authentication: providers: - id:
 // google_calendar_auth jwks_uri:
 // https://www.googleapis.com/oauth2/v1/certs issuer:
 // https://securetoken.google.com rules: - selector: "*" requirements:
-// provider_id: google_calendar_auth
+// provider_id: google_calendar_auth - selector:
+// google.calendar.Delegate oauth: canonical_scopes:
+// https://www.googleapis.com/auth/calendar.read
 type Authentication struct {
 	// Providers: Defines a set of authentication providers that a service
 	// supports.
@@ -1040,6 +1030,13 @@ func (s *Control) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateAdminQuotaPolicyMetadata: Metadata message that provides
+// information such as progress, partial failures, and similar
+// information on each GetOperation call of LRO returned by
+// CreateAdminQuotaPolicy.
+type CreateAdminQuotaPolicyMetadata struct {
+}
+
 // CustomError: Customize service error responses. For example, list any
 // service specific protobuf types that can appear in error detail lists
 // of error responses. Example: custom_error: types: -
@@ -1141,6 +1138,13 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomHttpPattern
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteAdminQuotaPolicyMetadata: Metadata message that provides
+// information such as progress, partial failures, and similar
+// information on each GetOperation call of LRO returned by
+// DeleteAdminQuotaPolicy.
+type DeleteAdminQuotaPolicyMetadata struct {
 }
 
 // DisableServiceRequest: Request message for the `DisableService`
@@ -1441,12 +1445,6 @@ func (s *EnableServiceResponse) MarshalJSON() ([]byte, error) {
 // subsequent cross-origin request is # allowed to proceed. - name:
 // library-example.googleapis.com allow_cors: true
 type Endpoint struct {
-	// Aliases: DEPRECATED: This field is no longer supported. Instead of
-	// using aliases, please specify multiple google.api.Endpoint for each
-	// of the intended aliases. Additional names that this endpoint will be
-	// hosted on.
-	Aliases []string `json:"aliases,omitempty"`
-
 	// AllowCors: Allowing CORS
 	// (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
 	// cross-domain traffic, would allow the backends served from this
@@ -1465,7 +1463,7 @@ type Endpoint struct {
 	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Aliases") to
+	// ForceSendFields is a list of field names (e.g. "AllowCors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1473,7 +1471,7 @@ type Endpoint struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Aliases") to include in
+	// NullFields is a list of field names (e.g. "AllowCors") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1654,6 +1652,11 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GetServiceIdentityMetadata: Metadata for the `GetServiceIdentity`
+// method.
+type GetServiceIdentityMetadata struct {
+}
+
 // GetServiceIdentityResponse: Response message for getting service
 // identity.
 type GetServiceIdentityResponse struct {
@@ -1724,8 +1727,8 @@ type GoogleApiService struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: Deprecated. The service config compiler always sets
-	// this field to `3`.
+	// ConfigVersion: Obsolete. Do not use. This field has no semantic
+	// meaning. The service config compiler always sets this field to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -2331,6 +2334,13 @@ func (s *HttpRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAdminOverridesMetadata: Metadata message that provides
+// information such as progress, partial failures, and similar
+// information on each GetOperation call of LRO returned by
+// ImportAdminOverrides.
+type ImportAdminOverridesMetadata struct {
+}
+
 // ImportAdminOverridesResponse: Response message for
 // ImportAdminOverrides
 type ImportAdminOverridesResponse struct {
@@ -2360,6 +2370,13 @@ func (s *ImportAdminOverridesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAdminQuotaPoliciesMetadata: Metadata message that provides
+// information such as progress, partial failures, and similar
+// information on each GetOperation call of LRO returned by
+// ImportAdminQuotaPolicies.
+type ImportAdminQuotaPoliciesMetadata struct {
+}
+
 // ImportAdminQuotaPoliciesResponse: Response message for
 // ImportAdminQuotaPolicies
 type ImportAdminQuotaPoliciesResponse struct {
@@ -2387,6 +2404,13 @@ func (s *ImportAdminQuotaPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdminQuotaPoliciesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportConsumerOverridesMetadata: Metadata message that provides
+// information such as progress, partial failures, and similar
+// information on each GetOperation call of LRO returned by
+// ImportConsumerOverrides.
+type ImportConsumerOverridesMetadata struct {
 }
 
 // ImportConsumerOverridesResponse: Response message for
@@ -3701,26 +3725,26 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 // QuotaOverride: A quota override
 type QuotaOverride struct {
 	// AdminOverrideAncestor: The resource name of the ancestor that
-	// requested the override. For example: "organizations/12345" or
-	// "folders/67890". Used by admin overrides only.
+	// requested the override. For example: `organizations/12345` or
+	// `folders/67890`. Used by admin overrides only.
 	AdminOverrideAncestor string `json:"adminOverrideAncestor,omitempty"`
 
 	// Dimensions: If this map is nonempty, then this override applies only
 	// to specific values for dimensions defined in the limit unit. For
-	// example, an override on a limit with the unit 1/{project}/{region}
-	// could contain an entry with the key "region" and the value
-	// "us-east-1"; the override is only applied to quota consumed in that
+	// example, an override on a limit with the unit `1/{project}/{region}`
+	// could contain an entry with the key `region` and the value
+	// `us-east-1`; the override is only applied to quota consumed in that
 	// region. This map has the following restrictions: * Keys that are not
 	// defined in the limit's unit are not valid keys. Any string appearing
-	// in {brackets} in the unit (besides {project} or {user}) is a defined
-	// key. * "project" is not a valid key; the project is already specified
-	// in the parent resource name. * "user" is not a valid key; the API
-	// does not support quota overrides that apply only to a specific user.
-	// * If "region" appears as a key, its value must be a valid Cloud
-	// region. * If "zone" appears as a key, its value must be a valid Cloud
-	// zone. * If any valid key other than "region" or "zone" appears in the
-	// map, then all valid keys other than "region" or "zone" must also
-	// appear in the map.
+	// in `{brackets}` in the unit (besides `{project}` or `{user}`) is a
+	// defined key. * `project` is not a valid key; the project is already
+	// specified in the parent resource name. * `user` is not a valid key;
+	// the API does not support quota overrides that apply only to a
+	// specific user. * If `region` appears as a key, its value must be a
+	// valid Cloud region. * If `zone` appears as a key, its value must be a
+	// valid Cloud zone. * If any valid key other than `region` or `zone`
+	// appears in the map, then all valid keys other than `region` or `zone`
+	// must also appear in the map.
 	Dimensions map[string]string `json:"dimensions,omitempty"`
 
 	// Metric: The name of the metric to which this override applies. An
@@ -4079,6 +4103,13 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateAdminQuotaPolicyMetadata: Metadata message that provides
+// information such as progress, partial failures, and similar
+// information on each GetOperation call of LRO returned by
+// UpdateAdminQuotaPolicy.
+type UpdateAdminQuotaPolicyMetadata struct {
+}
+
 // Usage: Configuration controlling usage of a service.
 type Usage struct {
 	// ProducerNotificationChannel: The full resource name of a channel used
@@ -4206,6 +4237,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4240,7 +4273,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4328,8 +4361,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4349,6 +4381,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4382,7 +4416,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4462,8 +4496,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4483,6 +4516,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4526,7 +4561,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4609,8 +4644,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4706,7 +4740,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4798,8 +4832,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//     "$ref": "ListOperationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4841,6 +4874,10 @@ type ServicesBatchEnableCall struct {
 // atomic: if enabling any service fails, then the entire batch fails,
 // and no state changes occur. To enable a single service, use the
 // `EnableService` method instead.
+//
+// - parent: Parent to enable services on. An example name would be:
+//   `projects/123` where `123` is the project number. The
+//   `BatchEnableServices` method currently only supports projects.
 func (r *ServicesService) BatchEnable(parent string, batchenableservicesrequest *BatchEnableServicesRequest) *ServicesBatchEnableCall {
 	c := &ServicesBatchEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4875,7 +4912,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4963,8 +5000,7 @@ func (c *ServicesBatchEnableCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4983,6 +5019,12 @@ type ServicesBatchGetCall struct {
 
 // BatchGet: Returns the service configurations and enabled states for a
 // given list of services.
+//
+// - parent: Parent to retrieve services from. If this is set, the
+//   parent of all of the services specified in `names` must match this
+//   field. An example name would be: `projects/123` where `123` is the
+//   project number. The `BatchGetServices` method currently only
+//   supports projects.
 func (r *ServicesService) BatchGet(parent string) *ServicesBatchGetCall {
 	c := &ServicesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5036,7 +5078,7 @@ func (c *ServicesBatchGetCall) Header() http.Header {
 
 func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5125,8 +5167,7 @@ func (c *ServicesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetServic
 	//     "$ref": "BatchGetServicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -5149,6 +5190,12 @@ type ServicesDisableCall struct {
 // disable method on a service that is not currently enabled. Callers
 // will receive a `FAILED_PRECONDITION` status if the target service is
 // not currently enabled.
+//
+// - name: Name of the consumer and service to disable the service on.
+//   The enable and disable methods currently only support projects. An
+//   example name would be:
+//   `projects/123/services/serviceusage.googleapis.com` where `123` is
+//   the project number.
 func (r *ServicesService) Disable(name string, disableservicerequest *DisableServiceRequest) *ServicesDisableCall {
 	c := &ServicesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5183,7 +5230,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5271,8 +5318,7 @@ func (c *ServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -5290,6 +5336,13 @@ type ServicesEnableCall struct {
 }
 
 // Enable: Enable a service so that it can be used with a project.
+//
+// - name: Name of the consumer and service to enable the service on.
+//   The `EnableService` and `DisableService` methods currently only
+//   support projects. Enabling a service requires that the service is
+//   public or is shared with the user enabling the service. An example
+//   name would be: `projects/123/services/serviceusage.googleapis.com`
+//   where `123` is the project number.
 func (r *ServicesService) Enable(name string, enableservicerequest *EnableServiceRequest) *ServicesEnableCall {
 	c := &ServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5324,7 +5377,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5412,8 +5465,7 @@ func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/service.management"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -5432,6 +5484,11 @@ type ServicesGetCall struct {
 
 // Get: Returns the service configuration and enabled state for a given
 // service.
+//
+// - name: Name of the consumer and service to get the `ConsumerState`
+//   for. An example name would be:
+//   `projects/123/services/serviceusage.googleapis.com` where `123` is
+//   the project number.
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5475,7 +5532,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5558,8 +5615,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleApiServiceusa
 	//     "$ref": "GoogleApiServiceusageV1Service"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -5587,6 +5643,9 @@ type ServicesListCall struct {
 // should use Cloud Asset Inventory API
 // (https://cloud.google.com/asset-inventory/docs/apis), which provides
 // higher throughput and richer filtering capability.
+//
+// - parent: Parent to search for services on. An example name would be:
+//   `projects/123` where `123` is the project number.
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5654,7 +5713,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5753,8 +5812,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//     "$ref": "ListServicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

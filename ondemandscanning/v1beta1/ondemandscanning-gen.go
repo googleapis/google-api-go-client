@@ -262,6 +262,38 @@ func (s *AnalyzePackagesMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnalyzePackagesMetadataV1: AnalyzePackagesMetadata contains metadata
+// for an active scan of a container image.
+type AnalyzePackagesMetadataV1 struct {
+	// CreateTime: When the scan was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ResourceUri: The resource URI of the container image being scanned.
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzePackagesMetadataV1) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzePackagesMetadataV1
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AnalyzePackagesRequest: AnalyzePackagesRequest is the request to
 // analyze a list of packages and create Vulnerability Occurrences for
 // it.
@@ -321,6 +353,35 @@ type AnalyzePackagesResponse struct {
 
 func (s *AnalyzePackagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyzePackagesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzePackagesResponseV1: AnalyzePackagesResponse contains the
+// information necessary to find results for the given scan.
+type AnalyzePackagesResponseV1 struct {
+	// Scan: The name of the scan resource created by this successful scan.
+	Scan string `json:"scan,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scan") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzePackagesResponseV1) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzePackagesResponseV1
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1370,6 +1431,8 @@ type PackageData struct {
 	// Package: The package being analysed for vulnerabilities
 	Package string `json:"package,omitempty"`
 
+	Unused string `json:"unused,omitempty"`
+
 	// Version: The version of the package being analysed
 	Version string `json:"version,omitempty"`
 
@@ -2096,6 +2159,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2129,7 +2194,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2229,6 +2294,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2262,7 +2329,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2362,6 +2429,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2405,7 +2474,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2515,6 +2584,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2579,7 +2650,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2725,6 +2796,8 @@ type ProjectsLocationsOperationsWaitCall struct {
 // latest state before the specified timeout (including immediately),
 // meaning even an immediate response is no guarantee that the operation
 // is done.
+//
+// - name: The name of the operation resource to wait on.
 func (r *ProjectsLocationsOperationsService) Wait(name string) *ProjectsLocationsOperationsWaitCall {
 	c := &ProjectsLocationsOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2767,7 +2840,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2871,6 +2944,9 @@ type ProjectsLocationsScansAnalyzePackagesCall struct {
 }
 
 // AnalyzePackages: Initiates an analysis of the provided packages.
+//
+// - parent: The parent of the resource for which analysis is requested.
+//   Format: projects/[project_name]/locations/[location].
 func (r *ProjectsLocationsScansService) AnalyzePackages(parent string, analyzepackagesrequest *AnalyzePackagesRequest) *ProjectsLocationsScansAnalyzePackagesCall {
 	c := &ProjectsLocationsScansAnalyzePackagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2905,7 +2981,7 @@ func (c *ProjectsLocationsScansAnalyzePackagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansAnalyzePackagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3012,6 +3088,10 @@ type ProjectsLocationsScansVulnerabilitiesListCall struct {
 
 // List: Lists vulnerabilities resulting from a successfully completed
 // scan.
+//
+// - parent: The parent of the collection of Vulnerabilities being
+//   requested. Format:
+//   projects/[project_name]/locations/[location]/scans/[scan_id].
 func (r *ProjectsLocationsScansVulnerabilitiesService) List(parent string) *ProjectsLocationsScansVulnerabilitiesListCall {
 	c := &ProjectsLocationsScansVulnerabilitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3069,7 +3149,7 @@ func (c *ProjectsLocationsScansVulnerabilitiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansVulnerabilitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

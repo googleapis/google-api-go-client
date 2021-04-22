@@ -79,7 +79,7 @@ const mtlsBasePath = "https://containeranalysis.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -959,6 +959,9 @@ type Detail struct {
 	// Source: The source from which the information in this Detail was
 	// obtained.
 	Source string `json:"source,omitempty"`
+
+	// Vendor: The vendor of the product. e.g. "google"
+	Vendor string `json:"vendor,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CpeUri") to
 	// unconditionally include in API requests. By default, fields with
@@ -3310,6 +3313,9 @@ type ProjectsNotesCreateCall struct {
 }
 
 // Create: Creates a new `Note`.
+//
+// - parent: This field contains the project Id for example:
+//   "projects/{project_id}.
 func (r *ProjectsNotesService) Create(parent string, note *Note) *ProjectsNotesCreateCall {
 	c := &ProjectsNotesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3358,7 +3364,7 @@ func (c *ProjectsNotesCreateCall) Header() http.Header {
 
 func (c *ProjectsNotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3473,6 +3479,9 @@ type ProjectsNotesDeleteCall struct {
 }
 
 // Delete: Deletes the given `Note` from the system.
+//
+// - name: The name of the note in the form of
+//   "providers/{provider_id}/notes/{NOTE_ID}".
 func (r *ProjectsNotesService) Delete(name string) *ProjectsNotesDeleteCall {
 	c := &ProjectsNotesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3506,7 +3515,7 @@ func (c *ProjectsNotesDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3604,6 +3613,9 @@ type ProjectsNotesGetCall struct {
 }
 
 // Get: Returns the requested `Note`.
+//
+// - name: The name of the note in the form of
+//   "providers/{provider_id}/notes/{NOTE_ID}".
 func (r *ProjectsNotesService) Get(name string) *ProjectsNotesGetCall {
 	c := &ProjectsNotesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3647,7 +3659,7 @@ func (c *ProjectsNotesGetCall) Header() http.Header {
 
 func (c *ProjectsNotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3759,6 +3771,10 @@ type ProjectsNotesGetIamPolicyCall struct {
 // otherwise. The resource takes the following formats:
 // `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences
 // and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsNotesGetIamPolicyCall {
 	c := &ProjectsNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3793,7 +3809,7 @@ func (c *ProjectsNotesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsNotesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3899,6 +3915,9 @@ type ProjectsNotesListCall struct {
 }
 
 // List: Lists all `Notes` for a given project.
+//
+// - parent: This field contains the project Id for example:
+//   "projects/{PROJECT_ID}".
 func (r *ProjectsNotesService) List(parent string) *ProjectsNotesListCall {
 	c := &ProjectsNotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3969,7 +3988,7 @@ func (c *ProjectsNotesListCall) Header() http.Header {
 
 func (c *ProjectsNotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4112,6 +4131,9 @@ type ProjectsNotesPatchCall struct {
 }
 
 // Patch: Updates an existing `Note`.
+//
+// - name: The name of the note. Should be of the form
+//   "projects/{provider_id}/notes/{note_id}".
 func (r *ProjectsNotesService) Patch(name string, note *Note) *ProjectsNotesPatchCall {
 	c := &ProjectsNotesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4153,7 +4175,7 @@ func (c *ProjectsNotesPatchCall) Header() http.Header {
 
 func (c *ProjectsNotesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4276,6 +4298,10 @@ type ProjectsNotesSetIamPolicyCall struct {
 // `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{projectid}/occurrences/{occurrenceid}` for
 // occurrences and projects/{projectid}/notes/{noteid} for notes
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsNotesSetIamPolicyCall {
 	c := &ProjectsNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4310,7 +4336,7 @@ func (c *ProjectsNotesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsNotesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4424,6 +4450,10 @@ type ProjectsNotesTestIamPermissionsCall struct {
 // `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsNotesTestIamPermissionsCall {
 	c := &ProjectsNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4458,7 +4488,7 @@ func (c *ProjectsNotesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsNotesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4566,6 +4596,9 @@ type ProjectsNotesOccurrencesListCall struct {
 // List: Lists `Occurrences` referencing the specified `Note`. Use this
 // method to get all occurrences referencing your `Note` across all your
 // customer projects.
+//
+// - name: The name field will contain the note name for example:
+//   "provider/{provider_id}/notes/{note_id}".
 func (r *ProjectsNotesOccurrencesService) List(name string) *ProjectsNotesOccurrencesListCall {
 	c := &ProjectsNotesOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4629,7 +4662,7 @@ func (c *ProjectsNotesOccurrencesListCall) Header() http.Header {
 
 func (c *ProjectsNotesOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4768,6 +4801,9 @@ type ProjectsOccurrencesCreateCall struct {
 
 // Create: Creates a new `Occurrence`. Use this method to create
 // `Occurrences` for a resource.
+//
+// - parent: This field contains the project Id for example:
+//   "projects/{project_id}".
 func (r *ProjectsOccurrencesService) Create(parent string, occurrence *Occurrence) *ProjectsOccurrencesCreateCall {
 	c := &ProjectsOccurrencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4809,7 +4845,7 @@ func (c *ProjectsOccurrencesCreateCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4920,6 +4956,9 @@ type ProjectsOccurrencesDeleteCall struct {
 
 // Delete: Deletes the given `Occurrence` from the system. Use this when
 // an `Occurrence` is no longer applicable for the given resource.
+//
+// - name: The name of the occurrence in the form of
+//   "projects/{project_id}/occurrences/{OCCURRENCE_ID}".
 func (r *ProjectsOccurrencesService) Delete(name string) *ProjectsOccurrencesDeleteCall {
 	c := &ProjectsOccurrencesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4953,7 +4992,7 @@ func (c *ProjectsOccurrencesDeleteCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5051,6 +5090,9 @@ type ProjectsOccurrencesGetCall struct {
 }
 
 // Get: Returns the requested `Occurrence`.
+//
+// - name: The name of the occurrence of the form
+//   "projects/{project_id}/occurrences/{OCCURRENCE_ID}".
 func (r *ProjectsOccurrencesService) Get(name string) *ProjectsOccurrencesGetCall {
 	c := &ProjectsOccurrencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5094,7 +5136,7 @@ func (c *ProjectsOccurrencesGetCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5206,6 +5248,10 @@ type ProjectsOccurrencesGetIamPolicyCall struct {
 // otherwise. The resource takes the following formats:
 // `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences
 // and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsOccurrencesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsOccurrencesGetIamPolicyCall {
 	c := &ProjectsOccurrencesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5240,7 +5286,7 @@ func (c *ProjectsOccurrencesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5346,6 +5392,9 @@ type ProjectsOccurrencesGetNotesCall struct {
 }
 
 // GetNotes: Gets the `Note` attached to the given `Occurrence`.
+//
+// - name: The name of the occurrence in the form
+//   "projects/{project_id}/occurrences/{OCCURRENCE_ID}".
 func (r *ProjectsOccurrencesService) GetNotes(name string) *ProjectsOccurrencesGetNotesCall {
 	c := &ProjectsOccurrencesGetNotesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5389,7 +5438,7 @@ func (c *ProjectsOccurrencesGetNotesCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetNotesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5491,6 +5540,9 @@ type ProjectsOccurrencesGetVulnerabilitySummaryCall struct {
 
 // GetVulnerabilitySummary: Gets a summary of the number and severity of
 // occurrences.
+//
+// - parent: This contains the project Id for example:
+//   projects/{project_id}.
 func (r *ProjectsOccurrencesService) GetVulnerabilitySummary(parent string) *ProjectsOccurrencesGetVulnerabilitySummaryCall {
 	c := &ProjectsOccurrencesGetVulnerabilitySummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5540,7 +5592,7 @@ func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5648,6 +5700,9 @@ type ProjectsOccurrencesListCall struct {
 
 // List: Lists active `Occurrences` for a given project matching the
 // filters.
+//
+// - parent: This contains the project Id for example:
+//   projects/{project_id}.
 func (r *ProjectsOccurrencesService) List(parent string) *ProjectsOccurrencesListCall {
 	c := &ProjectsOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5740,7 +5795,7 @@ func (c *ProjectsOccurrencesListCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5910,6 +5965,9 @@ type ProjectsOccurrencesPatchCall struct {
 }
 
 // Patch: Updates an existing occurrence.
+//
+// - name: The name of the occurrence. Should be of the form
+//   "projects/{project_id}/occurrences/{OCCURRENCE_ID}".
 func (r *ProjectsOccurrencesService) Patch(name string, occurrence *Occurrence) *ProjectsOccurrencesPatchCall {
 	c := &ProjectsOccurrencesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5951,7 +6009,7 @@ func (c *ProjectsOccurrencesPatchCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6074,6 +6132,10 @@ type ProjectsOccurrencesSetIamPolicyCall struct {
 // `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{projectid}/occurrences/{occurrenceid}` for
 // occurrences and projects/{projectid}/notes/{noteid} for notes
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsOccurrencesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsOccurrencesSetIamPolicyCall {
 	c := &ProjectsOccurrencesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6108,7 +6170,7 @@ func (c *ProjectsOccurrencesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6222,6 +6284,10 @@ type ProjectsOccurrencesTestIamPermissionsCall struct {
 // `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsOccurrencesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsOccurrencesTestIamPermissionsCall {
 	c := &ProjectsOccurrencesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6256,7 +6322,7 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6362,6 +6428,8 @@ type ProjectsOperationsCreateCall struct {
 }
 
 // Create: Creates a new `Operation`.
+//
+// - parent: The project Id that this operation should be created under.
 func (r *ProjectsOperationsService) Create(parent string, createoperationrequest *CreateOperationRequest) *ProjectsOperationsCreateCall {
 	c := &ProjectsOperationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6396,7 +6464,7 @@ func (c *ProjectsOperationsCreateCall) Header() http.Header {
 
 func (c *ProjectsOperationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6504,6 +6572,9 @@ type ProjectsOperationsPatchCall struct {
 // Patch: Updates an existing operation returns an error if operation
 // does not exist. The only valid operations are to update mark the done
 // bit change the result.
+//
+// - name: The name of the Operation. Should be of the form
+//   "projects/{provider_id}/operations/{operation_id}".
 func (r *ProjectsOperationsService) Patch(name string, updateoperationrequest *UpdateOperationRequest) *ProjectsOperationsPatchCall {
 	c := &ProjectsOperationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6538,7 +6609,7 @@ func (c *ProjectsOperationsPatchCall) Header() http.Header {
 
 func (c *ProjectsOperationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6644,6 +6715,9 @@ type ProjectsScanConfigsGetCall struct {
 }
 
 // Get: Gets a specific scan configuration for a project.
+//
+// - name: The name of the ScanConfig in the form
+//   projects/{project_id}/scanConfigs/{scan_config_id}.
 func (r *ProjectsScanConfigsService) Get(name string) *ProjectsScanConfigsGetCall {
 	c := &ProjectsScanConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6687,7 +6761,7 @@ func (c *ProjectsScanConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6788,6 +6862,8 @@ type ProjectsScanConfigsListCall struct {
 }
 
 // List: Lists scan configurations for a project.
+//
+// - parent: This containers the project Id i.e.: projects/{project_id}.
 func (r *ProjectsScanConfigsService) List(parent string) *ProjectsScanConfigsListCall {
 	c := &ProjectsScanConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6851,7 +6927,7 @@ func (c *ProjectsScanConfigsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6989,6 +7065,9 @@ type ProjectsScanConfigsPatchCall struct {
 }
 
 // Patch: Updates the scan configuration to a new value.
+//
+// - name: The scan config to update of the form
+//   projects/{project_id}/scanConfigs/{scan_config_id}.
 func (r *ProjectsScanConfigsService) Patch(name string, scanconfig *ScanConfig) *ProjectsScanConfigsPatchCall {
 	c := &ProjectsScanConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7030,7 +7109,7 @@ func (c *ProjectsScanConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7142,6 +7221,9 @@ type ProvidersNotesCreateCall struct {
 }
 
 // Create: Creates a new `Note`.
+//
+// - name: The name of the project. Should be of the form
+//   "providers/{provider_id}". @Deprecated.
 func (r *ProvidersNotesService) Create(name string, note *Note) *ProvidersNotesCreateCall {
 	c := &ProvidersNotesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7190,7 +7272,7 @@ func (c *ProvidersNotesCreateCall) Header() http.Header {
 
 func (c *ProvidersNotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7305,6 +7387,9 @@ type ProvidersNotesDeleteCall struct {
 }
 
 // Delete: Deletes the given `Note` from the system.
+//
+// - name: The name of the note in the form of
+//   "providers/{provider_id}/notes/{NOTE_ID}".
 func (r *ProvidersNotesService) Delete(name string) *ProvidersNotesDeleteCall {
 	c := &ProvidersNotesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7338,7 +7423,7 @@ func (c *ProvidersNotesDeleteCall) Header() http.Header {
 
 func (c *ProvidersNotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7436,6 +7521,9 @@ type ProvidersNotesGetCall struct {
 }
 
 // Get: Returns the requested `Note`.
+//
+// - name: The name of the note in the form of
+//   "providers/{provider_id}/notes/{NOTE_ID}".
 func (r *ProvidersNotesService) Get(name string) *ProvidersNotesGetCall {
 	c := &ProvidersNotesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7479,7 +7567,7 @@ func (c *ProvidersNotesGetCall) Header() http.Header {
 
 func (c *ProvidersNotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7591,6 +7679,10 @@ type ProvidersNotesGetIamPolicyCall struct {
 // otherwise. The resource takes the following formats:
 // `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences
 // and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProvidersNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProvidersNotesGetIamPolicyCall {
 	c := &ProvidersNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7625,7 +7717,7 @@ func (c *ProvidersNotesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProvidersNotesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7731,6 +7823,9 @@ type ProvidersNotesListCall struct {
 }
 
 // List: Lists all `Notes` for a given project.
+//
+// - name: The name field will contain the project Id for example:
+//   "providers/{provider_id} @Deprecated.
 func (r *ProvidersNotesService) List(name string) *ProvidersNotesListCall {
 	c := &ProvidersNotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7801,7 +7896,7 @@ func (c *ProvidersNotesListCall) Header() http.Header {
 
 func (c *ProvidersNotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7944,6 +8039,9 @@ type ProvidersNotesPatchCall struct {
 }
 
 // Patch: Updates an existing `Note`.
+//
+// - name: The name of the note. Should be of the form
+//   "projects/{provider_id}/notes/{note_id}".
 func (r *ProvidersNotesService) Patch(name string, note *Note) *ProvidersNotesPatchCall {
 	c := &ProvidersNotesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7985,7 +8083,7 @@ func (c *ProvidersNotesPatchCall) Header() http.Header {
 
 func (c *ProvidersNotesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8108,6 +8206,10 @@ type ProvidersNotesSetIamPolicyCall struct {
 // `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{projectid}/occurrences/{occurrenceid}` for
 // occurrences and projects/{projectid}/notes/{noteid} for notes
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProvidersNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProvidersNotesSetIamPolicyCall {
 	c := &ProvidersNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8142,7 +8244,7 @@ func (c *ProvidersNotesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProvidersNotesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8256,6 +8358,10 @@ type ProvidersNotesTestIamPermissionsCall struct {
 // `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProvidersNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProvidersNotesTestIamPermissionsCall {
 	c := &ProvidersNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8290,7 +8396,7 @@ func (c *ProvidersNotesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProvidersNotesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8398,6 +8504,9 @@ type ProvidersNotesOccurrencesListCall struct {
 // List: Lists `Occurrences` referencing the specified `Note`. Use this
 // method to get all occurrences referencing your `Note` across all your
 // customer projects.
+//
+// - name: The name field will contain the note name for example:
+//   "provider/{provider_id}/notes/{note_id}".
 func (r *ProvidersNotesOccurrencesService) List(name string) *ProvidersNotesOccurrencesListCall {
 	c := &ProvidersNotesOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8461,7 +8570,7 @@ func (c *ProvidersNotesOccurrencesListCall) Header() http.Header {
 
 func (c *ProvidersNotesOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

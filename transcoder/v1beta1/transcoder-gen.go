@@ -2137,16 +2137,9 @@ type VideoStream struct {
 	// (FPS). Must be less than or equal to 120. Will default to the input
 	// frame rate if larger than the input frame rate. The API will generate
 	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. The following table shows the computed video
-	// FPS given the target FPS (in parenthesis) and input FPS (in the first
-	// column): ``` | | (30) | (60) | (25) | (50) |
-	// |--------|--------|--------|------|------| | 240 | Fail | Fail | Fail
-	// | Fail | | 120 | 30 | 60 | 20 | 30 | | 100 | 25 | 50 | 20 | 30 | | 50
-	// | 25 | 50 | 20 | 30 | | 60 | 30 | 60 | 20 | 30 | | 59.94 | 29.97 |
-	// 59.94 | 20 | 30 | | 48 | 24 | 48 | 20 | 30 | | 30 | 30 | 30 | 20 | 30
-	// | | 25 | 25 | 25 | 20 | 30 | | 24 | 24 | 24 | 20 | 30 | | 23.976 |
-	// 23.976 | 23.976 | 20 | 30 | | 15 | 15 | 15 | 20 | 30 | | 12 | 12 | 12
-	// | 20 | 30 | | 10 | 10 | 10 | 20 | 30 | ```
+	// equal to the target FPS. See Calculate frame rate
+	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
+	// more information.
 	FrameRate float64 `json:"frameRate,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
@@ -2265,6 +2258,9 @@ type ProjectsLocationsJobTemplatesCreateCall struct {
 }
 
 // Create: Creates a job template in the specified region.
+//
+// - parent: The parent location to create this job template. Format:
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsJobTemplatesService) Create(parent string, jobtemplate *JobTemplate) *ProjectsLocationsJobTemplatesCreateCall {
 	c := &ProjectsLocationsJobTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2309,7 +2305,7 @@ func (c *ProjectsLocationsJobTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2419,6 +2415,10 @@ type ProjectsLocationsJobTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a job template.
+//
+// - name: The name of the job template to delete.
+//   `projects/{project}/locations/{location}/jobTemplates/{job_template}
+//   `.
 func (r *ProjectsLocationsJobTemplatesService) Delete(name string) *ProjectsLocationsJobTemplatesDeleteCall {
 	c := &ProjectsLocationsJobTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2452,7 +2452,7 @@ func (c *ProjectsLocationsJobTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2550,6 +2550,10 @@ type ProjectsLocationsJobTemplatesGetCall struct {
 }
 
 // Get: Returns the job template data.
+//
+// - name: The name of the job template to retrieve. Format:
+//   `projects/{project}/locations/{location}/jobTemplates/{job_template}
+//   `.
 func (r *ProjectsLocationsJobTemplatesService) Get(name string) *ProjectsLocationsJobTemplatesGetCall {
 	c := &ProjectsLocationsJobTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2593,7 +2597,7 @@ func (c *ProjectsLocationsJobTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2694,6 +2698,9 @@ type ProjectsLocationsJobTemplatesListCall struct {
 }
 
 // List: Lists job templates in the specified region.
+//
+// - parent: The parent location from which to retrieve the collection
+//   of job templates. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsJobTemplatesService) List(parent string) *ProjectsLocationsJobTemplatesListCall {
 	c := &ProjectsLocationsJobTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2752,7 +2759,7 @@ func (c *ProjectsLocationsJobTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2885,6 +2892,9 @@ type ProjectsLocationsJobsCreateCall struct {
 }
 
 // Create: Creates a job in the specified region.
+//
+// - parent: The parent location to create and process this job. Format:
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsJobsService) Create(parent string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2919,7 +2929,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3024,6 +3034,9 @@ type ProjectsLocationsJobsDeleteCall struct {
 }
 
 // Delete: Deletes a job.
+//
+// - name: The name of the job to delete. Format:
+//   `projects/{project}/locations/{location}/jobs/{job}`.
 func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
 	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3057,7 +3070,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3155,6 +3168,9 @@ type ProjectsLocationsJobsGetCall struct {
 }
 
 // Get: Returns the job data.
+//
+// - name: The name of the job to retrieve. Format:
+//   `projects/{project}/locations/{location}/jobs/{job}`.
 func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3198,7 +3214,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3299,6 +3315,8 @@ type ProjectsLocationsJobsListCall struct {
 }
 
 // List: Lists jobs in the specified region.
+//
+// - parent: Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3357,7 +3375,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

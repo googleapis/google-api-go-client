@@ -253,6 +253,15 @@ type Action struct {
 	// `username` and `password` keys.
 	Credentials *Secret `json:"credentials,omitempty"`
 
+	// EncryptedEnvironment: The encrypted environment to pass into the
+	// container. This environment is merged with values specified in the
+	// google.genomics.v2alpha1.Pipeline message, overwriting any duplicate
+	// values. The secret must decrypt to a JSON-encoded dictionary where
+	// key-value pairs serve as environment variable names and their values.
+	// The decoded environment variables can overwrite the values specified
+	// by the `environment` field.
+	EncryptedEnvironment *Secret `json:"encryptedEnvironment,omitempty"`
+
 	// Entrypoint: If specified, overrides the `ENTRYPOINT` specified in the
 	// container.
 	Entrypoint string `json:"entrypoint,omitempty"`
@@ -899,14 +908,14 @@ type FailedEvent struct {
 	// following guidelines to decide between `FAILED_PRECONDITION`,
 	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
 	// retry just the failing call. (b) Use `ABORTED` if the client should
-	// retry at a higher level (e.g., when a client-specified test-and-set
-	// fails, indicating the client should restart a read-modify-write
-	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
-	// retry until the system state has been explicitly fixed. E.g., if an
-	// "rmdir" fails because the directory is non-empty,
-	// `FAILED_PRECONDITION` should be returned since the client should not
-	// retry unless the files are deleted from the directory. HTTP Mapping:
-	// 400 Bad Request
+	// retry at a higher level. For example, when a client-specified
+	// test-and-set fails, indicating the client should restart a
+	// read-modify-write sequence. (c) Use `FAILED_PRECONDITION` if the
+	// client should not retry until the system state has been explicitly
+	// fixed. For example, if an "rmdir" fails because the directory is
+	// non-empty, `FAILED_PRECONDITION` should be returned since the client
+	// should not retry unless the files are deleted from the directory.
+	// HTTP Mapping: 400 Bad Request
 	//   "ABORTED" - The operation was aborted, typically due to a
 	// concurrency issue such as a sequencer check failure or transaction
 	// abort. See the guidelines above for deciding between
@@ -1358,6 +1367,14 @@ type Pipeline struct {
 	// Actions: The list of actions to execute, in the order they are
 	// specified.
 	Actions []*Action `json:"actions,omitempty"`
+
+	// EncryptedEnvironment: The encrypted environment to pass into every
+	// action. Each action can also specify its own encrypted environment.
+	// The secret must decrypt to a JSON-encoded dictionary where key-value
+	// pairs serve as environment variable names and their values. The
+	// decoded environment variables can overwrite the values specified by
+	// the `environment` field.
+	EncryptedEnvironment *Secret `json:"encryptedEnvironment,omitempty"`
 
 	// Environment: The environment to pass into every action. Each action
 	// can also specify additional environment variables but cannot delete
@@ -2078,7 +2095,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2178,6 +2195,8 @@ type ProjectsOperationsCancelCall struct {
 // or the operation completed despite cancellation. Authorization
 // requires the following Google IAM (https://cloud.google.com/iam)
 // permission: * `genomics.operations.cancel`
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2212,7 +2231,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2323,6 +2342,8 @@ type ProjectsOperationsGetCall struct {
 // recommended by the API service. Authorization requires the following
 // Google IAM (https://cloud.google.com/iam) permission: *
 // `genomics.operations.get`
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2366,7 +2387,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,6 +2492,8 @@ type ProjectsOperationsListCall struct {
 // request. Authorization requires the following Google IAM
 // (https://cloud.google.com/iam) permission: *
 // `genomics.operations.list`
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2554,7 +2577,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2694,6 +2717,9 @@ type ProjectsWorkersCheckInCall struct {
 
 // CheckIn: The worker uses this method to retrieve the assigned
 // operation and provide periodic status updates.
+//
+// - id: The VM identity token for authenticating the VM instance.
+//   https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
 func (r *ProjectsWorkersService) CheckIn(id string, checkinrequest *CheckInRequest) *ProjectsWorkersCheckInCall {
 	c := &ProjectsWorkersCheckInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -2728,7 +2754,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2836,6 +2862,9 @@ type WorkersCheckInCall struct {
 
 // CheckIn: The worker uses this method to retrieve the assigned
 // operation and provide periodic status updates.
+//
+// - id: The VM identity token for authenticating the VM instance.
+//   https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
 func (r *WorkersService) CheckIn(id string, checkinrequest *CheckInRequest) *WorkersCheckInCall {
 	c := &WorkersCheckInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -2870,7 +2899,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

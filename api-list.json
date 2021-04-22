@@ -243,6 +243,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "http://code.google.com/apis/adsense/management/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "adsense:v2",
+      "name": "adsense",
+      "version": "v2",
+      "title": "AdSense Management API",
+      "description": "The AdSense Management API allows publishers to access their inventory and run earnings and performance reports.",
+      "discoveryRestUrl": "https://adsense.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "http://code.google.com/apis/adsense/management/",
       "preferred": true
     },
     {
@@ -441,6 +456,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "apikeys:v2",
+      "name": "apikeys",
+      "version": "v2",
+      "title": "API Keys API",
+      "description": "Manages the API keys associated with developer projects.",
+      "discoveryRestUrl": "https://apikeys.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/api-keys/docs",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "appengine:v1alpha",
       "name": "appengine",
       "version": "v1alpha",
@@ -462,36 +492,6 @@
       "title": "App Engine Admin API",
       "description": "Provisions and manages developers' App Engine applications.",
       "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "appengine:v1beta4",
-      "name": "appengine",
-      "version": "v1beta4",
-      "title": "App Engine Admin API",
-      "description": "Provisions and manages developers' App Engine applications.",
-      "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta4",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "appengine:v1beta5",
-      "name": "appengine",
-      "version": "v1beta5",
-      "title": "App Engine Admin API",
-      "description": "Provisions and manages developers' App Engine applications.",
-      "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta5",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1082,6 +1082,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/channel",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudcommerceprocurement:v1",
+      "name": "cloudcommerceprocurement",
+      "version": "v1",
+      "title": "Cloud Commerce Partner Procurement API",
+      "description": "Partner API for the Cloud Commerce Procurement Service.",
+      "discoveryRestUrl": "https://cloudcommerceprocurement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/marketplace/docs/partners/",
       "preferred": true
     },
     {
@@ -2055,6 +2070,21 @@
       "title": "Cloud Document AI API",
       "description": "Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.",
       "discoveryRestUrl": "https://documentai.googleapis.com/$discovery/rest?version=v1beta3",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/document-ai/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "documentai:v1",
+      "name": "documentai",
+      "version": "v1",
+      "title": "Cloud Document AI API",
+      "description": "Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.",
+      "discoveryRestUrl": "https://documentai.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3251,6 +3281,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "mybusinesslodging:v1",
+      "name": "mybusinesslodging",
+      "version": "v1",
+      "title": "My Business Lodging API",
+      "description": "The My Business Lodging API enables managing lodging business information on Google.",
+      "discoveryRestUrl": "https://mybusinesslodging.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "networkconnectivity:v1alpha1",
       "name": "networkconnectivity",
       "version": "v1alpha1",
@@ -3338,6 +3383,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "ondemandscanning:v1",
+      "name": "ondemandscanning",
+      "version": "v1",
+      "title": "On-Demand Scanning API",
+      "description": "A service to scan container images for vulnerabilities.",
+      "discoveryRestUrl": "https://ondemandscanning.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
       "preferred": true
     },
     {
@@ -3367,7 +3427,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
+      "documentationLink": "https://cloud.google.com/compute/docs/osconfig/rest",
       "preferred": false
     },
     {
@@ -3382,7 +3442,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
+      "documentationLink": "https://cloud.google.com/compute/docs/osconfig/rest",
       "preferred": true
     },
     {
@@ -3498,6 +3558,21 @@
       "title": "Policy Simulator API",
       "description": "Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1beta1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.",
       "discoveryRestUrl": "https://policysimulator.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/iam/docs/simulating-access",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "policysimulator:v1",
+      "name": "policysimulator",
+      "version": "v1",
+      "title": "Policy Simulator API",
+      "description": "Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1beta1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.",
+      "discoveryRestUrl": "https://policysimulator.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

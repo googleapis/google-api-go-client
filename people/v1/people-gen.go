@@ -1778,6 +1778,10 @@ type ListOtherContactsResponse struct {
 	// ListOtherContactsRequest.request_mask for more detailed information.
 	OtherContacts []*Person `json:"otherContacts,omitempty"`
 
+	// TotalSize: The total number of other contacts in the list without
+	// pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -3444,7 +3448,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3584,7 +3588,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3677,6 +3681,8 @@ type ContactGroupsDeleteCall struct {
 
 // Delete: Delete an existing contact group owned by the authenticated
 // user by specifying a contact group resource name.
+//
+// - resourceName: The resource name of the contact group to delete.
 func (r *ContactGroupsService) Delete(resourceName string) *ContactGroupsDeleteCall {
 	c := &ContactGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3717,7 +3723,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3821,6 +3827,8 @@ type ContactGroupsGetCall struct {
 
 // Get: Get a specific contact group owned by the authenticated user by
 // specifying a contact group resource name.
+//
+// - resourceName: The resource name of the contact group to get.
 func (r *ContactGroupsService) Get(resourceName string) *ContactGroupsGetCall {
 	c := &ContactGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3882,7 +3890,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4073,7 +4081,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4207,6 +4215,10 @@ type ContactGroupsUpdateCall struct {
 
 // Update: Update the name of an existing contact group owned by the
 // authenticated user.
+//
+// - resourceName: The resource name for the contact group, assigned by
+//   the server. An ASCII string, in the form of
+//   `contactGroups/{contact_group_id}`.
 func (r *ContactGroupsService) Update(resourceName string, updatecontactgrouprequest *UpdateContactGroupRequest) *ContactGroupsUpdateCall {
 	c := &ContactGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4241,7 +4253,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4351,6 +4363,8 @@ type ContactGroupsMembersModifyCall struct {
 // members added are `contactGroups/myContacts` and
 // `contactGroups/starred`. Other system contact groups are deprecated
 // and can only have contacts removed.
+//
+// - resourceName: The resource name of the contact group to modify.
 func (r *ContactGroupsMembersService) Modify(resourceName string, modifycontactgroupmembersrequest *ModifyContactGroupMembersRequest) *ContactGroupsMembersModifyCall {
 	c := &ContactGroupsMembersModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4385,7 +4399,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4493,6 +4507,8 @@ type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 
 // CopyOtherContactToMyContactsGroup: Copies an "Other contact" to a new
 // contact in the user's "myContacts" group
+//
+// - resourceName: The resource name of the "Other contact" to copy.
 func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
 	c := &OtherContactsCopyOtherContactToMyContactsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4527,7 +4543,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4725,7 +4741,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4861,7 +4877,9 @@ type OtherContactsSearchCall struct {
 }
 
 // Search: Provides a list of contacts in the authenticated user's other
-// contacts that matches the search query.
+// contacts that matches the search query. The query matches on a
+// contact's `names`, `emailAddresses`, and `phoneNumbers` fields that
+// are from the OTHER_CONTACT source.
 func (r *OtherContactsService) Search() *OtherContactsSearchCall {
 	c := &OtherContactsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4869,6 +4887,7 @@ func (r *OtherContactsService) Search() *OtherContactsSearchCall {
 
 // PageSize sets the optional parameter "pageSize": The number of
 // results to return. Defaults to 10 if field is not set, or set to 0.
+// Values greater than 10 will be capped to 10.
 func (c *OtherContactsSearchCall) PageSize(pageSize int64) *OtherContactsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4930,7 +4949,7 @@ func (c *OtherContactsSearchCall) Header() http.Header {
 
 func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4989,14 +5008,14 @@ func (c *OtherContactsSearchCall) Do(opts ...googleapi.CallOption) (*SearchRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of contacts in the authenticated user's other contacts that matches the search query.",
+	//   "description": "Provides a list of contacts in the authenticated user's other contacts that matches the search query. The query matches on a contact's `names`, `emailAddresses`, and `phoneNumbers` fields that are from the OTHER_CONTACT source.",
 	//   "flatPath": "v1/otherContacts:search",
 	//   "httpMethod": "GET",
 	//   "id": "people.otherContacts.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0.",
+	//       "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 10 will be capped to 10.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5035,7 +5054,8 @@ type PeopleBatchCreateContactsCall struct {
 }
 
 // BatchCreateContacts: Create a batch of new contacts and return the
-// PersonResponses for the newly created contacts.
+// PersonResponses for the newly created contacts. Limited to 10
+// parallel requests per user.
 func (r *PeopleService) BatchCreateContacts(batchcreatecontactsrequest *BatchCreateContactsRequest) *PeopleBatchCreateContactsCall {
 	c := &PeopleBatchCreateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchcreatecontactsrequest = batchcreatecontactsrequest
@@ -5069,7 +5089,7 @@ func (c *PeopleBatchCreateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5130,7 +5150,7 @@ func (c *PeopleBatchCreateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a batch of new contacts and return the PersonResponses for the newly created contacts.",
+	//   "description": "Create a batch of new contacts and return the PersonResponses for the newly created contacts. Limited to 10 parallel requests per user.",
 	//   "flatPath": "v1/people:batchCreateContacts",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.batchCreateContacts",
@@ -5161,7 +5181,7 @@ type PeopleBatchDeleteContactsCall struct {
 }
 
 // BatchDeleteContacts: Delete a batch of contacts. Any non-contact data
-// will not be deleted.
+// will not be deleted. Limited to 10 parallel requests per user.
 func (r *PeopleService) BatchDeleteContacts(batchdeletecontactsrequest *BatchDeleteContactsRequest) *PeopleBatchDeleteContactsCall {
 	c := &PeopleBatchDeleteContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchdeletecontactsrequest = batchdeletecontactsrequest
@@ -5195,7 +5215,7 @@ func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
 
 func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5256,7 +5276,7 @@ func (c *PeopleBatchDeleteContactsCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a batch of contacts. Any non-contact data will not be deleted.",
+	//   "description": "Delete a batch of contacts. Any non-contact data will not be deleted. Limited to 10 parallel requests per user.",
 	//   "flatPath": "v1/people:batchDeleteContacts",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.batchDeleteContacts",
@@ -5287,7 +5307,8 @@ type PeopleBatchUpdateContactsCall struct {
 }
 
 // BatchUpdateContacts: Update a batch of contacts and return a map of
-// resource names to PersonResponses for the updated contacts.
+// resource names to PersonResponses for the updated contacts. Limited
+// to 10 parallel requests per user.
 func (r *PeopleService) BatchUpdateContacts(batchupdatecontactsrequest *BatchUpdateContactsRequest) *PeopleBatchUpdateContactsCall {
 	c := &PeopleBatchUpdateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchupdatecontactsrequest = batchupdatecontactsrequest
@@ -5321,7 +5342,7 @@ func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5382,7 +5403,7 @@ func (c *PeopleBatchUpdateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a batch of contacts and return a map of resource names to PersonResponses for the updated contacts.",
+	//   "description": "Update a batch of contacts and return a map of resource names to PersonResponses for the updated contacts. Limited to 10 parallel requests per user.",
 	//   "flatPath": "v1/people:batchUpdateContacts",
 	//   "httpMethod": "POST",
 	//   "id": "people.people.batchUpdateContacts",
@@ -5480,7 +5501,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5598,6 +5619,8 @@ type PeopleDeleteContactCall struct {
 
 // DeleteContact: Delete a contact person. Any non-contact data will not
 // be deleted.
+//
+// - resourceName: The resource name of the contact to delete.
 func (r *PeopleService) DeleteContact(resourceName string) *PeopleDeleteContactCall {
 	c := &PeopleDeleteContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5631,7 +5654,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5728,6 +5751,9 @@ type PeopleDeleteContactPhotoCall struct {
 }
 
 // DeleteContactPhoto: Delete a contact's photo.
+//
+// - resourceName: The resource name of the contact whose photo will be
+//   deleted.
 func (r *PeopleService) DeleteContactPhoto(resourceName string) *PeopleDeleteContactPhotoCall {
 	c := &PeopleDeleteContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5792,7 +5818,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5916,6 +5942,14 @@ type PeopleGetCall struct {
 // Get: Provides information about a person by specifying a resource
 // name. Use `people/me` to indicate the authenticated user. The request
 // returns a 400 error if 'personFields' is not specified.
+//
+// - resourceName: The resource name of the person to provide
+//   information about. - To get information about the authenticated
+//   user, specify `people/me`. - To get information about a google
+//   account, specify `people/{account_id}`. - To get information about
+//   a contact, specify the resource name that identifies the contact as
+//   returned by `people.connections.list`
+//   (/people/api/rest/v1/people.connections/list).
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5998,7 +6032,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6237,7 +6271,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6490,7 +6524,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6656,14 +6690,18 @@ type PeopleSearchContactsCall struct {
 }
 
 // SearchContacts: Provides a list of contacts in the authenticated
-// user's grouped contacts that matches the search query.
+// user's grouped contacts that matches the search query. The query
+// matches on a contact's `names`, `nickNames`, `emailAddresses`,
+// `phoneNumbers`, and `organizations` fields that are from the CONTACT"
+// source.
 func (r *PeopleService) SearchContacts() *PeopleSearchContactsCall {
 	c := &PeopleSearchContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The number of
-// results to return.
+// results to return. Defaults to 10 if field is not set, or set to 0.
+// Values greater than 10 will be capped to 10.
 func (c *PeopleSearchContactsCall) PageSize(pageSize int64) *PeopleSearchContactsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6690,6 +6728,21 @@ func (c *PeopleSearchContactsCall) Query(query string) *PeopleSearchContactsCall
 // skills * urls * userDefined
 func (c *PeopleSearchContactsCall) ReadMask(readMask string) *PeopleSearchContactsCall {
 	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Sources sets the optional parameter "sources": A mask of what source
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+//
+// Possible values:
+//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
+//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+// SourceType.DOMAIN_CONTACT.
+func (c *PeopleSearchContactsCall) Sources(sources ...string) *PeopleSearchContactsCall {
+	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
@@ -6730,7 +6783,7 @@ func (c *PeopleSearchContactsCall) Header() http.Header {
 
 func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6789,14 +6842,14 @@ func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of contacts in the authenticated user's grouped contacts that matches the search query.",
+	//   "description": "Provides a list of contacts in the authenticated user's grouped contacts that matches the search query. The query matches on a contact's `names`, `nickNames`, `emailAddresses`, `phoneNumbers`, and `organizations` fields that are from the CONTACT\" source.",
 	//   "flatPath": "v1/people:searchContacts",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.searchContacts",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The number of results to return.",
+	//       "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 10 will be capped to 10.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6810,6 +6863,24 @@ func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResp
 	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sources": {
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
+	//       "enum": [
+	//         "READ_SOURCE_TYPE_UNSPECIFIED",
+	//         "READ_SOURCE_TYPE_PROFILE",
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified.",
+	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
+	//         "Returns SourceType.CONTACT.",
+	//         "Returns SourceType.DOMAIN_CONTACT."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -6945,7 +7016,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7121,6 +7192,10 @@ type PeopleUpdateContactCall struct {
 // the person. The server returns a 400 error if more than one field is
 // specified on a field that is a singleton for contact sources: *
 // biographies * birthdays * genders * names
+//
+// - resourceName: The resource name for the person, assigned by the
+//   server. An ASCII string with a max length of 27 characters, in the
+//   form of `people/{person_id}`.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7200,7 +7275,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7336,6 +7411,8 @@ type PeopleUpdateContactPhotoCall struct {
 }
 
 // UpdateContactPhoto: Update a contact's photo.
+//
+// - resourceName: Person resource name.
 func (r *PeopleService) UpdateContactPhoto(resourceName string, updatecontactphotorequest *UpdateContactPhotoRequest) *PeopleUpdateContactPhotoCall {
 	c := &PeopleUpdateContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7370,7 +7447,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7481,6 +7558,9 @@ type PeopleConnectionsListCall struct {
 // expired. Sync tokens expire after 7 days to prevent data drift
 // between clients and the server. To handle a sync token expired error,
 // a request should be sent without `sync_token` to get all contacts.
+//
+// - resourceName: The resource name to return connections for. Only
+//   `people/me` is valid.
 func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsListCall {
 	c := &PeopleConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7622,7 +7702,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

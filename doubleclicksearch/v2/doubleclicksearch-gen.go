@@ -1079,6 +1079,17 @@ type ConversionGetCall struct {
 
 // Get: Retrieves a list of conversions from a DoubleClick Search engine
 // account.
+//
+// - advertiserId: Numeric ID of the advertiser.
+// - agencyId: Numeric ID of the agency.
+// - endDate: Last date (inclusive) on which to retrieve conversions.
+//   Format is yyyymmdd.
+// - engineAccountId: Numeric ID of the engine account.
+// - rowCount: The number of conversions to return per call.
+// - startDate: First date (inclusive) on which to retrieve conversions.
+//   Format is yyyymmdd.
+// - startRow: The 0-based starting index for retrieving conversions
+//   results.
 func (r *ConversionService) Get(agencyId int64, advertiserId int64, engineAccountId int64, endDate int64, rowCount int64, startDate int64, startRow int64) *ConversionGetCall {
 	c := &ConversionGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agencyId = agencyId
@@ -1155,7 +1166,7 @@ func (c *ConversionGetCall) Header() http.Header {
 
 func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1368,7 +1379,7 @@ func (c *ConversionInsertCall) Header() http.Header {
 
 func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1493,7 +1504,7 @@ func (c *ConversionUpdateCall) Header() http.Header {
 
 func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1619,7 +1630,7 @@ func (c *ConversionUpdateAvailabilityCall) Header() http.Header {
 
 func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1744,7 +1755,7 @@ func (c *ReportsGenerateCall) Header() http.Header {
 
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1837,6 +1848,8 @@ type ReportsGetCall struct {
 }
 
 // Get: Polls for the status of a report request.
+//
+// - reportId: ID of the report request being polled.
 func (r *ReportsService) Get(reportId string) *ReportsGetCall {
 	c := &ReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportId = reportId
@@ -1880,7 +1893,7 @@ func (c *ReportsGetCall) Header() http.Header {
 
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1981,6 +1994,9 @@ type ReportsGetFileCall struct {
 }
 
 // GetFile: Downloads a report file encoded in UTF-8.
+//
+// - reportFragment: The index of the report fragment to download.
+// - reportId: ID of the report.
 func (r *ReportsService) GetFile(reportId string, reportFragment int64) *ReportsGetFileCall {
 	c := &ReportsGetFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportId = reportId
@@ -2025,7 +2041,7 @@ func (c *ReportsGetFileCall) Header() http.Header {
 
 func (c *ReportsGetFileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2157,7 +2173,7 @@ func (c *ReportsRequestCall) Header() http.Header {
 
 func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2251,6 +2267,9 @@ type SavedColumnsListCall struct {
 }
 
 // List: Retrieve the list of saved columns for a specified advertiser.
+//
+// - advertiserId: DS ID of the advertiser.
+// - agencyId: DS ID of the agency.
 func (r *SavedColumnsService) List(agencyId int64, advertiserId int64) *SavedColumnsListCall {
 	c := &SavedColumnsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agencyId = agencyId
@@ -2295,7 +2314,7 @@ func (c *SavedColumnsListCall) Header() http.Header {
 
 func (c *SavedColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

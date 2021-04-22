@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -2195,6 +2195,12 @@ type AssetsListCall struct {
 
 // List: Lists assets with time and resource types and returns paged
 // results in response.
+//
+// - parent: Name of the organization or project the assets belong to.
+//   Format: "organizations/[organization-number]" (such as
+//   "organizations/123"), "projects/[project-number]" (such as
+//   "projects/my-project-id"), or "projects/[project-id]" (such as
+//   "projects/12345").
 func (r *AssetsService) List(parent string) *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2303,7 +2309,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

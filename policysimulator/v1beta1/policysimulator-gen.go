@@ -1726,6 +1726,10 @@ type FoldersLocationsReplaysCreateCall struct {
 }
 
 // Create: Creates and starts a Replay using the given ReplayConfig.
+//
+// - parent: The parent resource where this Replay will be created. This
+//   resource must be a project, folder, or organization with a
+//   location. Example: `projects/my-example-project/locations/global`.
 func (r *FoldersLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *FoldersLocationsReplaysCreateCall {
 	c := &FoldersLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1760,7 +1764,7 @@ func (c *FoldersLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1867,6 +1871,13 @@ type FoldersLocationsReplaysGetCall struct {
 
 // Get: Gets the specified Replay. Each `Replay` is available for at
 // least 7 days.
+//
+// - name: The name of the Replay to retrieve, in the following format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}`, where `{resource-id}` is the ID of the project,
+//   folder, or organization that owns the `Replay`. Example:
+//   `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
+//   4d7d-8e03-479ce1833c36`.
 func (r *FoldersLocationsReplaysService) Get(name string) *FoldersLocationsReplaysGetCall {
 	c := &FoldersLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1910,7 +1921,7 @@ func (c *FoldersLocationsReplaysGetCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2012,6 +2023,13 @@ type FoldersLocationsReplaysResultsListCall struct {
 }
 
 // List: Lists the results of running a Replay.
+//
+// - parent: The Replay whose results are listed, in the following
+//   format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}` Example:
+//   `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
+//   3-479ce1833c36`.
 func (r *FoldersLocationsReplaysResultsService) List(parent string) *FoldersLocationsReplaysResultsListCall {
 	c := &FoldersLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2073,7 +2091,7 @@ func (c *FoldersLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2211,6 +2229,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2254,7 +2274,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2433,7 +2453,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2565,6 +2585,10 @@ type OrganizationsLocationsReplaysCreateCall struct {
 }
 
 // Create: Creates and starts a Replay using the given ReplayConfig.
+//
+// - parent: The parent resource where this Replay will be created. This
+//   resource must be a project, folder, or organization with a
+//   location. Example: `projects/my-example-project/locations/global`.
 func (r *OrganizationsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *OrganizationsLocationsReplaysCreateCall {
 	c := &OrganizationsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2599,7 +2623,7 @@ func (c *OrganizationsLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2706,6 +2730,13 @@ type OrganizationsLocationsReplaysGetCall struct {
 
 // Get: Gets the specified Replay. Each `Replay` is available for at
 // least 7 days.
+//
+// - name: The name of the Replay to retrieve, in the following format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}`, where `{resource-id}` is the ID of the project,
+//   folder, or organization that owns the `Replay`. Example:
+//   `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
+//   4d7d-8e03-479ce1833c36`.
 func (r *OrganizationsLocationsReplaysService) Get(name string) *OrganizationsLocationsReplaysGetCall {
 	c := &OrganizationsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2749,7 +2780,7 @@ func (c *OrganizationsLocationsReplaysGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2851,6 +2882,13 @@ type OrganizationsLocationsReplaysResultsListCall struct {
 }
 
 // List: Lists the results of running a Replay.
+//
+// - parent: The Replay whose results are listed, in the following
+//   format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}` Example:
+//   `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
+//   3-479ce1833c36`.
 func (r *OrganizationsLocationsReplaysResultsService) List(parent string) *OrganizationsLocationsReplaysResultsListCall {
 	c := &OrganizationsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2912,7 +2950,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3048,6 +3086,10 @@ type ProjectsLocationsReplaysCreateCall struct {
 }
 
 // Create: Creates and starts a Replay using the given ReplayConfig.
+//
+// - parent: The parent resource where this Replay will be created. This
+//   resource must be a project, folder, or organization with a
+//   location. Example: `projects/my-example-project/locations/global`.
 func (r *ProjectsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *ProjectsLocationsReplaysCreateCall {
 	c := &ProjectsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3082,7 +3124,7 @@ func (c *ProjectsLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3189,6 +3231,13 @@ type ProjectsLocationsReplaysGetCall struct {
 
 // Get: Gets the specified Replay. Each `Replay` is available for at
 // least 7 days.
+//
+// - name: The name of the Replay to retrieve, in the following format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}`, where `{resource-id}` is the ID of the project,
+//   folder, or organization that owns the `Replay`. Example:
+//   `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
+//   4d7d-8e03-479ce1833c36`.
 func (r *ProjectsLocationsReplaysService) Get(name string) *ProjectsLocationsReplaysGetCall {
 	c := &ProjectsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3232,7 +3281,7 @@ func (c *ProjectsLocationsReplaysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3334,6 +3383,13 @@ type ProjectsLocationsReplaysResultsListCall struct {
 }
 
 // List: Lists the results of running a Replay.
+//
+// - parent: The Replay whose results are listed, in the following
+//   format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}` Example:
+//   `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
+//   3-479ce1833c36`.
 func (r *ProjectsLocationsReplaysResultsService) List(parent string) *ProjectsLocationsReplaysResultsListCall {
 	c := &ProjectsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3395,7 +3451,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

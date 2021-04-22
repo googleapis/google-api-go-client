@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -2541,6 +2541,11 @@ type FoldersExportAssetsCall struct {
 // seconds with exponential retry to poll the export operation result.
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *FoldersService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *FoldersExportAssetsCall {
 	c := &FoldersExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2575,7 +2580,7 @@ func (c *FoldersExportAssetsCall) Header() http.Header {
 
 func (c *FoldersExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2683,6 +2688,8 @@ type FoldersOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *FoldersOperationsService) Get(name string) *FoldersOperationsGetCall {
 	c := &FoldersOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2726,7 +2733,7 @@ func (c *FoldersOperationsGetCall) Header() http.Header {
 
 func (c *FoldersOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2833,6 +2840,11 @@ type OrganizationsBatchGetAssetsHistoryCall struct {
 // history with asset in both non-delete or deleted status. If a
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+// - parent: The relative name of the root asset. It can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *OrganizationsBatchGetAssetsHistoryCall {
 	c := &OrganizationsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2916,7 +2928,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *OrganizationsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3056,6 +3068,11 @@ type OrganizationsExportAssetsCall struct {
 // seconds with exponential retry to poll the export operation result.
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *OrganizationsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *OrganizationsExportAssetsCall {
 	c := &OrganizationsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3090,7 +3107,7 @@ func (c *OrganizationsExportAssetsCall) Header() http.Header {
 
 func (c *OrganizationsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3198,6 +3215,8 @@ type OrganizationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3241,7 +3260,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3348,6 +3367,11 @@ type ProjectsBatchGetAssetsHistoryCall struct {
 // history with asset in both non-delete or deleted status. If a
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+// - parent: The relative name of the root asset. It can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGetAssetsHistoryCall {
 	c := &ProjectsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3431,7 +3455,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *ProjectsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3571,6 +3595,11 @@ type ProjectsExportAssetsCall struct {
 // seconds with exponential retry to poll the export operation result.
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *ProjectsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *ProjectsExportAssetsCall {
 	c := &ProjectsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3605,7 +3634,7 @@ func (c *ProjectsExportAssetsCall) Header() http.Header {
 
 func (c *ProjectsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3713,6 +3742,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3756,7 +3787,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

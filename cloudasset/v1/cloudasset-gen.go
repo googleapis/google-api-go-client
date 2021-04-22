@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -670,6 +670,73 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConditionContext: The IAM conditions context.
+type ConditionContext struct {
+	// AccessTime: The hypothetical access timestamp to evaluate IAM
+	// conditions. Note that this value must not be earlier than the current
+	// time; otherwise, an INVALID_ARGUMENT error will be returned.
+	AccessTime string `json:"accessTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConditionContext) MarshalJSON() ([]byte, error) {
+	type NoMethod ConditionContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConditionEvaluation: The Condition evaluation.
+type ConditionEvaluation struct {
+	// EvaluationValue: The evaluation result.
+	//
+	// Possible values:
+	//   "EVALUATION_VALUE_UNSPECIFIED" - Reserved for future use.
+	//   "TRUE" - The evaluation result is `true`.
+	//   "FALSE" - The evaluation result is `false`.
+	//   "CONDITIONAL" - The evaluation result is `conditional` when the
+	// condition expression contains variables that are either missing input
+	// values or have not been supported by Analyzer yet.
+	EvaluationValue string `json:"evaluationValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EvaluationValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EvaluationValue") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConditionEvaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod ConditionEvaluation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateFeedRequest: Create asset feed request.
 type CreateFeedRequest struct {
 	// Feed: Required. The feed details. The field `name` must be empty and
@@ -1094,6 +1161,10 @@ type GoogleCloudAssetV1AccessControlList struct {
 	// The access_selector, if it is specified in request; - Otherwise,
 	// access specifiers reachable from the policy binding's role.
 	Accesses []*GoogleCloudAssetV1Access `json:"accesses,omitempty"`
+
+	// ConditionEvaluation: Condition evaluation for this AccessControlList,
+	// if there is a condition defined in the above IAM policy binding.
+	ConditionEvaluation *ConditionEvaluation `json:"conditionEvaluation,omitempty"`
 
 	// ResourceEdges: Resource edges of the graph starting from the policy
 	// attached resource to any descendant resources. The Edge.source_node
@@ -2962,6 +3033,10 @@ type IamPolicyAnalysisQuery struct {
 	// analysis. This is optional.
 	AccessSelector *AccessSelector `json:"accessSelector,omitempty"`
 
+	// ConditionContext: Optional. The hypothetical context for IAM
+	// conditions evaluation.
+	ConditionContext *ConditionContext `json:"conditionContext,omitempty"`
+
 	// IdentitySelector: Optional. Specifies an identity for analysis.
 	IdentitySelector *IdentitySelector `json:"identitySelector,omitempty"`
 
@@ -4030,7 +4105,10 @@ type ResourceSearchResult struct {
 	ParentAssetType string `json:"parentAssetType,omitempty"`
 
 	// ParentFullResourceName: The full resource name of this resource's
-	// parent, if it has one.
+	// parent, if it has one. To search against the
+	// `parent_full_resource_name`: * use a field query. Example:
+	// `parentFullResourceName:"project-name" * use a free text query.
+	// Example: `project-name`
 	ParentFullResourceName string `json:"parentFullResourceName,omitempty"`
 
 	// Project: The project that this resource belongs to, in the form of
@@ -4650,6 +4728,12 @@ type FeedsCreateCall struct {
 
 // Create: Creates a feed in a parent project/folder/organization to
 // listen to its asset updates.
+//
+// - parent: The name of the project/folder/organization where this feed
+//   should be created in. It can only be an organization number (such
+//   as "organizations/123"), a folder number (such as "folders/123"), a
+//   project ID (such as "projects/my-project-id")", or a project number
+//   (such as "projects/12345").
 func (r *FeedsService) Create(parent string, createfeedrequest *CreateFeedRequest) *FeedsCreateCall {
 	c := &FeedsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4684,7 +4768,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4789,6 +4873,11 @@ type FeedsDeleteCall struct {
 }
 
 // Delete: Deletes an asset feed.
+//
+// - name: The name of the feed and it must be in the format of:
+//   projects/project_number/feeds/feed_id
+//   folders/folder_number/feeds/feed_id
+//   organizations/organization_number/feeds/feed_id.
 func (r *FeedsService) Delete(name string) *FeedsDeleteCall {
 	c := &FeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4822,7 +4911,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4920,6 +5009,11 @@ type FeedsGetCall struct {
 }
 
 // Get: Gets details about an asset feed.
+//
+// - name: The name of the Feed and it must be in the format of:
+//   projects/project_number/feeds/feed_id
+//   folders/folder_number/feeds/feed_id
+//   organizations/organization_number/feeds/feed_id.
 func (r *FeedsService) Get(name string) *FeedsGetCall {
 	c := &FeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4963,7 +5057,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5064,6 +5158,11 @@ type FeedsListCall struct {
 }
 
 // List: Lists all asset feeds in a parent project/folder/organization.
+//
+// - parent: The parent project/folder/organization whose feeds are to
+//   be listed. It can only be using project/folder/organization number
+//   (such as "folders/12345")", or a project ID (such as
+//   "projects/my-project-id").
 func (r *FeedsService) List(parent string) *FeedsListCall {
 	c := &FeedsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5107,7 +5206,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5208,6 +5307,14 @@ type FeedsPatchCall struct {
 }
 
 // Patch: Updates an asset feed configuration.
+//
+// - name: The format will be
+//   projects/{project_number}/feeds/{client-assigned_feed_identifier}
+//   or folders/{folder_number}/feeds/{client-assigned_feed_identifier}
+//   or
+//   organizations/{organization_number}/feeds/{client-assigned_feed_iden
+//   tifier} The client-assigned feed identifier must be unique within
+//   the parent project/folder/organization.
 func (r *FeedsService) Patch(nameid string, updatefeedrequest *UpdateFeedRequest) *FeedsPatchCall {
 	c := &FeedsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5242,7 +5349,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5350,6 +5457,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5393,7 +5502,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5495,6 +5604,16 @@ type V1AnalyzeIamPolicyCall struct {
 
 // AnalyzeIamPolicy: Analyzes IAM policies to answer which identities
 // have what accesses on which resources.
+//
+// - scope: The relative name of the root asset. Only resources and IAM
+//   policies within the scope will be analyzed. This can only be an
+//   organization number (such as "organizations/123"), a folder number
+//   (such as "folders/123"), a project ID (such as
+//   "projects/my-project-id"), or a project number (such as
+//   "projects/12345"). To know how to get organization id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+//   To know how to get folder or project id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicy(scope string) *V1AnalyzeIamPolicyCall {
 	c := &V1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -5513,6 +5632,16 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorPermissions(analysis
 // "analysisQuery.accessSelector.roles": The roles to appear in result.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysisQueryAccessSelectorRoles ...string) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.SetMulti("analysisQuery.accessSelector.roles", append([]string{}, analysisQueryAccessSelectorRoles...))
+	return c
+}
+
+// AnalysisQueryConditionContextAccessTime sets the optional parameter
+// "analysisQuery.conditionContext.accessTime": The hypothetical access
+// timestamp to evaluate IAM conditions. Note that this value must not
+// be earlier than the current time; otherwise, an INVALID_ARGUMENT
+// error will be returned.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryConditionContextAccessTime(analysisQueryConditionContextAccessTime string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.conditionContext.accessTime", analysisQueryConditionContextAccessTime)
 	return c
 }
 
@@ -5683,7 +5812,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5763,6 +5892,12 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "description": "Optional. The roles to appear in result.",
 	//       "location": "query",
 	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "analysisQuery.conditionContext.accessTime": {
+	//       "description": "The hypothetical access timestamp to evaluate IAM conditions. Note that this value must not be earlier than the current time; otherwise, an INVALID_ARGUMENT error will be returned.",
+	//       "format": "google-datetime",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.identitySelector.identity": {
@@ -5851,6 +5986,16 @@ type V1AnalyzeIamPolicyLongrunningCall struct {
 // seconds with exponential backoff retry to poll the operation result.
 // The metadata contains the request to help callers to map responses to
 // requests.
+//
+// - scope: The relative name of the root asset. Only resources and IAM
+//   policies within the scope will be analyzed. This can only be an
+//   organization number (such as "organizations/123"), a folder number
+//   (such as "folders/123"), a project ID (such as
+//   "projects/my-project-id"), or a project number (such as
+//   "projects/12345"). To know how to get organization id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+//   To know how to get folder or project id, visit here
+//   (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicyLongrunning(scope string, analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest) *V1AnalyzeIamPolicyLongrunningCall {
 	c := &V1AnalyzeIamPolicyLongrunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -5885,7 +6030,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5997,6 +6142,11 @@ type V1BatchGetAssetsHistoryCall struct {
 // history with asset in both non-delete or deleted status. If a
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+// - parent: The relative name of the root asset. It can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id")", or a project number (such as
+//   "projects/12345").
 func (r *V1Service) BatchGetAssetsHistory(parent string) *V1BatchGetAssetsHistoryCall {
 	c := &V1BatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6084,7 +6234,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6234,6 +6384,11 @@ type V1ExportAssetsCall struct {
 // exponential retry to poll the export operation result. For
 // regular-size resource parent, the export operation usually finishes
 // within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), or a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *V1Service) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *V1ExportAssetsCall {
 	c := &V1ExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6268,7 +6423,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6377,6 +6532,16 @@ type V1SearchAllIamPoliciesCall struct {
 // scope, such as a project, folder, or organization. The caller must be
 // granted the `cloudasset.assets.searchAllIamPolicies` permission on
 // the desired scope, otherwise the request will be rejected.
+//
+// - scope: A scope can be a project, a folder, or an organization. The
+//   search is limited to the IAM policies within the `scope`. The
+//   caller must be granted the `cloudasset.assets.searchAllIamPolicies`
+//   (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
+//   permission on the desired scope. The allowed values are: *
+//   projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+//   projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
+//   folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
+//   organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456").
 func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCall {
 	c := &V1SearchAllIamPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -6479,7 +6644,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6620,6 +6785,16 @@ type V1SearchAllResourcesCall struct {
 // scope, such as a project, folder, or organization. The caller must be
 // granted the `cloudasset.assets.searchAllResources` permission on the
 // desired scope, otherwise the request will be rejected.
+//
+// - scope: A scope can be a project, a folder, or an organization. The
+//   search is limited to the resources within the `scope`. The caller
+//   must be granted the `cloudasset.assets.searchAllResources`
+//   (https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
+//   permission on the desired scope. The allowed values are: *
+//   projects/{PROJECT_ID} (e.g., "projects/foo-bar") *
+//   projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
+//   folders/{FOLDER_NUMBER} (e.g., "folders/1234567") *
+//   organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456").
 func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 	c := &V1SearchAllResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -6750,7 +6925,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

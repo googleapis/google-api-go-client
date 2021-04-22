@@ -83,7 +83,7 @@ const mtlsBasePath = "https://dataflow.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your Google Compute Engine resources
@@ -92,7 +92,7 @@ const (
 	// View your Google Compute Engine resources
 	ComputeReadonlyScope = "https://www.googleapis.com/auth/compute.readonly"
 
-	// View your email address
+	// See your primary Google Account email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
@@ -694,7 +694,8 @@ func (s *BigQueryIODetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BigTableIODetails: Metadata for a BigTable connector used by the job.
+// BigTableIODetails: Metadata for a Cloud BigTable connector used by
+// the job.
 type BigTableIODetails struct {
 	// InstanceId: InstanceId accessed in the connection.
 	InstanceId string `json:"instanceId,omitempty"`
@@ -1884,7 +1885,8 @@ type ExecutionStageState struct {
 	//   "JOB_STATE_RESOURCE_CLEANING_UP" - `JOB_STATE_RESOURCE_CLEANING_UP`
 	// indicates that the batch job's associated resources are currently
 	// being cleaned up after a successful run. Currently, this is an opt-in
-	// feature, please reach out to Cloud support team if you are intersted.
+	// feature, please reach out to Cloud support team if you are
+	// interested.
 	ExecutionStageState string `json:"executionStageState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentStateTime") to
@@ -1929,7 +1931,7 @@ type ExecutionStageSummary struct {
 	// InputSource: Input sources for this stage.
 	InputSource []*StageSource `json:"inputSource,omitempty"`
 
-	// Kind: Type of tranform this stage is executing.
+	// Kind: Type of transform this stage is executing.
 	//
 	// Possible values:
 	//   "UNKNOWN_KIND" - Unrecognized transform type.
@@ -2127,6 +2129,10 @@ type FlexTemplateRuntimeEnvironment struct {
 	// ServiceAccountEmail: The email address of the service account to run
 	// the job as.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// StagingLocation: The Cloud Storage path for staging local files. Must
+	// be a valid Cloud Storage URL, beginning with `gs://`.
+	StagingLocation string `json:"stagingLocation,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You
 	// can specify a subnetwork using either a complete URL or an
@@ -2716,7 +2722,8 @@ type Job struct {
 	//   "JOB_STATE_RESOURCE_CLEANING_UP" - `JOB_STATE_RESOURCE_CLEANING_UP`
 	// indicates that the batch job's associated resources are currently
 	// being cleaned up after a successful run. Currently, this is an opt-in
-	// feature, please reach out to Cloud support team if you are intersted.
+	// feature, please reach out to Cloud support team if you are
+	// interested.
 	CurrentState string `json:"currentState,omitempty"`
 
 	// CurrentStateTime: The timestamp associated with the current state.
@@ -2837,7 +2844,8 @@ type Job struct {
 	//   "JOB_STATE_RESOURCE_CLEANING_UP" - `JOB_STATE_RESOURCE_CLEANING_UP`
 	// indicates that the batch job's associated resources are currently
 	// being cleaned up after a successful run. Currently, this is an opt-in
-	// feature, please reach out to Cloud support team if you are intersted.
+	// feature, please reach out to Cloud support team if you are
+	// interested.
 	RequestedState string `json:"requestedState,omitempty"`
 
 	// SatisfiesPzs: Reserved for future use. This field is set only in
@@ -2862,7 +2870,7 @@ type Job struct {
 	// JOB_VIEW_ALL.
 	Steps []*Step `json:"steps,omitempty"`
 
-	// StepsLocation: The GCS location where the steps are stored.
+	// StepsLocation: The Cloud Storage location where the steps are stored.
 	StepsLocation string `json:"stepsLocation,omitempty"`
 
 	// TempFiles: A set of files the system should be aware of that are used
@@ -3082,8 +3090,8 @@ func (s *JobMessage) MarshalJSON() ([]byte, error) {
 // JobMetadata: Metadata available primarily for filtering jobs. Will be
 // included in the ListJob response and Job SUMMARY view.
 type JobMetadata struct {
-	// BigTableDetails: Identification of a BigTable source used in the
-	// Dataflow job.
+	// BigTableDetails: Identification of a Cloud BigTable source used in
+	// the Dataflow job.
 	BigTableDetails []*BigTableIODetails `json:"bigTableDetails,omitempty"`
 
 	// BigqueryDetails: Identification of a BigQuery source used in the
@@ -3265,8 +3273,8 @@ type LaunchFlexTemplateParameter struct {
 	// ContainerSpec: Spec about the container image to launch.
 	ContainerSpec *ContainerSpec `json:"containerSpec,omitempty"`
 
-	// ContainerSpecGcsPath: Gcs path to a file with json serialized
-	// ContainerSpec as content.
+	// ContainerSpecGcsPath: Cloud Storage path to a file with json
+	// serialized ContainerSpec as content.
 	ContainerSpecGcsPath string `json:"containerSpecGcsPath,omitempty"`
 
 	// Environment: The runtime environment for the FlexTemplate job
@@ -4208,18 +4216,18 @@ type ParameterMetadata struct {
 	// Possible values:
 	//   "DEFAULT" - Default input type.
 	//   "TEXT" - The parameter specifies generic text input.
-	//   "GCS_READ_BUCKET" - The parameter specifies a GCS Bucket to read
-	// from.
-	//   "GCS_WRITE_BUCKET" - The parameter specifies a GCS Bucket to write
-	// to.
-	//   "GCS_READ_FILE" - The parameter specifies a GCS file path to read
-	// from.
-	//   "GCS_WRITE_FILE" - The parameter specifies a GCS file path to write
-	// to.
-	//   "GCS_READ_FOLDER" - The parameter specifies a GCS folder path to
-	// read from.
-	//   "GCS_WRITE_FOLDER" - The parameter specifies a GCS folder to write
-	// to.
+	//   "GCS_READ_BUCKET" - The parameter specifies a Cloud Storage Bucket
+	// to read from.
+	//   "GCS_WRITE_BUCKET" - The parameter specifies a Cloud Storage Bucket
+	// to write to.
+	//   "GCS_READ_FILE" - The parameter specifies a Cloud Storage file path
+	// to read from.
+	//   "GCS_WRITE_FILE" - The parameter specifies a Cloud Storage file
+	// path to write to.
+	//   "GCS_READ_FOLDER" - The parameter specifies a Cloud Storage folder
+	// path to read from.
+	//   "GCS_WRITE_FOLDER" - The parameter specifies a Cloud Storage folder
+	// to write to.
 	//   "PUBSUB_TOPIC" - The parameter specifies a Pub/Sub Topic.
 	//   "PUBSUB_SUBSCRIPTION" - The parameter specifies a Pub/Sub
 	// Subscription.
@@ -4480,7 +4488,7 @@ func (s *ProgressTimeseries) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PubSubIODetails: Metadata for a PubSub connector used by the job.
+// PubSubIODetails: Metadata for a Pub/Sub connector used by the job.
 type PubSubIODetails struct {
 	// Subscription: Subscription used in the connection.
 	Subscription string `json:"subscription,omitempty"`
@@ -7359,7 +7367,7 @@ func (s *WorkerDetails) MarshalJSON() ([]byte, error) {
 // health of a worker. The VM should be identified by the labels
 // attached to the WorkerMessage that this health ping belongs to.
 type WorkerHealthReport struct {
-	// Msg: A message describing any unusual health reports.
+	// Msg: Message describing any unusual health reports.
 	Msg string `json:"msg,omitempty"`
 
 	// Pods: The pods running on the worker. See:
@@ -7372,6 +7380,10 @@ type WorkerHealthReport struct {
 	// reports. The default value of 0 should be interpreted as the field is
 	// not being explicitly set by the worker.
 	ReportInterval string `json:"reportInterval,omitempty"`
+
+	// VmBrokenCode: Code to describe a specific reason, if known, that a VM
+	// has reported broken state.
+	VmBrokenCode string `json:"vmBrokenCode,omitempty"`
 
 	// VmIsBroken: Whether the VM is in a permanently broken state. Broken
 	// VMs should be abandoned or deleted ASAP to avoid assigning or
@@ -7561,20 +7573,20 @@ type WorkerMessageCode struct {
 	// identifies the type of message being sent. Examples: 1.
 	// "HARNESS_STARTED" might be used to indicate the worker harness has
 	// started. 2. "GCS_DOWNLOAD_ERROR" might be used to indicate an error
-	// downloading a GCS file as part of the boot process of one of the
-	// worker containers. This is a string and not an enum to make it easy
-	// to add new codes without waiting for an API change.
+	// downloading a Cloud Storage file as part of the boot process of one
+	// of the worker containers. This is a string and not an enum to make it
+	// easy to add new codes without waiting for an API change.
 	Code string `json:"code,omitempty"`
 
 	// Parameters: Parameters contains specific information about the code.
 	// This is a struct to allow parameters of different types. Examples: 1.
 	// For a "HARNESS_STARTED" message parameters might provide the name of
 	// the worker and additional data like timing information. 2. For a
-	// "GCS_DOWNLOAD_ERROR" parameters might contain fields listing the GCS
-	// objects being downloaded and fields containing errors. In general
-	// complex data structures should be avoided. If a worker needs to send
-	// a specific and complicated data structure then please consider
-	// defining a new proto and adding it to the data oneof in
+	// "GCS_DOWNLOAD_ERROR" parameters might contain fields listing the
+	// Cloud Storage objects being downloaded and fields containing errors.
+	// In general complex data structures should be avoided. If a worker
+	// needs to send a specific and complicated data structure then please
+	// consider defining a new proto and adding it to the data oneof in
 	// WorkerMessageResponse. Conventions: Parameters should only be used
 	// for information that isn't typically passed as a label. hostname and
 	// other worker identifiers should almost always be passed as labels
@@ -7934,6 +7946,9 @@ type ProjectsDeleteSnapshotsCall struct {
 }
 
 // DeleteSnapshots: Deletes a snapshot.
+//
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
 func (r *ProjectsService) DeleteSnapshots(projectId string) *ProjectsDeleteSnapshotsCall {
 	c := &ProjectsDeleteSnapshotsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -7981,7 +7996,7 @@ func (c *ProjectsDeleteSnapshotsCall) Header() http.Header {
 
 func (c *ProjectsDeleteSnapshotsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8091,6 +8106,8 @@ type ProjectsWorkerMessagesCall struct {
 }
 
 // WorkerMessages: Send a worker_message to the service.
+//
+// - projectId: The project to send the WorkerMessages to.
 func (r *ProjectsService) WorkerMessages(projectId string, sendworkermessagesrequest *SendWorkerMessagesRequest) *ProjectsWorkerMessagesCall {
 	c := &ProjectsWorkerMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8125,7 +8142,7 @@ func (c *ProjectsWorkerMessagesCall) Header() http.Header {
 
 func (c *ProjectsWorkerMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8233,6 +8250,8 @@ type ProjectsJobsAggregatedCall struct {
 }
 
 // Aggregated: List the jobs of a project across all regions.
+//
+// - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) Aggregated(projectId string) *ProjectsJobsAggregatedCall {
 	c := &ProjectsJobsAggregatedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8339,7 +8358,7 @@ func (c *ProjectsJobsAggregatedCall) Header() http.Header {
 
 func (c *ProjectsJobsAggregatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8517,6 +8536,9 @@ type ProjectsJobsCreateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.create` is not recommended, as your job will
 // always start in `us-central1`.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8585,7 +8607,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8726,6 +8748,10 @@ type ProjectsJobsGetCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.get` is not recommended, as you can only get the
 // state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8797,7 +8823,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8936,6 +8962,9 @@ type ProjectsJobsGetMetricsCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.getMetrics` is not recommended, as you can only
 // request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get metrics for.
+// - projectId: A project id.
 func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *ProjectsJobsGetMetricsCall {
 	c := &ProjectsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8997,7 +9026,7 @@ func (c *ProjectsJobsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9126,6 +9155,8 @@ type ProjectsJobsListCall struct {
 // `projects.jobs.aggregated`. Using `projects.jobs.list` is not
 // recommended, as you can only get the list of jobs that are running in
 // `us-central1`.
+//
+// - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9232,7 +9263,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9407,6 +9438,9 @@ type ProjectsJobsSnapshotCall struct {
 }
 
 // Snapshot: Snapshot the state of a streaming job.
+//
+// - jobId: The job to be snapshotted.
+// - projectId: The project which owns the job to be snapshotted.
 func (r *ProjectsJobsService) Snapshot(projectId string, jobId string, snapshotjobrequest *SnapshotJobRequest) *ProjectsJobsSnapshotCall {
 	c := &ProjectsJobsSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9442,7 +9476,7 @@ func (c *ProjectsJobsSnapshotCall) Header() http.Header {
 
 func (c *ProjectsJobsSnapshotCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9564,6 +9598,10 @@ type ProjectsJobsUpdateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.update` is not recommended, as you can only
 // update the state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *ProjectsJobsUpdateCall {
 	c := &ProjectsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9608,7 +9646,7 @@ func (c *ProjectsJobsUpdateCall) Header() http.Header {
 
 func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9731,6 +9769,9 @@ type ProjectsJobsDebugGetConfigCall struct {
 
 // GetConfig: Get encoded debug configuration for component. Not
 // cacheable.
+//
+// - jobId: The job id.
+// - projectId: The project id.
 func (r *ProjectsJobsDebugService) GetConfig(projectId string, jobId string, getdebugconfigrequest *GetDebugConfigRequest) *ProjectsJobsDebugGetConfigCall {
 	c := &ProjectsJobsDebugGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9766,7 +9807,7 @@ func (c *ProjectsJobsDebugGetConfigCall) Header() http.Header {
 
 func (c *ProjectsJobsDebugGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9883,6 +9924,9 @@ type ProjectsJobsDebugSendCaptureCall struct {
 }
 
 // SendCapture: Send encoded debug capture data for component.
+//
+// - jobId: The job id.
+// - projectId: The project id.
 func (r *ProjectsJobsDebugService) SendCapture(projectId string, jobId string, senddebugcapturerequest *SendDebugCaptureRequest) *ProjectsJobsDebugSendCaptureCall {
 	c := &ProjectsJobsDebugSendCaptureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9918,7 +9962,7 @@ func (c *ProjectsJobsDebugSendCaptureCall) Header() http.Header {
 
 func (c *ProjectsJobsDebugSendCaptureCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10040,6 +10084,9 @@ type ProjectsJobsMessagesListCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.messages.list` is not recommended, as you can
 // only request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get messages about.
+// - projectId: A project id.
 func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *ProjectsJobsMessagesListCall {
 	c := &ProjectsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10161,7 +10208,7 @@ func (c *ProjectsJobsMessagesListCall) Header() http.Header {
 
 func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10343,6 +10390,9 @@ type ProjectsJobsWorkItemsLeaseCall struct {
 }
 
 // Lease: Leases a dataflow WorkItem to run.
+//
+// - jobId: Identifies the workflow job this worker belongs to.
+// - projectId: Identifies the project this worker belongs to.
 func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *ProjectsJobsWorkItemsLeaseCall {
 	c := &ProjectsJobsWorkItemsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10378,7 +10428,7 @@ func (c *ProjectsJobsWorkItemsLeaseCall) Header() http.Header {
 
 func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10496,6 +10546,9 @@ type ProjectsJobsWorkItemsReportStatusCall struct {
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
 // worker.
+//
+// - jobId: The job which the WorkItem is part of.
+// - projectId: The project which owns the WorkItem's job.
 func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *ProjectsJobsWorkItemsReportStatusCall {
 	c := &ProjectsJobsWorkItemsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10531,7 +10584,7 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Header() http.Header {
 
 func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10648,6 +10701,11 @@ type ProjectsLocationsWorkerMessagesCall struct {
 }
 
 // WorkerMessages: Send a worker_message to the service.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job.
+// - projectId: The project to send the WorkerMessages to.
 func (r *ProjectsLocationsService) WorkerMessages(projectId string, location string, sendworkermessagesrequest *SendWorkerMessagesRequest) *ProjectsLocationsWorkerMessagesCall {
 	c := &ProjectsLocationsWorkerMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10683,7 +10741,7 @@ func (c *ProjectsLocationsWorkerMessagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10800,6 +10858,12 @@ type ProjectsLocationsFlexTemplatesLaunchCall struct {
 }
 
 // Launch: Launch a job with a FlexTemplate.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request. E.g., us-central1, us-west1.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsFlexTemplatesService) Launch(projectId string, location string, launchflextemplaterequest *LaunchFlexTemplateRequest) *ProjectsLocationsFlexTemplatesLaunchCall {
 	c := &ProjectsLocationsFlexTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10835,7 +10899,7 @@ func (c *ProjectsLocationsFlexTemplatesLaunchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFlexTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10956,6 +11020,12 @@ type ProjectsLocationsJobsCreateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.create` is not recommended, as your job will
 // always start in `us-central1`.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsJobsService) Create(projectId string, location string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11016,7 +11086,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11161,6 +11231,13 @@ type ProjectsLocationsJobsGetCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.get` is not recommended, as you can only get the
 // state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jobId string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11224,7 +11301,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11364,6 +11441,12 @@ type ProjectsLocationsJobsGetExecutionDetailsCall struct {
 // GetExecutionDetails: Request detailed information about the execution
 // status of the job. EXPERIMENTAL. This API is subject to change or
 // removal without notice.
+//
+// - jobId: The job to get execution details for.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
 func (r *ProjectsLocationsJobsService) GetExecutionDetails(projectId string, location string, jobId string) *ProjectsLocationsJobsGetExecutionDetailsCall {
 	c := &ProjectsLocationsJobsGetExecutionDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11426,7 +11509,7 @@ func (c *ProjectsLocationsJobsGetExecutionDetailsCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetExecutionDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11584,6 +11667,12 @@ type ProjectsLocationsJobsGetMetricsCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.getMetrics` is not recommended, as you can only
 // request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get metrics for.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
 func (r *ProjectsLocationsJobsService) GetMetrics(projectId string, location string, jobId string) *ProjectsLocationsJobsGetMetricsCall {
 	c := &ProjectsLocationsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11637,7 +11726,7 @@ func (c *ProjectsLocationsJobsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11770,6 +11859,11 @@ type ProjectsLocationsJobsListCall struct {
 // `projects.jobs.aggregated`. Using `projects.jobs.list` is not
 // recommended, as you can only get the list of jobs that are running in
 // `us-central1`.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The project which owns the jobs.
 func (r *ProjectsLocationsJobsService) List(projectId string, location string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11868,7 +11962,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12047,6 +12141,10 @@ type ProjectsLocationsJobsSnapshotCall struct {
 }
 
 // Snapshot: Snapshot the state of a streaming job.
+//
+// - jobId: The job to be snapshotted.
+// - location: The location that contains this job.
+// - projectId: The project which owns the job to be snapshotted.
 func (r *ProjectsLocationsJobsService) Snapshot(projectId string, location string, jobId string, snapshotjobrequest *SnapshotJobRequest) *ProjectsLocationsJobsSnapshotCall {
 	c := &ProjectsLocationsJobsSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12083,7 +12181,7 @@ func (c *ProjectsLocationsJobsSnapshotCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsSnapshotCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12214,6 +12312,13 @@ type ProjectsLocationsJobsUpdateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.update` is not recommended, as you can only
 // update the state of jobs that are running in `us-central1`.
+//
+// - jobId: The job ID.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains this job.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsJobsService) Update(projectId string, location string, jobId string, job *Job) *ProjectsLocationsJobsUpdateCall {
 	c := &ProjectsLocationsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12250,7 +12355,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12377,6 +12482,12 @@ type ProjectsLocationsJobsDebugGetConfigCall struct {
 
 // GetConfig: Get encoded debug configuration for component. Not
 // cacheable.
+//
+// - jobId: The job id.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: The project id.
 func (r *ProjectsLocationsJobsDebugService) GetConfig(projectId string, location string, jobId string, getdebugconfigrequest *GetDebugConfigRequest) *ProjectsLocationsJobsDebugGetConfigCall {
 	c := &ProjectsLocationsJobsDebugGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12413,7 +12524,7 @@ func (c *ProjectsLocationsJobsDebugGetConfigCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDebugGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12539,6 +12650,12 @@ type ProjectsLocationsJobsDebugSendCaptureCall struct {
 }
 
 // SendCapture: Send encoded debug capture data for component.
+//
+// - jobId: The job id.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: The project id.
 func (r *ProjectsLocationsJobsDebugService) SendCapture(projectId string, location string, jobId string, senddebugcapturerequest *SendDebugCaptureRequest) *ProjectsLocationsJobsDebugSendCaptureCall {
 	c := &ProjectsLocationsJobsDebugSendCaptureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12575,7 +12692,7 @@ func (c *ProjectsLocationsJobsDebugSendCaptureCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDebugSendCaptureCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12706,6 +12823,12 @@ type ProjectsLocationsJobsMessagesListCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
 // Using `projects.jobs.messages.list` is not recommended, as you can
 // only request the status of jobs that are running in `us-central1`.
+//
+// - jobId: The job to get messages about.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
 func (r *ProjectsLocationsJobsMessagesService) List(projectId string, location string, jobId string) *ProjectsLocationsJobsMessagesListCall {
 	c := &ProjectsLocationsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12819,7 +12942,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13005,6 +13128,10 @@ type ProjectsLocationsJobsSnapshotsListCall struct {
 }
 
 // List: Lists snapshots.
+//
+// - jobId: If specified, list snapshots created from this job.
+// - location: The location to list snapshots in.
+// - projectId: The project ID to list snapshots for.
 func (r *ProjectsLocationsJobsSnapshotsService) List(projectId string, location string, jobId string) *ProjectsLocationsJobsSnapshotsListCall {
 	c := &ProjectsLocationsJobsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13050,7 +13177,7 @@ func (c *ProjectsLocationsJobsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13174,6 +13301,13 @@ type ProjectsLocationsJobsStagesGetExecutionDetailsCall struct {
 // GetExecutionDetails: Request detailed information about the execution
 // status of a stage of the job. EXPERIMENTAL. This API is subject to
 // change or removal without notice.
+//
+// - jobId: The job to get execution details for.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the job specified by job_id.
+// - projectId: A project id.
+// - stageId: The stage for which to fetch information.
 func (r *ProjectsLocationsJobsStagesService) GetExecutionDetails(projectId string, location string, jobId string, stageId string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
 	c := &ProjectsLocationsJobsStagesGetExecutionDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13251,7 +13385,7 @@ func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Header() http.Heade
 
 func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13424,6 +13558,12 @@ type ProjectsLocationsJobsWorkItemsLeaseCall struct {
 }
 
 // Lease: Leases a dataflow WorkItem to run.
+//
+// - jobId: Identifies the workflow job this worker belongs to.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the WorkItem's job.
+// - projectId: Identifies the project this worker belongs to.
 func (r *ProjectsLocationsJobsWorkItemsService) Lease(projectId string, location string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *ProjectsLocationsJobsWorkItemsLeaseCall {
 	c := &ProjectsLocationsJobsWorkItemsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13460,7 +13600,7 @@ func (c *ProjectsLocationsJobsWorkItemsLeaseCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13587,6 +13727,12 @@ type ProjectsLocationsJobsWorkItemsReportStatusCall struct {
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
 // worker.
+//
+// - jobId: The job which the WorkItem is part of.
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   that contains the WorkItem's job.
+// - projectId: The project which owns the WorkItem's job.
 func (r *ProjectsLocationsJobsWorkItemsService) ReportStatus(projectId string, location string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *ProjectsLocationsJobsWorkItemsReportStatusCall {
 	c := &ProjectsLocationsJobsWorkItemsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13623,7 +13769,7 @@ func (c *ProjectsLocationsJobsWorkItemsReportStatusCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13748,6 +13894,11 @@ type ProjectsLocationsSnapshotsDeleteCall struct {
 }
 
 // Delete: Deletes a snapshot.
+//
+// - location: The location that contains this snapshot.
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
+// - snapshotId: The ID of the snapshot.
 func (r *ProjectsLocationsSnapshotsService) Delete(projectId string, location string, snapshotId string) *ProjectsLocationsSnapshotsDeleteCall {
 	c := &ProjectsLocationsSnapshotsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13783,7 +13934,7 @@ func (c *ProjectsLocationsSnapshotsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsSnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13901,6 +14052,11 @@ type ProjectsLocationsSnapshotsGetCall struct {
 }
 
 // Get: Gets information about a snapshot.
+//
+// - location: The location that contains this snapshot.
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
+// - snapshotId: The ID of the snapshot.
 func (r *ProjectsLocationsSnapshotsService) Get(projectId string, location string, snapshotId string) *ProjectsLocationsSnapshotsGetCall {
 	c := &ProjectsLocationsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13946,7 +14102,7 @@ func (c *ProjectsLocationsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14066,6 +14222,9 @@ type ProjectsLocationsSnapshotsListCall struct {
 }
 
 // List: Lists snapshots.
+//
+// - location: The location to list snapshots in.
+// - projectId: The project ID to list snapshots for.
 func (r *ProjectsLocationsSnapshotsService) List(projectId string, location string) *ProjectsLocationsSnapshotsListCall {
 	c := &ProjectsLocationsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14117,7 +14276,7 @@ func (c *ProjectsLocationsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14237,6 +14396,12 @@ type ProjectsLocationsSqlValidateCall struct {
 // always confirm the given query parses correctly, and if able to look
 // up schema information from DataCatalog, will validate that the query
 // analyzes properly as well.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsSqlService) Validate(projectId string, location string) *ProjectsLocationsSqlValidateCall {
 	c := &ProjectsLocationsSqlValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14287,7 +14452,7 @@ func (c *ProjectsLocationsSqlValidateCall) Header() http.Header {
 
 func (c *ProjectsLocationsSqlValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14402,6 +14567,12 @@ type ProjectsLocationsTemplatesCreateCall struct {
 }
 
 // Create: Creates a Cloud Dataflow job from a template.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsTemplatesService) Create(projectId string, location string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsLocationsTemplatesCreateCall {
 	c := &ProjectsLocationsTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14437,7 +14608,7 @@ func (c *ProjectsLocationsTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14554,6 +14725,12 @@ type ProjectsLocationsTemplatesGetCall struct {
 }
 
 // Get: Get the template associated with a template.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsTemplatesService) Get(projectId string, location string) *ProjectsLocationsTemplatesGetCall {
 	c := &ProjectsLocationsTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14617,7 +14794,7 @@ func (c *ProjectsLocationsTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14745,6 +14922,12 @@ type ProjectsLocationsTemplatesLaunchCall struct {
 }
 
 // Launch: Launch a template.
+//
+// - location: The [regional endpoint]
+//   (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+//   to which to direct the request.
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsLocationsTemplatesLaunchCall {
 	c := &ProjectsLocationsTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14754,8 +14937,9 @@ func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location st
 }
 
 // DynamicTemplateGcsPath sets the optional parameter
-// "dynamicTemplate.gcsPath": Path to dynamic template spec file on GCS.
-// The file must be a Json serialized DynamicTemplateFieSpec object.
+// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
+// Cloud Storage. The file must be a Json serialized
+// DynamicTemplateFieSpec object.
 func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
 	return c
@@ -14812,7 +14996,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14887,7 +15071,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dynamicTemplate.gcsPath": {
-	//       "description": "Path to dynamic template spec file on GCS. The file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "description": "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14949,6 +15133,10 @@ type ProjectsSnapshotsGetCall struct {
 }
 
 // Get: Gets information about a snapshot.
+//
+// - projectId: The ID of the Cloud Platform project that the snapshot
+//   belongs to.
+// - snapshotId: The ID of the snapshot.
 func (r *ProjectsSnapshotsService) Get(projectId string, snapshotId string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15000,7 +15188,7 @@ func (c *ProjectsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15116,6 +15304,8 @@ type ProjectsSnapshotsListCall struct {
 }
 
 // List: Lists snapshots.
+//
+// - projectId: The project ID to list snapshots for.
 func (r *ProjectsSnapshotsService) List(projectId string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15173,7 +15363,7 @@ func (c *ProjectsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15286,6 +15476,9 @@ type ProjectsTemplatesCreateCall struct {
 }
 
 // Create: Creates a Cloud Dataflow job from a template.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsTemplatesService) Create(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesCreateCall {
 	c := &ProjectsTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15320,7 +15513,7 @@ func (c *ProjectsTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15428,6 +15621,9 @@ type ProjectsTemplatesGetCall struct {
 }
 
 // Get: Get the template associated with a template.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCall {
 	c := &ProjectsTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15499,7 +15695,7 @@ func (c *ProjectsTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15623,6 +15819,9 @@ type ProjectsTemplatesLaunchCall struct {
 }
 
 // Launch: Launch a template.
+//
+// - projectId: The ID of the Cloud Platform project that the job
+//   belongs to.
 func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsTemplatesLaunchCall {
 	c := &ProjectsTemplatesLaunchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15631,8 +15830,9 @@ func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparame
 }
 
 // DynamicTemplateGcsPath sets the optional parameter
-// "dynamicTemplate.gcsPath": Path to dynamic template spec file on GCS.
-// The file must be a Json serialized DynamicTemplateFieSpec object.
+// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
+// Cloud Storage. The file must be a Json serialized
+// DynamicTemplateFieSpec object.
 func (c *ProjectsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
 	return c
@@ -15698,7 +15898,7 @@ func (c *ProjectsTemplatesLaunchCall) Header() http.Header {
 
 func (c *ProjectsTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15771,7 +15971,7 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//   ],
 	//   "parameters": {
 	//     "dynamicTemplate.gcsPath": {
-	//       "description": "Path to dynamic template spec file on GCS. The file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "description": "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

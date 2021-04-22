@@ -961,6 +961,8 @@ type AssetsGetCall struct {
 // Get: Returns detailed information about an asset given its name.
 // PRIVATE assets are returned only if the currently authenticated user
 // (via OAuth token) is the author of the asset.
+//
+// - name: An asset's name in the form `assets/{ASSET_ID}`.
 func (r *AssetsService) Get(name string) *AssetsGetCall {
 	c := &AssetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1004,7 +1006,7 @@ func (c *AssetsGetCall) Header() http.Header {
 
 func (c *AssetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1219,7 +1221,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1382,6 +1384,10 @@ type UsersAssetsListCall struct {
 // representing the currently-authenticated user, is supported. May
 // include assets with an access level of PRIVATE or UNLISTED and assets
 // which are All Rights Reserved for the currently-authenticated user.
+//
+// - name: A valid user id. Currently, only the special value 'me',
+//   representing the currently-authenticated user is supported. To use
+//   'me', you must pass an OAuth token with the request.
 func (r *UsersAssetsService) List(name string) *UsersAssetsListCall {
 	c := &UsersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1473,7 +1479,7 @@ func (c *UsersAssetsListCall) Header() http.Header {
 
 func (c *UsersAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1630,6 +1636,10 @@ type UsersLikedassetsListCall struct {
 // List: Lists assets that the user has liked. Only the value 'me',
 // representing the currently-authenticated user, is supported. May
 // include assets with an access level of UNLISTED.
+//
+// - name: A valid user id. Currently, only the special value 'me',
+//   representing the currently-authenticated user is supported. To use
+//   'me', you must pass an OAuth token with the request.
 func (r *UsersLikedassetsService) List(name string) *UsersLikedassetsListCall {
 	c := &UsersLikedassetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1707,7 +1717,7 @@ func (c *UsersLikedassetsListCall) Header() http.Header {
 
 func (c *UsersLikedassetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

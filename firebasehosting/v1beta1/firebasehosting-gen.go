@@ -83,7 +83,7 @@ const mtlsBasePath = "https://firebasehosting.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -1831,6 +1831,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1874,7 +1876,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1980,6 +1982,11 @@ type ProjectsSitesCreateCall struct {
 // Create: Creates a new Hosting Site in the specified parent Firebase
 // project. Note that Hosting sites can take several minutes to
 // propagate through Firebase systems.
+//
+// - parent: The Firebase project in which to create a Hosting site, in
+//   the format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
+//   (../projects#Site.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsSitesService) Create(parent string, site *Site) *ProjectsSitesCreateCall {
 	c := &ProjectsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2023,7 +2030,7 @@ func (c *ProjectsSitesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2135,6 +2142,11 @@ type ProjectsSitesDeleteCall struct {
 
 // Delete: Deletes the specified Hosting Site from the specified parent
 // Firebase project.
+//
+// - name: The fully-qualified resource name for the Hosting site, in
+//   the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
+//   `Site` `name` (../projects#Site.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER values.
 func (r *ProjectsSitesService) Delete(name string) *ProjectsSitesDeleteCall {
 	c := &ProjectsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2168,7 +2180,7 @@ func (c *ProjectsSitesDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2267,6 +2279,13 @@ type ProjectsSitesGetCall struct {
 }
 
 // Get: Gets the specified Hosting Site.
+//
+// - name: The fully-qualified resource name for the Hosting site, in
+//   the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
+//   `Site` `name` (../projects#Site.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally
+//   unique identifier, you can also use the unique sub-collection
+//   resource access pattern, in the format: projects/-/sites/SITE_ID.
 func (r *ProjectsSitesService) Get(nameid string) *ProjectsSitesGetCall {
 	c := &ProjectsSitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2310,7 +2329,7 @@ func (c *ProjectsSitesGetCall) Header() http.Header {
 
 func (c *ProjectsSitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2414,6 +2433,9 @@ type ProjectsSitesGetConfigCall struct {
 }
 
 // GetConfig: Gets the Hosting metadata for a specific site.
+//
+// - name: The site for which to get the SiteConfig, in the format:
+//   sites/ site-name/config.
 func (r *ProjectsSitesService) GetConfig(name string) *ProjectsSitesGetConfigCall {
 	c := &ProjectsSitesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2457,7 +2479,7 @@ func (c *ProjectsSitesGetConfigCall) Header() http.Header {
 
 func (c *ProjectsSitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2562,6 +2584,11 @@ type ProjectsSitesListCall struct {
 
 // List: Lists each Hosting Site associated with the specified parent
 // Firebase project.
+//
+// - parent: The Firebase project for which to list sites, in the
+//   format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
+//   (../projects#Site.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsSitesService) List(parent string) *ProjectsSitesListCall {
 	c := &ProjectsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2621,7 +2648,7 @@ func (c *ProjectsSitesListCall) Header() http.Header {
 
 func (c *ProjectsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2757,6 +2784,15 @@ type ProjectsSitesPatchCall struct {
 }
 
 // Patch: Updates attributes of the specified Hosting Site.
+//
+// - name: Output only. The fully-qualified resource name of the Hosting
+//   site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
+//   PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
+//   (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+//   ***(recommended)*** or its `ProjectId`
+//   (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+//   Learn more about using project identifiers in Google's AIP 2510
+//   standard (https://google.aip.dev/cloud/2510).
 func (r *ProjectsSitesService) Patch(nameid string, site *Site) *ProjectsSitesPatchCall {
 	c := &ProjectsSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2798,7 +2834,7 @@ func (c *ProjectsSitesPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2911,6 +2947,9 @@ type ProjectsSitesUpdateConfigCall struct {
 }
 
 // UpdateConfig: Sets the Hosting metadata for a specific site.
+//
+// - name: The site for which to update the SiteConfig, in the format:
+//   sites/ site-name/config.
 func (r *ProjectsSitesService) UpdateConfig(name string, siteconfig *SiteConfig) *ProjectsSitesUpdateConfigCall {
 	c := &ProjectsSitesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2955,7 +2994,7 @@ func (c *ProjectsSitesUpdateConfigCall) Header() http.Header {
 
 func (c *ProjectsSitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3068,6 +3107,9 @@ type ProjectsSitesChannelsCreateCall struct {
 }
 
 // Create: Creates a new channel in the specified site.
+//
+// - parent: The site in which to create this channel, in the format:
+//   sites/ SITE_ID.
 func (r *ProjectsSitesChannelsService) Create(parent string, channel *Channel) *ProjectsSitesChannelsCreateCall {
 	c := &ProjectsSitesChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3109,7 +3151,7 @@ func (c *ProjectsSitesChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3221,6 +3263,9 @@ type ProjectsSitesChannelsDeleteCall struct {
 
 // Delete: Deletes the specified channel of the specified site. The
 // `live` channel cannot be deleted.
+//
+// - name: The fully-qualified resource name for the channel, in the
+//   format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsService) Delete(name string) *ProjectsSitesChannelsDeleteCall {
 	c := &ProjectsSitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3254,7 +3299,7 @@ func (c *ProjectsSitesChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3354,6 +3399,9 @@ type ProjectsSitesChannelsGetCall struct {
 
 // Get: Retrieves information for the specified channel of the specified
 // site.
+//
+// - name: The fully-qualified resource name for the channel, in the
+//   format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsService) Get(name string) *ProjectsSitesChannelsGetCall {
 	c := &ProjectsSitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3397,7 +3445,7 @@ func (c *ProjectsSitesChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3502,6 +3550,9 @@ type ProjectsSitesChannelsListCall struct {
 
 // List: Lists the channels for the specified site. All sites have a
 // default `live` channel.
+//
+// - parent: The site for which to list channels, in the format:
+//   sites/SITE_ID.
 func (r *ProjectsSitesChannelsService) List(parent string) *ProjectsSitesChannelsListCall {
 	c := &ProjectsSitesChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3563,7 +3614,7 @@ func (c *ProjectsSitesChannelsListCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3700,6 +3751,9 @@ type ProjectsSitesChannelsPatchCall struct {
 
 // Patch: Updates information for the specified channel of the specified
 // site. Implicitly creates the channel if it doesn't already exist.
+//
+// - name: The fully-qualified resource name for the channel, in the
+//   format: sites/ SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsService) Patch(name string, channel *Channel) *ProjectsSitesChannelsPatchCall {
 	c := &ProjectsSitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3741,7 +3795,7 @@ func (c *ProjectsSitesChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3855,6 +3909,10 @@ type ProjectsSitesChannelsReleasesCreateCall struct {
 
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
+//
+// - parent: The site or channel to which the release belongs, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsReleasesService) Create(parent string, release *Release) *ProjectsSitesChannelsReleasesCreateCall {
 	c := &ProjectsSitesChannelsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3899,7 +3957,7 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4014,6 +4072,10 @@ type ProjectsSitesChannelsReleasesListCall struct {
 // site or channel. When used to list releases for a site, this list
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
+//
+// - parent: The site or channel for which to list releases, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsReleasesService) List(parent string) *ProjectsSitesChannelsReleasesListCall {
 	c := &ProjectsSitesChannelsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4074,7 +4136,7 @@ func (c *ProjectsSitesChannelsReleasesListCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4210,6 +4272,9 @@ type ProjectsSitesDomainsCreateCall struct {
 }
 
 // Create: Creates a domain mapping on the specified site.
+//
+// - parent: The parent to create the domain association for, in the
+//   format: sites/site-name.
 func (r *ProjectsSitesDomainsService) Create(parent string, domain *Domain) *ProjectsSitesDomainsCreateCall {
 	c := &ProjectsSitesDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4244,7 +4309,7 @@ func (c *ProjectsSitesDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4350,6 +4415,8 @@ type ProjectsSitesDomainsDeleteCall struct {
 }
 
 // Delete: Deletes the existing domain mapping on the specified site.
+//
+// - name: The name of the domain association to delete.
 func (r *ProjectsSitesDomainsService) Delete(name string) *ProjectsSitesDomainsDeleteCall {
 	c := &ProjectsSitesDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4383,7 +4450,7 @@ func (c *ProjectsSitesDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4482,6 +4549,8 @@ type ProjectsSitesDomainsGetCall struct {
 }
 
 // Get: Gets a domain mapping on the specified site.
+//
+// - name: The name of the domain configuration to get.
 func (r *ProjectsSitesDomainsService) Get(name string) *ProjectsSitesDomainsGetCall {
 	c := &ProjectsSitesDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4525,7 +4594,7 @@ func (c *ProjectsSitesDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4629,6 +4698,9 @@ type ProjectsSitesDomainsListCall struct {
 }
 
 // List: Lists the domains for the specified site.
+//
+// - parent: The parent for which to list domains, in the format: sites/
+//   site-name.
 func (r *ProjectsSitesDomainsService) List(parent string) *ProjectsSitesDomainsListCall {
 	c := &ProjectsSitesDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4686,7 +4758,7 @@ func (c *ProjectsSitesDomainsListCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4823,6 +4895,9 @@ type ProjectsSitesDomainsUpdateCall struct {
 
 // Update: Updates the specified domain mapping, creating the mapping as
 // if it does not exist.
+//
+// - name: The name of the domain association to update or create, if an
+//   association doesn't already exist.
 func (r *ProjectsSitesDomainsService) Update(name string, domain *Domain) *ProjectsSitesDomainsUpdateCall {
 	c := &ProjectsSitesDomainsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4857,7 +4932,7 @@ func (c *ProjectsSitesDomainsUpdateCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4965,6 +5040,10 @@ type ProjectsSitesReleasesCreateCall struct {
 
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
+//
+// - parent: The site or channel to which the release belongs, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesReleasesService) Create(parent string, release *Release) *ProjectsSitesReleasesCreateCall {
 	c := &ProjectsSitesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5009,7 +5088,7 @@ func (c *ProjectsSitesReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5124,6 +5203,10 @@ type ProjectsSitesReleasesListCall struct {
 // site or channel. When used to list releases for a site, this list
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
+//
+// - parent: The site or channel for which to list releases, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesReleasesService) List(parent string) *ProjectsSitesReleasesListCall {
 	c := &ProjectsSitesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5184,7 +5267,7 @@ func (c *ProjectsSitesReleasesListCall) Header() http.Header {
 
 func (c *ProjectsSitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5321,6 +5404,9 @@ type ProjectsSitesVersionsCloneCall struct {
 
 // Clone: Creates a new version on the specified target site using the
 // content of the specified version.
+//
+// - parent: The target site for the cloned version, in the format:
+//   sites/ SITE_ID.
 func (r *ProjectsSitesVersionsService) Clone(parent string, cloneversionrequest *CloneVersionRequest) *ProjectsSitesVersionsCloneCall {
 	c := &ProjectsSitesVersionsCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5355,7 +5441,7 @@ func (c *ProjectsSitesVersionsCloneCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5462,6 +5548,9 @@ type ProjectsSitesVersionsCreateCall struct {
 }
 
 // Create: Creates a new version for the specified site.
+//
+// - parent: The site in which to create the version, in the format:
+//   sites/ SITE_ID.
 func (r *ProjectsSitesVersionsService) Create(parent string, version *Version) *ProjectsSitesVersionsCreateCall {
 	c := &ProjectsSitesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5512,7 +5601,7 @@ func (c *ProjectsSitesVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5629,6 +5718,9 @@ type ProjectsSitesVersionsDeleteCall struct {
 }
 
 // Delete: Deletes the specified version.
+//
+// - name: The fully-qualified resource name for the version, in the
+//   format: sites/SITE_ID/versions/VERSION_ID.
 func (r *ProjectsSitesVersionsService) Delete(name string) *ProjectsSitesVersionsDeleteCall {
 	c := &ProjectsSitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5662,7 +5754,7 @@ func (c *ProjectsSitesVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5763,6 +5855,10 @@ type ProjectsSitesVersionsListCall struct {
 // List: Lists the versions that have been created for the specified
 // site. This list includes versions for both the default `live` channel
 // and any active preview channels for the specified site.
+//
+// - parent: The site or channel for which to list versions, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesVersionsService) List(parent string) *ProjectsSitesVersionsListCall {
 	c := &ProjectsSitesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5834,7 +5930,7 @@ func (c *ProjectsSitesVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5980,6 +6076,11 @@ type ProjectsSitesVersionsPatchCall struct {
 // (../sites.versions#versionstatus) transitions for a version are from
 // `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
 // status of a version to `DELETED`.
+//
+// - name: The fully-qualified resource name for the version, in the
+//   format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+//   the response body when you call `CreateVersion`
+//   (sites.versions/create).
 func (r *ProjectsSitesVersionsService) Patch(name string, version *Version) *ProjectsSitesVersionsPatchCall {
 	c := &ProjectsSitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6024,7 +6125,7 @@ func (c *ProjectsSitesVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6138,6 +6239,9 @@ type ProjectsSitesVersionsPopulateFilesCall struct {
 
 // PopulateFiles:  Adds content files to the specified version. Each
 // file must be under 2 GB.
+//
+// - parent: The version to which to add files, in the format:
+//   sites/SITE_ID /versions/VERSION_ID.
 func (r *ProjectsSitesVersionsService) PopulateFiles(parent string, populateversionfilesrequest *PopulateVersionFilesRequest) *ProjectsSitesVersionsPopulateFilesCall {
 	c := &ProjectsSitesVersionsPopulateFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6172,7 +6276,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6280,6 +6384,9 @@ type ProjectsSitesVersionsFilesListCall struct {
 
 // List: Lists the remaining files to be uploaded for the specified
 // version.
+//
+// - parent: The version for which to list files, in the format:
+//   sites/SITE_ID /versions/VERSION_ID.
 func (r *ProjectsSitesVersionsFilesService) List(parent string) *ProjectsSitesVersionsFilesListCall {
 	c := &ProjectsSitesVersionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6354,7 +6461,7 @@ func (c *ProjectsSitesVersionsFilesListCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6505,6 +6612,9 @@ type SitesGetConfigCall struct {
 }
 
 // GetConfig: Gets the Hosting metadata for a specific site.
+//
+// - name: The site for which to get the SiteConfig, in the format:
+//   sites/ site-name/config.
 func (r *SitesService) GetConfig(name string) *SitesGetConfigCall {
 	c := &SitesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6548,7 +6658,7 @@ func (c *SitesGetConfigCall) Header() http.Header {
 
 func (c *SitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6652,6 +6762,9 @@ type SitesUpdateConfigCall struct {
 }
 
 // UpdateConfig: Sets the Hosting metadata for a specific site.
+//
+// - name: The site for which to update the SiteConfig, in the format:
+//   sites/ site-name/config.
 func (r *SitesService) UpdateConfig(name string, siteconfig *SiteConfig) *SitesUpdateConfigCall {
 	c := &SitesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6696,7 +6809,7 @@ func (c *SitesUpdateConfigCall) Header() http.Header {
 
 func (c *SitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6809,6 +6922,9 @@ type SitesChannelsCreateCall struct {
 }
 
 // Create: Creates a new channel in the specified site.
+//
+// - parent: The site in which to create this channel, in the format:
+//   sites/ SITE_ID.
 func (r *SitesChannelsService) Create(parent string, channel *Channel) *SitesChannelsCreateCall {
 	c := &SitesChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6850,7 +6966,7 @@ func (c *SitesChannelsCreateCall) Header() http.Header {
 
 func (c *SitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6962,6 +7078,9 @@ type SitesChannelsDeleteCall struct {
 
 // Delete: Deletes the specified channel of the specified site. The
 // `live` channel cannot be deleted.
+//
+// - name: The fully-qualified resource name for the channel, in the
+//   format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsService) Delete(name string) *SitesChannelsDeleteCall {
 	c := &SitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6995,7 +7114,7 @@ func (c *SitesChannelsDeleteCall) Header() http.Header {
 
 func (c *SitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7095,6 +7214,9 @@ type SitesChannelsGetCall struct {
 
 // Get: Retrieves information for the specified channel of the specified
 // site.
+//
+// - name: The fully-qualified resource name for the channel, in the
+//   format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsService) Get(name string) *SitesChannelsGetCall {
 	c := &SitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7138,7 +7260,7 @@ func (c *SitesChannelsGetCall) Header() http.Header {
 
 func (c *SitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7243,6 +7365,9 @@ type SitesChannelsListCall struct {
 
 // List: Lists the channels for the specified site. All sites have a
 // default `live` channel.
+//
+// - parent: The site for which to list channels, in the format:
+//   sites/SITE_ID.
 func (r *SitesChannelsService) List(parent string) *SitesChannelsListCall {
 	c := &SitesChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7304,7 +7429,7 @@ func (c *SitesChannelsListCall) Header() http.Header {
 
 func (c *SitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7441,6 +7566,9 @@ type SitesChannelsPatchCall struct {
 
 // Patch: Updates information for the specified channel of the specified
 // site. Implicitly creates the channel if it doesn't already exist.
+//
+// - name: The fully-qualified resource name for the channel, in the
+//   format: sites/ SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsService) Patch(name string, channel *Channel) *SitesChannelsPatchCall {
 	c := &SitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7482,7 +7610,7 @@ func (c *SitesChannelsPatchCall) Header() http.Header {
 
 func (c *SitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7596,6 +7724,10 @@ type SitesChannelsReleasesCreateCall struct {
 
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
+//
+// - parent: The site or channel to which the release belongs, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsReleasesService) Create(parent string, release *Release) *SitesChannelsReleasesCreateCall {
 	c := &SitesChannelsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7640,7 +7772,7 @@ func (c *SitesChannelsReleasesCreateCall) Header() http.Header {
 
 func (c *SitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7755,6 +7887,10 @@ type SitesChannelsReleasesListCall struct {
 // site or channel. When used to list releases for a site, this list
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
+//
+// - parent: The site or channel for which to list releases, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsReleasesService) List(parent string) *SitesChannelsReleasesListCall {
 	c := &SitesChannelsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7815,7 +7951,7 @@ func (c *SitesChannelsReleasesListCall) Header() http.Header {
 
 func (c *SitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7951,6 +8087,9 @@ type SitesDomainsCreateCall struct {
 }
 
 // Create: Creates a domain mapping on the specified site.
+//
+// - parent: The parent to create the domain association for, in the
+//   format: sites/site-name.
 func (r *SitesDomainsService) Create(parent string, domain *Domain) *SitesDomainsCreateCall {
 	c := &SitesDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7985,7 +8124,7 @@ func (c *SitesDomainsCreateCall) Header() http.Header {
 
 func (c *SitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8091,6 +8230,8 @@ type SitesDomainsDeleteCall struct {
 }
 
 // Delete: Deletes the existing domain mapping on the specified site.
+//
+// - name: The name of the domain association to delete.
 func (r *SitesDomainsService) Delete(name string) *SitesDomainsDeleteCall {
 	c := &SitesDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8124,7 +8265,7 @@ func (c *SitesDomainsDeleteCall) Header() http.Header {
 
 func (c *SitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8223,6 +8364,8 @@ type SitesDomainsGetCall struct {
 }
 
 // Get: Gets a domain mapping on the specified site.
+//
+// - name: The name of the domain configuration to get.
 func (r *SitesDomainsService) Get(name string) *SitesDomainsGetCall {
 	c := &SitesDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8266,7 +8409,7 @@ func (c *SitesDomainsGetCall) Header() http.Header {
 
 func (c *SitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8370,6 +8513,9 @@ type SitesDomainsListCall struct {
 }
 
 // List: Lists the domains for the specified site.
+//
+// - parent: The parent for which to list domains, in the format: sites/
+//   site-name.
 func (r *SitesDomainsService) List(parent string) *SitesDomainsListCall {
 	c := &SitesDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8427,7 +8573,7 @@ func (c *SitesDomainsListCall) Header() http.Header {
 
 func (c *SitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8564,6 +8710,9 @@ type SitesDomainsUpdateCall struct {
 
 // Update: Updates the specified domain mapping, creating the mapping as
 // if it does not exist.
+//
+// - name: The name of the domain association to update or create, if an
+//   association doesn't already exist.
 func (r *SitesDomainsService) Update(name string, domain *Domain) *SitesDomainsUpdateCall {
 	c := &SitesDomainsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8598,7 +8747,7 @@ func (c *SitesDomainsUpdateCall) Header() http.Header {
 
 func (c *SitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8706,6 +8855,10 @@ type SitesReleasesCreateCall struct {
 
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
+//
+// - parent: The site or channel to which the release belongs, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesReleasesService) Create(parent string, release *Release) *SitesReleasesCreateCall {
 	c := &SitesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8750,7 +8903,7 @@ func (c *SitesReleasesCreateCall) Header() http.Header {
 
 func (c *SitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8865,6 +9018,10 @@ type SitesReleasesListCall struct {
 // site or channel. When used to list releases for a site, this list
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
+//
+// - parent: The site or channel for which to list releases, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesReleasesService) List(parent string) *SitesReleasesListCall {
 	c := &SitesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8925,7 +9082,7 @@ func (c *SitesReleasesListCall) Header() http.Header {
 
 func (c *SitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9062,6 +9219,9 @@ type SitesVersionsCloneCall struct {
 
 // Clone: Creates a new version on the specified target site using the
 // content of the specified version.
+//
+// - parent: The target site for the cloned version, in the format:
+//   sites/ SITE_ID.
 func (r *SitesVersionsService) Clone(parent string, cloneversionrequest *CloneVersionRequest) *SitesVersionsCloneCall {
 	c := &SitesVersionsCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9096,7 +9256,7 @@ func (c *SitesVersionsCloneCall) Header() http.Header {
 
 func (c *SitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9203,6 +9363,9 @@ type SitesVersionsCreateCall struct {
 }
 
 // Create: Creates a new version for the specified site.
+//
+// - parent: The site in which to create the version, in the format:
+//   sites/ SITE_ID.
 func (r *SitesVersionsService) Create(parent string, version *Version) *SitesVersionsCreateCall {
 	c := &SitesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9253,7 +9416,7 @@ func (c *SitesVersionsCreateCall) Header() http.Header {
 
 func (c *SitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9370,6 +9533,9 @@ type SitesVersionsDeleteCall struct {
 }
 
 // Delete: Deletes the specified version.
+//
+// - name: The fully-qualified resource name for the version, in the
+//   format: sites/SITE_ID/versions/VERSION_ID.
 func (r *SitesVersionsService) Delete(name string) *SitesVersionsDeleteCall {
 	c := &SitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9403,7 +9569,7 @@ func (c *SitesVersionsDeleteCall) Header() http.Header {
 
 func (c *SitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9504,6 +9670,10 @@ type SitesVersionsListCall struct {
 // List: Lists the versions that have been created for the specified
 // site. This list includes versions for both the default `live` channel
 // and any active preview channels for the specified site.
+//
+// - parent: The site or channel for which to list versions, in either
+//   of the following formats: - sites/SITE_ID -
+//   sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesVersionsService) List(parent string) *SitesVersionsListCall {
 	c := &SitesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9575,7 +9745,7 @@ func (c *SitesVersionsListCall) Header() http.Header {
 
 func (c *SitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9721,6 +9891,11 @@ type SitesVersionsPatchCall struct {
 // (../sites.versions#versionstatus) transitions for a version are from
 // `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
 // status of a version to `DELETED`.
+//
+// - name: The fully-qualified resource name for the version, in the
+//   format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+//   the response body when you call `CreateVersion`
+//   (sites.versions/create).
 func (r *SitesVersionsService) Patch(name string, version *Version) *SitesVersionsPatchCall {
 	c := &SitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9765,7 +9940,7 @@ func (c *SitesVersionsPatchCall) Header() http.Header {
 
 func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9879,6 +10054,9 @@ type SitesVersionsPopulateFilesCall struct {
 
 // PopulateFiles:  Adds content files to the specified version. Each
 // file must be under 2 GB.
+//
+// - parent: The version to which to add files, in the format:
+//   sites/SITE_ID /versions/VERSION_ID.
 func (r *SitesVersionsService) PopulateFiles(parent string, populateversionfilesrequest *PopulateVersionFilesRequest) *SitesVersionsPopulateFilesCall {
 	c := &SitesVersionsPopulateFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9913,7 +10091,7 @@ func (c *SitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *SitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10021,6 +10199,9 @@ type SitesVersionsFilesListCall struct {
 
 // List: Lists the remaining files to be uploaded for the specified
 // version.
+//
+// - parent: The version for which to list files, in the format:
+//   sites/SITE_ID /versions/VERSION_ID.
 func (r *SitesVersionsFilesService) List(parent string) *SitesVersionsFilesListCall {
 	c := &SitesVersionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10095,7 +10276,7 @@ func (c *SitesVersionsFilesListCall) Header() http.Header {
 
 func (c *SitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

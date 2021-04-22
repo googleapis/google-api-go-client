@@ -156,7 +156,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The maximum number of results to return. If not set, the service will select a default.",
+                  "description": "The maximum number of results to return. If not set, the service selects a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -365,7 +365,7 @@
       }
     }
   },
-  "revision": "20210319",
+  "revision": "20210415",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -526,17 +526,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDocumentaiUiv1beta3SampleDatasetMetadata": {
-      "description": "The long running operation metadata for SampleDataset.",
-      "id": "GoogleCloudDocumentaiUiv1beta3SampleDatasetMetadata",
-      "properties": {
-        "commonMetadata": {
-          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
-          "description": "The basic metadata of the long running operation."
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata": {
       "description": "The long running operation metadata for set default processor version method.",
       "id": "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata",
@@ -577,12 +566,22 @@
       "description": "The dataset validation information. This includes any and all errors with documents and the dataset.",
       "id": "GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation",
       "properties": {
+        "datasetErrorCount": {
+          "description": "The total number of dataset errors.",
+          "format": "int32",
+          "type": "integer"
+        },
         "datasetErrors": {
           "description": "Error information for the dataset as a whole. A maximum of 10 dataset errors will be returned. A single dataset error is terminal for training.",
           "items": {
             "$ref": "GoogleRpcStatus"
           },
           "type": "array"
+        },
+        "documentErrorCount": {
+          "description": "The total number of document errors.",
+          "format": "int32",
+          "type": "integer"
         },
         "documentErrors": {
           "description": "Error information pertaining to specific documents. A maximum of 10 document errors will be returned. Any document with errors will not be used throughout training.",
@@ -1839,7 +1838,7 @@
           "type": "number"
         },
         "y": {
-          "description": "Y coordinate.",
+          "description": "Y coordinate (starts from the top of the image).",
           "format": "float",
           "type": "number"
         }
@@ -1930,7 +1929,7 @@
           "type": "integer"
         },
         "y": {
-          "description": "Y coordinate.",
+          "description": "Y coordinate (starts from the top of the image).",
           "format": "int32",
           "type": "integer"
         }
@@ -2989,7 +2988,7 @@
           "type": "number"
         },
         "y": {
-          "description": "Y coordinate.",
+          "description": "Y coordinate (starts from the top of the image).",
           "format": "float",
           "type": "number"
         }
@@ -3080,7 +3079,7 @@
           "type": "integer"
         },
         "y": {
-          "description": "Y coordinate.",
+          "description": "Y coordinate (starts from the top of the image).",
           "format": "int32",
           "type": "integer"
         }
@@ -4348,7 +4347,7 @@
           "type": "number"
         },
         "y": {
-          "description": "Y coordinate.",
+          "description": "Y coordinate (starts from the top of the image).",
           "format": "float",
           "type": "number"
         }
@@ -4494,7 +4493,7 @@
           "type": "integer"
         },
         "y": {
-          "description": "Y coordinate.",
+          "description": "Y coordinate (starts from the top of the image).",
           "format": "int32",
           "type": "integer"
         }

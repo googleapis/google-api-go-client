@@ -161,18 +161,7 @@ type BiddersBiddingFunctionsService struct {
 // TURTLEDOVE simulation experiment bidding flow.
 type BiddingFunction struct {
 	// BiddingFunction: The raw Javascript source code of the bidding
-	// function. The function takes in a Javascript object, `inputs`, that
-	// contains the following named fields: `openrtbContextualBidRequest` OR
-	// `googleContextualBidRequest`, `customContextualSignal`,
-	// `interestBasedBidData`, `interestGroupData`, `recentImpressionAges`,
-	// and returns the bid price CPM (double). Example: ``` /* Returns a bid
-	// price CPM (double). * * @param {Object} inputs an object with the *
-	// following named fields: * - openrtbContextualBidRequest * OR
-	// googleContextualBidRequest * - customContextualSignal * -
-	// interestBasedBidData * - interestGroupData * - recentImpressionAges
-	// */ function biddingFunction(inputs) { ... return
-	// inputs.interestBasedBidData.cpm *
-	// inputs.customContextualSignals.placementMultiplier; } ```
+	// function.
 	BiddingFunction string `json:"biddingFunction,omitempty"`
 
 	// Name: The name of the bidding function that must follow the pattern:
@@ -259,6 +248,9 @@ type BiddersBiddingFunctionsCreateCall struct {
 }
 
 // Create: Creates a new bidding function.
+//
+// - parent: The name of the bidder for which to create the bidding
+//   function. Format: `bidders/{bidderAccountId}`.
 func (r *BiddersBiddingFunctionsService) Create(parent string, biddingfunction *BiddingFunction) *BiddersBiddingFunctionsCreateCall {
 	c := &BiddersBiddingFunctionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -293,7 +285,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -400,6 +392,9 @@ type BiddersBiddingFunctionsListCall struct {
 
 // List: Lists the bidding functions that a bidder currently has
 // registered.
+//
+// - parent: Name of the bidder whose bidding functions will be listed.
+//   Format: `bidders/{bidder_account_id}`.
 func (r *BiddersBiddingFunctionsService) List(parent string) *BiddersBiddingFunctionsListCall {
 	c := &BiddersBiddingFunctionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -459,7 +454,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

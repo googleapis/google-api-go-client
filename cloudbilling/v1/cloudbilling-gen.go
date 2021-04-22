@@ -1430,7 +1430,7 @@ func (c *BillingAccountsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1526,6 +1526,9 @@ type BillingAccountsGetCall struct {
 // Get: Gets information about a billing account. The current
 // authenticated user must be a viewer of the billing account
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+// - name: The resource name of the billing account to retrieve. For
+//   example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	c := &BillingAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1569,7 +1572,7 @@ func (c *BillingAccountsGetCall) Header() http.Header {
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1675,6 +1678,10 @@ type BillingAccountsGetIamPolicyCall struct {
 // The caller must have the `billing.accounts.getIamPolicy` permission
 // on the account, which is often given to billing account viewers
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsGetIamPolicyCall {
 	c := &BillingAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1732,7 +1739,7 @@ func (c *BillingAccountsGetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1913,7 +1920,7 @@ func (c *BillingAccountsListCall) Header() http.Header {
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2046,6 +2053,8 @@ type BillingAccountsPatchCall struct {
 // typically given to the administrator
 // (https://cloud.google.com/billing/docs/how-to/billing-access) of the
 // billing account.
+//
+// - name: The name of the billing account resource to be updated.
 func (r *BillingAccountsService) Patch(name string, billingaccount *BillingAccount) *BillingAccountsPatchCall {
 	c := &BillingAccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2087,7 +2096,7 @@ func (c *BillingAccountsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2204,6 +2213,10 @@ type BillingAccountsSetIamPolicyCall struct {
 // `billing.accounts.setIamPolicy` permission on the account, which is
 // often given to billing account administrators
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *BillingAccountsSetIamPolicyCall {
 	c := &BillingAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2238,7 +2251,7 @@ func (c *BillingAccountsSetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2348,6 +2361,10 @@ type BillingAccountsTestIamPermissionsCall struct {
 // account. This method takes the resource and a set of permissions as
 // input and returns the subset of the input permissions that the caller
 // is allowed for that resource.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *BillingAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *BillingAccountsTestIamPermissionsCall {
 	c := &BillingAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2382,7 +2399,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Header() http.Header {
 
 func (c *BillingAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,6 +2511,10 @@ type BillingAccountsProjectsListCall struct {
 // `billing.resourceAssociations.list` IAM permission, which is often
 // given to billing account viewers
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+// - name: The resource name of the billing account associated with the
+//   projects that you want to list. For example,
+//   `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
 	c := &BillingAccountsProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2554,7 +2575,7 @@ func (c *BillingAccountsProjectsListCall) Header() http.Header {
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2691,6 +2712,9 @@ type ProjectsGetBillingInfoCall struct {
 // GetBillingInfo: Gets the billing information for a project. The
 // current authenticated user must have permission to view the project
 // (https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo ).
+//
+// - name: The resource name of the project for which billing
+//   information is retrieved. For example, `projects/tokyo-rain-123`.
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
 	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2734,7 +2758,7 @@ func (c *ProjectsGetBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2864,6 +2888,10 @@ type ProjectsUpdateBillingInfoCall struct {
 // billing on the project: any paid resources used by the project will
 // be shut down. Thus, unless you wish to disable billing, you should
 // always call this method with the name of an *open* billing account.
+//
+// - name: The resource name of the project associated with the billing
+//   information that you want to update. For example,
+//   `projects/tokyo-rain-123`.
 func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *ProjectBillingInfo) *ProjectsUpdateBillingInfoCall {
 	c := &ProjectsUpdateBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2898,7 +2926,7 @@ func (c *ProjectsUpdateBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3062,7 +3090,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3185,6 +3213,8 @@ type ServicesSkusListCall struct {
 }
 
 // List: Lists all publicly available SKUs for a given cloud service.
+//
+// - parent: The name of the service. Example: "services/DA34-426B-A397".
 func (r *ServicesSkusService) List(parent string) *ServicesSkusListCall {
 	c := &ServicesSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3275,7 +3305,7 @@ func (c *ServicesSkusListCall) Header() http.Header {
 
 func (c *ServicesSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

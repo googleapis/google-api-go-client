@@ -373,6 +373,8 @@ type ProjectsProfilesCreateCall struct {
 // response status. To a gRPC client, the extension will be return as a
 // binary-serialized proto in the trailing metadata item named
 // "google.rpc.retryinfo-bin".
+//
+// - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) Create(parent string, createprofilerequest *CreateProfileRequest) *ProjectsProfilesCreateCall {
 	c := &ProjectsProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -407,7 +409,7 @@ func (c *ProjectsProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -517,6 +519,8 @@ type ProjectsProfilesCreateOfflineCall struct {
 // CreateOffline: CreateOfflineProfile creates a new profile resource in
 // the offline mode. The client provides the profile to create along
 // with the profile bytes, the server records it.
+//
+// - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) CreateOffline(parent string, profile *Profile) *ProjectsProfilesCreateOfflineCall {
 	c := &ProjectsProfilesCreateOfflineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -551,7 +555,7 @@ func (c *ProjectsProfilesCreateOfflineCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateOfflineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -662,6 +666,9 @@ type ProjectsProfilesPatchCall struct {
 // profile resource created in the online mode. Updating the bytes for
 // profiles created in the offline mode is currently not supported: the
 // profile content must be provided at the time of the profile creation.
+//
+// - name: Output only. Opaque, server-assigned, unique ID for this
+//   profile.
 func (r *ProjectsProfilesService) Patch(name string, profile *Profile) *ProjectsProfilesPatchCall {
 	c := &ProjectsProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -706,7 +713,7 @@ func (c *ProjectsProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

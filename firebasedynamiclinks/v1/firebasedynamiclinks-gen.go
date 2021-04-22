@@ -1422,7 +1422,7 @@ func (c *ManagedShortLinksCreateCall) Header() http.Header {
 
 func (c *ManagedShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1553,7 +1553,7 @@ func (c *ShortLinksCreateCall) Header() http.Header {
 
 func (c *ShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1648,6 +1648,8 @@ type V1GetLinkStatsCall struct {
 // GetLinkStats: Fetches analytics stats of a short Dynamic Link for a
 // given duration. Metrics include number of clicks, redirects,
 // installs, app first opens, and app reopens.
+//
+// - dynamicLink: Dynamic Link URL. e.g. https://abcd.app.goo.gl/wxyz.
 func (r *V1Service) GetLinkStats(dynamicLink string) *V1GetLinkStatsCall {
 	c := &V1GetLinkStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dynamicLink = dynamicLink
@@ -1705,7 +1707,7 @@ func (c *V1GetLinkStatsCall) Header() http.Header {
 
 func (c *V1GetLinkStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1849,7 +1851,7 @@ func (c *V1InstallAttributionCall) Header() http.Header {
 
 func (c *V1InstallAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1976,7 +1978,7 @@ func (c *V1ReopenAttributionCall) Header() http.Header {
 
 func (c *V1ReopenAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

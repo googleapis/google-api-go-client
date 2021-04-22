@@ -427,6 +427,8 @@ type TasklistsDeleteCall struct {
 }
 
 // Delete: Deletes the authenticated user's specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
 	c := &TasklistsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -460,7 +462,7 @@ func (c *TasklistsDeleteCall) Header() http.Header {
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -529,6 +531,8 @@ type TasklistsGetCall struct {
 }
 
 // Get: Returns the authenticated user's specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 	c := &TasklistsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -572,7 +576,7 @@ func (c *TasklistsGetCall) Header() http.Header {
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -706,7 +710,7 @@ func (c *TasklistsInsertCall) Header() http.Header {
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -855,7 +859,7 @@ func (c *TasklistsListCall) Header() http.Header {
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -978,6 +982,8 @@ type TasklistsPatchCall struct {
 
 // Patch: Updates the authenticated user's specified task list. This
 // method supports patch semantics.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
 	c := &TasklistsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1012,7 +1018,7 @@ func (c *TasklistsPatchCall) Header() http.Header {
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1117,6 +1123,8 @@ type TasklistsUpdateCall struct {
 }
 
 // Update: Updates the authenticated user's specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *TasklistsUpdateCall {
 	c := &TasklistsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1151,7 +1159,7 @@ func (c *TasklistsUpdateCall) Header() http.Header {
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1257,6 +1265,8 @@ type TasksClearCall struct {
 // Clear: Clears all completed tasks from the specified task list. The
 // affected tasks will be marked as 'hidden' and no longer be returned
 // by default when retrieving all tasks for a task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 	c := &TasksClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1290,7 +1300,7 @@ func (c *TasksClearCall) Header() http.Header {
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1359,6 +1369,9 @@ type TasksDeleteCall struct {
 }
 
 // Delete: Deletes the specified task from the task list.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall {
 	c := &TasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1393,7 +1406,7 @@ func (c *TasksDeleteCall) Header() http.Header {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1471,6 +1484,9 @@ type TasksGetCall struct {
 }
 
 // Get: Returns the specified task.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
 	c := &TasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1515,7 +1531,7 @@ func (c *TasksGetCall) Header() http.Header {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1624,6 +1640,8 @@ type TasksInsertCall struct {
 }
 
 // Insert: Creates a new task on the specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 	c := &TasksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1673,7 +1691,7 @@ func (c *TasksInsertCall) Header() http.Header {
 
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1788,6 +1806,8 @@ type TasksListCall struct {
 }
 
 // List: Returns all tasks in the specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasksService) List(tasklistid string) *TasksListCall {
 	c := &TasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1912,7 +1932,7 @@ func (c *TasksListCall) Header() http.Header {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2087,6 +2107,9 @@ type TasksMoveCall struct {
 // Move: Moves the specified task to another position in the task list.
 // This can include putting it as a child task under a new parent and/or
 // move it to a different position among its sibling tasks.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 	c := &TasksMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2137,7 +2160,7 @@ func (c *TasksMoveCall) Header() http.Header {
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2254,6 +2277,9 @@ type TasksPatchCall struct {
 
 // Patch: Updates the specified task. This method supports patch
 // semantics.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *TasksPatchCall {
 	c := &TasksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2289,7 +2315,7 @@ func (c *TasksPatchCall) Header() http.Header {
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2403,6 +2429,9 @@ type TasksUpdateCall struct {
 }
 
 // Update: Updates the specified task.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *TasksUpdateCall {
 	c := &TasksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2438,7 +2467,7 @@ func (c *TasksUpdateCall) Header() http.Header {
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

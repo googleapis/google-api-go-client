@@ -539,7 +539,7 @@ type CreateProjectMetadata struct {
 	// CreateTime: Creation time of the project creation workflow.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Gettable: True if the project can be retrieved using GetProject. No
+	// Gettable: True if the project can be retrieved using `GetProject`. No
 	// other operations on the project are guaranteed to work until the
 	// project creation is complete.
 	Gettable bool `json:"gettable,omitempty"`
@@ -570,6 +570,11 @@ func (s *CreateProjectMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateTagBindingMetadata: Runtime operation information for creating
+// a TagValue.
+type CreateTagBindingMetadata struct {
+}
+
 // CreateTagKeyMetadata: Runtime operation information for creating a
 // TagKey.
 type CreateTagKeyMetadata struct {
@@ -581,18 +586,23 @@ type CreateTagValueMetadata struct {
 }
 
 // DeleteFolderMetadata: A status object which is used as the `metadata`
-// field for the Operation returned by DeleteFolder.
+// field for the `Operation` returned by `DeleteFolder`.
 type DeleteFolderMetadata struct {
 }
 
 // DeleteOrganizationMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by DeleteOrganization.
+// `metadata` field for the operation returned by DeleteOrganization.
 type DeleteOrganizationMetadata struct {
 }
 
 // DeleteProjectMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by DeleteProject.
+// `metadata` field for the Operation returned by `DeleteProject`.
 type DeleteProjectMetadata struct {
+}
+
+// DeleteTagBindingMetadata: Runtime operation information for deleting
+// a TagBinding.
+type DeleteTagBindingMetadata struct {
 }
 
 // DeleteTagKeyMetadata: Runtime operation information for deleting a
@@ -677,41 +687,41 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Folder: A Folder in an Organization's resource hierarchy, used to
-// organize that Organization's resources.
+// Folder: A folder in an organization's resource hierarchy, used to
+// organize that organization's resources.
 type Folder struct {
-	// CreateTime: Output only. Timestamp when the Folder was created.
+	// CreateTime: Output only. Timestamp when the folder was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DeleteTime: Output only. Timestamp when the Folder was requested to
+	// DeleteTime: Output only. Timestamp when the folder was requested to
 	// be deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
 	// DisplayName: The folder's display name. A folder's display name must
-	// be unique amongst its siblings, e.g. no two folders with the same
-	// parent can share the same display name. The display name must start
-	// and end with a letter or digit, may contain letters, digits, spaces,
-	// hyphens and underscores and can be no longer than 30 characters. This
-	// is captured by the regular expression: `[\p{L}\p{N}]([\p{L}\p{N}_-
-	// ]{0,28}[\p{L}\p{N}])?`.
+	// be unique amongst its siblings. For example, no two folders with the
+	// same parent can share the same display name. The display name must
+	// start and end with a letter or digit, may contain letters, digits,
+	// spaces, hyphens and underscores and can be no longer than 30
+	// characters. This is captured by the regular expression:
+	// `[\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?`.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Etag: Output only. A checksum computed by the server based on the
-	// current value of the Folder resource. This may be sent on update and
+	// current value of the folder resource. This may be sent on update and
 	// delete requests to ensure the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Name: Output only. The resource name of the Folder. Its format is
+	// Name: Output only. The resource name of the folder. Its format is
 	// `folders/{folder_id}`, for example: "folders/1234".
 	Name string `json:"name,omitempty"`
 
-	// Parent: Required. The Folder's parent's resource name. Updates to the
-	// folder's parent must be performed via MoveFolder.
+	// Parent: Required. The folder's parent's resource name. Updates to the
+	// folder's parent must be performed using MoveFolder.
 	Parent string `json:"parent,omitempty"`
 
 	// State: Output only. The lifecycle state of the folder. Updates to the
-	// state must be performed via DeleteFolder and UndeleteFolder.
+	// state must be performed using DeleteFolder and UndeleteFolder.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -720,7 +730,7 @@ type Folder struct {
 	// user.
 	State string `json:"state,omitempty"`
 
-	// UpdateTime: Output only. Timestamp when the Folder was last modified.
+	// UpdateTime: Output only. Timestamp when the folder was last modified.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -973,7 +983,7 @@ func (s *Lien) MarshalJSON() ([]byte, error) {
 
 // ListFoldersResponse: The ListFolders response message.
 type ListFoldersResponse struct {
-	// Folders: A possibly paginated list of Folders that are direct
+	// Folders: A possibly paginated list of folders that are direct
 	// descendants of the specified parent resource.
 	Folders []*Folder `json:"folders,omitempty"`
 
@@ -1209,7 +1219,7 @@ func (s *ListTagValuesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MoveFolderMetadata: Metadata pertaining to the Folder move process.
+// MoveFolderMetadata: Metadata pertaining to the folder move process.
 type MoveFolderMetadata struct {
 	// DestinationParent: The resource name of the folder or organization to
 	// move the folder to.
@@ -1247,9 +1257,9 @@ func (s *MoveFolderMetadata) MarshalJSON() ([]byte, error) {
 
 // MoveFolderRequest: The MoveFolder request message.
 type MoveFolderRequest struct {
-	// DestinationParent: Required. The resource name of the Folder or
-	// Organization to reparent the folder under. Must be of the form
-	// `folders/{folder_id}` or `organizations/{org_id}`.
+	// DestinationParent: Required. The resource name of the folder or
+	// organization which should be the folder's new parent. Must be of the
+	// form `folders/{folder_id}` or `organizations/{org_id}`.
 	DestinationParent string `json:"destinationParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationParent")
@@ -1374,7 +1384,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Organization: The root node in the resource hierarchy to which a
-// particular entity's (e.g., company) resources belong.
+// particular entity's (a company, for example) resources belong.
 type Organization struct {
 	// CreateTime: Output only. Timestamp when the Organization was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1388,10 +1398,10 @@ type Organization struct {
 	DirectoryCustomerId string `json:"directoryCustomerId,omitempty"`
 
 	// DisplayName: Output only. A human-readable string that refers to the
-	// Organization in the GCP Console UI. This string is set by the server
-	// and cannot be changed. The string will be set to the primary domain
-	// (for example, "google.com") of the G Suite customer that owns the
-	// organization.
+	// organization in the Google Cloud Console. This string is set by the
+	// server and cannot be changed. The string will be set to the primary
+	// domain (for example, "google.com") of the Google Workspace customer
+	// that owns the organization.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Etag: Output only. A checksum computed by the server based on the
@@ -1411,7 +1421,7 @@ type Organization struct {
 	//   "STATE_UNSPECIFIED" - Unspecified state. This is only useful for
 	// distinguishing unset values.
 	//   "ACTIVE" - The normal and active state.
-	//   "DELETE_REQUESTED" - The Organization has been marked for deletion
+	//   "DELETE_REQUESTED" - The organization has been marked for deletion
 	// by the user.
 	State string `json:"state,omitempty"`
 
@@ -1550,8 +1560,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Project: A Project is a high-level Google Cloud Platform entity. It
-// is a container for ACLs, APIs, App Engine Apps, VMs, and other Google
+// Project: A project is a high-level Google Cloud entity. It is a
+// container for ACLs, APIs, App Engine Apps, VMs, and other Google
 // Cloud Platform resources.
 type Project struct {
 	// CreateTime: Output only. Creation time.
@@ -1561,7 +1571,7 @@ type Project struct {
 	// requested for deletion.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
-	// DisplayName: Optional. A user-assigned display name of the Project.
+	// DisplayName: Optional. A user-assigned display name of the project.
 	// When present it must be between 4 to 30 characters. Allowed
 	// characters are: lowercase and uppercase letters, numbers, hyphen,
 	// single-quote, double-quote, space, and exclamation point. Example:
@@ -1574,7 +1584,7 @@ type Project struct {
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Labels: Optional. The labels associated with this Project. Label keys
+	// Labels: Optional. The labels associated with this project. Label keys
 	// must be between 1 and 63 characters long and must conform to the
 	// following regular expression: \a-z\ (\[-a-z0-9\]*\[a-z0-9\])?. Label
 	// values must be between 0 and 63 characters long and must conform to
@@ -1585,7 +1595,7 @@ type Project struct {
 	// "myBusinessDimension" : "businessValue"
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. The unique resource name of the Project. It is an
+	// Name: Output only. The unique resource name of the project. It is an
 	// int64 generated number prefixed by "projects/". Example:
 	// `projects/415104041262`
 	Name string `json:"name,omitempty"`
@@ -1594,13 +1604,13 @@ type Project struct {
 	// `organizations/123` or `folders/876`.
 	Parent string `json:"parent,omitempty"`
 
-	// ProjectId: Immutable. The unique, user-assigned id of the Project. It
+	// ProjectId: Immutable. The unique, user-assigned id of the project. It
 	// must be 6 to 30 lowercase ASCII letters, digits, or hyphens. It must
 	// start with a letter. Trailing hyphens are prohibited. Example:
 	// `tokyo-rain-123`
 	ProjectId string `json:"projectId,omitempty"`
 
-	// State: Output only. The Project lifecycle state.
+	// State: Output only. The project lifecycle state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state. This is only used/useful
@@ -2126,7 +2136,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // UndeleteFolderMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by UndeleteFolder.
+// `metadata` field for the `Operation` returned by `UndeleteFolder`.
 type UndeleteFolderMetadata struct {
 }
 
@@ -2140,7 +2150,7 @@ type UndeleteOrganizationMetadata struct {
 }
 
 // UndeleteProjectMetadata: A status object which is used as the
-// `metadata` field for the Operation returned by UndeleteProject.
+// `metadata` field for the Operation returned by `UndeleteProject`.
 type UndeleteProjectMetadata struct {
 }
 
@@ -2179,24 +2189,25 @@ type FoldersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Folder in the resource hierarchy. Returns an
-// Operation which can be used to track the progress of the folder
-// creation workflow. Upon success the Operation.response field will be
-// populated with the created Folder. In order to succeed, the addition
-// of this new Folder must not violate the Folder naming, height or
-// fanout constraints. + The Folder's display_name must be distinct from
-// all other Folders that share its parent. + The addition of the Folder
-// must not cause the active Folder hierarchy to exceed a height of 10.
-// Note, the full active + deleted Folder hierarchy is allowed to reach
-// a height of 20; this provides additional headroom when moving folders
-// that contain deleted folders. + The addition of the Folder must not
-// cause the total number of Folders under its parent to exceed 300. If
-// the operation fails due to a folder constraint violation, some errors
-// may be returned by the CreateFolder request, with status code
-// FAILED_PRECONDITION and an error description. Other folder constraint
-// violations will be communicated in the Operation, with the specific
-// PreconditionFailure returned via the details list in the
-// Operation.error field. The caller must have
+// Create: Creates a folder in the resource hierarchy. Returns an
+// `Operation` which can be used to track the progress of the folder
+// creation workflow. Upon success, the `Operation.response` field will
+// be populated with the created Folder. In order to succeed, the
+// addition of this new folder must not violate the folder naming,
+// height, or fanout constraints. + The folder's `display_name` must be
+// distinct from all other folders that share its parent. + The addition
+// of the folder must not cause the active folder hierarchy to exceed a
+// height of 10. Note, the full active + deleted folder hierarchy is
+// allowed to reach a height of 20; this provides additional headroom
+// when moving folders that contain deleted folders. + The addition of
+// the folder must not cause the total number of folders under its
+// parent to exceed 300. If the operation fails due to a folder
+// constraint violation, some errors may be returned by the
+// `CreateFolder` request, with status code `FAILED_PRECONDITION` and an
+// error description. Other folder constraint violations will be
+// communicated in the `Operation`, with the specific
+// `PreconditionFailure` returned in the details list in the
+// `Operation.error` field. The caller must have
 // `resourcemanager.folders.create` permission on the identified parent.
 func (r *FoldersService) Create(folder *Folder) *FoldersCreateCall {
 	c := &FoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2231,7 +2242,7 @@ func (c *FoldersCreateCall) Header() http.Header {
 
 func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2292,7 +2303,7 @@ func (c *FoldersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Folder in the resource hierarchy. Returns an Operation which can be used to track the progress of the folder creation workflow. Upon success the Operation.response field will be populated with the created Folder. In order to succeed, the addition of this new Folder must not violate the Folder naming, height or fanout constraints. + The Folder's display_name must be distinct from all other Folders that share its parent. + The addition of the Folder must not cause the active Folder hierarchy to exceed a height of 10. Note, the full active + deleted Folder hierarchy is allowed to reach a height of 20; this provides additional headroom when moving folders that contain deleted folders. + The addition of the Folder must not cause the total number of Folders under its parent to exceed 300. If the operation fails due to a folder constraint violation, some errors may be returned by the CreateFolder request, with status code FAILED_PRECONDITION and an error description. Other folder constraint violations will be communicated in the Operation, with the specific PreconditionFailure returned via the details list in the Operation.error field. The caller must have `resourcemanager.folders.create` permission on the identified parent.",
+	//   "description": "Creates a folder in the resource hierarchy. Returns an `Operation` which can be used to track the progress of the folder creation workflow. Upon success, the `Operation.response` field will be populated with the created Folder. In order to succeed, the addition of this new folder must not violate the folder naming, height, or fanout constraints. + The folder's `display_name` must be distinct from all other folders that share its parent. + The addition of the folder must not cause the active folder hierarchy to exceed a height of 10. Note, the full active + deleted folder hierarchy is allowed to reach a height of 20; this provides additional headroom when moving folders that contain deleted folders. + The addition of the folder must not cause the total number of folders under its parent to exceed 300. If the operation fails due to a folder constraint violation, some errors may be returned by the `CreateFolder` request, with status code `FAILED_PRECONDITION` and an error description. Other folder constraint violations will be communicated in the `Operation`, with the specific `PreconditionFailure` returned in the details list in the `Operation.error` field. The caller must have `resourcemanager.folders.create` permission on the identified parent.",
 	//   "flatPath": "v3/folders",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.create",
@@ -2322,13 +2333,16 @@ type FoldersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Requests deletion of a Folder. The Folder is moved into the
+// Delete: Requests deletion of a folder. The folder is moved into the
 // DELETE_REQUESTED state immediately, and is deleted approximately 30
-// days later. This method may only be called on an empty Folder, where
-// a Folder is empty if it doesn't contain any Folders or Projects in
+// days later. This method may only be called on an empty folder, where
+// a folder is empty if it doesn't contain any folders or projects in
 // the ACTIVE state. If called on a folder in DELETE_REQUESTED state the
-// result will be a no-op success. The caller must have
+// operation will result in a no-op success. The caller must have
 // `resourcemanager.folders.delete` permission on the identified folder.
+//
+// - name: The resource name of the folder to be deleted. Must be of the
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2362,7 +2376,7 @@ func (c *FoldersDeleteCall) Header() http.Header {
 
 func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2421,7 +2435,7 @@ func (c *FoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Requests deletion of a Folder. The Folder is moved into the DELETE_REQUESTED state immediately, and is deleted approximately 30 days later. This method may only be called on an empty Folder, where a Folder is empty if it doesn't contain any Folders or Projects in the ACTIVE state. If called on a folder in DELETE_REQUESTED state the result will be a no-op success. The caller must have `resourcemanager.folders.delete` permission on the identified folder.",
+	//   "description": "Requests deletion of a folder. The folder is moved into the DELETE_REQUESTED state immediately, and is deleted approximately 30 days later. This method may only be called on an empty folder, where a folder is empty if it doesn't contain any folders or projects in the ACTIVE state. If called on a folder in DELETE_REQUESTED state the operation will result in a no-op success. The caller must have `resourcemanager.folders.delete` permission on the identified folder.",
 	//   "flatPath": "v3/folders/{foldersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.folders.delete",
@@ -2430,7 +2444,7 @@ func (c *FoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Folder to be deleted. Must be of the form `folders/{folder_id}`.",
+	//       "description": "Required. The resource name of the folder to be deleted. Must be of the form `folders/{folder_id}`.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -2459,10 +2473,13 @@ type FoldersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a Folder identified by the supplied resource name.
-// Valid Folder resource names have the format `folders/{folder_id}`
+// Get: Retrieves a folder identified by the supplied resource name.
+// Valid folder resource names have the format `folders/{folder_id}`
 // (for example, `folders/1234`). The caller must have
 // `resourcemanager.folders.get` permission on the identified folder.
+//
+// - name: The resource name of the folder to retrieve. Must be of the
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2506,7 +2523,7 @@ func (c *FoldersGetCall) Header() http.Header {
 
 func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2568,7 +2585,7 @@ func (c *FoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a Folder identified by the supplied resource name. Valid Folder resource names have the format `folders/{folder_id}` (for example, `folders/1234`). The caller must have `resourcemanager.folders.get` permission on the identified folder.",
+	//   "description": "Retrieves a folder identified by the supplied resource name. Valid folder resource names have the format `folders/{folder_id}` (for example, `folders/1234`). The caller must have `resourcemanager.folders.get` permission on the identified folder.",
 	//   "flatPath": "v3/folders/{foldersId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.folders.get",
@@ -2577,7 +2594,7 @@ func (c *FoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Folder to retrieve. Must be of the form `folders/{folder_id}`.",
+	//       "description": "Required. The resource name of the folder to retrieve. Must be of the form `folders/{folder_id}`.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -2607,12 +2624,16 @@ type FoldersGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a Folder. The
+// GetIamPolicy: Gets the access control policy for a folder. The
 // returned policy may be empty if no such policy or resource exists.
-// The `resource` field should be the Folder's resource name, e.g.
-// "folders/1234". The caller must have
+// The `resource` field should be the folder's resource name, for
+// example: "folders/1234". The caller must have
 // `resourcemanager.folders.getIamPolicy` permission on the identified
 // folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2647,7 +2668,7 @@ func (c *FoldersGetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +2732,7 @@ func (c *FoldersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Folder. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the Folder's resource name, e.g. \"folders/1234\". The caller must have `resourcemanager.folders.getIamPolicy` permission on the identified folder.",
+	//   "description": "Gets the access control policy for a folder. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the folder's resource name, for example: \"folders/1234\". The caller must have `resourcemanager.folders.getIamPolicy` permission on the identified folder.",
 	//   "flatPath": "v3/folders/{foldersId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.getIamPolicy",
@@ -2752,10 +2773,10 @@ type FoldersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Folders that are direct descendants of supplied
-// parent resource. List provides a strongly consistent view of the
-// Folders underneath the specified parent resource. List returns
-// Folders sorted based upon the (ascending) lexical ordering of their
+// List: Lists the folders that are direct descendants of supplied
+// parent resource. `list()` provides a strongly consistent view of the
+// folders underneath the specified parent resource. `list()` returns
+// folders sorted based upon the (ascending) lexical ordering of their
 // display_name. The caller must have `resourcemanager.folders.list`
 // permission on the identified parent.
 func (r *FoldersService) List() *FoldersListCall {
@@ -2764,7 +2785,7 @@ func (r *FoldersService) List() *FoldersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of Folders to return in the response. If unspecified, server picks an
+// of folders to return in the response. If unspecified, server picks an
 // appropriate default.
 func (c *FoldersListCall) PageSize(pageSize int64) *FoldersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -2780,7 +2801,7 @@ func (c *FoldersListCall) PageToken(pageToken string) *FoldersListCall {
 }
 
 // Parent sets the optional parameter "parent": Required. The resource
-// name of the Organization or Folder whose Folders are being listed.
+// name of the organization or folder whose folders are being listed.
 // Must be of the form `folders/{folder_id}` or
 // `organizations/{org_id}`. Access to this method is controlled by
 // checking the `resourcemanager.folders.list` permission on the
@@ -2791,7 +2812,7 @@ func (c *FoldersListCall) Parent(parent string) *FoldersListCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Folders in the DELETE_REQUESTED state should be returned.
+// whether folders in the DELETE_REQUESTED state should be returned.
 // Defaults to false.
 func (c *FoldersListCall) ShowDeleted(showDeleted bool) *FoldersListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
@@ -2835,7 +2856,7 @@ func (c *FoldersListCall) Header() http.Header {
 
 func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2894,14 +2915,14 @@ func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Folders that are direct descendants of supplied parent resource. List provides a strongly consistent view of the Folders underneath the specified parent resource. List returns Folders sorted based upon the (ascending) lexical ordering of their display_name. The caller must have `resourcemanager.folders.list` permission on the identified parent.",
+	//   "description": "Lists the folders that are direct descendants of supplied parent resource. `list()` provides a strongly consistent view of the folders underneath the specified parent resource. `list()` returns folders sorted based upon the (ascending) lexical ordering of their display_name. The caller must have `resourcemanager.folders.list` permission on the identified parent.",
 	//   "flatPath": "v3/folders",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.folders.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of Folders to return in the response. If unspecified, server picks an appropriate default.",
+	//       "description": "Optional. The maximum number of folders to return in the response. If unspecified, server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2912,12 +2933,12 @@ func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Organization or Folder whose Folders are being listed. Must be of the form `folders/{folder_id}` or `organizations/{org_id}`. Access to this method is controlled by checking the `resourcemanager.folders.list` permission on the `parent`.",
+	//       "description": "Required. The resource name of the organization or folder whose folders are being listed. Must be of the form `folders/{folder_id}` or `organizations/{org_id}`. Access to this method is controlled by checking the `resourcemanager.folders.list` permission on the `parent`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Optional. Controls whether Folders in the DELETE_REQUESTED state should be returned. Defaults to false.",
+	//       "description": "Optional. Controls whether folders in the DELETE_REQUESTED state should be returned. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2966,20 +2987,24 @@ type FoldersMoveCall struct {
 	header_           http.Header
 }
 
-// Move: Moves a Folder under a new resource parent. Returns an
-// Operation which can be used to track the progress of the folder move
-// workflow. Upon success the Operation.response field will be populated
-// with the moved Folder. Upon failure, a FolderOperationError
-// categorizing the failure cause will be returned - if the failure
-// occurs synchronously then the FolderOperationError will be returned
-// via the Status.details field and if it occurs asynchronously then the
-// FolderOperation will be returned via the Operation.error field. In
-// addition, the Operation.metadata field will be populated with a
-// FolderOperation message as an aid to stateless clients. Folder moves
-// will be rejected if they violate either the naming, height or fanout
-// constraints described in the CreateFolder documentation. The caller
-// must have `resourcemanager.folders.move` permission on the folder's
-// current and proposed new parent.
+// Move: Moves a folder under a new resource parent. Returns an
+// `Operation` which can be used to track the progress of the folder
+// move workflow. Upon success, the `Operation.response` field will be
+// populated with the moved folder. Upon failure, a
+// `FolderOperationError` categorizing the failure cause will be
+// returned - if the failure occurs synchronously then the
+// `FolderOperationError` will be returned in the `Status.details`
+// field. If it occurs asynchronously, then the FolderOperation will be
+// returned in the `Operation.error` field. In addition, the
+// `Operation.metadata` field will be populated with a `FolderOperation`
+// message as an aid to stateless clients. Folder moves will be rejected
+// if they violate either the naming, height, or fanout constraints
+// described in the CreateFolder documentation. The caller must have
+// `resourcemanager.folders.move` permission on the folder's current and
+// proposed new parent.
+//
+// - name: The resource name of the Folder to move. Must be of the form
+//   folders/{folder_id}.
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3014,7 +3039,7 @@ func (c *FoldersMoveCall) Header() http.Header {
 
 func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,7 +3103,7 @@ func (c *FoldersMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves a Folder under a new resource parent. Returns an Operation which can be used to track the progress of the folder move workflow. Upon success the Operation.response field will be populated with the moved Folder. Upon failure, a FolderOperationError categorizing the failure cause will be returned - if the failure occurs synchronously then the FolderOperationError will be returned via the Status.details field and if it occurs asynchronously then the FolderOperation will be returned via the Operation.error field. In addition, the Operation.metadata field will be populated with a FolderOperation message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.",
+	//   "description": "Moves a folder under a new resource parent. Returns an `Operation` which can be used to track the progress of the folder move workflow. Upon success, the `Operation.response` field will be populated with the moved folder. Upon failure, a `FolderOperationError` categorizing the failure cause will be returned - if the failure occurs synchronously then the `FolderOperationError` will be returned in the `Status.details` field. If it occurs asynchronously, then the FolderOperation will be returned in the `Operation.error` field. In addition, the `Operation.metadata` field will be populated with a `FolderOperation` message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height, or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.",
 	//   "flatPath": "v3/folders/{foldersId}:move",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.move",
@@ -3119,18 +3144,21 @@ type FoldersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a Folder, changing its display_name. Changes to the
-// folder display_name will be rejected if they violate either the
-// display_name formatting rules or naming constraints described in the
-// CreateFolder documentation. The Folder's display_name must start and
-// end with a letter or digit, may contain letters, digits, spaces,
-// hyphens and underscores and can be between 3 and 30 characters. This
-// is captured by the regular expression:
+// Patch: Updates a folder, changing its `display_name`. Changes to the
+// folder `display_name` will be rejected if they violate either the
+// `display_name` formatting rules or the naming constraints described
+// in the CreateFolder documentation. The folder's `display_name` must
+// start and end with a letter or digit, may contain letters, digits,
+// spaces, hyphens and underscores and can be between 3 and 30
+// characters. This is captured by the regular expression:
 // `\p{L}\p{N}{1,28}[\p{L}\p{N}]`. The caller must have
 // `resourcemanager.folders.update` permission on the identified folder.
 // If the update fails due to the unique name constraint then a
-// PreconditionFailure explaining this violation will be returned in the
-// Status.details field.
+// `PreconditionFailure` explaining this violation will be returned in
+// the Status.details field.
+//
+// - name: Output only. The resource name of the folder. Its format is
+//   `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3172,7 +3200,7 @@ func (c *FoldersPatchCall) Header() http.Header {
 
 func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3236,7 +3264,7 @@ func (c *FoldersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Folder, changing its display_name. Changes to the folder display_name will be rejected if they violate either the display_name formatting rules or naming constraints described in the CreateFolder documentation. The Folder's display_name must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be between 3 and 30 characters. This is captured by the regular expression: `\\p{L}\\p{N}{1,28}[\\p{L}\\p{N}]`. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a PreconditionFailure explaining this violation will be returned in the Status.details field.",
+	//   "description": "Updates a folder, changing its `display_name`. Changes to the folder `display_name` will be rejected if they violate either the `display_name` formatting rules or the naming constraints described in the CreateFolder documentation. The folder's `display_name` must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be between 3 and 30 characters. This is captured by the regular expression: `\\p{L}\\p{N}{1,28}[\\p{L}\\p{N}]`. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a `PreconditionFailure` explaining this violation will be returned in the Status.details field.",
 	//   "flatPath": "v3/folders/{foldersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudresourcemanager.folders.patch",
@@ -3245,7 +3273,7 @@ func (c *FoldersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the Folder. Its format is `folders/{folder_id}`, for example: \"folders/1234\".",
+	//       "description": "Output only. The resource name of the folder. Its format is `folders/{folder_id}`, for example: \"folders/1234\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -3283,9 +3311,9 @@ type FoldersSearchCall struct {
 }
 
 // Search: Search for folders that match specific filter criteria.
-// Search provides an eventually consistent view of the folders a user
-// has access to which meet the specified filter criteria. This will
-// only return folders on which the caller has the permission
+// `search()` provides an eventually consistent view of the folders a
+// user has access to which meet the specified filter criteria. This
+// will only return folders on which the caller has the permission
 // `resourcemanager.folders.get`.
 func (r *FoldersService) Search() *FoldersSearchCall {
 	c := &FoldersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3309,25 +3337,25 @@ func (c *FoldersSearchCall) PageToken(pageToken string) *FoldersSearchCall {
 }
 
 // Query sets the optional parameter "query": Search criteria used to
-// select the Folders to return. If no search criteria is specified then
+// select the folders to return. If no search criteria is specified then
 // all accessible folders will be returned. Query expressions can be
 // used to restrict results based upon displayName, state and parent,
 // where the operators `=` (`:`) `NOT`, `AND` and `OR` can be used along
-// with the suffix wildcard symbol `*`. The displayName field in a query
-// expression should use escaped quotes for values that include
+// with the suffix wildcard symbol `*`. The `displayName` field in a
+// query expression should use escaped quotes for values that include
 // whitespace to prevent unexpected behavior. | Field | Description |
 // |-------------------------|----------------------------------------|
 // | displayName | Filters by displayName. | | parent | Filters by
-// parent (e.g. folders/123). | | state, lifecycleState | Filters by
-// state. | Some example queries are: * Query `displayName=Test*`
-// returns Folder resources whose display name starts with "Test". *
-// Query `state=ACTIVE` returns Folder resources with `state` set to
-// `ACTIVE`. * Query `parent=folders/123` returns Folder resources that
-// have `folders/123` as a parent resource. * Query `parent=folders/123
-// AND state=ACTIVE` returns active Folder resources that have
-// `folders/123` as a parent resource. * Query `displayName=\\"Test
-// String\\" returns Folder resources with display names that include
-// both "Test" and "String".
+// parent (for example: folders/123). | | state, lifecycleState |
+// Filters by state. | Some example queries are: * Query
+// `displayName=Test*` returns Folder resources whose display name
+// starts with "Test". * Query `state=ACTIVE` returns Folder resources
+// with `state` set to `ACTIVE`. * Query `parent=folders/123` returns
+// Folder resources that have `folders/123` as a parent resource. *
+// Query `parent=folders/123 AND state=ACTIVE` returns active Folder
+// resources that have `folders/123` as a parent resource. * Query
+// `displayName=\\"Test String\\" returns Folder resources with display
+// names that include both "Test" and "String".
 func (c *FoldersSearchCall) Query(query string) *FoldersSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -3370,7 +3398,7 @@ func (c *FoldersSearchCall) Header() http.Header {
 
 func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3429,7 +3457,7 @@ func (c *FoldersSearchCall) Do(opts ...googleapi.CallOption) (*SearchFoldersResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Search for folders that match specific filter criteria. Search provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.",
+	//   "description": "Search for folders that match specific filter criteria. `search()` provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.",
 	//   "flatPath": "v3/folders:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.folders.search",
@@ -3447,7 +3475,7 @@ func (c *FoldersSearchCall) Do(opts ...googleapi.CallOption) (*SearchFoldersResp
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. Search criteria used to select the Folders to return. If no search criteria is specified then all accessible folders will be returned. Query expressions can be used to restrict results based upon displayName, state and parent, where the operators `=` (`:`) `NOT`, `AND` and `OR` can be used along with the suffix wildcard symbol `*`. The displayName field in a query expression should use escaped quotes for values that include whitespace to prevent unexpected behavior. | Field | Description | |-------------------------|----------------------------------------| | displayName | Filters by displayName. | | parent | Filters by parent (e.g. folders/123). | | state, lifecycleState | Filters by state. | Some example queries are: * Query `displayName=Test*` returns Folder resources whose display name starts with \"Test\". * Query `state=ACTIVE` returns Folder resources with `state` set to `ACTIVE`. * Query `parent=folders/123` returns Folder resources that have `folders/123` as a parent resource. * Query `parent=folders/123 AND state=ACTIVE` returns active Folder resources that have `folders/123` as a parent resource. * Query `displayName=\\\\\"Test String\\\\\"` returns Folder resources with display names that include both \"Test\" and \"String\".",
+	//       "description": "Optional. Search criteria used to select the folders to return. If no search criteria is specified then all accessible folders will be returned. Query expressions can be used to restrict results based upon displayName, state and parent, where the operators `=` (`:`) `NOT`, `AND` and `OR` can be used along with the suffix wildcard symbol `*`. The `displayName` field in a query expression should use escaped quotes for values that include whitespace to prevent unexpected behavior. | Field | Description | |-------------------------|----------------------------------------| | displayName | Filters by displayName. | | parent | Filters by parent (for example: folders/123). | | state, lifecycleState | Filters by state. | Some example queries are: * Query `displayName=Test*` returns Folder resources whose display name starts with \"Test\". * Query `state=ACTIVE` returns Folder resources with `state` set to `ACTIVE`. * Query `parent=folders/123` returns Folder resources that have `folders/123` as a parent resource. * Query `parent=folders/123 AND state=ACTIVE` returns active Folder resources that have `folders/123` as a parent resource. * Query `displayName=\\\\\"Test String\\\\\"` returns Folder resources with display names that include both \"Test\" and \"String\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3496,11 +3524,15 @@ type FoldersSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a Folder, replacing
-// any existing policy. The `resource` field should be the Folder's
-// resource name, e.g. "folders/1234". The caller must have
+// SetIamPolicy: Sets the access control policy on a folder, replacing
+// any existing policy. The `resource` field should be the folder's
+// resource name, for example: "folders/1234". The caller must have
 // `resourcemanager.folders.setIamPolicy` permission on the identified
 // folder.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3535,7 +3567,7 @@ func (c *FoldersSetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3599,7 +3631,7 @@ func (c *FoldersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Folder, replacing any existing policy. The `resource` field should be the Folder's resource name, e.g. \"folders/1234\". The caller must have `resourcemanager.folders.setIamPolicy` permission on the identified folder.",
+	//   "description": "Sets the access control policy on a folder, replacing any existing policy. The `resource` field should be the folder's resource name, for example: \"folders/1234\". The caller must have `resourcemanager.folders.setIamPolicy` permission on the identified folder.",
 	//   "flatPath": "v3/folders/{foldersId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.setIamPolicy",
@@ -3641,9 +3673,13 @@ type FoldersTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified Folder. The `resource` field should be the Folder's
-// resource name, e.g. "folders/1234". There are no permissions required
-// for making this API call.
+// specified folder. The `resource` field should be the folder's
+// resource name, for example: "folders/1234". There are no permissions
+// required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3678,7 +3714,7 @@ func (c *FoldersTestIamPermissionsCall) Header() http.Header {
 
 func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3742,7 +3778,7 @@ func (c *FoldersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified Folder. The `resource` field should be the Folder's resource name, e.g. \"folders/1234\". There are no permissions required for making this API call.",
+	//   "description": "Returns permissions that a caller has on the specified folder. The `resource` field should be the folder's resource name, for example: \"folders/1234\". There are no permissions required for making this API call.",
 	//   "flatPath": "v3/folders/{foldersId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.testIamPermissions",
@@ -3783,14 +3819,18 @@ type FoldersUndeleteCall struct {
 	header_               http.Header
 }
 
-// Undelete: Cancels the deletion request for a Folder. This method may
-// be called on a Folder in any state. If Folder is in ACTIVE state the
-// result will be a no-op success. In order to succeed, the Folder's
-// parent must be in the ACTIVE state. In addition, reintroducing the
-// folder into the tree must not violate folder naming, height and
-// fanout constraints described in the CreateFolder documentation. The
-// caller must have `resourcemanager.folders.undelete` permission on the
-// identified folder.
+// Undelete: Cancels the deletion request for a folder. This method may
+// be called on a folder in any state. If the folder is in the ACTIVE
+// state the result will be a no-op success. In order to succeed, the
+// folder's parent must be in the ACTIVE state. In addition,
+// reintroducing the folder into the tree must not violate folder
+// naming, height, and fanout constraints described in the CreateFolder
+// documentation. The caller must have
+// `resourcemanager.folders.undelete` permission on the identified
+// folder.
+//
+// - name: The resource name of the folder to undelete. Must be of the
+//   form `folders/{folder_id}`.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3825,7 +3865,7 @@ func (c *FoldersUndeleteCall) Header() http.Header {
 
 func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3889,7 +3929,7 @@ func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels the deletion request for a Folder. This method may be called on a Folder in any state. If Folder is in ACTIVE state the result will be a no-op success. In order to succeed, the Folder's parent must be in the ACTIVE state. In addition, reintroducing the folder into the tree must not violate folder naming, height and fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.undelete` permission on the identified folder.",
+	//   "description": "Cancels the deletion request for a folder. This method may be called on a folder in any state. If the folder is in the ACTIVE state the result will be a no-op success. In order to succeed, the folder's parent must be in the ACTIVE state. In addition, reintroducing the folder into the tree must not violate folder naming, height, and fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.undelete` permission on the identified folder.",
 	//   "flatPath": "v3/folders/{foldersId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.undelete",
@@ -3898,7 +3938,7 @@ func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Folder to undelete. Must be of the form `folders/{folder_id}`.",
+	//       "description": "Required. The resource name of the folder to undelete. Must be of the form `folders/{folder_id}`.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -3967,7 +4007,7 @@ func (c *LiensCreateCall) Header() http.Header {
 
 func (c *LiensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4063,6 +4103,8 @@ type LiensDeleteCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.updateLiens`.
+//
+// - name: The name/identifier of the Lien to delete.
 func (r *LiensService) Delete(nameid string) *LiensDeleteCall {
 	c := &LiensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4096,7 +4138,7 @@ func (c *LiensDeleteCall) Header() http.Header {
 
 func (c *LiensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4198,6 +4240,8 @@ type LiensGetCall struct {
 // permission on the `parent` resource. For example, a Lien with a
 // `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.get`
+//
+// - name: The name/identifier of the Lien.
 func (r *LiensService) Get(nameid string) *LiensGetCall {
 	c := &LiensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4241,7 +4285,7 @@ func (c *LiensGetCall) Header() http.Header {
 
 func (c *LiensGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4412,7 +4456,7 @@ func (c *LiensListCall) Header() http.Header {
 
 func (c *LiensListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4541,6 +4585,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4584,7 +4630,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4685,8 +4731,13 @@ type OrganizationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Fetches an Organization resource identified by the specified
+// Get: Fetches an organization resource identified by the specified
 // resource name.
+//
+// - name: The resource name of the Organization to fetch. This is the
+//   organization's relative path in the API, formatted as
+//   "organizations/[organizationId]". For example,
+//   "organizations/1234".
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4730,7 +4781,7 @@ func (c *OrganizationsGetCall) Header() http.Header {
 
 func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4792,7 +4843,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches an Organization resource identified by the specified resource name.",
+	//   "description": "Fetches an organization resource identified by the specified resource name.",
 	//   "flatPath": "v3/organizations/{organizationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.organizations.get",
@@ -4831,12 +4882,16 @@ type OrganizationsGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for an Organization
-// resource. May be empty if no such policy or resource exists. The
-// `resource` field should be the organization's resource name, e.g.
-// "organizations/123". Authorization requires the Google IAM permission
-// `resourcemanager.organizations.getIamPolicy` on the specified
-// organization
+// GetIamPolicy: Gets the access control policy for an organization
+// resource. The policy may be empty if no such policy or resource
+// exists. The `resource` field should be the organization's resource
+// name, for example: "organizations/123". Authorization requires the
+// IAM permission `resourcemanager.organizations.getIamPolicy` on the
+// specified organization.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4871,7 +4926,7 @@ func (c *OrganizationsGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4935,7 +4990,7 @@ func (c *OrganizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for an Organization resource. May be empty if no such policy or resource exists. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". Authorization requires the Google IAM permission `resourcemanager.organizations.getIamPolicy` on the specified organization",
+	//   "description": "Gets the access control policy for an organization resource. The policy may be empty if no such policy or resource exists. The `resource` field should be the organization's resource name, for example: \"organizations/123\". Authorization requires the IAM permission `resourcemanager.organizations.getIamPolicy` on the specified organization.",
 	//   "flatPath": "v3/organizations/{organizationsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.getIamPolicy",
@@ -4976,9 +5031,9 @@ type OrganizationsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Searches Organization resources that are visible to the user
-// and satisfy the specified filter. This method returns Organizations
-// in an unspecified order. New Organizations do not necessarily appear
+// Search: Searches organization resources that are visible to the user
+// and satisfy the specified filter. This method returns organizations
+// in an unspecified order. New organizations do not necessarily appear
 // at the end of the results, and may take a small amount of time to
 // appear. Search will only return organizations on which the user has
 // the permission `resourcemanager.organizations.get`
@@ -4988,7 +5043,7 @@ func (r *OrganizationsService) Search() *OrganizationsSearchCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of Organizations to return in the response. If unspecified, server
+// of organizations to return in the response. If unspecified, server
 // picks an appropriate default.
 func (c *OrganizationsSearchCall) PageSize(pageSize int64) *OrganizationsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -5057,7 +5112,7 @@ func (c *OrganizationsSearchCall) Header() http.Header {
 
 func (c *OrganizationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5116,14 +5171,14 @@ func (c *OrganizationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchOrgan
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches Organization resources that are visible to the user and satisfy the specified filter. This method returns Organizations in an unspecified order. New Organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get`",
+	//   "description": "Searches organization resources that are visible to the user and satisfy the specified filter. This method returns organizations in an unspecified order. New organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get`",
 	//   "flatPath": "v3/organizations:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.organizations.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of Organizations to return in the response. If unspecified, server picks an appropriate default.",
+	//       "description": "Optional. The maximum number of organizations to return in the response. If unspecified, server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5183,12 +5238,16 @@ type OrganizationsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on an Organization
+// SetIamPolicy: Sets the access control policy on an organization
 // resource. Replaces any existing policy. The `resource` field should
-// be the organization's resource name, e.g. "organizations/123".
-// Authorization requires the Google IAM permission
+// be the organization's resource name, for example:
+// "organizations/123". Authorization requires the IAM permission
 // `resourcemanager.organizations.setIamPolicy` on the specified
-// organization
+// organization.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5223,7 +5282,7 @@ func (c *OrganizationsSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5287,7 +5346,7 @@ func (c *OrganizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on an Organization resource. Replaces any existing policy. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". Authorization requires the Google IAM permission `resourcemanager.organizations.setIamPolicy` on the specified organization",
+	//   "description": "Sets the access control policy on an organization resource. Replaces any existing policy. The `resource` field should be the organization's resource name, for example: \"organizations/123\". Authorization requires the IAM permission `resourcemanager.organizations.setIamPolicy` on the specified organization.",
 	//   "flatPath": "v3/organizations/{organizationsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.setIamPolicy",
@@ -5328,10 +5387,14 @@ type OrganizationsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified Organization. The `resource` field should be the
-// organization's resource name, e.g. "organizations/123". There are no
-// permissions required for making this API call.
+// TestIamPermissions: Returns the permissions that a caller has on the
+// specified organization. The `resource` field should be the
+// organization's resource name, for example: "organizations/123". There
+// are no permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5366,7 +5429,7 @@ func (c *OrganizationsTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5430,7 +5493,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified Organization. The `resource` field should be the organization's resource name, e.g. \"organizations/123\". There are no permissions required for making this API call.",
+	//   "description": "Returns the permissions that a caller has on the specified organization. The `resource` field should be the organization's resource name, for example: \"organizations/123\". There are no permissions required for making this API call.",
 	//   "flatPath": "v3/organizations/{organizationsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.testIamPermissions",
@@ -5471,11 +5534,11 @@ type ProjectsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Request that a new Project be created. The result is an
-// Operation which can be used to track the creation process. This
+// Create: Request that a new project be created. The result is an
+// `Operation` which can be used to track the creation process. This
 // process usually takes a few seconds, but can sometimes take much
-// longer. The tracking Operation is automatically deleted after a few
-// hours, so there is no need to call DeleteOperation.
+// longer. The tracking `Operation` is automatically deleted after a few
+// hours, so there is no need to call `DeleteOperation`.
 func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
 	c := &ProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5509,7 +5572,7 @@ func (c *ProjectsCreateCall) Header() http.Header {
 
 func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5570,7 +5633,7 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Request that a new Project be created. The result is an Operation which can be used to track the creation process. This process usually takes a few seconds, but can sometimes take much longer. The tracking Operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.",
+	//   "description": "Request that a new project be created. The result is an `Operation` which can be used to track the creation process. This process usually takes a few seconds, but can sometimes take much longer. The tracking `Operation` is automatically deleted after a few hours, so there is no need to call `DeleteOperation`.",
 	//   "flatPath": "v3/projects",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.create",
@@ -5600,20 +5663,23 @@ type ProjectsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Marks the Project identified by the specified `name` (for
+// Delete: Marks the project identified by the specified `name` (for
 // example, `projects/415104041262`) for deletion. This method will only
-// affect the Project if it has a lifecycle state of ACTIVE. This method
+// affect the project if it has a lifecycle state of ACTIVE. This method
 // changes the Project's lifecycle state from ACTIVE to
 // DELETE_REQUESTED. The deletion starts at an unspecified time, at
 // which point the Project is no longer accessible. Until the deletion
 // completes, you can check the lifecycle state checked by retrieving
-// the Project with GetProject, and the Project remains visible to
+// the project with GetProject, and the project remains visible to
 // ListProjects. However, you cannot update the project. After the
-// deletion completes, the Project is not retrievable by the GetProject,
+// deletion completes, the project is not retrievable by the GetProject,
 // ListProjects, and SearchProjects methods. This method behaves
-// idempotently (eg., deleting a `DELETE_REQUESTED` project will not be
-// an error, but also won't do anything). The caller must have delete
-// permissions for this Project.
+// idempotently, such that deleting a `DELETE_REQUESTED` project will
+// not cause an error, but also won't do anything. The caller must have
+// `resourcemanager.projects.delete` permissions for this project.
+//
+// - name: The name of the Project (for example,
+//   `projects/415104041262`).
 func (r *ProjectsService) Delete(name string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5647,7 +5713,7 @@ func (c *ProjectsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5706,7 +5772,7 @@ func (c *ProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the Project identified by the specified `name` (for example, `projects/415104041262`) for deletion. This method will only affect the Project if it has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the Project is no longer accessible. Until the deletion completes, you can check the lifecycle state checked by retrieving the Project with GetProject, and the Project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the Project is not retrievable by the GetProject, ListProjects, and SearchProjects methods. This method behaves idempotently (eg., deleting a `DELETE_REQUESTED` project will not be an error, but also won't do anything). The caller must have delete permissions for this Project.",
+	//   "description": "Marks the project identified by the specified `name` (for example, `projects/415104041262`) for deletion. This method will only affect the project if it has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the Project is no longer accessible. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with GetProject, and the project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the project is not retrievable by the GetProject, ListProjects, and SearchProjects methods. This method behaves idempotently, such that deleting a `DELETE_REQUESTED` project will not cause an error, but also won't do anything. The caller must have `resourcemanager.projects.delete` permissions for this project.",
 	//   "flatPath": "v3/projects/{projectsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.projects.delete",
@@ -5744,9 +5810,12 @@ type ProjectsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves the Project identified by the specified `name` (for
-// example, `projects/415104041262`). The caller must have read
-// permissions for this Project.
+// Get: Retrieves the project identified by the specified `name` (for
+// example, `projects/415104041262`). The caller must have
+// `resourcemanager.projects.get` permission for this project.
+//
+// - name: The name of the project (for example,
+//   `projects/415104041262`).
 func (r *ProjectsService) Get(name string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5790,7 +5859,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5852,7 +5921,7 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the Project identified by the specified `name` (for example, `projects/415104041262`). The caller must have read permissions for this Project.",
+	//   "description": "Retrieves the project identified by the specified `name` (for example, `projects/415104041262`). The caller must have `resourcemanager.projects.get` permission for this project.",
 	//   "flatPath": "v3/projects/{projectsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.projects.get",
@@ -5892,8 +5961,12 @@ type ProjectsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Returns the IAM access control policy for the specified
-// Project. Permission is denied if the policy or the resource does not
+// project. Permission is denied if the policy or the resource do not
 // exist.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5928,7 +6001,7 @@ func (c *ProjectsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5992,7 +6065,7 @@ func (c *ProjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the IAM access control policy for the specified Project. Permission is denied if the policy or the resource does not exist.",
+	//   "description": "Returns the IAM access control policy for the specified project. Permission is denied if the policy or the resource do not exist.",
 	//   "flatPath": "v3/projects/{projectsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.getIamPolicy",
@@ -6033,20 +6106,20 @@ type ProjectsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Projects that are direct children of the specified folder
-// or organization resource. List provides a strongly consistent view of
-// the Projects underneath the specified parent resource. List returns
-// Projects sorted based upon the (ascending) lexical ordering of their
-// `display_name`. The caller must have `resourcemanager.projects.list`
-// permission on the identified parent.
+// List: Lists projects that are direct children of the specified folder
+// or organization resource. `list()` provides a strongly consistent
+// view of the projects underneath the specified parent resource.
+// `list()` returns projects sorted based upon the (ascending) lexical
+// ordering of their `display_name`. The caller must have
+// `resourcemanager.projects.list` permission on the identified parent.
 func (r *ProjectsService) List() *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of Projects to return in the response. The server can return fewer
-// Projects than requested. If unspecified, server picks an appropriate
+// of projects to return in the response. The server can return fewer
+// projects than requested. If unspecified, server picks an appropriate
 // default.
 func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -6071,7 +6144,7 @@ func (c *ProjectsListCall) Parent(parent string) *ProjectsListCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Indicate that
-// Projects in the `DELETE_REQUESTED` state should also be returned.
+// projects in the `DELETE_REQUESTED` state should also be returned.
 // Normally only `ACTIVE` projects are returned.
 func (c *ProjectsListCall) ShowDeleted(showDeleted bool) *ProjectsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
@@ -6115,7 +6188,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6174,14 +6247,14 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ListProjectsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Projects that are direct children of the specified folder or organization resource. List provides a strongly consistent view of the Projects underneath the specified parent resource. List returns Projects sorted based upon the (ascending) lexical ordering of their `display_name`. The caller must have `resourcemanager.projects.list` permission on the identified parent.",
+	//   "description": "Lists projects that are direct children of the specified folder or organization resource. `list()` provides a strongly consistent view of the projects underneath the specified parent resource. `list()` returns projects sorted based upon the (ascending) lexical ordering of their `display_name`. The caller must have `resourcemanager.projects.list` permission on the identified parent.",
 	//   "flatPath": "v3/projects",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.projects.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of Projects to return in the response. The server can return fewer Projects than requested. If unspecified, server picks an appropriate default.",
+	//       "description": "Optional. The maximum number of projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6197,7 +6270,7 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ListProjectsRespon
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Optional. Indicate that Projects in the `DELETE_REQUESTED` state should also be returned. Normally only `ACTIVE` projects are returned.",
+	//       "description": "Optional. Indicate that projects in the `DELETE_REQUESTED` state should also be returned. Normally only `ACTIVE` projects are returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6246,13 +6319,18 @@ type ProjectsMoveCall struct {
 	header_            http.Header
 }
 
-// Move: Move a Project under a new resource parent. Returns an
-// operation which can be used to track the process of the Project move
-// workflow. Upon success, the Operation.response field will be
-// populated with the moved Project. The caller must have
-// `resourcemanager.projects.update` permission on the Project and have
-// `resourcemanager.projects.move` permission on the Project's current
-// and proposed new parent.
+// Move: Move a project to another place in your resource hierarchy,
+// under a new resource parent. Returns an operation which can be used
+// to track the process of the project move workflow. Upon success, the
+// `Operation.response` field will be populated with the moved project.
+// The caller must have `resourcemanager.projects.update` permission on
+// the project and have `resourcemanager.projects.move` permission on
+// the project's current and proposed new parent. If project has no
+// current parent, or it currently does not have an associated
+// organization resource, you will also need the
+// `resourcemanager.projects.setIamPolicy` permission in the project.
+//
+// - name: The name of the project to move.
 func (r *ProjectsService) Move(name string, moveprojectrequest *MoveProjectRequest) *ProjectsMoveCall {
 	c := &ProjectsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6287,7 +6365,7 @@ func (c *ProjectsMoveCall) Header() http.Header {
 
 func (c *ProjectsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6351,7 +6429,7 @@ func (c *ProjectsMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Move a Project under a new resource parent. Returns an operation which can be used to track the process of the Project move workflow. Upon success, the Operation.response field will be populated with the moved Project. The caller must have `resourcemanager.projects.update` permission on the Project and have `resourcemanager.projects.move` permission on the Project's current and proposed new parent. ",
+	//   "description": "Move a project to another place in your resource hierarchy, under a new resource parent. Returns an operation which can be used to track the process of the project move workflow. Upon success, the `Operation.response` field will be populated with the moved project. The caller must have `resourcemanager.projects.update` permission on the project and have `resourcemanager.projects.move` permission on the project's current and proposed new parent. If project has no current parent, or it currently does not have an associated organization resource, you will also need the `resourcemanager.projects.setIamPolicy` permission in the project. ",
 	//   "flatPath": "v3/projects/{projectsId}:move",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.move",
@@ -6392,11 +6470,15 @@ type ProjectsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the attributes of the Project identified by the
-// specified `name` (for example, `projects/415104041262`). At present
-// this is only useful for updating the display_name and labels.
-// Deleting all labels requires an update mask for labels field. The
-// caller must have modify permissions for this Project.
+// Patch: Updates the `display_name` and labels of the project
+// identified by the specified `name` (for example,
+// `projects/415104041262`). Deleting all labels requires an update mask
+// for labels field. The caller must have
+// `resourcemanager.projects.update` permission for this project.
+//
+// - name: Output only. The unique resource name of the project. It is
+//   an int64 generated number prefixed by "projects/". Example:
+//   `projects/415104041262`.
 func (r *ProjectsService) Patch(name string, project *Project) *ProjectsPatchCall {
 	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6438,7 +6520,7 @@ func (c *ProjectsPatchCall) Header() http.Header {
 
 func (c *ProjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6502,7 +6584,7 @@ func (c *ProjectsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the attributes of the Project identified by the specified `name` (for example, `projects/415104041262`). At present this is only useful for updating the display_name and labels. Deleting all labels requires an update mask for labels field. The caller must have modify permissions for this Project.",
+	//   "description": "Updates the `display_name` and labels of the project identified by the specified `name` (for example, `projects/415104041262`). Deleting all labels requires an update mask for labels field. The caller must have `resourcemanager.projects.update` permission for this project.",
 	//   "flatPath": "v3/projects/{projectsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudresourcemanager.projects.patch",
@@ -6511,7 +6593,7 @@ func (c *ProjectsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The unique resource name of the Project. It is an int64 generated number prefixed by \"projects/\". Example: `projects/415104041262`",
+	//       "description": "Output only. The unique resource name of the project. It is an int64 generated number prefixed by \"projects/\". Example: `projects/415104041262`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6548,9 +6630,9 @@ type ProjectsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search for Projects that the caller has the
-// `resourcemanager.projects.get` permission on and satisfy the
-// specified query. This method returns Projects in an unspecified
+// Search: Search for projects that the caller has both
+// `resourcemanager.projects.get` permission on, and also satisfy the
+// specified query. This method returns projects in an unspecified
 // order. This method is eventually consistent with project mutations;
 // this means that a newly created project may not appear in the results
 // or recent updates to an existing project may not be reflected in the
@@ -6562,8 +6644,8 @@ func (r *ProjectsService) Search() *ProjectsSearchCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of Projects to return in the response. The server can return fewer
-// Projects than requested. If unspecified, server picks an appropriate
+// of projects to return in the response. The server can return fewer
+// projects than requested. If unspecified, server picks an appropriate
 // default.
 func (c *ProjectsSearchCall) PageSize(pageSize int64) *ProjectsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -6585,14 +6667,14 @@ func (c *ProjectsSearchCall) PageToken(pageToken string) *ProjectsSearchCall {
 // the fields. Some eligible fields are: | Field | Description |
 // |-------------------------|-------------------------------------------
 // ---| | displayName, name | Filters by displayName. | | parent |
-// Project's parent. (e.g. folders/123, organizations/*) Prefer parent
-// field over parent.type and parent.id. | | parent.type | Parent's
-// type: `folder` or `organization`. | | parent.id | Parent's id number
-// (e.g. 123) | | id, projectId | Filters by projectId. | | state,
-// lifecycleState | Filters by state. | | labels | Filters by label name
-// or value. | | labels. (where *key* is the name of a label) | Filters
-// by label name. | Search expressions are case insensitive. Some
-// examples queries: | Query | Description |
+// Project's parent (for example: folders/123, organizations/*). Prefer
+// parent field over parent.type and parent.id.| | parent.type |
+// Parent's type: `folder` or `organization`. | | parent.id | Parent's
+// id number (for example: 123) | | id, projectId | Filters by
+// projectId. | | state, lifecycleState | Filters by state. | | labels |
+// Filters by label name or value. | | labels.\ (where *key* is the name
+// of a label) | Filters by label name.| Search expressions are case
+// insensitive. Some examples queries: | Query | Description |
 // |------------------|--------------------------------------------------
 // ---| | name:how* | The project's name starts with "how". | |
 // name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL |
@@ -6600,7 +6682,7 @@ func (c *ProjectsSearchCall) PageToken(pageToken string) *ProjectsSearchCall {
 // labels.color:* | The project has the label `color`. | |
 // labels.color:red | The project's label `color` has the value `red`. |
 // | labels.color:red labels.size:big | The project's label `color` has
-// the value `red` and its label `size` has the value `big`. | If no
+// the value `red` and its label `size` has the value `big`.| If no
 // query is specified, the call will return projects for which the user
 // has the `resourcemanager.projects.get` permission.
 func (c *ProjectsSearchCall) Query(query string) *ProjectsSearchCall {
@@ -6645,7 +6727,7 @@ func (c *ProjectsSearchCall) Header() http.Header {
 
 func (c *ProjectsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6704,14 +6786,14 @@ func (c *ProjectsSearchCall) Do(opts ...googleapi.CallOption) (*SearchProjectsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Search for Projects that the caller has the `resourcemanager.projects.get` permission on and satisfy the specified query. This method returns Projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.",
+	//   "description": "Search for projects that the caller has both `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.",
 	//   "flatPath": "v3/projects:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.projects.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of Projects to return in the response. The server can return fewer Projects than requested. If unspecified, server picks an appropriate default.",
+	//       "description": "Optional. The maximum number of projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6722,7 +6804,7 @@ func (c *ProjectsSearchCall) Do(opts ...googleapi.CallOption) (*SearchProjectsRe
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, the it will return results that match any of the fields. Some eligible fields are: | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent. (e.g. folders/123, organizations/*) Prefer parent field over parent.type and parent.id. | | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (e.g. 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels. (where *key* is the name of a label) | Filters by label name. | Search expressions are case insensitive. Some examples queries: | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` and its label `size` has the value `big`. | If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
+	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, the it will return results that match any of the fields. Some eligible fields are: | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent (for example: folders/123, organizations/*). Prefer parent field over parent.type and parent.id.| | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (for example: 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels.\\ (where *key* is the name of a label) | Filters by label name.| Search expressions are case insensitive. Some examples queries: | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` and its label `size` has the value `big`.| If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6771,8 +6853,8 @@ type ProjectsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the IAM access control policy for the specified
-// Project. CAUTION: This method will replace the existing policy, and
-// cannot be used to append additional IAM settings. NOTE: Removing
+// project. CAUTION: This method will replace the existing policy, and
+// cannot be used to append additional IAM settings. Note: Removing
 // service accounts from policies or changing their roles can render
 // services completely inoperable. It is important to understand how the
 // service account is being used before removing or updating its roles.
@@ -6785,22 +6867,26 @@ type ProjectsSetIamPolicyCall struct {
 // organization, but not the examplepetstore.com organization. + Service
 // accounts can be made owners of a project directly without any
 // restrictions. However, to be added as an owner, a user must be
-// invited via Cloud Platform console and must accept the invitation. +
-// A user cannot be granted the owner role using `setIamPolicy()`. The
-// user must be granted the owner role using the Cloud Platform Console
-// and must explicitly accept the invitation. + Invitations to grant the
-// owner role cannot be sent using `setIamPolicy()`; they must be sent
-// only using the Cloud Platform Console. + Membership changes that
-// leave the project without any owners that have accepted the Terms of
-// Service (ToS) will be rejected. + If the project is not part of an
-// organization, there must be at least one owner who has accepted the
-// Terms of Service (ToS) agreement in the policy. Calling
-// `setIamPolicy()` to remove the last ToS-accepted owner from the
-// policy will fail. This restriction also applies to legacy projects
-// that no longer have owners who have accepted the ToS. Edits to IAM
-// policies will be rejected until the lack of a ToS-accepting owner is
-// rectified. + Calling this method requires enabling the App Engine
-// Admin API.
+// invited using the Cloud Platform console and must accept the
+// invitation. + A user cannot be granted the owner role using
+// `setIamPolicy()`. The user must be granted the owner role using the
+// Cloud Platform Console and must explicitly accept the invitation. +
+// Invitations to grant the owner role cannot be sent using
+// `setIamPolicy()`; they must be sent only using the Cloud Platform
+// Console. + Membership changes that leave the project without any
+// owners that have accepted the Terms of Service (ToS) will be
+// rejected. + If the project is not part of an organization, there must
+// be at least one owner who has accepted the Terms of Service (ToS)
+// agreement in the policy. Calling `setIamPolicy()` to remove the last
+// ToS-accepted owner from the policy will fail. This restriction also
+// applies to legacy projects that no longer have owners who have
+// accepted the ToS. Edits to IAM policies will be rejected until the
+// lack of a ToS-accepting owner is rectified. + Calling this method
+// requires enabling the App Engine Admin API.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6835,7 +6921,7 @@ func (c *ProjectsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6899,7 +6985,7 @@ func (c *ProjectsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM access control policy for the specified Project. CAUTION: This method will replace the existing policy, and cannot be used to append additional IAM settings. NOTE: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles. The following constraints apply when using `setIamPolicy()`: + Project does not support `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The owner role can be granted to a `user`, `serviceAccount`, or a group that is part of an organization. For example, group@myownpersonaldomain.com could be added as an owner to a project in the myownpersonaldomain.com organization, but not the examplepetstore.com organization. + Service accounts can be made owners of a project directly without any restrictions. However, to be added as an owner, a user must be invited via Cloud Platform console and must accept the invitation. + A user cannot be granted the owner role using `setIamPolicy()`. The user must be granted the owner role using the Cloud Platform Console and must explicitly accept the invitation. + Invitations to grant the owner role cannot be sent using `setIamPolicy()`; they must be sent only using the Cloud Platform Console. + Membership changes that leave the project without any owners that have accepted the Terms of Service (ToS) will be rejected. + If the project is not part of an organization, there must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner from the policy will fail. This restriction also applies to legacy projects that no longer have owners who have accepted the ToS. Edits to IAM policies will be rejected until the lack of a ToS-accepting owner is rectified. + Calling this method requires enabling the App Engine Admin API.",
+	//   "description": "Sets the IAM access control policy for the specified project. CAUTION: This method will replace the existing policy, and cannot be used to append additional IAM settings. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles. The following constraints apply when using `setIamPolicy()`: + Project does not support `allUsers` and `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The owner role can be granted to a `user`, `serviceAccount`, or a group that is part of an organization. For example, group@myownpersonaldomain.com could be added as an owner to a project in the myownpersonaldomain.com organization, but not the examplepetstore.com organization. + Service accounts can be made owners of a project directly without any restrictions. However, to be added as an owner, a user must be invited using the Cloud Platform console and must accept the invitation. + A user cannot be granted the owner role using `setIamPolicy()`. The user must be granted the owner role using the Cloud Platform Console and must explicitly accept the invitation. + Invitations to grant the owner role cannot be sent using `setIamPolicy()`; they must be sent only using the Cloud Platform Console. + Membership changes that leave the project without any owners that have accepted the Terms of Service (ToS) will be rejected. + If the project is not part of an organization, there must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner from the policy will fail. This restriction also applies to legacy projects that no longer have owners who have accepted the ToS. Edits to IAM policies will be rejected until the lack of a ToS-accepting owner is rectified. + Calling this method requires enabling the App Engine Admin API.",
 	//   "flatPath": "v3/projects/{projectsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.setIamPolicy",
@@ -6941,7 +7027,11 @@ type ProjectsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified Project.
+// specified project.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6976,7 +7066,7 @@ func (c *ProjectsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7040,7 +7130,7 @@ func (c *ProjectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified Project.",
+	//   "description": "Returns permissions that a caller has on the specified project.",
 	//   "flatPath": "v3/projects/{projectsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.testIamPermissions",
@@ -7082,11 +7172,14 @@ type ProjectsUndeleteCall struct {
 	header_                http.Header
 }
 
-// Undelete: Restores the Project identified by the specified `name`
+// Undelete: Restores the project identified by the specified `name`
 // (for example, `projects/415104041262`). You can only use this method
-// for a Project that has a lifecycle state of DELETE_REQUESTED. After
-// deletion starts, the Project cannot be restored. The caller must have
-// undelete permissions for this Project.
+// for a project that has a lifecycle state of DELETE_REQUESTED. After
+// deletion starts, the project cannot be restored. The caller must have
+// `resourcemanager.projects.undelete` permission for this project.
+//
+// - name: The name of the project (for example,
+//   `projects/415104041262`). Required.
 func (r *ProjectsService) Undelete(name string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7121,7 +7214,7 @@ func (c *ProjectsUndeleteCall) Header() http.Header {
 
 func (c *ProjectsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7185,7 +7278,7 @@ func (c *ProjectsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the Project identified by the specified `name` (for example, `projects/415104041262`). You can only use this method for a Project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, the Project cannot be restored. The caller must have undelete permissions for this Project.",
+	//   "description": "Restores the project identified by the specified `name` (for example, `projects/415104041262`). You can only use this method for a project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, the project cannot be restored. The caller must have `resourcemanager.projects.undelete` permission for this project.",
 	//   "flatPath": "v3/projects/{projectsId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.undelete",
@@ -7194,7 +7287,7 @@ func (c *ProjectsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Project (for example, `projects/415104041262`). Required.",
+	//       "description": "Required. The name of the project (for example, `projects/415104041262`). Required.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7268,7 +7361,7 @@ func (c *TagBindingsCreateCall) Header() http.Header {
 
 func (c *TagBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7366,6 +7459,11 @@ type TagBindingsDeleteCall struct {
 }
 
 // Delete: Deletes a TagBinding.
+//
+// - name: The name of the TagBinding. This is a String of the form:
+//   `tagBindings/{id}` (e.g.
+//   `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F
+//   123/tagValues/456`).
 func (r *TagBindingsService) Delete(name string) *TagBindingsDeleteCall {
 	c := &TagBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7399,7 +7497,7 @@ func (c *TagBindingsDeleteCall) Header() http.Header {
 
 func (c *TagBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7567,7 +7665,7 @@ func (c *TagBindingsListCall) Header() http.Header {
 
 func (c *TagBindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7737,7 +7835,7 @@ func (c *TagKeysCreateCall) Header() http.Header {
 
 func (c *TagKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7836,6 +7934,10 @@ type TagKeysDeleteCall struct {
 
 // Delete: Deletes a TagKey. The TagKey cannot be deleted if it has any
 // child TagValues.
+//
+// - name: The resource name of a TagKey to be deleted in the format
+//   `tagKeys/123`. The TagKey cannot be a parent of any existing
+//   TagValues or it will not be deleted successfully.
 func (r *TagKeysService) Delete(name string) *TagKeysDeleteCall {
 	c := &TagKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7885,7 +7987,7 @@ func (c *TagKeysDeleteCall) Header() http.Header {
 
 func (c *TagKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7995,6 +8097,9 @@ type TagKeysGetCall struct {
 // Get: Retrieves a TagKey. This method will return `PERMISSION_DENIED`
 // if the key does not exist or the user does not have permission to
 // view it.
+//
+// - name: A resource name in the format `tagKeys/{id}`, such as
+//   `tagKeys/123`.
 func (r *TagKeysService) Get(name string) *TagKeysGetCall {
 	c := &TagKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8038,7 +8143,7 @@ func (c *TagKeysGetCall) Header() http.Header {
 
 func (c *TagKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8145,6 +8250,10 @@ type TagKeysGetIamPolicyCall struct {
 // example, "tagKeys/1234". The caller must have
 // `cloudresourcemanager.googleapis.com/tagKeys.getIamPolicy` permission
 // on the specified TagKey.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagKeysService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagKeysGetIamPolicyCall {
 	c := &TagKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8179,7 +8288,7 @@ func (c *TagKeysGetIamPolicyCall) Header() http.Header {
 
 func (c *TagKeysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8352,7 +8461,7 @@ func (c *TagKeysListCall) Header() http.Header {
 
 func (c *TagKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8479,6 +8588,10 @@ type TagKeysPatchCall struct {
 }
 
 // Patch: Updates the attributes of the TagKey resource.
+//
+// - name: Immutable. The resource name for a TagKey. Must be in the
+//   format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated
+//   numeric id for the TagKey.
 func (r *TagKeysService) Patch(name string, tagkey *TagKey) *TagKeysPatchCall {
 	c := &TagKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8530,7 +8643,7 @@ func (c *TagKeysPatchCall) Header() http.Header {
 
 func (c *TagKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8651,6 +8764,10 @@ type TagKeysSetIamPolicyCall struct {
 // resource name. For example, "tagKeys/1234". The caller must have
 // `resourcemanager.tagKeys.setIamPolicy` permission on the identified
 // tagValue.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagKeysSetIamPolicyCall {
 	c := &TagKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8685,7 +8802,7 @@ func (c *TagKeysSetIamPolicyCall) Header() http.Header {
 
 func (c *TagKeysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8794,6 +8911,10 @@ type TagKeysTestIamPermissionsCall struct {
 // specified TagKey. The `resource` field should be the TagKey's
 // resource name. For example, "tagKeys/1234". There are no permissions
 // required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TagKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagKeysTestIamPermissionsCall {
 	c := &TagKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8828,7 +8949,7 @@ func (c *TagKeysTestIamPermissionsCall) Header() http.Header {
 
 func (c *TagKeysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8977,7 +9098,7 @@ func (c *TagValuesCreateCall) Header() http.Header {
 
 func (c *TagValuesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9076,6 +9197,9 @@ type TagValuesDeleteCall struct {
 
 // Delete: Deletes a TagValue. The TagValue cannot have any bindings
 // when it is deleted.
+//
+// - name: Resource name for TagValue to be deleted in the format
+//   tagValues/456.
 func (r *TagValuesService) Delete(name string) *TagValuesDeleteCall {
 	c := &TagValuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9125,7 +9249,7 @@ func (c *TagValuesDeleteCall) Header() http.Header {
 
 func (c *TagValuesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9235,6 +9359,9 @@ type TagValuesGetCall struct {
 // Get: Retrieves TagValue. If the TagValue or namespaced name does not
 // exist, or if the user does not have permission to view it, this
 // method will return `PERMISSION_DENIED`.
+//
+// - name: Resource name for TagValue to be fetched in the format
+//   `tagValues/456`.
 func (r *TagValuesService) Get(name string) *TagValuesGetCall {
 	c := &TagValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9278,7 +9405,7 @@ func (c *TagValuesGetCall) Header() http.Header {
 
 func (c *TagValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9386,6 +9513,10 @@ type TagValuesGetIamPolicyCall struct {
 // `cloudresourcemanager.googleapis.com/tagValues.getIamPolicy`
 // permission on the identified TagValue to get the access control
 // policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagValuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagValuesGetIamPolicyCall {
 	c := &TagValuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9420,7 +9551,7 @@ func (c *TagValuesGetIamPolicyCall) Header() http.Header {
 
 func (c *TagValuesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9593,7 +9724,7 @@ func (c *TagValuesListCall) Header() http.Header {
 
 func (c *TagValuesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9720,6 +9851,9 @@ type TagValuesPatchCall struct {
 }
 
 // Patch: Updates the attributes of the TagValue resource.
+//
+// - name: Immutable. Resource name for TagValue in the format
+//   `tagValues/456`.
 func (r *TagValuesService) Patch(name string, tagvalue *TagValue) *TagValuesPatchCall {
 	c := &TagValuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9769,7 +9903,7 @@ func (c *TagValuesPatchCall) Header() http.Header {
 
 func (c *TagValuesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9890,6 +10024,10 @@ type TagValuesSetIamPolicyCall struct {
 // resource name. For example: `tagValues/1234`. The caller must have
 // `resourcemanager.tagValues.setIamPolicy` permission on the identified
 // tagValue.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *TagValuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagValuesSetIamPolicyCall {
 	c := &TagValuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9924,7 +10062,7 @@ func (c *TagValuesSetIamPolicyCall) Header() http.Header {
 
 func (c *TagValuesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10033,6 +10171,10 @@ type TagValuesTestIamPermissionsCall struct {
 // specified TagValue. The `resource` field should be the TagValue's
 // resource name. For example: `tagValues/1234`. There are no
 // permissions required for making this API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *TagValuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagValuesTestIamPermissionsCall {
 	c := &TagValuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10067,7 +10209,7 @@ func (c *TagValuesTestIamPermissionsCall) Header() http.Header {
 
 func (c *TagValuesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

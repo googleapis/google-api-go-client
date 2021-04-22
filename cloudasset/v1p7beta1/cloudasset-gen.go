@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -2411,6 +2411,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2454,7 +2456,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2565,6 +2567,11 @@ type V1p7beta1ExportAssetsCall struct {
 // exponential retry to poll the export operation result. For
 // regular-size resource parent, the export operation usually finishes
 // within 5 minutes.
+//
+// - parent: The relative name of the root asset. This can only be an
+//   organization number (such as "organizations/123"), a project ID
+//   (such as "projects/my-project-id"), or a project number (such as
+//   "projects/12345"), or a folder number (such as "folders/123").
 func (r *V1p7beta1Service) ExportAssets(parent string, googlecloudassetv1p7beta1exportassetsrequest *GoogleCloudAssetV1p7beta1ExportAssetsRequest) *V1p7beta1ExportAssetsCall {
 	c := &V1p7beta1ExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2599,7 +2606,7 @@ func (c *V1p7beta1ExportAssetsCall) Header() http.Header {
 
 func (c *V1p7beta1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

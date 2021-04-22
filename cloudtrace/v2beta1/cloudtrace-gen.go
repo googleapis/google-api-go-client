@@ -83,7 +83,7 @@ const mtlsBasePath = "https://cloudtrace.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Write Trace data for a project or application
@@ -320,6 +320,10 @@ type ProjectsTraceSinksCreateCall struct {
 // `writer_identity` is not permitted to write to the destination. A
 // sink can export traces only from the resource owning the sink (the
 // 'parent').
+//
+// - parent: The resource in which to create the sink (currently only
+//   project sinks are supported): "projects/[PROJECT_ID]" Examples:
+//   "projects/my-trace-project", "projects/123456789".
 func (r *ProjectsTraceSinksService) Create(parent string, tracesink *TraceSink) *ProjectsTraceSinksCreateCall {
 	c := &ProjectsTraceSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -354,7 +358,7 @@ func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -460,6 +464,11 @@ type ProjectsTraceSinksDeleteCall struct {
 }
 
 // Delete: Deletes a sink.
+//
+// - name: The full resource name of the sink to delete, including the
+//   parent resource and the sink identifier:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Delete(nameid string) *ProjectsTraceSinksDeleteCall {
 	c := &ProjectsTraceSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -493,7 +502,7 @@ func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -593,6 +602,10 @@ type ProjectsTraceSinksGetCall struct {
 
 // Get: Get a trace sink by name under the parent resource (GCP
 // project).
+//
+// - name: The resource name of the sink:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Get(name string) *ProjectsTraceSinksGetCall {
 	c := &ProjectsTraceSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -636,7 +649,7 @@ func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -738,6 +751,10 @@ type ProjectsTraceSinksListCall struct {
 }
 
 // List: List all sinks for the parent resource (GCP project).
+//
+// - parent: The parent resource whose sinks are to be listed (currently
+//   only project parent resources are supported):
+//   "projects/[PROJECT_ID]".
 func (r *ProjectsTraceSinksService) List(parent string) *ProjectsTraceSinksListCall {
 	c := &ProjectsTraceSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -800,7 +817,7 @@ func (c *ProjectsTraceSinksListCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -936,6 +953,11 @@ type ProjectsTraceSinksPatchCall struct {
 // Patch: Updates a sink. This method updates fields in the existing
 // sink according to the provided update mask. The sink's name cannot be
 // changed nor any output-only fields (e.g. the writer_identity).
+//
+// - name: The full resource name of the sink to update, including the
+//   parent resource and the sink identifier:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *ProjectsTraceSinksPatchCall {
 	c := &ProjectsTraceSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -983,7 +1005,7 @@ func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

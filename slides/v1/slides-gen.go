@@ -86,8 +86,8 @@ const (
 	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
-	// View and manage Google Drive files and folders that you have opened
-	// or created with this app
+	// See, edit, create, and delete only the specific Google Drive files
+	// you use with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
 	// See and download all your Google Drive files
@@ -7129,6 +7129,8 @@ type PresentationsBatchUpdateCall struct {
 // collaborator changes. If there are no collaborators, the presentation
 // should reflect your changes. In any case, the updates in your request
 // are guaranteed to be applied together atomically.
+//
+// - presentationId: The presentation to apply the updates to.
 func (r *PresentationsService) BatchUpdate(presentationId string, batchupdatepresentationrequest *BatchUpdatePresentationRequest) *PresentationsBatchUpdateCall {
 	c := &PresentationsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7163,7 +7165,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7309,7 +7311,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7404,6 +7406,8 @@ type PresentationsGetCall struct {
 }
 
 // Get: Gets the latest version of the specified presentation.
+//
+// - presentationId: The ID of the presentation to retrieve.
 func (r *PresentationsService) Get(presentationId string) *PresentationsGetCall {
 	c := &PresentationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7447,7 +7451,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7554,6 +7558,9 @@ type PresentationsPagesGetCall struct {
 
 // Get: Gets the latest version of the specified page in the
 // presentation.
+//
+// - pageObjectId: The object ID of the page to retrieve.
+// - presentationId: The ID of the presentation to retrieve.
 func (r *PresentationsPagesService) Get(presentationId string, pageObjectId string) *PresentationsPagesGetCall {
 	c := &PresentationsPagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7598,7 +7605,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7714,6 +7721,10 @@ type PresentationsPagesGetThumbnailCall struct {
 // specified page in the presentation and returns a URL to the thumbnail
 // image. This request counts as an expensive read request
 // (/slides/limits) for quota purposes.
+//
+// - pageObjectId: The object ID of the page whose thumbnail to
+//   retrieve.
+// - presentationId: The ID of the presentation to retrieve.
 func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
 	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7787,7 +7798,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

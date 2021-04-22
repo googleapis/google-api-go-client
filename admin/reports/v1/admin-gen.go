@@ -924,6 +924,13 @@ type ActivitiesListCall struct {
 // administrator and Google Drive activity reports. For more information
 // about the activity report's parameters, see the activity parameters
 // reference guides.
+//
+// - applicationName: Application name for which the events are to be
+//   retrieved.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1114,7 +1121,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1213,7 +1220,8 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "user_accounts",
 	//         "context_aware_access",
 	//         "chrome",
-	//         "data_studio"
+	//         "data_studio",
+	//         "keep"
 	//       ],
 	//       "enumDescriptions": [
 	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
@@ -1235,10 +1243,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
 	//         "The Chrome activity reports return information about unsafe events reported in the context of the WebProtect features of BeyondCorp.",
-	//         "The Data Studio activity reports return information about various types of Data Studio activity events."
+	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
+	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
 	//       ],
 	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
+	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1351,6 +1360,13 @@ type ActivitiesWatchCall struct {
 
 // Watch: Start receiving notifications for account activities. For more
 // information, see Receiving Push Notifications.
+//
+// - applicationName: Application name for which the events are to be
+//   retrieved.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1532,7 +1548,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1633,7 +1649,8 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "user_accounts",
 	//         "context_aware_access",
 	//         "chrome",
-	//         "data_studio"
+	//         "data_studio",
+	//         "keep"
 	//       ],
 	//       "enumDescriptions": [
 	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
@@ -1655,10 +1672,11 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
 	//         "The Chrome activity reports return information about unsafe events reported in the context of the WebProtect features of BeyondCorp.",
-	//         "The Data Studio activity reports return information about various types of Data Studio activity events."
+	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
+	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
 	//       ],
 	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
+	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1783,7 +1801,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1852,6 +1870,10 @@ type CustomerUsageReportsGetCall struct {
 // see the Customers Usage Report guide. For more information about the
 // customer report's parameters, see the Customers Usage parameters
 // reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -1933,7 +1955,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2078,6 +2100,13 @@ type EntityUsageReportsGetCall struct {
 // information, see the Entities Usage Report guide. For more
 // information about the entities report's parameters, see the Entities
 // Usage parameters reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
+// - entityKey: Represents the key of the object to filter the data
+//   with.
+// - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityType = entityType
@@ -2193,7 +2222,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2382,6 +2411,14 @@ type UserUsageReportGetCall struct {
 // statistics for a set of users with the account. For more information,
 // see the User Usage Report guide. For more information about the user
 // report's parameters, see the Users Usage parameters reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -2516,7 +2553,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

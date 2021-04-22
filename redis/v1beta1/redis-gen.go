@@ -1082,6 +1082,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1125,7 +1127,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1227,6 +1229,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1294,7 +1299,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1440,6 +1445,10 @@ type ProjectsLocationsInstancesCreateCall struct {
 // longrunning.Operation will contain the new instance object in the
 // response field. The returned operation is automatically deleted after
 // a few hours, so there is no need to call DeleteOperation.
+//
+// - parent: The resource name of the instance location using the form:
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1485,7 +1494,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1596,6 +1605,10 @@ type ProjectsLocationsInstancesDeleteCall struct {
 
 // Delete: Deletes a specific Redis instance. Instance stops serving and
 // data is deleted.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1629,7 +1642,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1730,6 +1743,10 @@ type ProjectsLocationsInstancesExportCall struct {
 // Cloud Storage. Redis will continue serving during this operation. The
 // returned operation is automatically deleted after a few hours, so
 // there is no need to call DeleteOperation.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Export(name string, exportinstancerequest *ExportInstanceRequest) *ProjectsLocationsInstancesExportCall {
 	c := &ProjectsLocationsInstancesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1764,7 +1781,7 @@ func (c *ProjectsLocationsInstancesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1872,6 +1889,10 @@ type ProjectsLocationsInstancesFailoverCall struct {
 // Failover: Initiates a failover of the primary node to current replica
 // node for a specific STANDARD tier Cloud Memorystore for Redis
 // instance.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Failover(name string, failoverinstancerequest *FailoverInstanceRequest) *ProjectsLocationsInstancesFailoverCall {
 	c := &ProjectsLocationsInstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1906,7 +1927,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2012,6 +2033,10 @@ type ProjectsLocationsInstancesGetCall struct {
 }
 
 // Get: Gets the details of a specific Redis instance.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2055,7 +2080,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2158,6 +2183,10 @@ type ProjectsLocationsInstancesGetAuthStringCall struct {
 // GetAuthString: Gets the AUTH string for a Redis instance. If AUTH is
 // not enabled for the instance the response will be empty. This
 // information is not included in the details returned to GetInstance.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) GetAuthString(name string) *ProjectsLocationsInstancesGetAuthStringCall {
 	c := &ProjectsLocationsInstancesGetAuthStringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2201,7 +2230,7 @@ func (c *ProjectsLocationsInstancesGetAuthStringCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetAuthStringCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,6 +2336,10 @@ type ProjectsLocationsInstancesImportCall struct {
 // the instance will contain only data from the imported file. The
 // returned operation is automatically deleted after a few hours, so
 // there is no need to call DeleteOperation.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Import(name string, importinstancerequest *ImportInstanceRequest) *ProjectsLocationsInstancesImportCall {
 	c := &ProjectsLocationsInstancesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2341,7 +2374,7 @@ func (c *ProjectsLocationsInstancesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2452,6 +2485,10 @@ type ProjectsLocationsInstancesListCall struct {
 // `projects/{project_id}/locations/{location_id}` If `location_id` is
 // specified as `-` (wildcard), then all regions available to the
 // project are queried, and the results are aggregated.
+//
+// - parent: The resource name of the instance location using the form:
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2514,7 +2551,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2651,6 +2688,15 @@ type ProjectsLocationsInstancesPatchCall struct {
 // instance object in the response field. The returned operation is
 // automatically deleted after a few hours, so there is no need to call
 // DeleteOperation.
+//
+// - name: Unique name of the resource in this scope including project
+//   and location using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` Note: Redis instances are managed and addressed at regional
+//   level so location_id here refers to a GCP region; however, users
+//   may choose which specific zone (or collection of zones for
+//   cross-zone instances) an instance should be provisioned in. Refer
+//   to location_id and alternative_location_id fields for more details.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2695,7 +2741,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2808,6 +2854,10 @@ type ProjectsLocationsInstancesUpgradeCall struct {
 
 // Upgrade: Upgrades Redis instance to the newer Redis version specified
 // in the request.
+//
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Upgrade(name string, upgradeinstancerequest *UpgradeInstanceRequest) *ProjectsLocationsInstancesUpgradeCall {
 	c := &ProjectsLocationsInstancesUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2842,7 +2892,7 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2956,6 +3006,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2989,7 +3041,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3089,6 +3141,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3122,7 +3176,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3222,6 +3276,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3265,7 +3321,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3375,6 +3431,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3439,7 +3497,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

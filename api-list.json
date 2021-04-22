@@ -1086,6 +1086,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "cloudcommerceprocurement:v1",
+      "name": "cloudcommerceprocurement",
+      "version": "v1",
+      "title": "Cloud Commerce Partner Procurement API",
+      "description": "Partner API for the Cloud Commerce Procurement Service.",
+      "discoveryRestUrl": "https://cloudcommerceprocurement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/marketplace/docs/partners/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "clouddebugger:v2",
       "name": "clouddebugger",
       "version": "v2",

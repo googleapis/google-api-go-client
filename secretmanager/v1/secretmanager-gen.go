@@ -1514,7 +1514,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1686,7 +1686,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1862,7 +1862,7 @@ func (c *ProjectsSecretsAddVersionCall) Header() http.Header {
 
 func (c *ProjectsSecretsAddVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2015,7 +2015,7 @@ func (c *ProjectsSecretsCreateCall) Header() http.Header {
 
 func (c *ProjectsSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2161,7 +2161,7 @@ func (c *ProjectsSecretsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2305,7 +2305,7 @@ func (c *ProjectsSecretsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2468,7 +2468,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2637,7 +2637,7 @@ func (c *ProjectsSecretsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,7 +2814,7 @@ func (c *ProjectsSecretsPatchCall) Header() http.Header {
 
 func (c *ProjectsSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2966,7 +2966,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3115,7 +3115,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSecretsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3221,11 +3221,13 @@ type ProjectsSecretsVersionsAccessCall struct {
 }
 
 // Access: Accesses a SecretVersion. This call returns the secret data.
-// `projects/*/secrets/*/versions/latest` is an alias to the `latest`
-// SecretVersion.
+// `projects/*/secrets/*/versions/latest` is an alias to the most
+// recently created SecretVersion.
 //
 // - name: The resource name of the SecretVersion in the format
 //   `projects/*/secrets/*/versions/*`.
+//   `projects/*/secrets/*/versions/latest` is an alias to the most
+//   recently created SecretVersion.
 func (r *ProjectsSecretsVersionsService) Access(name string) *ProjectsSecretsVersionsAccessCall {
 	c := &ProjectsSecretsVersionsAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3269,7 +3271,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3331,7 +3333,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Do(opts ...googleapi.CallOption) (*A
 	}
 	return ret, nil
 	// {
-	//   "description": "Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the `latest` SecretVersion.",
+	//   "description": "Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}:access",
 	//   "httpMethod": "GET",
 	//   "id": "secretmanager.projects.secrets.versions.access",
@@ -3340,7 +3342,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Do(opts ...googleapi.CallOption) (*A
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion in the format `projects/*/secrets/*/versions/*`.",
+	//       "description": "Required. The resource name of the SecretVersion in the format `projects/*/secrets/*/versions/*`. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3408,7 +3410,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3552,7 +3554,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3696,7 +3698,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3802,13 +3804,13 @@ type ProjectsSecretsVersionsGetCall struct {
 }
 
 // Get: Gets metadata for a SecretVersion.
-// `projects/*/secrets/*/versions/latest` is an alias to the `latest`
-// SecretVersion.
+// `projects/*/secrets/*/versions/latest` is an alias to the most
+// recently created SecretVersion.
 //
 // - name: The resource name of the SecretVersion in the format
 //   `projects/*/secrets/*/versions/*`.
-//   `projects/*/secrets/*/versions/latest` is an alias to the `latest`
-//   SecretVersion.
+//   `projects/*/secrets/*/versions/latest` is an alias to the most
+//   recently created SecretVersion.
 func (r *ProjectsSecretsVersionsService) Get(name string) *ProjectsSecretsVersionsGetCall {
 	c := &ProjectsSecretsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3852,7 +3854,7 @@ func (c *ProjectsSecretsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3914,7 +3916,7 @@ func (c *ProjectsSecretsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Secr
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets metadata for a SecretVersion. `projects/*/secrets/*/versions/latest` is an alias to the `latest` SecretVersion.",
+	//   "description": "Gets metadata for a SecretVersion. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "secretmanager.projects.secrets.versions.get",
@@ -3923,7 +3925,7 @@ func (c *ProjectsSecretsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Secr
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion in the format `projects/*/secrets/*/versions/*`. `projects/*/secrets/*/versions/latest` is an alias to the `latest` SecretVersion.",
+	//       "description": "Required. The resource name of the SecretVersion in the format `projects/*/secrets/*/versions/*`. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -4015,7 +4017,7 @@ func (c *ProjectsSecretsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210421")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

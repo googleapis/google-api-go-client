@@ -6,21 +6,26 @@
 
 // To run this test locally, you will need to do the following:
 // • Navigate to your Google Cloud Project
-// • Get a copy of the Service Account Key File from somebody
+// • Get a copy of a Service Account Key File for testing (should be in .json format)
 // • If you are unable to obtain an existing key file, create one:
 //    • > IAM and Admin > Service Accounts
 //    • Under the needed Service Account > Actions > Manage Keys
 //    • Add Key > Create New Key
 //    • Select JSON, and the click Create
-// • > Compute > Compute Engine > VM Instances
-// • Look for an available VM Instance, or create one
-// • On the VM Instance, click the SSH Button
-// • Upload your Service Account Key File
-// • Upload this script, along with setup.sh
-// • Get a copy of the needed environment variables from somebody, and upload those too
+// • Look for an available VM Instance, or create one- > Compute > Compute Engine > VM Instances
+// • On the VM Instance, click the SSH Button.  Then upload:
+//    • Your Service Account Key File
+//    • This script, along with setup.sh
+//    • A copy of env.conf, containing the required environment variables (see existing skeleton)/
 // • Set your environment variables (Usually this will be `source env.conf`)
-// • If the setup script has not yet been run, then run it
-// • `go test -tags integration`
+// • Ensure that your VM is properly set up to run the integration test e.g.
+//    • wget -c https://golang.org/dl/go1.15.2.linux-amd64.tar.gz
+//       • Check https://golang.org/dl/for the latest version of Go
+//    • sudo tar -C /usr/local -xvzf go1.15.2.linux-amd64.tar.gz
+//    • go mod init google.golang.org/api/google-api-go-client
+//    • go mod tidy
+// • Run setup.sh
+// • go test -tags integration`
 
 package byoid
 
@@ -30,12 +35,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
-	"google.golang.org/api/dns/v1"
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
+
+	"google.golang.org/api/dns/v1"
 )
 
 const (
@@ -47,7 +55,6 @@ const (
 var (
 	oidcAudience string
 	oidcToken    string
-	awsToken     string
 	clientID     string
 	projectID    string
 )
@@ -68,7 +75,6 @@ func TestMain(m *testing.M) {
 	if oidcAudience == "" {
 		log.Fatalf("Please set %s to the OIDC Audience", envAudienceOIDC)
 	}
-
 	var err error
 
 	clientID, err = getClientID(keyFileName)
@@ -174,6 +180,7 @@ type credentialSource struct {
 	Headers map[string]string `json:"headers,omitempty"`
 
 	EnvironmentID               string `json:"environment_id,omitempty"`
+	RegionURL                   string `json:"region_url"`
 	RegionalCredVerificationURL string `json:"regional_cred_verification_url,omitempty"`
 	Format                      string `json:"format,omitempty"`
 }
@@ -199,6 +206,28 @@ func TestFileBasedCredentials(t *testing.T) {
 		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
 		CredentialSource: credentialSource{
 			File: tokenFile.Name(),
+		},
+	})
+}
+
+// Tests to make sure URL based external credentials work properly.
+func TestURLBasedCredentials(t *testing.T) {
+	//Set up a server to return a token
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" {
+			t.Errorf("Unexpected request method, %v is found", r.Method)
+		}
+		w.Write([]byte(oidcToken))
+	}))
+
+	testBYOID(t, config{
+		Type:                           "external_account",
+		Audience:                       oidcAudience,
+		SubjectTokenType:               "urn:ietf:params:oauth:token-type:jwt",
+		TokenURL:                       "https://sts.googleapis.com/v1beta/token",
+		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
+		CredentialSource: credentialSource{
+			URL: ts.URL,
 		},
 	})
 }

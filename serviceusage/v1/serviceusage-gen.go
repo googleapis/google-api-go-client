@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   serviceusageService, err := serviceusage.NewService(ctx, option.WithScopes(serviceusage.ServiceManagementScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   serviceusageService, err := serviceusage.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -81,12 +85,20 @@ const mtlsBasePath = "https://serviceusage.mtls.googleapis.com/"
 const (
 	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View your data across Google Cloud Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
+	// Manage your Google API service configuration
+	ServiceManagementScope = "https://www.googleapis.com/auth/service.management"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloud-platform.read-only",
+		"https://www.googleapis.com/auth/service.management",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -4273,7 +4285,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4361,7 +4373,8 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -4416,7 +4429,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4496,7 +4509,8 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -4561,7 +4575,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4644,7 +4658,8 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -4740,7 +4755,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4832,7 +4847,8 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//     "$ref": "ListOperationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -4912,7 +4928,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5000,7 +5016,8 @@ func (c *ServicesBatchEnableCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -5078,7 +5095,7 @@ func (c *ServicesBatchGetCall) Header() http.Header {
 
 func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5167,7 +5184,8 @@ func (c *ServicesBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetServic
 	//     "$ref": "BatchGetServicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -5230,7 +5248,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5318,7 +5336,8 @@ func (c *ServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -5377,7 +5396,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5465,7 +5484,8 @@ func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
 	//   ]
 	// }
 
@@ -5532,7 +5552,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5615,7 +5635,8 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleApiServiceusa
 	//     "$ref": "GoogleApiServiceusageV1Service"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -5713,7 +5734,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210411")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5812,7 +5833,8 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//     "$ref": "ListServicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 

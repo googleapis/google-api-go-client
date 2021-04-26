@@ -37,7 +37,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
-	neturl "net/url"
+	"net/url"
 	"os"
 	"regexp"
 	"testing"
@@ -241,26 +241,35 @@ func TestURLBasedCredentials(t *testing.T) {
 
 // Tests to make sure AWS based external credentials work properly.
 func TestAWSBasedCredentials(t *testing.T) {
-	data := neturl.Values{}
+	data := url.Values{}
 	data.Set("audience", clientID)
 	data.Set("includeEmail", "true")
 
 	client, err := google.DefaultClient(context.Background(), "https://www.googleapis.com/auth/cloud-platform")
-	resp, err := client.PostForm(fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIdToken", clientID), data)
+	if err != nil {
+		t.Errof("Failed to create default client: %v", err)
+	}
+	resp, err := client.PostForm(fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIDToken", clientID), data)
+	if err != nil {
+		t.Errorf("Failed to generate an ID token: %v", err)
+	}
 	if resp.StatusCode != 200 {
-		t.Errorf("byoid: failed to get Google ID token for AWS test: %v", err)
+		t.Errorf("Failed to get Google ID token for AWS test: %v", err)
 	}
 
 	var res map[string]interface{}
 
-	json.NewDecoder(resp.Body).Decode(&res)
+	err := json.NewDecoder(resp.Body).Decode(&res)
+	if err != nil {
+		t.Errorf("Could not successfully parse response from generateIDToken: %v", err)
+	}
 
 	token, ok := res["token"]
 	if !ok {
-		t.Errorf("byoid: Didn't receieve an ID token back from generateIDToken")
+		t.Errorf("Didn't receieve an ID token back from generateIDToken")
 	}
 
-	data = neturl.Values{}
+	data = url.Values{}
 	data.Set("Action", "AssumeRoleWithWebIdentity")
 	data.Set("Version", "2011-06-15")
 	data.Set("DurationSeconds", "3600")
@@ -271,7 +280,7 @@ func TestAWSBasedCredentials(t *testing.T) {
 	resp, err = http.PostForm("https://sts.amazonaws.com/", data)
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		t.Errorf("byoid: failed to parse response body from AWS: %v", err)
+		t.Errorf("Failed to parse response body from AWS: %v", err)
 	}
 
 	bodyString := string(bodyBytes)
@@ -286,21 +295,21 @@ func TestAWSBasedCredentials(t *testing.T) {
 		os.Setenv("AWS_SESSION_TOKEN", result[1])
 		defer os.Setenv("AWS_SESSION_TOKEN", currSessTokEnv)
 	} else {
-		t.Errorf("byoid: could not find session token in response from AWS")
+		t.Errorf("Could not find session token in response from AWS")
 	}
 	if result := SecAccKey.FindStringSubmatch(bodyString); len(result) == 2 {
 		currSecAccKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
 		os.Setenv("AWS_SECRET_ACCESS_KEY", result[1])
 		defer os.Setenv("AWS_SECRET_ACCESS_KEY", currSecAccKey)
 	} else {
-		t.Errorf("byoid: could not find secret access key in response from AWS")
+		t.Errorf("Could not find secret access key in response from AWS")
 	}
 	if result := AccKeyID.FindStringSubmatch(bodyString); len(result) == 2 {
 		currAccKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
 		os.Setenv("AWS_ACCESS_KEY_ID", result[1])
 		defer os.Setenv("AWS_ACCESS_KEY_ID", currAccKeyID)
 	} else {
-		t.Errorf("byoid: could not find access key ID in response from AWS")
+		t.Errorf("Could not find access key ID in response from AWS")
 	}
 
 	currRegion := os.Getenv("AWS_REGION")

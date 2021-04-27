@@ -42,8 +42,8 @@ import (
 	"os"
 	"testing"
 
-	"google.golang.org/api/dns/v1"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/dns/v1"
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
 )
@@ -292,7 +292,7 @@ func TestAWSBasedCredentials(t *testing.T) {
 		t.Fatalf("Failed to unmarshal XML response from AWS.")
 	}
 
-	if respVars.SessionToken != "" || respVars.SecretAccessKey != "" || respVars.AccessKeyID != "" {
+	if respVars.SessionToken == "" || respVars.SecretAccessKey == "" || respVars.AccessKeyID == "" {
 		t.Fatalf("Couldn't find the required variables in the response from the AWS server.")
 	}
 

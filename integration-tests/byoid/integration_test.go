@@ -32,6 +32,7 @@ package byoid
 import (
 	"context"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -39,11 +40,9 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"os"
-	"regexp"
 	"testing"
 
 	"golang.org/x/oauth2/google"
-
 	"google.golang.org/api/dns/v1"
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
@@ -247,26 +246,25 @@ func TestAWSBasedCredentials(t *testing.T) {
 
 	client, err := google.DefaultClient(context.Background(), "https://www.googleapis.com/auth/cloud-platform")
 	if err != nil {
-		t.Errof("Failed to create default client: %v", err)
+		t.Fatalf("Failed to create default client: %v", err)
 	}
-	resp, err := client.PostForm(fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIDToken", clientID), data)
+	resp, err := client.PostForm(fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIdToken", clientID), data)
 	if err != nil {
-		t.Errorf("Failed to generate an ID token: %v", err)
+		t.Fatalf("Failed to generate an ID token: %v", err)
 	}
 	if resp.StatusCode != 200 {
-		t.Errorf("Failed to get Google ID token for AWS test: %v", err)
+		t.Fatalf("Failed to get Google ID token for AWS test: %v", err)
 	}
 
 	var res map[string]interface{}
 
-	err := json.NewDecoder(resp.Body).Decode(&res)
+	err = json.NewDecoder(resp.Body).Decode(&res)
 	if err != nil {
-		t.Errorf("Could not successfully parse response from generateIDToken: %v", err)
+		t.Fatalf("Could not successfully parse response from generateIDToken: %v", err)
 	}
-
 	token, ok := res["token"]
 	if !ok {
-		t.Errorf("Didn't receieve an ID token back from generateIDToken")
+		t.Fatalf("Didn't receieve an ID token back from generateIDToken")
 	}
 
 	data = url.Values{}
@@ -278,38 +276,50 @@ func TestAWSBasedCredentials(t *testing.T) {
 	data.Set("WebIdentityToken", token.(string))
 
 	resp, err = http.PostForm("https://sts.amazonaws.com/", data)
+	if err != nil {
+		t.Fatalf("Failed to post data to AWS: %v", err)
+	}
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		t.Errorf("Failed to parse response body from AWS: %v", err)
+		t.Fatalf("Failed to parse response body from AWS: %v", err)
 	}
 
-	bodyString := string(bodyBytes)
+	type Credentials struct {
+		SessionToken    string `xml:"SessionToken"`
+		SecretAccessKey string `xml:"SecretAccessKey"`
+		AccessKeyID     string `xml:"AccessKeyId"`
+	}
+	type AssumeRoleWithWebIdentityResult struct {
+		Credentials Credentials `xml:"Credentials"`
+	}
+	type AssumeRoleWithWebIdentityResponse struct {
+		XMLName                         xml.Name                        `xml:"AssumeRoleWithWebIdentityResponse"`
+		AssumeRoleWithWebIdentityResult AssumeRoleWithWebIdentityResult `xml:"AssumeRoleWithWebIdentityResult"`
+	}
 
-	// Using regex instead of loading the full XML response because I only need a few fields.
-	SessTok := regexp.MustCompile("<SessionToken>(.*)</SessionToken>")
-	SecAccKey := regexp.MustCompile("<SecretAccessKey>(.*)</SecretAccessKey>")
-	AccKeyID := regexp.MustCompile("<AccessKeyId>(.*)</AccessKeyId>")
+	respFields := AssumeRoleWithWebIdentityResponse{}
+	err = xml.Unmarshal(bodyBytes, &respFields)
 
-	if result := SessTok.FindStringSubmatch(bodyString); len(result) == 2 {
+	if respFields.AssumeRoleWithWebIdentityResult.Credentials.SessionToken != "" {
 		currSessTokEnv := os.Getenv("AWS_SESSION_TOKEN")
-		os.Setenv("AWS_SESSION_TOKEN", result[1])
+		os.Setenv("AWS_SESSION_TOKEN", respFields.AssumeRoleWithWebIdentityResult.Credentials.SessionToken)
 		defer os.Setenv("AWS_SESSION_TOKEN", currSessTokEnv)
 	} else {
-		t.Errorf("Could not find session token in response from AWS")
+		t.Fatalf("Could not find session token in response from AWS")
 	}
-	if result := SecAccKey.FindStringSubmatch(bodyString); len(result) == 2 {
+	if respFields.AssumeRoleWithWebIdentityResult.Credentials.SecretAccessKey != "" {
 		currSecAccKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
-		os.Setenv("AWS_SECRET_ACCESS_KEY", result[1])
+		os.Setenv("AWS_SECRET_ACCESS_KEY", respFields.AssumeRoleWithWebIdentityResult.Credentials.SecretAccessKey)
 		defer os.Setenv("AWS_SECRET_ACCESS_KEY", currSecAccKey)
 	} else {
-		t.Errorf("Could not find secret access key in response from AWS")
+		t.Fatalf("Could not find secret access key in response from AWS")
 	}
-	if result := AccKeyID.FindStringSubmatch(bodyString); len(result) == 2 {
+	if respFields.AssumeRoleWithWebIdentityResult.Credentials.AccessKeyID != "" {
 		currAccKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
-		os.Setenv("AWS_ACCESS_KEY_ID", result[1])
+		os.Setenv("AWS_ACCESS_KEY_ID", respFields.AssumeRoleWithWebIdentityResult.Credentials.AccessKeyID)
 		defer os.Setenv("AWS_ACCESS_KEY_ID", currAccKeyID)
 	} else {
-		t.Errorf("Could not find access key ID in response from AWS")
+		t.Fatalf("Could not find access key ID in response from AWS")
 	}
 
 	currRegion := os.Getenv("AWS_REGION")

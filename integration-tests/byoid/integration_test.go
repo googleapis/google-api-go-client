@@ -117,8 +117,7 @@ func getClientID(keyFileName string) (string, error) {
 
 	decoder := json.NewDecoder(kf)
 	var keyFileSettings keyFile
-	err = decoder.Decode(&keyFileSettings)
-	if err != nil {
+	if err = decoder.Decode(&keyFileSettings); err != nil {
 		return "", err
 	}
 
@@ -258,8 +257,7 @@ func TestAWSBasedCredentials(t *testing.T) {
 
 	var res map[string]interface{}
 
-	err = json.NewDecoder(resp.Body).Decode(&res)
-	if err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&res); err != nil {
 		t.Fatalf("Could not successfully parse response from generateIDToken: %v", err)
 	}
 	token, ok := res["token"]
@@ -284,47 +282,34 @@ func TestAWSBasedCredentials(t *testing.T) {
 		t.Fatalf("Failed to parse response body from AWS: %v", err)
 	}
 
-	type Credentials struct {
-		SessionToken    string `xml:"SessionToken"`
-		SecretAccessKey string `xml:"SecretAccessKey"`
-		AccessKeyID     string `xml:"AccessKeyId"`
-	}
-	type AssumeRoleWithWebIdentityResult struct {
-		Credentials Credentials `xml:"Credentials"`
-	}
-	type AssumeRoleWithWebIdentityResponse struct {
-		XMLName                         xml.Name                        `xml:"AssumeRoleWithWebIdentityResponse"`
-		AssumeRoleWithWebIdentityResult AssumeRoleWithWebIdentityResult `xml:"AssumeRoleWithWebIdentityResult"`
+	var respVars struct {
+		SessionToken    string `xml:"AssumeRoleWithWebIdentityResult>Credentials>SessionToken"`
+		SecretAccessKey string `xml:"AssumeRoleWithWebIdentityResult>Credentials>SecretAccessKey"`
+		AccessKeyID     string `xml:"AssumeRoleWithWebIdentityResult>Credentials>AccessKeyId"`
 	}
 
-	respFields := AssumeRoleWithWebIdentityResponse{}
-	err = xml.Unmarshal(bodyBytes, &respFields)
+	err = xml.Unmarshal(bodyBytes, &respVars)
 
-	if respFields.AssumeRoleWithWebIdentityResult.Credentials.SessionToken != "" {
-		currSessTokEnv := os.Getenv("AWS_SESSION_TOKEN")
-		os.Setenv("AWS_SESSION_TOKEN", respFields.AssumeRoleWithWebIdentityResult.Credentials.SessionToken)
-		defer os.Setenv("AWS_SESSION_TOKEN", currSessTokEnv)
-	} else {
-		t.Fatalf("Could not find session token in response from AWS")
+	if respVars.SessionToken != "" || respVars.SecretAccessKey != "" || respVars.AccessKeyID != "" {
+		t.Fatalf("Couldn't find the required variables in the response from the AWS server.")
 	}
-	if respFields.AssumeRoleWithWebIdentityResult.Credentials.SecretAccessKey != "" {
-		currSecAccKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
-		os.Setenv("AWS_SECRET_ACCESS_KEY", respFields.AssumeRoleWithWebIdentityResult.Credentials.SecretAccessKey)
-		defer os.Setenv("AWS_SECRET_ACCESS_KEY", currSecAccKey)
-	} else {
-		t.Fatalf("Could not find secret access key in response from AWS")
-	}
-	if respFields.AssumeRoleWithWebIdentityResult.Credentials.AccessKeyID != "" {
-		currAccKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
-		os.Setenv("AWS_ACCESS_KEY_ID", respFields.AssumeRoleWithWebIdentityResult.Credentials.AccessKeyID)
-		defer os.Setenv("AWS_ACCESS_KEY_ID", currAccKeyID)
-	} else {
-		t.Fatalf("Could not find access key ID in response from AWS")
-	}
+
+	currSessTokEnv := os.Getenv("AWS_SESSION_TOKEN")
+	defer os.Setenv("AWS_SESSION_TOKEN", currSessTokEnv)
+	os.Setenv("AWS_SESSION_TOKEN", respVars.SessionToken)
+
+	currSecAccKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
+	defer os.Setenv("AWS_SECRET_ACCESS_KEY", currSecAccKey)
+	os.Setenv("AWS_SECRET_ACCESS_KEY", respVars.SecretAccessKey)
+
+	currAccKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
+	defer os.Setenv("AWS_ACCESS_KEY_ID", currAccKeyID)
+	os.Setenv("AWS_ACCESS_KEY_ID", respVars.AccessKeyID)
+
 
 	currRegion := os.Getenv("AWS_REGION")
-	os.Setenv("AWS_REGION", "us-east-1")
 	defer os.Setenv("AWS_REGION", currRegion)
+	os.Setenv("AWS_REGION", "us-east-1")
 
 	testBYOID(t, config{
 		Type:                           "external_account",

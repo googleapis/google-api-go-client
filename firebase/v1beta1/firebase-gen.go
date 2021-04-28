@@ -83,7 +83,7 @@ const mtlsBasePath = "https://firebase.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -1846,7 +1846,7 @@ func (c *AvailableProjectsListCall) Header() http.Header {
 
 func (c *AvailableProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1972,6 +1972,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2015,7 +2017,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2141,6 +2143,18 @@ type ProjectsAddFirebaseCall struct {
 // Owner contain these permissions): `firebase.projects.update`,
 // `resourcemanager.projects.get`, `serviceusage.services.enable`, and
 // `serviceusage.services.get`.
+//
+// - project: The resource name of the GCP `Project` to which Firebase
+//   resources will be added, in the format: projects/PROJECT_IDENTIFIER
+//   Refer to the `FirebaseProject` `name`
+//   (../projects#FirebaseProject.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values. After calling `AddFirebase`, the unique
+//   Project identifiers ( `projectNumber`
+//   (https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_number)
+//   and `projectId`
+//   (https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_id))
+//   of the underlying GCP `Project` are also the identifiers of the
+//   FirebaseProject.
 func (r *ProjectsService) AddFirebase(projectid string, addfirebaserequest *AddFirebaseRequest) *ProjectsAddFirebaseCall {
 	c := &ProjectsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectid = projectid
@@ -2175,7 +2189,7 @@ func (c *ProjectsAddFirebaseCall) Header() http.Header {
 
 func (c *ProjectsAddFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2320,6 +2334,12 @@ type ProjectsAddGoogleAnalyticsCall struct {
 // enabled in the Firebase console or by specifying `timeZone` and
 // `regionCode` in the call to `AddFirebase`
 // (../../v1beta1/projects/addFirebase).
+//
+// - parent: The resource name of the FirebaseProject to link to an
+//   existing Google Analytics account, in the format:
+//   projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//   (../projects#FirebaseProject.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsService) AddGoogleAnalytics(parent string, addgoogleanalyticsrequest *AddGoogleAnalyticsRequest) *ProjectsAddGoogleAnalyticsCall {
 	c := &ProjectsAddGoogleAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2354,7 +2374,7 @@ func (c *ProjectsAddGoogleAnalyticsCall) Header() http.Header {
 
 func (c *ProjectsAddGoogleAnalyticsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2461,6 +2481,11 @@ type ProjectsGetCall struct {
 }
 
 // Get: Gets the specified FirebaseProject.
+//
+// - name: The resource name of the FirebaseProject, in the format:
+//   projects/ PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//   (../projects#FirebaseProject.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsService) Get(name string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2504,7 +2529,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2613,6 +2638,11 @@ type ProjectsGetAdminSdkConfigCall struct {
 // the Firebase Admin SDK initializeApp
 // (https://firebase.google.com/docs/admin/setup#initialize_the_sdk)
 // command.
+//
+// - name: The resource name of the FirebaseProject, in the format:
+//   projects/ PROJECT_IDENTIFIER/adminSdkConfig Refer to the
+//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//   field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsService) GetAdminSdkConfig(name string) *ProjectsGetAdminSdkConfigCall {
 	c := &ProjectsGetAdminSdkConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2656,7 +2686,7 @@ func (c *ProjectsGetAdminSdkConfigCall) Header() http.Header {
 
 func (c *ProjectsGetAdminSdkConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2763,6 +2793,11 @@ type ProjectsGetAnalyticsDetailsCall struct {
 // associated with the specified FirebaseProject. If the
 // `FirebaseProject` is not yet linked to Google Analytics, then the
 // response to `GetAnalyticsDetails` is `NOT_FOUND`.
+//
+// - name: The resource name of the FirebaseProject, in the format:
+//   projects/ PROJECT_IDENTIFIER/analyticsDetails Refer to the
+//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//   field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsService) GetAnalyticsDetails(name string) *ProjectsGetAnalyticsDetailsCall {
 	c := &ProjectsGetAnalyticsDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2806,7 +2841,7 @@ func (c *ProjectsGetAnalyticsDetailsCall) Header() http.Header {
 
 func (c *ProjectsGetAnalyticsDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2977,7 +3012,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3102,6 +3137,15 @@ type ProjectsPatchCall struct {
 
 // Patch: Updates the attributes of the specified FirebaseProject. All
 // query parameters (#query-parameters) are required.
+//
+// - name: The resource name of the Project, in the format:
+//   projects/PROJECT_IDENTIFIER PROJECT_IDENTIFIER: the Project's
+//   `ProjectNumber` (../projects#FirebaseProject.FIELDS.project_number)
+//   ***(recommended)*** or its `ProjectId`
+//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//   using project identifiers in Google's AIP 2510 standard
+//   (https://google.aip.dev/cloud/2510). Note that the value for
+//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`.
 func (r *ProjectsService) Patch(nameid string, firebaseproject *FirebaseProject) *ProjectsPatchCall {
 	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3145,7 +3189,7 @@ func (c *ProjectsPatchCall) Header() http.Header {
 
 func (c *ProjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3270,6 +3314,12 @@ type ProjectsRemoveAnalyticsCall struct {
 // Apps, this call provisions a *new* data stream for each Web App. To
 // call `RemoveAnalytics`, a project member must be an Owner for the
 // `FirebaseProject`.
+//
+// - parent: The resource name of the FirebaseProject to unlink from its
+//   Google Analytics account, in the format:
+//   projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//   (../projects#FirebaseProject.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsService) RemoveAnalytics(parent string, removeanalyticsrequest *RemoveAnalyticsRequest) *ProjectsRemoveAnalyticsCall {
 	c := &ProjectsRemoveAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3304,7 +3354,7 @@ func (c *ProjectsRemoveAnalyticsCall) Header() http.Header {
 
 func (c *ProjectsRemoveAnalyticsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3415,6 +3465,11 @@ type ProjectsSearchAppsCall struct {
 // with an App should be done using the platform-specific service, but
 // some tool use-cases require a summary of all known Apps (such as for
 // App selector interfaces).
+//
+// - parent: The parent FirebaseProject for which to list Apps, in the
+//   format: projects/ PROJECT_IDENTIFIER Refer to the `FirebaseProject`
+//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER values.
 func (r *ProjectsService) SearchApps(parent string) *ProjectsSearchAppsCall {
 	c := &ProjectsSearchAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3502,7 +3557,7 @@ func (c *ProjectsSearchAppsCall) Header() http.Header {
 
 func (c *ProjectsSearchAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3647,6 +3702,12 @@ type ProjectsAndroidAppsCreateCall struct {
 // be used to track the provisioning process. The `Operation` is
 // automatically deleted after completion, so there is no need to call
 // `DeleteOperation`.
+//
+// - parent: The resource name of the parent FirebaseProject in which to
+//   create an AndroidApp, in the format:
+//   projects/PROJECT_IDENTIFIER/androidApps Refer to the
+//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//   field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsAndroidAppsService) Create(parent string, androidapp *AndroidApp) *ProjectsAndroidAppsCreateCall {
 	c := &ProjectsAndroidAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3681,7 +3742,7 @@ func (c *ProjectsAndroidAppsCreateCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3788,6 +3849,14 @@ type ProjectsAndroidAppsGetCall struct {
 }
 
 // Get: Gets the specified AndroidApp.
+//
+// - name: The resource name of the AndroidApp, in the format: projects/
+//   PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
+//   identifier, the Unique Resource from Sub-Collection access pattern
+//   may be used here, in the format: projects/-/androidApps/APP_ID
+//   Refer to the `AndroidApp` `name`
+//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsService) Get(nameid string) *ProjectsAndroidAppsGetCall {
 	c := &ProjectsAndroidAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3831,7 +3900,7 @@ func (c *ProjectsAndroidAppsGetCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3936,6 +4005,15 @@ type ProjectsAndroidAppsGetConfigCall struct {
 
 // GetConfig: Gets the configuration artifact associated with the
 // specified AndroidApp.
+//
+// - name: The resource name of the AndroidApp configuration to
+//   download, in the format:
+//   projects/PROJECT_IDENTIFIER/androidApps/APP_ID/config Since an
+//   APP_ID is a unique identifier, the Unique Resource from
+//   Sub-Collection access pattern may be used here, in the format:
+//   projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
+//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsService) GetConfig(nameid string) *ProjectsAndroidAppsGetConfigCall {
 	c := &ProjectsAndroidAppsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3979,7 +4057,7 @@ func (c *ProjectsAndroidAppsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4086,6 +4164,12 @@ type ProjectsAndroidAppsListCall struct {
 // FirebaseProject. The elements are returned in no particular order,
 // but will be a consistent view of the Apps when additional requests
 // are made with a `pageToken`.
+//
+// - parent: The resource name of the parent FirebaseProject for which
+//   to list each associated AndroidApp, in the format:
+//   projects/PROJECT_IDENTIFIER /androidApps Refer to the
+//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//   field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsAndroidAppsService) List(parent string) *ProjectsAndroidAppsListCall {
 	c := &ProjectsAndroidAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4146,7 +4230,7 @@ func (c *ProjectsAndroidAppsListCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4282,6 +4366,19 @@ type ProjectsAndroidAppsPatchCall struct {
 }
 
 // Patch: Updates the attributes of the specified AndroidApp.
+//
+// - name: The resource name of the AndroidApp, in the format: projects/
+//   PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the
+//   parent Project's `ProjectNumber`
+//   (../projects#FirebaseProject.FIELDS.project_number)
+//   ***(recommended)*** or its `ProjectId`
+//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//   using project identifiers in Google's AIP 2510 standard
+//   (https://google.aip.dev/cloud/2510). Note that the value for
+//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+//   APP_ID: the globally unique, Firebase-assigned identifier for the
+//   App (see `appId`
+//   (../projects.androidApps#AndroidApp.FIELDS.app_id)).
 func (r *ProjectsAndroidAppsService) Patch(nameid string, androidapp *AndroidApp) *ProjectsAndroidAppsPatchCall {
 	c := &ProjectsAndroidAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4324,7 +4421,7 @@ func (c *ProjectsAndroidAppsPatchCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4437,6 +4534,15 @@ type ProjectsAndroidAppsShaCreateCall struct {
 }
 
 // Create: Adds a ShaCertificate to the specified AndroidApp.
+//
+// - parent: The resource name of the parent AndroidApp to which to add
+//   a ShaCertificate, in the format:
+//   projects/PROJECT_IDENTIFIER/androidApps/ APP_ID Since an APP_ID is
+//   a unique identifier, the Unique Resource from Sub-Collection access
+//   pattern may be used here, in the format:
+//   projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
+//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsShaService) Create(parentid string, shacertificate *ShaCertificate) *ProjectsAndroidAppsShaCreateCall {
 	c := &ProjectsAndroidAppsShaCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -4471,7 +4577,7 @@ func (c *ProjectsAndroidAppsShaCreateCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsShaCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4577,6 +4683,17 @@ type ProjectsAndroidAppsShaDeleteCall struct {
 }
 
 // Delete: Removes a ShaCertificate from the specified AndroidApp.
+//
+// - name: The resource name of the ShaCertificate to remove from the
+//   parent AndroidApp, in the format:
+//   projects/PROJECT_IDENTIFIER/androidApps/APP_ID /sha/SHA_HASH Refer
+//   to the `ShaCertificate` `name`
+//   (../projects.androidApps.sha#ShaCertificate.FIELDS.name) field for
+//   details about PROJECT_IDENTIFIER, APP_ID, and SHA_HASH values. You
+//   can obtain the full resource name of the `ShaCertificate` from the
+//   response of `ListShaCertificates`
+//   (../projects.androidApps.sha/list) or the original
+//   `CreateShaCertificate` (../projects.androidApps.sha/create).
 func (r *ProjectsAndroidAppsShaService) Delete(name string) *ProjectsAndroidAppsShaDeleteCall {
 	c := &ProjectsAndroidAppsShaDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4610,7 +4727,7 @@ func (c *ProjectsAndroidAppsShaDeleteCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsShaDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4710,6 +4827,15 @@ type ProjectsAndroidAppsShaListCall struct {
 
 // List: Lists the SHA-1 and SHA-256 certificates for the specified
 // AndroidApp.
+//
+// - parent: The resource name of the parent AndroidApp for which to
+//   list each associated ShaCertificate, in the format:
+//   projects/PROJECT_IDENTIFIER /androidApps/APP_ID Since an APP_ID is
+//   a unique identifier, the Unique Resource from Sub-Collection access
+//   pattern may be used here, in the format:
+//   projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
+//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsShaService) List(parentid string) *ProjectsAndroidAppsShaListCall {
 	c := &ProjectsAndroidAppsShaListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -4753,7 +4879,7 @@ func (c *ProjectsAndroidAppsShaListCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsShaListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4874,6 +5000,14 @@ type ProjectsAvailableLocationsListCall struct {
 // `ListAvailableLocations` with a specified project, a member must be
 // at minimum a Viewer of the Project. Calls without a specified project
 // do not require any specific project permissions.
+//
+// - parent: The FirebaseProject for which to list GCP resource
+//   locations, in the format: projects/PROJECT_IDENTIFIER Refer to the
+//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//   field for details about PROJECT_IDENTIFIER values. If no unique
+//   project identifier is specified (that is, `projects/-`), the
+//   returned list does not take into account org-specific or
+//   project-specific location restrictions.
 func (r *ProjectsAvailableLocationsService) List(parentid string) *ProjectsAvailableLocationsListCall {
 	c := &ProjectsAvailableLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -4935,7 +5069,7 @@ func (c *ProjectsAvailableLocationsListCall) Header() http.Header {
 
 func (c *ProjectsAvailableLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5099,6 +5233,12 @@ type ProjectsDefaultLocationFinalizeCall struct {
 // DeleteOperation. All fields listed in the request body
 // (#request-body) are required. To call `FinalizeDefaultLocation`, a
 // member must be an Owner of the Project.
+//
+// - parent: The resource name of the FirebaseProject for which the
+//   default GCP resource location will be set, in the format:
+//   projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//   (../projects#FirebaseProject.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsDefaultLocationService) Finalize(parent string, finalizedefaultlocationrequest *FinalizeDefaultLocationRequest) *ProjectsDefaultLocationFinalizeCall {
 	c := &ProjectsDefaultLocationFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5133,7 +5273,7 @@ func (c *ProjectsDefaultLocationFinalizeCall) Header() http.Header {
 
 func (c *ProjectsDefaultLocationFinalizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5244,6 +5384,12 @@ type ProjectsIosAppsCreateCall struct {
 // be used to track the provisioning process. The `Operation` is
 // automatically deleted after completion, so there is no need to call
 // `DeleteOperation`.
+//
+// - parent: The resource name of the parent FirebaseProject in which to
+//   create an IosApp, in the format:
+//   projects/PROJECT_IDENTIFIER/iosApps Refer to the `FirebaseProject`
+//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER values.
 func (r *ProjectsIosAppsService) Create(parent string, iosapp *IosApp) *ProjectsIosAppsCreateCall {
 	c := &ProjectsIosAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5278,7 +5424,7 @@ func (c *ProjectsIosAppsCreateCall) Header() http.Header {
 
 func (c *ProjectsIosAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5385,6 +5531,14 @@ type ProjectsIosAppsGetCall struct {
 }
 
 // Get: Gets the specified IosApp.
+//
+// - name: The resource name of the IosApp, in the format:
+//   projects/PROJECT_IDENTIFIER /iosApps/APP_ID Since an APP_ID is a
+//   unique identifier, the Unique Resource from Sub-Collection access
+//   pattern may be used here, in the format: projects/-/iosApps/APP_ID
+//   Refer to the `IosApp` `name`
+//   (../projects.iosApps#IosApp.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsIosAppsService) Get(nameid string) *ProjectsIosAppsGetCall {
 	c := &ProjectsIosAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5428,7 +5582,7 @@ func (c *ProjectsIosAppsGetCall) Header() http.Header {
 
 func (c *ProjectsIosAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5533,6 +5687,14 @@ type ProjectsIosAppsGetConfigCall struct {
 
 // GetConfig: Gets the configuration artifact associated with the
 // specified IosApp.
+//
+// - name: The resource name of the App configuration to download, in
+//   the format: projects/PROJECT_IDENTIFIER/iosApps/APP_ID/config Since
+//   an APP_ID is a unique identifier, the Unique Resource from
+//   Sub-Collection access pattern may be used here, in the format:
+//   projects/-/iosApps/APP_ID Refer to the `IosApp` `name`
+//   (../projects.iosApps#IosApp.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsIosAppsService) GetConfig(nameid string) *ProjectsIosAppsGetConfigCall {
 	c := &ProjectsIosAppsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5576,7 +5738,7 @@ func (c *ProjectsIosAppsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsIosAppsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5683,6 +5845,12 @@ type ProjectsIosAppsListCall struct {
 // FirebaseProject. The elements are returned in no particular order,
 // but will be a consistent view of the Apps when additional requests
 // are made with a `pageToken`.
+//
+// - parent: The resource name of the parent FirebaseProject for which
+//   to list each associated IosApp, in the format:
+//   projects/PROJECT_IDENTIFIER/iosApps Refer to the `FirebaseProject`
+//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER values.
 func (r *ProjectsIosAppsService) List(parent string) *ProjectsIosAppsListCall {
 	c := &ProjectsIosAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5743,7 +5911,7 @@ func (c *ProjectsIosAppsListCall) Header() http.Header {
 
 func (c *ProjectsIosAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5879,6 +6047,18 @@ type ProjectsIosAppsPatchCall struct {
 }
 
 // Patch: Updates the attributes of the specified IosApp.
+//
+// - name: The resource name of the IosApp, in the format:
+//   projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER:
+//   the parent Project's `ProjectNumber`
+//   (../projects#FirebaseProject.FIELDS.project_number)
+//   ***(recommended)*** or its `ProjectId`
+//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//   using project identifiers in Google's AIP 2510 standard
+//   (https://google.aip.dev/cloud/2510). Note that the value for
+//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+//   APP_ID: the globally unique, Firebase-assigned identifier for the
+//   App (see `appId` (../projects.iosApps#IosApp.FIELDS.app_id)).
 func (r *ProjectsIosAppsService) Patch(nameid string, iosapp *IosApp) *ProjectsIosAppsPatchCall {
 	c := &ProjectsIosAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5921,7 +6101,7 @@ func (c *ProjectsIosAppsPatchCall) Header() http.Header {
 
 func (c *ProjectsIosAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6038,6 +6218,12 @@ type ProjectsWebAppsCreateCall struct {
 // be used to track the provisioning process. The `Operation` is
 // automatically deleted after completion, so there is no need to call
 // `DeleteOperation`.
+//
+// - parent: The resource name of the parent FirebaseProject in which to
+//   create a WebApp, in the format: projects/PROJECT_IDENTIFIER/webApps
+//   Refer to the `FirebaseProject` `name`
+//   (../projects#FirebaseProject.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER values.
 func (r *ProjectsWebAppsService) Create(parent string, webapp *WebApp) *ProjectsWebAppsCreateCall {
 	c := &ProjectsWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6072,7 +6258,7 @@ func (c *ProjectsWebAppsCreateCall) Header() http.Header {
 
 func (c *ProjectsWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6179,6 +6365,14 @@ type ProjectsWebAppsGetCall struct {
 }
 
 // Get: Gets the specified WebApp.
+//
+// - name: The resource name of the WebApp, in the format:
+//   projects/PROJECT_IDENTIFIER /webApps/APP_ID Since an APP_ID is a
+//   unique identifier, the Unique Resource from Sub-Collection access
+//   pattern may be used here, in the format: projects/-/webApps/APP_ID
+//   Refer to the `WebApp` `name`
+//   (../projects.webApps#WebApp.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsWebAppsService) Get(nameid string) *ProjectsWebAppsGetCall {
 	c := &ProjectsWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6222,7 +6416,7 @@ func (c *ProjectsWebAppsGetCall) Header() http.Header {
 
 func (c *ProjectsWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6327,6 +6521,14 @@ type ProjectsWebAppsGetConfigCall struct {
 
 // GetConfig: Gets the configuration artifact associated with the
 // specified WebApp.
+//
+// - name: The resource name of the WebApp configuration to download, in
+//   the format: projects/PROJECT_IDENTIFIER/webApps/APP_ID/config Since
+//   an APP_ID is a unique identifier, the Unique Resource from
+//   Sub-Collection access pattern may be used here, in the format:
+//   projects/-/webApps/APP_ID Refer to the `WebApp` `name`
+//   (../projects.webApps#WebApp.FIELDS.name) field for details about
+//   PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsWebAppsService) GetConfig(nameid string) *ProjectsWebAppsGetConfigCall {
 	c := &ProjectsWebAppsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6370,7 +6572,7 @@ func (c *ProjectsWebAppsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsWebAppsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6477,6 +6679,12 @@ type ProjectsWebAppsListCall struct {
 // FirebaseProject. The elements are returned in no particular order,
 // but will be a consistent view of the Apps when additional requests
 // are made with a `pageToken`.
+//
+// - parent: The resource name of the parent FirebaseProject for which
+//   to list each associated WebApp, in the format:
+//   projects/PROJECT_IDENTIFIER/webApps Refer to the `FirebaseProject`
+//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//   about PROJECT_IDENTIFIER values.
 func (r *ProjectsWebAppsService) List(parent string) *ProjectsWebAppsListCall {
 	c := &ProjectsWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6537,7 +6745,7 @@ func (c *ProjectsWebAppsListCall) Header() http.Header {
 
 func (c *ProjectsWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6673,6 +6881,18 @@ type ProjectsWebAppsPatchCall struct {
 }
 
 // Patch: Updates the attributes of the specified WebApp.
+//
+// - name: The resource name of the WebApp, in the format:
+//   projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER:
+//   the parent Project's `ProjectNumber`
+//   (../projects#FirebaseProject.FIELDS.project_number)
+//   ***(recommended)*** or its `ProjectId`
+//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//   using project identifiers in Google's AIP 2510 standard
+//   (https://google.aip.dev/cloud/2510). Note that the value for
+//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+//   APP_ID: the globally unique, Firebase-assigned identifier for the
+//   App (see `appId` (../projects.webApps#WebApp.FIELDS.app_id)).
 func (r *ProjectsWebAppsService) Patch(nameid string, webapp *WebApp) *ProjectsWebAppsPatchCall {
 	c := &ProjectsWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6715,7 +6935,7 @@ func (c *ProjectsWebAppsPatchCall) Header() http.Header {
 
 func (c *ProjectsWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

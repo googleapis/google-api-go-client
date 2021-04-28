@@ -157,6 +157,10 @@ type EventsMoveCall struct {
 
 // Move: Moves an event to another calendar, i.e. changes an event's
 // organizer.
+//
+// - destination: Calendar identifier of the target calendar where the
+//   event is to be moved to.
+// - rightString: Yet another parameter.
 func (r *EventsService) Move(destinationid string, rightString string) *EventsMoveCall {
 	c := &EventsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("destination", destinationid)
@@ -306,6 +310,9 @@ type ReportsQueryCall struct {
 }
 
 // Query: Retrieve your YouTube Analytics reports.
+//
+// - startDate: The start date for fetching YouTube Analytics data. The
+//   value should be in YYYY-MM-DD format.
 func (r *ReportsService) Query(startDate string) *ReportsQueryCall {
 	c := &ReportsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("start-date", startDate)

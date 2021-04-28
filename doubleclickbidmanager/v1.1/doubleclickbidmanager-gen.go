@@ -736,6 +736,8 @@ type FilterPair struct {
 	//   "FILTER_OM_SDK_AVAILABLE"
 	//   "FILTER_DATA_SOURCE"
 	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -1149,6 +1151,8 @@ type Parameters struct {
 	//   "FILTER_OM_SDK_AVAILABLE"
 	//   "FILTER_DATA_SOURCE"
 	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -2049,6 +2053,8 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_OM_SDK_AVAILABLE"
 	//   "FILTER_DATA_SOURCE"
 	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.
@@ -2257,6 +2263,7 @@ type QuerySchedule struct {
 	//   "SEMI_MONTHLY"
 	//   "MONTHLY"
 	//   "QUARTERLY"
+	//   "YEARLY"
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunMinuteOfDay: Time of day at which a new report will be
@@ -2788,7 +2795,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2914,7 +2921,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3047,7 +3054,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3147,6 +3154,8 @@ type QueriesDeletequeryCall struct {
 
 // Deletequery: Deletes a stored query as well as the associated stored
 // reports.
+//
+// - queryId: Query ID to delete.
 func (r *QueriesService) Deletequery(queryId int64) *QueriesDeletequeryCall {
 	c := &QueriesDeletequeryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3180,7 +3189,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3250,6 +3259,8 @@ type QueriesGetqueryCall struct {
 }
 
 // Getquery: Retrieves a stored query.
+//
+// - queryId: Query ID to retrieve.
 func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
 	c := &QueriesGetqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3293,7 +3304,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3450,7 +3461,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3571,6 +3582,8 @@ type QueriesRunqueryCall struct {
 }
 
 // Runquery: Runs a stored query to generate a report.
+//
+// - queryId: Query ID to run.
 func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryRequest) *QueriesRunqueryCall {
 	c := &QueriesRunqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3612,7 +3625,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3696,6 +3709,8 @@ type ReportsListreportsCall struct {
 }
 
 // Listreports: Retrieves stored reports.
+//
+// - queryId: Query ID with which the reports are associated.
 func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
 	c := &ReportsListreportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3754,7 +3769,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3919,7 +3934,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -59,7 +59,6 @@ var (
 	oidcAudience string
 	awsAudience  string
 	oidcToken    string
-	awsToken     string
 	clientID     string
 	projectID    string
 )
@@ -187,6 +186,7 @@ type credentialSource struct {
 	File                        string `json:"file,omitempty"`
 	URL                         string `json:"url,omitempty"`
 	EnvironmentID               string `json:"environment_id,omitempty"`
+	RegionURL                   string `json:"region_url"`
 	RegionalCredVerificationURL string `json:"regional_cred_verification_url,omitempty"`
 }
 

@@ -1168,6 +1168,11 @@ type FeaturetilesGetCall struct {
 }
 
 // Get: Gets a feature tile by its tile resource name.
+//
+// - name: Resource name of the tile. The tile resource name is prefixed
+//   by its collection ID `tiles/` followed by the resource ID, which
+//   encodes the tile's global x and y coordinates and zoom level as
+//   `@,,z`. For example, `tiles/@1,2,3z`.
 func (r *FeaturetilesService) Get(name string) *FeaturetilesGetCall {
 	c := &FeaturetilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1379,7 +1384,7 @@ func (c *FeaturetilesGetCall) Header() http.Header {
 
 func (c *FeaturetilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1582,6 +1587,11 @@ type TerraintilesGetCall struct {
 }
 
 // Get: Gets a terrain tile by its tile resource name.
+//
+// - name: Resource name of the tile. The tile resource name is prefixed
+//   by its collection ID `terraintiles/` followed by the resource ID,
+//   which encodes the tile's global x and y coordinates and zoom level
+//   as `@,,z`. For example, `terraintiles/@1,2,3z`.
 func (r *TerraintilesService) Get(name string) *TerraintilesGetCall {
 	c := &TerraintilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1747,7 +1757,7 @@ func (c *TerraintilesGetCall) Header() http.Header {
 
 func (c *TerraintilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

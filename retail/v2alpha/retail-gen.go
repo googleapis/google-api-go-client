@@ -79,7 +79,7 @@ const mtlsBasePath = "https://retail.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -830,9 +830,9 @@ type GoogleCloudRetailV2alphaBigQuerySource struct {
 	// directory.
 	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
 
-	// ProjectId: The project id (can be project # or id) that the BigQuery
+	// ProjectId: The project ID (can be project # or ID) that the BigQuery
 	// source is in with a length limit of 128 characters. If not specified,
-	// inherits the project id from the parent request.
+	// inherits the project ID from the parent request.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// TableId: Required. The BigQuery table to copy the data from with a
@@ -1092,7 +1092,7 @@ type GoogleCloudRetailV2alphaGcsSource struct {
 	// Product per line. Each product must have a valid Product.id. *
 	// `product_merchant_center`: See Importing catalog data from Merchant
 	// Center
-	// (https://cloud.google.com/retail/recommendations-ai/docs/upload-catalog#mcc).
+	// (https://cloud.google.com/retail/recommendations-ai/docs/upload-catalog#mc).
 	// Supported values for user events imports: * `user_event` (default):
 	// One JSON UserEvent per line. * `user_event_ga360`: Using
 	// https://support.google.com/analytics/answer/3437719?hl=en.
@@ -1104,8 +1104,8 @@ type GoogleCloudRetailV2alphaGcsSource struct {
 	// matching one or more files, such as `gs://bucket/directory/*.json`. A
 	// request can contain at most 100 files, and each file can be up to 2
 	// GB. See Importing product information
-	// (https://cloud.google.com/recommendations-ai/docs/upload-catalog) for
-	// the expected file format and setup instructions.
+	// (https://cloud.google.com/retail/recommendations-ai/docs/upload-catalog)
+	// for the expected file format and setup instructions.
 	InputUris []string `json:"inputUris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataSchema") to
@@ -1451,13 +1451,19 @@ type GoogleCloudRetailV2alphaPredictRequest struct {
 	// `PredictRequest.params`.
 	Filter string `json:"filter,omitempty"`
 
-	// Labels: The labels for the predict request. * Label keys can contain
-	// lowercase letters, digits and hyphens, must start with a letter, and
-	// must end with a letter or digit. * Non-zero label values can contain
-	// lowercase letters, digits and hyphens, must start with a letter, and
-	// must end with a letter or digit. * No more than 64 labels can be
-	// associated with a given request. See https://goo.gl/xmQnxf for more
-	// information on and examples of labels.
+	// Labels: The labels applied to a resource must meet the following
+	// requirements: * Each resource can have multiple labels, up to a
+	// maximum of 64. * Each label must be a key-value pair. * Keys have a
+	// minimum length of 1 character and a maximum length of 63 characters,
+	// and cannot be empty. Values can be empty, and have a maximum length
+	// of 63 characters. * Keys and values can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. All characters
+	// must use UTF-8 encoding, and international characters are allowed. *
+	// The key portion of a label must be unique. However, you can use the
+	// same key with multiple resources. * Keys must start with a lowercase
+	// letter or international character. See Google Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// PageSize: Maximum number of results to return per page. Set this
@@ -1794,10 +1800,12 @@ type GoogleCloudRetailV2alphaProduct struct {
 	Title string `json:"title,omitempty"`
 
 	// Type: Immutable. The type of the product. This field is output-only.
+	// Default to Catalog.product_level_config.ingestion_product_type if
+	// unset.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value. Default to Type.PRIMARY if
-	// unset.
+	//   "TYPE_UNSPECIFIED" - Default value. Default to
+	// Catalog.product_level_config.ingestion_product_type if unset.
 	//   "PRIMARY" - The primary type. As the primary unit for predicting,
 	// indexing and search serving, a Type.PRIMARY Product is grouped with
 	// multiple Type.VARIANT Products.
@@ -1964,9 +1972,9 @@ type GoogleCloudRetailV2alphaProductLevelConfig struct {
 	// this field is set to an invalid value other than these, an
 	// INVALID_ARGUMENT error is returned. If this field is `variant` and
 	// merchant_center_product_id_field is `itemGroupId`, an
-	// INVALID_ARGUMENT error is returned. See Using catalog levels
-	// (/retail/recommendations-ai/docs/catalog#catalog-levels) for more
-	// details.
+	// INVALID_ARGUMENT error is returned. See Using product levels
+	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
+	// for more details.
 	IngestionProductType string `json:"ingestionProductType,omitempty"`
 
 	// MerchantCenterProductIdField: Which field of Merchant Center Product
@@ -1978,9 +1986,9 @@ type GoogleCloudRetailV2alphaProductLevelConfig struct {
 	// represent the item group. If this field is set to an invalid value
 	// other than these, an INVALID_ARGUMENT error is returned. If this
 	// field is `itemGroupId` and ingestion_product_type is `variant`, an
-	// INVALID_ARGUMENT error is returned. See Using catalog levels
-	// (/retail/recommendations-ai/docs/catalog#catalog-levels) for more
-	// details.
+	// INVALID_ARGUMENT error is returned. See Using product levels
+	// (https://cloud.google.com/retail/recommendations-ai/docs/catalog#product-levels)
+	// for more details.
 	MerchantCenterProductIdField string `json:"merchantCenterProductIdField,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2357,6 +2365,10 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// unique identifier should not change if the visitor log in/out of the
 	// website. The field must be a UTF-8 encoded string with a length limit
 	// of 128 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+	// The field should not contain PII or user-data. We recommend to use
+	// Google Analystics Client ID
+	// (https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#clientId)
+	// for this field.
 	VisitorId string `json:"visitorId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3117,6 +3129,11 @@ type ProjectsLocationsCatalogsListCall struct {
 }
 
 // List: Lists all the Catalogs associated with the project.
+//
+// - parent: The account resource name with an associated location. If
+//   the caller does not have permission to list Catalogs under this
+//   location, regardless of whether or not this location exists, a
+//   PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocationsCatalogsListCall {
 	c := &ProjectsLocationsCatalogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3180,7 +3197,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3315,6 +3332,8 @@ type ProjectsLocationsCatalogsPatchCall struct {
 }
 
 // Patch: Updates the Catalogs.
+//
+// - name: Immutable. The fully qualified resource name of the catalog.
 func (r *ProjectsLocationsCatalogsService) Patch(name string, googlecloudretailv2alphacatalog *GoogleCloudRetailV2alphaCatalog) *ProjectsLocationsCatalogsPatchCall {
 	c := &ProjectsLocationsCatalogsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3323,10 +3342,8 @@ func (r *ProjectsLocationsCatalogsService) Patch(name string, googlecloudretailv
 }
 
 // UpdateMask sets the optional parameter "updateMask": Indicates which
-// fields in the provided Catalog to update. If not set, will only
-// update the Catalog.product_level_config field, which is also the only
-// currently supported field to update. If an unsupported or unknown
-// field is provided, an INVALID_ARGUMENT error is returned.
+// fields in the provided Catalog to update. If an unsupported or
+// unknown field is provided, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsCatalogsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3359,7 +3376,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3439,7 +3456,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided Catalog to update. If not set, will only update the Catalog.product_level_config field, which is also the only currently supported field to update. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Indicates which fields in the provided Catalog to update. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3473,6 +3490,8 @@ type ProjectsLocationsCatalogsBranchesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsBranchesOperationsService) Get(name string) *ProjectsLocationsCatalogsBranchesOperationsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3516,7 +3535,7 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3617,6 +3636,10 @@ type ProjectsLocationsCatalogsBranchesProductsCreateCall struct {
 }
 
 // Create: Creates a Product.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch`.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Create(parent string, googlecloudretailv2alphaproduct *GoogleCloudRetailV2alphaProduct) *ProjectsLocationsCatalogsBranchesProductsCreateCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3664,7 +3687,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3774,6 +3797,17 @@ type ProjectsLocationsCatalogsBranchesProductsDeleteCall struct {
 }
 
 // Delete: Deletes a Product.
+//
+// - name: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to delete the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned. If the Product to
+//   delete does not exist, a NOT_FOUND error is returned. The Product
+//   to delete can neither be a Product.Type.COLLECTION Product member
+//   nor a Product.Type.PRIMARY Product with more than one variants.
+//   Otherwise, an INVALID_ARGUMENT error is returned. All inventory
+//   information for the named Product will be deleted.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Delete(name string) *ProjectsLocationsCatalogsBranchesProductsDeleteCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3807,7 +3841,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3905,6 +3939,13 @@ type ProjectsLocationsCatalogsBranchesProductsGetCall struct {
 }
 
 // Get: Gets a Product.
+//
+// - name: Full resource name of Product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/some_product_id`. If the caller does not have
+//   permission to access the Product, regardless of whether or not it
+//   exists, a PERMISSION_DENIED error is returned. If the requested
+//   Product does not exist, a NOT_FOUND error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Get(name string) *ProjectsLocationsCatalogsBranchesProductsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3948,7 +3989,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4052,6 +4093,12 @@ type ProjectsLocationsCatalogsBranchesProductsImportCall struct {
 // synchronous. No partial updating is supported. Non-existing items are
 // created. Note that it is possible for a subset of the Products to be
 // successfully updated.
+//
+// - parent:
+//   `projects/1234/locations/global/catalogs/default_catalog/branches/de
+//   fault_branch` If no updateMask is specified, requires
+//   products.create permission. If updateMask is specified, requires
+//   products.update permission.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Import(parent string, googlecloudretailv2alphaimportproductsrequest *GoogleCloudRetailV2alphaImportProductsRequest) *ProjectsLocationsCatalogsBranchesProductsImportCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4086,7 +4133,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4192,6 +4239,11 @@ type ProjectsLocationsCatalogsBranchesProductsPatchCall struct {
 }
 
 // Patch: Updates a Product.
+//
+// - name: Immutable. Full resource name of the product, such as
+//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//   lt_branch/products/product_id`. The branch ID must be
+//   "default_branch".
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Patch(name string, googlecloudretailv2alphaproduct *GoogleCloudRetailV2alphaProduct) *ProjectsLocationsCatalogsBranchesProductsPatchCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4245,7 +4297,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4364,6 +4416,8 @@ type ProjectsLocationsCatalogsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsOperationsService) Get(name string) *ProjectsLocationsCatalogsOperationsGetCall {
 	c := &ProjectsLocationsCatalogsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4407,7 +4461,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4517,6 +4571,8 @@ type ProjectsLocationsCatalogsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsOperationsService) List(name string) *ProjectsLocationsCatalogsOperationsListCall {
 	c := &ProjectsLocationsCatalogsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4581,7 +4637,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4720,6 +4776,15 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 }
 
 // Predict: Makes a recommendation prediction.
+//
+// - placement: Full resource name of the format:
+//   {name=projects/*/locations/global/catalogs/default_catalog/placement
+//   s/*} The ID of the Recommendations AI placement. Before you can
+//   request predictions from your model, you must create at least one
+//   placement for it. For more information, see Managing placements
+//   (https://cloud.google.com/retail/recommendations-ai/docs/manage-placements).
+//   The full list of available placements can be seen at
+//   https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2alphapredictrequest *GoogleCloudRetailV2alphaPredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -4754,7 +4819,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4864,6 +4929,9 @@ type ProjectsLocationsCatalogsUserEventsCollectCall struct {
 // request to due to browser restriction of POST-ing to a 3rd party
 // domain. This method is used only by the Retail API JavaScript pixel
 // and Google Tag Manager. Users should not call this method directly.
+//
+// - parent: The parent catalog name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4931,7 +4999,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5053,6 +5121,8 @@ type ProjectsLocationsCatalogsUserEventsImportCall struct {
 // ImportResponse. Note that it is possible for a subset of the items to
 // be successfully inserted. Operation.metadata is of type
 // ImportMetadata.
+//
+// - parent: `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Import(parent string, googlecloudretailv2alphaimportusereventsrequest *GoogleCloudRetailV2alphaImportUserEventsRequest) *ProjectsLocationsCatalogsUserEventsImportCall {
 	c := &ProjectsLocationsCatalogsUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5087,7 +5157,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5196,6 +5266,10 @@ type ProjectsLocationsCatalogsUserEventsPurgeCall struct {
 // provided. Depending on the number of events specified by the filter,
 // this operation could take hours or days to complete. To test a
 // filter, use the list command first.
+//
+// - parent: The resource name of the catalog under which the events are
+//   created. The format is
+//   `projects/${projectId}/locations/global/catalogs/${catalogId}`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Purge(parent string, googlecloudretailv2alphapurgeusereventsrequest *GoogleCloudRetailV2alphaPurgeUserEventsRequest) *ProjectsLocationsCatalogsUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5230,7 +5304,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5343,6 +5417,9 @@ type ProjectsLocationsCatalogsUserEventsRejoinCall struct {
 // used to trigger a 'join' operation on specified events with latest
 // version of product catalog. It can also be used to correct events
 // joined with wrong product catalog.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Rejoin(parent string, googlecloudretailv2alpharejoinusereventsrequest *GoogleCloudRetailV2alphaRejoinUserEventsRequest) *ProjectsLocationsCatalogsUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5377,7 +5454,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5483,6 +5560,9 @@ type ProjectsLocationsCatalogsUserEventsWriteCall struct {
 }
 
 // Write: Writes a single user event.
+//
+// - parent: The parent catalog resource name, such as
+//   `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Write(parent string, googlecloudretailv2alphauserevent *GoogleCloudRetailV2alphaUserEvent) *ProjectsLocationsCatalogsUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5517,7 +5597,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5626,6 +5706,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5669,7 +5751,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5779,6 +5861,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5843,7 +5927,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

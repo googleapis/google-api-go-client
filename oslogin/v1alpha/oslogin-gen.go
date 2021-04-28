@@ -85,7 +85,7 @@ const mtlsBasePath = "https://oslogin.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -398,6 +398,8 @@ type UsersGetLoginProfileCall struct {
 
 // GetLoginProfile: Retrieves the profile information used for logging
 // in to a virtual machine on Google Compute Engine.
+//
+// - name: The unique ID for the user in format `users/{user}`.
 func (r *UsersService) GetLoginProfile(name string) *UsersGetLoginProfileCall {
 	c := &UsersGetLoginProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -429,6 +431,19 @@ func (c *UsersGetLoginProfileCall) ProjectId(projectId string) *UsersGetLoginPro
 // filtering the results of the request.
 func (c *UsersGetLoginProfileCall) SystemId(systemId string) *UsersGetLoginProfileCall {
 	c.urlParams_.Set("systemId", systemId)
+	return c
+}
+
+// View sets the optional parameter "view": The view configures whether
+// to retrieve security keys information.
+//
+// Possible values:
+//   "LOGIN_PROFILE_VIEW_UNSPECIFIED" - The default login profile view.
+// The API defaults to the BASIC view.
+//   "BASIC" - Includes POSIX and SSH key information.
+//   "SECURITY_KEY" - Include security key information for the user.
+func (c *UsersGetLoginProfileCall) View(view string) *UsersGetLoginProfileCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -469,7 +484,7 @@ func (c *UsersGetLoginProfileCall) Header() http.Header {
 
 func (c *UsersGetLoginProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -570,6 +585,21 @@ func (c *UsersGetLoginProfileCall) Do(opts ...googleapi.CallOption) (*LoginProfi
 	//       "description": "A system ID for filtering the results of the request.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The view configures whether to retrieve security keys information.",
+	//       "enum": [
+	//         "LOGIN_PROFILE_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "SECURITY_KEY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default login profile view. The API defaults to the BASIC view.",
+	//         "Includes POSIX and SSH key information.",
+	//         "Include security key information for the user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1alpha/{+name}/loginProfile",
@@ -600,6 +630,8 @@ type UsersImportSshPublicKeyCall struct {
 // ImportSshPublicKey: Adds an SSH public key and returns the profile
 // information. Default POSIX account information is set when no
 // username and UID exist as part of the login profile.
+//
+// - parent: The unique ID for the user in format `users/{user}`.
 func (r *UsersService) ImportSshPublicKey(parent string, sshpublickey *SshPublicKey) *UsersImportSshPublicKeyCall {
 	c := &UsersImportSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -611,6 +643,19 @@ func (r *UsersService) ImportSshPublicKey(parent string, sshpublickey *SshPublic
 // the Google Cloud Platform project.
 func (c *UsersImportSshPublicKeyCall) ProjectId(projectId string) *UsersImportSshPublicKeyCall {
 	c.urlParams_.Set("projectId", projectId)
+	return c
+}
+
+// View sets the optional parameter "view": The view configures whether
+// to retrieve security keys information.
+//
+// Possible values:
+//   "LOGIN_PROFILE_VIEW_UNSPECIFIED" - The default login profile view.
+// The API defaults to the BASIC view.
+//   "BASIC" - Includes POSIX and SSH key information.
+//   "SECURITY_KEY" - Include security key information for the user.
+func (c *UsersImportSshPublicKeyCall) View(view string) *UsersImportSshPublicKeyCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -641,7 +686,7 @@ func (c *UsersImportSshPublicKeyCall) Header() http.Header {
 
 func (c *UsersImportSshPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -724,6 +769,21 @@ func (c *UsersImportSshPublicKeyCall) Do(opts ...googleapi.CallOption) (*ImportS
 	//       "description": "The project ID of the Google Cloud Platform project.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The view configures whether to retrieve security keys information.",
+	//       "enum": [
+	//         "LOGIN_PROFILE_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "SECURITY_KEY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default login profile view. The API defaults to the BASIC view.",
+	//         "Includes POSIX and SSH key information.",
+	//         "Include security key information for the user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1alpha/{+parent}:importSshPublicKey",
@@ -752,6 +812,11 @@ type UsersProjectsDeleteCall struct {
 }
 
 // Delete: Deletes a POSIX account.
+//
+// - name: A reference to the POSIX account to update. POSIX accounts
+//   are identified by the project ID they are associated with. A
+//   reference to the POSIX account is in format
+//   `users/{user}/projects/{project}`.
 func (r *UsersProjectsService) Delete(name string) *UsersProjectsDeleteCall {
 	c := &UsersProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -799,7 +864,7 @@ func (c *UsersProjectsDeleteCall) Header() http.Header {
 
 func (c *UsersProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -912,6 +977,10 @@ type UsersSshPublicKeysDeleteCall struct {
 }
 
 // Delete: Deletes an SSH public key.
+//
+// - name: The fingerprint of the public key to update. Public keys are
+//   identified by their SHA-256 fingerprint. The fingerprint of the
+//   public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
 func (r *UsersSshPublicKeysService) Delete(name string) *UsersSshPublicKeysDeleteCall {
 	c := &UsersSshPublicKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -945,7 +1014,7 @@ func (c *UsersSshPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1044,6 +1113,10 @@ type UsersSshPublicKeysGetCall struct {
 }
 
 // Get: Retrieves an SSH public key.
+//
+// - name: The fingerprint of the public key to retrieve. Public keys
+//   are identified by their SHA-256 fingerprint. The fingerprint of the
+//   public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
 func (r *UsersSshPublicKeysService) Get(name string) *UsersSshPublicKeysGetCall {
 	c := &UsersSshPublicKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1087,7 +1160,7 @@ func (c *UsersSshPublicKeysGetCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1190,6 +1263,10 @@ type UsersSshPublicKeysPatchCall struct {
 
 // Patch: Updates an SSH public key and returns the profile information.
 // This method supports patch semantics.
+//
+// - name: The fingerprint of the public key to update. Public keys are
+//   identified by their SHA-256 fingerprint. The fingerprint of the
+//   public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
 func (r *UsersSshPublicKeysService) Patch(name string, sshpublickey *SshPublicKey) *UsersSshPublicKeysPatchCall {
 	c := &UsersSshPublicKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1231,7 +1308,7 @@ func (c *UsersSshPublicKeysPatchCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

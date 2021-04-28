@@ -79,7 +79,7 @@ const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -1392,9 +1392,10 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 // GoogleIdentityAccesscontextmanagerV1EgressFrom: Defines the
 // conditions under which an EgressPolicy matches a request. Conditions
 // based on information about the source of the request. Note that if
-// the destination of the request is protected by a ServicePerimeter,
-// then that ServicePerimeter must have an IngressPolicy which allows
-// access in order for this request to succeed.
+// the destination of the request is also protected by a
+// ServicePerimeter, then that ServicePerimeter must have an
+// IngressPolicy which allows access in order for this request to
+// succeed.
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through this
 	// [EgressPolicy]. Should be in the format of email address. The email
@@ -1488,19 +1489,22 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte
 // under which an EgressPolicy matches a request. Conditions are based
 // on information about the ApiOperation intended to be performed on the
 // `resources` specified. Note that if the destination of the request is
-// protected by a ServicePerimeter, then that ServicePerimeter must have
-// an IngressPolicy which allows access in order for this request to
-// succeed.
+// also protected by a ServicePerimeter, then that ServicePerimeter must
+// have an IngressPolicy which allows access in order for this request
+// to succeed. The request must match `operations` AND `resources`
+// fields in order to be allowed egress out of the perimeter.
 type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
-	// Operations: A list of ApiOperations that this egress rule applies to.
-	// A request matches if it contains an operation/service in this list.
+	// Operations: A list of ApiOperations allowed to be performed by the
+	// sources specified in the corresponding EgressFrom. A request matches
+	// if it uses an operation/service in this list.
 	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
 
 	// Resources: A list of resources, currently only projects in the form
-	// `projects/`, that match this to stanza. A request matches if it
-	// contains a resource in this list. If `*` is specified for resources,
-	// then this EgressTo rule will authorize access to all resources
-	// outside the perimeter.
+	// `projects/`, that are allowed to be accessed by sources defined in
+	// the corresponding EgressFrom. A request matches if it contains a
+	// resource in this list. If `*` is specified for `resources`, then this
+	// EgressTo rule will authorize access to all resources outside the
+	// perimeter.
 	Resources []string `json:"resources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
@@ -1528,7 +1532,9 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, er
 
 // GoogleIdentityAccesscontextmanagerV1IngressFrom: Defines the
 // conditions under which an IngressPolicy matches a request. Conditions
-// are based on information about the source of the request.
+// are based on information about the source of the request. The request
+// must satisfy what is defined in `sources` AND identity related fields
+// in order to match.
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through this
 	// ingress policy. Should be in the format of email address. The email
@@ -1629,7 +1635,8 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 	// AccessLevel names are listed, resources within the perimeter can only
 	// be accessed via Google Cloud calls with request origins within the
 	// perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`.
-	// If `*` is specified, then all IngressSources will be allowed.
+	// If a single `*` is specified for `access_level`, then all
+	// IngressSources will be allowed.
 	AccessLevel string `json:"accessLevel,omitempty"`
 
 	// Resource: A Google Cloud resource that is allowed to ingress the
@@ -1667,20 +1674,19 @@ func (s *GoogleIdentityAccesscontextmanagerV1IngressSource) MarshalJSON() ([]byt
 // GoogleIdentityAccesscontextmanagerV1IngressTo: Defines the conditions
 // under which an IngressPolicy matches a request. Conditions are based
 // on information about the ApiOperation intended to be performed on the
-// destination of the request.
+// target resource of the request. The request must satisfy what is
+// defined in `operations` AND `resources` in order to match.
 type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
-	// Operations: A list of ApiOperations the sources specified in
-	// corresponding IngressFrom are allowed to perform in this
+	// Operations: A list of ApiOperations allowed to be performed by the
+	// sources specified in corresponding IngressFrom in this
 	// ServicePerimeter.
 	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
 
 	// Resources: A list of resources, currently only projects in the form
 	// `projects/`, protected by this ServicePerimeter that are allowed to
-	// be accessed by sources defined in the corresponding IngressFrom. A
-	// request matches if it contains a resource in this list. If `*` is
-	// specified for resources, then this IngressTo rule will authorize
-	// access to all resources inside the perimeter, provided that the
-	// request also matches the `operations` field.
+	// be accessed by sources defined in the corresponding IngressFrom. If a
+	// single `*` is specified, then access to all resources inside the
+	// perimeter are allowed.
 	Resources []string `json:"resources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
@@ -2195,6 +2201,12 @@ type AssetsListCall struct {
 
 // List: Lists assets with time and resource types and returns paged
 // results in response.
+//
+// - parent: Name of the organization or project the assets belong to.
+//   Format: "organizations/[organization-number]" (such as
+//   "organizations/123"), "projects/[project-number]" (such as
+//   "projects/my-project-id"), or "projects/[project-id]" (such as
+//   "projects/12345").
 func (r *AssetsService) List(parent string) *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2303,7 +2315,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

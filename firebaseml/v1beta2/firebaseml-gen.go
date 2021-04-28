@@ -572,6 +572,9 @@ type ProjectsModelsCreateCall struct {
 
 // Create: Creates a model in Firebase ML. The longrunning operation
 // will eventually return a Model
+//
+// - parent: The parent project resource where the model is to be
+//   created. The parent must have the form `projects/{project_id}`.
 func (r *ProjectsModelsService) Create(parent string, model *Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -606,7 +609,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -711,6 +714,9 @@ type ProjectsModelsDeleteCall struct {
 }
 
 // Delete: Deletes a model
+//
+// - name: The name of the model to delete. The name must have the form
+//   `projects/{project_id}/models/{model_id}`.
 func (r *ProjectsModelsService) Delete(name string) *ProjectsModelsDeleteCall {
 	c := &ProjectsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -744,7 +750,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -844,6 +850,9 @@ type ProjectsModelsDownloadCall struct {
 // Download: Gets Download information for a model. This is meant for
 // downloading model resources onto devices. It gives very limited
 // information about the model.
+//
+// - name: The name of the model to download. The name must have the
+//   form `projects/{project}/models/{model}`.
 func (r *ProjectsModelsService) Download(name string) *ProjectsModelsDownloadCall {
 	c := &ProjectsModelsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -887,7 +896,7 @@ func (c *ProjectsModelsDownloadCall) Header() http.Header {
 
 func (c *ProjectsModelsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -985,6 +994,9 @@ type ProjectsModelsGetCall struct {
 }
 
 // Get: Gets a model resource.
+//
+// - name: The name of the model to get. The name must have the form
+//   `projects/{project_id}/models/{model_id}`.
 func (r *ProjectsModelsService) Get(name string) *ProjectsModelsGetCall {
 	c := &ProjectsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1028,7 +1040,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1129,6 +1141,9 @@ type ProjectsModelsListCall struct {
 }
 
 // List: Lists the models
+//
+// - parent: The name of the parent to list models for. The parent must
+//   have the form `projects/{project_id}'.
 func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	c := &ProjectsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1193,7 +1208,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1332,6 +1347,10 @@ type ProjectsModelsPatchCall struct {
 
 // Patch: Updates a model. The longrunning operation will eventually
 // return a Model.
+//
+// - name: The resource name of the Model. Model names have the form
+//   `projects/{project_id}/models/{model_id}` The name is ignored when
+//   creating a model.
 func (r *ProjectsModelsService) Patch(name string, model *Model) *ProjectsModelsPatchCall {
 	c := &ProjectsModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1372,7 +1391,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1486,6 +1505,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1529,7 +1550,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

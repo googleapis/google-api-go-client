@@ -799,7 +799,12 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Export: An export
+// Export: An export To work with Vault resources, the account must have
+// the [required Vault privileges]
+// (https://support.google.com/vault/answer/2799699) and access to the
+// matter. To access a matter, the account must have created the matter,
+// have the matter shared with them, or have the **View All Matters**
+// privilege.
 type Export struct {
 	// CloudStorageSink: Output only. Export sink for cloud storage files.
 	CloudStorageSink *CloudStorageSink `json:"cloudStorageSink,omitempty"`
@@ -1122,7 +1127,12 @@ func (s *HangoutsChatOptions) MarshalJSON() ([]byte, error) {
 
 // HeldAccount: An account being held in a particular hold. This
 // structure is immutable. This can be either a single user or a google
-// group, depending on the corpus.
+// group, depending on the corpus. To work with Vault resources, the
+// account must have the [required Vault privileges]
+// (https://support.google.com/vault/answer/2799699) and access to the
+// matter. To access a matter, the account must have created the matter,
+// have the matter shared with them, or have the **View All Matters**
+// privilege.
 type HeldAccount struct {
 	// AccountId: The account's ID as provided by the Admin SDK.
 	AccountId string `json:"accountId,omitempty"`
@@ -1376,7 +1386,12 @@ func (s *HeldVoiceQuery) MarshalJSON() ([]byte, error) {
 // artifacts based on the combination of the query and accounts
 // restrictions. A hold can be configured to either apply to an
 // explicitly configured set of accounts, or can be applied to all
-// members of an organizational unit.
+// members of an organizational unit. To work with Vault resources, the
+// account must have the [required Vault privileges]
+// (https://support.google.com/vault/answer/2799699) and access to the
+// matter. To access a matter, the account must have created the matter,
+// have the matter shared with them, or have the **View All Matters**
+// privilege.
 type Hold struct {
 	// Accounts: If set, the hold applies to the enumerated accounts and
 	// org_unit must be empty.
@@ -1764,7 +1779,12 @@ func (s *MailOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Matter: Represents a matter.
+// Matter: Represents a matter. To work with Vault resources, the
+// account must have the [required Vault privileges]
+// (https://support.google.com/vault/answer/2799699) and access to the
+// matter. To access a matter, the account must have created the matter,
+// have the matter shared with them, or have the **View All Matters**
+// privilege.
 type Matter struct {
 	// Description: The description of the matter.
 	Description string `json:"description,omitempty"`
@@ -2212,7 +2232,12 @@ func (s *ReopenMatterResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SavedQuery: Definition of the saved query.
+// SavedQuery: Definition of the saved query. To work with Vault
+// resources, the account must have the [required Vault privileges]
+// (https://support.google.com/vault/answer/2799699) and access to the
+// matter. To access a matter, the account must have created the matter,
+// have the matter shared with them, or have the **View All Matters**
+// privilege.
 type SavedQuery struct {
 	// CreateTime: Output only. The server generated timestamp at which
 	// saved query was created.
@@ -2475,6 +2500,8 @@ type MattersAddPermissionsCall struct {
 }
 
 // AddPermissions: Adds an account as a matter collaborator.
+//
+// - matterId: The matter ID.
 func (r *MattersService) AddPermissions(matterId string, addmatterpermissionsrequest *AddMatterPermissionsRequest) *MattersAddPermissionsCall {
 	c := &MattersAddPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -2509,7 +2536,7 @@ func (c *MattersAddPermissionsCall) Header() http.Header {
 
 func (c *MattersAddPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2615,6 +2642,8 @@ type MattersCloseCall struct {
 
 // Close: Closes the specified matter. Returns matter with updated
 // state.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Close(matterId string, closematterrequest *CloseMatterRequest) *MattersCloseCall {
 	c := &MattersCloseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -2649,7 +2678,7 @@ func (c *MattersCloseCall) Header() http.Header {
 
 func (c *MattersCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2755,6 +2784,8 @@ type MattersCountCall struct {
 
 // Count: Counts the artifacts within the context of a matter and
 // returns a detailed breakdown of metrics.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Count(matterId string, countartifactsrequest *CountArtifactsRequest) *MattersCountCall {
 	c := &MattersCountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -2789,7 +2820,7 @@ func (c *MattersCountCall) Header() http.Header {
 
 func (c *MattersCountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2928,7 +2959,7 @@ func (c *MattersCreateCall) Header() http.Header {
 
 func (c *MattersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3021,6 +3052,8 @@ type MattersDeleteCall struct {
 
 // Delete: Deletes the specified matter. Returns matter with updated
 // state.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Delete(matterId string) *MattersDeleteCall {
 	c := &MattersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -3054,7 +3087,7 @@ func (c *MattersDeleteCall) Header() http.Header {
 
 func (c *MattersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3151,6 +3184,8 @@ type MattersGetCall struct {
 }
 
 // Get: Gets the specified matter.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Get(matterId string) *MattersGetCall {
 	c := &MattersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -3208,7 +3243,7 @@ func (c *MattersGetCall) Header() http.Header {
 
 func (c *MattersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3407,7 +3442,7 @@ func (c *MattersListCall) Header() http.Header {
 
 func (c *MattersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3561,6 +3596,8 @@ type MattersRemovePermissionsCall struct {
 }
 
 // RemovePermissions: Removes an account as a matter collaborator.
+//
+// - matterId: The matter ID.
 func (r *MattersService) RemovePermissions(matterId string, removematterpermissionsrequest *RemoveMatterPermissionsRequest) *MattersRemovePermissionsCall {
 	c := &MattersRemovePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -3595,7 +3632,7 @@ func (c *MattersRemovePermissionsCall) Header() http.Header {
 
 func (c *MattersRemovePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3701,6 +3738,8 @@ type MattersReopenCall struct {
 
 // Reopen: Reopens the specified matter. Returns matter with updated
 // state.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Reopen(matterId string, reopenmatterrequest *ReopenMatterRequest) *MattersReopenCall {
 	c := &MattersReopenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -3735,7 +3774,7 @@ func (c *MattersReopenCall) Header() http.Header {
 
 func (c *MattersReopenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3841,6 +3880,8 @@ type MattersUndeleteCall struct {
 
 // Undelete: Undeletes the specified matter. Returns matter with updated
 // state.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Undelete(matterId string, undeletematterrequest *UndeleteMatterRequest) *MattersUndeleteCall {
 	c := &MattersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -3875,7 +3916,7 @@ func (c *MattersUndeleteCall) Header() http.Header {
 
 func (c *MattersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3982,6 +4023,8 @@ type MattersUpdateCall struct {
 // Update: Updates the specified matter. This updates only the name and
 // description of the matter, identified by matter ID. Changes to any
 // other fields are ignored. Returns the default view of the matter.
+//
+// - matterId: The matter ID.
 func (r *MattersService) Update(matterId string, matter *Matter) *MattersUpdateCall {
 	c := &MattersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4016,7 +4059,7 @@ func (c *MattersUpdateCall) Header() http.Header {
 
 func (c *MattersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4121,6 +4164,8 @@ type MattersExportsCreateCall struct {
 }
 
 // Create: Creates an Export.
+//
+// - matterId: The matter ID.
 func (r *MattersExportsService) Create(matterId string, export *Export) *MattersExportsCreateCall {
 	c := &MattersExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4155,7 +4200,7 @@ func (c *MattersExportsCreateCall) Header() http.Header {
 
 func (c *MattersExportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4260,6 +4305,9 @@ type MattersExportsDeleteCall struct {
 }
 
 // Delete: Deletes an Export.
+//
+// - exportId: The export ID.
+// - matterId: The matter ID.
 func (r *MattersExportsService) Delete(matterId string, exportId string) *MattersExportsDeleteCall {
 	c := &MattersExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4294,7 +4342,7 @@ func (c *MattersExportsDeleteCall) Header() http.Header {
 
 func (c *MattersExportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4400,6 +4448,9 @@ type MattersExportsGetCall struct {
 }
 
 // Get: Gets an Export.
+//
+// - exportId: The export ID.
+// - matterId: The matter ID.
 func (r *MattersExportsService) Get(matterId string, exportId string) *MattersExportsGetCall {
 	c := &MattersExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4444,7 +4495,7 @@ func (c *MattersExportsGetCall) Header() http.Header {
 
 func (c *MattersExportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4553,6 +4604,8 @@ type MattersExportsListCall struct {
 }
 
 // List: Lists Exports.
+//
+// - matterId: The matter ID.
 func (r *MattersExportsService) List(matterId string) *MattersExportsListCall {
 	c := &MattersExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4610,7 +4663,7 @@ func (c *MattersExportsListCall) Header() http.Header {
 
 func (c *MattersExportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4746,6 +4799,9 @@ type MattersHoldsAddHeldAccountsCall struct {
 // AddHeldAccounts: Adds HeldAccounts to a hold. Returns a list of
 // accounts that have been successfully added. Accounts can only be
 // added to an existing account-based hold.
+//
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsService) AddHeldAccounts(matterId string, holdId string, addheldaccountsrequest *AddHeldAccountsRequest) *MattersHoldsAddHeldAccountsCall {
 	c := &MattersHoldsAddHeldAccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4781,7 +4837,7 @@ func (c *MattersHoldsAddHeldAccountsCall) Header() http.Header {
 
 func (c *MattersHoldsAddHeldAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4894,6 +4950,8 @@ type MattersHoldsCreateCall struct {
 }
 
 // Create: Creates a hold in the given matter.
+//
+// - matterId: The matter ID.
 func (r *MattersHoldsService) Create(matterId string, hold *Hold) *MattersHoldsCreateCall {
 	c := &MattersHoldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -4928,7 +4986,7 @@ func (c *MattersHoldsCreateCall) Header() http.Header {
 
 func (c *MattersHoldsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5034,6 +5092,9 @@ type MattersHoldsDeleteCall struct {
 
 // Delete: Removes a hold by ID. This will release any HeldAccounts on
 // this Hold.
+//
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsService) Delete(matterId string, holdId string) *MattersHoldsDeleteCall {
 	c := &MattersHoldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -5068,7 +5129,7 @@ func (c *MattersHoldsDeleteCall) Header() http.Header {
 
 func (c *MattersHoldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5174,6 +5235,9 @@ type MattersHoldsGetCall struct {
 }
 
 // Get: Gets a hold by ID.
+//
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsService) Get(matterId string, holdId string) *MattersHoldsGetCall {
 	c := &MattersHoldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -5234,7 +5298,7 @@ func (c *MattersHoldsGetCall) Header() http.Header {
 
 func (c *MattersHoldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5359,6 +5423,8 @@ type MattersHoldsListCall struct {
 
 // List: Lists holds within a matter. An empty page token in
 // ListHoldsResponse denotes no more holds to list.
+//
+// - matterId: The matter ID.
 func (r *MattersHoldsService) List(matterId string) *MattersHoldsListCall {
 	c := &MattersHoldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -5434,7 +5500,7 @@ func (c *MattersHoldsListCall) Header() http.Header {
 
 func (c *MattersHoldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5586,6 +5652,9 @@ type MattersHoldsRemoveHeldAccountsCall struct {
 // of statuses in the same order as the request. If this request leaves
 // the hold with no held accounts, the hold will not apply to any
 // accounts.
+//
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsService) RemoveHeldAccounts(matterId string, holdId string, removeheldaccountsrequest *RemoveHeldAccountsRequest) *MattersHoldsRemoveHeldAccountsCall {
 	c := &MattersHoldsRemoveHeldAccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -5621,7 +5690,7 @@ func (c *MattersHoldsRemoveHeldAccountsCall) Header() http.Header {
 
 func (c *MattersHoldsRemoveHeldAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5738,6 +5807,9 @@ type MattersHoldsUpdateCall struct {
 // add accounts to a hold that covers an OU, nor can you add OUs to a
 // hold that covers individual accounts. Accounts listed in the hold
 // will be ignored.
+//
+// - holdId: The ID of the hold.
+// - matterId: The matter ID.
 func (r *MattersHoldsService) Update(matterId string, holdId string, hold *Hold) *MattersHoldsUpdateCall {
 	c := &MattersHoldsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -5773,7 +5845,7 @@ func (c *MattersHoldsUpdateCall) Header() http.Header {
 
 func (c *MattersHoldsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5889,6 +5961,9 @@ type MattersHoldsAccountsCreateCall struct {
 // Create: Adds a HeldAccount to a hold. Accounts can only be added to a
 // hold that has no held_org_unit set. Attempting to add an account to
 // an OU-based hold will result in an error.
+//
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsAccountsService) Create(matterId string, holdId string, heldaccount *HeldAccount) *MattersHoldsAccountsCreateCall {
 	c := &MattersHoldsAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -5924,7 +5999,7 @@ func (c *MattersHoldsAccountsCreateCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6039,6 +6114,10 @@ type MattersHoldsAccountsDeleteCall struct {
 
 // Delete: Removes a HeldAccount from a hold. If this request leaves the
 // hold with no held accounts, the hold will not apply to any accounts.
+//
+// - accountId: The ID of the account to remove from the hold.
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsAccountsService) Delete(matterId string, holdId string, accountId string) *MattersHoldsAccountsDeleteCall {
 	c := &MattersHoldsAccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6074,7 +6153,7 @@ func (c *MattersHoldsAccountsDeleteCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6190,6 +6269,9 @@ type MattersHoldsAccountsListCall struct {
 // List: Lists HeldAccounts for a hold. This will only list individually
 // specified held accounts. If the hold is on an OU, then use Admin SDK
 // to enumerate its members.
+//
+// - holdId: The hold ID.
+// - matterId: The matter ID.
 func (r *MattersHoldsAccountsService) List(matterId string, holdId string) *MattersHoldsAccountsListCall {
 	c := &MattersHoldsAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6234,7 +6316,7 @@ func (c *MattersHoldsAccountsListCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6343,6 +6425,9 @@ type MattersSavedQueriesCreateCall struct {
 }
 
 // Create: Creates a saved query.
+//
+// - matterId: The matter ID of the parent matter for which the saved
+//   query is to be created.
 func (r *MattersSavedQueriesService) Create(matterId string, savedquery *SavedQuery) *MattersSavedQueriesCreateCall {
 	c := &MattersSavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6377,7 +6462,7 @@ func (c *MattersSavedQueriesCreateCall) Header() http.Header {
 
 func (c *MattersSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6482,6 +6567,10 @@ type MattersSavedQueriesDeleteCall struct {
 }
 
 // Delete: Deletes a saved query by Id.
+//
+// - matterId: The matter ID of the parent matter for which the saved
+//   query is to be deleted.
+// - savedQueryId: ID of the saved query to be deleted.
 func (r *MattersSavedQueriesService) Delete(matterId string, savedQueryId string) *MattersSavedQueriesDeleteCall {
 	c := &MattersSavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6516,7 +6605,7 @@ func (c *MattersSavedQueriesDeleteCall) Header() http.Header {
 
 func (c *MattersSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6622,6 +6711,10 @@ type MattersSavedQueriesGetCall struct {
 }
 
 // Get: Retrieves a saved query by Id.
+//
+// - matterId: The matter ID of the parent matter for which the saved
+//   query is to be retrieved.
+// - savedQueryId: ID of the saved query to be retrieved.
 func (r *MattersSavedQueriesService) Get(matterId string, savedQueryId string) *MattersSavedQueriesGetCall {
 	c := &MattersSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6666,7 +6759,7 @@ func (c *MattersSavedQueriesGetCall) Header() http.Header {
 
 func (c *MattersSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6776,6 +6869,9 @@ type MattersSavedQueriesListCall struct {
 
 // List: Lists saved queries within a matter. An empty page token in
 // ListSavedQueriesResponse denotes no more saved queries to list.
+//
+// - matterId: The matter ID of the parent matter for which the saved
+//   queries are to be retrieved.
 func (r *MattersSavedQueriesService) List(matterId string) *MattersSavedQueriesListCall {
 	c := &MattersSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6834,7 +6930,7 @@ func (c *MattersSavedQueriesListCall) Header() http.Header {
 
 func (c *MattersSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6976,6 +7072,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7010,7 +7108,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7115,6 +7213,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7148,7 +7248,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7245,6 +7345,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7288,7 +7390,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7399,6 +7501,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7463,7 +7567,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

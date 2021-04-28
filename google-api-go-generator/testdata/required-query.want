@@ -172,6 +172,8 @@ type TechsCountCall struct {
 }
 
 // Count: Counts the number of techs matching the constraints.
+//
+// - manager: .
 func (r *TechsService) Count(manager string) *TechsCountCall {
 	c := &TechsCountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("manager", manager)

@@ -263,6 +263,31 @@ type AdvancedSecurityOverrides struct {
 	//   "COMMON_CRITERIA_MODE_ENABLED" - Enables Common Criteria Mode.
 	CommonCriteriaMode string `json:"commonCriteriaMode,omitempty"`
 
+	// DeveloperSettings: Controls access to developer settings: developer
+	// options and safe boot. Replaces safeBootDisabled (deprecated) and
+	// debuggingFeaturesAllowed (deprecated).
+	//
+	// Possible values:
+	//   "DEVELOPER_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// DEVELOPER_SETTINGS_DISABLED.
+	//   "DEVELOPER_SETTINGS_DISABLED" - Default. Disables all developer
+	// settings and prevents the user from accessing them.
+	//   "DEVELOPER_SETTINGS_ALLOWED" - Allows all developer settings. The
+	// user can access and optionally configure the settings.
+	DeveloperSettings string `json:"developerSettings,omitempty"`
+
+	// GooglePlayProtectVerifyApps: Whether Google Play Protect verification
+	// (https://support.google.com/accounts/answer/2812853) is enforced.
+	// Replaces ensureVerifyAppsEnabled (deprecated).
+	//
+	// Possible values:
+	//   "GOOGLE_PLAY_PROTECT_VERIFY_APPS_UNSPECIFIED" - Unspecified.
+	// Defaults to VERIFY_APPS_ENFORCED.
+	//   "VERIFY_APPS_ENFORCED" - Default. Force-enables app verification.
+	//   "VERIFY_APPS_USER_CHOICE" - Allows the user to choose whether to
+	// enable app verification.
+	GooglePlayProtectVerifyApps string `json:"googlePlayProtectVerifyApps,omitempty"`
+
 	// UntrustedAppsPolicy: The policy for untrusted apps (apps from unknown
 	// sources) enforced on the device. Replaces
 	// install_unknown_sources_allowed (deprecated).
@@ -842,23 +867,38 @@ func (s *BlockAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ChoosePrivateKeyRule: A rule for automatically choosing a private key
-// and certificate to authenticate the device to a server.
+// ChoosePrivateKeyRule: Controls apps' access to private keys. The rule
+// determines which private key, if any, Android Device Policy grants to
+// the specified app. Access is granted either when the app calls
+// KeyChain.choosePrivateKeyAlias
+// (https://developer.android.com/reference/android/security/KeyChain#choosePrivateKeyAlias%28android.app.Activity,%20android.security.KeyChainAliasCallback,%20java.lang.String[],%20java.security.Principal[],%20java.lang.String,%20int,%20java.lang.String%29)
+// (or any overloads) to request a private key alias for a given URL, or
+// for rules that are not URL-specific (that is, if urlPattern is not
+// set, or set to the empty string or .*) on Android 11 and above,
+// directly so that the app can call KeyChain.getPrivateKey
+// (https://developer.android.com/reference/android/security/KeyChain#getPrivateKey%28android.content.Context,%20java.lang.String%29),
+// without first having to call KeyChain.choosePrivateKeyAlias.When an
+// app calls KeyChain.choosePrivateKeyAlias if more than one
+// choosePrivateKeyRules matches, the last matching rule defines which
+// key alias to return.
 type ChoosePrivateKeyRule struct {
-	// PackageNames: The package names for which outgoing requests are
-	// subject to this rule. If no package names are specified, then the
-	// rule applies to all packages. For each package name listed, the rule
-	// applies to that package and all other packages that shared the same
-	// Android UID. The SHA256 hash of the signing key signatures of each
-	// package_name will be verified against those provided by Play
+	// PackageNames: The package names to which this rule applies. The hash
+	// of the signing certificate for each app is verified against the hash
+	// provided by Play. If no package names are specified, then the alias
+	// is provided to all apps that call KeyChain.choosePrivateKeyAlias
+	// (https://developer.android.com/reference/android/security/KeyChain#choosePrivateKeyAlias%28android.app.Activity,%20android.security.KeyChainAliasCallback,%20java.lang.String[],%20java.security.Principal[],%20java.lang.String,%20int,%20java.lang.String%29)
+	// or any overloads (but not without calling
+	// KeyChain.choosePrivateKeyAlias, even on Android 11 and above). Any
+	// app with the same Android UID as a package specified here will have
+	// access when they call KeyChain.choosePrivateKeyAlias.
 	PackageNames []string `json:"packageNames,omitempty"`
 
 	// PrivateKeyAlias: The alias of the private key to be used.
 	PrivateKeyAlias string `json:"privateKeyAlias,omitempty"`
 
-	// UrlPattern: The URL pattern to match against the URL of the outgoing
-	// request. The pattern may contain asterisk (*) wildcards. Any URL is
-	// matched if unspecified.
+	// UrlPattern: The URL pattern to match against the URL of the request.
+	// If not set or empty, it matches all URLs. This uses the regular
+	// expression syntax of java.util.regex.Pattern.
 	UrlPattern string `json:"urlPattern,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PackageNames") to
@@ -1448,8 +1488,8 @@ type DeviceSettings struct {
 	// is enabled.
 	UnknownSourcesEnabled bool `json:"unknownSourcesEnabled,omitempty"`
 
-	// VerifyAppsEnabled: Whether Verify Apps (Google Play Protect
-	// (https://support.google.com/googleplay/answer/2812853)) is enabled on
+	// VerifyAppsEnabled: Whether Google Play Protect verification
+	// (https://support.google.com/accounts/answer/2812853) is enforced on
 	// the device.
 	VerifyAppsEnabled bool `json:"verifyAppsEnabled,omitempty"`
 
@@ -3274,10 +3314,8 @@ type Policy struct {
 	// disabled.
 	CellBroadcastsConfigDisabled bool `json:"cellBroadcastsConfigDisabled,omitempty"`
 
-	// ChoosePrivateKeyRules: Rules for automatically choosing a private key
-	// and certificate to authenticate the device to a server. The rules are
-	// ordered by increasing precedence, so if an outgoing request matches
-	// more than one rule, the last rule defines which private key to use.
+	// ChoosePrivateKeyRules: Rules for determining apps' access to private
+	// keys. See ChoosePrivateKeyRule for details.
 	ChoosePrivateKeyRules []*ChoosePrivateKeyRule `json:"choosePrivateKeyRules,omitempty"`
 
 	// ComplianceRules: Rules declaring which mitigating actions to take
@@ -3450,7 +3488,9 @@ type Policy struct {
 	// booting. This prevents being unable to connect to a network if there
 	// is no suitable network in the last policy and the device boots into
 	// an app in lock task mode, or the user is otherwise unable to reach
-	// device settings.
+	// device settings.Note: Setting wifiConfigDisabled to true will
+	// override this setting under specific circumstances. Please see
+	// wifiConfigDisabled for further details.
 	NetworkEscapeHatchEnabled bool `json:"networkEscapeHatchEnabled,omitempty"`
 
 	// NetworkResetDisabled: Whether resetting network settings is disabled.
@@ -3477,7 +3517,9 @@ type Policy struct {
 
 	// PasswordRequirements: Password requirements. The field
 	// password_requirements.require_password_unlock must not be set.
-	// DEPRECATED - Use password_policies.
+	// DEPRECATED - Use password_policies.Note:Complexity-based values of
+	// PasswordQuality, that is, COMPLEXITY_LOW, COMPLEXITY_MEDIUM, and
+	// COMPLEXITY_HIGH, cannot be used here.
 	PasswordRequirements *PasswordRequirements `json:"passwordRequirements,omitempty"`
 
 	// PermissionGrants: Explicit permission or group grants or denials for
@@ -3626,7 +3668,10 @@ type Policy struct {
 	VpnConfigDisabled bool `json:"vpnConfigDisabled,omitempty"`
 
 	// WifiConfigDisabled: Whether configuring Wi-Fi access points is
-	// disabled.
+	// disabled.Note: If a network connection can't be made at boot time and
+	// configuring Wi-Fi is disabled then network escape hatch will be shown
+	// in order to refresh the device policy (see
+	// networkEscapeHatchEnabled).
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 
 	// WifiConfigsLockdownEnabled: DEPRECATED - Use wifi_config_disabled.
@@ -4739,7 +4784,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4853,6 +4898,9 @@ type EnterprisesDeleteCall struct {
 
 // Delete: This feature is not generally available yet. Deletes an
 // enterprise.
+//
+// - name: This feature is not generally available yet. The name of the
+//   enterprise in the form enterprises/{enterpriseId}.
 func (r *EnterprisesService) Delete(name string) *EnterprisesDeleteCall {
 	c := &EnterprisesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4886,7 +4934,7 @@ func (c *EnterprisesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4984,6 +5032,9 @@ type EnterprisesGetCall struct {
 }
 
 // Get: Gets an enterprise.
+//
+// - name: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesService) Get(name string) *EnterprisesGetCall {
 	c := &EnterprisesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5027,7 +5078,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5209,7 +5260,7 @@ func (c *EnterprisesListCall) Header() http.Header {
 
 func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5348,6 +5399,9 @@ type EnterprisesPatchCall struct {
 }
 
 // Patch: Updates an enterprise.
+//
+// - name: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesService) Patch(name string, enterprise *Enterprise) *EnterprisesPatchCall {
 	c := &EnterprisesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5390,7 +5444,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5502,6 +5556,9 @@ type EnterprisesApplicationsGetCall struct {
 }
 
 // Get: Gets info about an application.
+//
+// - name: The name of the application in the form
+//   enterprises/{enterpriseId}/applications/{package_name}.
 func (r *EnterprisesApplicationsService) Get(name string) *EnterprisesApplicationsGetCall {
 	c := &EnterprisesApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5554,7 +5611,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5659,6 +5716,9 @@ type EnterprisesDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device. This operation wipes the device.
+//
+// - name: The name of the device in the form
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDeleteCall {
 	c := &EnterprisesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5715,7 +5775,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5834,6 +5894,9 @@ type EnterprisesDevicesGetCall struct {
 }
 
 // Get: Gets a device.
+//
+// - name: The name of the device in the form
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5877,7 +5940,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5980,6 +6043,9 @@ type EnterprisesDevicesIssueCommandCall struct {
 // IssueCommand: Issues a command to a device. The Operation resource
 // returned contains a Command in its metadata field. Use the get
 // operation method to get the status of the command.
+//
+// - name: The name of the device in the form
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) IssueCommand(name string, command *Command) *EnterprisesDevicesIssueCommandCall {
 	c := &EnterprisesDevicesIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6014,7 +6080,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6120,6 +6186,9 @@ type EnterprisesDevicesListCall struct {
 }
 
 // List: Lists devices for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6177,7 +6246,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6310,6 +6379,9 @@ type EnterprisesDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+// - name: The name of the device in the form
+//   enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Patch(name string, device *Device) *EnterprisesDevicesPatchCall {
 	c := &EnterprisesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6352,7 +6424,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6472,6 +6544,8 @@ type EnterprisesDevicesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // Code.CANCELLED.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *EnterprisesDevicesOperationsService) Cancel(name string) *EnterprisesDevicesOperationsCancelCall {
 	c := &EnterprisesDevicesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6505,7 +6579,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6605,6 +6679,8 @@ type EnterprisesDevicesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns google.rpc.Code.UNIMPLEMENTED.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *EnterprisesDevicesOperationsService) Delete(name string) *EnterprisesDevicesOperationsDeleteCall {
 	c := &EnterprisesDevicesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6638,7 +6714,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6738,6 +6814,8 @@ type EnterprisesDevicesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *EnterprisesDevicesOperationsService) Get(name string) *EnterprisesDevicesOperationsGetCall {
 	c := &EnterprisesDevicesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6781,7 +6859,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6891,6 +6969,8 @@ type EnterprisesDevicesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *EnterprisesDevicesOperationsService) List(name string) *EnterprisesDevicesOperationsListCall {
 	c := &EnterprisesDevicesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6955,7 +7035,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7093,6 +7173,9 @@ type EnterprisesEnrollmentTokensCreateCall struct {
 }
 
 // Create: Creates an enrollment token for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) Create(parent string, enrollmenttoken *EnrollmentToken) *EnterprisesEnrollmentTokensCreateCall {
 	c := &EnterprisesEnrollmentTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7127,7 +7210,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7233,6 +7316,9 @@ type EnterprisesEnrollmentTokensDeleteCall struct {
 
 // Delete: Deletes an enrollment token. This operation invalidates the
 // token, preventing its future use.
+//
+// - name: The name of the enrollment token in the form
+//   enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 func (r *EnterprisesEnrollmentTokensService) Delete(name string) *EnterprisesEnrollmentTokensDeleteCall {
 	c := &EnterprisesEnrollmentTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7266,7 +7352,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7364,6 +7450,9 @@ type EnterprisesPoliciesDeleteCall struct {
 
 // Delete: Deletes a policy. This operation is only permitted if no
 // devices are currently referencing the policy.
+//
+// - name: The name of the policy in the form
+//   enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Delete(name string) *EnterprisesPoliciesDeleteCall {
 	c := &EnterprisesPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7397,7 +7486,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7495,6 +7584,9 @@ type EnterprisesPoliciesGetCall struct {
 }
 
 // Get: Gets a policy.
+//
+// - name: The name of the policy in the form
+//   enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Get(name string) *EnterprisesPoliciesGetCall {
 	c := &EnterprisesPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7538,7 +7630,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7639,6 +7731,9 @@ type EnterprisesPoliciesListCall struct {
 }
 
 // List: Lists policies for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesPoliciesService) List(parent string) *EnterprisesPoliciesListCall {
 	c := &EnterprisesPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7696,7 +7791,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7829,6 +7924,9 @@ type EnterprisesPoliciesPatchCall struct {
 }
 
 // Patch: Updates or creates a policy.
+//
+// - name: The name of the policy in the form
+//   enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Patch(name string, policy *Policy) *EnterprisesPoliciesPatchCall {
 	c := &EnterprisesPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7871,7 +7969,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7983,6 +8081,9 @@ type EnterprisesWebAppsCreateCall struct {
 }
 
 // Create: Creates a web app.
+//
+// - parent: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) Create(parent string, webapp *WebApp) *EnterprisesWebAppsCreateCall {
 	c := &EnterprisesWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8017,7 +8118,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8122,6 +8223,9 @@ type EnterprisesWebAppsDeleteCall struct {
 }
 
 // Delete: Deletes a web app.
+//
+// - name: The name of the web app in the form
+//   enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Delete(name string) *EnterprisesWebAppsDeleteCall {
 	c := &EnterprisesWebAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8155,7 +8259,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8253,6 +8357,9 @@ type EnterprisesWebAppsGetCall struct {
 }
 
 // Get: Gets a web app.
+//
+// - name: The name of the web app in the form
+//   enterprises/{enterpriseId}/webApp/{packageName}.
 func (r *EnterprisesWebAppsService) Get(name string) *EnterprisesWebAppsGetCall {
 	c := &EnterprisesWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8296,7 +8403,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8397,6 +8504,9 @@ type EnterprisesWebAppsListCall struct {
 }
 
 // List: Lists web apps for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListCall {
 	c := &EnterprisesWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8454,7 +8564,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8587,6 +8697,9 @@ type EnterprisesWebAppsPatchCall struct {
 }
 
 // Patch: Updates a web app.
+//
+// - name: The name of the web app in the form
+//   enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Patch(name string, webapp *WebApp) *EnterprisesWebAppsPatchCall {
 	c := &EnterprisesWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8629,7 +8742,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8742,6 +8855,9 @@ type EnterprisesWebTokensCreateCall struct {
 
 // Create: Creates a web token to access an embeddable managed Google
 // Play web UI for a given enterprise.
+//
+// - parent: The name of the enterprise in the form
+//   enterprises/{enterpriseId}.
 func (r *EnterprisesWebTokensService) Create(parent string, webtoken *WebToken) *EnterprisesWebTokensCreateCall {
 	c := &EnterprisesWebTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8776,7 +8892,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8931,7 +9047,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

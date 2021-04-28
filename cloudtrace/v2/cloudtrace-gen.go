@@ -83,7 +83,7 @@ const mtlsBasePath = "https://cloudtrace.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Write Trace data for a project or application
@@ -913,6 +913,9 @@ type ProjectsTracesBatchWriteCall struct {
 
 // BatchWrite: Sends new spans to new or existing traces. You cannot
 // update existing spans.
+//
+// - name: The name of the project where the spans belong. The format is
+//   `projects/[PROJECT_ID]`.
 func (r *ProjectsTracesService) BatchWrite(name string, batchwritespansrequest *BatchWriteSpansRequest) *ProjectsTracesBatchWriteCall {
 	c := &ProjectsTracesBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -947,7 +950,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1054,6 +1057,13 @@ type ProjectsTracesSpansCreateSpanCall struct {
 }
 
 // CreateSpan: Creates a new span.
+//
+// - name: The resource name of the span in the following format:
+//   projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
+//   identifier for a trace within a project; it is a 32-character
+//   hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique
+//   identifier for a span within a trace; it is a 16-character
+//   hexadecimal encoding of an 8-byte array. It should not be zero.
 func (r *ProjectsTracesSpansService) CreateSpan(nameid string, span *Span) *ProjectsTracesSpansCreateSpanCall {
 	c := &ProjectsTracesSpansCreateSpanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1088,7 +1098,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

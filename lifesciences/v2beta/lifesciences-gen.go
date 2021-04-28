@@ -766,14 +766,14 @@ type FailedEvent struct {
 	// following guidelines to decide between `FAILED_PRECONDITION`,
 	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
 	// retry just the failing call. (b) Use `ABORTED` if the client should
-	// retry at a higher level (e.g., when a client-specified test-and-set
-	// fails, indicating the client should restart a read-modify-write
-	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
-	// retry until the system state has been explicitly fixed. E.g., if an
-	// "rmdir" fails because the directory is non-empty,
-	// `FAILED_PRECONDITION` should be returned since the client should not
-	// retry unless the files are deleted from the directory. HTTP Mapping:
-	// 400 Bad Request
+	// retry at a higher level. For example, when a client-specified
+	// test-and-set fails, indicating the client should restart a
+	// read-modify-write sequence. (c) Use `FAILED_PRECONDITION` if the
+	// client should not retry until the system state has been explicitly
+	// fixed. For example, if an "rmdir" fails because the directory is
+	// non-empty, `FAILED_PRECONDITION` should be returned since the client
+	// should not retry unless the files are deleted from the directory.
+	// HTTP Mapping: 400 Bad Request
 	//   "ABORTED" - The operation was aborted, typically due to a
 	// concurrency issue such as a sequencer check failure or transaction
 	// abort. See the guidelines above for deciding between
@@ -1789,6 +1789,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1832,7 +1834,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1934,6 +1936,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1950,7 +1955,7 @@ func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsList
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2001,7 +2006,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2084,7 +2089,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2145,6 +2150,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // or the operation completed despite cancellation. Authorization
 // requires the following Google IAM (https://cloud.google.com/iam)
 // permission: * `lifesciences.operations.cancel`
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2179,7 +2186,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2289,6 +2296,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // recommended by the API service. Authorization requires the following
 // Google IAM (https://cloud.google.com/iam) permission: *
 // `lifesciences.operations.get`
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2332,7 +2341,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2436,6 +2445,8 @@ type ProjectsLocationsOperationsListCall struct {
 // request. Authorization requires the following Google IAM
 // (https://cloud.google.com/iam) permission: *
 // `lifesciences.operations.list`
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2508,7 +2519,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2657,6 +2668,9 @@ type ProjectsLocationsPipelinesRunCall struct {
 // required permissions. Authorization requires the following Google IAM
 // (https://cloud.google.com/iam/) permission: *
 // `lifesciences.workflows.run`
+//
+// - parent: The project and location that this request should be
+//   executed against.
 func (r *ProjectsLocationsPipelinesService) Run(parent string, runpipelinerequest *RunPipelineRequest) *ProjectsLocationsPipelinesRunCall {
 	c := &ProjectsLocationsPipelinesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2691,7 +2705,7 @@ func (c *ProjectsLocationsPipelinesRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

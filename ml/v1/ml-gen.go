@@ -83,7 +83,7 @@ const mtlsBasePath = "https://ml.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -4706,6 +4706,9 @@ type ProjectsExplainCall struct {
 
 // Explain: Performs explanation on the data in the request. {% dynamic
 // include "/ai-platform/includes/___explain-request" %}
+//
+// - name: The resource name of a model or a version. Authorization:
+//   requires the `predict` permission on the specified resource.
 func (r *ProjectsService) Explain(name string, googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest) *ProjectsExplainCall {
 	c := &ProjectsExplainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4740,7 +4743,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4850,6 +4853,8 @@ type ProjectsGetConfigCall struct {
 // account permissions for the Google Cloud Storage location where you
 // put your model training code for training the model with Google Cloud
 // Machine Learning.
+//
+// - name: The project name.
 func (r *ProjectsService) GetConfig(name string) *ProjectsGetConfigCall {
 	c := &ProjectsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4893,7 +4898,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4996,6 +5001,9 @@ type ProjectsPredictCall struct {
 
 // Predict: Performs online prediction on the data in the request. {%
 // dynamic include "/ai-platform/includes/___predict-request" %}
+//
+// - name: The resource name of a model or a version. Authorization:
+//   requires the `predict` permission on the specified resource.
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5030,7 +5038,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5141,6 +5149,8 @@ type ProjectsJobsCancelCall struct {
 }
 
 // Cancel: Cancels a running job.
+//
+// - name: The name of the job to cancel.
 func (r *ProjectsJobsService) Cancel(name string, googlecloudmlv1__canceljobrequest *GoogleCloudMlV1__CancelJobRequest) *ProjectsJobsCancelCall {
 	c := &ProjectsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5175,7 +5185,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5281,6 +5291,8 @@ type ProjectsJobsCreateCall struct {
 }
 
 // Create: Creates a training or a batch prediction job.
+//
+// - parent: The project name.
 func (r *ProjectsJobsService) Create(parent string, googlecloudmlv1__job *GoogleCloudMlV1__Job) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5315,7 +5327,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5421,6 +5433,8 @@ type ProjectsJobsGetCall struct {
 }
 
 // Get: Describes a job.
+//
+// - name: The name of the job to get the description of.
 func (r *ProjectsJobsService) Get(name string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5464,7 +5478,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5568,6 +5582,10 @@ type ProjectsJobsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamPolicyCall {
 	c := &ProjectsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5625,7 +5643,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5734,6 +5752,8 @@ type ProjectsJobsListCall struct {
 // List: Lists the jobs in the project. If there are no jobs that match
 // the request parameters, the list request returns an empty response
 // body: {}.
+//
+// - parent: The name of the project for which to list jobs.
 func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5807,7 +5827,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5948,6 +5968,8 @@ type ProjectsJobsPatchCall struct {
 
 // Patch: Updates a specific job resource. Currently the only supported
 // fields to update are `labels`.
+//
+// - name: The job name.
 func (r *ProjectsJobsService) Patch(name string, googlecloudmlv1__job *GoogleCloudMlV1__Job) *ProjectsJobsPatchCall {
 	c := &ProjectsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5998,7 +6020,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6112,6 +6134,10 @@ type ProjectsJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsJobsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
 	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6146,7 +6172,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6257,6 +6283,10 @@ type ProjectsJobsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsJobsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsJobsTestIamPermissionsCall {
 	c := &ProjectsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6291,7 +6321,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6399,6 +6429,8 @@ type ProjectsLocationsGetCall struct {
 
 // Get: Get the complete list of CMLE capabilities in a location, along
 // with their location-specific properties.
+//
+// - name: The name of the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6442,7 +6474,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6545,6 +6577,10 @@ type ProjectsLocationsListCall struct {
 
 // List: List all locations that provides at least one type of CMLE
 // capability.
+//
+// - parent: The name of the project for which available locations are
+//   to be listed (since some locations might be whitelisted for
+//   specific projects).
 func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6606,7 +6642,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6749,6 +6785,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6782,7 +6820,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6882,6 +6920,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6925,7 +6965,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7026,6 +7066,9 @@ type ProjectsLocationsStudiesCreateCall struct {
 }
 
 // Create: Creates a study.
+//
+// - parent: The project and location that the study belongs to. Format:
+//   projects/{project}/locations/{location}.
 func (r *ProjectsLocationsStudiesService) Create(parent string, googlecloudmlv1__study *GoogleCloudMlV1__Study) *ProjectsLocationsStudiesCreateCall {
 	c := &ProjectsLocationsStudiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7068,7 +7111,7 @@ func (c *ProjectsLocationsStudiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7178,6 +7221,8 @@ type ProjectsLocationsStudiesDeleteCall struct {
 }
 
 // Delete: Deletes a study.
+//
+// - name: The study name.
 func (r *ProjectsLocationsStudiesService) Delete(name string) *ProjectsLocationsStudiesDeleteCall {
 	c := &ProjectsLocationsStudiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7211,7 +7256,7 @@ func (c *ProjectsLocationsStudiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7309,6 +7354,8 @@ type ProjectsLocationsStudiesGetCall struct {
 }
 
 // Get: Gets a study.
+//
+// - name: The study name.
 func (r *ProjectsLocationsStudiesService) Get(name string) *ProjectsLocationsStudiesGetCall {
 	c := &ProjectsLocationsStudiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7352,7 +7399,7 @@ func (c *ProjectsLocationsStudiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7453,6 +7500,9 @@ type ProjectsLocationsStudiesListCall struct {
 }
 
 // List: Lists all the studies in a region for an associated project.
+//
+// - parent: The project and location that the study belongs to. Format:
+//   projects/{project}/locations/{location}.
 func (r *ProjectsLocationsStudiesService) List(parent string) *ProjectsLocationsStudiesListCall {
 	c := &ProjectsLocationsStudiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7496,7 +7546,7 @@ func (c *ProjectsLocationsStudiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7600,6 +7650,8 @@ type ProjectsLocationsStudiesTrialsAddMeasurementCall struct {
 // AddMeasurement: Adds a measurement of the objective metrics to a
 // trial. This measurement is assumed to have been taken before the
 // trial is complete.
+//
+// - name: The trial name.
 func (r *ProjectsLocationsStudiesTrialsService) AddMeasurement(name string, googlecloudmlv1__addtrialmeasurementrequest *GoogleCloudMlV1__AddTrialMeasurementRequest) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
 	c := &ProjectsLocationsStudiesTrialsAddMeasurementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7634,7 +7686,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Header() http.Header 
 
 func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7742,6 +7794,8 @@ type ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall struct {
 // CheckEarlyStoppingState: Checks whether a trial should stop or not.
 // Returns a long-running operation. When the operation is successful,
 // it will contain a CheckTrialEarlyStoppingStateResponse.
+//
+// - name: The trial name.
 func (r *ProjectsLocationsStudiesTrialsService) CheckEarlyStoppingState(name string, googlecloudmlv1__checktrialearlystoppingstaterequest *GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
 	c := &ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7776,7 +7830,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Header() htt
 
 func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7882,6 +7936,8 @@ type ProjectsLocationsStudiesTrialsCompleteCall struct {
 }
 
 // Complete: Marks a trial as complete.
+//
+// - name: The trial name.metat.
 func (r *ProjectsLocationsStudiesTrialsService) Complete(name string, googlecloudmlv1__completetrialrequest *GoogleCloudMlV1__CompleteTrialRequest) *ProjectsLocationsStudiesTrialsCompleteCall {
 	c := &ProjectsLocationsStudiesTrialsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7916,7 +7972,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8022,6 +8078,8 @@ type ProjectsLocationsStudiesTrialsCreateCall struct {
 }
 
 // Create: Adds a user provided trial to a study.
+//
+// - parent: The name of the study that the trial belongs to.
 func (r *ProjectsLocationsStudiesTrialsService) Create(parent string, googlecloudmlv1__trial *GoogleCloudMlV1__Trial) *ProjectsLocationsStudiesTrialsCreateCall {
 	c := &ProjectsLocationsStudiesTrialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8056,7 +8114,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8161,6 +8219,8 @@ type ProjectsLocationsStudiesTrialsDeleteCall struct {
 }
 
 // Delete: Deletes a trial.
+//
+// - name: The trial name.
 func (r *ProjectsLocationsStudiesTrialsService) Delete(name string) *ProjectsLocationsStudiesTrialsDeleteCall {
 	c := &ProjectsLocationsStudiesTrialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8194,7 +8254,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8292,6 +8352,8 @@ type ProjectsLocationsStudiesTrialsGetCall struct {
 }
 
 // Get: Gets a trial.
+//
+// - name: The trial name.
 func (r *ProjectsLocationsStudiesTrialsService) Get(name string) *ProjectsLocationsStudiesTrialsGetCall {
 	c := &ProjectsLocationsStudiesTrialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8335,7 +8397,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8436,6 +8498,8 @@ type ProjectsLocationsStudiesTrialsListCall struct {
 }
 
 // List: Lists the trials associated with a study.
+//
+// - parent: The name of the study that the trial belongs to.
 func (r *ProjectsLocationsStudiesTrialsService) List(parent string) *ProjectsLocationsStudiesTrialsListCall {
 	c := &ProjectsLocationsStudiesTrialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8479,7 +8543,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8584,6 +8648,9 @@ type ProjectsLocationsStudiesTrialsListOptimalTrialsCall struct {
 // multi-objective study or the optimal trials for single-objective
 // study. The definition of pareto-optimal can be checked in wiki page.
 // https://en.wikipedia.org/wiki/Pareto_efficiency
+//
+// - parent: The name of the study that the pareto-optimal trial belongs
+//   to.
 func (r *ProjectsLocationsStudiesTrialsService) ListOptimalTrials(parent string, googlecloudmlv1__listoptimaltrialsrequest *GoogleCloudMlV1__ListOptimalTrialsRequest) *ProjectsLocationsStudiesTrialsListOptimalTrialsCall {
 	c := &ProjectsLocationsStudiesTrialsListOptimalTrialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8618,7 +8685,7 @@ func (c *ProjectsLocationsStudiesTrialsListOptimalTrialsCall) Header() http.Head
 
 func (c *ProjectsLocationsStudiesTrialsListOptimalTrialsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8726,6 +8793,8 @@ type ProjectsLocationsStudiesTrialsStopCall struct {
 }
 
 // Stop: Stops a trial.
+//
+// - name: The trial name.
 func (r *ProjectsLocationsStudiesTrialsService) Stop(name string, googlecloudmlv1__stoptrialrequest *GoogleCloudMlV1__StopTrialRequest) *ProjectsLocationsStudiesTrialsStopCall {
 	c := &ProjectsLocationsStudiesTrialsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8760,7 +8829,7 @@ func (c *ProjectsLocationsStudiesTrialsStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8870,6 +8939,8 @@ type ProjectsLocationsStudiesTrialsSuggestCall struct {
 // associated with the generation of trial suggestions. When this
 // long-running operation succeeds, it will contain a
 // SuggestTrialsResponse.
+//
+// - parent: The name of the study that the trial belongs to.
 func (r *ProjectsLocationsStudiesTrialsService) Suggest(parent string, googlecloudmlv1__suggesttrialsrequest *GoogleCloudMlV1__SuggestTrialsRequest) *ProjectsLocationsStudiesTrialsSuggestCall {
 	c := &ProjectsLocationsStudiesTrialsSuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8904,7 +8975,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsSuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9013,6 +9084,8 @@ type ProjectsModelsCreateCall struct {
 // versions. You must add at least one version before you can request
 // predictions from the model. Add versions by calling
 // projects.models.versions.create.
+//
+// - parent: The project name.
 func (r *ProjectsModelsService) Create(parent string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9047,7 +9120,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9154,6 +9227,8 @@ type ProjectsModelsDeleteCall struct {
 // Delete: Deletes a model. You can only delete a model if there are no
 // versions in it. You can delete versions by calling
 // projects.models.versions.delete.
+//
+// - name: The name of the model.
 func (r *ProjectsModelsService) Delete(name string) *ProjectsModelsDeleteCall {
 	c := &ProjectsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9187,7 +9262,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9287,6 +9362,8 @@ type ProjectsModelsGetCall struct {
 // Get: Gets information about a model, including its name, the
 // description (if set), and the default version (if at least one
 // version of the model has been deployed).
+//
+// - name: The name of the model.
 func (r *ProjectsModelsService) Get(name string) *ProjectsModelsGetCall {
 	c := &ProjectsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9330,7 +9407,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9434,6 +9511,10 @@ type ProjectsModelsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGetIamPolicyCall {
 	c := &ProjectsModelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9491,7 +9572,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9601,6 +9682,8 @@ type ProjectsModelsListCall struct {
 // multiple models, and each model can have multiple versions. If there
 // are no models that match the request parameters, the list request
 // returns an empty response body: {}.
+//
+// - parent: The name of the project whose models are to be listed.
 func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	c := &ProjectsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9669,7 +9752,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9811,6 +9894,8 @@ type ProjectsModelsPatchCall struct {
 // Patch: Updates a specific model resource. Currently the only
 // supported fields to update are `description` and
 // `default_version.name`.
+//
+// - name: The project name.
 func (r *ProjectsModelsService) Patch(name string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsPatchCall {
 	c := &ProjectsModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9859,7 +9944,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9973,6 +10058,10 @@ type ProjectsModelsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsModelsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsModelsSetIamPolicyCall {
 	c := &ProjectsModelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10007,7 +10096,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10118,6 +10207,10 @@ type ProjectsModelsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsModelsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsModelsTestIamPermissionsCall {
 	c := &ProjectsModelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10152,7 +10245,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10265,6 +10358,8 @@ type ProjectsModelsVersionsCreateCall struct {
 // has one or more versions, the default version does not automatically
 // change. If you want a new version to be the default, you must call
 // projects.models.versions.setDefault.
+//
+// - parent: The name of the model.
 func (r *ProjectsModelsVersionsService) Create(parent string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsCreateCall {
 	c := &ProjectsModelsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10299,7 +10394,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10408,6 +10503,9 @@ type ProjectsModelsVersionsDeleteCall struct {
 // remove a single version. Note: You cannot delete the version that is
 // set as the default version of the model unless it is the only
 // remaining version.
+//
+// - name: The name of the version. You can get the names of all the
+//   versions of a model by calling projects.models.versions.list.
 func (r *ProjectsModelsVersionsService) Delete(name string) *ProjectsModelsVersionsDeleteCall {
 	c := &ProjectsModelsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10441,7 +10539,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10542,6 +10640,8 @@ type ProjectsModelsVersionsGetCall struct {
 // versions. You can call projects.models.versions.list to get the same
 // information that this method returns for all of the versions of a
 // model.
+//
+// - name: The name of the version.
 func (r *ProjectsModelsVersionsService) Get(name string) *ProjectsModelsVersionsGetCall {
 	c := &ProjectsModelsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10585,7 +10685,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10691,6 +10791,8 @@ type ProjectsModelsVersionsListCall struct {
 // list be retrieved in batches (called pages). If there are no versions
 // that match the request parameters, the list request returns an empty
 // response body: {}.
+//
+// - parent: The name of the model for which to list the version.
 func (r *ProjectsModelsVersionsService) List(parent string) *ProjectsModelsVersionsListCall {
 	c := &ProjectsModelsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10759,7 +10861,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10901,6 +11003,8 @@ type ProjectsModelsVersionsPatchCall struct {
 // Patch: Updates the specified Version resource. Currently the only
 // update-able fields are `description`, `requestLoggingConfig`,
 // `autoScaling.minNodes`, and `manualScaling.nodes`.
+//
+// - name: The name of the model.
 func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsPatchCall {
 	c := &ProjectsModelsVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10951,7 +11055,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11068,6 +11172,10 @@ type ProjectsModelsVersionsSetDefaultCall struct {
 // for a model is automatically set as the default. You must make any
 // subsequent changes to the default version setting manually using this
 // method.
+//
+// - name: The name of the version to make the default for the model.
+//   You can get the names of all the versions of a model by calling
+//   projects.models.versions.list.
 func (r *ProjectsModelsVersionsService) SetDefault(name string, googlecloudmlv1__setdefaultversionrequest *GoogleCloudMlV1__SetDefaultVersionRequest) *ProjectsModelsVersionsSetDefaultCall {
 	c := &ProjectsModelsVersionsSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11102,7 +11210,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11216,6 +11324,8 @@ type ProjectsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11249,7 +11359,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11349,6 +11459,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11392,7 +11504,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11502,6 +11614,8 @@ type ProjectsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11566,7 +11680,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

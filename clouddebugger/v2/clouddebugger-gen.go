@@ -83,7 +83,7 @@ const mtlsBasePath = "https://clouddebugger.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Use Stackdriver Debugger
@@ -1435,7 +1435,7 @@ func (c *ControllerDebuggeesRegisterCall) Header() http.Header {
 
 func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1539,6 +1539,8 @@ type ControllerDebuggeesBreakpointsListCall struct {
 // agent should remember the breakpoints that are completed until the
 // controller removes them from the active list to avoid setting those
 // breakpoints again.
+//
+// - debuggeeId: Identifies the debuggee.
 func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *ControllerDebuggeesBreakpointsListCall {
 	c := &ControllerDebuggeesBreakpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -1610,7 +1612,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Header() http.Header {
 
 func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1734,6 +1736,9 @@ type ControllerDebuggeesBreakpointsUpdateCall struct {
 // breakpoint semantics. These may only make changes such as
 // canonicalizing a value or snapping the location to the correct line
 // of code.
+//
+// - debuggeeId: Identifies the debuggee being debugged.
+// - id: Breakpoint identifier, unique in the scope of the debuggee.
 func (r *ControllerDebuggeesBreakpointsService) Update(debuggeeId string, id string, updateactivebreakpointrequest *UpdateActiveBreakpointRequest) *ControllerDebuggeesBreakpointsUpdateCall {
 	c := &ControllerDebuggeesBreakpointsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -1769,7 +1774,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Header() http.Header {
 
 func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1947,7 +1952,7 @@ func (c *DebuggerDebuggeesListCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2052,6 +2057,9 @@ type DebuggerDebuggeesBreakpointsDeleteCall struct {
 }
 
 // Delete: Deletes the breakpoint from the debuggee.
+//
+// - breakpointId: ID of the breakpoint to delete.
+// - debuggeeId: ID of the debuggee whose breakpoint to delete.
 func (r *DebuggerDebuggeesBreakpointsService) Delete(debuggeeId string, breakpointId string) *DebuggerDebuggeesBreakpointsDeleteCall {
 	c := &DebuggerDebuggeesBreakpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -2094,7 +2102,7 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2206,6 +2214,9 @@ type DebuggerDebuggeesBreakpointsGetCall struct {
 }
 
 // Get: Gets breakpoint information.
+//
+// - breakpointId: ID of the breakpoint to get.
+// - debuggeeId: ID of the debuggee whose breakpoint to get.
 func (r *DebuggerDebuggeesBreakpointsService) Get(debuggeeId string, breakpointId string) *DebuggerDebuggeesBreakpointsGetCall {
 	c := &DebuggerDebuggeesBreakpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -2258,7 +2269,7 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2372,6 +2383,8 @@ type DebuggerDebuggeesBreakpointsListCall struct {
 }
 
 // List: Lists all breakpoints for the debuggee.
+//
+// - debuggeeId: ID of the debuggee whose breakpoints to list.
 func (r *DebuggerDebuggeesBreakpointsService) List(debuggeeId string) *DebuggerDebuggeesBreakpointsListCall {
 	c := &DebuggerDebuggeesBreakpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -2472,7 +2485,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2611,6 +2624,8 @@ type DebuggerDebuggeesBreakpointsSetCall struct {
 }
 
 // Set: Sets the breakpoint to the debuggee.
+//
+// - debuggeeId: ID of the debuggee where the breakpoint is to be set.
 func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint *Breakpoint) *DebuggerDebuggeesBreakpointsSetCall {
 	c := &DebuggerDebuggeesBreakpointsSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -2670,7 +2685,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

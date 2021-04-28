@@ -79,7 +79,7 @@ const mtlsBasePath = "https://iap.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -555,6 +555,10 @@ type V1beta1GetIamPolicyCall struct {
 // Proxy protected resource. More information about managing access via
 // IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *V1beta1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1beta1GetIamPolicyCall {
 	c := &V1beta1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -589,7 +593,7 @@ func (c *V1beta1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1beta1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -698,6 +702,10 @@ type V1beta1SetIamPolicyCall struct {
 // Proxy protected resource. Replaces any existing policy. More
 // information about managing access via IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *V1beta1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1beta1SetIamPolicyCall {
 	c := &V1beta1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -732,7 +740,7 @@ func (c *V1beta1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1beta1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -843,6 +851,10 @@ type V1beta1TestIamPermissionsCall struct {
 // [google.rpc.Code.PERMISSION_DENIED] will be returned. More
 // information about managing access via IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *V1beta1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1beta1TestIamPermissionsCall {
 	c := &V1beta1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -877,7 +889,7 @@ func (c *V1beta1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1beta1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

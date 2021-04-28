@@ -1512,6 +1512,8 @@ type EncodedFullHashesGetCall struct {
 }
 
 // Get:
+//
+// - encodedRequest: A serialized FindFullHashesRequest proto.
 func (r *EncodedFullHashesService) Get(encodedRequest string) *EncodedFullHashesGetCall {
 	c := &EncodedFullHashesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.encodedRequest = encodedRequest
@@ -1570,7 +1572,7 @@ func (c *EncodedFullHashesGetCall) Header() http.Header {
 
 func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1680,6 +1682,8 @@ type EncodedUpdatesGetCall struct {
 }
 
 // Get:
+//
+// - encodedRequest: A serialized FetchThreatListUpdatesRequest proto.
 func (r *EncodedUpdatesService) Get(encodedRequest string) *EncodedUpdatesGetCall {
 	c := &EncodedUpdatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.encodedRequest = encodedRequest
@@ -1738,7 +1742,7 @@ func (c *EncodedUpdatesGetCall) Header() http.Header {
 
 func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1881,7 +1885,7 @@ func (c *FullHashesFindCall) Header() http.Header {
 
 func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2006,7 +2010,7 @@ func (c *ThreatHitsCreateCall) Header() http.Header {
 
 func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2129,7 +2133,7 @@ func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 
 func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2263,7 +2267,7 @@ func (c *ThreatListsListCall) Header() http.Header {
 
 func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2382,7 +2386,7 @@ func (c *ThreatMatchesFindCall) Header() http.Header {
 
 func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

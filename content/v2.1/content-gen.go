@@ -1687,8 +1687,8 @@ type AccountsLinkRequest struct {
 	LinkedAccountId string `json:"linkedAccountId,omitempty"`
 
 	// Services:  Acceptable values are: - "shoppingAdsProductManagement"
-	// - "shoppingAdsOther" - "shoppingActionsProductManagement" -
-	// "shoppingActionsOrderManagement" - "shoppingActionsOther"
+	// - "shoppingActionsProductManagement" -
+	// "shoppingActionsOrderManagement"
 	Services []string `json:"services,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -2243,6 +2243,11 @@ func (s *AccounttaxListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ActivateBuyOnGoogleProgramRequest: Request message for the
+// ActivateProgram method.
+type ActivateBuyOnGoogleProgramRequest struct {
+}
+
 type Amount struct {
 	// PriceAmount: [required] The pre-tax or post-tax price depending on
 	// the location of the order.
@@ -2321,6 +2326,12 @@ type BuyOnGoogleProgramStatus struct {
 	// in a specific region code.
 	//   "ONBOARDING" - Merchant is onboarding to a given program in a
 	// specific region code.
+	//   "ELIGIBLE_FOR_REVIEW" - Merchant fulfilled all the requirements and
+	// is ready to request review in a specific region code.
+	//   "PENDING_REVIEW" - Merchant is waiting for the review to be
+	// completed in a specific region code.
+	//   "REVIEW_DISAPPROVED" - The review for a merchant has been rejected
+	// in a specific region code.
 	//   "ACTIVE" - Merchant's program participation is active for a
 	// specific region code.
 	//   "PAUSED" - Participation has been paused.
@@ -4143,6 +4154,10 @@ type InapplicabilityDetails struct {
 	// than floor price in the restriction.
 	//   "UNCATEGORIZED" - The reason is not categorized to any known
 	// reason.
+	//   "INVALID_AUTO_PRICE_MIN" - The auto_pricing_min_price is invalid.
+	// For example, it is missing or < 0.
+	//   "INVALID_FLOOR_CONFIG" - The floor defined in the rule is invalid.
+	// For example, it has the wrong sign which results in a floor < 0.
 	InapplicableReason string `json:"inapplicableReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InapplicableCount")
@@ -5812,8 +5827,9 @@ type Metrics struct {
 	// Clicks: Number of clicks.
 	Clicks int64 `json:"clicks,omitempty,string"`
 
-	// Ctr: Number of clicks merchant's products receive (clicks) divided by
-	// the number of times the products are shown (impressions).
+	// Ctr: Click-through rate - the number of clicks merchant's products
+	// receive (clicks) divided by the number of times the products are
+	// shown (impressions).
 	Ctr float64 `json:"ctr,omitempty"`
 
 	// Impressions: Number of times merchant's products are shown.
@@ -9951,6 +9967,11 @@ func (s *OrdersUpdateShipmentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PauseBuyOnGoogleProgramRequest: Request message for the PauseProgram
+// method.
+type PauseBuyOnGoogleProgramRequest struct {
+}
+
 type PickupCarrierService struct {
 	// CarrierName: The name of the pickup carrier (e.g., "UPS").
 	// Required.
@@ -10813,6 +10834,10 @@ type Product struct {
 	// AdditionalImageLinks: Additional URLs of images of the item.
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`
 
+	// AdditionalSizeType: Additional cut of the item. Used together with
+	// size_type to represent combined size types for apparel items.
+	AdditionalSizeType string `json:"additionalSizeType,omitempty"`
+
 	// AdsGrouping: Used to group items in an arbitrary way. Only for CPA%,
 	// discouraged otherwise.
 	AdsGrouping string `json:"adsGrouping,omitempty"`
@@ -11242,6 +11267,35 @@ type ProductShipping struct {
 	// LocationId: The numeric ID of a location that the shipping rate
 	// applies to as defined in the AdWords API.
 	LocationId int64 `json:"locationId,omitempty,string"`
+
+	// MaxHandlingTime: Maximum handling time (inclusive) between when the
+	// order is received and shipped in business days. 0 means that the
+	// order is shipped on the same day as it is received if it happens
+	// before the cut-off time. Both maxHandlingTime and maxTransitTime are
+	// required if providing shipping speeds.
+	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
+
+	// MaxTransitTime: Maximum transit time (inclusive) between when the
+	// order has shipped and when it is delivered in business days. 0 means
+	// that the order is delivered on the same day as it ships. Both
+	// maxHandlingTime and maxTransitTime are required if providing shipping
+	// speeds.
+	MaxTransitTime int64 `json:"maxTransitTime,omitempty,string"`
+
+	// MinHandlingTime: Minimum handling time (inclusive) between when the
+	// order is received and shipped in business days. 0 means that the
+	// order is shipped on the same day as it is received if it happens
+	// before the cut-off time. minHandlingTime can only be present together
+	// with maxHandlingTime; but it is not required if maxHandlingTime is
+	// present.
+	MinHandlingTime int64 `json:"minHandlingTime,omitempty,string"`
+
+	// MinTransitTime: Minimum transit time (inclusive) between when the
+	// order has shipped and when it is delivered in business days. 0 means
+	// that the order is delivered on the same day as it ships.
+	// minTransitTime can only be present together with maxTransitTime; but
+	// it is not required if maxTransitTime is present.
+	MinTransitTime int64 `json:"minTransitTime,omitempty,string"`
 
 	// PostalCode: The postal code range that the shipping rate applies to,
 	// represented by a postal code, a postal code prefix followed by a *
@@ -13246,6 +13300,11 @@ func (s *RepricingRuleStatsBasedRule) MarshalJSON() ([]byte, error) {
 	type NoMethod RepricingRuleStatsBasedRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RequestReviewBuyOnGoogleProgramRequest: Request message for the
+// RequestReviewProgram method.
+type RequestReviewBuyOnGoogleProgramRequest struct {
 }
 
 // ReturnAddress: Return address resource.
@@ -15991,7 +16050,7 @@ func (c *AccountsAuthinfoCall) Header() http.Header {
 
 func (c *AccountsAuthinfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16079,6 +16138,12 @@ type AccountsClaimwebsiteCall struct {
 }
 
 // Claimwebsite: Claims the website of a Merchant Center sub-account.
+//
+// - accountId: The ID of the account whose website is claimed.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccountsService) Claimwebsite(merchantId uint64, accountId uint64) *AccountsClaimwebsiteCall {
 	c := &AccountsClaimwebsiteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -16122,7 +16187,7 @@ func (c *AccountsClaimwebsiteCall) Header() http.Header {
 
 func (c *AccountsClaimwebsiteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16267,7 +16332,7 @@ func (c *AccountsCustombatchCall) Header() http.Header {
 
 func (c *AccountsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16360,6 +16425,11 @@ type AccountsDeleteCall struct {
 }
 
 // Delete: Deletes a Merchant Center sub-account.
+//
+// - accountId: The ID of the account.
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account, and accountId must be the ID of a sub-account
+//   of this account.
 func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -16401,7 +16471,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16487,6 +16557,12 @@ type AccountsGetCall struct {
 }
 
 // Get: Retrieves a Merchant Center account.
+//
+// - accountId: The ID of the account.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccountsService) Get(merchantId uint64, accountId uint64) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -16543,7 +16619,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16666,6 +16742,9 @@ type AccountsInsertCall struct {
 }
 
 // Insert: Creates a Merchant Center sub-account.
+//
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account.
 func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsInsertCall {
 	c := &AccountsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -16700,7 +16779,7 @@ func (c *AccountsInsertCall) Header() http.Header {
 
 func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16808,6 +16887,12 @@ type AccountsLinkCall struct {
 
 // Link: Performs an action on a link between two Merchant Center
 // accounts, namely accountId and linkedAccountId.
+//
+// - accountId: The ID of the account that should be linked.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccountsService) Link(merchantId uint64, accountId uint64, accountslinkrequest *AccountsLinkRequest) *AccountsLinkCall {
 	c := &AccountsLinkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -16843,7 +16928,7 @@ func (c *AccountsLinkCall) Header() http.Header {
 
 func (c *AccountsLinkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16958,6 +17043,9 @@ type AccountsListCall struct {
 }
 
 // List: Lists the sub-accounts in your Merchant Center account.
+//
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account.
 func (r *AccountsService) List(merchantId uint64) *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17034,7 +17122,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17188,6 +17276,12 @@ type AccountsListlinksCall struct {
 
 // Listlinks: Returns the list of accounts linked to your Merchant
 // Center account.
+//
+// - accountId: The ID of the account for which to list links.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccountsService) Listlinks(merchantId uint64, accountId uint64) *AccountsListlinksCall {
 	c := &AccountsListlinksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17246,7 +17340,7 @@ func (c *AccountsListlinksCall) Header() http.Header {
 
 func (c *AccountsListlinksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17390,6 +17484,12 @@ type AccountsUpdateCall struct {
 
 // Update: Updates a Merchant Center account. Any fields that are not
 // provided are deleted from the resource.
+//
+// - accountId: The ID of the account.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17425,7 +17525,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17542,6 +17642,9 @@ type AccountsUpdatelabelsCall struct {
 
 // Updatelabels: Updates labels that are assigned to the Merchant Center
 // account by CSS user.
+//
+// - accountId: The ID of the account whose labels are updated.
+// - merchantId: The ID of the managing account.
 func (r *AccountsService) Updatelabels(merchantId uint64, accountId uint64, accountsupdatelabelsrequest *AccountsUpdateLabelsRequest) *AccountsUpdatelabelsCall {
 	c := &AccountsUpdatelabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17577,7 +17680,7 @@ func (c *AccountsUpdatelabelsCall) Header() http.Header {
 
 func (c *AccountsUpdatelabelsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17694,6 +17797,9 @@ type AccountsCredentialsCreateCall struct {
 // Create: Uploads credentials for the Merchant Center account. If
 // credentials already exist for this Merchant Center account and
 // purpose, this method updates them.
+//
+// - accountId: The merchant id of the account these credentials belong
+//   to.
 func (r *AccountsCredentialsService) Create(accountId int64, accountcredentials *AccountCredentials) *AccountsCredentialsCreateCall {
 	c := &AccountsCredentialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17728,7 +17834,7 @@ func (c *AccountsCredentialsCreateCall) Header() http.Header {
 
 func (c *AccountsCredentialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17834,6 +17940,8 @@ type AccountsLabelsCreateCall struct {
 }
 
 // Create: Creates a new label, not assigned to any account.
+//
+// - accountId: The id of the account this label belongs to.
 func (r *AccountsLabelsService) Create(accountId int64, accountlabel *AccountLabel) *AccountsLabelsCreateCall {
 	c := &AccountsLabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17868,7 +17976,7 @@ func (c *AccountsLabelsCreateCall) Header() http.Header {
 
 func (c *AccountsLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17975,6 +18083,9 @@ type AccountsLabelsDeleteCall struct {
 
 // Delete: Deletes a label and removes it from all accounts to which it
 // was assigned.
+//
+// - accountId: The id of the account that owns the label.
+// - labelId: The id of the label to delete.
 func (r *AccountsLabelsService) Delete(accountId int64, labelId int64) *AccountsLabelsDeleteCall {
 	c := &AccountsLabelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18009,7 +18120,7 @@ func (c *AccountsLabelsDeleteCall) Header() http.Header {
 
 func (c *AccountsLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18088,6 +18199,8 @@ type AccountsLabelsListCall struct {
 }
 
 // List: Lists the labels assigned to an account.
+//
+// - accountId: The account id for whose labels are to be listed.
 func (r *AccountsLabelsService) List(accountId int64) *AccountsLabelsListCall {
 	c := &AccountsLabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18150,7 +18263,7 @@ func (c *AccountsLabelsListCall) Header() http.Header {
 
 func (c *AccountsLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18284,6 +18397,9 @@ type AccountsLabelsPatchCall struct {
 }
 
 // Patch: Updates a label.
+//
+// - accountId: The id of the account this label belongs to.
+// - labelId: The id of the label to update.
 func (r *AccountsLabelsService) Patch(accountId int64, labelId int64, accountlabel *AccountLabel) *AccountsLabelsPatchCall {
 	c := &AccountsLabelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18319,7 +18435,7 @@ func (c *AccountsLabelsPatchCall) Header() http.Header {
 
 func (c *AccountsLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18434,6 +18550,9 @@ type AccountsReturncarrierCreateCall struct {
 }
 
 // Create: Links return carrier to a merchant account.
+//
+// - accountId: The Merchant Center Account Id under which the Return
+//   Carrier is to be linked.
 func (r *AccountsReturncarrierService) Create(accountId int64, accountreturncarrier *AccountReturnCarrier) *AccountsReturncarrierCreateCall {
 	c := &AccountsReturncarrierCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18468,7 +18587,7 @@ func (c *AccountsReturncarrierCreateCall) Header() http.Header {
 
 func (c *AccountsReturncarrierCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18574,6 +18693,11 @@ type AccountsReturncarrierDeleteCall struct {
 }
 
 // Delete: Delete a return carrier in the merchant account.
+//
+// - accountId: The Merchant Center Account Id under which the Return
+//   Carrier is to be linked.
+// - carrierAccountId: The Google-provided unique carrier ID, used to
+//   update the resource.
 func (r *AccountsReturncarrierService) Delete(accountId int64, carrierAccountId int64) *AccountsReturncarrierDeleteCall {
 	c := &AccountsReturncarrierDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18608,7 +18732,7 @@ func (c *AccountsReturncarrierDeleteCall) Header() http.Header {
 
 func (c *AccountsReturncarrierDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18687,6 +18811,9 @@ type AccountsReturncarrierListCall struct {
 }
 
 // List: Lists available return carriers in the merchant account.
+//
+// - accountId: The Merchant Center Account Id under which the Return
+//   Carrier is to be linked.
 func (r *AccountsReturncarrierService) List(accountId int64) *AccountsReturncarrierListCall {
 	c := &AccountsReturncarrierListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18730,7 +18857,7 @@ func (c *AccountsReturncarrierListCall) Header() http.Header {
 
 func (c *AccountsReturncarrierListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18832,6 +18959,11 @@ type AccountsReturncarrierPatchCall struct {
 }
 
 // Patch: Updates a return carrier in the merchant account.
+//
+// - accountId: The Merchant Center Account Id under which the Return
+//   Carrier is to be linked.
+// - carrierAccountId: The Google-provided unique carrier ID, used to
+//   update the resource.
 func (r *AccountsReturncarrierService) Patch(accountId int64, carrierAccountId int64, accountreturncarrier *AccountReturnCarrier) *AccountsReturncarrierPatchCall {
 	c := &AccountsReturncarrierPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18867,7 +18999,7 @@ func (c *AccountsReturncarrierPatchCall) Header() http.Header {
 
 func (c *AccountsReturncarrierPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19015,7 +19147,7 @@ func (c *AccountstatusesCustombatchCall) Header() http.Header {
 
 func (c *AccountstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19111,6 +19243,12 @@ type AccountstatusesGetCall struct {
 
 // Get: Retrieves the status of a Merchant Center account. No
 // itemLevelIssues are returned for multi-client accounts.
+//
+// - accountId: The ID of the account.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *AccountstatusesGetCall {
 	c := &AccountstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19163,7 +19301,7 @@ func (c *AccountstatusesGetCall) Header() http.Header {
 
 func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19280,6 +19418,9 @@ type AccountstatusesListCall struct {
 
 // List: Lists the statuses of the sub-accounts in your Merchant Center
 // account.
+//
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account.
 func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCall {
 	c := &AccountstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19346,7 +19487,7 @@ func (c *AccountstatusesListCall) Header() http.Header {
 
 func (c *AccountstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19518,7 +19659,7 @@ func (c *AccounttaxCustombatchCall) Header() http.Header {
 
 func (c *AccounttaxCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19612,6 +19753,13 @@ type AccounttaxGetCall struct {
 }
 
 // Get: Retrieves the tax settings of the account.
+//
+// - accountId: The ID of the account for which to get/update account
+//   tax settings.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccounttaxService) Get(merchantId uint64, accountId uint64) *AccounttaxGetCall {
 	c := &AccounttaxGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19656,7 +19804,7 @@ func (c *AccounttaxGetCall) Header() http.Header {
 
 func (c *AccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19767,6 +19915,9 @@ type AccounttaxListCall struct {
 
 // List: Lists the tax settings of the sub-accounts in your Merchant
 // Center account.
+//
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account.
 func (r *AccounttaxService) List(merchantId uint64) *AccounttaxListCall {
 	c := &AccounttaxListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19824,7 +19975,7 @@ func (c *AccounttaxListCall) Header() http.Header {
 
 func (c *AccounttaxListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19959,6 +20110,13 @@ type AccounttaxUpdateCall struct {
 
 // Update: Updates the tax settings of the account. Any fields that are
 // not provided are deleted from the resource.
+//
+// - accountId: The ID of the account for which to get/update account
+//   tax settings.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *AccounttaxService) Update(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxUpdateCall {
 	c := &AccounttaxUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19994,7 +20152,7 @@ func (c *AccounttaxUpdateCall) Header() http.Header {
 
 func (c *AccounttaxUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20097,6 +20255,136 @@ func (c *AccounttaxUpdateCall) Do(opts ...googleapi.CallOption) (*AccountTax, er
 
 }
 
+// method id "content.buyongoogleprograms.activate":
+
+type BuyongoogleprogramsActivateCall struct {
+	s                                 *APIService
+	merchantId                        int64
+	regionCode                        string
+	activatebuyongoogleprogramrequest *ActivateBuyOnGoogleProgramRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Activate: Reactivates the BoG program in your Merchant Center
+// account. Moves the program to the active state when allowed, e.g.
+// when paused. Important: This method is only whitelisted for selected
+// merchants.
+//
+// - merchantId: The ID of the account.
+// - regionCode: The program region code ISO 3166-1 alpha-2
+//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//   US is available.
+func (r *BuyongoogleprogramsService) Activate(merchantId int64, regionCode string, activatebuyongoogleprogramrequest *ActivateBuyOnGoogleProgramRequest) *BuyongoogleprogramsActivateCall {
+	c := &BuyongoogleprogramsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.regionCode = regionCode
+	c.activatebuyongoogleprogramrequest = activatebuyongoogleprogramrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyongoogleprogramsActivateCall) Fields(s ...googleapi.Field) *BuyongoogleprogramsActivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyongoogleprogramsActivateCall) Context(ctx context.Context) *BuyongoogleprogramsActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyongoogleprogramsActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyongoogleprogramsActivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activatebuyongoogleprogramrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/buyongoogleprograms/{regionCode}/activate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+		"regionCode": c.regionCode,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.buyongoogleprograms.activate" call.
+func (c *BuyongoogleprogramsActivateCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reactivates the BoG program in your Merchant Center account. Moves the program to the active state when allowed, e.g. when paused. Important: This method is only whitelisted for selected merchants.",
+	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/activate",
+	//   "httpMethod": "POST",
+	//   "id": "content.buyongoogleprograms.activate",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "regionCode"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "regionCode": {
+	//       "description": "The program region code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only US is available.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/buyongoogleprograms/{regionCode}/activate",
+	//   "request": {
+	//     "$ref": "ActivateBuyOnGoogleProgramRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
 // method id "content.buyongoogleprograms.get":
 
 type BuyongoogleprogramsGetCall struct {
@@ -20109,8 +20397,13 @@ type BuyongoogleprogramsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a status of BoG program for your Merchant Center
+// Get: Retrieves a status of the BoG program for your Merchant Center
 // account.
+//
+// - merchantId: The ID of the account.
+// - regionCode: The Program region code ISO 3166-1 alpha-2
+//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//   US is available.
 func (r *BuyongoogleprogramsService) Get(merchantId int64, regionCode string) *BuyongoogleprogramsGetCall {
 	c := &BuyongoogleprogramsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20155,7 +20448,7 @@ func (c *BuyongoogleprogramsGetCall) Header() http.Header {
 
 func (c *BuyongoogleprogramsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20218,7 +20511,7 @@ func (c *BuyongoogleprogramsGetCall) Do(opts ...googleapi.CallOption) (*BuyOnGoo
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a status of BoG program for your Merchant Center account.",
+	//   "description": "Retrieves a status of the BoG program for your Merchant Center account.",
 	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}",
 	//   "httpMethod": "GET",
 	//   "id": "content.buyongoogleprograms.get",
@@ -20264,13 +20557,18 @@ type BuyongoogleprogramsOnboardCall struct {
 	header_                          http.Header
 }
 
-// Onboard: Onboards BoG in your Merchant Center account. By using this
-// method, you agree to the Terms of Service
+// Onboard: Onboards the BoG program in your Merchant Center account. By
+// using this method, you agree to the Terms of Service
 // (https://merchants.google.com/mc/termsofservice/transactions/US/latest).
 // Calling this method is only possible if the authenticated account is
 // the same as the merchant id in the request. Calling this method
 // multiple times will only accept Terms of Service if the latest
 // version is not currently signed.
+//
+// - merchantId: The ID of the account.
+// - regionCode: The program region code ISO 3166-1 alpha-2
+//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//   US is available.
 func (r *BuyongoogleprogramsService) Onboard(merchantId int64, regionCode string, onboardbuyongoogleprogramrequest *OnboardBuyOnGoogleProgramRequest) *BuyongoogleprogramsOnboardCall {
 	c := &BuyongoogleprogramsOnboardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20306,7 +20604,7 @@ func (c *BuyongoogleprogramsOnboardCall) Header() http.Header {
 
 func (c *BuyongoogleprogramsOnboardCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20346,7 +20644,7 @@ func (c *BuyongoogleprogramsOnboardCall) Do(opts ...googleapi.CallOption) error 
 	}
 	return nil
 	// {
-	//   "description": "Onboards BoG in your Merchant Center account. By using this method, you agree to the [Terms of Service](https://merchants.google.com/mc/termsofservice/transactions/US/latest). Calling this method is only possible if the authenticated account is the same as the merchant id in the request. Calling this method multiple times will only accept Terms of Service if the latest version is not currently signed.",
+	//   "description": "Onboards the BoG program in your Merchant Center account. By using this method, you agree to the [Terms of Service](https://merchants.google.com/mc/termsofservice/transactions/US/latest). Calling this method is only possible if the authenticated account is the same as the merchant id in the request. Calling this method multiple times will only accept Terms of Service if the latest version is not currently signed.",
 	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/onboard",
 	//   "httpMethod": "POST",
 	//   "id": "content.buyongoogleprograms.onboard",
@@ -20380,6 +20678,264 @@ func (c *BuyongoogleprogramsOnboardCall) Do(opts ...googleapi.CallOption) error 
 
 }
 
+// method id "content.buyongoogleprograms.pause":
+
+type BuyongoogleprogramsPauseCall struct {
+	s                              *APIService
+	merchantId                     int64
+	regionCode                     string
+	pausebuyongoogleprogramrequest *PauseBuyOnGoogleProgramRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Pause: Pauses the BoG program in your Merchant Center account.
+// Important: This method is only whitelisted for selected merchants.
+//
+// - merchantId: The ID of the account.
+// - regionCode: The program region code ISO 3166-1 alpha-2
+//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//   US is available.
+func (r *BuyongoogleprogramsService) Pause(merchantId int64, regionCode string, pausebuyongoogleprogramrequest *PauseBuyOnGoogleProgramRequest) *BuyongoogleprogramsPauseCall {
+	c := &BuyongoogleprogramsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.regionCode = regionCode
+	c.pausebuyongoogleprogramrequest = pausebuyongoogleprogramrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyongoogleprogramsPauseCall) Fields(s ...googleapi.Field) *BuyongoogleprogramsPauseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyongoogleprogramsPauseCall) Context(ctx context.Context) *BuyongoogleprogramsPauseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyongoogleprogramsPauseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyongoogleprogramsPauseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pausebuyongoogleprogramrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/buyongoogleprograms/{regionCode}/pause")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+		"regionCode": c.regionCode,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.buyongoogleprograms.pause" call.
+func (c *BuyongoogleprogramsPauseCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Pauses the BoG program in your Merchant Center account. Important: This method is only whitelisted for selected merchants.",
+	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/pause",
+	//   "httpMethod": "POST",
+	//   "id": "content.buyongoogleprograms.pause",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "regionCode"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "regionCode": {
+	//       "description": "The program region code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only US is available.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/buyongoogleprograms/{regionCode}/pause",
+	//   "request": {
+	//     "$ref": "PauseBuyOnGoogleProgramRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.buyongoogleprograms.requestreview":
+
+type BuyongoogleprogramsRequestreviewCall struct {
+	s                                      *APIService
+	merchantId                             int64
+	regionCode                             string
+	requestreviewbuyongoogleprogramrequest *RequestReviewBuyOnGoogleProgramRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Requestreview: Requests review and then activates the BoG program in
+// your Merchant Center account for the first time. Moves the program to
+// the REVIEW_PENDING state. Important: This method is only whitelisted
+// for selected merchants.
+//
+// - merchantId: The ID of the account.
+// - regionCode: The program region code ISO 3166-1 alpha-2
+//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//   US is available.
+func (r *BuyongoogleprogramsService) Requestreview(merchantId int64, regionCode string, requestreviewbuyongoogleprogramrequest *RequestReviewBuyOnGoogleProgramRequest) *BuyongoogleprogramsRequestreviewCall {
+	c := &BuyongoogleprogramsRequestreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.regionCode = regionCode
+	c.requestreviewbuyongoogleprogramrequest = requestreviewbuyongoogleprogramrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyongoogleprogramsRequestreviewCall) Fields(s ...googleapi.Field) *BuyongoogleprogramsRequestreviewCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyongoogleprogramsRequestreviewCall) Context(ctx context.Context) *BuyongoogleprogramsRequestreviewCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyongoogleprogramsRequestreviewCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyongoogleprogramsRequestreviewCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.requestreviewbuyongoogleprogramrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/buyongoogleprograms/{regionCode}/requestreview")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+		"regionCode": c.regionCode,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.buyongoogleprograms.requestreview" call.
+func (c *BuyongoogleprogramsRequestreviewCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Requests review and then activates the BoG program in your Merchant Center account for the first time. Moves the program to the REVIEW_PENDING state. Important: This method is only whitelisted for selected merchants.",
+	//   "flatPath": "{merchantId}/buyongoogleprograms/{regionCode}/requestreview",
+	//   "httpMethod": "POST",
+	//   "id": "content.buyongoogleprograms.requestreview",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "regionCode"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "regionCode": {
+	//       "description": "The program region code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only US is available.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/buyongoogleprograms/{regionCode}/requestreview",
+	//   "request": {
+	//     "$ref": "RequestReviewBuyOnGoogleProgramRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
 // method id "content.collections.create":
 
 type CollectionsCreateCall struct {
@@ -20395,6 +20951,9 @@ type CollectionsCreateCall struct {
 // collection with the same collectionId already exists, this method
 // updates that entry. In each update, the collection is completely
 // replaced by the fields in the body of the update request.
+//
+// - merchantId: The ID of the account that contains the collection.
+//   This account cannot be a multi-client account.
 func (r *CollectionsService) Create(merchantId int64, collection *Collection) *CollectionsCreateCall {
 	c := &CollectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20429,7 +20988,7 @@ func (c *CollectionsCreateCall) Header() http.Header {
 
 func (c *CollectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20535,6 +21094,11 @@ type CollectionsDeleteCall struct {
 }
 
 // Delete: Deletes a collection from your Merchant Center account.
+//
+// - collectionId: The collectionId of the collection. CollectionId is
+//   the same as the REST ID of the collection.
+// - merchantId: The ID of the account that contains the collection.
+//   This account cannot be a multi-client account.
 func (r *CollectionsService) Delete(merchantId int64, collectionId string) *CollectionsDeleteCall {
 	c := &CollectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20569,7 +21133,7 @@ func (c *CollectionsDeleteCall) Header() http.Header {
 
 func (c *CollectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20648,6 +21212,10 @@ type CollectionsGetCall struct {
 }
 
 // Get: Retrieves a collection from your Merchant Center account.
+//
+// - collectionId: The REST ID of the collection.
+// - merchantId: The ID of the account that contains the collection.
+//   This account cannot be a multi-client account.
 func (r *CollectionsService) Get(merchantId int64, collectionId string) *CollectionsGetCall {
 	c := &CollectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20692,7 +21260,7 @@ func (c *CollectionsGetCall) Header() http.Header {
 
 func (c *CollectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20804,6 +21372,9 @@ type CollectionsListCall struct {
 // response might contain fewer items than specified by page_size. Rely
 // on next_page_token to determine if there are more items to be
 // requested.
+//
+// - merchantId: The ID of the account that contains the collection.
+//   This account cannot be a multi-client account.
 func (r *CollectionsService) List(merchantId int64) *CollectionsListCall {
 	c := &CollectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20863,7 +21434,7 @@ func (c *CollectionsListCall) Header() http.Header {
 
 func (c *CollectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20998,6 +21569,11 @@ type CollectionstatusesGetCall struct {
 
 // Get: Gets the status of a collection from your Merchant Center
 // account.
+//
+// - collectionId: The collectionId of the collection. CollectionId is
+//   the same as the REST ID of the collection.
+// - merchantId: The ID of the account that contains the collection.
+//   This account cannot be a multi-client account.
 func (r *CollectionstatusesService) Get(merchantId int64, collectionId string) *CollectionstatusesGetCall {
 	c := &CollectionstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -21042,7 +21618,7 @@ func (c *CollectionstatusesGetCall) Header() http.Header {
 
 func (c *CollectionstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21152,6 +21728,9 @@ type CollectionstatusesListCall struct {
 
 // List: Lists the statuses of the collections in your Merchant Center
 // account.
+//
+// - merchantId: The ID of the account that contains the collection.
+//   This account cannot be a multi-client account.
 func (r *CollectionstatusesService) List(merchantId int64) *CollectionstatusesListCall {
 	c := &CollectionstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -21211,7 +21790,7 @@ func (c *CollectionstatusesListCall) Header() http.Header {
 
 func (c *CollectionstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21345,6 +21924,12 @@ type CssesGetCall struct {
 }
 
 // Get: Retrieves a single CSS domain by ID.
+//
+// - cssDomainId: The ID of the CSS domain to return.
+// - cssGroupId: The ID of the managing account. If this parameter is
+//   not the same as cssDomainId (#cssDomainId), then this ID must be a
+//   CSS group ID and `cssDomainId` must be the ID of a CSS domain
+//   affiliated with this group.
 func (r *CssesService) Get(cssGroupId int64, cssDomainId int64) *CssesGetCall {
 	c := &CssesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.cssGroupId = cssGroupId
@@ -21389,7 +21974,7 @@ func (c *CssesGetCall) Header() http.Header {
 
 func (c *CssesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21499,6 +22084,8 @@ type CssesListCall struct {
 }
 
 // List: Lists CSS domains affiliated with a CSS group.
+//
+// - cssGroupId: The CSS group ID of CSS domains to be listed.
 func (r *CssesService) List(cssGroupId int64) *CssesListCall {
 	c := &CssesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.cssGroupId = cssGroupId
@@ -21560,7 +22147,7 @@ func (c *CssesListCall) Header() http.Header {
 
 func (c *CssesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21695,6 +22282,9 @@ type CssesUpdatelabelsCall struct {
 
 // Updatelabels: Updates labels that are assigned to a CSS domain by its
 // CSS group.
+//
+// - cssDomainId: The ID of the updated CSS domain.
+// - cssGroupId: The CSS group ID of the updated CSS domain.
 func (r *CssesService) Updatelabels(cssGroupId int64, cssDomainId int64, labelids *LabelIds) *CssesUpdatelabelsCall {
 	c := &CssesUpdatelabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.cssGroupId = cssGroupId
@@ -21730,7 +22320,7 @@ func (c *CssesUpdatelabelsCall) Header() http.Header {
 
 func (c *CssesUpdatelabelsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21878,7 +22468,7 @@ func (c *DatafeedsCustombatchCall) Header() http.Header {
 
 func (c *DatafeedsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21972,6 +22562,10 @@ type DatafeedsDeleteCall struct {
 
 // Delete: Deletes a datafeed configuration from your Merchant Center
 // account.
+//
+// - datafeedId: The ID of the datafeed.
+// - merchantId: The ID of the account that manages the datafeed. This
+//   account cannot be a multi-client account.
 func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *DatafeedsDeleteCall {
 	c := &DatafeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22006,7 +22600,7 @@ func (c *DatafeedsDeleteCall) Header() http.Header {
 
 func (c *DatafeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22087,6 +22681,10 @@ type DatafeedsFetchnowCall struct {
 // Fetchnow: Invokes a fetch for the datafeed in your Merchant Center
 // account. If you need to call this method more than once per day, we
 // recommend you use the Products service to update your product data.
+//
+// - datafeedId: The ID of the datafeed to be fetched.
+// - merchantId: The ID of the account that manages the datafeed. This
+//   account cannot be a multi-client account.
 func (r *DatafeedsService) Fetchnow(merchantId uint64, datafeedId uint64) *DatafeedsFetchnowCall {
 	c := &DatafeedsFetchnowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22121,7 +22719,7 @@ func (c *DatafeedsFetchnowCall) Header() http.Header {
 
 func (c *DatafeedsFetchnowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22230,6 +22828,10 @@ type DatafeedsGetCall struct {
 
 // Get: Retrieves a datafeed configuration from your Merchant Center
 // account.
+//
+// - datafeedId: The ID of the datafeed.
+// - merchantId: The ID of the account that manages the datafeed. This
+//   account cannot be a multi-client account.
 func (r *DatafeedsService) Get(merchantId uint64, datafeedId uint64) *DatafeedsGetCall {
 	c := &DatafeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22274,7 +22876,7 @@ func (c *DatafeedsGetCall) Header() http.Header {
 
 func (c *DatafeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22385,6 +22987,9 @@ type DatafeedsInsertCall struct {
 
 // Insert: Registers a datafeed configuration with your Merchant Center
 // account.
+//
+// - merchantId: The ID of the account that manages the datafeed. This
+//   account cannot be a multi-client account.
 func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *DatafeedsInsertCall {
 	c := &DatafeedsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22419,7 +23024,7 @@ func (c *DatafeedsInsertCall) Header() http.Header {
 
 func (c *DatafeedsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22526,6 +23131,9 @@ type DatafeedsListCall struct {
 
 // List: Lists the configurations for datafeeds in your Merchant Center
 // account.
+//
+// - merchantId: The ID of the account that manages the datafeeds. This
+//   account cannot be a multi-client account.
 func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
 	c := &DatafeedsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22583,7 +23191,7 @@ func (c *DatafeedsListCall) Header() http.Header {
 
 func (c *DatafeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22719,6 +23327,10 @@ type DatafeedsUpdateCall struct {
 // Update: Updates a datafeed configuration of your Merchant Center
 // account. Any fields that are not provided are deleted from the
 // resource.
+//
+// - datafeedId: The ID of the datafeed.
+// - merchantId: The ID of the account that manages the datafeed. This
+//   account cannot be a multi-client account.
 func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsUpdateCall {
 	c := &DatafeedsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22754,7 +23366,7 @@ func (c *DatafeedsUpdateCall) Header() http.Header {
 
 func (c *DatafeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22902,7 +23514,7 @@ func (c *DatafeedstatusesCustombatchCall) Header() http.Header {
 
 func (c *DatafeedstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22998,6 +23610,10 @@ type DatafeedstatusesGetCall struct {
 
 // Get: Retrieves the status of a datafeed from your Merchant Center
 // account.
+//
+// - datafeedId: The ID of the datafeed.
+// - merchantId: The ID of the account that manages the datafeed. This
+//   account cannot be a multi-client account.
 func (r *DatafeedstatusesService) Get(merchantId uint64, datafeedId uint64) *DatafeedstatusesGetCall {
 	c := &DatafeedstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23062,7 +23678,7 @@ func (c *DatafeedstatusesGetCall) Header() http.Header {
 
 func (c *DatafeedstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23183,6 +23799,9 @@ type DatafeedstatusesListCall struct {
 
 // List: Lists the statuses of the datafeeds in your Merchant Center
 // account.
+//
+// - merchantId: The ID of the account that manages the datafeeds. This
+//   account cannot be a multi-client account.
 func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListCall {
 	c := &DatafeedstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23240,7 +23859,7 @@ func (c *DatafeedstatusesListCall) Header() http.Header {
 
 func (c *DatafeedstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23406,7 +24025,7 @@ func (c *LiasettingsCustombatchCall) Header() http.Header {
 
 func (c *LiasettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23500,6 +24119,13 @@ type LiasettingsGetCall struct {
 }
 
 // Get: Retrieves the LIA settings of the account.
+//
+// - accountId: The ID of the account for which to get or update LIA
+//   settings.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Get(merchantId uint64, accountId uint64) *LiasettingsGetCall {
 	c := &LiasettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23544,7 +24170,7 @@ func (c *LiasettingsGetCall) Header() http.Header {
 
 func (c *LiasettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23656,6 +24282,13 @@ type LiasettingsGetaccessiblegmbaccountsCall struct {
 
 // Getaccessiblegmbaccounts: Retrieves the list of accessible Google My
 // Business accounts.
+//
+// - accountId: The ID of the account for which to retrieve accessible
+//   Google My Business accounts.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Getaccessiblegmbaccounts(merchantId uint64, accountId uint64) *LiasettingsGetaccessiblegmbaccountsCall {
 	c := &LiasettingsGetaccessiblegmbaccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23700,7 +24333,7 @@ func (c *LiasettingsGetaccessiblegmbaccountsCall) Header() http.Header {
 
 func (c *LiasettingsGetaccessiblegmbaccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23813,6 +24446,9 @@ type LiasettingsListCall struct {
 
 // List: Lists the LIA settings of the sub-accounts in your Merchant
 // Center account.
+//
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account.
 func (r *LiasettingsService) List(merchantId uint64) *LiasettingsListCall {
 	c := &LiasettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23870,7 +24506,7 @@ func (c *LiasettingsListCall) Header() http.Header {
 
 func (c *LiasettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24045,7 +24681,7 @@ func (c *LiasettingsListposdataprovidersCall) Header() http.Header {
 
 func (c *LiasettingsListposdataprovidersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24135,6 +24771,13 @@ type LiasettingsRequestgmbaccessCall struct {
 
 // Requestgmbaccess: Requests access to a specified Google My Business
 // account.
+//
+// - accountId: The ID of the account for which GMB access is requested.
+// - gmbEmail: The email of the Google My Business account.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Requestgmbaccess(merchantId uint64, accountId uint64, gmbEmail string) *LiasettingsRequestgmbaccessCall {
 	c := &LiasettingsRequestgmbaccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24170,7 +24813,7 @@ func (c *LiasettingsRequestgmbaccessCall) Header() http.Header {
 
 func (c *LiasettingsRequestgmbaccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24287,6 +24930,14 @@ type LiasettingsRequestinventoryverificationCall struct {
 
 // Requestinventoryverification: Requests inventory validation for the
 // specified country.
+//
+// - accountId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - country: The country for which inventory validation is requested.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Requestinventoryverification(merchantId uint64, accountId uint64, country string) *LiasettingsRequestinventoryverificationCall {
 	c := &LiasettingsRequestinventoryverificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24322,7 +24973,7 @@ func (c *LiasettingsRequestinventoryverificationCall) Header() http.Header {
 
 func (c *LiasettingsRequestinventoryverificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24440,6 +25091,18 @@ type LiasettingsSetinventoryverificationcontactCall struct {
 
 // Setinventoryverificationcontact: Sets the inventory verification
 // contract for the specified country.
+//
+// - accountId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - contactEmail: The email of the inventory verification contact.
+// - contactName: The name of the inventory verification contact.
+// - country: The country for which inventory verification is requested.
+// - language: The language for which inventory verification is
+//   requested.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Setinventoryverificationcontact(merchantId uint64, accountId uint64, country string, language string, contactName string, contactEmail string) *LiasettingsSetinventoryverificationcontactCall {
 	c := &LiasettingsSetinventoryverificationcontactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24478,7 +25141,7 @@ func (c *LiasettingsSetinventoryverificationcontactCall) Header() http.Header {
 
 func (c *LiasettingsSetinventoryverificationcontactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24616,6 +25279,14 @@ type LiasettingsSetposdataproviderCall struct {
 
 // Setposdataprovider: Sets the POS data provider for the specified
 // country.
+//
+// - accountId: The ID of the account for which to retrieve accessible
+//   Google My Business accounts.
+// - country: The country for which the POS data provider is selected.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Setposdataprovider(merchantId uint64, accountId uint64, country string) *LiasettingsSetposdataproviderCall {
 	c := &LiasettingsSetposdataproviderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24666,7 +25337,7 @@ func (c *LiasettingsSetposdataproviderCall) Header() http.Header {
 
 func (c *LiasettingsSetposdataproviderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24794,6 +25465,13 @@ type LiasettingsUpdateCall struct {
 
 // Update: Updates the LIA settings of the account. Any fields that are
 // not provided are deleted from the resource.
+//
+// - accountId: The ID of the account for which to get or update LIA
+//   settings.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *LiasettingsService) Update(merchantId uint64, accountId uint64, liasettings *LiaSettings) *LiasettingsUpdateCall {
 	c := &LiasettingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24829,7 +25507,7 @@ func (c *LiasettingsUpdateCall) Header() http.Header {
 
 func (c *LiasettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24977,7 +25655,7 @@ func (c *LocalinventoryCustombatchCall) Header() http.Header {
 
 func (c *LocalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25073,6 +25751,11 @@ type LocalinventoryInsertCall struct {
 
 // Insert: Updates the local inventory of a product in your Merchant
 // Center account.
+//
+// - merchantId: The ID of the account that contains the product. This
+//   account cannot be a multi-client account.
+// - productId: The REST ID of the product for which to update local
+//   inventory.
 func (r *LocalinventoryService) Insert(merchantId uint64, productId string, localinventory *LocalInventory) *LocalinventoryInsertCall {
 	c := &LocalinventoryInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25108,7 +25791,7 @@ func (c *LocalinventoryInsertCall) Header() http.Header {
 
 func (c *LocalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25224,6 +25907,10 @@ type OrderinvoicesCreatechargeinvoiceCall struct {
 
 // Createchargeinvoice: Creates a charge invoice for a shipment group,
 // and triggers a charge capture for orderinvoice enabled orders.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrderinvoicesService) Createchargeinvoice(merchantId uint64, orderId string, orderinvoicescreatechargeinvoicerequest *OrderinvoicesCreateChargeInvoiceRequest) *OrderinvoicesCreatechargeinvoiceCall {
 	c := &OrderinvoicesCreatechargeinvoiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25259,7 +25946,7 @@ func (c *OrderinvoicesCreatechargeinvoiceCall) Header() http.Header {
 
 func (c *OrderinvoicesCreatechargeinvoiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25380,6 +26067,10 @@ type OrderinvoicesCreaterefundinvoiceCall struct {
 // orders. This can only be used for line items that have previously
 // been charged using `createChargeInvoice`. All amounts (except for the
 // summary) are incremental with respect to the previous invoice.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrderinvoicesService) Createrefundinvoice(merchantId uint64, orderId string, orderinvoicescreaterefundinvoicerequest *OrderinvoicesCreateRefundInvoiceRequest) *OrderinvoicesCreaterefundinvoiceCall {
 	c := &OrderinvoicesCreaterefundinvoiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25415,7 +26106,7 @@ func (c *OrderinvoicesCreaterefundinvoiceCall) Header() http.Header {
 
 func (c *OrderinvoicesCreaterefundinvoiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25532,6 +26223,9 @@ type OrderreportsListdisbursementsCall struct {
 
 // Listdisbursements: Retrieves a report for disbursements from your
 // Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
 func (r *OrderreportsService) Listdisbursements(merchantId uint64) *OrderreportsListdisbursementsCall {
 	c := &OrderreportsListdisbursementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25605,7 +26299,7 @@ func (c *OrderreportsListdisbursementsCall) Header() http.Header {
 
 func (c *OrderreportsListdisbursementsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25751,6 +26445,11 @@ type OrderreportsListtransactionsCall struct {
 
 // Listtransactions: Retrieves a list of transactions for a disbursement
 // from your Merchant Center account.
+//
+// - disbursementId: The Google-provided ID of the disbursement (found
+//   in Wallet).
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
 func (r *OrderreportsService) Listtransactions(merchantId uint64, disbursementId string) *OrderreportsListtransactionsCall {
 	c := &OrderreportsListtransactionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25825,7 +26524,7 @@ func (c *OrderreportsListtransactionsCall) Header() http.Header {
 
 func (c *OrderreportsListtransactionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25978,6 +26677,10 @@ type OrderreturnsAcknowledgeCall struct {
 }
 
 // Acknowledge: Acks an order return in your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - returnId: The ID of the return.
 func (r *OrderreturnsService) Acknowledge(merchantId uint64, returnId string, orderreturnsacknowledgerequest *OrderreturnsAcknowledgeRequest) *OrderreturnsAcknowledgeCall {
 	c := &OrderreturnsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26013,7 +26716,7 @@ func (c *OrderreturnsAcknowledgeCall) Header() http.Header {
 
 func (c *OrderreturnsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26127,6 +26830,9 @@ type OrderreturnsCreateorderreturnCall struct {
 }
 
 // Createorderreturn: Create return in your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
 func (r *OrderreturnsService) Createorderreturn(merchantId uint64, orderreturnscreateorderreturnrequest *OrderreturnsCreateOrderReturnRequest) *OrderreturnsCreateorderreturnCall {
 	c := &OrderreturnsCreateorderreturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26161,7 +26867,7 @@ func (c *OrderreturnsCreateorderreturnCall) Header() http.Header {
 
 func (c *OrderreturnsCreateorderreturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26269,6 +26975,10 @@ type OrderreturnsGetCall struct {
 }
 
 // Get: Retrieves an order return from your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - returnId: Merchant order return ID generated by Google.
 func (r *OrderreturnsService) Get(merchantId uint64, returnId string) *OrderreturnsGetCall {
 	c := &OrderreturnsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26313,7 +27023,7 @@ func (c *OrderreturnsGetCall) Header() http.Header {
 
 func (c *OrderreturnsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26422,6 +27132,9 @@ type OrderreturnsListCall struct {
 }
 
 // List: Lists order returns in your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
 func (r *OrderreturnsService) List(merchantId uint64) *OrderreturnsListCall {
 	c := &OrderreturnsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26590,7 +27303,7 @@ func (c *OrderreturnsListCall) Header() http.Header {
 
 func (c *OrderreturnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26816,6 +27529,10 @@ type OrderreturnsProcessCall struct {
 }
 
 // Process: Processes return in your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - returnId: The ID of the return.
 func (r *OrderreturnsService) Process(merchantId uint64, returnId string, orderreturnsprocessrequest *OrderreturnsProcessRequest) *OrderreturnsProcessCall {
 	c := &OrderreturnsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26851,7 +27568,7 @@ func (c *OrderreturnsProcessCall) Header() http.Header {
 
 func (c *OrderreturnsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26966,6 +27683,10 @@ type OrdersAcknowledgeCall struct {
 }
 
 // Acknowledge: Marks an order as acknowledged.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Acknowledge(merchantId uint64, orderId string, ordersacknowledgerequest *OrdersAcknowledgeRequest) *OrdersAcknowledgeCall {
 	c := &OrdersAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27001,7 +27722,7 @@ func (c *OrdersAcknowledgeCall) Header() http.Header {
 
 func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27116,6 +27837,10 @@ type OrdersAdvancetestorderCall struct {
 
 // Advancetestorder: Sandbox only. Moves a test order from state
 // "inProgress" to state "pendingShipment".
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the test order to modify.
 func (r *OrdersService) Advancetestorder(merchantId uint64, orderId string) *OrdersAdvancetestorderCall {
 	c := &OrdersAdvancetestorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27150,7 +27875,7 @@ func (c *OrdersAdvancetestorderCall) Header() http.Header {
 
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27257,6 +27982,10 @@ type OrdersCancelCall struct {
 }
 
 // Cancel: Cancels all line items in an order, making a full refund.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order to cancel.
 func (r *OrdersService) Cancel(merchantId uint64, orderId string, orderscancelrequest *OrdersCancelRequest) *OrdersCancelCall {
 	c := &OrdersCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27292,7 +28021,7 @@ func (c *OrdersCancelCall) Header() http.Header {
 
 func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27407,6 +28136,10 @@ type OrdersCancellineitemCall struct {
 }
 
 // Cancellineitem: Cancels a line item, making a full refund.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Cancellineitem(merchantId uint64, orderId string, orderscancellineitemrequest *OrdersCancelLineItemRequest) *OrdersCancellineitemCall {
 	c := &OrdersCancellineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27442,7 +28175,7 @@ func (c *OrdersCancellineitemCall) Header() http.Header {
 
 func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27558,6 +28291,10 @@ type OrdersCanceltestorderbycustomerCall struct {
 
 // Canceltestorderbycustomer: Sandbox only. Cancels a test order for
 // customer-initiated cancellation.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the test order to cancel.
 func (r *OrdersService) Canceltestorderbycustomer(merchantId uint64, orderId string, orderscanceltestorderbycustomerrequest *OrdersCancelTestOrderByCustomerRequest) *OrdersCanceltestorderbycustomerCall {
 	c := &OrdersCanceltestorderbycustomerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27593,7 +28330,7 @@ func (c *OrdersCanceltestorderbycustomerCall) Header() http.Header {
 
 func (c *OrdersCanceltestorderbycustomerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27708,6 +28445,9 @@ type OrdersCreatetestorderCall struct {
 }
 
 // Createtestorder: Sandbox only. Creates a test order.
+//
+// - merchantId: The ID of the account that should manage the order.
+//   This cannot be a multi-client account.
 func (r *OrdersService) Createtestorder(merchantId uint64, orderscreatetestorderrequest *OrdersCreateTestOrderRequest) *OrdersCreatetestorderCall {
 	c := &OrdersCreatetestorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27742,7 +28482,7 @@ func (c *OrdersCreatetestorderCall) Header() http.Header {
 
 func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27849,6 +28589,10 @@ type OrdersCreatetestreturnCall struct {
 }
 
 // Createtestreturn: Sandbox only. Creates a test return.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Createtestreturn(merchantId uint64, orderId string, orderscreatetestreturnrequest *OrdersCreateTestReturnRequest) *OrdersCreatetestreturnCall {
 	c := &OrdersCreatetestreturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27884,7 +28628,7 @@ func (c *OrdersCreatetestreturnCall) Header() http.Header {
 
 func (c *OrdersCreatetestreturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27999,6 +28743,10 @@ type OrdersGetCall struct {
 }
 
 // Get: Retrieves an order from your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Get(merchantId uint64, orderId string) *OrdersGetCall {
 	c := &OrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28043,7 +28791,7 @@ func (c *OrdersGetCall) Header() http.Header {
 
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28153,6 +28901,10 @@ type OrdersGetbymerchantorderidCall struct {
 }
 
 // Getbymerchantorderid: Retrieves an order using merchant order ID.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - merchantOrderId: The merchant order ID to be looked for.
 func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId string) *OrdersGetbymerchantorderidCall {
 	c := &OrdersGetbymerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28197,7 +28949,7 @@ func (c *OrdersGetbymerchantorderidCall) Header() http.Header {
 
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28309,6 +29061,10 @@ type OrdersGettestordertemplateCall struct {
 
 // Gettestordertemplate: Sandbox only. Retrieves an order template that
 // can be used to quickly create a new order in sandbox.
+//
+// - merchantId: The ID of the account that should manage the order.
+//   This cannot be a multi-client account.
+// - templateName: The name of the template to retrieve.
 func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName string) *OrdersGettestordertemplateCall {
 	c := &OrdersGettestordertemplateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28360,7 +29116,7 @@ func (c *OrdersGettestordertemplateCall) Header() http.Header {
 
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28501,6 +29257,10 @@ type OrdersInstorerefundlineitemCall struct {
 // system communicate with Google to ensure that customers do not
 // receive a double refund by first refunding via Google then via an
 // in-store return.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Instorerefundlineitem(merchantId uint64, orderId string, ordersinstorerefundlineitemrequest *OrdersInStoreRefundLineItemRequest) *OrdersInstorerefundlineitemCall {
 	c := &OrdersInstorerefundlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28536,7 +29296,7 @@ func (c *OrdersInstorerefundlineitemCall) Header() http.Header {
 
 func (c *OrdersInstorerefundlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28651,6 +29411,9 @@ type OrdersListCall struct {
 }
 
 // List: Lists the orders in your Merchant Center account.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
 func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 	c := &OrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28767,7 +29530,7 @@ func (c *OrdersListCall) Header() http.Header {
 
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28953,6 +29716,10 @@ type OrdersRefunditemCall struct {
 }
 
 // Refunditem: Issues a partial or total refund for items and shipment.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order to refund.
 func (r *OrdersService) Refunditem(merchantId uint64, orderId string, ordersrefunditemrequest *OrdersRefundItemRequest) *OrdersRefunditemCall {
 	c := &OrdersRefunditemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28988,7 +29755,7 @@ func (c *OrdersRefunditemCall) Header() http.Header {
 
 func (c *OrdersRefunditemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29103,6 +29870,10 @@ type OrdersRefundorderCall struct {
 }
 
 // Refundorder: Issues a partial or total refund for an order.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order to refund.
 func (r *OrdersService) Refundorder(merchantId uint64, orderId string, ordersrefundorderrequest *OrdersRefundOrderRequest) *OrdersRefundorderCall {
 	c := &OrdersRefundorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29138,7 +29909,7 @@ func (c *OrdersRefundorderCall) Header() http.Header {
 
 func (c *OrdersRefundorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29253,6 +30024,10 @@ type OrdersRejectreturnlineitemCall struct {
 }
 
 // Rejectreturnlineitem: Rejects return on an line item.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Rejectreturnlineitem(merchantId uint64, orderId string, ordersrejectreturnlineitemrequest *OrdersRejectReturnLineItemRequest) *OrdersRejectreturnlineitemCall {
 	c := &OrdersRejectreturnlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29288,7 +30063,7 @@ func (c *OrdersRejectreturnlineitemCall) Header() http.Header {
 
 func (c *OrdersRejectreturnlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29411,6 +30186,10 @@ type OrdersReturnrefundlineitemCall struct {
 // then use Orderreturns.processreturn to issue the refund. If the
 // return cannot be found, then we recommend using this API to issue a
 // refund.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Returnrefundlineitem(merchantId uint64, orderId string, ordersreturnrefundlineitemrequest *OrdersReturnRefundLineItemRequest) *OrdersReturnrefundlineitemCall {
 	c := &OrdersReturnrefundlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29446,7 +30225,7 @@ func (c *OrdersReturnrefundlineitemCall) Header() http.Header {
 
 func (c *OrdersReturnrefundlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29567,6 +30346,10 @@ type OrdersSetlineitemmetadataCall struct {
 // information about a line item that cannot be provided via other
 // methods. Submitted key-value pairs can be retrieved as part of the
 // orders resource.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Setlineitemmetadata(merchantId uint64, orderId string, orderssetlineitemmetadatarequest *OrdersSetLineItemMetadataRequest) *OrdersSetlineitemmetadataCall {
 	c := &OrdersSetlineitemmetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29602,7 +30385,7 @@ func (c *OrdersSetlineitemmetadataCall) Header() http.Header {
 
 func (c *OrdersSetlineitemmetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29718,6 +30501,10 @@ type OrdersShiplineitemsCall struct {
 }
 
 // Shiplineitems: Marks line item(s) as shipped.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Shiplineitems(merchantId uint64, orderId string, ordersshiplineitemsrequest *OrdersShipLineItemsRequest) *OrdersShiplineitemsCall {
 	c := &OrdersShiplineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29753,7 +30540,7 @@ func (c *OrdersShiplineitemsCall) Header() http.Header {
 
 func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29869,6 +30656,10 @@ type OrdersUpdatelineitemshippingdetailsCall struct {
 
 // Updatelineitemshippingdetails: Updates ship by and delivery by dates
 // for a line item.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Updatelineitemshippingdetails(merchantId uint64, orderId string, ordersupdatelineitemshippingdetailsrequest *OrdersUpdateLineItemShippingDetailsRequest) *OrdersUpdatelineitemshippingdetailsCall {
 	c := &OrdersUpdatelineitemshippingdetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29904,7 +30695,7 @@ func (c *OrdersUpdatelineitemshippingdetailsCall) Header() http.Header {
 
 func (c *OrdersUpdatelineitemshippingdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30022,6 +30813,10 @@ type OrdersUpdatemerchantorderidCall struct {
 
 // Updatemerchantorderid: Updates the merchant order ID for a given
 // order.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Updatemerchantorderid(merchantId uint64, orderId string, ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest) *OrdersUpdatemerchantorderidCall {
 	c := &OrdersUpdatemerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30057,7 +30852,7 @@ func (c *OrdersUpdatemerchantorderidCall) Header() http.Header {
 
 func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30174,6 +30969,10 @@ type OrdersUpdateshipmentCall struct {
 
 // Updateshipment: Updates a shipment's status, carrier, and/or tracking
 // ID.
+//
+// - merchantId: The ID of the account that manages the order. This
+//   cannot be a multi-client account.
+// - orderId: The ID of the order.
 func (r *OrdersService) Updateshipment(merchantId uint64, orderId string, ordersupdateshipmentrequest *OrdersUpdateShipmentRequest) *OrdersUpdateshipmentCall {
 	c := &OrdersUpdateshipmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30209,7 +31008,7 @@ func (c *OrdersUpdateshipmentCall) Header() http.Header {
 
 func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30323,6 +31122,9 @@ type OrdertrackingsignalsCreateCall struct {
 }
 
 // Create: Creates new order tracking signal.
+//
+// - merchantId: The ID of the merchant for which the order signal is
+//   created.
 func (r *OrdertrackingsignalsService) Create(merchantId int64, ordertrackingsignal *OrderTrackingSignal) *OrdertrackingsignalsCreateCall {
 	c := &OrdertrackingsignalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30357,7 +31159,7 @@ func (c *OrdertrackingsignalsCreateCall) Header() http.Header {
 
 func (c *OrdertrackingsignalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30495,7 +31297,7 @@ func (c *PosCustombatchCall) Header() http.Header {
 
 func (c *PosCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30589,6 +31391,10 @@ type PosDeleteCall struct {
 }
 
 // Delete: Deletes a store for the given merchant.
+//
+// - merchantId: The ID of the POS or inventory data provider.
+// - storeCode: A store code that is unique per merchant.
+// - targetMerchantId: The ID of the target merchant.
 func (r *PosService) Delete(merchantId uint64, targetMerchantId uint64, storeCode string) *PosDeleteCall {
 	c := &PosDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30624,7 +31430,7 @@ func (c *PosDeleteCall) Header() http.Header {
 
 func (c *PosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30713,6 +31519,10 @@ type PosGetCall struct {
 }
 
 // Get: Retrieves information about the given store.
+//
+// - merchantId: The ID of the POS or inventory data provider.
+// - storeCode: A store code that is unique per merchant.
+// - targetMerchantId: The ID of the target merchant.
 func (r *PosService) Get(merchantId uint64, targetMerchantId uint64, storeCode string) *PosGetCall {
 	c := &PosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30758,7 +31568,7 @@ func (c *PosGetCall) Header() http.Header {
 
 func (c *PosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30877,6 +31687,9 @@ type PosInsertCall struct {
 }
 
 // Insert: Creates a store for the given merchant.
+//
+// - merchantId: The ID of the POS or inventory data provider.
+// - targetMerchantId: The ID of the target merchant.
 func (r *PosService) Insert(merchantId uint64, targetMerchantId uint64, posstore *PosStore) *PosInsertCall {
 	c := &PosInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30912,7 +31725,7 @@ func (c *PosInsertCall) Header() http.Header {
 
 func (c *PosInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31028,6 +31841,9 @@ type PosInventoryCall struct {
 }
 
 // Inventory: Submit inventory for the given merchant.
+//
+// - merchantId: The ID of the POS or inventory data provider.
+// - targetMerchantId: The ID of the target merchant.
 func (r *PosService) Inventory(merchantId uint64, targetMerchantId uint64, posinventoryrequest *PosInventoryRequest) *PosInventoryCall {
 	c := &PosInventoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31063,7 +31879,7 @@ func (c *PosInventoryCall) Header() http.Header {
 
 func (c *PosInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31179,6 +31995,9 @@ type PosListCall struct {
 }
 
 // List: Lists the stores of the target merchant.
+//
+// - merchantId: The ID of the POS or inventory data provider.
+// - targetMerchantId: The ID of the target merchant.
 func (r *PosService) List(merchantId uint64, targetMerchantId uint64) *PosListCall {
 	c := &PosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31223,7 +32042,7 @@ func (c *PosListCall) Header() http.Header {
 
 func (c *PosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31334,6 +32153,9 @@ type PosSaleCall struct {
 }
 
 // Sale: Submit a sale event for the given merchant.
+//
+// - merchantId: The ID of the POS or inventory data provider.
+// - targetMerchantId: The ID of the target merchant.
 func (r *PosService) Sale(merchantId uint64, targetMerchantId uint64, possalerequest *PosSaleRequest) *PosSaleCall {
 	c := &PosSaleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31369,7 +32191,7 @@ func (c *PosSaleCall) Header() http.Header {
 
 func (c *PosSaleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31517,7 +32339,7 @@ func (c *ProductsCustombatchCall) Header() http.Header {
 
 func (c *ProductsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31610,6 +32432,10 @@ type ProductsDeleteCall struct {
 }
 
 // Delete: Deletes a product from your Merchant Center account.
+//
+// - merchantId: The ID of the account that contains the product. This
+//   account cannot be a multi-client account.
+// - productId: The REST ID of the product.
 func (r *ProductsService) Delete(merchantId uint64, productId string) *ProductsDeleteCall {
 	c := &ProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31651,7 +32477,7 @@ func (c *ProductsDeleteCall) Header() http.Header {
 
 func (c *ProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31736,6 +32562,10 @@ type ProductsGetCall struct {
 }
 
 // Get: Retrieves a product from your Merchant Center account.
+//
+// - merchantId: The ID of the account that contains the product. This
+//   account cannot be a multi-client account.
+// - productId: The REST ID of the product.
 func (r *ProductsService) Get(merchantId uint64, productId string) *ProductsGetCall {
 	c := &ProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31780,7 +32610,7 @@ func (c *ProductsGetCall) Header() http.Header {
 
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31891,6 +32721,9 @@ type ProductsInsertCall struct {
 // Insert: Uploads a product to your Merchant Center account. If an item
 // with the same channel, contentLanguage, offerId, and targetCountry
 // already exists, this method updates that entry.
+//
+// - merchantId: The ID of the account that contains the product. This
+//   account cannot be a multi-client account.
 func (r *ProductsService) Insert(merchantId uint64, product *Product) *ProductsInsertCall {
 	c := &ProductsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31932,7 +32765,7 @@ func (c *ProductsInsertCall) Header() http.Header {
 
 func (c *ProductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32047,6 +32880,9 @@ type ProductsListCall struct {
 // response might contain fewer items than specified by maxResults. Rely
 // on nextPageToken to determine if there are more items to be
 // requested.
+//
+// - merchantId: The ID of the account that contains the products. This
+//   account cannot be a multi-client account.
 func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32104,7 +32940,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32270,7 +33106,7 @@ func (c *ProductstatusesCustombatchCall) Header() http.Header {
 
 func (c *ProductstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32365,6 +33201,10 @@ type ProductstatusesGetCall struct {
 }
 
 // Get: Gets the status of a product from your Merchant Center account.
+//
+// - merchantId: The ID of the account that contains the product. This
+//   account cannot be a multi-client account.
+// - productId: The REST ID of the product.
 func (r *ProductstatusesService) Get(merchantId uint64, productId string) *ProductstatusesGetCall {
 	c := &ProductstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32417,7 +33257,7 @@ func (c *ProductstatusesGetCall) Header() http.Header {
 
 func (c *ProductstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32533,6 +33373,9 @@ type ProductstatusesListCall struct {
 
 // List: Lists the statuses of the products in your Merchant Center
 // account.
+//
+// - merchantId: The ID of the account that contains the products. This
+//   account cannot be a multi-client account.
 func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCall {
 	c := &ProductstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32599,7 +33442,7 @@ func (c *ProductstatusesListCall) Header() http.Header {
 
 func (c *ProductstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32739,6 +33582,10 @@ type ProductstatusesRepricingreportsListCall struct {
 }
 
 // List: Lists the metrics report for a given Repricing product.
+//
+// - merchantId: Id of the merchant who owns the Repricing rule.
+// - productId: Id of the Repricing product. Also known as the REST_ID
+//   (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.id).
 func (r *ProductstatusesRepricingreportsService) List(merchantId int64, productId string) *ProductstatusesRepricingreportsListCall {
 	c := &ProductstatusesRepricingreportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32829,7 +33676,7 @@ func (c *ProductstatusesRepricingreportsListCall) Header() http.Header {
 
 func (c *ProductstatusesRepricingreportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32987,6 +33834,9 @@ type PubsubnotificationsettingsGetCall struct {
 
 // Get: Retrieves a Merchant Center account's pubsub notification
 // settings.
+//
+// - merchantId: The ID of the account for which to get pubsub
+//   notification settings.
 func (r *PubsubnotificationsettingsService) Get(merchantId uint64) *PubsubnotificationsettingsGetCall {
 	c := &PubsubnotificationsettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33030,7 +33880,7 @@ func (c *PubsubnotificationsettingsGetCall) Header() http.Header {
 
 func (c *PubsubnotificationsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33133,6 +33983,8 @@ type PubsubnotificationsettingsUpdateCall struct {
 // Update: Register a Merchant Center account for pubsub notifications.
 // Note that cloud topic name should not be provided as part of the
 // request.
+//
+// - merchantId: The ID of the account.
 func (r *PubsubnotificationsettingsService) Update(merchantId uint64, pubsubnotificationsettings *PubsubNotificationSettings) *PubsubnotificationsettingsUpdateCall {
 	c := &PubsubnotificationsettingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33167,7 +34019,7 @@ func (c *PubsubnotificationsettingsUpdateCall) Header() http.Header {
 
 func (c *PubsubnotificationsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33306,7 +34158,7 @@ func (c *RegionalinventoryCustombatchCall) Header() http.Header {
 
 func (c *RegionalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33403,6 +34255,11 @@ type RegionalinventoryInsertCall struct {
 // Insert: Update the regional inventory of a product in your Merchant
 // Center account. If a regional inventory with the same region ID
 // already exists, this method updates that entry.
+//
+// - merchantId: The ID of the account that contains the product. This
+//   account cannot be a multi-client account.
+// - productId: The REST ID of the product for which to update the
+//   regional inventory.
 func (r *RegionalinventoryService) Insert(merchantId uint64, productId string, regionalinventory *RegionalInventory) *RegionalinventoryInsertCall {
 	c := &RegionalinventoryInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33438,7 +34295,7 @@ func (c *RegionalinventoryInsertCall) Header() http.Header {
 
 func (c *RegionalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33552,6 +34409,9 @@ type RegionsCreateCall struct {
 }
 
 // Create: Creates a region definition in your Merchant Center account.
+//
+// - merchantId: The id of the merchant for which to create region
+//   definition.
 func (r *RegionsService) Create(merchantId int64, region *Region) *RegionsCreateCall {
 	c := &RegionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33593,7 +34453,7 @@ func (c *RegionsCreateCall) Header() http.Header {
 
 func (c *RegionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33705,6 +34565,10 @@ type RegionsDeleteCall struct {
 
 // Delete: Deletes a region definition from your Merchant Center
 // account.
+//
+// - merchantId: The id of the merchant for which to delete region
+//   definition.
+// - regionId: The id of the region to delete.
 func (r *RegionsService) Delete(merchantId int64, regionId string) *RegionsDeleteCall {
 	c := &RegionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33739,7 +34603,7 @@ func (c *RegionsDeleteCall) Header() http.Header {
 
 func (c *RegionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33818,6 +34682,10 @@ type RegionsGetCall struct {
 }
 
 // Get: Retrieves a region defined in your Merchant Center account.
+//
+// - merchantId: The id of the merchant for which to retrieve region
+//   definition.
+// - regionId: The id of the region to retrieve.
 func (r *RegionsService) Get(merchantId int64, regionId string) *RegionsGetCall {
 	c := &RegionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33862,7 +34730,7 @@ func (c *RegionsGetCall) Header() http.Header {
 
 func (c *RegionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33971,6 +34839,9 @@ type RegionsListCall struct {
 }
 
 // List: Lists the regions in your Merchant Center account.
+//
+// - merchantId: The id of the merchant for which to list region
+//   definitions.
 func (r *RegionsService) List(merchantId int64) *RegionsListCall {
 	c := &RegionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34032,7 +34903,7 @@ func (c *RegionsListCall) Header() http.Header {
 
 func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34166,6 +35037,10 @@ type RegionsPatchCall struct {
 }
 
 // Patch: Updates a region definition in your Merchant Center account.
+//
+// - merchantId: The id of the merchant for which to update region
+//   definition.
+// - regionId: The id of the region to update.
 func (r *RegionsService) Patch(merchantId int64, regionId string, region *Region) *RegionsPatchCall {
 	c := &RegionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34208,7 +35083,7 @@ func (c *RegionsPatchCall) Header() http.Header {
 
 func (c *RegionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34329,6 +35204,9 @@ type ReportsSearchCall struct {
 
 // Search: Retrieves merchant performance mertrics matching the search
 // query and optionally segmented by selected dimensions.
+//
+// - merchantId: Id of the merchant making the call. Must be a
+//   standalone account or an MCA subaccount.
 func (r *ReportsService) Search(merchantId int64, searchrequest *SearchRequest) *ReportsSearchCall {
 	c := &ReportsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34363,7 +35241,7 @@ func (c *ReportsSearchCall) Header() http.Header {
 
 func (c *ReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34490,6 +35368,8 @@ type RepricingrulesCreateCall struct {
 }
 
 // Create: Creates a repricing rule for your Merchant Center account.
+//
+// - merchantId: The id of the merchant who owns the repricing rule.
 func (r *RepricingrulesService) Create(merchantId int64, repricingrule *RepricingRule) *RepricingrulesCreateCall {
 	c := &RepricingrulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34531,7 +35411,7 @@ func (c *RepricingrulesCreateCall) Header() http.Header {
 
 func (c *RepricingrulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34642,6 +35522,9 @@ type RepricingrulesDeleteCall struct {
 }
 
 // Delete: Deletes a repricing rule in your Merchant Center account.
+//
+// - merchantId: The id of the merchant who owns the repricing rule.
+// - ruleId: The id of the rule to Delete.
 func (r *RepricingrulesService) Delete(merchantId int64, ruleId string) *RepricingrulesDeleteCall {
 	c := &RepricingrulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34676,7 +35559,7 @@ func (c *RepricingrulesDeleteCall) Header() http.Header {
 
 func (c *RepricingrulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34755,6 +35638,9 @@ type RepricingrulesGetCall struct {
 }
 
 // Get: Retrieves a repricing rule from your Merchant Center account.
+//
+// - merchantId: The id of the merchant who owns the repricing rule.
+// - ruleId: The id of the rule to retrieve.
 func (r *RepricingrulesService) Get(merchantId int64, ruleId string) *RepricingrulesGetCall {
 	c := &RepricingrulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34799,7 +35685,7 @@ func (c *RepricingrulesGetCall) Header() http.Header {
 
 func (c *RepricingrulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34908,6 +35794,8 @@ type RepricingrulesListCall struct {
 }
 
 // List: Lists the repricing rules in your Merchant Center account.
+//
+// - merchantId: The id of the merchant who owns the repricing rule.
 func (r *RepricingrulesService) List(merchantId int64) *RepricingrulesListCall {
 	c := &RepricingrulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34987,7 +35875,7 @@ func (c *RepricingrulesListCall) Header() http.Header {
 
 func (c *RepricingrulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35136,6 +36024,9 @@ type RepricingrulesPatchCall struct {
 // will be thrown. If you do not provide an optional field in the update
 // request, if that field currently exists, it will be deleted from the
 // rule.
+//
+// - merchantId: The id of the merchant who owns the repricing rule.
+// - ruleId: The id of the rule to update.
 func (r *RepricingrulesService) Patch(merchantId int64, ruleId string, repricingrule *RepricingRule) *RepricingrulesPatchCall {
 	c := &RepricingrulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -35171,7 +36062,7 @@ func (c *RepricingrulesPatchCall) Header() http.Header {
 
 func (c *RepricingrulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35286,6 +36177,9 @@ type RepricingrulesRepricingreportsListCall struct {
 }
 
 // List: Lists the metrics report for a given Repricing rule.
+//
+// - merchantId: Id of the merchant who owns the Repricing rule.
+// - ruleId: Id of the Repricing rule.
 func (r *RepricingrulesRepricingreportsService) List(merchantId int64, ruleId string) *RepricingrulesRepricingreportsListCall {
 	c := &RepricingrulesRepricingreportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -35367,7 +36261,7 @@ func (c *RepricingrulesRepricingreportsListCall) Header() http.Header {
 
 func (c *RepricingrulesRepricingreportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35551,7 +36445,7 @@ func (c *ReturnaddressCustombatchCall) Header() http.Header {
 
 func (c *ReturnaddressCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35645,6 +36539,10 @@ type ReturnaddressDeleteCall struct {
 
 // Delete: Deletes a return address for the given Merchant Center
 // account.
+//
+// - merchantId: The Merchant Center account from which to delete the
+//   given return address.
+// - returnAddressId: Return address ID generated by Google.
 func (r *ReturnaddressService) Delete(merchantId uint64, returnAddressId string) *ReturnaddressDeleteCall {
 	c := &ReturnaddressDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -35679,7 +36577,7 @@ func (c *ReturnaddressDeleteCall) Header() http.Header {
 
 func (c *ReturnaddressDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35758,6 +36656,10 @@ type ReturnaddressGetCall struct {
 }
 
 // Get: Gets a return address of the Merchant Center account.
+//
+// - merchantId: The Merchant Center account to get a return address
+//   for.
+// - returnAddressId: Return address ID generated by Google.
 func (r *ReturnaddressService) Get(merchantId uint64, returnAddressId string) *ReturnaddressGetCall {
 	c := &ReturnaddressGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -35802,7 +36704,7 @@ func (c *ReturnaddressGetCall) Header() http.Header {
 
 func (c *ReturnaddressGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35911,6 +36813,9 @@ type ReturnaddressInsertCall struct {
 }
 
 // Insert: Inserts a return address for the Merchant Center account.
+//
+// - merchantId: The Merchant Center account to insert a return address
+//   for.
 func (r *ReturnaddressService) Insert(merchantId uint64, returnaddress *ReturnAddress) *ReturnaddressInsertCall {
 	c := &ReturnaddressInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -35945,7 +36850,7 @@ func (c *ReturnaddressInsertCall) Header() http.Header {
 
 func (c *ReturnaddressInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36051,6 +36956,9 @@ type ReturnaddressListCall struct {
 }
 
 // List: Lists the return addresses of the Merchant Center account.
+//
+// - merchantId: The Merchant Center account to list return addresses
+//   for.
 func (r *ReturnaddressService) List(merchantId uint64) *ReturnaddressListCall {
 	c := &ReturnaddressListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36116,7 +37024,7 @@ func (c *ReturnaddressListCall) Header() http.Header {
 
 func (c *ReturnaddressListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36287,7 +37195,7 @@ func (c *ReturnpolicyCustombatchCall) Header() http.Header {
 
 func (c *ReturnpolicyCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36381,6 +37289,10 @@ type ReturnpolicyDeleteCall struct {
 
 // Delete: Deletes a return policy for the given Merchant Center
 // account.
+//
+// - merchantId: The Merchant Center account from which to delete the
+//   given return policy.
+// - returnPolicyId: Return policy ID generated by Google.
 func (r *ReturnpolicyService) Delete(merchantId uint64, returnPolicyId string) *ReturnpolicyDeleteCall {
 	c := &ReturnpolicyDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36415,7 +37327,7 @@ func (c *ReturnpolicyDeleteCall) Header() http.Header {
 
 func (c *ReturnpolicyDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36494,6 +37406,9 @@ type ReturnpolicyGetCall struct {
 }
 
 // Get: Gets a return policy of the Merchant Center account.
+//
+// - merchantId: The Merchant Center account to get a return policy for.
+// - returnPolicyId: Return policy ID generated by Google.
 func (r *ReturnpolicyService) Get(merchantId uint64, returnPolicyId string) *ReturnpolicyGetCall {
 	c := &ReturnpolicyGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36538,7 +37453,7 @@ func (c *ReturnpolicyGetCall) Header() http.Header {
 
 func (c *ReturnpolicyGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36647,6 +37562,9 @@ type ReturnpolicyInsertCall struct {
 }
 
 // Insert: Inserts a return policy for the Merchant Center account.
+//
+// - merchantId: The Merchant Center account to insert a return policy
+//   for.
 func (r *ReturnpolicyService) Insert(merchantId uint64, returnpolicy *ReturnPolicy) *ReturnpolicyInsertCall {
 	c := &ReturnpolicyInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36681,7 +37599,7 @@ func (c *ReturnpolicyInsertCall) Header() http.Header {
 
 func (c *ReturnpolicyInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36787,6 +37705,9 @@ type ReturnpolicyListCall struct {
 }
 
 // List: Lists the return policies of the Merchant Center account.
+//
+// - merchantId: The Merchant Center account to list return policies
+//   for.
 func (r *ReturnpolicyService) List(merchantId uint64) *ReturnpolicyListCall {
 	c := &ReturnpolicyListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36830,7 +37751,7 @@ func (c *ReturnpolicyListCall) Header() http.Header {
 
 func (c *ReturnpolicyListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36931,6 +37852,9 @@ type ReturnpolicyonlineCreateCall struct {
 }
 
 // Create: Creates a new return policy.
+//
+// - merchantId: The id of the merchant for which to retrieve the return
+//   policy online object.
 func (r *ReturnpolicyonlineService) Create(merchantId int64, returnpolicyonline *ReturnPolicyOnline) *ReturnpolicyonlineCreateCall {
 	c := &ReturnpolicyonlineCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36965,7 +37889,7 @@ func (c *ReturnpolicyonlineCreateCall) Header() http.Header {
 
 func (c *ReturnpolicyonlineCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37071,6 +37995,10 @@ type ReturnpolicyonlineDeleteCall struct {
 }
 
 // Delete: Deletes an existing return policy.
+//
+// - merchantId: The id of the merchant for which to retrieve the return
+//   policy online object.
+// - returnPolicyId: The id of the return policy to delete.
 func (r *ReturnpolicyonlineService) Delete(merchantId int64, returnPolicyId string) *ReturnpolicyonlineDeleteCall {
 	c := &ReturnpolicyonlineDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37105,7 +38033,7 @@ func (c *ReturnpolicyonlineDeleteCall) Header() http.Header {
 
 func (c *ReturnpolicyonlineDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37184,6 +38112,10 @@ type ReturnpolicyonlineGetCall struct {
 }
 
 // Get: Gets an existing return policy.
+//
+// - merchantId: The id of the merchant for which to retrieve the return
+//   policy online object.
+// - returnPolicyId: The id of the return policy to retrieve.
 func (r *ReturnpolicyonlineService) Get(merchantId int64, returnPolicyId string) *ReturnpolicyonlineGetCall {
 	c := &ReturnpolicyonlineGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37228,7 +38160,7 @@ func (c *ReturnpolicyonlineGetCall) Header() http.Header {
 
 func (c *ReturnpolicyonlineGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37337,6 +38269,9 @@ type ReturnpolicyonlineListCall struct {
 }
 
 // List: Lists all existing return policies.
+//
+// - merchantId: The id of the merchant for which to retrieve the return
+//   policy online object.
 func (r *ReturnpolicyonlineService) List(merchantId int64) *ReturnpolicyonlineListCall {
 	c := &ReturnpolicyonlineListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37380,7 +38315,7 @@ func (c *ReturnpolicyonlineListCall) Header() http.Header {
 
 func (c *ReturnpolicyonlineListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37482,6 +38417,10 @@ type ReturnpolicyonlinePatchCall struct {
 }
 
 // Patch: Updates an existing return policy.
+//
+// - merchantId: The id of the merchant for which to retrieve the return
+//   policy online object.
+// - returnPolicyId: The id of the return policy to update.
 func (r *ReturnpolicyonlineService) Patch(merchantId int64, returnPolicyId string, returnpolicyonline *ReturnPolicyOnline) *ReturnpolicyonlinePatchCall {
 	c := &ReturnpolicyonlinePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37517,7 +38456,7 @@ func (c *ReturnpolicyonlinePatchCall) Header() http.Header {
 
 func (c *ReturnpolicyonlinePatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37632,6 +38571,9 @@ type SettlementreportsGetCall struct {
 }
 
 // Get: Retrieves a settlement report from your Merchant Center account.
+//
+// - merchantId: The Merchant Center account of the settlement report.
+// - settlementId: The Google-provided ID of the settlement.
 func (r *SettlementreportsService) Get(merchantId uint64, settlementId string) *SettlementreportsGetCall {
 	c := &SettlementreportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37676,7 +38618,7 @@ func (c *SettlementreportsGetCall) Header() http.Header {
 
 func (c *SettlementreportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37786,6 +38728,8 @@ type SettlementreportsListCall struct {
 
 // List: Retrieves a list of settlement reports from your Merchant
 // Center account.
+//
+// - merchantId: The Merchant Center account to list settlements for.
 func (r *SettlementreportsService) List(merchantId uint64) *SettlementreportsListCall {
 	c := &SettlementreportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37861,7 +38805,7 @@ func (c *SettlementreportsListCall) Header() http.Header {
 
 func (c *SettlementreportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38005,6 +38949,9 @@ type SettlementtransactionsListCall struct {
 }
 
 // List: Retrieves a list of transactions for the settlement.
+//
+// - merchantId: The Merchant Center account to list transactions for.
+// - settlementId: The Google-provided ID of the settlement.
 func (r *SettlementtransactionsService) List(merchantId uint64, settlementId string) *SettlementtransactionsListCall {
 	c := &SettlementtransactionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38073,7 +39020,7 @@ func (c *SettlementtransactionsListCall) Header() http.Header {
 
 func (c *SettlementtransactionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38254,7 +39201,7 @@ func (c *ShippingsettingsCustombatchCall) Header() http.Header {
 
 func (c *ShippingsettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38349,6 +39296,13 @@ type ShippingsettingsGetCall struct {
 }
 
 // Get: Retrieves the shipping settings of the account.
+//
+// - accountId: The ID of the account for which to get/update shipping
+//   settings.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *ShippingsettingsService) Get(merchantId uint64, accountId uint64) *ShippingsettingsGetCall {
 	c := &ShippingsettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38393,7 +39347,7 @@ func (c *ShippingsettingsGetCall) Header() http.Header {
 
 func (c *ShippingsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38504,6 +39458,9 @@ type ShippingsettingsGetsupportedcarriersCall struct {
 
 // Getsupportedcarriers: Retrieves supported carriers and carrier
 // services for an account.
+//
+// - merchantId: The ID of the account for which to retrieve the
+//   supported carriers.
 func (r *ShippingsettingsService) Getsupportedcarriers(merchantId uint64) *ShippingsettingsGetsupportedcarriersCall {
 	c := &ShippingsettingsGetsupportedcarriersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38547,7 +39504,7 @@ func (c *ShippingsettingsGetsupportedcarriersCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedcarriersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38650,6 +39607,9 @@ type ShippingsettingsGetsupportedholidaysCall struct {
 }
 
 // Getsupportedholidays: Retrieves supported holidays for an account.
+//
+// - merchantId: The ID of the account for which to retrieve the
+//   supported holidays.
 func (r *ShippingsettingsService) Getsupportedholidays(merchantId uint64) *ShippingsettingsGetsupportedholidaysCall {
 	c := &ShippingsettingsGetsupportedholidaysCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38693,7 +39653,7 @@ func (c *ShippingsettingsGetsupportedholidaysCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedholidaysCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38797,6 +39757,9 @@ type ShippingsettingsGetsupportedpickupservicesCall struct {
 
 // Getsupportedpickupservices: Retrieves supported pickup services for
 // an account.
+//
+// - merchantId: The ID of the account for which to retrieve the
+//   supported pickup services.
 func (r *ShippingsettingsService) Getsupportedpickupservices(merchantId uint64) *ShippingsettingsGetsupportedpickupservicesCall {
 	c := &ShippingsettingsGetsupportedpickupservicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38840,7 +39803,7 @@ func (c *ShippingsettingsGetsupportedpickupservicesCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedpickupservicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38944,6 +39907,9 @@ type ShippingsettingsListCall struct {
 
 // List: Lists the shipping settings of the sub-accounts in your
 // Merchant Center account.
+//
+// - merchantId: The ID of the managing account. This must be a
+//   multi-client account.
 func (r *ShippingsettingsService) List(merchantId uint64) *ShippingsettingsListCall {
 	c := &ShippingsettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39002,7 +39968,7 @@ func (c *ShippingsettingsListCall) Header() http.Header {
 
 func (c *ShippingsettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39137,6 +40103,13 @@ type ShippingsettingsUpdateCall struct {
 
 // Update: Updates the shipping settings of the account. Any fields that
 // are not provided are deleted from the resource.
+//
+// - accountId: The ID of the account for which to get/update shipping
+//   settings.
+// - merchantId: The ID of the managing account. If this parameter is
+//   not the same as accountId, then this account must be a multi-client
+//   account and `accountId` must be the ID of a sub-account of this
+//   account.
 func (r *ShippingsettingsService) Update(merchantId uint64, accountId uint64, shippingsettings *ShippingSettings) *ShippingsettingsUpdateCall {
 	c := &ShippingsettingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39172,7 +40145,7 @@ func (c *ShippingsettingsUpdateCall) Header() http.Header {
 
 func (c *ShippingsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

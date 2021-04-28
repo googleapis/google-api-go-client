@@ -537,36 +537,6 @@ func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiUiv1beta3SampleDatasetMetadata: The long running
-// operation metadata for SampleDataset.
-type GoogleCloudDocumentaiUiv1beta3SampleDatasetMetadata struct {
-	// CommonMetadata: The basic metadata of the long running operation.
-	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CommonMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiUiv1beta3SampleDatasetMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3SampleDatasetMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
 // long running operation metadata for set default processor version
 // method.
@@ -644,30 +614,37 @@ func (s *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata) MarshalJSO
 // dation: The dataset validation information. This includes any and all
 // errors with documents and the dataset.
 type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation struct {
+	// DatasetErrorCount: The total number of dataset errors.
+	DatasetErrorCount int64 `json:"datasetErrorCount,omitempty"`
+
 	// DatasetErrors: Error information for the dataset as a whole. A
 	// maximum of 10 dataset errors will be returned. A single dataset error
 	// is terminal for training.
 	DatasetErrors []*GoogleRpcStatus `json:"datasetErrors,omitempty"`
+
+	// DocumentErrorCount: The total number of document errors.
+	DocumentErrorCount int64 `json:"documentErrorCount,omitempty"`
 
 	// DocumentErrors: Error information pertaining to specific documents. A
 	// maximum of 10 document errors will be returned. Any document with
 	// errors will not be used throughout training.
 	DocumentErrors []*GoogleRpcStatus `json:"documentErrors,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DatasetErrors") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DatasetErrorCount")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DatasetErrors") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DatasetErrorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2677,7 +2654,7 @@ type GoogleCloudDocumentaiV1beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -2853,7 +2830,7 @@ type GoogleCloudDocumentaiV1beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -4719,7 +4696,7 @@ type GoogleCloudDocumentaiV1beta2NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -5074,7 +5051,7 @@ type GoogleCloudDocumentaiV1beta2Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
@@ -5963,6 +5940,10 @@ type ProjectsDocumentsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - parent: Target project and location to make a call. Format:
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically.
 func (r *ProjectsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsDocumentsBatchProcessCall {
 	c := &ProjectsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5997,7 +5978,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6103,6 +6084,11 @@ type ProjectsDocumentsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - parent: Target project and location to make a call. Format:
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically. This field is
+//   only populated when used in ProcessDocument method.
 func (r *ProjectsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsDocumentsProcessCall {
 	c := &ProjectsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6137,7 +6123,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6245,6 +6231,10 @@ type ProjectsLocationsDocumentsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - parent: Target project and location to make a call. Format:
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically.
 func (r *ProjectsLocationsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsLocationsDocumentsBatchProcessCall {
 	c := &ProjectsLocationsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6279,7 +6269,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6385,6 +6375,11 @@ type ProjectsLocationsDocumentsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - parent: Target project and location to make a call. Format:
+//   `projects/{project-id}/locations/{location-id}`. If no location is
+//   specified, a region will be chosen automatically. This field is
+//   only populated when used in ProcessDocument method.
 func (r *ProjectsLocationsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsLocationsDocumentsProcessCall {
 	c := &ProjectsLocationsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6419,7 +6414,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6528,6 +6523,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6571,7 +6568,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6674,6 +6671,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6717,7 +6716,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

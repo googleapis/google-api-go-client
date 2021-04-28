@@ -703,6 +703,11 @@ type RestMethod struct {
 	// The ETag is sent as an HTTP If-Match or If-None-Match header.
 	EtagRequired bool `json:"etagRequired,omitempty"`
 
+	// FlatPath: The URI path of this REST method in (RFC 6570) format
+	// without level 2 features ({+var}). Supplementary to the path
+	// property.
+	FlatPath string `json:"flatPath,omitempty"`
+
 	// HttpMethod: HTTP method used by this method.
 	HttpMethod string `json:"httpMethod,omitempty"`
 
@@ -1010,6 +1015,9 @@ type ApisGetRestCall struct {
 }
 
 // GetRest: Retrieve the description of a particular version of an api.
+//
+// - api: The name of the API.
+// - version: The version of the API.
 func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
 	c := &ApisGetRestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.api = api
@@ -1054,7 +1062,7 @@ func (c *ApisGetRestCall) Header() http.Header {
 
 func (c *ApisGetRestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1213,7 +1221,7 @@ func (c *ApisListCall) Header() http.Header {
 
 func (c *ApisListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

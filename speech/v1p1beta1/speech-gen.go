@@ -81,7 +81,7 @@ const mtlsBasePath = "https://speech.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -843,8 +843,7 @@ type RecognitionConfig struct {
 	// Adaptation: Speech adaptation configuration improves the accuracy of
 	// speech recognition. When speech adaptation is set it supersedes the
 	// `speech_contexts` field. For more information, see the speech
-	// adaptation
-	// (https://cloud.google.com/speech-to-text/docs/context-strength)
+	// adaptation (https://cloud.google.com/speech-to-text/docs/adaptation)
 	// documentation.
 	Adaptation *SpeechAdaptation `json:"adaptation,omitempty"`
 
@@ -909,6 +908,23 @@ type RecognitionConfig struct {
 	// using a speaker_tag provided in the WordInfo. Note: Use
 	// diarization_config instead.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
+
+	// EnableSpokenEmojis: The spoken emoji behavior for the call If not
+	// set, uses default behavior based on model of choice If 'true', adds
+	// spoken emoji formatting for the request. This will replace spoken
+	// emojis with the corresponding Unicode symbols in the final
+	// transcript. If 'false', spoken emojis are not replaced.
+	EnableSpokenEmojis bool `json:"enableSpokenEmojis,omitempty"`
+
+	// EnableSpokenPunctuation: The spoken punctuation behavior for the call
+	// If not set, uses default behavior based on model of choice e.g.
+	// command_and_search will enable spoken punctuation by default If
+	// 'true', replaces spoken punctuation with the corresponding symbols in
+	// the request. For example, "how are you question mark" becomes "how
+	// are you?". See
+	// https://cloud.google.com/speech-to-text/docs/spoken-punctuation for
+	// support. If 'false', spoken punctuation is not replaced.
+	EnableSpokenPunctuation bool `json:"enableSpokenPunctuation,omitempty"`
 
 	// EnableWordConfidence: If `true`, the top result includes a list of
 	// words and the confidence for those words. If `false`, no word-level
@@ -990,7 +1006,7 @@ type RecognitionConfig struct {
 	// command_and_search Best for short queries such as voice commands or
 	// voice search. phone_call Best for audio that originated from a phone
 	// call (typically recorded at an 8khz sampling rate). video Best for
-	// audio that originated from from video or includes multiple speakers.
+	// audio that originated from video or includes multiple speakers.
 	// Ideally the audio is recorded at a 16khz or greater sampling rate.
 	// This is a premium model that costs more than the standard rate.
 	// default Best for audio that is not one of the specific audio models.
@@ -1015,8 +1031,7 @@ type RecognitionConfig struct {
 
 	// SpeechContexts: Array of SpeechContext. A means to provide context to
 	// assist the speech recognition. For more information, see speech
-	// adaptation
-	// (https://cloud.google.com/speech-to-text/docs/context-strength).
+	// adaptation (https://cloud.google.com/speech-to-text/docs/adaptation).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// UseEnhanced: Set to true to use an enhanced model for speech
@@ -1644,6 +1659,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1687,7 +1704,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,7 +1883,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1997,6 +2014,10 @@ type ProjectsLocationsCustomClassesCreateCall struct {
 }
 
 // Create: Create a custom class.
+//
+// - parent: The parent resource where this custom class will be
+//   created. Format:
+//   {api_version}/projects/{project}/locations/{location}/customClasses.
 func (r *ProjectsLocationsCustomClassesService) Create(parent string, createcustomclassrequest *CreateCustomClassRequest) *ProjectsLocationsCustomClassesCreateCall {
 	c := &ProjectsLocationsCustomClassesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2031,7 +2052,7 @@ func (c *ProjectsLocationsCustomClassesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2136,6 +2157,10 @@ type ProjectsLocationsCustomClassesDeleteCall struct {
 }
 
 // Delete: Delete a custom class.
+//
+// - name: The name of the custom class to delete. Format:
+//   {api_version}/projects/{project}/locations/{location}/customClasses/
+//   {custom_class}.
 func (r *ProjectsLocationsCustomClassesService) Delete(name string) *ProjectsLocationsCustomClassesDeleteCall {
 	c := &ProjectsLocationsCustomClassesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2169,7 +2194,7 @@ func (c *ProjectsLocationsCustomClassesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2267,6 +2292,10 @@ type ProjectsLocationsCustomClassesGetCall struct {
 }
 
 // Get: Get a custom class.
+//
+// - name: The name of the custom class to retrieve. Format:
+//   {api_version}/projects/{project}/locations/{location}/customClasses/
+//   {custom_class}.
 func (r *ProjectsLocationsCustomClassesService) Get(name string) *ProjectsLocationsCustomClassesGetCall {
 	c := &ProjectsLocationsCustomClassesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2310,7 +2339,7 @@ func (c *ProjectsLocationsCustomClassesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2411,6 +2440,10 @@ type ProjectsLocationsCustomClassesListCall struct {
 }
 
 // List: List custom classes.
+//
+// - parent: The parent, which owns this collection of custom classes.
+//   Format:
+//   {api_version}/projects/{project}/locations/{location}/customClasses.
 func (r *ProjectsLocationsCustomClassesService) List(parent string) *ProjectsLocationsCustomClassesListCall {
 	c := &ProjectsLocationsCustomClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2473,7 +2506,7 @@ func (c *ProjectsLocationsCustomClassesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2606,6 +2639,8 @@ type ProjectsLocationsCustomClassesPatchCall struct {
 }
 
 // Patch: Update a custom class.
+//
+// - name: The resource name of the custom class.
 func (r *ProjectsLocationsCustomClassesService) Patch(name string, customclass *CustomClass) *ProjectsLocationsCustomClassesPatchCall {
 	c := &ProjectsLocationsCustomClassesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2647,7 +2682,7 @@ func (c *ProjectsLocationsCustomClassesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2762,6 +2797,10 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // single word or a multi-word phrase. The items in the PhraseSet are
 // favored by the recognition model when you send a call that includes
 // the PhraseSet.
+//
+// - parent: The parent resource where this phrase set will be created.
+//   Format:
+//   {api_version}/projects/{project}/locations/{location}/phraseSets.
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
 	c := &ProjectsLocationsPhraseSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2796,7 +2835,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2901,6 +2940,10 @@ type ProjectsLocationsPhraseSetsDeleteCall struct {
 }
 
 // Delete: Delete a phrase set.
+//
+// - name: The name of the phrase set to delete. Format:
+//   {api_version}/projects/{project}/locations/{location}/phraseSets/{ph
+//   rase_set}.
 func (r *ProjectsLocationsPhraseSetsService) Delete(name string) *ProjectsLocationsPhraseSetsDeleteCall {
 	c := &ProjectsLocationsPhraseSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2934,7 +2977,7 @@ func (c *ProjectsLocationsPhraseSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3032,6 +3075,10 @@ type ProjectsLocationsPhraseSetsGetCall struct {
 }
 
 // Get: Get a phrase set.
+//
+// - name: The name of the phrase set to retrieve. Format:
+//   {api_version}/projects/{project}/locations/{location}/phraseSets/{ph
+//   rase_set}.
 func (r *ProjectsLocationsPhraseSetsService) Get(name string) *ProjectsLocationsPhraseSetsGetCall {
 	c := &ProjectsLocationsPhraseSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3075,7 +3122,7 @@ func (c *ProjectsLocationsPhraseSetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3176,6 +3223,9 @@ type ProjectsLocationsPhraseSetsListCall struct {
 }
 
 // List: List phrase sets.
+//
+// - parent: The parent, which owns this collection of phrase set.
+//   Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsPhraseSetsService) List(parent string) *ProjectsLocationsPhraseSetsListCall {
 	c := &ProjectsLocationsPhraseSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3238,7 +3288,7 @@ func (c *ProjectsLocationsPhraseSetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3371,6 +3421,8 @@ type ProjectsLocationsPhraseSetsPatchCall struct {
 }
 
 // Patch: Update a phrase set.
+//
+// - name: The resource name of the phrase set.
 func (r *ProjectsLocationsPhraseSetsService) Patch(name string, phraseset *PhraseSet) *ProjectsLocationsPhraseSetsPatchCall {
 	c := &ProjectsLocationsPhraseSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3412,7 +3464,7 @@ func (c *ProjectsLocationsPhraseSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3561,7 +3613,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3687,7 +3739,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

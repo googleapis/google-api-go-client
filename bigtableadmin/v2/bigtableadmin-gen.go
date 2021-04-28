@@ -104,7 +104,7 @@ const (
 	// Administer your Cloud Bigtable tables
 	CloudBigtableAdminTableScope = "https://www.googleapis.com/auth/cloud-bigtable.admin.table"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View your data across Google Cloud Platform services
@@ -2891,6 +2891,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2924,7 +2926,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3029,6 +3031,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3062,7 +3066,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3167,6 +3171,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3210,7 +3216,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3326,6 +3332,8 @@ type OperationsProjectsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsProjectsOperationsService) List(name string) *OperationsProjectsOperationsListCall {
 	c := &OperationsProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3390,7 +3398,7 @@ func (c *OperationsProjectsOperationsListCall) Header() http.Header {
 
 func (c *OperationsProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3534,6 +3542,9 @@ type ProjectsInstancesCreateCall struct {
 }
 
 // Create: Create an instance within a project.
+//
+// - parent: The unique name of the project in which to create the new
+//   instance. Values are of the form `projects/{project}`.
 func (r *ProjectsInstancesService) Create(parent string, createinstancerequest *CreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3568,7 +3579,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3678,6 +3689,9 @@ type ProjectsInstancesDeleteCall struct {
 }
 
 // Delete: Delete an instance from a project.
+//
+// - name: The unique name of the instance to be deleted. Values are of
+//   the form `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3711,7 +3725,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3814,6 +3828,9 @@ type ProjectsInstancesGetCall struct {
 }
 
 // Get: Gets information about an instance.
+//
+// - name: The unique name of the requested instance. Values are of the
+//   form `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3857,7 +3874,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3966,6 +3983,10 @@ type ProjectsInstancesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for an instance
 // resource. Returns an empty policy if an instance exists but does not
 // have a policy set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsInstancesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesGetIamPolicyCall {
 	c := &ProjectsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4000,7 +4021,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4111,6 +4132,10 @@ type ProjectsInstancesListCall struct {
 }
 
 // List: Lists information about instances in a project.
+//
+// - parent: The unique name of the project for which a list of
+//   instances is requested. Values are of the form
+//   `projects/{project}`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4161,7 +4186,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4296,6 +4321,9 @@ type ProjectsInstancesPartialUpdateInstanceCall struct {
 // PartialUpdateInstance: Partially updates an instance within a
 // project. This method can modify all fields of an Instance and is the
 // preferred way to update an Instance.
+//
+// - name: The unique name of the instance. Values are of the form
+//   `projects/{project}/instances/a-z+[a-z0-9]`.
 func (r *ProjectsInstancesService) PartialUpdateInstance(name string, instance *Instance) *ProjectsInstancesPartialUpdateInstanceCall {
 	c := &ProjectsInstancesPartialUpdateInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4338,7 +4366,7 @@ func (c *ProjectsInstancesPartialUpdateInstanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesPartialUpdateInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4456,6 +4484,10 @@ type ProjectsInstancesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on an instance resource.
 // Replaces any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesSetIamPolicyCall {
 	c := &ProjectsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4490,7 +4522,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4602,6 +4634,10 @@ type ProjectsInstancesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified instance resource.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTestIamPermissionsCall {
 	c := &ProjectsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4636,7 +4672,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4749,6 +4785,9 @@ type ProjectsInstancesUpdateCall struct {
 // Update: Updates an instance within a project. This method updates
 // only the display name and type for an Instance. To update other
 // Instance properties, such as labels, use PartialUpdateInstance.
+//
+// - name: The unique name of the instance. Values are of the form
+//   `projects/{project}/instances/a-z+[a-z0-9]`.
 func (r *ProjectsInstancesService) Update(name string, instance *Instance) *ProjectsInstancesUpdateCall {
 	c := &ProjectsInstancesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4783,7 +4822,7 @@ func (c *ProjectsInstancesUpdateCall) Header() http.Header {
 
 func (c *ProjectsInstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4894,6 +4933,10 @@ type ProjectsInstancesAppProfilesCreateCall struct {
 }
 
 // Create: Creates an app profile within an instance.
+//
+// - parent: The unique name of the instance in which to create the new
+//   app profile. Values are of the form
+//   `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesAppProfilesService) Create(parent string, appprofile *AppProfile) *ProjectsInstancesAppProfilesCreateCall {
 	c := &ProjectsInstancesAppProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4944,7 +4987,7 @@ func (c *ProjectsInstancesAppProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5064,6 +5107,10 @@ type ProjectsInstancesAppProfilesDeleteCall struct {
 }
 
 // Delete: Deletes an app profile from an instance.
+//
+// - name: The unique name of the app profile to be deleted. Values are
+//   of the form
+//   `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
 func (r *ProjectsInstancesAppProfilesService) Delete(name string) *ProjectsInstancesAppProfilesDeleteCall {
 	c := &ProjectsInstancesAppProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5105,7 +5152,7 @@ func (c *ProjectsInstancesAppProfilesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5213,6 +5260,10 @@ type ProjectsInstancesAppProfilesGetCall struct {
 }
 
 // Get: Gets information about an app profile.
+//
+// - name: The unique name of the requested app profile. Values are of
+//   the form
+//   `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
 func (r *ProjectsInstancesAppProfilesService) Get(name string) *ProjectsInstancesAppProfilesGetCall {
 	c := &ProjectsInstancesAppProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5256,7 +5307,7 @@ func (c *ProjectsInstancesAppProfilesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5363,6 +5414,12 @@ type ProjectsInstancesAppProfilesListCall struct {
 }
 
 // List: Lists information about app profiles in an instance.
+//
+// - parent: The unique name of the instance for which a list of app
+//   profiles is requested. Values are of the form
+//   `projects/{project}/instances/{instance}`. Use `{instance} = '-'`
+//   to list AppProfiles for all Instances in a project, e.g.,
+//   `projects/myproject/instances/-`.
 func (r *ProjectsInstancesAppProfilesService) List(parent string) *ProjectsInstancesAppProfilesListCall {
 	c := &ProjectsInstancesAppProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5425,7 +5482,7 @@ func (c *ProjectsInstancesAppProfilesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5563,6 +5620,9 @@ type ProjectsInstancesAppProfilesPatchCall struct {
 }
 
 // Patch: Updates an app profile within an instance.
+//
+// - name: The unique name of the app profile. Values are of the form
+//   `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 func (r *ProjectsInstancesAppProfilesService) Patch(name string, appprofile *AppProfile) *ProjectsInstancesAppProfilesPatchCall {
 	c := &ProjectsInstancesAppProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5612,7 +5672,7 @@ func (c *ProjectsInstancesAppProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5734,6 +5794,10 @@ type ProjectsInstancesClustersCreateCall struct {
 }
 
 // Create: Creates a cluster within an instance.
+//
+// - parent: The unique name of the instance in which to create the new
+//   cluster. Values are of the form
+//   `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesClustersService) Create(parent string, cluster *Cluster) *ProjectsInstancesClustersCreateCall {
 	c := &ProjectsInstancesClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5777,7 +5841,7 @@ func (c *ProjectsInstancesClustersCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5892,6 +5956,10 @@ type ProjectsInstancesClustersDeleteCall struct {
 }
 
 // Delete: Deletes a cluster from an instance.
+//
+// - name: The unique name of the cluster to be deleted. Values are of
+//   the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersService) Delete(name string) *ProjectsInstancesClustersDeleteCall {
 	c := &ProjectsInstancesClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5925,7 +5993,7 @@ func (c *ProjectsInstancesClustersDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6028,6 +6096,9 @@ type ProjectsInstancesClustersGetCall struct {
 }
 
 // Get: Gets information about a cluster.
+//
+// - name: The unique name of the requested cluster. Values are of the
+//   form `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersService) Get(name string) *ProjectsInstancesClustersGetCall {
 	c := &ProjectsInstancesClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6071,7 +6142,7 @@ func (c *ProjectsInstancesClustersGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6178,6 +6249,12 @@ type ProjectsInstancesClustersListCall struct {
 }
 
 // List: Lists information about clusters in an instance.
+//
+// - parent: The unique name of the instance for which a list of
+//   clusters is requested. Values are of the form
+//   `projects/{project}/instances/{instance}`. Use `{instance} = '-'`
+//   to list Clusters for all Instances in a project, e.g.,
+//   `projects/myproject/instances/-`.
 func (r *ProjectsInstancesClustersService) List(parent string) *ProjectsInstancesClustersListCall {
 	c := &ProjectsInstancesClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6228,7 +6305,7 @@ func (c *ProjectsInstancesClustersListCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6349,6 +6426,169 @@ func (c *ProjectsInstancesClustersListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
+// method id "bigtableadmin.projects.instances.clusters.partialUpdateCluster":
+
+type ProjectsInstancesClustersPartialUpdateClusterCall struct {
+	s          *Service
+	name       string
+	cluster    *Cluster
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// PartialUpdateCluster: Partially updates a cluster within a project.
+// This method is the preferred way to update a Cluster.
+//
+// - name: The unique name of the cluster. Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/a-z*`.
+func (r *ProjectsInstancesClustersService) PartialUpdateCluster(name string, cluster *Cluster) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c := &ProjectsInstancesClustersPartialUpdateClusterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cluster = cluster
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// subset of Cluster fields which should be replaced. Must be explicitly
+// set.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) UpdateMask(updateMask string) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Context(ctx context.Context) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.partialUpdateCluster" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Partially updates a cluster within a project. This method is the preferred way to update a Cluster. ",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigtableadmin.projects.instances.clusters.partialUpdateCluster",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The subset of Cluster fields which should be replaced. Must be explicitly set.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "Cluster"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/bigtable.admin.instance",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigtableadmin.projects.instances.clusters.update":
 
 type ProjectsInstancesClustersUpdateCall struct {
@@ -6360,7 +6600,11 @@ type ProjectsInstancesClustersUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a cluster within an instance.
+// Update: Updates a cluster within an instance. UpdateCluster is
+// deprecated. Please use PartialUpdateCluster instead.
+//
+// - name: The unique name of the cluster. Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/a-z*`.
 func (r *ProjectsInstancesClustersService) Update(name string, cluster *Cluster) *ProjectsInstancesClustersUpdateCall {
 	c := &ProjectsInstancesClustersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6395,7 +6639,7 @@ func (c *ProjectsInstancesClustersUpdateCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6459,7 +6703,7 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a cluster within an instance.",
+	//   "description": "Updates a cluster within an instance. UpdateCluster is deprecated. Please use PartialUpdateCluster instead.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}",
 	//   "httpMethod": "PUT",
 	//   "id": "bigtableadmin.projects.instances.clusters.update",
@@ -6510,6 +6754,11 @@ type ProjectsInstancesClustersBackupsCreateCall struct {
 // backup. The metadata field type is CreateBackupMetadata. The response
 // field type is Backup, if successful. Cancelling the returned
 // operation will stop the creation and delete the backup.
+//
+// - parent: This must be one of the clusters in the instance in which
+//   this table is located. The backup will be stored in this cluster.
+//   Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesClustersBackupsCreateCall {
 	c := &ProjectsInstancesClustersBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6556,7 +6805,7 @@ func (c *ProjectsInstancesClustersBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6670,6 +6919,10 @@ type ProjectsInstancesClustersBackupsDeleteCall struct {
 }
 
 // Delete: Deletes a pending or completed Cloud Bigtable backup.
+//
+// - name: Name of the backup to delete. Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}/backups/
+//   {backup}`.
 func (r *ProjectsInstancesClustersBackupsService) Delete(name string) *ProjectsInstancesClustersBackupsDeleteCall {
 	c := &ProjectsInstancesClustersBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6703,7 +6956,7 @@ func (c *ProjectsInstancesClustersBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6805,6 +7058,10 @@ type ProjectsInstancesClustersBackupsGetCall struct {
 }
 
 // Get: Gets metadata on a pending or completed Cloud Bigtable Backup.
+//
+// - name: Name of the backup. Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}/backups/
+//   {backup}`.
 func (r *ProjectsInstancesClustersBackupsService) Get(name string) *ProjectsInstancesClustersBackupsGetCall {
 	c := &ProjectsInstancesClustersBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6848,7 +7105,7 @@ func (c *ProjectsInstancesClustersBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6955,6 +7212,10 @@ type ProjectsInstancesClustersBackupsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a Table resource.
 // Returns an empty policy if the resource exists but does not have a
 // policy set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsInstancesClustersBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesClustersBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesClustersBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6989,7 +7250,7 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7100,6 +7361,11 @@ type ProjectsInstancesClustersBackupsListCall struct {
 
 // List: Lists Cloud Bigtable backups. Returns both completed and
 // pending backups.
+//
+// - parent: The cluster to list backups from. Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}`. Use
+//   `{cluster} = '-'` to list backups for all clusters in an instance,
+//   e.g., `projects/{project}/instances/{instance}/clusters/-`.
 func (r *ProjectsInstancesClustersBackupsService) List(parent string) *ProjectsInstancesClustersBackupsListCall {
 	c := &ProjectsInstancesClustersBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7204,7 +7470,7 @@ func (c *ProjectsInstancesClustersBackupsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7351,6 +7617,14 @@ type ProjectsInstancesClustersBackupsPatchCall struct {
 }
 
 // Patch: Updates a pending or completed Cloud Bigtable Backup.
+//
+// - name: A globally unique identifier for the backup which cannot be
+//   changed. Values are of the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}/
+//   backups/_a-zA-Z0-9*` The final segment of the name must be between
+//   1 and 50 characters in length. The backup is stored in the cluster
+//   identified by the prefix of the backup name of the form
+//   `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesClustersBackupsPatchCall {
 	c := &ProjectsInstancesClustersBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7396,7 +7670,7 @@ func (c *ProjectsInstancesClustersBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7513,6 +7787,10 @@ type ProjectsInstancesClustersBackupsSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on a Table resource.
 // Replaces any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsInstancesClustersBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesClustersBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesClustersBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7547,7 +7825,7 @@ func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7658,6 +7936,10 @@ type ProjectsInstancesClustersBackupsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified table resource.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsInstancesClustersBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesClustersBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesClustersBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7692,7 +7974,7 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Header() http.H
 
 func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7804,6 +8086,10 @@ type ProjectsInstancesTablesCheckConsistencyCall struct {
 // CheckConsistency: Checks replication consistency based on a
 // consistency token, that is, if replication has caught up based on the
 // conditions specified in the token and the check request.
+//
+// - name: The unique name of the Table for which to check replication
+//   consistency. Values are of the form
+//   `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) CheckConsistency(name string, checkconsistencyrequest *CheckConsistencyRequest) *ProjectsInstancesTablesCheckConsistencyCall {
 	c := &ProjectsInstancesTablesCheckConsistencyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7838,7 +8124,7 @@ func (c *ProjectsInstancesTablesCheckConsistencyCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesCheckConsistencyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7950,6 +8236,10 @@ type ProjectsInstancesTablesCreateCall struct {
 // Create: Creates a new table in the specified instance. The table can
 // be created with a full set of initial column families, specified in
 // the request.
+//
+// - parent: The unique name of the instance in which to create the
+//   table. Values are of the form
+//   `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesTablesService) Create(parent string, createtablerequest *CreateTableRequest) *ProjectsInstancesTablesCreateCall {
 	c := &ProjectsInstancesTablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7984,7 +8274,7 @@ func (c *ProjectsInstancesTablesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8093,6 +8383,9 @@ type ProjectsInstancesTablesDeleteCall struct {
 }
 
 // Delete: Permanently deletes a specified table and all of its data.
+//
+// - name: The unique name of the table to be deleted. Values are of the
+//   form `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) Delete(name string) *ProjectsInstancesTablesDeleteCall {
 	c := &ProjectsInstancesTablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8126,7 +8419,7 @@ func (c *ProjectsInstancesTablesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8230,6 +8523,10 @@ type ProjectsInstancesTablesDropRowRangeCall struct {
 // DropRowRange: Permanently drop/delete a row range from a specified
 // table. The request can specify whether to delete all rows in a table,
 // or only those that match a particular prefix.
+//
+// - name: The unique name of the table on which to drop a range of
+//   rows. Values are of the form
+//   `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) DropRowRange(name string, droprowrangerequest *DropRowRangeRequest) *ProjectsInstancesTablesDropRowRangeCall {
 	c := &ProjectsInstancesTablesDropRowRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8264,7 +8561,7 @@ func (c *ProjectsInstancesTablesDropRowRangeCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesDropRowRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8377,6 +8674,10 @@ type ProjectsInstancesTablesGenerateConsistencyTokenCall struct {
 // which can be used in CheckConsistency to check whether mutations to
 // the table that finished before this call started have been
 // replicated. The tokens will be available for 90 days.
+//
+// - name: The unique name of the Table for which to create a
+//   consistency token. Values are of the form
+//   `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) GenerateConsistencyToken(name string, generateconsistencytokenrequest *GenerateConsistencyTokenRequest) *ProjectsInstancesTablesGenerateConsistencyTokenCall {
 	c := &ProjectsInstancesTablesGenerateConsistencyTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8411,7 +8712,7 @@ func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) Header() http.Head
 
 func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8521,6 +8822,9 @@ type ProjectsInstancesTablesGetCall struct {
 }
 
 // Get: Gets metadata information about the specified table.
+//
+// - name: The unique name of the requested table. Values are of the
+//   form `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) Get(name string) *ProjectsInstancesTablesGetCall {
 	c := &ProjectsInstancesTablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8539,7 +8843,7 @@ func (r *ProjectsInstancesTablesService) Get(name string) *ProjectsInstancesTabl
 // table's schema.
 //   "REPLICATION_VIEW" - Only populates `name` and fields related to
 // the table's replication state.
-//   "ENCRYPTION_VIEW" - Only populates 'name' and fields related to the
+//   "ENCRYPTION_VIEW" - Only populates `name` and fields related to the
 // table's encryption state.
 //   "FULL" - Populates all fields.
 func (c *ProjectsInstancesTablesGetCall) View(view string) *ProjectsInstancesTablesGetCall {
@@ -8584,7 +8888,7 @@ func (c *ProjectsInstancesTablesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8676,7 +8980,7 @@ func (c *ProjectsInstancesTablesGetCall) Do(opts ...googleapi.CallOption) (*Tabl
 	//         "Only populates `name`.",
 	//         "Only populates `name` and fields related to the table's schema.",
 	//         "Only populates `name` and fields related to the table's replication state.",
-	//         "Only populates 'name' and fields related to the table's encryption state.",
+	//         "Only populates `name` and fields related to the table's encryption state.",
 	//         "Populates all fields."
 	//       ],
 	//       "location": "query",
@@ -8713,6 +9017,10 @@ type ProjectsInstancesTablesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a Table resource.
 // Returns an empty policy if the resource exists but does not have a
 // policy set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsInstancesTablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesTablesGetIamPolicyCall {
 	c := &ProjectsInstancesTablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8747,7 +9055,7 @@ func (c *ProjectsInstancesTablesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8857,6 +9165,10 @@ type ProjectsInstancesTablesListCall struct {
 }
 
 // List: Lists all tables served from a specified instance.
+//
+// - parent: The unique name of the instance for which tables should be
+//   listed. Values are of the form
+//   `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesTablesService) List(parent string) *ProjectsInstancesTablesListCall {
 	c := &ProjectsInstancesTablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8894,7 +9206,7 @@ func (c *ProjectsInstancesTablesListCall) PageToken(pageToken string) *ProjectsI
 // table's schema.
 //   "REPLICATION_VIEW" - Only populates `name` and fields related to
 // the table's replication state.
-//   "ENCRYPTION_VIEW" - Only populates 'name' and fields related to the
+//   "ENCRYPTION_VIEW" - Only populates `name` and fields related to the
 // table's encryption state.
 //   "FULL" - Populates all fields.
 func (c *ProjectsInstancesTablesListCall) View(view string) *ProjectsInstancesTablesListCall {
@@ -8939,7 +9251,7 @@ func (c *ProjectsInstancesTablesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9042,7 +9354,7 @@ func (c *ProjectsInstancesTablesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//         "Only populates `name`.",
 	//         "Only populates `name` and fields related to the table's schema.",
 	//         "Only populates `name` and fields related to the table's replication state.",
-	//         "Only populates 'name' and fields related to the table's encryption state.",
+	//         "Only populates `name` and fields related to the table's encryption state.",
 	//         "Populates all fields."
 	//       ],
 	//       "location": "query",
@@ -9102,6 +9414,10 @@ type ProjectsInstancesTablesModifyColumnFamiliesCall struct {
 // modifications will occur before this method returns, but data
 // requests received prior to that point may see a table where only some
 // modifications have taken effect.
+//
+// - name: The unique name of the table whose families should be
+//   modified. Values are of the form
+//   `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) ModifyColumnFamilies(name string, modifycolumnfamiliesrequest *ModifyColumnFamiliesRequest) *ProjectsInstancesTablesModifyColumnFamiliesCall {
 	c := &ProjectsInstancesTablesModifyColumnFamiliesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9136,7 +9452,7 @@ func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9251,6 +9567,10 @@ type ProjectsInstancesTablesRestoreCall struct {
 // track the progress of the operation, and to cancel it. The metadata
 // field type is RestoreTableMetadata. The response type is Table, if
 // successful.
+//
+// - parent: The name of the instance in which to create the restored
+//   table. This instance must be the parent of the source backup.
+//   Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesTablesService) Restore(parent string, restoretablerequest *RestoreTableRequest) *ProjectsInstancesTablesRestoreCall {
 	c := &ProjectsInstancesTablesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9285,7 +9605,7 @@ func (c *ProjectsInstancesTablesRestoreCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9396,6 +9716,10 @@ type ProjectsInstancesTablesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on a Table resource.
 // Replaces any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsInstancesTablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesTablesSetIamPolicyCall {
 	c := &ProjectsInstancesTablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9430,7 +9754,7 @@ func (c *ProjectsInstancesTablesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9541,6 +9865,10 @@ type ProjectsInstancesTablesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified table resource.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsInstancesTablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTablesTestIamPermissionsCall {
 	c := &ProjectsInstancesTablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9575,7 +9903,7 @@ func (c *ProjectsInstancesTablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9685,6 +10013,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9728,7 +10058,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9836,28 +10166,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9900,7 +10236,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9971,7 +10307,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9983,13 +10319,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

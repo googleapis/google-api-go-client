@@ -2858,6 +2858,8 @@ type ProjectsGetConfigCall struct {
 // the Google Cloud Storage location where you put your model training
 // code
 // for training the model with Google Cloud Machine Learning.
+//
+// - name: The project name.
 func (r *ProjectsService) GetConfig(name string) *ProjectsGetConfigCall {
 	c := &ProjectsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3008,6 +3010,11 @@ type ProjectsPredictCall struct {
 // method. <p>For details of the request and response format, see the
 // **guide
 // to the predict request format (/ml-engine/docs/v1/predict-request)**.
+//
+// - name: The resource name of a model or a version.
+//
+//   Authorization: requires the `predict` permission on the specified
+//   resource.
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3153,6 +3160,8 @@ type ProjectsJobsCancelCall struct {
 }
 
 // Cancel: Cancels a running job.
+//
+// - name: The name of the job to cancel.
 func (r *ProjectsJobsService) Cancel(name string, googlecloudmlv1__canceljobrequest *GoogleCloudMlV1__CancelJobRequest) *ProjectsJobsCancelCall {
 	c := &ProjectsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3293,6 +3302,8 @@ type ProjectsJobsCreateCall struct {
 }
 
 // Create: Creates a training or a batch prediction job.
+//
+// - parent: The project name.
 func (r *ProjectsJobsService) Create(parent string, googlecloudmlv1__job *GoogleCloudMlV1__Job) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3433,6 +3444,8 @@ type ProjectsJobsGetCall struct {
 }
 
 // Get: Describes a job.
+//
+// - name: The name of the job to get the description of.
 func (r *ProjectsJobsService) Get(name string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3580,6 +3593,11 @@ type ProjectsJobsGetIamPolicyCall struct {
 // Returns an empty policy if the resource exists and does not have a
 // policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested.
+//   See the operation documentation for the appropriate value for this
+//   field.
 func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamPolicyCall {
 	c := &ProjectsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3728,6 +3746,8 @@ type ProjectsJobsListCall struct {
 // If there are no jobs that match the request parameters, the
 // list
 // request returns an empty response body: {}.
+//
+// - parent: The name of the project for which to list jobs.
 func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3955,6 +3975,8 @@ type ProjectsJobsPatchCall struct {
 // Patch: Updates a specific job resource.
 //
 // Currently the only supported fields to update are `labels`.
+//
+// - name: The job name.
 func (r *ProjectsJobsService) Patch(name string, googlecloudmlv1__job *GoogleCloudMlV1__Job) *ProjectsJobsPatchCall {
 	c := &ProjectsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4132,6 +4154,11 @@ type ProjectsJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any
 // existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified.
+//   See the operation documentation for the appropriate value for this
+//   field.
 func (r *ProjectsJobsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
 	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4282,6 +4309,11 @@ type ProjectsJobsTestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested.
+//   See the operation documentation for the appropriate value for this
+//   field.
 func (r *ProjectsJobsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsJobsTestIamPermissionsCall {
 	c := &ProjectsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4425,6 +4457,8 @@ type ProjectsLocationsGetCall struct {
 // Get: Get the complete list of CMLE capabilities in a location, along
 // with their
 // location-specific properties.
+//
+// - name: The name of the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4570,6 +4604,11 @@ type ProjectsLocationsListCall struct {
 
 // List: List all locations that provides at least one type of CMLE
 // capability.
+//
+// - parent: The name of the project for which available locations are
+//   to be
+//   listed (since some locations might be restricted to specific
+//   projects).
 func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4777,6 +4816,8 @@ type ProjectsModelsCreateCall struct {
 // the model. Add versions by calling
 // projects.models.versions.create
 // (/ml-engine/reference/rest/v1/projects.models.versions/create).
+//
+// - parent: The project name.
 func (r *ProjectsModelsService) Create(parent string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4922,6 +4963,8 @@ type ProjectsModelsDeleteCall struct {
 // versions by calling
 // projects.models.versions.delete
 // (/ml-engine/reference/rest/v1/projects.models.versions/delete).
+//
+// - name: The name of the model.
 func (r *ProjectsModelsService) Delete(name string) *ProjectsModelsDeleteCall {
 	c := &ProjectsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5057,6 +5100,8 @@ type ProjectsModelsGetCall struct {
 // set), and the default version (if at least one version of the model
 // has
 // been deployed).
+//
+// - name: The name of the model.
 func (r *ProjectsModelsService) Get(name string) *ProjectsModelsGetCall {
 	c := &ProjectsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5204,6 +5249,11 @@ type ProjectsModelsGetIamPolicyCall struct {
 // Returns an empty policy if the resource exists and does not have a
 // policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested.
+//   See the operation documentation for the appropriate value for this
+//   field.
 func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGetIamPolicyCall {
 	c := &ProjectsModelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5356,6 +5406,8 @@ type ProjectsModelsListCall struct {
 // If there are no models that match the request parameters, the list
 // request
 // returns an empty response body: {}.
+//
+// - parent: The name of the project whose models are to be listed.
 func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	c := &ProjectsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5572,6 +5624,8 @@ type ProjectsModelsPatchCall struct {
 // Currently the only supported fields to update are `description`
 // and
 // `default_version.name`.
+//
+// - name: The project name.
 func (r *ProjectsModelsService) Patch(name string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsPatchCall {
 	c := &ProjectsModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5745,6 +5799,11 @@ type ProjectsModelsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any
 // existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified.
+//   See the operation documentation for the appropriate value for this
+//   field.
 func (r *ProjectsModelsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsModelsSetIamPolicyCall {
 	c := &ProjectsModelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5895,6 +5954,11 @@ type ProjectsModelsTestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested.
+//   See the operation documentation for the appropriate value for this
+//   field.
 func (r *ProjectsModelsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsModelsTestIamPermissionsCall {
 	c := &ProjectsModelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6050,6 +6114,8 @@ type ProjectsModelsVersionsCreateCall struct {
 // call
 // projects.models.versions.setDefault
 // (/ml-engine/reference/rest/v1/projects.models.versions/setDefault).
+//
+// - parent: The name of the model.
 func (r *ProjectsModelsVersionsService) Create(parent string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsCreateCall {
 	c := &ProjectsModelsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6197,6 +6263,12 @@ type ProjectsModelsVersionsDeleteCall struct {
 // Note: You cannot delete the version that is set as the default
 // version
 // of the model unless it is the only remaining version.
+//
+// - name: The name of the version. You can get the names of all
+//   the
+//   versions of a model by calling
+//   projects.models.versions.list
+//   (/ml-engine/reference/rest/v1/projects.models.versions/list).
 func (r *ProjectsModelsVersionsService) Delete(name string) *ProjectsModelsVersionsDeleteCall {
 	c := &ProjectsModelsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6336,6 +6408,8 @@ type ProjectsModelsVersionsGetCall struct {
 // to get the same information that this method returns for all of
 // the
 // versions of a model.
+//
+// - name: The name of the version.
 func (r *ProjectsModelsVersionsService) Get(name string) *ProjectsModelsVersionsGetCall {
 	c := &ProjectsModelsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6490,6 +6564,8 @@ type ProjectsModelsVersionsListCall struct {
 // If there are no versions that match the request parameters, the
 // list
 // request returns an empty response body: {}.
+//
+// - parent: The name of the model for which to list the version.
 func (r *ProjectsModelsVersionsService) List(parent string) *ProjectsModelsVersionsListCall {
 	c := &ProjectsModelsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6706,6 +6782,8 @@ type ProjectsModelsVersionsPatchCall struct {
 // Currently the only update-able fields are `description`
 // and
 // `autoScaling.minNodes`.
+//
+// - name: The name of the model.
 func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsPatchCall {
 	c := &ProjectsModelsVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6884,6 +6962,13 @@ type ProjectsModelsVersionsSetDefaultCall struct {
 // default. You must make any subsequent changes to the default
 // version
 // setting manually using this method.
+//
+// - name: The name of the version to make the default for the model.
+//   You
+//   can get the names of all the versions of a model by
+//   calling
+//   projects.models.versions.list
+//   (/ml-engine/reference/rest/v1/projects.models.versions/list).
 func (r *ProjectsModelsVersionsService) SetDefault(name string, googlecloudmlv1__setdefaultversionrequest *GoogleCloudMlV1__SetDefaultVersionRequest) *ProjectsModelsVersionsSetDefaultCall {
 	c := &ProjectsModelsVersionsSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7040,6 +7125,8 @@ type ProjectsOperationsCancelCall struct {
 // an Operation.error value with a google.rpc.Status.code of
 // 1,
 // corresponding to `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7176,6 +7263,8 @@ type ProjectsOperationsDeleteCall struct {
 // operation. If the server doesn't support this method, it
 // returns
 // `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
 	c := &ProjectsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7311,6 +7400,8 @@ type ProjectsOperationsGetCall struct {
 // method to poll the operation result at intervals as recommended by
 // the API
 // service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7471,6 +7562,8 @@ type ProjectsOperationsListCall struct {
 // collection id, however overriding users must ensure the name
 // binding
 // is the parent resource, without the operations collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

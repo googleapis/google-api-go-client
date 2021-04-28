@@ -79,7 +79,7 @@ const mtlsBasePath = "https://storagetransfer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -480,14 +480,14 @@ type ErrorSummary struct {
 	// following guidelines to decide between `FAILED_PRECONDITION`,
 	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
 	// retry just the failing call. (b) Use `ABORTED` if the client should
-	// retry at a higher level (e.g., when a client-specified test-and-set
-	// fails, indicating the client should restart a read-modify-write
-	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
-	// retry until the system state has been explicitly fixed. E.g., if an
-	// "rmdir" fails because the directory is non-empty,
-	// `FAILED_PRECONDITION` should be returned since the client should not
-	// retry unless the files are deleted from the directory. HTTP Mapping:
-	// 400 Bad Request
+	// retry at a higher level. For example, when a client-specified
+	// test-and-set fails, indicating the client should restart a
+	// read-modify-write sequence. (c) Use `FAILED_PRECONDITION` if the
+	// client should not retry until the system state has been explicitly
+	// fixed. For example, if an "rmdir" fails because the directory is
+	// non-empty, `FAILED_PRECONDITION` should be returned since the client
+	// should not retry unless the files are deleted from the directory.
+	// HTTP Mapping: 400 Bad Request
 	//   "ABORTED" - The operation was aborted, typically due to a
 	// concurrency issue such as a sequencer check failure or transaction
 	// abort. See the guidelines above for deciding between
@@ -1301,9 +1301,10 @@ type TransferJob struct {
 	// specified name is in use by a job, the creation request fails with an
 	// ALREADY_EXISTS error. This name must start with "transferJobs/"
 	// prefix and end with a letter or a number, and should be no more than
-	// 128 characters. Example:
-	// "transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$" Invalid job names will
-	// fail with an INVALID_ARGUMENT error.
+	// 128 characters. This name must not start with 'transferJobs/OPI'.
+	// 'transferJobs/OPI' is a reserved prefix. Example:
+	// "transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$" Invalid job
+	// names will fail with an INVALID_ARGUMENT error.
 	Name string `json:"name,omitempty"`
 
 	// NotificationConfig: Notification configuration.
@@ -1598,6 +1599,9 @@ type GoogleServiceAccountsGetCall struct {
 // access to Storage Transfer Service. This service account is created
 // and owned by Storage Transfer Service and can only be used by Storage
 // Transfer Service.
+//
+// - projectId: The ID of the Google Cloud Platform Console project that
+//   the Google service account is associated with.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
 	c := &GoogleServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1641,7 +1645,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1773,7 +1777,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,6 +1870,10 @@ type TransferJobsGetCall struct {
 }
 
 // Get: Gets a transfer job.
+//
+// - jobName: " The job to get.
+// - projectId: The ID of the Google Cloud Platform Console project that
+//   owns the job.
 func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
 	c := &TransferJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -1910,7 +1918,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2017,6 +2025,15 @@ type TransferJobsListCall struct {
 }
 
 // List: Lists transfer jobs.
+//
+// - filter: A list of query parameters specified as JSON text in the
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "jobStatuses":["status1","status2",...]}` Since `jobNames` and
+//   `jobStatuses` support multiple values, their values must be
+//   specified with array notation. `projectId` is required. `jobNames`
+//   and `jobStatuses` are optional. The valid values for `jobStatuses`
+//   are case-insensitive: ENABLED, DISABLED, and DELETED.
 func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("filter", filter)
@@ -2074,7 +2091,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2206,6 +2223,8 @@ type TransferJobsPatchCall struct {
 // not affect transfer operations that are running already. **Note:**
 // The job's status field can be modified using this RPC (for example,
 // to set a job's status to DELETED, DISABLED, or ENABLED).
+//
+// - jobName: The name of job to update.
 func (r *TransferJobsService) Patch(jobName string, updatetransferjobrequest *UpdateTransferJobRequest) *TransferJobsPatchCall {
 	c := &TransferJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2240,7 +2259,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2349,6 +2368,8 @@ type TransferJobsRunCall struct {
 // TransferJob. A TransferJob has a maximum of one active
 // TransferOperation. If this method is called while a TransferOperation
 // is active, an error wil be returned.
+//
+// - jobName: The name of the transfer job.
 func (r *TransferJobsService) Run(jobName string, runtransferjobrequest *RunTransferJobRequest) *TransferJobsRunCall {
 	c := &TransferJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2383,7 +2404,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2507,6 +2528,8 @@ type TransferOperationsCancelCall struct {
 // transferred five files before you canceled the job, tomorrow's
 // transfer operation will compute a new delta with the five files that
 // were not copied today plus any new files discovered tomorrow.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *TransferOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *TransferOperationsCancelCall {
 	c := &TransferOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2541,7 +2564,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2649,6 +2672,8 @@ type TransferOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *TransferOperationsService) Get(name string) *TransferOperationsGetCall {
 	c := &TransferOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2692,7 +2717,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2794,6 +2819,19 @@ type TransferOperationsListCall struct {
 
 // List: Lists transfer operations. Operations are ordered by their
 // creation time in reverse chronological order.
+//
+// - filter: A list of query parameters specified as JSON text in the
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "operationNames":["opid1","opid2",...],
+//   "transferStatuses":["status1","status2",...]}` Since `jobNames`,
+//   `operationNames`, and `transferStatuses` support multiple values,
+//   they must be specified with array notation. `projectId` is
+//   required. `jobNames`, `operationNames`, and `transferStatuses` are
+//   optional. The valid values for `transferStatuses` are
+//   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
+//   ABORTED.
+// - name: Not used.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2852,7 +2890,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2992,6 +3030,8 @@ type TransferOperationsPauseCall struct {
 }
 
 // Pause: Pauses a transfer operation.
+//
+// - name: The name of the transfer operation.
 func (r *TransferOperationsService) Pause(name string, pausetransferoperationrequest *PauseTransferOperationRequest) *TransferOperationsPauseCall {
 	c := &TransferOperationsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3026,7 +3066,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3132,6 +3172,8 @@ type TransferOperationsResumeCall struct {
 }
 
 // Resume: Resumes a transfer operation that is paused.
+//
+// - name: The name of the transfer operation.
 func (r *TransferOperationsService) Resume(name string, resumetransferoperationrequest *ResumeTransferOperationRequest) *TransferOperationsResumeCall {
 	c := &TransferOperationsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3166,7 +3208,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -85,7 +85,7 @@ const mtlsBasePath = "https://datastore.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your Google Cloud Datastore data
@@ -945,6 +945,8 @@ type ProjectsExportCall struct {
 // output of an export may only be used once the associated operation is
 // done. If an export operation is cancelled before completion it may
 // leave partial data behind in Google Cloud Storage.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsService) Export(projectId string, googledatastoreadminv1beta1exportentitiesrequest *GoogleDatastoreAdminV1beta1ExportEntitiesRequest) *ProjectsExportCall {
 	c := &ProjectsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -979,7 +981,7 @@ func (c *ProjectsExportCall) Header() http.Header {
 
 func (c *ProjectsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1090,6 +1092,8 @@ type ProjectsImportCall struct {
 // Operation resource that is created. If an ImportEntities operation is
 // cancelled, it is possible that a subset of the data has already been
 // imported to Cloud Datastore.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsService) Import(projectId string, googledatastoreadminv1beta1importentitiesrequest *GoogleDatastoreAdminV1beta1ImportEntitiesRequest) *ProjectsImportCall {
 	c := &ProjectsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1124,7 +1128,7 @@ func (c *ProjectsImportCall) Header() http.Header {
 
 func (c *ProjectsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

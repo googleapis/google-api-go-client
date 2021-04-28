@@ -3018,6 +3018,10 @@ func (s *GoogleCloudChannelV1TransferableOffer) MarshalJSON() ([]byte, error) {
 // information a reseller needs to view existing provisioned services
 // for a customer that they do not own. Read-only.
 type GoogleCloudChannelV1TransferableSku struct {
+	// LegacySku: Optional. The customer to transfer has an entitlement with
+	// the populated legacy SKU.
+	LegacySku *GoogleCloudChannelV1Sku `json:"legacySku,omitempty"`
+
 	// Sku: The SKU pertaining to the provisioning resource as specified in
 	// the Offer.
 	Sku *GoogleCloudChannelV1Sku `json:"sku,omitempty"`
@@ -3025,7 +3029,7 @@ type GoogleCloudChannelV1TransferableSku struct {
 	// TransferEligibility: Describes the transfer eligibility of a SKU.
 	TransferEligibility *GoogleCloudChannelV1TransferEligibility `json:"transferEligibility,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Sku") to
+	// ForceSendFields is a list of field names (e.g. "LegacySku") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3033,8 +3037,8 @@ type GoogleCloudChannelV1TransferableSku struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Sku") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "LegacySku") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -4270,6 +4274,9 @@ type AccountsCheckCloudIdentityAccountsExistCall struct {
 // empty) Note: in the v1alpha1 version of the API, a NOT_FOUND error
 // returns if no CloudIdentityCustomerAccount resources match the
 // domain.
+//
+// - parent: The reseller account's resource name. Parent uses the
+//   format: accounts/{account_id}.
 func (r *AccountsService) CheckCloudIdentityAccountsExist(parent string, googlecloudchannelv1checkcloudidentityaccountsexistrequest *GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest) *AccountsCheckCloudIdentityAccountsExistCall {
 	c := &AccountsCheckCloudIdentityAccountsExistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4304,7 +4311,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) Header() http.Header {
 
 func (c *AccountsCheckCloudIdentityAccountsExistCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4423,6 +4430,8 @@ type AccountsListSubscribersCall struct {
 // UNKNOWN: Any non-user error related to a technical issue in the
 // backend. Contact Cloud Channel support. Return value: A list of
 // service email addresses.
+//
+// - account: Resource name of the account.
 func (r *AccountsService) ListSubscribers(account string) *AccountsListSubscribersCall {
 	c := &AccountsListSubscribersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4485,7 +4494,7 @@ func (c *AccountsListSubscribersCall) Header() http.Header {
 
 func (c *AccountsListSubscribersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4630,6 +4639,8 @@ type AccountsListTransferableOffersCall struct {
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 // Return value: List of TransferableOffer for the given customer and
 // SKU.
+//
+// - parent: The resource name of the reseller's account.
 func (r *AccountsService) ListTransferableOffers(parent string, googlecloudchannelv1listtransferableoffersrequest *GoogleCloudChannelV1ListTransferableOffersRequest) *AccountsListTransferableOffersCall {
 	c := &AccountsListTransferableOffersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4664,7 +4675,7 @@ func (c *AccountsListTransferableOffersCall) Header() http.Header {
 
 func (c *AccountsListTransferableOffersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4802,6 +4813,9 @@ type AccountsListTransferableSkusCall struct {
 // different from the reseller account in the query. * INVALID_ARGUMENT:
 // Required request parameters are missing or invalid. Return value: A
 // list of the customer's TransferableSku.
+//
+// - parent: The reseller account's resource name. Parent uses the
+//   format: accounts/{account_id}.
 func (r *AccountsService) ListTransferableSkus(parent string, googlecloudchannelv1listtransferableskusrequest *GoogleCloudChannelV1ListTransferableSkusRequest) *AccountsListTransferableSkusCall {
 	c := &AccountsListTransferableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4836,7 +4850,7 @@ func (c *AccountsListTransferableSkusCall) Header() http.Header {
 
 func (c *AccountsListTransferableSkusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4975,6 +4989,8 @@ type AccountsRegisterCall struct {
 // Cloud Channel support. * UNKNOWN: Any non-user error related to a
 // technical issue in the backend. Contact Cloud Channel support. Return
 // value: The topic name with the registered service email address.
+//
+// - account: Resource name of the account.
 func (r *AccountsService) Register(account string, googlecloudchannelv1registersubscriberrequest *GoogleCloudChannelV1RegisterSubscriberRequest) *AccountsRegisterCall {
 	c := &AccountsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -5009,7 +5025,7 @@ func (c *AccountsRegisterCall) Header() http.Header {
 
 func (c *AccountsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5131,6 +5147,8 @@ type AccountsUnregisterCall struct {
 // value: The topic name that unregistered the service email address.
 // Returns a success response if the service email address wasn't
 // registered with the topic.
+//
+// - account: Resource name of the account.
 func (r *AccountsService) Unregister(account string, googlecloudchannelv1unregistersubscriberrequest *GoogleCloudChannelV1UnregisterSubscriberRequest) *AccountsUnregisterCall {
 	c := &AccountsUnregisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -5165,7 +5183,7 @@ func (c *AccountsUnregisterCall) Header() http.Header {
 
 func (c *AccountsUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5287,6 +5305,10 @@ type AccountsChannelPartnerLinksCreateCall struct {
 // UNKNOWN: Any non-user error related to a technical issue in the
 // backend. Contact Cloud Channel support. Return value: The new
 // ChannelPartnerLink resource.
+//
+// - parent: Create a channel partner link for the provided reseller
+//   account's resource name. Parent uses the format:
+//   accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) Create(parent string, googlecloudchannelv1channelpartnerlink *GoogleCloudChannelV1ChannelPartnerLink) *AccountsChannelPartnerLinksCreateCall {
 	c := &AccountsChannelPartnerLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5321,7 +5343,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5435,6 +5457,11 @@ type AccountsChannelPartnerLinksGetCall struct {
 // * NOT_FOUND: ChannelPartnerLink resource not found because of an
 // invalid channel partner link name. Return value: The
 // ChannelPartnerLink resource.
+//
+// - name: The resource name of the channel partner link to retrieve.
+//   Name uses the format:
+//   accounts/{account_id}/channelPartnerLinks/{id} where {id} is the
+//   Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Get(name string) *AccountsChannelPartnerLinksGetCall {
 	c := &AccountsChannelPartnerLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5492,7 +5519,7 @@ func (c *AccountsChannelPartnerLinksGetCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5615,6 +5642,10 @@ type AccountsChannelPartnerLinksListCall struct {
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 // Return value: The list of the distributor account's
 // ChannelPartnerLink resources.
+//
+// - parent: The resource name of the reseller account for listing
+//   channel partner links. Parent uses the format:
+//   accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) List(parent string) *AccountsChannelPartnerLinksListCall {
 	c := &AccountsChannelPartnerLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5690,7 +5721,7 @@ func (c *AccountsChannelPartnerLinksListCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5853,6 +5884,10 @@ type AccountsChannelPartnerLinksPatchCall struct {
 // error related to a technical issue in the backend. Contact Cloud
 // Channel support. Return value: The updated ChannelPartnerLink
 // resource.
+//
+// - name: The resource name of the channel partner link to cancel. Name
+//   uses the format: accounts/{account_id}/channelPartnerLinks/{id}
+//   where {id} is the Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Patch(name string, googlecloudchannelv1updatechannelpartnerlinkrequest *GoogleCloudChannelV1UpdateChannelPartnerLinkRequest) *AccountsChannelPartnerLinksPatchCall {
 	c := &AccountsChannelPartnerLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5887,7 +5922,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6000,6 +6035,9 @@ type AccountsChannelPartnerLinksCustomersCreateCall struct {
 // parameters are missing or invalid. * Domain field value doesn't match
 // the primary email domain. Return value: The newly created Customer
 // resource.
+//
+// - parent: The resource name of reseller account in which to create
+//   the customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersCreateCall {
 	c := &AccountsChannelPartnerLinksCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6034,7 +6072,7 @@ func (c *AccountsChannelPartnerLinksCustomersCreateCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6144,6 +6182,8 @@ type AccountsChannelPartnerLinksCustomersDeleteCall struct {
 // request parameters are missing or invalid. * FAILED_PRECONDITION: The
 // customer has existing entitlements. * NOT_FOUND: No Customer resource
 // found for the name in the request.
+//
+// - name: The resource name of the customer to delete.
 func (r *AccountsChannelPartnerLinksCustomersService) Delete(name string) *AccountsChannelPartnerLinksCustomersDeleteCall {
 	c := &AccountsChannelPartnerLinksCustomersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6177,7 +6217,7 @@ func (c *AccountsChannelPartnerLinksCustomersDeleteCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6280,6 +6320,9 @@ type AccountsChannelPartnerLinksCustomersGetCall struct {
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 // * NOT_FOUND: The customer resource doesn't exist. Usually the result
 // of an invalid name parameter. Return value: The Customer resource.
+//
+// - name: The resource name of the customer to retrieve. Name uses the
+//   format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Get(name string) *AccountsChannelPartnerLinksCustomersGetCall {
 	c := &AccountsChannelPartnerLinksCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6323,7 +6366,7 @@ func (c *AccountsChannelPartnerLinksCustomersGetCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6428,6 +6471,9 @@ type AccountsChannelPartnerLinksCustomersListCall struct {
 // account in the API request. * INVALID_ARGUMENT: Required request
 // parameters are missing or invalid. Return value: List of Customers,
 // or an empty list if there are no customers.
+//
+// - parent: The resource name of the reseller account to list customers
+//   from. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *AccountsChannelPartnerLinksCustomersListCall {
 	c := &AccountsChannelPartnerLinksCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6489,7 +6535,7 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6629,6 +6675,9 @@ type AccountsChannelPartnerLinksCustomersPatchCall struct {
 // the API request. * INVALID_ARGUMENT: Required request parameters are
 // missing or invalid. * NOT_FOUND: No Customer resource found for the
 // name in the request. Return value: The updated Customer resource.
+//
+// - name: Output only. Resource name of the customer. Format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Patch(name string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersPatchCall {
 	c := &AccountsChannelPartnerLinksCustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6670,7 +6719,7 @@ func (c *AccountsChannelPartnerLinksCustomersPatchCall) Header() http.Header {
 
 func (c *AccountsChannelPartnerLinksCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6788,6 +6837,9 @@ type AccountsCustomersCreateCall struct {
 // parameters are missing or invalid. * Domain field value doesn't match
 // the primary email domain. Return value: The newly created Customer
 // resource.
+//
+// - parent: The resource name of reseller account in which to create
+//   the customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersCreateCall {
 	c := &AccountsCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6822,7 +6874,7 @@ func (c *AccountsCustomersCreateCall) Header() http.Header {
 
 func (c *AccountsCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6932,6 +6984,8 @@ type AccountsCustomersDeleteCall struct {
 // request parameters are missing or invalid. * FAILED_PRECONDITION: The
 // customer has existing entitlements. * NOT_FOUND: No Customer resource
 // found for the name in the request.
+//
+// - name: The resource name of the customer to delete.
 func (r *AccountsCustomersService) Delete(name string) *AccountsCustomersDeleteCall {
 	c := &AccountsCustomersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6965,7 +7019,7 @@ func (c *AccountsCustomersDeleteCall) Header() http.Header {
 
 func (c *AccountsCustomersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7068,6 +7122,9 @@ type AccountsCustomersGetCall struct {
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 // * NOT_FOUND: The customer resource doesn't exist. Usually the result
 // of an invalid name parameter. Return value: The Customer resource.
+//
+// - name: The resource name of the customer to retrieve. Name uses the
+//   format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Get(name string) *AccountsCustomersGetCall {
 	c := &AccountsCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7111,7 +7168,7 @@ func (c *AccountsCustomersGetCall) Header() http.Header {
 
 func (c *AccountsCustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7216,6 +7273,9 @@ type AccountsCustomersListCall struct {
 // account in the API request. * INVALID_ARGUMENT: Required request
 // parameters are missing or invalid. Return value: List of Customers,
 // or an empty list if there are no customers.
+//
+// - parent: The resource name of the reseller account to list customers
+//   from. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCall {
 	c := &AccountsCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7277,7 +7337,7 @@ func (c *AccountsCustomersListCall) Header() http.Header {
 
 func (c *AccountsCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7416,6 +7476,9 @@ type AccountsCustomersListPurchasableOffersCall struct {
 // entitlement. Possible error codes: * PERMISSION_DENIED: The customer
 // doesn't belong to the reseller * INVALID_ARGUMENT: Required request
 // parameters are missing or invalid.
+//
+// - customer: The resource name of the customer to list Offers for.
+//   Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *AccountsCustomersListPurchasableOffersCall {
 	c := &AccountsCustomersListPurchasableOffersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7511,7 +7574,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) Header() http.Header {
 
 func (c *AccountsCustomersListPurchasableOffersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7670,6 +7733,9 @@ type AccountsCustomersListPurchasableSkusCall struct {
 // an entitlement. Possible error codes: * PERMISSION_DENIED: The
 // customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
 // request parameters are missing or invalid.
+//
+// - customer: The resource name of the customer to list SKUs for.
+//   Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableSkus(customer string) *AccountsCustomersListPurchasableSkusCall {
 	c := &AccountsCustomersListPurchasableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -7770,7 +7836,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) Header() http.Header {
 
 func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7940,6 +8006,9 @@ type AccountsCustomersPatchCall struct {
 // the API request. * INVALID_ARGUMENT: Required request parameters are
 // missing or invalid. * NOT_FOUND: No Customer resource found for the
 // name in the request. Return value: The updated Customer resource.
+//
+// - name: Output only. Resource name of the customer. Format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Patch(name string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersPatchCall {
 	c := &AccountsCustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7981,7 +8050,7 @@ func (c *AccountsCustomersPatchCall) Header() http.Header {
 
 func (c *AccountsCustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8106,6 +8175,9 @@ type AccountsCustomersProvisionCloudIdentityCall struct {
 // results of the operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata contains an
 // instance of OperationMetadata.
+//
+// - customer: Resource name of the customer. Format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ProvisionCloudIdentity(customer string, googlecloudchannelv1provisioncloudidentityrequest *GoogleCloudChannelV1ProvisionCloudIdentityRequest) *AccountsCustomersProvisionCloudIdentityCall {
 	c := &AccountsCustomersProvisionCloudIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -8140,7 +8212,7 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) Header() http.Header {
 
 func (c *AccountsCustomersProvisionCloudIdentityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8264,6 +8336,10 @@ type AccountsCustomersTransferEntitlementsCall struct {
 // of a long-running operation. To get the results of the operation,
 // call the GetOperation method of CloudChannelOperationsService. The
 // Operation metadata will contain an instance of OperationMetadata.
+//
+// - parent: The resource name of the reseller's customer account that
+//   will receive transferred entitlements. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlements(parent string, googlecloudchannelv1transferentitlementsrequest *GoogleCloudChannelV1TransferEntitlementsRequest) *AccountsCustomersTransferEntitlementsCall {
 	c := &AccountsCustomersTransferEntitlementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8298,7 +8374,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) Header() http.Header {
 
 func (c *AccountsCustomersTransferEntitlementsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8423,6 +8499,10 @@ type AccountsCustomersTransferEntitlementsToGoogleCall struct {
 // GetOperation method of CloudChannelOperationsService. The response
 // will contain google.protobuf.Empty on success. The Operation metadata
 // will contain an instance of OperationMetadata.
+//
+// - parent: The resource name of the reseller's customer account where
+//   the entitlements transfer from. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlementsToGoogle(parent string, googlecloudchannelv1transferentitlementstogooglerequest *GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) *AccountsCustomersTransferEntitlementsToGoogleCall {
 	c := &AccountsCustomersTransferEntitlementsToGoogleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8457,7 +8537,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) Header() http.Header
 
 func (c *AccountsCustomersTransferEntitlementsToGoogleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8580,6 +8660,11 @@ type AccountsCustomersEntitlementsActivateCall struct {
 // long-running operation. To get the results of the operation, call the
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to activate. Name uses
+//   the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Activate(name string, googlecloudchannelv1activateentitlementrequest *GoogleCloudChannelV1ActivateEntitlementRequest) *AccountsCustomersEntitlementsActivateCall {
 	c := &AccountsCustomersEntitlementsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8614,7 +8699,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8737,6 +8822,11 @@ type AccountsCustomersEntitlementsCancelCall struct {
 // method of CloudChannelOperationsService. The response will contain
 // google.protobuf.Empty on success. The Operation metadata will contain
 // an instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to cancel. Name uses the
+//   format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Cancel(name string, googlecloudchannelv1cancelentitlementrequest *GoogleCloudChannelV1CancelEntitlementRequest) *AccountsCustomersEntitlementsCancelCall {
 	c := &AccountsCustomersEntitlementsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8771,7 +8861,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8889,6 +8979,11 @@ type AccountsCustomersEntitlementsChangeOfferCall struct {
 // operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to update. Name uses the
+//   format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeOffer(name string, googlecloudchannelv1changeofferrequest *GoogleCloudChannelV1ChangeOfferRequest) *AccountsCustomersEntitlementsChangeOfferCall {
 	c := &AccountsCustomersEntitlementsChangeOfferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8923,7 +9018,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsChangeOfferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9043,6 +9138,10 @@ type AccountsCustomersEntitlementsChangeParametersCall struct {
 // of the operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - name: The name of the entitlement to update. Name uses the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeParameters(name string, googlecloudchannelv1changeparametersrequest *GoogleCloudChannelV1ChangeParametersRequest) *AccountsCustomersEntitlementsChangeParametersCall {
 	c := &AccountsCustomersEntitlementsChangeParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9077,7 +9176,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) Header() http.Header
 
 func (c *AccountsCustomersEntitlementsChangeParametersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9197,6 +9296,10 @@ type AccountsCustomersEntitlementsChangeRenewalSettingsCall struct {
 // long-running operation. To get the results of the operation, call the
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
+//
+// - name: The name of the entitlement to update. Name uses the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeRenewalSettings(name string, googlecloudchannelv1changerenewalsettingsrequest *GoogleCloudChannelV1ChangeRenewalSettingsRequest) *AccountsCustomersEntitlementsChangeRenewalSettingsCall {
 	c := &AccountsCustomersEntitlementsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9231,7 +9334,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) Header() http.H
 
 func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9360,6 +9463,10 @@ type AccountsCustomersEntitlementsCreateCall struct {
 // operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - parent: The resource name of the reseller's customer account in
+//   which to create the entitlement. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) Create(parent string, googlecloudchannelv1createentitlementrequest *GoogleCloudChannelV1CreateEntitlementRequest) *AccountsCustomersEntitlementsCreateCall {
 	c := &AccountsCustomersEntitlementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9394,7 +9501,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9504,6 +9611,11 @@ type AccountsCustomersEntitlementsGetCall struct {
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 // * NOT_FOUND: The customer entitlement was not found. Return value:
 // The requested Entitlement resource.
+//
+// - name: The resource name of the entitlement to retrieve. Name uses
+//   the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Get(name string) *AccountsCustomersEntitlementsGetCall {
 	c := &AccountsCustomersEntitlementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9547,7 +9659,7 @@ func (c *AccountsCustomersEntitlementsGetCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9651,6 +9763,10 @@ type AccountsCustomersEntitlementsListCall struct {
 // codes: * PERMISSION_DENIED: The customer doesn't belong to the
 // reseller. * INVALID_ARGUMENT: Required request parameters are missing
 // or invalid. Return value: A list of the customer's Entitlements.
+//
+// - parent: The resource name of the reseller's customer account to
+//   list entitlements for. Parent uses the format:
+//   accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) List(parent string) *AccountsCustomersEntitlementsListCall {
 	c := &AccountsCustomersEntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9712,7 +9828,7 @@ func (c *AccountsCustomersEntitlementsListCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9861,6 +9977,11 @@ type AccountsCustomersEntitlementsStartPaidServiceCall struct {
 // operation, call the GetOperation method of
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
+//
+// - name: The name of the entitlement to start a paid service for. Name
+//   uses the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) StartPaidService(name string, googlecloudchannelv1startpaidservicerequest *GoogleCloudChannelV1StartPaidServiceRequest) *AccountsCustomersEntitlementsStartPaidServiceCall {
 	c := &AccountsCustomersEntitlementsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9895,7 +10016,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) Header() http.Header
 
 func (c *AccountsCustomersEntitlementsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10012,6 +10133,11 @@ type AccountsCustomersEntitlementsSuspendCall struct {
 // long-running operation. To get the results of the operation, call the
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
+//
+// - name: The resource name of the entitlement to suspend. Name uses
+//   the format:
+//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//   ent_id}.
 func (r *AccountsCustomersEntitlementsService) Suspend(name string, googlecloudchannelv1suspendentitlementrequest *GoogleCloudChannelV1SuspendEntitlementRequest) *AccountsCustomersEntitlementsSuspendCall {
 	c := &AccountsCustomersEntitlementsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10046,7 +10172,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) Header() http.Header {
 
 func (c *AccountsCustomersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10153,6 +10279,9 @@ type AccountsOffersListCall struct {
 
 // List: Lists the Offers the reseller can sell. Possible error codes: *
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
+//
+// - parent: The resource name of the reseller account from which to
+//   list Offers. Parent uses the format: accounts/{account_id}.
 func (r *AccountsOffersService) List(parent string) *AccountsOffersListCall {
 	c := &AccountsOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10231,7 +10360,7 @@ func (c *AccountsOffersListCall) Header() http.Header {
 
 func (c *AccountsOffersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10384,6 +10513,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10418,7 +10549,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10526,6 +10657,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10559,7 +10692,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10659,6 +10792,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10702,7 +10837,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10812,6 +10947,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10876,7 +11013,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11090,7 +11227,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11225,6 +11362,10 @@ type ProductsSkusListCall struct {
 // List: Lists the SKUs for a product the reseller is authorized to
 // sell. Possible error codes: * INVALID_ARGUMENT: Required request
 // parameters are missing or invalid.
+//
+// - parent: The resource name of the Product to list SKUs for. Parent
+//   uses the format: products/{product_id}. Supports products/- to
+//   retrieve SKUs for all products.
 func (r *ProductsSkusService) List(parent string) *ProductsSkusListCall {
 	c := &ProductsSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11300,7 +11441,7 @@ func (c *ProductsSkusListCall) Header() http.Header {
 
 func (c *ProductsSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

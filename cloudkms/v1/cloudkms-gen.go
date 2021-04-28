@@ -85,7 +85,7 @@ const mtlsBasePath = "https://cloudkms.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your keys and secrets stored in Cloud Key Management
@@ -864,7 +864,7 @@ type CryptoKeyVersion struct {
 	// still available, and the version can be placed back into the ENABLED
 	// state.
 	//   "DESTROYED" - This version is destroyed, and the key material is no
-	// longer stored. A version may not leave this state once entered.
+	// longer stored.
 	//   "DESTROY_SCHEDULED" - This version is scheduled for destruction,
 	// and will be destroyed soon. Call RestoreCryptoKeyVersion to put it
 	// back into the DISABLED state.
@@ -2384,6 +2384,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2427,7 +2429,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2530,6 +2532,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2546,7 +2551,7 @@ func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsList
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2597,7 +2602,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2680,7 +2685,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2736,6 +2741,9 @@ type ProjectsLocationsKeyRingsCreateCall struct {
 }
 
 // Create: Create a new KeyRing in a given Project and Location.
+//
+// - parent: The resource name of the location associated with the
+//   KeyRings, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsKeyRingsService) Create(parent string, keyring *KeyRing) *ProjectsLocationsKeyRingsCreateCall {
 	c := &ProjectsLocationsKeyRingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2778,7 +2786,7 @@ func (c *ProjectsLocationsKeyRingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2890,6 +2898,8 @@ type ProjectsLocationsKeyRingsGetCall struct {
 }
 
 // Get: Returns metadata for a given KeyRing.
+//
+// - name: The name of the KeyRing to get.
 func (r *ProjectsLocationsKeyRingsService) Get(name string) *ProjectsLocationsKeyRingsGetCall {
 	c := &ProjectsLocationsKeyRingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2933,7 +2943,7 @@ func (c *ProjectsLocationsKeyRingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3037,6 +3047,10 @@ type ProjectsLocationsKeyRingsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsKeyRingsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3094,7 +3108,7 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3202,6 +3216,9 @@ type ProjectsLocationsKeyRingsListCall struct {
 }
 
 // List: Lists KeyRings.
+//
+// - parent: The resource name of the location associated with the
+//   KeyRings, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsKeyRingsService) List(parent string) *ProjectsLocationsKeyRingsListCall {
 	c := &ProjectsLocationsKeyRingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3282,7 +3299,7 @@ func (c *ProjectsLocationsKeyRingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3428,6 +3445,10 @@ type ProjectsLocationsKeyRingsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsKeyRingsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3462,7 +3483,7 @@ func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3574,6 +3595,10 @@ type ProjectsLocationsKeyRingsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3608,7 +3633,7 @@ func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3716,6 +3741,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCreateCall struct {
 
 // Create: Create a new CryptoKey within a KeyRing. CryptoKey.purpose
 // and CryptoKey.version_template.algorithm are required.
+//
+// - parent: The name of the KeyRing associated with the CryptoKeys.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Create(parent string, cryptokey *CryptoKey) *ProjectsLocationsKeyRingsCryptoKeysCreateCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3768,7 +3795,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3886,6 +3913,9 @@ type ProjectsLocationsKeyRingsCryptoKeysDecryptCall struct {
 
 // Decrypt: Decrypts data that was protected by Encrypt. The
 // CryptoKey.purpose must be ENCRYPT_DECRYPT.
+//
+// - name: The resource name of the CryptoKey to use for decryption. The
+//   server will choose the appropriate version.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Decrypt(name string, decryptrequest *DecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysDecryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3920,7 +3950,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4028,6 +4058,10 @@ type ProjectsLocationsKeyRingsCryptoKeysEncryptCall struct {
 
 // Encrypt: Encrypts data, so that it can only be recovered by a call to
 // Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.
+//
+// - name: The resource name of the CryptoKey or CryptoKeyVersion to use
+//   for encryption. If a CryptoKey is specified, the server will use
+//   its primary version.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Encrypt(name string, encryptrequest *EncryptRequest) *ProjectsLocationsKeyRingsCryptoKeysEncryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysEncryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4062,7 +4096,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4170,6 +4204,8 @@ type ProjectsLocationsKeyRingsCryptoKeysGetCall struct {
 
 // Get: Returns metadata for a given CryptoKey, as well as its primary
 // CryptoKeyVersion.
+//
+// - name: The name of the CryptoKey to get.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Get(name string) *ProjectsLocationsKeyRingsCryptoKeysGetCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4213,7 +4249,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4317,6 +4353,10 @@ type ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4374,7 +4414,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4482,6 +4522,9 @@ type ProjectsLocationsKeyRingsCryptoKeysListCall struct {
 }
 
 // List: Lists CryptoKeys.
+//
+// - parent: The resource name of the KeyRing to list, in the format
+//   `projects/*/locations/*/keyRings/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) List(parent string) *ProjectsLocationsKeyRingsCryptoKeysListCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4575,7 +4618,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4732,6 +4775,9 @@ type ProjectsLocationsKeyRingsCryptoKeysPatchCall struct {
 }
 
 // Patch: Update a CryptoKey.
+//
+// - name: Output only. The resource name for this CryptoKey in the
+//   format `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Patch(name string, cryptokey *CryptoKey) *ProjectsLocationsKeyRingsCryptoKeysPatchCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4773,7 +4819,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4888,6 +4934,10 @@ type ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4922,7 +4972,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5034,6 +5084,10 @@ type ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5068,7 +5122,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5176,6 +5230,8 @@ type ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall struct {
 
 // UpdatePrimaryVersion: Update the version of a CryptoKey that will be
 // used in Encrypt. Returns an error if called on an asymmetric key.
+//
+// - name: The resource name of the CryptoKey to update.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) UpdatePrimaryVersion(name string, updatecryptokeyprimaryversionrequest *UpdateCryptoKeyPrimaryVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5210,7 +5266,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) Header() h
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5319,6 +5375,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall s
 // AsymmetricDecrypt: Decrypts data that was encrypted with a public key
 // retrieved from GetPublicKey corresponding to a CryptoKeyVersion with
 // CryptoKey.purpose ASYMMETRIC_DECRYPT.
+//
+// - name: The resource name of the CryptoKeyVersion to use for
+//   decryption.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) AsymmetricDecrypt(name string, asymmetricdecryptrequest *AsymmetricDecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5353,7 +5412,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCa
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5462,6 +5521,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall stru
 // AsymmetricSign: Signs data using a CryptoKeyVersion with
 // CryptoKey.purpose ASYMMETRIC_SIGN, producing a signature that can be
 // verified with the public key retrieved from GetPublicKey.
+//
+// - name: The resource name of the CryptoKeyVersion to use for signing.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) AsymmetricSign(name string, asymmetricsignrequest *AsymmetricSignRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5496,7 +5557,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall)
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5605,6 +5666,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall struct {
 // Create: Create a new CryptoKeyVersion in a CryptoKey. The server will
 // assign the next sequential id. If unset, state will be set to
 // ENABLED.
+//
+// - parent: The name of the CryptoKey associated with the
+//   CryptoKeyVersions.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Create(parent string, cryptokeyversion *CryptoKeyVersion) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5639,7 +5703,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) Header(
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5752,6 +5816,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall struct {
 // material will be irrevocably destroyed. Before the destroy_time is
 // reached, RestoreCryptoKeyVersion may be called to reverse the
 // process.
+//
+// - name: The resource name of the CryptoKeyVersion to destroy.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Destroy(name string, destroycryptokeyversionrequest *DestroyCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5786,7 +5852,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5893,6 +5959,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall struct {
 }
 
 // Get: Returns metadata for a given CryptoKeyVersion.
+//
+// - name: The name of the CryptoKeyVersion to get.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Get(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5936,7 +6004,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) Header() h
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6039,6 +6107,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall struct
 
 // GetPublicKey: Returns the public key for the given CryptoKeyVersion.
 // The CryptoKey.purpose must be ASYMMETRIC_SIGN or ASYMMETRIC_DECRYPT.
+//
+// - name: The name of the CryptoKeyVersion public key to get.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) GetPublicKey(name string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6082,7 +6152,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) H
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6186,6 +6256,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall struct {
 // Import: Imports a new CryptoKeyVersion into an existing CryptoKey
 // using the wrapped key material provided in the request. The version
 // ID will be assigned the next sequential id within the CryptoKey.
+//
+// - parent: The name of the CryptoKey to be imported into.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Import(parent string, importcryptokeyversionrequest *ImportCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6220,7 +6292,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) Header(
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6327,6 +6399,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall struct {
 }
 
 // List: Lists CryptoKeyVersions.
+//
+// - parent: The resource name of the CryptoKey to list, in the format
+//   `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) List(parent string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6420,7 +6495,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Header() 
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6580,6 +6655,11 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall struct {
 // between ENABLED and DISABLED using this method. See
 // DestroyCryptoKeyVersion and RestoreCryptoKeyVersion to move between
 // other states.
+//
+// - name: Output only. The resource name for this CryptoKeyVersion in
+//   the format
+//   `projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*`
+//   .
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Patch(name string, cryptokeyversion *CryptoKeyVersion) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6621,7 +6701,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) Header()
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6736,6 +6816,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall struct {
 // Restore: Restore a CryptoKeyVersion in the DESTROY_SCHEDULED state.
 // Upon restoration of the CryptoKeyVersion, state will be set to
 // DISABLED, and destroy_time will be cleared.
+//
+// - name: The resource name of the CryptoKeyVersion to restore.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Restore(name string, restorecryptokeyversionrequest *RestoreCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6770,7 +6852,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6878,6 +6960,8 @@ type ProjectsLocationsKeyRingsImportJobsCreateCall struct {
 
 // Create: Create a new ImportJob within a KeyRing.
 // ImportJob.import_method is required.
+//
+// - parent: The name of the KeyRing associated with the ImportJobs.
 func (r *ProjectsLocationsKeyRingsImportJobsService) Create(parent string, importjob *ImportJob) *ProjectsLocationsKeyRingsImportJobsCreateCall {
 	c := &ProjectsLocationsKeyRingsImportJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6920,7 +7004,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7032,6 +7116,8 @@ type ProjectsLocationsKeyRingsImportJobsGetCall struct {
 }
 
 // Get: Returns metadata for a given ImportJob.
+//
+// - name: The name of the ImportJob to get.
 func (r *ProjectsLocationsKeyRingsImportJobsService) Get(name string) *ProjectsLocationsKeyRingsImportJobsGetCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7075,7 +7161,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7179,6 +7265,10 @@ type ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7236,7 +7326,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7344,6 +7434,9 @@ type ProjectsLocationsKeyRingsImportJobsListCall struct {
 }
 
 // List: Lists ImportJobs.
+//
+// - parent: The resource name of the KeyRing to list, in the format
+//   `projects/*/locations/*/keyRings/*`.
 func (r *ProjectsLocationsKeyRingsImportJobsService) List(parent string) *ProjectsLocationsKeyRingsImportJobsListCall {
 	c := &ProjectsLocationsKeyRingsImportJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7424,7 +7517,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7570,6 +7663,10 @@ type ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7604,7 +7701,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7716,6 +7813,10 @@ type ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7750,7 +7851,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

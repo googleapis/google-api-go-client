@@ -1,5 +1,25 @@
 # Changes
 
+## [0.45.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.44.0...v0.45.0) (2021-04-20)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#979](https://www.github.com/googleapis/google-api-go-client/issues/979) [#977](https://www.github.com/googleapis/google-api-go-client/issues/977) [#976](https://www.github.com/googleapis/google-api-go-client/issues/976) [#974](https://www.github.com/googleapis/google-api-go-client/issues/974)
+* **transport:** configure HTTP/2 ReadIdleTimeout ([#882](https://www.github.com/googleapis/google-api-go-client/issues/882)) ([c2ff762](https://www.github.com/googleapis/google-api-go-client/commit/c2ff762ec2c036284f19bba2b67b66d49c63a663))
+
+## [0.44.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.43.0...v0.44.0) (2021-04-07)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#972](https://www.github.com/googleapis/google-api-go-client/issues/972) [#971](https://www.github.com/googleapis/google-api-go-client/issues/971) [#969](https://www.github.com/googleapis/google-api-go-client/issues/969) [#970](https://www.github.com/googleapis/google-api-go-client/issues/970) [#968](https://www.github.com/googleapis/google-api-go-client/issues/968) [#967](https://www.github.com/googleapis/google-api-go-client/issues/967) [#966](https://www.github.com/googleapis/google-api-go-client/issues/966) [#965](https://www.github.com/googleapis/google-api-go-client/issues/965) [#963](https://www.github.com/googleapis/google-api-go-client/issues/963) [#959](https://www.github.com/googleapis/google-api-go-client/issues/959) [#956](https://www.github.com/googleapis/google-api-go-client/issues/956) [#955](https://www.github.com/googleapis/google-api-go-client/issues/955) [#954](https://www.github.com/googleapis/google-api-go-client/issues/954) [#953](https://www.github.com/googleapis/google-api-go-client/issues/953) [#951](https://www.github.com/googleapis/google-api-go-client/issues/951)
+
+
+### Bug Fixes
+
+* **compute:** make MetadataItems.Value a pointer ([#973](https://www.github.com/googleapis/google-api-go-client/issues/973)) ([d8cce34](https://www.github.com/googleapis/google-api-go-client/commit/d8cce341d63f52436ae62707841cb359cecb340a))
+
 ## [0.43.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.42.0...v0.43.0) (2021-03-24)
 
 

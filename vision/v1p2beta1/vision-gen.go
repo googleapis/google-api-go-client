@@ -85,7 +85,7 @@ const mtlsBasePath = "https://vision.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Apply machine learning models to understand and label images
@@ -13392,7 +13392,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13526,7 +13526,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13652,7 +13652,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13786,7 +13786,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13885,6 +13885,13 @@ type ProjectsFilesAnnotateCall struct {
 // (customers can specify which 5 in AnnotateFileRequest.pages) frames
 // (gif) or pages (pdf or tiff) from each file provided and perform
 // detection and annotation for each image extracted.
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) Annotate(parent string, googlecloudvisionv1p2beta1batchannotatefilesrequest *GoogleCloudVisionV1p2beta1BatchAnnotateFilesRequest) *ProjectsFilesAnnotateCall {
 	c := &ProjectsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13919,7 +13926,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14034,6 +14041,13 @@ type ProjectsFilesAsyncBatchAnnotateCall struct {
 // `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest) *ProjectsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14068,7 +14082,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14175,6 +14189,13 @@ type ProjectsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) Annotate(parent string, googlecloudvisionv1p2beta1batchannotateimagesrequest *GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest) *ProjectsImagesAnnotateCall {
 	c := &ProjectsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14209,7 +14230,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14324,6 +14345,13 @@ type ProjectsImagesAsyncBatchAnnotateCall struct {
 // contains `AsyncBatchAnnotateImagesResponse` (results). This service
 // will write image annotation outputs to json files in customer GCS
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p2beta1asyncbatchannotateimagesrequest *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateImagesRequest) *ProjectsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14358,7 +14386,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14470,6 +14498,13 @@ type ProjectsLocationsFilesAnnotateCall struct {
 // (customers can specify which 5 in AnnotateFileRequest.pages) frames
 // (gif) or pages (pdf or tiff) from each file provided and perform
 // detection and annotation for each image extracted.
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) Annotate(parent string, googlecloudvisionv1p2beta1batchannotatefilesrequest *GoogleCloudVisionV1p2beta1BatchAnnotateFilesRequest) *ProjectsLocationsFilesAnnotateCall {
 	c := &ProjectsLocationsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14504,7 +14539,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14619,6 +14654,13 @@ type ProjectsLocationsFilesAsyncBatchAnnotateCall struct {
 // `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14653,7 +14695,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14760,6 +14802,13 @@ type ProjectsLocationsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) Annotate(parent string, googlecloudvisionv1p2beta1batchannotateimagesrequest *GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest) *ProjectsLocationsImagesAnnotateCall {
 	c := &ProjectsLocationsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14794,7 +14843,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14909,6 +14958,13 @@ type ProjectsLocationsImagesAsyncBatchAnnotateCall struct {
 // contains `AsyncBatchAnnotateImagesResponse` (results). This service
 // will write image annotation outputs to json files in customer GCS
 // bucket, each json file containing BatchAnnotateImagesResponse proto.
+//
+// - parent: Optional. Target project and location to make a call.
+//   Format: `projects/{project-id}/locations/{location-id}`. If no
+//   parent is specified, a region will be chosen automatically.
+//   Supported location-ids: `us`: USA country only, `asia`: East asia
+//   areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//   `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) AsyncBatchAnnotate(parent string, googlecloudvisionv1p2beta1asyncbatchannotateimagesrequest *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateImagesRequest) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14943,7 +14999,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

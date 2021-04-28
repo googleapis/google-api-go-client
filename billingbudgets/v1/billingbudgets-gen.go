@@ -175,7 +175,9 @@ type GoogleCloudBillingBudgetsV1Budget struct {
 	Amount *GoogleCloudBillingBudgetsV1BudgetAmount `json:"amount,omitempty"`
 
 	// BudgetFilter: Optional. Filters that define which resources are used
-	// to compute the actual spend against the budget.
+	// to compute the actual spend against the budget amount, such as
+	// projects, services, and the budget's time period, as well as other
+	// filters.
 	BudgetFilter *GoogleCloudBillingBudgetsV1Filter `json:"budgetFilter,omitempty"`
 
 	// DisplayName: User data for display name in UI. The name must be less
@@ -232,8 +234,9 @@ func (s *GoogleCloudBillingBudgetsV1Budget) MarshalJSON() ([]byte, error) {
 // usage period.
 type GoogleCloudBillingBudgetsV1BudgetAmount struct {
 	// LastPeriodAmount: Use the last period's actual spend as the budget
-	// for the present period. Cannot be set in combination with
-	// Filter.custom_period.
+	// for the present period. LastPeriodAmount can only be set when the
+	// budget's time period is a Filter.calendar_period. It cannot be set in
+	// combination with Filter.custom_period.
 	LastPeriodAmount *GoogleCloudBillingBudgetsV1LastPeriodAmount `json:"lastPeriodAmount,omitempty"`
 
 	// SpecifiedAmount: A specified amount to use as the budget.
@@ -305,11 +308,11 @@ func (s *GoogleCloudBillingBudgetsV1CustomPeriod) MarshalJSON() ([]byte, error) 
 // the scope of the cost to calculate.
 type GoogleCloudBillingBudgetsV1Filter struct {
 	// CalendarPeriod: Optional. Specifies to track usage for recurring
-	// calendar period. E.g. Assume that CalendarPeriod.QUARTER is set. The
-	// budget will track usage from April 1 to June 30, when current
-	// calendar month is April, May, June. After that, it will track usage
-	// from July 1 to September 30 when current calendar month is July,
-	// August, September, and so on.
+	// calendar period. For example, assume that CalendarPeriod.QUARTER is
+	// set. The budget will track usage from April 1 to June 30, when the
+	// current calendar month is April, May, June. After that, it will track
+	// usage from July 1 to September 30 when the current calendar month is
+	// July, August, September, so on.
 	//
 	// Possible values:
 	//   "CALENDAR_PERIOD_UNSPECIFIED"
@@ -323,10 +326,10 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	// CreditTypes: Optional. If Filter.credit_types_treatment is
 	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be
 	// subtracted from gross cost to determine the spend for threshold
-	// calculations. If Filter.credit_types_treatment is **not**
-	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See a list of
-	// acceptable credit type values
+	// calculations. See a list of acceptable credit type values
 	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#credits-type).
+	// If Filter.credit_types_treatment is **not**
+	// INCLUDE_SPECIFIED_CREDITS, this field must be empty.
 	CreditTypes []string `json:"creditTypes,omitempty"`
 
 	// CreditTypesTreatment: Optional. If not set, default behavior is
@@ -338,13 +341,16 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	// gross cost to determine the spend for threshold calculations.
 	//   "EXCLUDE_ALL_CREDITS" - All types of credit are added to the net
 	// cost to determine the spend for threshold calculations.
-	//   "INCLUDE_SPECIFIED_CREDITS" - Credit types specified in the
-	// credit_types field are subtracted from the gross cost to determine
-	// the spend for threshold calculations.
+	//   "INCLUDE_SPECIFIED_CREDITS" - [Credit
+	// types](https://cloud.google.com/billing/docs/how-to/export-data-bigque
+	// ry-tables#credits-type) specified in the credit_types field are
+	// subtracted from the gross cost to determine the spend for threshold
+	// calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 
 	// CustomPeriod: Optional. Specifies to track usage from any start date
-	// (required) to any end date (optional).
+	// (required) to any end date (optional). This time period is static, it
+	// does not recur.
 	CustomPeriod *GoogleCloudBillingBudgetsV1CustomPeriod `json:"customPeriod,omitempty"`
 
 	// Labels: Optional. A single label and value pair specifying that usage
@@ -404,10 +410,12 @@ func (s *GoogleCloudBillingBudgetsV1Filter) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudBillingBudgetsV1LastPeriodAmount: Describes a budget
-// amount targeted to last period's spend. At this time, the amount is
-// automatically 100% of last period's spend; that is, there are no
-// other options yet. Future configuration will be described here (for
-// example, configuring a percentage of last period's spend).
+// amount targeted to the last Filter.calendar_period spend. At this
+// time, the amount is automatically 100% of the last calendar period's
+// spend; that is, there are no other options yet. Future configuration
+// options will be described here (for example, configuring a percentage
+// of last period's spend). LastPeriodAmount cannot be set for a budget
+// configured with a Filter.custom_period.
 type GoogleCloudBillingBudgetsV1LastPeriodAmount struct {
 }
 
@@ -532,8 +540,9 @@ type GoogleCloudBillingBudgetsV1ThresholdRule struct {
 	//   "CURRENT_SPEND" - Use current spend as the basis for comparison
 	// against the threshold.
 	//   "FORECASTED_SPEND" - Use forecasted spend for the period as the
-	// basis for comparison against the threshold. Cannot be set in
-	// combination with Filter.custom_period.
+	// basis for comparison against the threshold. FORECASTED_SPEND can only
+	// be set when the budget's time period is a Filter.calendar_period. It
+	// cannot be set in combination with Filter.custom_period.
 	SpendBasis string `json:"spendBasis,omitempty"`
 
 	// ThresholdPercent: Required. Send an alert when this threshold is
@@ -691,6 +700,9 @@ type BillingAccountsBudgetsCreateCall struct {
 // Create: Creates a new budget. See Quotas and limits
 // (https://cloud.google.com/billing/quotas) for more information on the
 // limits of the number of budgets you can create.
+//
+// - parent: The name of the billing account to create the budget in.
+//   Values are of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) Create(parent string, googlecloudbillingbudgetsv1budget *GoogleCloudBillingBudgetsV1Budget) *BillingAccountsBudgetsCreateCall {
 	c := &BillingAccountsBudgetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -725,7 +737,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -832,6 +844,9 @@ type BillingAccountsBudgetsDeleteCall struct {
 }
 
 // Delete: Deletes a budget. Returns successfully if already deleted.
+//
+// - name: Name of the budget to delete. Values are of the form
+//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Delete(name string) *BillingAccountsBudgetsDeleteCall {
 	c := &BillingAccountsBudgetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -865,7 +880,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -967,6 +982,9 @@ type BillingAccountsBudgetsGetCall struct {
 // Google Cloud Console that aren't available on this API. When reading
 // from the API, you will not see these fields in the return value,
 // though they may have been set in the Cloud Console.
+//
+// - name: Name of budget to get. Values are of the form
+//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Get(name string) *BillingAccountsBudgetsGetCall {
 	c := &BillingAccountsBudgetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1010,7 +1028,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1117,6 +1135,9 @@ type BillingAccountsBudgetsListCall struct {
 // available on this API. When reading from the API, you will not see
 // these fields in the return value, though they may have been set in
 // the Cloud Console.
+//
+// - parent: Name of billing account to list budgets under. Values are
+//   of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) List(parent string) *BillingAccountsBudgetsListCall {
 	c := &BillingAccountsBudgetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1176,7 +1197,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1315,6 +1336,10 @@ type BillingAccountsBudgetsPatchCall struct {
 // There are some fields exposed on the Google Cloud Console that aren't
 // available on this API. Budget fields that are not exposed in this API
 // will not be changed by this method.
+//
+// - name: Output only. Resource name of the budget. The resource name
+//   implies the scope of a budget. Values are of the form
+//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Patch(name string, googlecloudbillingbudgetsv1budget *GoogleCloudBillingBudgetsV1Budget) *BillingAccountsBudgetsPatchCall {
 	c := &BillingAccountsBudgetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1360,7 +1385,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

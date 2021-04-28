@@ -2166,6 +2166,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2199,7 +2201,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2277,7 +2279,10 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -2303,6 +2308,8 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2367,7 +2374,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2464,7 +2471,10 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "ListOperationsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
 	// }
 
 }
@@ -2502,6 +2512,9 @@ type ProjectsPatchDeploymentsCreateCall struct {
 }
 
 // Create: Create an OS Config patch deployment.
+//
+// - parent: The project to apply this patch deployment to in the form
+//   `projects/*`.
 func (r *ProjectsPatchDeploymentsService) Create(parent string, patchdeployment *PatchDeployment) *ProjectsPatchDeploymentsCreateCall {
 	c := &ProjectsPatchDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2547,7 +2560,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2657,6 +2670,9 @@ type ProjectsPatchDeploymentsDeleteCall struct {
 }
 
 // Delete: Delete an OS Config patch deployment.
+//
+// - name: The resource name of the patch deployment in the form
+//   `projects/*/patchDeployments/*`.
 func (r *ProjectsPatchDeploymentsService) Delete(name string) *ProjectsPatchDeploymentsDeleteCall {
 	c := &ProjectsPatchDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2690,7 +2706,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2788,6 +2804,9 @@ type ProjectsPatchDeploymentsGetCall struct {
 }
 
 // Get: Get an OS Config patch deployment.
+//
+// - name: The resource name of the patch deployment in the form
+//   `projects/*/patchDeployments/*`.
 func (r *ProjectsPatchDeploymentsService) Get(name string) *ProjectsPatchDeploymentsGetCall {
 	c := &ProjectsPatchDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2831,7 +2850,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2932,6 +2951,8 @@ type ProjectsPatchDeploymentsListCall struct {
 }
 
 // List: Get a page of OS Config patch deployments.
+//
+// - parent: The resource name of the parent in the form `projects/*`.
 func (r *ProjectsPatchDeploymentsService) List(parent string) *ProjectsPatchDeploymentsListCall {
 	c := &ProjectsPatchDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2990,7 +3011,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3124,6 +3145,8 @@ type ProjectsPatchJobsCancelCall struct {
 
 // Cancel: Cancel a patch job. The patch job must be active. Canceled
 // patch jobs cannot be restarted.
+//
+// - name: Name of the patch in the form `projects/*/patchJobs/*`.
 func (r *ProjectsPatchJobsService) Cancel(name string, cancelpatchjobrequest *CancelPatchJobRequest) *ProjectsPatchJobsCancelCall {
 	c := &ProjectsPatchJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3158,7 +3181,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3264,6 +3287,9 @@ type ProjectsPatchJobsExecuteCall struct {
 }
 
 // Execute: Patch VM instances by creating and running a patch job.
+//
+// - parent: The project in which to run this patch in the form
+//   `projects/*`.
 func (r *ProjectsPatchJobsService) Execute(parent string, executepatchjobrequest *ExecutePatchJobRequest) *ProjectsPatchJobsExecuteCall {
 	c := &ProjectsPatchJobsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3298,7 +3324,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3405,6 +3431,8 @@ type ProjectsPatchJobsGetCall struct {
 
 // Get: Get the patch job. This can be used to track the progress of an
 // ongoing patch job or review the details of completed jobs.
+//
+// - name: Name of the patch in the form `projects/*/patchJobs/*`.
 func (r *ProjectsPatchJobsService) Get(name string) *ProjectsPatchJobsGetCall {
 	c := &ProjectsPatchJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3448,7 +3476,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3549,6 +3577,8 @@ type ProjectsPatchJobsListCall struct {
 }
 
 // List: Get a list of patch jobs.
+//
+// - parent: In the form of `projects/*`.
 func (r *ProjectsPatchJobsService) List(parent string) *ProjectsPatchJobsListCall {
 	c := &ProjectsPatchJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3616,7 +3646,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3754,6 +3784,9 @@ type ProjectsPatchJobsInstanceDetailsListCall struct {
 }
 
 // List: Get a list of instance details for a given patch job.
+//
+// - parent: The parent for the instances are in the form of
+//   `projects/*/patchJobs/*`.
 func (r *ProjectsPatchJobsInstanceDetailsService) List(parent string) *ProjectsPatchJobsInstanceDetailsListCall {
 	c := &ProjectsPatchJobsInstanceDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3820,7 +3853,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

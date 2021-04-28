@@ -739,6 +739,8 @@ type GroupsGetCall struct {
 }
 
 // Get: Gets one resource by id.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -782,7 +784,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -882,6 +884,8 @@ type GroupsPatchCall struct {
 
 // Patch: Updates an existing resource. This method supports patch
 // semantics.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -916,7 +920,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1020,6 +1024,8 @@ type GroupsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -1054,7 +1060,7 @@ func (c *GroupsUpdateCall) Header() http.Header {
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

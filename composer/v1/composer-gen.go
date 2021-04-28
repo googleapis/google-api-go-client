@@ -1110,7 +1110,7 @@ type SoftwareConfig struct {
 
 	// PythonVersion: Optional. The major version of Python used to run the
 	// Apache Airflow scheduler, worker, and webserver processes. Can be set
-	// to '2' or '3'. If not specified, the default is '2'. Cannot be
+	// to '2' or '3'. If not specified, the default is '3'. Cannot be
 	// updated.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
@@ -1259,6 +1259,9 @@ type ProjectsLocationsEnvironmentsCreateCall struct {
 }
 
 // Create: Create a new environment.
+//
+// - parent: The parent must be of the form
+//   "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) Create(parent string, environment *Environment) *ProjectsLocationsEnvironmentsCreateCall {
 	c := &ProjectsLocationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1293,7 +1296,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1398,6 +1401,10 @@ type ProjectsLocationsEnvironmentsDeleteCall struct {
 }
 
 // Delete: Delete an environment.
+//
+// - name: The environment to delete, in the form:
+//   "projects/{projectId}/locations/{locationId}/environments/{environme
+//   ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Delete(name string) *ProjectsLocationsEnvironmentsDeleteCall {
 	c := &ProjectsLocationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1431,7 +1438,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1529,6 +1536,10 @@ type ProjectsLocationsEnvironmentsGetCall struct {
 }
 
 // Get: Get an existing environment.
+//
+// - name: The resource name of the environment to get, in the form:
+//   "projects/{projectId}/locations/{locationId}/environments/{environme
+//   ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Get(name string) *ProjectsLocationsEnvironmentsGetCall {
 	c := &ProjectsLocationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1572,7 +1583,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1673,6 +1684,9 @@ type ProjectsLocationsEnvironmentsListCall struct {
 }
 
 // List: List environments.
+//
+// - parent: List environments in the given project and location, in the
+//   form: "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) List(parent string) *ProjectsLocationsEnvironmentsListCall {
 	c := &ProjectsLocationsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1730,7 +1744,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1863,6 +1877,11 @@ type ProjectsLocationsEnvironmentsPatchCall struct {
 }
 
 // Patch: Update an environment.
+//
+// - name: The relative resource name of the environment to update, in
+//   the form:
+//   "projects/{projectId}/locations/{locationId}/environments/{environme
+//   ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *Environment) *ProjectsLocationsEnvironmentsPatchCall {
 	c := &ProjectsLocationsEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1973,7 +1992,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2085,6 +2104,9 @@ type ProjectsLocationsImageVersionsListCall struct {
 }
 
 // List: List ImageVersions for provided location.
+//
+// - parent: List ImageVersions in the given project and location, in
+//   the form: "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2150,7 +2172,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2290,6 +2312,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2323,7 +2347,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2423,6 +2447,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2466,7 +2492,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2576,6 +2602,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2640,7 +2668,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

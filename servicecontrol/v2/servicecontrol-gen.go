@@ -83,7 +83,7 @@ const mtlsBasePath = "https://servicecontrol.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your Google Service Control data
@@ -602,8 +602,8 @@ type CheckResponse struct {
 	// `CheckRequest`.
 	Headers map[string]string `json:"headers,omitempty"`
 
-	// Status: An 'OK' status allows the operation. Any other status
-	// indicates a denial; google.rpc.Status.details () would contain
+	// Status: Operation is allowed when this field is not set. Any non-'OK'
+	// status indicates a denial; google.rpc.Status.details () would contain
 	// additional details about the denial.
 	Status *Status `json:"status,omitempty"`
 
@@ -783,7 +783,7 @@ type Request struct {
 	// Method: The HTTP request method, such as `GET`, `POST`.
 	Method string `json:"method,omitempty"`
 
-	// Path: The HTTP URL path.
+	// Path: The HTTP URL path, excluding the query parameters.
 	Path string `json:"path,omitempty"`
 
 	// Protocol: The network protocol used with the request, such as
@@ -1083,7 +1083,7 @@ func (s *ResourceLocation) MarshalJSON() ([]byte, error) {
 // Response: This message defines attributes for a typical network
 // response. It generally models semantics of an HTTP response.
 type Response struct {
-	// BackendLatency: The length of time it takes the backend service to
+	// BackendLatency: The amount of time it takes the backend service to
 	// fully respond to a request. Measured from when the destination
 	// service starts to send the request to the backend until when the
 	// destination service receives the complete response from the backend.
@@ -1302,6 +1302,12 @@ type ServicesCheckCall struct {
 // `servicemanagement.services.check` permission on the specified
 // service. For more information, see Service Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
+//
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -1336,7 +1342,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1454,6 +1460,12 @@ type ServicesReportCall struct {
 // `servicemanagement.services.report` permission on the specified
 // service. For more information, see Service Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
+//
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -1488,7 +1500,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

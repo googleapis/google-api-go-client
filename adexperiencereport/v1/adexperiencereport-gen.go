@@ -310,6 +310,9 @@ type SitesGetCall struct {
 }
 
 // Get: Gets a site's Ad Experience Report summary.
+//
+// - name: The name of the site whose summary to get, e.g.
+//   `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`.
 func (r *SitesService) Get(name string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -353,7 +356,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -493,7 +496,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

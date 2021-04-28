@@ -269,6 +269,11 @@ type ProjectsBucketsAddFirebaseCall struct {
 
 // AddFirebase: Links a Google Cloud Storage bucket to a Firebase
 // project.
+//
+// - bucket: Resource name of the bucket, mirrors the ID of the
+//   underlying Google Cloud Storage bucket. Because bucket resource
+//   names are unique across projects, you may omit the project number,
+//   `projects/-/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) AddFirebase(bucket string, addfirebaserequest *AddFirebaseRequest) *ProjectsBucketsAddFirebaseCall {
 	c := &ProjectsBucketsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -303,7 +308,7 @@ func (c *ProjectsBucketsAddFirebaseCall) Header() http.Header {
 
 func (c *ProjectsBucketsAddFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -410,6 +415,11 @@ type ProjectsBucketsGetCall struct {
 }
 
 // Get: Gets a single linked storage bucket.
+//
+// - name: Resource name of the bucket, mirrors the ID of the underlying
+//   Google Cloud Storage bucket. Because bucket resource names are
+//   unique across projects, you may omit the project number,
+//   `projects/-/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) Get(name string) *ProjectsBucketsGetCall {
 	c := &ProjectsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -453,7 +463,7 @@ func (c *ProjectsBucketsGetCall) Header() http.Header {
 
 func (c *ProjectsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -555,6 +565,9 @@ type ProjectsBucketsListCall struct {
 }
 
 // List: Lists the linked storage buckets for a project.
+//
+// - parent: Resource name of the parent Firebase project,
+//   `projects/{project_number}`.
 func (r *ProjectsBucketsService) List(parent string) *ProjectsBucketsListCall {
 	c := &ProjectsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -615,7 +628,7 @@ func (c *ProjectsBucketsListCall) Header() http.Header {
 
 func (c *ProjectsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -750,6 +763,11 @@ type ProjectsBucketsRemoveFirebaseCall struct {
 
 // RemoveFirebase: Unlinks a linked Google Cloud Storage bucket from a
 // Firebase project.
+//
+// - bucket: Resource name of the bucket, mirrors the ID of the
+//   underlying Google Cloud Storage bucket. Because bucket resource
+//   names are unique across projects, you may omit the project number,
+//   `projects/-/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) RemoveFirebase(bucket string, removefirebaserequest *RemoveFirebaseRequest) *ProjectsBucketsRemoveFirebaseCall {
 	c := &ProjectsBucketsRemoveFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -784,7 +802,7 @@ func (c *ProjectsBucketsRemoveFirebaseCall) Header() http.Header {
 
 func (c *ProjectsBucketsRemoveFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

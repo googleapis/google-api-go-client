@@ -1938,6 +1938,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1981,7 +1983,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2083,6 +2085,9 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2099,7 +2104,7 @@ func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsList
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service will select a default.
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2150,7 +2155,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2233,7 +2238,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2289,6 +2294,9 @@ type ProjectsLocationsConnectionProfilesCreateCall struct {
 
 // Create: Creates a new connection profile in a given project and
 // location.
+//
+// - parent: The parent, which owns this collection of connection
+//   profiles.
 func (r *ProjectsLocationsConnectionProfilesService) Create(parent string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesCreateCall {
 	c := &ProjectsLocationsConnectionProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2341,7 +2349,7 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2458,6 +2466,8 @@ type ProjectsLocationsConnectionProfilesDeleteCall struct {
 // Delete: Deletes a single Database Migration Service connection
 // profile. A connection profile can only be deleted if it is not in use
 // by any active migration jobs.
+//
+// - name: Name of the connection profile resource to delete.
 func (r *ProjectsLocationsConnectionProfilesService) Delete(name string) *ProjectsLocationsConnectionProfilesDeleteCall {
 	c := &ProjectsLocationsConnectionProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2510,7 +2520,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2618,6 +2628,8 @@ type ProjectsLocationsConnectionProfilesGetCall struct {
 }
 
 // Get: Gets details of a single connection profile.
+//
+// - name: Name of the connection profile resource to get.
 func (r *ProjectsLocationsConnectionProfilesService) Get(name string) *ProjectsLocationsConnectionProfilesGetCall {
 	c := &ProjectsLocationsConnectionProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2661,7 +2673,7 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2764,6 +2776,10 @@ type ProjectsLocationsConnectionProfilesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsConnectionProfilesService) GetIamPolicy(resource string) *ProjectsLocationsConnectionProfilesGetIamPolicyCall {
 	c := &ProjectsLocationsConnectionProfilesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2821,7 +2837,7 @@ func (c *ProjectsLocationsConnectionProfilesGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsConnectionProfilesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2929,6 +2945,9 @@ type ProjectsLocationsConnectionProfilesListCall struct {
 
 // List: Retrieve a list of all connection profiles in a given project
 // and location.
+//
+// - parent: The parent, which owns this collection of connection
+//   profiles.
 func (r *ProjectsLocationsConnectionProfilesService) List(parent string) *ProjectsLocationsConnectionProfilesListCall {
 	c := &ProjectsLocationsConnectionProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3014,7 +3033,7 @@ func (c *ProjectsLocationsConnectionProfilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3157,6 +3176,9 @@ type ProjectsLocationsConnectionProfilesPatchCall struct {
 }
 
 // Patch: Update the configuration of a single connection profile.
+//
+// - name: The name of this connection profile resource in the form of
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsConnectionProfilesService) Patch(name string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesPatchCall {
 	c := &ProjectsLocationsConnectionProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3210,7 +3232,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3329,6 +3351,10 @@ type ProjectsLocationsConnectionProfilesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsConnectionProfilesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsConnectionProfilesSetIamPolicyCall {
 	c := &ProjectsLocationsConnectionProfilesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3363,7 +3389,7 @@ func (c *ProjectsLocationsConnectionProfilesSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsConnectionProfilesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3474,6 +3500,10 @@ type ProjectsLocationsConnectionProfilesTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionProfilesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsConnectionProfilesTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectionProfilesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3508,7 +3538,7 @@ func (c *ProjectsLocationsConnectionProfilesTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsConnectionProfilesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3614,6 +3644,8 @@ type ProjectsLocationsMigrationJobsCreateCall struct {
 }
 
 // Create: Creates a new migration job in a given project and location.
+//
+// - parent: The parent, which owns this collection of migration jobs.
 func (r *ProjectsLocationsMigrationJobsService) Create(parent string, migrationjob *MigrationJob) *ProjectsLocationsMigrationJobsCreateCall {
 	c := &ProjectsLocationsMigrationJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3666,7 +3698,7 @@ func (c *ProjectsLocationsMigrationJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3781,6 +3813,8 @@ type ProjectsLocationsMigrationJobsDeleteCall struct {
 }
 
 // Delete: Deletes a single migration job.
+//
+// - name: Name of the migration job resource to delete.
 func (r *ProjectsLocationsMigrationJobsService) Delete(name string) *ProjectsLocationsMigrationJobsDeleteCall {
 	c := &ProjectsLocationsMigrationJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3834,7 +3868,7 @@ func (c *ProjectsLocationsMigrationJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3943,6 +3977,9 @@ type ProjectsLocationsMigrationJobsGenerateSshScriptCall struct {
 
 // GenerateSshScript: Generate a SSH configuration script to configure
 // the reverse SSH connectivity.
+//
+// - migrationJob: Name of the migration job resource to generate the
+//   SSH script.
 func (r *ProjectsLocationsMigrationJobsService) GenerateSshScript(migrationJob string, generatesshscriptrequest *GenerateSshScriptRequest) *ProjectsLocationsMigrationJobsGenerateSshScriptCall {
 	c := &ProjectsLocationsMigrationJobsGenerateSshScriptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.migrationJob = migrationJob
@@ -3977,7 +4014,7 @@ func (c *ProjectsLocationsMigrationJobsGenerateSshScriptCall) Header() http.Head
 
 func (c *ProjectsLocationsMigrationJobsGenerateSshScriptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4083,6 +4120,8 @@ type ProjectsLocationsMigrationJobsGetCall struct {
 }
 
 // Get: Gets details of a single migration job.
+//
+// - name: Name of the migration job resource to get.
 func (r *ProjectsLocationsMigrationJobsService) Get(name string) *ProjectsLocationsMigrationJobsGetCall {
 	c := &ProjectsLocationsMigrationJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4126,7 +4165,7 @@ func (c *ProjectsLocationsMigrationJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4229,6 +4268,10 @@ type ProjectsLocationsMigrationJobsGetIamPolicyCall struct {
 // GetIamPolicy: Gets the access control policy for a resource. Returns
 // an empty policy if the resource exists and does not have a policy
 // set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsMigrationJobsService) GetIamPolicy(resource string) *ProjectsLocationsMigrationJobsGetIamPolicyCall {
 	c := &ProjectsLocationsMigrationJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4286,7 +4329,7 @@ func (c *ProjectsLocationsMigrationJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4393,6 +4436,8 @@ type ProjectsLocationsMigrationJobsListCall struct {
 }
 
 // List: Lists migration jobs in a given project and location.
+//
+// - parent: The parent, which owns this collection of migrationJobs.
 func (r *ProjectsLocationsMigrationJobsService) List(parent string) *ProjectsLocationsMigrationJobsListCall {
 	c := &ProjectsLocationsMigrationJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4479,7 +4524,7 @@ func (c *ProjectsLocationsMigrationJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4622,6 +4667,9 @@ type ProjectsLocationsMigrationJobsPatchCall struct {
 }
 
 // Patch: Updates the parameters of a single migration job.
+//
+// - name: The name (URI) of this migration job resource, in the form
+//   of: projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsMigrationJobsService) Patch(name string, migrationjob *MigrationJob) *ProjectsLocationsMigrationJobsPatchCall {
 	c := &ProjectsLocationsMigrationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4675,7 +4723,7 @@ func (c *ProjectsLocationsMigrationJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4794,6 +4842,8 @@ type ProjectsLocationsMigrationJobsPromoteCall struct {
 // Promote: Promote a migration job, stopping replication to the
 // destination and promoting the destination to be a standalone
 // database.
+//
+// - name: Name of the migration job resource to promote.
 func (r *ProjectsLocationsMigrationJobsService) Promote(name string, promotemigrationjobrequest *PromoteMigrationJobRequest) *ProjectsLocationsMigrationJobsPromoteCall {
 	c := &ProjectsLocationsMigrationJobsPromoteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4828,7 +4878,7 @@ func (c *ProjectsLocationsMigrationJobsPromoteCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsPromoteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4936,6 +4986,8 @@ type ProjectsLocationsMigrationJobsRestartCall struct {
 // Restart: Restart a stopped or failed migration job, resetting the
 // destination instance to its original state and starting the migration
 // process from scratch.
+//
+// - name: Name of the migration job resource to restart.
 func (r *ProjectsLocationsMigrationJobsService) Restart(name string, restartmigrationjobrequest *RestartMigrationJobRequest) *ProjectsLocationsMigrationJobsRestartCall {
 	c := &ProjectsLocationsMigrationJobsRestartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4970,7 +5022,7 @@ func (c *ProjectsLocationsMigrationJobsRestartCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5077,6 +5129,8 @@ type ProjectsLocationsMigrationJobsResumeCall struct {
 
 // Resume: Resume a migration job that is currently stopped and is
 // resumable (was stopped during CDC phase).
+//
+// - name: Name of the migration job resource to resume.
 func (r *ProjectsLocationsMigrationJobsService) Resume(name string, resumemigrationjobrequest *ResumeMigrationJobRequest) *ProjectsLocationsMigrationJobsResumeCall {
 	c := &ProjectsLocationsMigrationJobsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5111,7 +5165,7 @@ func (c *ProjectsLocationsMigrationJobsResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5219,6 +5273,10 @@ type ProjectsLocationsMigrationJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsMigrationJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMigrationJobsSetIamPolicyCall {
 	c := &ProjectsLocationsMigrationJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5253,7 +5311,7 @@ func (c *ProjectsLocationsMigrationJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5359,6 +5417,8 @@ type ProjectsLocationsMigrationJobsStartCall struct {
 }
 
 // Start: Start an already created migration job.
+//
+// - name: Name of the migration job resource to start.
 func (r *ProjectsLocationsMigrationJobsService) Start(name string, startmigrationjobrequest *StartMigrationJobRequest) *ProjectsLocationsMigrationJobsStartCall {
 	c := &ProjectsLocationsMigrationJobsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5393,7 +5453,7 @@ func (c *ProjectsLocationsMigrationJobsStartCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5499,6 +5559,8 @@ type ProjectsLocationsMigrationJobsStopCall struct {
 }
 
 // Stop: Stops a running migration job.
+//
+// - name: Name of the migration job resource to stop.
 func (r *ProjectsLocationsMigrationJobsService) Stop(name string, stopmigrationjobrequest *StopMigrationJobRequest) *ProjectsLocationsMigrationJobsStopCall {
 	c := &ProjectsLocationsMigrationJobsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5533,7 +5595,7 @@ func (c *ProjectsLocationsMigrationJobsStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5644,6 +5706,10 @@ type ProjectsLocationsMigrationJobsTestIamPermissionsCall struct {
 // operation is designed to be used for building permission-aware UIs
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsMigrationJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMigrationJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsMigrationJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5678,7 +5744,7 @@ func (c *ProjectsLocationsMigrationJobsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsMigrationJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5785,6 +5851,8 @@ type ProjectsLocationsMigrationJobsVerifyCall struct {
 
 // Verify: Verify a migration job, making sure the destination can reach
 // the source and that all configuration and prerequisites are met.
+//
+// - name: Name of the migration job resource to verify.
 func (r *ProjectsLocationsMigrationJobsService) Verify(name string, verifymigrationjobrequest *VerifyMigrationJobRequest) *ProjectsLocationsMigrationJobsVerifyCall {
 	c := &ProjectsLocationsMigrationJobsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5819,7 +5887,7 @@ func (c *ProjectsLocationsMigrationJobsVerifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMigrationJobsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5934,6 +6002,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5968,7 +6038,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6076,6 +6146,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6109,7 +6181,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6209,6 +6281,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6252,7 +6326,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6362,6 +6436,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6426,7 +6502,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

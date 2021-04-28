@@ -2389,6 +2389,20 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	//   "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE" - Output files or
 	// directories were found both relative to the execution root directory
 	// and relative to the working directory.
+	//   "LOCATION_EXEC_ROOT_RELATIVE_OUTPUT_OUTSIDE_WORKING_DIR" - Output
+	// files or directories were found relative to the execution root
+	// directory but not relative to the working directory. In addition at
+	// least one output file or directory was found outside of the working
+	// directory such that a working-directory-relative-path would have
+	// needed to start with a `..`.
+	//
+	// "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE_OUTPUT_OUTSIDE_WORKING_DI
+	// R" - Output files or directories were found both relative to the
+	// execution root directory and relative to the working directory. In
+	// addition at least one exec-root-relative output file or directory was
+	// found outside of the working directory such that a
+	// working-directory-relative-path would have needed to start with a
+	// `..`.
 	OutputLocation string `json:"outputLocation,omitempty"`
 
 	// UsedAsyncContainer: Indicates whether an asynchronous container was
@@ -2507,6 +2521,7 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// is not running.
 	//   "DOCKER_IMAGE_VPCSC_PERMISSION_DENIED" - Docker failed because a
 	// request was denied by the organization's policy.
+	//   "WORKING_DIR_NOT_RELATIVE" - Working directory is not relative
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -4158,6 +4173,15 @@ type ActionResultsGetCall struct {
 // for some period of time afterwards. The lifetimes of the referenced
 // blobs SHOULD be increased if necessary and applicable. Errors: *
 // `NOT_FOUND`: The requested `ActionResult` is not in the cache.
+//
+// - hash: The hash. In the case of SHA-256, it will always be a
+//   lowercase hex string exactly 64 characters long.
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
+// - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes int64) *ActionResultsGetCall {
 	c := &ActionResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4227,7 +4251,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4374,6 +4398,15 @@ type ActionResultsUpdateCall struct {
 // updating the action result, such as a missing command or action. *
 // `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the
 // entry to the cache.
+//
+// - hash: The hash. In the case of SHA-256, it will always be a
+//   lowercase hex string exactly 64 characters long.
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
+// - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Update(instanceName string, hash string, sizeBytes int64, buildbazelremoteexecutionv2actionresult *BuildBazelRemoteExecutionV2ActionResult) *ActionResultsUpdateCall {
 	c := &ActionResultsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4424,7 +4457,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4601,6 +4634,12 @@ type ActionsExecuteCall struct {
 // execution of the action. The server MAY execute the action multiple
 // times, potentially in parallel. These redundant executions MAY
 // continue to run, even if the operation is completed.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *ActionsService) Execute(instanceName string, buildbazelremoteexecutionv2executerequest *BuildBazelRemoteExecutionV2ExecuteRequest) *ActionsExecuteCall {
 	c := &ActionsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4635,7 +4674,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4750,6 +4789,12 @@ type BlobsBatchReadCall struct {
 // Errors: * `INVALID_ARGUMENT`: The client attempted to read more than
 // the server supported limit. Every error on individual read will be
 // returned in the corresponding digest status.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchRead(instanceName string, buildbazelremoteexecutionv2batchreadblobsrequest *BuildBazelRemoteExecutionV2BatchReadBlobsRequest) *BlobsBatchReadCall {
 	c := &BlobsBatchReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4784,7 +4829,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4903,6 +4948,12 @@ type BlobsBatchUpdateCall struct {
 // following errors, additionally: * `RESOURCE_EXHAUSTED`: There is
 // insufficient disk quota to store the blob. * `INVALID_ARGUMENT`: The
 // Digest does not match the provided data.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchUpdate(instanceName string, buildbazelremoteexecutionv2batchupdateblobsrequest *BuildBazelRemoteExecutionV2BatchUpdateBlobsRequest) *BlobsBatchUpdateCall {
 	c := &BlobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4937,7 +4988,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5049,6 +5100,12 @@ type BlobsFindMissingCall struct {
 // already present in the CAS and do not need to be uploaded again.
 // Servers SHOULD increase the lifetimes of the referenced blobs if
 // necessary and applicable. There are no method-specific errors.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) FindMissing(instanceName string, buildbazelremoteexecutionv2findmissingblobsrequest *BuildBazelRemoteExecutionV2FindMissingBlobsRequest) *BlobsFindMissingCall {
 	c := &BlobsFindMissingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5083,7 +5140,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5206,6 +5263,15 @@ type BlobsGetTreeCall struct {
 // part of the tree is missing from the CAS, the server will return the
 // portion present and omit the rest. Errors: * `NOT_FOUND`: The
 // requested tree root is not present in the CAS.
+//
+// - hash: The hash. In the case of SHA-256, it will always be a
+//   lowercase hex string exactly 64 characters long.
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
+// - sizeBytes: The size of the blob, in bytes.
 func (r *BlobsService) GetTree(instanceName string, hash string, sizeBytes int64) *BlobsGetTreeCall {
 	c := &BlobsGetTreeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5271,7 +5337,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5429,6 +5495,8 @@ type OperationsWaitExecutionCall struct {
 // with the completed operation. The server MAY choose to stream
 // additional updates as execution progresses, such as to provide an
 // update as to the state of the execution.
+//
+// - name: The name of the Operation returned by Execute.
 func (r *OperationsService) WaitExecution(name string, buildbazelremoteexecutionv2waitexecutionrequest *BuildBazelRemoteExecutionV2WaitExecutionRequest) *OperationsWaitExecutionCall {
 	c := &OperationsWaitExecutionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5463,7 +5531,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5575,6 +5643,12 @@ type V2GetCapabilitiesCall struct {
 // ExecutionCapabilities. * Execution only endpoints should return
 // ExecutionCapabilities. * CAS + Action Cache only endpoints should
 // return CacheCapabilities.
+//
+// - instanceName: The instance of the execution system to operate
+//   against. A server may support multiple instances of the execution
+//   system (with their own workers, storage, caches, etc.). The server
+//   MAY require use of this field to select between them in an
+//   implementation-defined fashion, otherwise it can be omitted.
 func (r *V2Service) GetCapabilities(instanceName string) *V2GetCapabilitiesCall {
 	c := &V2GetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5618,7 +5692,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

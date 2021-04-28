@@ -135,7 +135,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Revisions = NewRevisionsService(s)
 	s.Scores = NewScoresService(s)
 	s.Snapshots = NewSnapshotsService(s)
-	s.SnapshotsExtended = NewSnapshotsExtendedService(s)
 	s.Stats = NewStatsService(s)
 	return s, nil
 }
@@ -164,8 +163,6 @@ type Service struct {
 	Scores *ScoresService
 
 	Snapshots *SnapshotsService
-
-	SnapshotsExtended *SnapshotsExtendedService
 
 	Stats *StatsService
 }
@@ -264,15 +261,6 @@ func NewSnapshotsService(s *Service) *SnapshotsService {
 }
 
 type SnapshotsService struct {
-	s *Service
-}
-
-func NewSnapshotsExtendedService(s *Service) *SnapshotsExtendedService {
-	rs := &SnapshotsExtendedService{s: s}
-	return rs
-}
-
-type SnapshotsExtendedService struct {
 	s *Service
 }
 
@@ -2786,94 +2774,6 @@ func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResolveSnapshotHeadRequest: Request for ResolveSnapshotHead RPC.
-type ResolveSnapshotHeadRequest struct {
-	// MaxConflictsPerSnapshot: The maximum number of SnapshotRevision
-	// resources for `conflictingRevisions` to return per SnapshotExtended
-	// resource in the response. For any response, the actual number of
-	// resources returned may be less than specified by
-	// `maxConflictsPerSnapshot`. The value provided should be greater or
-	// equal to 0. If no value is provided, the server will use a sensible
-	// default.
-	MaxConflictsPerSnapshot int64 `json:"maxConflictsPerSnapshot,omitempty"`
-
-	// ResolutionPolicy: Required. The automatic resolution policy. All
-	// conflicts are resolved in chronological order, starting from the/
-	// least recent. If the comparison metric is equal for the tentative
-	// head and the conflict, the head wins.
-	//
-	// Possible values:
-	//   "RESOLUTION_POLICY_UNSPECIFIED" - Safe default, don't use
-	// explicitly.
-	//   "USE_HEAD" - Drops all conflicts and keeps the current head only.
-	//   "LONGEST_PLAYTIME" - Use the snapshot with the longest played time.
-	//   "MOST_RECENTLY_MODIFIED" - Use the snapshot that was most recently
-	// modified.
-	//   "HIGHEST_PROGRESS" - Use the snapshot with the highest progress
-	// value.
-	//   "NO_AUTOMATIC_RESOLUTION" - Don't resolve conflicts at all.
-	// Effectively only returns the current head revision of the snapshot.
-	// Corresponds to a game opening the snapshot with manual resolution
-	// policy.
-	ResolutionPolicy string `json:"resolutionPolicy,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "MaxConflictsPerSnapshot") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxConflictsPerSnapshot")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResolveSnapshotHeadRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod ResolveSnapshotHeadRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ResolveSnapshotHeadResponse: Response for ResolveSnapshotHead RPC.
-type ResolveSnapshotHeadResponse struct {
-	// Snapshot: The state of the snapshot.
-	Snapshot *SnapshotExtended `json:"snapshot,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Snapshot") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Snapshot") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResolveSnapshotHeadResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ResolveSnapshotHeadResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RevisionCheckResponse: A third party checking a revision response.
 type RevisionCheckResponse struct {
 	// ApiVersion: The version of the API this client revision should use
@@ -3040,173 +2940,6 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SnapshotCoverImageResource: Identifies a snapshot cover image
-// resource. The image is provided by the game.
-type SnapshotCoverImageResource struct {
-	// ContentHash: Output only. Hash-like weak identifier of the uploaded
-	// image bytes, consistent per player per application. The content hash
-	// for a given resource will not change if the binary data hasn't
-	// changed. Except in very rare circumstances, the content_hash for
-	// matching binary data will be the same within a given player and
-	// application.
-	ContentHash string `json:"contentHash,omitempty"`
-
-	// DownloadUrl: Output only. A URL the client can use to download the
-	// image. May vary across requests, and only guaranteed to be valid for
-	// a short time after it is returned.
-	DownloadUrl string `json:"downloadUrl,omitempty"`
-
-	// Height: The height of the image in pixels.
-	Height int64 `json:"height,omitempty"`
-
-	// MimeType: Output only. The MIME type of the image.
-	MimeType string `json:"mimeType,omitempty"`
-
-	// ResourceId: The ID of the image resource. It's guaranteed that if two
-	// IDs are equal then the contents are equal as well. It's not
-	// guaranteed that two identical blobs coming from separate uploads have
-	// the same ID. The resource ID can only be used within the application,
-	// user and resource type it was originally returned for. For example,
-	// it's not possible to use SnapshotDataResource's resource ID as the
-	// resource_id of a SnapshotCoverImageResource, even if the blob is a
-	// valid image file.
-	ResourceId string `json:"resourceId,omitempty"`
-
-	// Width: The width of the image in pixels.
-	Width int64 `json:"width,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContentHash") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentHash") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SnapshotCoverImageResource) MarshalJSON() ([]byte, error) {
-	type NoMethod SnapshotCoverImageResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SnapshotDataResource: Identifies a snapshot data resource. The data
-// is provided by the game.
-type SnapshotDataResource struct {
-	// ContentHash: Output only. Hash-like weak identifier of the uploaded
-	// blob bytes, consistent per player per application. The content hash
-	// for a given resource will not change if the binary data hasn't
-	// changed. Except in very rare circumstances, the content_hash for
-	// matching binary data will be the same within a given player and
-	// application.
-	ContentHash string `json:"contentHash,omitempty"`
-
-	// DownloadUrl: Output only. A URL that the client can use to download
-	// the blob. May vary across requests, and only guaranteed to be valid
-	// for a short time after it is returned.
-	DownloadUrl string `json:"downloadUrl,omitempty"`
-
-	// ResourceId: The ID of the blob resource. It's guaranteed that if two
-	// IDs are equal then the contents are equal as well. It's not
-	// guaranteed that two identical blobs coming from separate uploads have
-	// the same resource ID. The resource ID can only be used within the
-	// application, user and resource type it was originally returned for.
-	// For example, it's not possible to use SnapshotDataResource's resource
-	// ID as the resource_id of a SnapshotCoverImageResource, even if the
-	// blob is a valid image file.
-	ResourceId string `json:"resourceId,omitempty"`
-
-	// Size: Output only. Size of the saved game blob in bytes.
-	Size int64 `json:"size,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "ContentHash") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentHash") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SnapshotDataResource) MarshalJSON() ([]byte, error) {
-	type NoMethod SnapshotDataResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SnapshotExtended: A snapshot represents a saved game state referred
-// to using the developer-provided snapshot_name. The set of attributes
-// and binary data for a specific state is called a revision. Each
-// revision is itself immutable, and referred to by a snapshot revision
-// id. At any time, a snapshot has a "head" revision, and updates are
-// made against that revision. If a snapshot update is received that
-// isn't against the current head revision, then instead of changing the
-// head revision it will result in a conflicting revision that must be
-// specifically resolved.
-type SnapshotExtended struct {
-	// ConflictingRevisions: A list of conflicting revisions. Only set if
-	// explicitly requested (e.g. using a field mask or a request flag), or
-	// if the RPC guarantees that this field is set. The conflicting
-	// revisions are sorted chronologically by their server creation time
-	// (oldest first). If there are too many conflicting revisions to return
-	// all of them in a single request this will only contain the first
-	// batch. In such case, the presented conflicting revisions must be
-	// resolved first in order to fetch the next batch.
-	ConflictingRevisions []*SnapshotRevision `json:"conflictingRevisions,omitempty"`
-
-	// HasConflictingRevisions: An indicator whether the snapshot has any
-	// conflicting revisions or not. Always set.
-	HasConflictingRevisions bool `json:"hasConflictingRevisions,omitempty"`
-
-	// HeadRevision: The current head revision (the canonical revision as
-	// understood by the server).
-	HeadRevision *SnapshotRevision `json:"headRevision,omitempty"`
-
-	// SnapshotName: An identifier of the snapshot, developer-specified. It
-	// must match the pattern [0-9a-zA-Z-._~]{1,100}.
-	SnapshotName string `json:"snapshotName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ConflictingRevisions") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConflictingRevisions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SnapshotExtended) MarshalJSON() ([]byte, error) {
-	type NoMethod SnapshotExtended
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // SnapshotImage: An image of a snapshot.
 type SnapshotImage struct {
 	// Height: The height of the image.
@@ -3285,92 +3018,6 @@ type SnapshotListResponse struct {
 
 func (s *SnapshotListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SnapshotListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SnapshotMetadata: Metadata about a snapshot revision. Snapshot
-// metadata is immutable - a metadata change corresponds to a new
-// snapshot revision.
-type SnapshotMetadata struct {
-	// Description: The description of this snapshot.
-	Description string `json:"description,omitempty"`
-
-	// DeviceName: The device that created the current revision.
-	DeviceName string `json:"deviceName,omitempty"`
-
-	// GameplayDuration: The duration associated with this snapshot. Values
-	// with sub-millisecond precision can be rounded or trimmed to the
-	// closest millisecond.
-	GameplayDuration string `json:"gameplayDuration,omitempty"`
-
-	// LastModifyTime: The timestamp of the last modification to this
-	// snapshot as provided by the client. Values with sub-millisecond
-	// precision can be rounded or trimmed to the closest millisecond.
-	LastModifyTime string `json:"lastModifyTime,omitempty"`
-
-	// ProgressValue: The progress value (64-bit integer set by developer)
-	// associated with this snapshot.
-	ProgressValue int64 `json:"progressValue,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SnapshotMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod SnapshotMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SnapshotRevision: A Snapshot revision resource. Snapshot revisions
-// are immutable.
-type SnapshotRevision struct {
-	// Blob: Reference to the game provided blob for this revision.
-	Blob *SnapshotDataResource `json:"blob,omitempty"`
-
-	// CoverImage: Reference to the cover image for this revision.
-	CoverImage *SnapshotCoverImageResource `json:"coverImage,omitempty"`
-
-	// Id: Output only. A server generated identifier of the snapshot
-	// revision.
-	Id string `json:"id,omitempty"`
-
-	// Metadata: Metadata for this snapshot revision.
-	Metadata *SnapshotMetadata `json:"metadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Blob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Blob") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SnapshotRevision) MarshalJSON() ([]byte, error) {
-	type NoMethod SnapshotRevision
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3565,7 +3212,7 @@ func (c *AchievementDefinitionsListCall) Header() http.Header {
 
 func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3692,6 +3339,9 @@ type AchievementsIncrementCall struct {
 
 // Increment: Increments the steps of the achievement with the given ID
 // for the currently authenticated player.
+//
+// - achievementId: The ID of the achievement used by this method.
+// - stepsToIncrement: The number of steps to increment.
 func (r *AchievementsService) Increment(achievementId string, stepsToIncrement int64) *AchievementsIncrementCall {
 	c := &AchievementsIncrementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -3735,7 +3385,7 @@ func (c *AchievementsIncrementCall) Header() http.Header {
 
 func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3847,6 +3497,9 @@ type AchievementsListCall struct {
 
 // List: Lists the progress for all your application's achievements for
 // the currently authenticated player.
+//
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *AchievementsService) List(playerId string) *AchievementsListCall {
 	c := &AchievementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -3927,7 +3580,7 @@ func (c *AchievementsListCall) Header() http.Header {
 
 func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4081,6 +3734,8 @@ type AchievementsRevealCall struct {
 
 // Reveal: Sets the state of the achievement with the given ID to
 // `REVEALED` for the currently authenticated player.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) Reveal(achievementId string) *AchievementsRevealCall {
 	c := &AchievementsRevealCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -4114,7 +3769,7 @@ func (c *AchievementsRevealCall) Header() http.Header {
 
 func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4213,6 +3868,9 @@ type AchievementsSetStepsAtLeastCall struct {
 // player towards unlocking an achievement. If the steps parameter is
 // less than the current number of steps that the player already gained
 // for the achievement, the achievement is not modified.
+//
+// - achievementId: The ID of the achievement used by this method.
+// - steps: The minimum value to set the steps to.
 func (r *AchievementsService) SetStepsAtLeast(achievementId string, steps int64) *AchievementsSetStepsAtLeastCall {
 	c := &AchievementsSetStepsAtLeastCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -4247,7 +3905,7 @@ func (c *AchievementsSetStepsAtLeastCall) Header() http.Header {
 
 func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4353,6 +4011,8 @@ type AchievementsUnlockCall struct {
 
 // Unlock: Unlocks this achievement for the currently authenticated
 // player.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) Unlock(achievementId string) *AchievementsUnlockCall {
 	c := &AchievementsUnlockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -4386,7 +4046,7 @@ func (c *AchievementsUnlockCall) Header() http.Header {
 
 func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4516,7 +4176,7 @@ func (c *AchievementsUpdateMultipleCall) Header() http.Header {
 
 func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4613,6 +4273,9 @@ type ApplicationsGetCall struct {
 // the requested application is not available for the specified
 // `platformType`, the returned response will not include any instance
 // data.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) Get(applicationId string) *ApplicationsGetCall {
 	c := &ApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -4677,7 +4340,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4848,7 +4511,7 @@ func (c *ApplicationsGetEndPointCall) Header() http.Header {
 
 func (c *ApplicationsGetEndPointCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4985,7 +4648,7 @@ func (c *ApplicationsPlayedCall) Header() http.Header {
 
 func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5044,6 +4707,9 @@ type ApplicationsVerifyCall struct {
 // Verify: Verifies the auth token provided with this request is for the
 // application with the specified ID, and returns the ID of the player
 // it was granted for.
+//
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) Verify(applicationId string) *ApplicationsVerifyCall {
 	c := &ApplicationsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -5087,7 +4753,7 @@ func (c *ApplicationsVerifyCall) Header() http.Header {
 
 func (c *ApplicationsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5252,7 +4918,7 @@ func (c *EventsListByPlayerCall) Header() http.Header {
 
 func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5443,7 +5109,7 @@ func (c *EventsListDefinitionsCall) Header() http.Header {
 
 func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5609,7 +5275,7 @@ func (c *EventsRecordCall) Header() http.Header {
 
 func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5708,6 +5374,8 @@ type LeaderboardsGetCall struct {
 }
 
 // Get: Retrieves the metadata of the leaderboard with the given ID.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *LeaderboardsService) Get(leaderboardId string) *LeaderboardsGetCall {
 	c := &LeaderboardsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -5758,7 +5426,7 @@ func (c *LeaderboardsGetCall) Header() http.Header {
 
 func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5927,7 +5595,7 @@ func (c *LeaderboardsListCall) Header() http.Header {
 
 func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6095,7 +5763,7 @@ func (c *MetagameGetMetagameConfigCall) Header() http.Header {
 
 func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6185,6 +5853,11 @@ type MetagameListCategoriesByPlayerCall struct {
 
 // ListCategoriesByPlayer: List play data aggregated per category for
 // the player corresponding to `playerId`.
+//
+// - collection: The collection of categories for which data will be
+//   returned.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *MetagameService) ListCategoriesByPlayer(playerId string, collection string) *MetagameListCategoriesByPlayerCall {
 	c := &MetagameListCategoriesByPlayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6252,7 +5925,7 @@ func (c *MetagameListCategoriesByPlayerCall) Header() http.Header {
 
 func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6406,6 +6079,9 @@ type PlayersGetCall struct {
 
 // Get: Retrieves the Player resource with the given ID. To retrieve the
 // player for the currently authenticated user, set `playerId` to `me`.
+//
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *PlayersService) Get(playerId string) *PlayersGetCall {
 	c := &PlayersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6456,7 +6132,7 @@ func (c *PlayersGetCall) Header() http.Header {
 
 func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6562,6 +6238,8 @@ type PlayersListCall struct {
 
 // List: Get the collection of players for the currently authenticated
 // user.
+//
+// - collection: Collection of players being retrieved.
 func (r *PlayersService) List(collection string) *PlayersListCall {
 	c := &PlayersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.collection = collection
@@ -6628,7 +6306,7 @@ func (c *PlayersListCall) Header() http.Header {
 
 func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6774,6 +6452,12 @@ type RevisionsCheckCall struct {
 }
 
 // Check: Checks whether the games client is out of date.
+//
+// - clientRevision: The revision of the client SDK used by your
+//   application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible
+//   values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the
+//   Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` -
+//   Client is running as a Web App.
 func (r *RevisionsService) Check(clientRevision string) *RevisionsCheckCall {
 	c := &RevisionsCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("clientRevision", clientRevision)
@@ -6817,7 +6501,7 @@ func (c *RevisionsCheckCall) Header() http.Header {
 
 func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6921,6 +6605,12 @@ type ScoresGetCall struct {
 // leaderboards in a given time span. `NOTE: You cannot ask for 'ALL'
 // leaderboards and 'ALL' timeSpans in the same request; only one
 // parameter may be set to 'ALL'.
+//
+// - leaderboardId: The ID of the leaderboard. Can be set to 'ALL' to
+//   retrieve data for all leaderboards for this application.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan string) *ScoresGetCall {
 	c := &ScoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -7006,7 +6696,7 @@ func (c *ScoresGetCall) Header() http.Header {
 
 func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7194,6 +6884,10 @@ type ScoresListCall struct {
 }
 
 // List: Lists the scores in a leaderboard, starting from the top.
+//
+// - collection: The collection of scores you're requesting.
+// - leaderboardId: The ID of the leaderboard.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) List(leaderboardId string, collection string, timeSpan string) *ScoresListCall {
 	c := &ScoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -7262,7 +6956,7 @@ func (c *ScoresListCall) Header() http.Header {
 
 func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7440,6 +7134,10 @@ type ScoresListWindowCall struct {
 
 // ListWindow: Lists the scores in a leaderboard around (and including)
 // a player's score.
+//
+// - collection: The collection of scores you're requesting.
+// - leaderboardId: The ID of the leaderboard.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) ListWindow(leaderboardId string, collection string, timeSpan string) *ScoresListWindowCall {
 	c := &ScoresListWindowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -7526,7 +7224,7 @@ func (c *ScoresListWindowCall) Header() http.Header {
 
 func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7712,6 +7410,15 @@ type ScoresSubmitCall struct {
 }
 
 // Submit: Submits a score to the specified leaderboard.
+//
+// - leaderboardId: The ID of the leaderboard.
+// - score: The score you're submitting. The submitted score is ignored
+//   if it is worse than a previously submitted score, where worse
+//   depends on the leaderboard sort order. The meaning of the score
+//   value depends on the leaderboard format type. For fixed-point, the
+//   score represents the raw value. For time, the score represents
+//   elapsed time in milliseconds. For currency, the score represents a
+//   value in micro units.
 func (r *ScoresService) Submit(leaderboardId string, score int64) *ScoresSubmitCall {
 	c := &ScoresSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -7762,7 +7469,7 @@ func (c *ScoresSubmitCall) Header() http.Header {
 
 func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7917,7 +7624,7 @@ func (c *ScoresSubmitMultipleCall) Header() http.Header {
 
 func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8016,6 +7723,8 @@ type SnapshotsGetCall struct {
 }
 
 // Get: Retrieves the metadata for a given snapshot ID.
+//
+// - snapshotId: The ID of the snapshot.
 func (r *SnapshotsService) Get(snapshotId string) *SnapshotsGetCall {
 	c := &SnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshotId = snapshotId
@@ -8066,7 +7775,7 @@ func (c *SnapshotsGetCall) Header() http.Header {
 
 func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8173,6 +7882,9 @@ type SnapshotsListCall struct {
 
 // List: Retrieves a list of snapshots created by your application for
 // the player corresponding to the player ID.
+//
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *SnapshotsService) List(playerId string) *SnapshotsListCall {
 	c := &SnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -8239,7 +7951,7 @@ func (c *SnapshotsListCall) Header() http.Header {
 
 func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8365,148 +8077,6 @@ func (c *SnapshotsListCall) Pages(ctx context.Context, f func(*SnapshotListRespo
 	}
 }
 
-// method id "games.snapshotsExtended.resolveSnapshotHead":
-
-type SnapshotsExtendedResolveSnapshotHeadCall struct {
-	s                          *Service
-	snapshotName               string
-	resolvesnapshotheadrequest *ResolveSnapshotHeadRequest
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
-}
-
-// ResolveSnapshotHead: Resolves any potential conflicts according to
-// the resolution policy specified in the request and returns the
-// snapshot head after the resolution.
-func (r *SnapshotsExtendedService) ResolveSnapshotHead(snapshotName string, resolvesnapshotheadrequest *ResolveSnapshotHeadRequest) *SnapshotsExtendedResolveSnapshotHeadCall {
-	c := &SnapshotsExtendedResolveSnapshotHeadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.snapshotName = snapshotName
-	c.resolvesnapshotheadrequest = resolvesnapshotheadrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *SnapshotsExtendedResolveSnapshotHeadCall) Fields(s ...googleapi.Field) *SnapshotsExtendedResolveSnapshotHeadCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *SnapshotsExtendedResolveSnapshotHeadCall) Context(ctx context.Context) *SnapshotsExtendedResolveSnapshotHeadCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *SnapshotsExtendedResolveSnapshotHeadCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *SnapshotsExtendedResolveSnapshotHeadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resolvesnapshotheadrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/snapshotsExtended/{snapshotName}:resolveHead")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"snapshotName": c.snapshotName,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "games.snapshotsExtended.resolveSnapshotHead" call.
-// Exactly one of *ResolveSnapshotHeadResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *ResolveSnapshotHeadResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *SnapshotsExtendedResolveSnapshotHeadCall) Do(opts ...googleapi.CallOption) (*ResolveSnapshotHeadResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ResolveSnapshotHeadResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Resolves any potential conflicts according to the resolution policy specified in the request and returns the snapshot head after the resolution.",
-	//   "flatPath": "games/v1/snapshotsExtended/{snapshotName}:resolveHead",
-	//   "httpMethod": "POST",
-	//   "id": "games.snapshotsExtended.resolveSnapshotHead",
-	//   "parameterOrder": [
-	//     "snapshotName"
-	//   ],
-	//   "parameters": {
-	//     "snapshotName": {
-	//       "description": "Required. Name of the snapshot.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "games/v1/snapshotsExtended/{snapshotName}:resolveHead",
-	//   "request": {
-	//     "$ref": "ResolveSnapshotHeadRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ResolveSnapshotHeadResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive.appdata",
-	//     "https://www.googleapis.com/auth/games"
-	//   ]
-	// }
-
-}
-
 // method id "games.stats.get":
 
 type StatsGetCall struct {
@@ -8561,7 +8131,7 @@ func (c *StatsGetCall) Header() http.Header {
 
 func (c *StatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

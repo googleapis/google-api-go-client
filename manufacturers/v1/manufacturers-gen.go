@@ -807,6 +807,17 @@ type AccountsProductsDeleteCall struct {
 }
 
 // Delete: Deletes the product from a Manufacturer Center account.
+//
+// - name: Name in the format
+//   `{target_country}:{content_language}:{product_id}`.
+//   `target_country` - The target country of the product as a CLDR
+//   territory code (for example, US). `content_language` - The content
+//   language of the product as a two-letter ISO 639-1 language code
+//   (for example, en). `product_id` - The ID of the product. For more
+//   information, see
+//   https://support.google.com/manufacturers/answer/6124116#id.
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Delete(parent string, name string) *AccountsProductsDeleteCall {
 	c := &AccountsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -841,7 +852,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -953,6 +964,17 @@ type AccountsProductsGetCall struct {
 // process. Changes are only visible after it has been processed. While
 // some issues may be available once the product has been processed,
 // other issues may take days to appear.
+//
+// - name: Name in the format
+//   `{target_country}:{content_language}:{product_id}`.
+//   `target_country` - The target country of the product as a CLDR
+//   territory code (for example, US). `content_language` - The content
+//   language of the product as a two-letter ISO 639-1 language code
+//   (for example, en). `product_id` - The ID of the product. For more
+//   information, see
+//   https://support.google.com/manufacturers/answer/6124116#id.
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Get(parent string, name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1011,7 +1033,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1139,6 +1161,9 @@ type AccountsProductsListCall struct {
 }
 
 // List: Lists all the products in a Manufacturer Center account.
+//
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1210,7 +1235,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1374,6 +1399,17 @@ type AccountsProductsUpdateCall struct {
 // retrieved. Until then, new products will be unavailable, and
 // retrieval of previously uploaded products will return the original
 // state of the product.
+//
+// - name: Name in the format
+//   `{target_country}:{content_language}:{product_id}`.
+//   `target_country` - The target country of the product as a CLDR
+//   territory code (for example, US). `content_language` - The content
+//   language of the product as a two-letter ISO 639-1 language code
+//   (for example, en). `product_id` - The ID of the product. For more
+//   information, see
+//   https://support.google.com/manufacturers/answer/6124116#id.
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Update(parent string, name string, attributes *Attributes) *AccountsProductsUpdateCall {
 	c := &AccountsProductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1409,7 +1445,7 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210327")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210423")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

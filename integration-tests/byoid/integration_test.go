@@ -32,28 +32,32 @@ package byoid
 import (
 	"context"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"testing"
 
+	"golang.org/x/oauth2/google"
+	"google.golang.org/api/dns/v1"
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
-
-	"google.golang.org/api/dns/v1"
 )
 
 const (
 	envCredentials  = "GCLOUD_TESTS_GOLANG_KEY"
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
+	envAudienceAWS  = "GCLOUD_TESTS_GOLANG_AUDIENCE_AWS"
 	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
 )
 
 var (
 	oidcAudience string
+	awsAudience  string
 	oidcToken    string
 	clientID     string
 	projectID    string
@@ -75,6 +79,12 @@ func TestMain(m *testing.M) {
 	if oidcAudience == "" {
 		log.Fatalf("Please set %s to the OIDC Audience", envAudienceOIDC)
 	}
+
+	awsAudience = os.Getenv(envAudienceAWS)
+	if awsAudience == "" {
+		log.Fatalf("Please set %s to the AWS Audience", envAudienceAWS)
+	}
+
 	var err error
 
 	clientID, err = getClientID(keyFileName)
@@ -106,8 +116,7 @@ func getClientID(keyFileName string) (string, error) {
 
 	decoder := json.NewDecoder(kf)
 	var keyFileSettings keyFile
-	err = decoder.Decode(&keyFileSettings)
-	if err != nil {
+	if err = decoder.Decode(&keyFileSettings); err != nil {
 		return "", err
 	}
 
@@ -174,15 +183,11 @@ type config struct {
 }
 
 type credentialSource struct {
-	File string `json:"file,omitempty"`
-
-	URL     string            `json:"url,omitempty"`
-	Headers map[string]string `json:"headers,omitempty"`
-
+	File                        string `json:"file,omitempty"`
+	URL                         string `json:"url,omitempty"`
 	EnvironmentID               string `json:"environment_id,omitempty"`
 	RegionURL                   string `json:"region_url"`
 	RegionalCredVerificationURL string `json:"regional_cred_verification_url,omitempty"`
-	Format                      string `json:"format,omitempty"`
 }
 
 // Tests to make sure File based external credentials continues to work.
@@ -228,6 +233,94 @@ func TestURLBasedCredentials(t *testing.T) {
 		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
 		CredentialSource: credentialSource{
 			URL: ts.URL,
+		},
+	})
+}
+
+// Tests to make sure AWS based external credentials work properly.
+func TestAWSBasedCredentials(t *testing.T) {
+	data := url.Values{}
+	data.Set("audience", clientID)
+	data.Set("includeEmail", "true")
+
+	client, err := google.DefaultClient(context.Background(), "https://www.googleapis.com/auth/cloud-platform")
+	if err != nil {
+		t.Fatalf("Failed to create default client: %v", err)
+	}
+	resp, err := client.PostForm(fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIdToken", clientID), data)
+	if err != nil {
+		t.Fatalf("Failed to generate an ID token: %v", err)
+	}
+	if resp.StatusCode != 200 {
+		t.Fatalf("Failed to get Google ID token for AWS test: %v", err)
+	}
+
+	var res map[string]interface{}
+
+	if err = json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		t.Fatalf("Could not successfully parse response from generateIDToken: %v", err)
+	}
+	token, ok := res["token"]
+	if !ok {
+		t.Fatalf("Didn't receieve an ID token back from generateIDToken")
+	}
+
+	data = url.Values{}
+	data.Set("Action", "AssumeRoleWithWebIdentity")
+	data.Set("Version", "2011-06-15")
+	data.Set("DurationSeconds", "3600")
+	data.Set("RoleSessionName", os.Getenv("GCLOUD_TESTS_GOLANG_AWS_ROLE_NAME"))
+	data.Set("RoleArn", os.Getenv("GCLOUD_TESTS_GOLANG_AWS_ROLE_ID"))
+	data.Set("WebIdentityToken", token.(string))
+
+	resp, err = http.PostForm("https://sts.amazonaws.com/", data)
+	if err != nil {
+		t.Fatalf("Failed to post data to AWS: %v", err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("Failed to parse response body from AWS: %v", err)
+	}
+
+	var respVars struct {
+		SessionToken    string `xml:"AssumeRoleWithWebIdentityResult>Credentials>SessionToken"`
+		SecretAccessKey string `xml:"AssumeRoleWithWebIdentityResult>Credentials>SecretAccessKey"`
+		AccessKeyID     string `xml:"AssumeRoleWithWebIdentityResult>Credentials>AccessKeyId"`
+	}
+
+	if err = xml.Unmarshal(bodyBytes, &respVars); err != nil {
+		t.Fatalf("Failed to unmarshal XML response from AWS.")
+	}
+
+	if respVars.SessionToken == "" || respVars.SecretAccessKey == "" || respVars.AccessKeyID == "" {
+		t.Fatalf("Couldn't find the required variables in the response from the AWS server.")
+	}
+
+	currSessTokEnv := os.Getenv("AWS_SESSION_TOKEN")
+	defer os.Setenv("AWS_SESSION_TOKEN", currSessTokEnv)
+	os.Setenv("AWS_SESSION_TOKEN", respVars.SessionToken)
+
+	currSecAccKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
+	defer os.Setenv("AWS_SECRET_ACCESS_KEY", currSecAccKey)
+	os.Setenv("AWS_SECRET_ACCESS_KEY", respVars.SecretAccessKey)
+
+	currAccKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
+	defer os.Setenv("AWS_ACCESS_KEY_ID", currAccKeyID)
+	os.Setenv("AWS_ACCESS_KEY_ID", respVars.AccessKeyID)
+
+	currRegion := os.Getenv("AWS_REGION")
+	defer os.Setenv("AWS_REGION", currRegion)
+	os.Setenv("AWS_REGION", "us-east-1")
+
+	testBYOID(t, config{
+		Type:                           "external_account",
+		Audience:                       awsAudience,
+		SubjectTokenType:               "urn:ietf:params:aws:token-type:aws4_request",
+		TokenURL:                       "https://sts.googleapis.com/v1/token",
+		ServiceAccountImpersonationURL: fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", clientID),
+		CredentialSource: credentialSource{
+			EnvironmentID:               "aws1",
+			RegionalCredVerificationURL: "https://sts.us-east-1.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
 		},
 	})
 }

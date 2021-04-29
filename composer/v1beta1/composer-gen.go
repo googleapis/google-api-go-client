@@ -320,8 +320,8 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EncryptionConfig: The encryption options for the Composer environment
-// and its dependencies.
+// EncryptionConfig: The encryption options for the Cloud Composer
+// environment and its dependencies.
 type EncryptionConfig struct {
 	// KmsKeyName: Optional. Customer-managed Encryption Key available
 	// through Google's Key Management Service. Cannot be updated. If not
@@ -445,8 +445,8 @@ type EnvironmentConfig struct {
 	// instance used internally by Apache Airflow software.
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
 
-	// EncryptionConfig: Optional. The encryption options for the Composer
-	// environment and its dependencies. Cannot be updated.
+	// EncryptionConfig: Optional. The encryption options for the Cloud
+	// Composer environment and its dependencies. Cannot be updated.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
@@ -860,9 +860,9 @@ type NodeConfig struct {
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 
 	// ServiceAccount: Optional. The Google Cloud Platform Service Account
-	// to be used by the node VMs. If a service account is not specified,
+	// to be used by the workloads. If a service account is not specified,
 	// the "default" Compute Engine service account is used. Cannot be
-	// updated.
+	// updated .
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Subnetwork: Optional. The Compute Engine subnetwork to be used for
@@ -1082,7 +1082,7 @@ type PrivateEnvironmentConfig struct {
 
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
 	// Composer environment is created. If this field is set to true,
-	// `IPAllocationPolicy.use_ip_aliases` must be set to true.
+	// `IPAllocationPolicy.use_ip_aliases` must be set to true .
 	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
 
 	// PrivateClusterConfig: Optional. Configuration for the private GKE
@@ -1374,7 +1374,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1516,7 +1516,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1661,7 +1661,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1822,7 +1822,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2081,7 +2081,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2232,7 +2232,7 @@ func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Header() http.Header
 
 func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2406,7 +2406,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2581,7 +2581,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2726,7 +2726,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2902,7 +2902,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210424")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

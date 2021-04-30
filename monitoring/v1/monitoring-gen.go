@@ -1297,9 +1297,9 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanContext: The context of a span, attached to Exemplars in
-// Distribution values during aggregation.It contains the name of a span
-// with format:
+// SpanContext: The context of a span. This is attached to an Exemplar
+// in Distribution values during aggregation.It contains the name of a
+// span with format:
 // projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
 type SpanContext struct {
 	// SpanName: The resource name of the span. The format is:
@@ -1903,7 +1903,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210429")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2049,7 +2049,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210429")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2200,7 +2200,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210429")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2369,7 +2369,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210429")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2543,7 +2543,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210426")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210429")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

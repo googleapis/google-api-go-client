@@ -1,5 +1,13 @@
 # Changes
 
+## [0.46.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.45.0...v0.46.0) (2021-05-03)
+
+
+### Features
+
+* add impersonate package ([#927](https://www.github.com/googleapis/google-api-go-client/issues/927)) ([#991](https://www.github.com/googleapis/google-api-go-client/issues/991)) ([4f8e0b2](https://www.github.com/googleapis/google-api-go-client/commit/4f8e0b2cef08407ea8e0ef389bd002240f99a318))
+* **all:** auto-regenerate discovery clients , refs [#1004](https://www.github.com/googleapis/google-api-go-client/issues/1004) [#1001](https://www.github.com/googleapis/google-api-go-client/issues/1001) [#1000](https://www.github.com/googleapis/google-api-go-client/issues/1000) [#999](https://www.github.com/googleapis/google-api-go-client/issues/999) [#998](https://www.github.com/googleapis/google-api-go-client/issues/998) [#996](https://www.github.com/googleapis/google-api-go-client/issues/996) [#993](https://www.github.com/googleapis/google-api-go-client/issues/993) [#992](https://www.github.com/googleapis/google-api-go-client/issues/992) [#990](https://www.github.com/googleapis/google-api-go-client/issues/990) [#988](https://www.github.com/googleapis/google-api-go-client/issues/988)
+
 ## [0.45.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.44.0...v0.45.0) (2021-04-20)
 
 

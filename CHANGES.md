@@ -2,6 +2,12 @@
 
 ## [0.46.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.45.0...v0.46.0) (2021-05-03)
 
+### Notice
+
+As a part of the changes that were made in #927 it is now recommended that all impersonation
+is done with the new impersonate package. Existing users of the experimental [option.ImpersonateCredentials](https://pkg.go.dev/google.golang.org/api/option#ImpersonateCredentials)
+should consider migrating code to use this new package. See [this example](https://pkg.go.dev/google.golang.org/api/impersonate#example-CredentialsTokenSource-ServiceAccount)
+for usage of the new package.
 
 ### Features
 

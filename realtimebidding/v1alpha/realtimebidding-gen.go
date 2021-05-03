@@ -169,6 +169,97 @@ type BiddingFunction struct {
 	// .
 	Name string `json:"name,omitempty"`
 
+	// Type: The type of the bidding function to be created.
+	//
+	// Possible values:
+	//   "FUNCTION_TYPE_UNSPECIFIED" - Default value that should not be
+	// used.
+	//   "TURTLEDOVE_SIMULATION_BIDDING_FUNCTION" - Bidding function that
+	// can be used by Authorized Buyers in the original TURTLEDOVE
+	// simulation. See The function takes in a Javascript object, `inputs`,
+	// that contains the following named fields:
+	// `openrtbContextualBidRequest` OR `googleContextualBidRequest`,
+	// `customContextualSignal`, `interestBasedBidData`,
+	// `interestGroupData`, `recentImpressionAges`, and returns the bid
+	// price CPM. Example: ``` /* Returns a bid price CPM. * * @param
+	// {Object} inputs an object with the * following named fields: * -
+	// openrtbContextualBidRequest * OR googleContextualBidRequest * -
+	// customContextualSignal * - interestBasedBidData * - interestGroupData
+	// * - recentImpressionAges */ function biddingFunction(inputs) { ...
+	// return inputs.interestBasedBidData.cpm *
+	// inputs.customContextualSignals.placementMultiplier; } ```
+	//   "FLEDGE_BIDDING_FUNCTION" - Buyer's interest group bidding function
+	// that can be used by Authorized Buyers in the FLEDGE simulation. See
+	// the FLEDGE explainer at
+	// https://github.com/WICG/turtledove/blob/main/FLEDGE.md#32-on-device-bidding.
+	// The function takes one argument, `inputs`, that contains an object
+	// with the following named fields of the form: ``` { "interestGroup" :
+	// [ { "buyerCreativeId": "...", # Ad creative ID "adData": { # any JSON
+	// of your choosing }, "userBiddingSignals": { . # any JSON of your
+	// choosing } } ], "auctionSignals": { "url: # string, "slotVisibility":
+	// # enum value, "slotDimensions": [ { "height": # number value "width":
+	// # number value } ] }, "perBuyerSignals": { # Any JSON },
+	// "trustedBiddingSignals": { # Any JSON }, "browserSignals": {
+	// "recent_impression_ages_secs: [ # number ] } } ``` `interestGroup`:
+	// An object containing a list of `ad` objects, which contain the
+	// following named fields: - `buyerCreativeId`: The ad creative ID
+	// string. - `adData`: Any JSON value of the bidder's choosing to
+	// contain data associated with an ad provided in
+	// `BidResponse.ad.adslot.ad_data` for the Google Authorized Buyers
+	// protocol and `BidResponse.seatbid.bid.ext.ad_data` for the OpenRTB
+	// protocol. - `userBiddingSignals`: Any JSON value of the bidder's
+	// choosing containing interest group data that corresponds to
+	// user_bidding_signals (as in FLEDGE). This field will be populated
+	// from `BidResponse.interest_group_map.user_bidding_signals` for Google
+	// Authorized Buyers protocol and
+	// `BidResponse.ext.interest_group_map.user_bidding_signals` for the
+	// OpenRTB protocol. `auctionSignals`: Contains data from the seller. It
+	// corresponds to the auction signals data described in the FLEDGE
+	// proposal. It is an object containing the following named fields: -
+	// `url`: The string URL of the page with parameters removed. -
+	// `slotVisibility`: Enum of one of the following potential values: -
+	// NO_DETECTION = 0 - ABOVE_THE_FOLD = 1 - BELOW_THE_FOLD = 2 -
+	// `slotDimensions`: A list of objects containing containing width and
+	// height pairs in `width` and `height` fields, respectively, from
+	// `BidRequest.adslot.width` and `BidRequest.adslot.height` for the
+	// Google Authorized Buyers protocol and
+	// `BidRequest.imp.banner.format.w` and `BidRequest.imp.banner.format.h`
+	// for the OpenRTB protocol. `perBuyerSignals`: The contextual signals
+	// from the bid response that are populated in
+	// `BidResponse.interest_group_bidding.interest_group_buyers.per_buyer_si
+	// gnals` for the Google Authorized Buyers protocol and
+	// `BidResponse.ext.interest_group_bidding.interest_group_buyers.per_buye
+	// r_signals` for the OpenRTB protocol. These signals can be of any JSON
+	// format of your choosing, however, the buyer's domain name must match
+	// between: - the interest group response in
+	// `BidResponse.interest_group_map.buyer_domain` for the Google
+	// Authorized Buyers protocol or in
+	// `BidResponse.ext.interest_group_map.buyer_domain` for the OpenRTB
+	// protocol. - the contextual response as a key to the map in
+	// `BidResponse.interest_group_bidding.interest_group_buyers` for the
+	// Google Authorized Buyers protocol or in
+	// `BidResponse.ext.interest_group_bidding.interest_group_buyers` for
+	// the OpenRTB protocol. In other words, there must be a match between
+	// the buyer domain of the contextual per_buyer_signals and the domain
+	// of an interest group. `trustedBiddingSignals`: The trusted bidding
+	// signals that corresponds to the trusted_bidding_signals in the FLEDGE
+	// proposal. It is provided in the interest group response as
+	// `BidResponse.interest_group_map.user_bidding_signals` for the Google
+	// Authorized Buyers protocol and
+	// `BidResponse.ext.interest_group_map.user_bidding_signals` for the
+	// OpenRTB protocol. This field can be any JSON format of your choosing.
+	// `browserSignals`: An object of simulated browser-provider signals. It
+	// is an object with a single named field,
+	// `recent_impression_ages_secs`, that contains a list of estimated
+	// number value recent impression ages in seconds for a given interest
+	// group. The function returns the string creative ID of the selected
+	// ad, the bid price CPM, and (optionally) selected product IDs.
+	// Example: ``` function biddingFunction(inputs) { ... return {
+	// "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3,
+	// "productIds": ["product_id_1", "product_id_2", "product_id_3"] } }
+	// ```
+	Type string `json:"type,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -285,7 +376,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210502")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -454,7 +545,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210422")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210502")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

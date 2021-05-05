@@ -12,6 +12,13 @@ export GOOGLE_CLOUD_PROJECT="dulcet-port-762"
 export GCLOUD_TESTS_IMPERSONATE_READER_KEY="${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-impersonate-reader-service-account"
 export GCLOUD_TESTS_IMPERSONATE_READER_EMAIL="impersonate-reader@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 export GCLOUD_TESTS_IMPERSONATE_WRITER_EMAIL="impersonate-writer@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+export GCLOUD_TESTS_GOLANG_PROJECT_NUMBER=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-project-number`
+export GCLOUD_TESTS_GOLANG_SERVICE_ACCOUNT_CLIENT_ID=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-client-id`
+export GCLOUD_TESTS_GOLANG_AWS_ACCOUNT_ID=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-aws-acc-id`
+export GCLOUD_TESTS_GOLANG_AWS_ROLE_NAME=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-aws-role-name`
+export GCLOUD_TESTS_GOLANG_AWS_ROLE_ID="arn:aws:iam::$GCLOUD_TESTS_GOLANG_AWS_ACCOUNT_ID:role/$GCLOUD_TESTS_GOLANG_AWS_ROLE_NAME"
+export GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-aud-oidc`
+export GCLOUD_TESTS_GOLANG_AUDIENCE_AWS=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-aud-aws`
 
 # Display commands being run
 set -x

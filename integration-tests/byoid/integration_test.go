@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build integration
-
 // To run this test locally, you will need to do the following:
 // • Navigate to your Google Cloud Project
 // • Get a copy of a Service Account Key File for testing (should be in .json format)
@@ -33,6 +31,7 @@ import (
 	"context"
 	"encoding/json"
 	"encoding/xml"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -49,10 +48,10 @@ import (
 )
 
 const (
-	envCredentials  = "GCLOUD_TESTS_GOLANG_KEY"
+	envCredentials  = "GOOGLE_APPLICATION_CREDENTIALS"
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
 	envAudienceAWS  = "GCLOUD_TESTS_GOLANG_AUDIENCE_AWS"
-	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
+	envProject      = "GOOGLE_CLOUD_PROJECT"
 )
 
 var (
@@ -65,6 +64,11 @@ var (
 
 // TestMain contains all of the setup code that needs to be run once before any of the tests are run
 func TestMain(m *testing.M) {
+	flag.Parse()
+	if testing.Short() {
+		// This line runs all of our individual tests
+		os.Exit(m.Run())
+	}
 	keyFileName := os.Getenv(envCredentials)
 	if keyFileName == "" {
 		log.Fatalf("Please set %s to your keyfile", envCredentials)
@@ -192,6 +196,9 @@ type credentialSource struct {
 
 // Tests to make sure File based external credentials continues to work.
 func TestFileBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	// Set up Token as a file
 	tokenFile, err := ioutil.TempFile("", "token.txt")
 	if err != nil {
@@ -217,6 +224,9 @@ func TestFileBasedCredentials(t *testing.T) {
 
 // Tests to make sure URL based external credentials work properly.
 func TestURLBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	//Set up a server to return a token
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "GET" {
@@ -239,6 +249,9 @@ func TestURLBasedCredentials(t *testing.T) {
 
 // Tests to make sure AWS based external credentials work properly.
 func TestAWSBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	data := url.Values{}
 	data.Set("audience", clientID)
 	data.Set("includeEmail", "true")

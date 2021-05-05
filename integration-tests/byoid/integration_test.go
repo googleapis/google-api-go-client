@@ -31,6 +31,7 @@ import (
 	"context"
 	"encoding/json"
 	"encoding/xml"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -63,6 +64,11 @@ var (
 
 // TestMain contains all of the setup code that needs to be run once before any of the tests are run
 func TestMain(m *testing.M) {
+	flag.Parse()
+	if testing.Short() {
+		// This line runs all of our individual tests
+		os.Exit(m.Run())
+	}
 	keyFileName := os.Getenv(envCredentials)
 	if keyFileName == "" {
 		log.Fatalf("Please set %s to your keyfile", envCredentials)
@@ -142,9 +148,6 @@ func generateGoogleToken(keyFileName string) (string, error) {
 // In each test we will set up whatever preconditions we need,
 // and then use this function.
 func testBYOID(t *testing.T, c config) {
-	if testing.Short() {
-		t.Skip("skipping integration test")
-	}
 	t.Helper()
 
 	// Set up config file.

@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build integration
-
 // To run this test locally, you will need to do the following:
 // • Navigate to your Google Cloud Project
 // • Get a copy of a Service Account Key File for testing (should be in .json format)
@@ -52,7 +50,7 @@ const (
 	envCredentials  = "GCLOUD_TESTS_GOLANG_KEY"
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
 	envAudienceAWS  = "GCLOUD_TESTS_GOLANG_AUDIENCE_AWS"
-	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
+	envProject      = "GOOGLE_CLOUD_PROJECT"
 )
 
 var (
@@ -144,6 +142,9 @@ func generateGoogleToken(keyFileName string) (string, error) {
 // In each test we will set up whatever preconditions we need,
 // and then use this function.
 func testBYOID(t *testing.T, c config) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	t.Helper()
 
 	// Set up config file.
@@ -192,6 +193,9 @@ type credentialSource struct {
 
 // Tests to make sure File based external credentials continues to work.
 func TestFileBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	// Set up Token as a file
 	tokenFile, err := ioutil.TempFile("", "token.txt")
 	if err != nil {
@@ -217,6 +221,9 @@ func TestFileBasedCredentials(t *testing.T) {
 
 // Tests to make sure URL based external credentials work properly.
 func TestURLBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	//Set up a server to return a token
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "GET" {
@@ -239,6 +246,9 @@ func TestURLBasedCredentials(t *testing.T) {
 
 // Tests to make sure AWS based external credentials work properly.
 func TestAWSBasedCredentials(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	data := url.Values{}
 	data.Set("audience", clientID)
 	data.Set("includeEmail", "true")

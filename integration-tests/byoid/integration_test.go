@@ -47,7 +47,7 @@ import (
 )
 
 const (
-	envCredentials  = "GCLOUD_TESTS_GOLANG_KEY"
+	envCredentials  = "GOOGLE_APPLICATION_CREDENTIALS"
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
 	envAudienceAWS  = "GCLOUD_TESTS_GOLANG_AUDIENCE_AWS"
 	envProject      = "GOOGLE_CLOUD_PROJECT"

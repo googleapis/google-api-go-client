@@ -776,10 +776,6 @@ type TransferLocationRequest struct {
 	// transfer the location to (for example, "accounts/{account}").
 	DestinationAccount string `json:"destinationAccount,omitempty"`
 
-	// Name: Required. The name of the location to transfer.
-	// `locations/{location_id}`.
-	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DestinationAccount")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -853,7 +849,7 @@ func (c *AccountsCreateCall) Header() http.Header {
 
 func (c *AccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -989,7 +985,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1168,7 +1164,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1349,7 +1345,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1503,7 +1499,7 @@ func (c *AccountsAdminsCreateCall) Header() http.Header {
 
 func (c *AccountsAdminsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1641,7 +1637,7 @@ func (c *AccountsAdminsDeleteCall) Header() http.Header {
 
 func (c *AccountsAdminsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1782,7 +1778,7 @@ func (c *AccountsAdminsListCall) Header() http.Header {
 
 func (c *AccountsAdminsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1928,7 +1924,7 @@ func (c *AccountsAdminsPatchCall) Header() http.Header {
 
 func (c *AccountsAdminsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2074,7 +2070,7 @@ func (c *AccountsInvitationsAcceptCall) Header() http.Header {
 
 func (c *AccountsInvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2214,7 +2210,7 @@ func (c *AccountsInvitationsDeclineCall) Header() http.Header {
 
 func (c *AccountsInvitationsDeclineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2370,7 +2366,7 @@ func (c *AccountsInvitationsListCall) Header() http.Header {
 
 func (c *AccountsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2461,26 +2457,27 @@ func (c *AccountsInvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInv
 
 }
 
-// method id "mybusinessaccountmanagement.locations.transferLocation":
+// method id "mybusinessaccountmanagement.locations.transfer":
 
-type LocationsTransferLocationCall struct {
+type LocationsTransferCall struct {
 	s                       *Service
-	locationsId             string
+	name                    string
 	transferlocationrequest *TransferLocationRequest
 	urlParams_              gensupport.URLParams
 	ctx_                    context.Context
 	header_                 http.Header
 }
 
-// TransferLocation: Moves a location from an account that the user owns
-// to another account that the same user administers. The user must be
-// an owner of the account the location is currently associated with and
+// Transfer: Moves a location from an account that the user owns to
+// another account that the same user administers. The user must be an
+// owner of the account the location is currently associated with and
 // must also be at least a manager of the destination account.
 //
-// - locationsId: .
-func (r *LocationsService) TransferLocation(locationsId string, transferlocationrequest *TransferLocationRequest) *LocationsTransferLocationCall {
-	c := &LocationsTransferLocationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.locationsId = locationsId
+// - name: The name of the location to transfer.
+//   `locations/{location_id}`.
+func (r *LocationsService) Transfer(name string, transferlocationrequest *TransferLocationRequest) *LocationsTransferCall {
+	c := &LocationsTransferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
 	c.transferlocationrequest = transferlocationrequest
 	return c
 }
@@ -2488,7 +2485,7 @@ func (r *LocationsService) TransferLocation(locationsId string, transferlocation
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *LocationsTransferLocationCall) Fields(s ...googleapi.Field) *LocationsTransferLocationCall {
+func (c *LocationsTransferCall) Fields(s ...googleapi.Field) *LocationsTransferCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2496,23 +2493,23 @@ func (c *LocationsTransferLocationCall) Fields(s ...googleapi.Field) *LocationsT
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *LocationsTransferLocationCall) Context(ctx context.Context) *LocationsTransferLocationCall {
+func (c *LocationsTransferCall) Context(ctx context.Context) *LocationsTransferCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *LocationsTransferLocationCall) Header() http.Header {
+func (c *LocationsTransferCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *LocationsTransferLocationCall) doRequest(alt string) (*http.Response, error) {
+func (c *LocationsTransferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2525,7 +2522,7 @@ func (c *LocationsTransferLocationCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/locations/{locationsId}:transferLocation")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:transfer")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2533,19 +2530,19 @@ func (c *LocationsTransferLocationCall) doRequest(alt string) (*http.Response, e
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"locationsId": c.locationsId,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "mybusinessaccountmanagement.locations.transferLocation" call.
+// Do executes the "mybusinessaccountmanagement.locations.transfer" call.
 // Exactly one of *Empty or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Empty.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *LocationsTransferLocationCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+func (c *LocationsTransferCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2577,20 +2574,22 @@ func (c *LocationsTransferLocationCall) Do(opts ...googleapi.CallOption) (*Empty
 	return ret, nil
 	// {
 	//   "description": "Moves a location from an account that the user owns to another account that the same user administers. The user must be an owner of the account the location is currently associated with and must also be at least a manager of the destination account.",
-	//   "flatPath": "v1/locations/{locationsId}:transferLocation",
+	//   "flatPath": "v1/locations/{locationsId}:transfer",
 	//   "httpMethod": "POST",
-	//   "id": "mybusinessaccountmanagement.locations.transferLocation",
+	//   "id": "mybusinessaccountmanagement.locations.transfer",
 	//   "parameterOrder": [
-	//     "locationsId"
+	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "locationsId": {
+	//     "name": {
+	//       "description": "Required. The name of the location to transfer. `locations/{location_id}`.",
 	//       "location": "path",
+	//       "pattern": "^locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/locations/{locationsId}:transferLocation",
+	//   "path": "v1/{+name}:transfer",
 	//   "request": {
 	//     "$ref": "TransferLocationRequest"
 	//   },
@@ -2653,7 +2652,7 @@ func (c *LocationsAdminsCreateCall) Header() http.Header {
 
 func (c *LocationsAdminsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2791,7 +2790,7 @@ func (c *LocationsAdminsDeleteCall) Header() http.Header {
 
 func (c *LocationsAdminsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2932,7 +2931,7 @@ func (c *LocationsAdminsListCall) Header() http.Header {
 
 func (c *LocationsAdminsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3079,7 +3078,7 @@ func (c *LocationsAdminsPatchCall) Header() http.Header {
 
 func (c *LocationsAdminsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

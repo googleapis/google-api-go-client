@@ -4934,7 +4934,7 @@
       }
     }
   },
-  "revision": "20210422",
+  "revision": "20210429",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -5705,6 +5705,10 @@
         "description": {
           "description": "Optional. A description of this metric, which is used in documentation. The maximum length of the description is 8000 characters.",
           "type": "string"
+        },
+        "disabled": {
+          "description": "Optional. If set to True, then this metric is disabled and it does not generate any points.",
+          "type": "boolean"
         },
         "filter": {
           "description": "Required. An advanced logs filter (https://cloud.google.com/logging/docs/view/advanced_filters) which is used to match log entries. Example: \"resource.type=gae_app AND severity\u003e=ERROR\" The maximum length of the filter is 20000 characters.",

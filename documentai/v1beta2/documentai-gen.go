@@ -1479,6 +1479,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	// element on the page.
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// Confidence: Optional. Confidence of detected page element, if
+	// applicable. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
 	LayoutId string `json:"layoutId,omitempty"`
 
@@ -1521,6 +1525,20 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) MarshalJSON() ([
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageBlock: A block has a set of
@@ -3407,6 +3425,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	// element on the page.
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// Confidence: Optional. Confidence of detected page element, if
+	// applicable. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
 	LayoutId string `json:"layoutId,omitempty"`
 
@@ -3449,6 +3471,20 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) MarshalJSON() ([
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageBlock: A block has a set of
@@ -5978,7 +6014,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6123,7 +6159,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6269,7 +6305,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6414,7 +6450,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6568,7 +6604,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6716,7 +6752,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

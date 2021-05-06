@@ -1047,6 +1047,11 @@ type GameServerCluster struct {
 	//   "P4" - Priority 4.
 	AllocationPriority string `json:"allocationPriority,omitempty"`
 
+	// ClusterState: Output only. The state of the Kubernetes cluster, this
+	// will be available if 'view' is set to `FULL` in the relevant
+	// List/Get/Preview request.
+	ClusterState *KubernetesClusterState `json:"clusterState,omitempty"`
+
 	// ConnectionInfo: The game server cluster connection information. This
 	// information is used to manage game server clusters.
 	ConnectionInfo *GameServerClusterConnectionInfo `json:"connectionInfo,omitempty"`
@@ -1411,6 +1416,82 @@ type GkeHubClusterReference struct {
 
 func (s *GkeHubClusterReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GkeHubClusterReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KubernetesClusterState: The state of the Kubernetes cluster.
+type KubernetesClusterState struct {
+	// AgonesVersionInstalled: Output only. The version of Agones currently
+	// installed in the registered Kubernetes cluster.
+	AgonesVersionInstalled string `json:"agonesVersionInstalled,omitempty"`
+
+	// AgonesVersionTargeted: Output only. The version of Agones that is
+	// targeted to be installed in the cluster.
+	AgonesVersionTargeted string `json:"agonesVersionTargeted,omitempty"`
+
+	// InstallationState: Output only. The state for the installed versions
+	// of Agones/Kubernetes.
+	//
+	// Possible values:
+	//   "INSTALLATION_STATE_UNSPECIFIED" - The default value. This value is
+	// used if the state is omitted.
+	//   "AGONES_KUBERNETES_VERSION_SUPPORTED" - The combination of Agones
+	// and Kubernetes versions is supported by Google Cloud Game Servers.
+	//   "AGONES_VERSION_UNSUPPORTED" - The installed version of Agones is
+	// not supported by Google Cloud Game Servers.
+	//   "AGONES_KUBERNETES_VERSION_UNSUPPORTED" - The installed version of
+	// Agones is supported by Google Cloud Game Servers, but the installed
+	// version of Kubernetes is not recommended or supported by the version
+	// of Agones.
+	//   "AGONES_VERSION_UNRECOGNIZED" - The installed version of Agones is
+	// not recognized, where the Agones controller's image name does not
+	// have version string as {major}.{minor}(.{patch}).
+	//   "KUBERNETES_VERSION_UNRECOGNIZED" - The server version of
+	// Kubernetes cluster is not recognized, where the API server didn't
+	// return parsable version info on path/version.
+	//   "VERSION_VERIFICATION_FAILED" - Failed to read or verify the
+	// version of Agones or Kubernetes. See version_installed_error_message
+	// for details.
+	//   "AGONES_NOT_INSTALLED" - Agones is not installed.
+	InstallationState string `json:"installationState,omitempty"`
+
+	// KubernetesVersionInstalled: Output only. The version of Kubernetes
+	// that is currently used in the registered Kubernetes cluster (as
+	// detected by the Cloud Game Servers service).
+	KubernetesVersionInstalled string `json:"kubernetesVersionInstalled,omitempty"`
+
+	// Provider: Output only. The cloud provider type reported by the first
+	// node's providerID in the list of nodes on the Kubernetes endpoint. On
+	// Kubernetes platforms that support zero-node clusters (like
+	// GKE-on-GCP), the provider type will be empty.
+	Provider string `json:"provider,omitempty"`
+
+	// VersionInstalledErrorMessage: Output only. The detailed error message
+	// for the installed versions of Agones/Kubernetes.
+	VersionInstalledErrorMessage string `json:"versionInstalledErrorMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AgonesVersionInstalled") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgonesVersionInstalled")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KubernetesClusterState) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesClusterState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2049,6 +2130,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // PreviewCreateGameServerClusterResponse: Response message for
 // GameServerClustersService.PreviewCreateGameServerCluster.
 type PreviewCreateGameServerClusterResponse struct {
+	// ClusterState: Output only. The state of the Kubernetes cluster in
+	// preview, this will be available if 'view' is set to `FULL` in the
+	// relevant List/Get/Preview request.
+	ClusterState *KubernetesClusterState `json:"clusterState,omitempty"`
+
 	// Etag: The ETag of the game server cluster.
 	Etag string `json:"etag,omitempty"`
 
@@ -2059,7 +2145,7 @@ type PreviewCreateGameServerClusterResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// ForceSendFields is a list of field names (e.g. "ClusterState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2067,10 +2153,10 @@ type PreviewCreateGameServerClusterResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ClusterState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2871,7 +2957,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3051,7 +3137,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3239,7 +3325,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3387,7 +3473,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3527,7 +3613,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Header(
 
 func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3681,7 +3767,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3845,7 +3931,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4000,7 +4086,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4179,7 +4265,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4373,7 +4459,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4544,7 +4630,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Header() http
 
 func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4704,7 +4790,7 @@ func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4853,7 +4939,7 @@ func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5015,7 +5101,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5175,7 +5261,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5325,7 +5411,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5471,7 +5557,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5652,7 +5738,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Header() http.He
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5840,7 +5926,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5983,7 +6069,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6128,7 +6214,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6304,7 +6390,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6486,7 +6572,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6632,7 +6718,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6776,7 +6862,7 @@ func (c *ProjectsLocationsRealmsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6955,7 +7041,7 @@ func (c *ProjectsLocationsRealmsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7146,7 +7232,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7313,7 +7399,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7477,7 +7563,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7625,7 +7711,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7734,6 +7820,27 @@ func (r *ProjectsLocationsRealmsGameServerClustersService) Get(name string) *Pro
 	return c
 }
 
+// View sets the optional parameter "view": View for the returned
+// GameServerCluster objects. When `FULL` is specified, the
+// `cluster_state` field is also returned in the GameServerCluster
+// object, which includes the state of the referenced Kubernetes cluster
+// such as versions and provider info. The default/unset value is
+// GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not
+// return the `cluster_state` field.
+//
+// Possible values:
+//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - The default / unset value.
+// The API will default to the BASIC view.
+//   "BASIC" - Include basic information of a GameServerCluster resource
+// and omit `cluster_state`. This is the default value (for
+// ListGameServerClusters, GetGameServerCluster and
+// PreviewCreateGameServerCluster).
+//   "FULL" - Include everything.
+func (c *ProjectsLocationsRealmsGameServerClustersGetCall) View(view string) *ProjectsLocationsRealmsGameServerClustersGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7771,7 +7878,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRealmsGameServerClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7847,6 +7954,21 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Do(opts ...googleapi.
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. View for the returned GameServerCluster objects. When `FULL` is specified, the `cluster_state` field is also returned in the GameServerCluster object, which includes the state of the referenced Kubernetes cluster such as versions and provider info. The default/unset value is GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not return the `cluster_state` field.",
+	//       "enum": [
+	//         "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic information of a GameServerCluster resource and omit `cluster_state`. This is the default value (for ListGameServerClusters, GetGameServerCluster and PreviewCreateGameServerCluster).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta/{+name}",
@@ -7913,6 +8035,27 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) PageToken(pageToken 
 	return c
 }
 
+// View sets the optional parameter "view": View for the returned
+// GameServerCluster objects. When `FULL` is specified, the
+// `cluster_state` field is also returned in the GameServerCluster
+// object, which includes the state of the referenced Kubernetes cluster
+// such as versions and provider info. The default/unset value is
+// GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not
+// return the `cluster_state` field.
+//
+// Possible values:
+//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - The default / unset value.
+// The API will default to the BASIC view.
+//   "BASIC" - Include basic information of a GameServerCluster resource
+// and omit `cluster_state`. This is the default value (for
+// ListGameServerClusters, GetGameServerCluster and
+// PreviewCreateGameServerCluster).
+//   "FULL" - Include everything.
+func (c *ProjectsLocationsRealmsGameServerClustersListCall) View(view string) *ProjectsLocationsRealmsGameServerClustersListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7950,7 +8093,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Header() http.Header
 
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8046,6 +8189,21 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Do(opts ...googleapi
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. View for the returned GameServerCluster objects. When `FULL` is specified, the `cluster_state` field is also returned in the GameServerCluster object, which includes the state of the referenced Kubernetes cluster such as versions and provider info. The default/unset value is GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED, same as BASIC, which does not return the `cluster_state` field.",
+	//       "enum": [
+	//         "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic information of a GameServerCluster resource and omit `cluster_state`. This is the default value (for ListGameServerClusters, GetGameServerCluster and PreviewCreateGameServerCluster).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -8143,7 +8301,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8281,6 +8439,22 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) PreviewTime
 	return c
 }
 
+// View sets the optional parameter "view": This field is deprecated,
+// preview will always return KubernetesClusterState.
+//
+// Possible values:
+//   "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED" - The default / unset value.
+// The API will default to the BASIC view.
+//   "BASIC" - Include basic information of a GameServerCluster resource
+// and omit `cluster_state`. This is the default value (for
+// ListGameServerClusters, GetGameServerCluster and
+// PreviewCreateGameServerCluster).
+//   "FULL" - Include everything.
+func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) View(view string) *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8308,7 +8482,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8398,6 +8572,21 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Do(opts ...
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. This field is deprecated, preview will always return KubernetesClusterState.",
+	//       "enum": [
+	//         "GAME_SERVER_CLUSTER_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic information of a GameServerCluster resource and omit `cluster_state`. This is the default value (for ListGameServerClusters, GetGameServerCluster and PreviewCreateGameServerCluster).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta/{+parent}/gameServerClusters:previewCreate",
@@ -8470,7 +8659,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8632,7 +8821,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

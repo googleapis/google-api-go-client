@@ -556,11 +556,63 @@ func (s *CustomerManagedEncryptionStatus) MarshalJSON() ([]byte, error) {
 // DestroySecretVersionRequest: Request message for
 // SecretManagerService.DestroySecretVersion.
 type DestroySecretVersionRequest struct {
+	// Etag: Optional. Etag of the SecretVersion. The request succeeds if it
+	// matches the etag of the currently stored secret version object. If
+	// the etag is omitted, the request succeeds.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DestroySecretVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DestroySecretVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DisableSecretVersionRequest: Request message for
 // SecretManagerService.DisableSecretVersion.
 type DisableSecretVersionRequest struct {
+	// Etag: Optional. Etag of the SecretVersion. The request succeeds if it
+	// matches the etag of the currently stored secret version object. If
+	// the etag is omitted, the request succeeds.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisableSecretVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DisableSecretVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -578,6 +630,32 @@ type Empty struct {
 // EnableSecretVersionRequest: Request message for
 // SecretManagerService.EnableSecretVersion.
 type EnableSecretVersionRequest struct {
+	// Etag: Optional. Etag of the SecretVersion. The request succeeds if it
+	// matches the etag of the currently stored secret version object. If
+	// the etag is omitted, the request succeeds.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnableSecretVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnableSecretVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -1109,6 +1187,9 @@ type Secret struct {
 	// CreateTime: Output only. The time at which the Secret was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Etag: Optional. Etag of the currently stored Secret.
+	Etag string `json:"etag,omitempty"`
+
 	// ExpireTime: Optional. Timestamp in UTC when the Secret is scheduled
 	// to expire. This is always provided on output, regardless of what was
 	// sent on input.
@@ -1210,6 +1291,9 @@ type SecretVersion struct {
 	// DestroyTime: Output only. The time this SecretVersion was destroyed.
 	// Only present if state is DESTROYED.
 	DestroyTime string `json:"destroyTime,omitempty"`
+
+	// Etag: Output only. Etag of the currently stored SecretVersion.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. The resource name of the SecretVersion in the
 	// format `projects/*/secrets/*/versions/*`. SecretVersion IDs in a
@@ -1514,7 +1598,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1686,7 +1770,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1862,7 +1946,7 @@ func (c *ProjectsSecretsAddVersionCall) Header() http.Header {
 
 func (c *ProjectsSecretsAddVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2015,7 +2099,7 @@ func (c *ProjectsSecretsCreateCall) Header() http.Header {
 
 func (c *ProjectsSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2134,6 +2218,14 @@ func (r *ProjectsSecretsService) Delete(name string) *ProjectsSecretsDeleteCall 
 	return c
 }
 
+// Etag sets the optional parameter "etag": Etag of the Secret. The
+// request succeeds if it matches the etag of the currently stored
+// secret object. If the etag is omitted, the request succeeds.
+func (c *ProjectsSecretsDeleteCall) Etag(etag string) *ProjectsSecretsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2161,7 +2253,7 @@ func (c *ProjectsSecretsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2228,6 +2320,11 @@ func (c *ProjectsSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. Etag of the Secret. The request succeeds if it matches the etag of the currently stored secret object. If the etag is omitted, the request succeeds.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The resource name of the Secret to delete in the format `projects/*/secrets/*`.",
 	//       "location": "path",
@@ -2305,7 +2402,7 @@ func (c *ProjectsSecretsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2468,7 +2565,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2637,7 +2734,7 @@ func (c *ProjectsSecretsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,7 +2911,7 @@ func (c *ProjectsSecretsPatchCall) Header() http.Header {
 
 func (c *ProjectsSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2966,7 +3063,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3115,7 +3212,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSecretsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3271,7 +3368,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3410,7 +3507,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3554,7 +3651,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3698,7 +3795,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3854,7 +3951,7 @@ func (c *ProjectsSecretsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4017,7 +4114,7 @@ func (c *ProjectsSecretsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210504")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

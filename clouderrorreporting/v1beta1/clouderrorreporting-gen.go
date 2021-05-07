@@ -860,7 +860,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1078,7 +1078,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1257,11 +1257,12 @@ type ProjectsEventsReportCall struct {
 // authentication. To use an API key, append it to the URL as the value
 // of a `key` parameter. For example: `POST
 // https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`
-// **Note:** Error Reporting (/error-reporting) is a global service
-// built on Cloud Logging and doesn't analyze logs stored in regional
-// log buckets or logs routed to other Google Cloud projects. For more
-// information, see Using Error Reporting with regionalized logs
-// (/error-reporting/docs/regionalization).
+// **Note:** [Error Reporting]
+// (https://cloud.google.com/error-reporting) is a global service built
+// on Cloud Logging and doesn't analyze logs stored in regional log
+// buckets or logs routed to other Google Cloud projects. For more
+// information, see [Using Error Reporting with regionalized logs]
+// (https://cloud.google.com/error-reporting/docs/regionalization).
 //
 // - projectName: The resource name of the Google Cloud Platform
 //   project. Written as `projects/{projectId}`, where `{projectId}` is
@@ -1302,7 +1303,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1366,7 +1367,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	}
 	return ret, nil
 	// {
-	//   "description": "Report an individual error event and record the event to a log. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456` **Note:** [Error Reporting](/error-reporting) is a global service built on Cloud Logging and doesn't analyze logs stored in regional log buckets or logs routed to other Google Cloud projects. For more information, see [Using Error Reporting with regionalized logs](/error-reporting/docs/regionalization).",
+	//   "description": "Report an individual error event and record the event to a log. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456` **Note:** [Error Reporting] (https://cloud.google.com/error-reporting) is a global service built on Cloud Logging and doesn't analyze logs stored in regional log buckets or logs routed to other Google Cloud projects. For more information, see [Using Error Reporting with regionalized logs] (https://cloud.google.com/error-reporting/docs/regionalization).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
 	//   "httpMethod": "POST",
 	//   "id": "clouderrorreporting.projects.events.report",
@@ -1586,7 +1587,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1856,7 +1857,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1995,7 +1996,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

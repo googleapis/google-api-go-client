@@ -1430,24 +1430,21 @@ func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Endpoint: `Endpoint` describes a network endpoint of a service that
+// Endpoint: `Endpoint` describes a network address of a service that
 // serves a set of APIs. It is commonly known as a service endpoint. A
 // service may expose any number of service endpoints, and all service
 // endpoints share the same service definition, such as quota limits and
-// monitoring metrics. Example service configuration: name:
-// library-example.googleapis.com endpoints: # Below entry makes
-// 'google.example.library.v1.Library' # API be served from endpoint
-// address library-example.googleapis.com. # It also allows HTTP OPTIONS
-// calls to be passed to the backend, for # it to decide whether the
-// subsequent cross-origin request is # allowed to proceed. - name:
-// library-example.googleapis.com allow_cors: true
+// monitoring metrics. Example: type: google.api.Service name:
+// library-example.googleapis.com endpoints: # Declares network address
+// `https://library-example.googleapis.com` # for service
+// `library-example.googleapis.com`. The `https` scheme # is implicit
+// for all service endpoints. Other schemes may be # supported in the
+// future. - name: library-example.googleapis.com allow_cors: false -
+// name: content-staging-library-example.googleapis.com # Allows HTTP
+// OPTIONS calls to be passed to the API frontend, for it # to decide
+// whether the subsequent cross-origin request is allowed # to proceed.
+// allow_cors: true
 type Endpoint struct {
-	// Aliases: Unimplemented. Dot not use. DEPRECATED: This field is no
-	// longer supported. Instead of using aliases, please specify multiple
-	// google.api.Endpoint for each of the intended aliases. Additional
-	// names that this endpoint will be hosted on.
-	Aliases []string `json:"aliases,omitempty"`
-
 	// AllowCors: Allowing CORS
 	// (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
 	// cross-domain traffic, would allow the backends served from this
@@ -1466,7 +1463,7 @@ type Endpoint struct {
 	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Aliases") to
+	// ForceSendFields is a list of field names (e.g. "AllowCors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1474,7 +1471,7 @@ type Endpoint struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Aliases") to include in
+	// NullFields is a list of field names (e.g. "AllowCors") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3506,15 +3503,18 @@ func (s *SecondaryIpRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Service: `Service` is the root object of Google service configuration
-// schema. It describes basic information about a service, such as the
-// name and the title, and delegates other aspects to sub-sections. Each
-// sub-section is either a proto message or a repeated proto message
-// that configures a specific aspect, such as auth. See each proto
-// message definition for details. Example: type: google.api.Service
-// name: calendar.googleapis.com title: Google Calendar API apis: -
-// name: google.calendar.v3.Calendar authentication: providers: - id:
-// google_calendar_auth jwks_uri:
+// Service: `Service` is the root object of Google API service
+// configuration (service config). It describes the basic information
+// about a logical service, such as the service name and the user-facing
+// title, and delegates other aspects to sub-sections. Each sub-section
+// is either a proto message or a repeated proto message that configures
+// a specific aspect, such as auth. For more information, see each proto
+// message definition. Example: type: google.api.Service name:
+// calendar.googleapis.com title: Google Calendar API apis: - name:
+// google.calendar.v3.Calendar visibility: rules: - selector:
+// "google.calendar.v3.*" restriction: PREVIEW backend: rules: -
+// selector: "google.calendar.v3.*" address: calendar.example.com
+// authentication: providers: - id: google_calendar_auth jwks_uri:
 // https://www.googleapis.com/oauth2/v1/certs issuer:
 // https://securetoken.google.com rules: - selector: "*" requirements:
 // provider_id: google_calendar_auth
@@ -4141,7 +4141,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4295,7 +4295,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4446,7 +4446,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4609,7 +4609,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4774,7 +4774,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4944,7 +4944,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

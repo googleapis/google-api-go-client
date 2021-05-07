@@ -420,6 +420,19 @@ func (c *UsersGetLoginProfileCall) SystemId(systemId string) *UsersGetLoginProfi
 	return c
 }
 
+// View sets the optional parameter "view": The view configures whether
+// to retrieve security keys information.
+//
+// Possible values:
+//   "LOGIN_PROFILE_VIEW_UNSPECIFIED" - The default login profile view.
+// The API defaults to the BASIC view.
+//   "BASIC" - Includes POSIX and SSH key information.
+//   "SECURITY_KEY" - Include security key information for the user.
+func (c *UsersGetLoginProfileCall) View(view string) *UsersGetLoginProfileCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -457,7 +470,7 @@ func (c *UsersGetLoginProfileCall) Header() http.Header {
 
 func (c *UsersGetLoginProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -543,6 +556,21 @@ func (c *UsersGetLoginProfileCall) Do(opts ...googleapi.CallOption) (*LoginProfi
 	//       "description": "A system ID for filtering the results of the request.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The view configures whether to retrieve security keys information.",
+	//       "enum": [
+	//         "LOGIN_PROFILE_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "SECURITY_KEY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default login profile view. The API defaults to the BASIC view.",
+	//         "Includes POSIX and SSH key information.",
+	//         "Include security key information for the user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta/{+name}/loginProfile",
@@ -589,6 +617,19 @@ func (c *UsersImportSshPublicKeyCall) ProjectId(projectId string) *UsersImportSs
 	return c
 }
 
+// View sets the optional parameter "view": The view configures whether
+// to retrieve security keys information.
+//
+// Possible values:
+//   "LOGIN_PROFILE_VIEW_UNSPECIFIED" - The default login profile view.
+// The API defaults to the BASIC view.
+//   "BASIC" - Includes POSIX and SSH key information.
+//   "SECURITY_KEY" - Include security key information for the user.
+func (c *UsersImportSshPublicKeyCall) View(view string) *UsersImportSshPublicKeyCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -616,7 +657,7 @@ func (c *UsersImportSshPublicKeyCall) Header() http.Header {
 
 func (c *UsersImportSshPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -699,6 +740,21 @@ func (c *UsersImportSshPublicKeyCall) Do(opts ...googleapi.CallOption) (*ImportS
 	//       "description": "The project ID of the Google Cloud Platform project.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The view configures whether to retrieve security keys information.",
+	//       "enum": [
+	//         "LOGIN_PROFILE_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "SECURITY_KEY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default login profile view. The API defaults to the BASIC view.",
+	//         "Includes POSIX and SSH key information.",
+	//         "Include security key information for the user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta/{+parent}:importSshPublicKey",
@@ -765,7 +821,7 @@ func (c *UsersProjectsDeleteCall) Header() http.Header {
 
 func (c *UsersProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -900,7 +956,7 @@ func (c *UsersSshPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1046,7 +1102,7 @@ func (c *UsersSshPublicKeysGetCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1194,7 +1250,7 @@ func (c *UsersSshPublicKeysPatchCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

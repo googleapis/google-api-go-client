@@ -94,7 +94,7 @@ const (
 	// members and their emails
 	CloudIdentityGroupsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.groups.readonly"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -1171,8 +1171,9 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 
 	// Name: Output only. Resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the
-	// DeviceUser in format: `devices/{device_id}/deviceUsers/{user_id}`,
-	// where user_id is the ID of the user associated with the user session.
+	// DeviceUser in format:
+	// `devices/{device_id}/deviceUsers/{device_user_id}`, where
+	// `device_user_id` uniquely identifies a user's use of a device.
 	Name string `json:"name,omitempty"`
 
 	// PasswordState: Password state of the DeviceUser object
@@ -1534,9 +1535,7 @@ type Group struct {
 	// cannot be removed once added.** Dynamic groups have a label with a
 	// key of `cloudidentity.googleapis.com/groups.dynamic`. Identity-mapped
 	// groups for Cloud Search have a label with a key of
-	// `system/groups/external` and an empty value. Examples:
-	// {"cloudidentity.googleapis.com/groups.discussion_forum": ""} or
-	// {"system/groups/external": ""}.
+	// `system/groups/external` and an empty value.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The resource name
@@ -1548,7 +1547,8 @@ type Group struct {
 	// which this `Group` resides in the Cloud Identity resource hierarchy.
 	// Must be of the form `identitysources/{identity_source_id}` for
 	// external- identity-mapped groups or `customers/{customer_id}` for
-	// Google Groups.
+	// Google Groups. The `customer_id` must begin with "C" (for example,
+	// 'C046psxkn').
 	Parent string `json:"parent,omitempty"`
 
 	// UpdateTime: Output only. The time when the `Group` was last updated.
@@ -1785,8 +1785,7 @@ func (s *LookupMembershipNameResponse) MarshalJSON() ([]byte, error) {
 // MemberRelation: Message representing a transitive membership of a
 // group.
 type MemberRelation struct {
-	// Member: Resource name for this member if member is a GROUP, otherwise
-	// it is empty.
+	// Member: Resource name for this member.
 	Member string `json:"member,omitempty"`
 
 	// PreferredMemberKey: Entity key has an id and a namespace. In case of
@@ -1865,6 +1864,7 @@ type Membership struct {
 	//   "USER" - Represents user type.
 	//   "SERVICE_ACCOUNT" - Represents service account type.
 	//   "GROUP" - Represents group type.
+	//   "SHARED_DRIVE" - Represents Shared drive.
 	//   "OTHER" - Represents other type.
 	Type string `json:"type,omitempty"`
 
@@ -2114,7 +2114,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // SearchGroupsResponse: The response message for
 // GroupsService.SearchGroups.
 type SearchGroupsResponse struct {
-	// Groups: The `Group`s that match the search query.
+	// Groups: The `Group` resources that match the search query.
 	Groups []*Group `json:"groups,omitempty"`
 
 	// NextPageToken: A continuation token to retrieve the next page of
@@ -2300,7 +2300,7 @@ func (s *TransitiveMembershipRole) MarshalJSON() ([]byte, error) {
 // `MembershipRole`.
 type UpdateMembershipRolesParams struct {
 	// FieldMask: The fully-qualified names of fields to update. May only
-	// contain the field `expiry_detail`.
+	// contain the field `expiry_detail.expire_time`.
 	FieldMask string `json:"fieldMask,omitempty"`
 
 	// MembershipRole: The `MembershipRole`s to be updated. Only `MEMBER`
@@ -2442,7 +2442,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2591,7 +2591,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2735,7 +2735,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2896,7 +2896,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3111,7 +3111,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3301,7 +3301,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3444,7 +3444,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3587,7 +3587,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3732,7 +3732,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3885,7 +3885,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4045,7 +4045,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4244,7 +4244,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4497,7 +4497,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4694,7 +4694,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4869,7 +4869,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5057,7 +5057,7 @@ func (c *DevicesDeviceUsersClientStatesListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5273,7 +5273,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5433,7 +5433,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5579,7 +5579,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5725,7 +5725,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5826,7 +5826,7 @@ type GroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the `Group`s under a customer or namespace.
+// List: Lists the `Group` resources under a customer or namespace.
 func (r *GroupsService) List() *GroupsListCall {
 	c := &GroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5854,9 +5854,11 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 }
 
 // Parent sets the optional parameter "parent": Required. The parent
-// resource under which to list all `Group`s. Must be of the form
-// `identitysources/{identity_source_id}` for external- identity-mapped
-// groups or `customers/{customer_id}` for Google Groups.
+// resource under which to list all `Group` resources. Must be of the
+// form `identitysources/{identity_source_id}` for external-
+// identity-mapped groups or `customers/{customer_id}` for Google
+// Groups. The `customer_id` must begin with "C" (for example,
+// 'C046psxkn').
 func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -5911,7 +5913,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5970,7 +5972,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the `Group`s under a customer or namespace.",
+	//   "description": "Lists the `Group` resources under a customer or namespace.",
 	//   "flatPath": "v1/groups",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.list",
@@ -5988,7 +5990,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource under which to list all `Group`s. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups.",
+	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6119,7 +6121,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6266,7 +6268,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6377,7 +6379,7 @@ type GroupsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Searches for `Group`s matching a specified query.
+// Search: Searches for `Group` resources matching a specified query.
 func (r *GroupsService) Search() *GroupsSearchCall {
 	c := &GroupsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6410,6 +6412,7 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 // operators on the parent and inclusion operators on labels (e.g.,
 // `parent == 'customers/{customer_id}' &&
 // 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
+// The `customer_id` must begin with "C" (for example, 'C046psxkn').
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -6464,7 +6467,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6523,7 +6526,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for `Group`s matching a specified query.",
+	//   "description": "Searches for `Group` resources matching a specified query.",
 	//   "flatPath": "v1/groups:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.search",
@@ -6541,7 +6544,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).",
+	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6675,7 +6678,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Header() http.Header {
 
 func (c *GroupsMembershipsCheckTransitiveMembershipCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6821,7 +6824,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6965,7 +6968,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7112,7 +7115,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7287,7 +7290,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetMembershipGraphCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7474,7 +7477,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7694,7 +7697,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7847,7 +7850,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7990,10 +7993,10 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageToken(pageToken string
 // Query sets the optional parameter "query": Required. A CEL expression
 // that MUST include member specification AND label(s). This is a
 // `required` field. Users can search on label attributes of groups.
-// CONTAINS match ('in') is supported on labels. Certain groups are
-// uniquely identified by both a 'member_key_id' and a
-// 'member_key_namespace', which requires an additional query input:
-// 'member_key_namespace'. Example query: `member_key_id ==
+// CONTAINS match ('in') is supported on labels. Identity-mapped groups
+// are uniquely identified by both a `member_key_id` and a
+// `member_key_namespace`, which requires an additional query input:
+// `member_key_namespace`. Example query: `member_key_id ==
 // 'member_key_id_value' && in labels`
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) Query(query string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c.urlParams_.Set("query", query)
@@ -8037,7 +8040,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Header() http.Header {
 
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8126,7 +8129,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. A CEL expression that MUST include member specification AND label(s). This is a `required` field. Users can search on label attributes of groups. CONTAINS match ('in') is supported on labels. Certain groups are uniquely identified by both a 'member_key_id' and a 'member_key_namespace', which requires an additional query input: 'member_key_namespace'. Example query: `member_key_id == 'member_key_id_value' \u0026\u0026 in labels`",
+	//       "description": "Required. A CEL expression that MUST include member specification AND label(s). This is a `required` field. Users can search on label attributes of groups. CONTAINS match ('in') is supported on labels. Identity-mapped groups are uniquely identified by both a `member_key_id` and a `member_key_namespace`, which requires an additional query input: `member_key_namespace`. Example query: `member_key_id == 'member_key_id_value' \u0026\u0026 in labels`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8246,7 +8249,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Header() http.Header 
 
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

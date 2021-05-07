@@ -668,7 +668,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	Name string `json:"name,omitempty"`
 
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
-	// system.
+	// system. The value is restricted to 63 ASCII characters at the
+	// maximum.
 	PartnerUserToken string `json:"partnerUserToken,omitempty"`
 
 	// Products: Required. Resource name that identifies one or more
@@ -931,7 +932,7 @@ func (c *PartnersProductsListCall) Header() http.Header {
 
 func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1141,7 +1142,7 @@ func (c *PartnersPromotionsListCall) Header() http.Header {
 
 func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1319,7 +1320,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1440,8 +1441,9 @@ func (r *PartnersSubscriptionsService) Create(parentid string, googlecloudpaymen
 
 // SubscriptionId sets the optional parameter "subscriptionId":
 // Required. Identifies the subscription resource on the Partner side.
-// If a subscription was previously created with the same
-// subscription_id, we will directly return that one.
+// The value is restricted to 63 ASCII characters at the maximum. If a
+// subscription was previously created with the same subscription_id, we
+// will directly return that one.
 func (c *PartnersSubscriptionsCreateCall) SubscriptionId(subscriptionId string) *PartnersSubscriptionsCreateCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c
@@ -1474,7 +1476,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,7 +1558,7 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "Required. Identifies the subscription resource on the Partner side. If a subscription was previously created with the same subscription_id, we will directly return that one.",
+	//       "description": "Required. Identifies the subscription resource on the Partner side. The value is restricted to 63 ASCII characters at the maximum. If a subscription was previously created with the same subscription_id, we will directly return that one.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1625,7 +1627,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1771,7 +1773,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1925,7 +1927,7 @@ func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2042,8 +2044,9 @@ func (r *PartnersSubscriptionsService) Provision(parentid string, googlecloudpay
 
 // SubscriptionId sets the optional parameter "subscriptionId":
 // Required. Identifies the subscription resource on the Partner side.
-// If a subscription was previously created with the same
-// subscription_id, we will directly return that one.
+// The value is restricted to 63 ASCII characters at the maximum. If a
+// subscription was previously created with the same subscription_id, we
+// will directly return that one.
 func (c *PartnersSubscriptionsProvisionCall) SubscriptionId(subscriptionId string) *PartnersSubscriptionsProvisionCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c
@@ -2076,7 +2079,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2158,7 +2161,7 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "Required. Identifies the subscription resource on the Partner side. If a subscription was previously created with the same subscription_id, we will directly return that one.",
+	//       "description": "Required. Identifies the subscription resource on the Partner side. The value is restricted to 63 ASCII characters at the maximum. If a subscription was previously created with the same subscription_id, we will directly return that one.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2228,7 +2231,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210505")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

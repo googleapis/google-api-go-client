@@ -606,9 +606,10 @@ type EnvVar struct {
 	// exists or not. Defaults to "". +optional
 	Value string `json:"value,omitempty"`
 
-	// ValueFrom: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported Source for the environment variable's value. Cannot be used
-	// if value is not empty. +optional
+	// ValueFrom: Cloud Run fully managed: supported Source for the
+	// environment variable's value. Only supports secret_key_ref. Cloud Run
+	// for Anthos: supported Source for the environment variable's value.
+	// Cannot be used if value is not empty. +optional
 	ValueFrom *EnvVarSource `json:"valueFrom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -642,8 +643,9 @@ type EnvVarSource struct {
 	// GKE: supported Selects a key of a ConfigMap. +optional
 	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
 
-	// SecretKeyRef: Cloud Run fully managed: not supported Cloud Run on
-	// GKE: supported Selects a key of a secret in the pod's namespace
+	// SecretKeyRef: Cloud Run fully managed: supported. Selects a key
+	// (version) of a secret in Secret Manager. Cloud Run for Anthos:
+	// supported. Selects a key of a secret in the pod's namespace.
 	// +optional
 	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
 
@@ -1275,7 +1277,10 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 
 // KeyToPath: Maps a string key to a path within a volume.
 type KeyToPath struct {
-	// Key: The key to project.
+	// Key: Cloud Run fully managed: supported The Cloud Secret Manager
+	// secret version. Can be 'latest' for the latest value or an integer
+	// for a specific version. Cloud Run for Anthos: supported The key to
+	// project.
 	Key string `json:"key,omitempty"`
 
 	// Mode: Mode bits to use on this file, must be a value between 0 and
@@ -1284,9 +1289,10 @@ type KeyToPath struct {
 	// like fsGroup, and the result can be other mode bits set. +optional
 	Mode int64 `json:"mode,omitempty"`
 
-	// Path: The relative path of the file to map the key to. May not be an
-	// absolute path. May not contain the path element '..'. May not start
-	// with the string '..'.
+	// Path: Cloud Run fully managed: supported Cloud Run for Anthos:
+	// supported The relative path of the file to map the key to. May not be
+	// an absolute path. May not contain the path element '..'. May not
+	// start with the string '..'.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1934,12 +1940,13 @@ func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretKeySelector: Cloud Run fully managed: not supported Cloud Run
-// on GKE: supported SecretKeySelector selects a key of a Secret.
+// SecretKeySelector: Cloud Run fully managed: supported Cloud Run on
+// GKE: supported SecretKeySelector selects a key of a Secret.
 type SecretKeySelector struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported The key of the secret to select from. Must be a valid
-	// secret key.
+	// Key: Cloud Run fully managed: supported A Cloud Secret Manager secret
+	// version. Must be 'latest' for the latest version or an integer for a
+	// specific version. Cloud Run for Anthos: supported The key of the
+	// secret to select from. Must be a valid secret key.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -1947,7 +1954,13 @@ type SecretKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run on GKE:
+	// Name: Cloud Run fully managed: supported The name of the secret in
+	// Cloud Secret Manager. By default, the secret is assumed to be in the
+	// same project. If the secret is in another project, you must define an
+	// alias. An alias definition has the form: :projects//secrets/. If
+	// multiple alias definitions are needed, they must be separated by
+	// commas. The alias definitions must be set on the
+	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
 	// supported The name of the secret in the pod's namespace to select
 	// from.
 	Name string `json:"name,omitempty"`
@@ -1991,18 +2004,31 @@ type SecretVolumeSource struct {
 	// can be other mode bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: If unspecified, each key-value pair in the Data field of the
-	// referenced Secret will be projected into the volume as a file whose
-	// name is the key and content is the value. If specified, the listed
-	// keys will be projected into the specified paths, and unlisted keys
-	// will not be present. If a key is specified which is not present in
-	// the Secret, the volume setup will error unless it is marked optional.
+	// Items: Cloud Run fully managed: supported If unspecified, the volume
+	// will expose a file whose name is the secret_name. If specified, the
+	// key will be used as the version to fetch from Cloud Secret Manager
+	// and the path will be the name of the file exposed in the volume. When
+	// items are defined, they must specify a key and a path. Cloud Run for
+	// Anthos: supported If unspecified, each key-value pair in the Data
+	// field of the referenced Secret will be projected into the volume as a
+	// file whose name is the key and content is the value. If specified,
+	// the listed keys will be projected into the specified paths, and
+	// unlisted keys will not be present. If a key is specified which is not
+	// present in the Secret, the volume setup will error unless it is
+	// marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
 	// Optional: Specify whether the Secret or its keys must be defined.
 	Optional bool `json:"optional,omitempty"`
 
-	// SecretName: Name of the secret in the container's namespace to use.
+	// SecretName: Cloud Run fully managed: supported The name of the secret
+	// in Cloud Secret Manager. By default, the secret is assumed to be in
+	// the same project. If the secret is in another project, you must
+	// define an alias. An alias definition has the form:
+	// :projects//secrets/. If multiple alias definitions are needed, they
+	// must be separated by commas. The alias definitions must be set on the
+	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
+	// supported Name of the secret in the container's namespace to use.
 	SecretName string `json:"secretName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
@@ -2303,7 +2329,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2468,7 +2494,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2627,7 +2653,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2828,7 +2854,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210506")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210507")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

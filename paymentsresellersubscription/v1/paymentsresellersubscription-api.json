@@ -366,7 +366,7 @@
       }
     }
   },
-  "revision": "20210506",
+  "revision": "20210507",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest": {
@@ -385,6 +385,7 @@
             "CANCELLATION_REASON_ACCIDENTAL_PURCHASE",
             "CANCELLATION_REASON_PAST_DUE",
             "CANCELLATION_REASON_ACCOUNT_CLOSED",
+            "CANCELLATION_REASON_UPGRADE_DOWNGRADE",
             "CANCELLATION_REASON_OTHER"
           ],
           "enumDescriptions": [
@@ -394,6 +395,7 @@
             "Accidential purchase.",
             "Payment is past due.",
             "User account closed.",
+            "Used for notification only, do not use in Cancel API. Cancallation due to upgrade or downgrade.",
             "Other reason."
           ],
           "type": "string"
@@ -739,6 +741,7 @@
             "CANCELLATION_REASON_ACCIDENTAL_PURCHASE",
             "CANCELLATION_REASON_PAST_DUE",
             "CANCELLATION_REASON_ACCOUNT_CLOSED",
+            "CANCELLATION_REASON_UPGRADE_DOWNGRADE",
             "CANCELLATION_REASON_OTHER"
           ],
           "enumDescriptions": [
@@ -748,6 +751,7 @@
             "Accidential purchase.",
             "Payment is past due.",
             "User account closed.",
+            "Used for notification only, do not use in Cancel API. Cancallation due to upgrade or downgrade.",
             "Other reason."
           ],
           "type": "string"

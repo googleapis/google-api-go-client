@@ -223,7 +223,7 @@ type GoogleChromeManagementV1CountChromeVersionsResponse struct {
 	// counts.
 	BrowserVersions []*GoogleChromeManagementV1BrowserVersion `json:"browserVersions,omitempty"`
 
-	// NextPageToken: Token to specify the next page in the list.
+	// NextPageToken: Token to specify the next page of the request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: Total number browser versions matching request.
@@ -263,7 +263,7 @@ type GoogleChromeManagementV1CountInstalledAppsResponse struct {
 	// InstalledApps: List of installed apps matching request.
 	InstalledApps []*GoogleChromeManagementV1InstalledApp `json:"installedApps,omitempty"`
 
-	// NextPageToken: Token to specify next page in the list.
+	// NextPageToken: Token to specify the next page of the request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: Total number of installed apps matching request.
@@ -337,7 +337,7 @@ type GoogleChromeManagementV1FindInstalledAppDevicesResponse struct {
 	// ascending alphabetical order on the Device.machine field.
 	Devices []*GoogleChromeManagementV1Device `json:"devices,omitempty"`
 
-	// NextPageToken: Token to specify the next page in the list.
+	// NextPageToken: Token to specify the next page of the request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: Total number of devices matching request.
@@ -501,7 +501,7 @@ func (c *CustomersReportsCountChromeVersionsCall) PageSize(pageSize int64) *Cust
 }
 
 // PageToken sets the optional parameter "pageToken": Token to specify
-// the next page in the list.
+// the page of the request to be returned.
 func (c *CustomersReportsCountChromeVersionsCall) PageToken(pageToken string) *CustomersReportsCountChromeVersionsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -544,7 +544,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210509")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -640,7 +640,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Do(opts ...googleapi.CallOptio
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to specify the next page in the list.",
+	//       "description": "Token to specify the page of the request to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -731,7 +731,7 @@ func (c *CustomersReportsCountInstalledAppsCall) PageSize(pageSize int64) *Custo
 }
 
 // PageToken sets the optional parameter "pageToken": Token to specify
-// next page in the list.
+// the page of the request to be returned.
 func (c *CustomersReportsCountInstalledAppsCall) PageToken(pageToken string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -774,7 +774,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210509")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -875,7 +875,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Do(opts ...googleapi.CallOption
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to specify next page in the list.",
+	//       "description": "Token to specify the page of the request to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -988,7 +988,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) PageSize(pageSize int64) *
 }
 
 // PageToken sets the optional parameter "pageToken": Token to specify
-// the next page in the list.
+// the page of the request to be returned.
 func (c *CustomersReportsFindInstalledAppDevicesCall) PageToken(pageToken string) *CustomersReportsFindInstalledAppDevicesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1031,7 +1031,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210509")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1159,7 +1159,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Do(opts ...googleapi.CallO
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to specify the next page in the list.",
+	//       "description": "Token to specify the page of the request to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

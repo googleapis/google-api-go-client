@@ -3792,6 +3792,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "recaptchaenterprise:v1",
+      "name": "recaptchaenterprise",
+      "version": "v1",
+      "title": "reCAPTCHA Enterprise API",
+      "description": "",
+      "discoveryRestUrl": "https://recaptchaenterprise.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/recaptcha-enterprise/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "recommendationengine:v1beta1",
       "name": "recommendationengine",
       "version": "v1beta1",

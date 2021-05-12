@@ -526,6 +526,18 @@ type FilterPair struct {
 	//   "FILTER_VIDEO_CONTENT_DURATION"
 	//   "FILTER_MATCHED_GENRE_TARGET"
 	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -944,6 +956,18 @@ type Parameters struct {
 	//   "FILTER_VIDEO_CONTENT_DURATION"
 	//   "FILTER_MATCHED_GENRE_TARGET"
 	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1434,6 +1458,8 @@ type Parameters struct {
 	//   "METRIC_CM360_POST_CLICK_REVENUE"
 	//   "METRIC_CM360_POST_CLICK_REVENUE_CROSS_ENVIRONMENT"
 	//   "METRIC_CM360_POST_VIEW_REVENUE_CROSS_ENVIRONMENT"
+	//   "METRIC_PERCENTAGE_FROM_CURRENT_IO_GOAL"
+	//   "METRIC_OMID_CAPABLE"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1849,6 +1875,18 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_VIDEO_CONTENT_DURATION"
 	//   "FILTER_MATCHED_GENRE_TARGET"
 	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.
@@ -2451,7 +2489,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2586,7 +2624,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2701,7 +2739,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2858,7 +2896,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3022,7 +3060,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3166,7 +3204,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

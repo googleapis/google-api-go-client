@@ -1143,7 +1143,8 @@ type BaselineValueFormat struct {
 	// If positive_color is also set, this field takes precedence.
 	PositiveColorStyle *ColorStyle `json:"positiveColorStyle,omitempty"`
 
-	// TextFormat: Text formatting options for baseline value.
+	// TextFormat: Text formatting options for baseline value. The link
+	// field is not supported.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComparisonType") to
@@ -1174,7 +1175,7 @@ func (s *BaselineValueFormat) MarshalJSON() ([]byte, error) {
 // one axis per axis position.
 type BasicChartAxis struct {
 	// Format: The format of the title. Only valid if the axis is not
-	// associated with the domain.
+	// associated with the domain. The link field is not supported.
 	Format *TextFormat `json:"format,omitempty"`
 
 	// Position: The position of this axis.
@@ -1703,8 +1704,7 @@ type BatchGetValuesByDataFilterRequest struct {
 
 	// DateTimeRenderOption: How dates, times, and durations should be
 	// represented in the output. This is ignored if value_render_option is
-	// FORMATTED_VALUE. The default dateTime render option is
-	// [DateTimeRenderOption.SERIAL_NUMBER].
+	// FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.
 	//
 	// Possible values:
 	//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -1734,7 +1734,7 @@ type BatchGetValuesByDataFilterRequest struct {
 	MajorDimension string `json:"majorDimension,omitempty"`
 
 	// ValueRenderOption: How values should be represented in the output.
-	// The default render option is ValueRenderOption.FORMATTED_VALUE.
+	// The default render option is FORMATTED_VALUE.
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
@@ -1906,7 +1906,7 @@ type BatchUpdateSpreadsheetResponse struct {
 
 	// UpdatedSpreadsheet: The spreadsheet after updates were applied. This
 	// is only set if
-	// [BatchUpdateSpreadsheetRequest.include_spreadsheet_in_response] is
+	// BatchUpdateSpreadsheetRequest.include_spreadsheet_in_response is
 	// `true`.
 	UpdatedSpreadsheet *Spreadsheet `json:"updatedSpreadsheet,omitempty"`
 
@@ -1957,7 +1957,7 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	// ResponseDateTimeRenderOption: Determines how dates, times, and
 	// durations in the response should be rendered. This is ignored if
 	// response_value_render_option is FORMATTED_VALUE. The default dateTime
-	// render option is DateTimeRenderOption.SERIAL_NUMBER.
+	// render option is SERIAL_NUMBER.
 	//
 	// Possible values:
 	//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -1975,8 +1975,7 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	ResponseDateTimeRenderOption string `json:"responseDateTimeRenderOption,omitempty"`
 
 	// ResponseValueRenderOption: Determines how values in the response
-	// should be rendered. The default render option is
-	// ValueRenderOption.FORMATTED_VALUE.
+	// should be rendered. The default render option is FORMATTED_VALUE.
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
@@ -2097,7 +2096,7 @@ type BatchUpdateValuesRequest struct {
 	// ResponseDateTimeRenderOption: Determines how dates, times, and
 	// durations in the response should be rendered. This is ignored if
 	// response_value_render_option is FORMATTED_VALUE. The default dateTime
-	// render option is DateTimeRenderOption.SERIAL_NUMBER.
+	// render option is SERIAL_NUMBER.
 	//
 	// Possible values:
 	//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -2115,8 +2114,7 @@ type BatchUpdateValuesRequest struct {
 	ResponseDateTimeRenderOption string `json:"responseDateTimeRenderOption,omitempty"`
 
 	// ResponseValueRenderOption: Determines how values in the response
-	// should be rendered. The default render option is
-	// ValueRenderOption.FORMATTED_VALUE.
+	// should be rendered. The default render option is FORMATTED_VALUE.
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
@@ -2626,7 +2624,7 @@ type BubbleChartSpec struct {
 	BubbleSizes *ChartData `json:"bubbleSizes,omitempty"`
 
 	// BubbleTextStyle: The format of the text inside the bubbles.
-	// Strikethrough and underline are not supported.
+	// Strikethrough, underline, and link are not supported.
 	BubbleTextStyle *TextFormat `json:"bubbleTextStyle,omitempty"`
 
 	// Domain: The data containing the bubble x-values. These values locate
@@ -2839,7 +2837,7 @@ func (s *CandlestickSeries) MarshalJSON() ([]byte, error) {
 type CellData struct {
 	// DataSourceFormula: Output only. Information about a data source
 	// formula on the cell. The field is set if user_entered_value is a
-	// formula referencing some DATA_SOURCE sheet, e.g
+	// formula referencing some DATA_SOURCE sheet, e.g.
 	// `=SUM(DataSheet!Column)`.
 	DataSourceFormula *DataSourceFormula `json:"dataSourceFormula,omitempty"`
 
@@ -2874,7 +2872,10 @@ type CellData struct {
 	// Hyperlink: A hyperlink this cell points to, if any. If the cell
 	// contains multiple hyperlinks, this field will be empty. This field is
 	// read-only. To set it, use a `=HYPERLINK` formula in the
-	// userEnteredValue.formulaValue field.
+	// userEnteredValue.formulaValue field. A cell-level link can also be
+	// set from the userEnteredFormat.textFormat field. Alternatively, set a
+	// hyperlink in the textFormatRun.format.link field that spans the
+	// entire cell.
 	Hyperlink string `json:"hyperlink,omitempty"`
 
 	// Note: Any note on the cell.
@@ -2983,7 +2984,9 @@ type CellFormat struct {
 	TextDirection string `json:"textDirection,omitempty"`
 
 	// TextFormat: The format of the text in the cell (unless overridden by
-	// a format run).
+	// a format run). Setting a cell-level link will clear the cell's
+	// existing links. Setting a link in a format run will clear the
+	// cell-level link.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
 	// TextRotation: The rotation applied to text in a cell
@@ -3007,10 +3010,10 @@ type CellFormat struct {
 	//   "WRAP_STRATEGY_UNSPECIFIED" - The default value, do not use.
 	//   "OVERFLOW_CELL" - Lines that are longer than the cell width will be
 	// written in the next cell over, so long as that cell is empty. If the
-	// next cell over is non-empty, this behaves the same as CLIP. The text
-	// will never wrap to the next line unless the user manually inserts a
-	// new line. Example: | First sentence. | | Manual newline that is very
-	// long. <- Text continues into next cell | Next newline. |
+	// next cell over is non-empty, this behaves the same as `CLIP`. The
+	// text will never wrap to the next line unless the user manually
+	// inserts a new line. Example: | First sentence. | | Manual newline
+	// that is very long. <- Text continues into next cell | Next newline. |
 	//   "LEGACY_WRAP" - This wrap strategy represents the old Google Sheets
 	// wrap strategy where words that are longer than a line are clipped
 	// rather than broken. This strategy is not supported on all platforms
@@ -3465,8 +3468,8 @@ type ChartSpec struct {
 	// Subtitle: The subtitle of the chart.
 	Subtitle string `json:"subtitle,omitempty"`
 
-	// SubtitleTextFormat: The subtitle text format. Strikethrough and
-	// underline are not supported.
+	// SubtitleTextFormat: The subtitle text format. Strikethrough,
+	// underline, and link are not supported.
 	SubtitleTextFormat *TextFormat `json:"subtitleTextFormat,omitempty"`
 
 	// SubtitleTextPosition: The subtitle text position. This field is
@@ -3476,8 +3479,8 @@ type ChartSpec struct {
 	// Title: The title of the chart.
 	Title string `json:"title,omitempty"`
 
-	// TitleTextFormat: The title text format. Strikethrough and underline
-	// are not supported.
+	// TitleTextFormat: The title text format. Strikethrough, underline, and
+	// link are not supported.
 	TitleTextFormat *TextFormat `json:"titleTextFormat,omitempty"`
 
 	// TitleTextPosition: The title text position. This field is optional.
@@ -3856,7 +3859,7 @@ type CopyPasteRequest struct {
 	//   "PASTE_VALUES" - Paste the values ONLY without formats, formulas,
 	// or merges.
 	//   "PASTE_FORMAT" - Paste the format and data validation only.
-	//   "PASTE_NO_BORDERS" - Like PASTE_NORMAL but without borders.
+	//   "PASTE_NO_BORDERS" - Like `PASTE_NORMAL` but without borders.
 	//   "PASTE_FORMULA" - Paste the formulas only.
 	//   "PASTE_DATA_VALIDATION" - Paste the data validation only.
 	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the conditional formatting
@@ -3994,7 +3997,7 @@ type CutPasteRequest struct {
 	//   "PASTE_VALUES" - Paste the values ONLY without formats, formulas,
 	// or merges.
 	//   "PASTE_FORMAT" - Paste the format and data validation only.
-	//   "PASTE_NO_BORDERS" - Like PASTE_NORMAL but without borders.
+	//   "PASTE_NO_BORDERS" - Like `PASTE_NORMAL` but without borders.
 	//   "PASTE_FORMULA" - Paste the formulas only.
 	//   "PASTE_DATA_VALIDATION" - Paste the data validation only.
 	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the conditional formatting
@@ -4230,7 +4233,8 @@ type DataLabel struct {
 	//   "OUTSIDE_END" - Outside a bar or column at the end.
 	Placement string `json:"placement,omitempty"`
 
-	// TextFormat: The text format used for the data label.
+	// TextFormat: The text format used for the data label. The link field
+	// is not supported.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
 	// Type: The type of the data label.
@@ -5496,8 +5500,7 @@ func (s *DeleteRangeRequest) MarshalJSON() ([]byte, error) {
 // DeleteSheetRequest: Deletes the requested sheet.
 type DeleteSheetRequest struct {
 	// SheetId: The ID of the sheet to delete. If the sheet is of
-	// SheetType.DATA_SOURCE type, the associated DataSource is also
-	// deleted.
+	// DATA_SOURCE type, the associated DataSource is also deleted.
 	SheetId int64 `json:"sheetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SheetId") to
@@ -6223,7 +6226,7 @@ type ExtendedValue struct {
 	FormulaValue *string `json:"formulaValue,omitempty"`
 
 	// NumberValue: Represents a double value. Note: Dates, Times and
-	// DateTimes are represented as doubles in "serial number" format.
+	// DateTimes are represented as doubles in SERIAL_NUMBER format.
 	NumberValue *float64 `json:"numberValue,omitempty"`
 
 	// StringValue: Represents a string value. Leading single quotes are not
@@ -7081,12 +7084,12 @@ type InterpolationPoint struct {
 	// InterpolationPoint.value.
 	//   "PERCENT" - The interpolation point is the given percentage over
 	// all the cells in the range of the conditional format. This is
-	// equivalent to NUMBER if the value was: `=(MAX(FLATTEN(range)) *
+	// equivalent to `NUMBER` if the value was: `=(MAX(FLATTEN(range)) *
 	// (value / 100)) + (MIN(FLATTEN(range)) * (1 - (value / 100)))` (where
 	// errors in the range are ignored when flattening).
 	//   "PERCENTILE" - The interpolation point is the given percentile over
 	// all the cells in the range of the conditional format. This is
-	// equivalent to NUMBER if the value was: `=PERCENTILE(FLATTEN(range),
+	// equivalent to `NUMBER` if the value was: `=PERCENTILE(FLATTEN(range),
 	// value / 100)` (where errors in the range are ignored when
 	// flattening).
 	Type string `json:"type,omitempty"`
@@ -7214,7 +7217,8 @@ type KeyValueFormat struct {
 	// used.
 	Position *TextPosition `json:"position,omitempty"`
 
-	// TextFormat: Text formatting options for key value.
+	// TextFormat: Text formatting options for key value. The link field is
+	// not supported.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Position") to
@@ -7792,7 +7796,7 @@ type PasteDataRequest struct {
 	//   "PASTE_VALUES" - Paste the values ONLY without formats, formulas,
 	// or merges.
 	//   "PASTE_FORMAT" - Paste the format and data validation only.
-	//   "PASTE_NO_BORDERS" - Like PASTE_NORMAL but without borders.
+	//   "PASTE_NO_BORDERS" - Like `PASTE_NORMAL` but without borders.
 	//   "PASTE_FORMULA" - Paste the formulas only.
 	//   "PASTE_DATA_VALIDATION" - Paste the data validation only.
 	//   "PASTE_CONDITIONAL_FORMATTING" - Paste the conditional formatting
@@ -9489,7 +9493,8 @@ type SlicerSpec struct {
 	//   "RIGHT" - The text is explicitly aligned to the right of the cell.
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 
-	// TextFormat: The text format of title in the slicer.
+	// TextFormat: The text format of title in the slicer. The link field is
+	// not supported.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
 	// Title: The title of the slicer.
@@ -10248,7 +10253,8 @@ type TreemapChartSpec struct {
 	// colors as well.
 	SizeData *ChartData `json:"sizeData,omitempty"`
 
-	// TextFormat: The text format for all labels on the chart.
+	// TextFormat: The text format for all labels on the chart. The link
+	// field is not supported.
 	TextFormat *TextFormat `json:"textFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColorData") to
@@ -11623,7 +11629,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11763,7 +11769,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11929,7 +11935,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12092,7 +12098,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12249,7 +12255,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12402,7 +12408,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12550,7 +12556,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12715,7 +12721,7 @@ func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string)
 // "responseDateTimeRenderOption": Determines how dates, times, and
 // durations in the response should be rendered. This is ignored if
 // response_value_render_option is FORMATTED_VALUE. The default dateTime
-// render option is [DateTimeRenderOption.SERIAL_NUMBER].
+// render option is SERIAL_NUMBER.
 //
 // Possible values:
 //   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -12737,8 +12743,7 @@ func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDate
 
 // ResponseValueRenderOption sets the optional parameter
 // "responseValueRenderOption": Determines how values in the response
-// should be rendered. The default render option is
-// ValueRenderOption.FORMATTED_VALUE.
+// should be rendered. The default render option is FORMATTED_VALUE.
 //
 // Possible values:
 //   "FORMATTED_VALUE" - Values will be calculated & formatted in the
@@ -12801,7 +12806,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12900,7 +12905,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//       "type": "string"
 	//     },
 	//     "responseDateTimeRenderOption": {
-	//       "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+	//       "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -12913,7 +12918,7 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//       "type": "string"
 	//     },
 	//     "responseValueRenderOption": {
-	//       "description": "Determines how values in the response should be rendered. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+	//       "description": "Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.",
 	//       "enum": [
 	//         "FORMATTED_VALUE",
 	//         "UNFORMATTED_VALUE",
@@ -13016,7 +13021,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13163,7 +13168,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13283,8 +13288,7 @@ func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *Spreadsheets
 // DateTimeRenderOption sets the optional parameter
 // "dateTimeRenderOption": How dates, times, and durations should be
 // represented in the output. This is ignored if value_render_option is
-// FORMATTED_VALUE. The default dateTime render option is
-// [DateTimeRenderOption.SERIAL_NUMBER].
+// FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.
 //
 // Possible values:
 //   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -13385,7 +13389,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13456,7 +13460,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//   ],
 	//   "parameters": {
 	//     "dateTimeRenderOption": {
-	//       "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+	//       "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -13577,7 +13581,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13723,7 +13727,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13868,7 +13872,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14018,7 +14022,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14149,8 +14153,7 @@ func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *Sp
 // DateTimeRenderOption sets the optional parameter
 // "dateTimeRenderOption": How dates, times, and durations should be
 // represented in the output. This is ignored if value_render_option is
-// FORMATTED_VALUE. The default dateTime render option is
-// [DateTimeRenderOption.SERIAL_NUMBER].
+// FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.
 //
 // Possible values:
 //   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -14188,7 +14191,7 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 
 // ValueRenderOption sets the optional parameter "valueRenderOption":
 // How values should be represented in the output. The default render
-// option is ValueRenderOption.FORMATTED_VALUE.
+// option is FORMATTED_VALUE.
 //
 // Possible values:
 //   "FORMATTED_VALUE" - Values will be calculated & formatted in the
@@ -14244,7 +14247,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14317,7 +14320,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//   ],
 	//   "parameters": {
 	//     "dateTimeRenderOption": {
-	//       "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+	//       "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -14357,7 +14360,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "valueRenderOption": {
-	//       "description": "How values should be represented in the output. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+	//       "description": "How values should be represented in the output. The default render option is FORMATTED_VALUE.",
 	//       "enum": [
 	//         "FORMATTED_VALUE",
 	//         "UNFORMATTED_VALUE",
@@ -14428,7 +14431,7 @@ func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInRe
 // "responseDateTimeRenderOption": Determines how dates, times, and
 // durations in the response should be rendered. This is ignored if
 // response_value_render_option is FORMATTED_VALUE. The default dateTime
-// render option is DateTimeRenderOption.SERIAL_NUMBER.
+// render option is SERIAL_NUMBER.
 //
 // Possible values:
 //   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
@@ -14450,8 +14453,7 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDate
 
 // ResponseValueRenderOption sets the optional parameter
 // "responseValueRenderOption": Determines how values in the response
-// should be rendered. The default render option is
-// ValueRenderOption.FORMATTED_VALUE.
+// should be rendered. The default render option is FORMATTED_VALUE.
 //
 // Possible values:
 //   "FORMATTED_VALUE" - Values will be calculated & formatted in the
@@ -14514,7 +14516,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14600,7 +14602,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//       "type": "string"
 	//     },
 	//     "responseDateTimeRenderOption": {
-	//       "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is DateTimeRenderOption.SERIAL_NUMBER.",
+	//       "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"
@@ -14613,7 +14615,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//       "type": "string"
 	//     },
 	//     "responseValueRenderOption": {
-	//       "description": "Determines how values in the response should be rendered. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+	//       "description": "Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.",
 	//       "enum": [
 	//         "FORMATTED_VALUE",
 	//         "UNFORMATTED_VALUE",

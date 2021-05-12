@@ -454,6 +454,10 @@ func (s *GoogleCloudAssuredworkloadsV1WorkloadResourceInfo) MarshalJSON() ([]byt
 // GoogleCloudAssuredworkloadsV1WorkloadResourceSettings: Represent the
 // custom settings for the resources to be created.
 type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
+	// DisplayName: User-assigned resource display name. If not empty it
+	// will be used to create a resource with the specified name.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// ResourceId: Resource identifier. For a project this represents
 	// project_id. If the project is already taken, the workload creation
 	// will fail.
@@ -471,7 +475,7 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 	//   "KEYRING" - Keyring resource that hosts encryption keys.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ResourceId") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -479,10 +483,10 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ResourceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -522,6 +526,10 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 
 	// Parent: Optional. The parent of the workload.
 	Parent string `json:"parent,omitempty"`
+
+	// ResourceSettings: Optional. Resource properties in the input that are
+	// used for creating/customizing workload resources.
+	ResourceSettings []*GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings `json:"resourceSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComplianceRegime") to
 	// unconditionally include in API requests. By default, fields with
@@ -863,6 +871,10 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo) MarshalJSON() (
 // GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings: Represent
 // the custom settings for the resources to be created.
 type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings struct {
+	// DisplayName: User-assigned resource display name. If not empty it
+	// will be used to create a resource with the specified name.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// ResourceId: Resource identifier. For a project this represents
 	// project_id. If the project is already taken, the workload creation
 	// will fail.
@@ -880,7 +892,7 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings struct {
 	//   "KEYRING" - Keyring resource that hosts encryption keys.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ResourceId") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -888,10 +900,10 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ResourceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1117,7 +1129,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1293,7 +1305,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1479,7 +1491,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1635,7 +1647,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1787,7 +1799,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1958,7 +1970,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2146,7 +2158,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210510")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

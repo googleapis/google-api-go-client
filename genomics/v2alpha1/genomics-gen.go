@@ -494,45 +494,6 @@ func (s *CheckInResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ComputeEngine: Describes a Compute Engine resource that is being
-// managed by a running pipeline.
-type ComputeEngine struct {
-	// DiskNames: The names of the disks that were created for this
-	// pipeline.
-	DiskNames []string `json:"diskNames,omitempty"`
-
-	// InstanceName: The instance on which the operation is running.
-	InstanceName string `json:"instanceName,omitempty"`
-
-	// MachineType: The machine type of the instance.
-	MachineType string `json:"machineType,omitempty"`
-
-	// Zone: The availability zone in which the instance resides.
-	Zone string `json:"zone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DiskNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiskNames") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ComputeEngine) MarshalJSON() ([]byte, error) {
-	type NoMethod ComputeEngine
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ContainerKilledEvent: An event generated when a container is forcibly
 // terminated by the worker. Currently, this only occurs when the
 // container outlives the timeout specified by the user.
@@ -1220,103 +1181,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationEvent: An event that occurred during an Operation.
-type OperationEvent struct {
-	// Description: Required description of event.
-	Description string `json:"description,omitempty"`
-
-	// EndTime: Optional time of when event finished. An event can have a
-	// start time and no finish time. If an event has a finish time, there
-	// must be a start time.
-	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Optional time of when event started.
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OperationEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod OperationEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OperationMetadata: Metadata describing an Operation.
-type OperationMetadata struct {
-	// ClientId: This field is deprecated. Use `labels` instead. Optionally
-	// provided by the caller when submitting the request that creates the
-	// operation.
-	ClientId string `json:"clientId,omitempty"`
-
-	// CreateTime: The time at which the job was submitted to the Genomics
-	// service.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EndTime: The time at which the job stopped running.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Events: Optional event messages that were generated during the job's
-	// execution. This also contains any warnings that were generated during
-	// import or export.
-	Events []*OperationEvent `json:"events,omitempty"`
-
-	// Labels: Optionally provided by the caller when submitting the request
-	// that creates the operation.
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// ProjectId: The Google Cloud Project in which the job is scoped.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// Request: The original request that started the operation. Note that
-	// this will be in current version of the API. If the operation was
-	// started with v1beta2 API and a GetOperation is performed on v1 API, a
-	// v1 request will be returned.
-	Request googleapi.RawMessage `json:"request,omitempty"`
-
-	// RuntimeMetadata: Runtime metadata on this Operation.
-	RuntimeMetadata googleapi.RawMessage `json:"runtimeMetadata,omitempty"`
-
-	// StartTime: The time at which the job began to run.
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClientId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // PersistentDisk: Configuration for a persistent disk to be attached to
 // the VM. See https://cloud.google.com/compute/docs/disks/performance
 // for more information about disk type, size, and performance
@@ -1560,37 +1424,6 @@ func (s *RunPipelineRequest) MarshalJSON() ([]byte, error) {
 // RunPipelineResponse: The response to the RunPipeline method, returned
 // in the operation's result field on success.
 type RunPipelineResponse struct {
-}
-
-// RuntimeMetadata: Runtime metadata that will be populated in the
-// runtimeMetadata field of the Operation associated with a RunPipeline
-// execution.
-type RuntimeMetadata struct {
-	// ComputeEngine: Execution information specific to Google Compute
-	// Engine.
-	ComputeEngine *ComputeEngine `json:"computeEngine,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ComputeEngine") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ComputeEngine") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RuntimeMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod RuntimeMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Secret: Holds encrypted information that is only decrypted and stored
@@ -2095,7 +1928,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2231,7 +2064,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2387,7 +2220,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2509,15 +2342,8 @@ func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCal
 // finishes, the value is the standard Google error code. * labels.key
 // or labels."key with space" where key is a label key. * done: If the
 // pipeline is running, this value is false. Once the pipeline finishes,
-// the value is true. In v1 and v1alpha2, the following filter fields
-// are supported: * projectId: Required. Corresponds to
-// OperationMetadata.projectId. * createTime: The time this job was
-// created, in seconds from the epoch
-// (http://en.wikipedia.org/wiki/Unix_time). Can use `>=` and/or `<=`
-// operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or
-// `CANCELED`. Only one status may be specified. * labels.key where key
-// is a label key. Examples: * `projectId = my-project AND createTime >=
-// 1432140000` * `projectId = my-project AND createTime >= 1432140000
+// the value is true. Examples: * `projectId = my-project AND createTime
+// >= 1432140000` * `projectId = my-project AND createTime >= 1432140000
 // AND createTime <= 1432150000 AND status = RUNNING` * `projectId =
 // my-project AND labels.color = *` * `projectId = my-project AND
 // labels.color = red`
@@ -2577,7 +2403,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2648,7 +2474,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A string for filtering Operations. In v2alpha1, the following filter fields are supported: * createTime: The time this job was created * events: The set of event (names) that have occurred while running the pipeline. The : operator can be used to determine if a particular event has occurred. * error: If the pipeline is running, this value is NULL. Once the pipeline finishes, the value is the standard Google error code. * labels.key or labels.\"key with space\" where key is a label key. * done: If the pipeline is running, this value is false. Once the pipeline finishes, the value is true. In v1 and v1alpha2, the following filter fields are supported: * projectId: Required. Corresponds to OperationMetadata.projectId. * createTime: The time this job was created, in seconds from the [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `\u003c=` operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or `CANCELED`. Only one status may be specified. * labels.key where key is a label key. Examples: * `projectId = my-project AND createTime \u003e= 1432140000` * `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING` * `projectId = my-project AND labels.color = *` * `projectId = my-project AND labels.color = red`",
+	//       "description": "A string for filtering Operations. In v2alpha1, the following filter fields are supported: * createTime: The time this job was created * events: The set of event (names) that have occurred while running the pipeline. The : operator can be used to determine if a particular event has occurred. * error: If the pipeline is running, this value is NULL. Once the pipeline finishes, the value is the standard Google error code. * labels.key or labels.\"key with space\" where key is a label key. * done: If the pipeline is running, this value is false. Once the pipeline finishes, the value is true. Examples: * `projectId = my-project AND createTime \u003e= 1432140000` * `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING` * `projectId = my-project AND labels.color = *` * `projectId = my-project AND labels.color = red`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2754,7 +2580,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2899,7 +2725,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210511")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

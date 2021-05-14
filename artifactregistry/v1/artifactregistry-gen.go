@@ -205,13 +205,27 @@ type ProjectsLocationsRepositoriesDockerImagesService struct {
 type CancelOperationRequest struct {
 }
 
-// DockerImage: DockerImage represents a docker artifact.
+// DockerImage: DockerImage represents a docker artifact. The following
+// fields are returned as untyped metadata in the Version resource,
+// using camelcase keys (i.e. metadata.imageSizeBytes): - imageSizeBytes
+// - mediaType - buildTime
 type DockerImage struct {
-	// ImageSizeBytes: Calculated size of the image.
+	// BuildTime: The time this image was built. This field is returned as
+	// the 'metadata.buildTime' field in the Version resource. The build
+	// time is returned to the client as an RFC 3339 string, which can be
+	// easily used with the JavaScript Date constructor and keeps the
+	// Version timestamps returned via OnePlatform consistent, as JSON
+	// marshals google.protobuf.Timestamp into an RFC 3339 string.
+	// (http://google3/cloud/containers/artifacts/metadata/v1beta2/builder/data.go?l=158-159&rcl=364878183).
+	BuildTime string `json:"buildTime,omitempty"`
+
+	// ImageSizeBytes: Calculated size of the image. This field is returned
+	// as the 'metadata.imageSizeBytes' field in the Version resource.
 	ImageSizeBytes int64 `json:"imageSizeBytes,omitempty,string"`
 
 	// MediaType: Media type of this image, e.g.
-	// "application/vnd.docker.distribution.manifest.v2+json".
+	// "application/vnd.docker.distribution.manifest.v2+json". This field is
+	// returned as the 'metadata.mediaType' field in the Version resource.
 	MediaType string `json:"mediaType,omitempty"`
 
 	// Name: Required. registry_location, project_id, repository_name and
@@ -237,7 +251,7 @@ type DockerImage struct {
 	// 75017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ImageSizeBytes") to
+	// ForceSendFields is a list of field names (e.g. "BuildTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -245,13 +259,12 @@ type DockerImage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ImageSizeBytes") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BuildTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -610,7 +623,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -753,7 +766,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -898,7 +911,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1078,7 +1091,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1255,7 +1268,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1417,7 +1430,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +1624,7 @@ func (c *ProjectsLocationsRepositoriesDockerImagesListCall) Header() http.Header
 
 func (c *ProjectsLocationsRepositoriesDockerImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

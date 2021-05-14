@@ -536,6 +536,76 @@ func (s *ComputeMessageStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ComputeTimeCursorRequest: Compute the corresponding cursor for a
+// publish or event time in a topic partition.
+type ComputeTimeCursorRequest struct {
+	// Partition: Required. The partition for which we should compute the
+	// cursor.
+	Partition int64 `json:"partition,omitempty,string"`
+
+	// Target: Required. The target publish or event time. Specifying a
+	// future time will return an unset cursor.
+	Target *TimeTarget `json:"target,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Partition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Partition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeTimeCursorRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeTimeCursorRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeTimeCursorResponse: Response containing the cursor
+// corresponding to a publish or event time in a topic partition.
+type ComputeTimeCursorResponse struct {
+	// Cursor: If present, the cursor references the first message with time
+	// greater than or equal to the specified target time. If such a message
+	// cannot be found, the cursor will be unset (i.e. `cursor` is not
+	// present).
+	Cursor *Cursor `json:"cursor,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Cursor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cursor") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeTimeCursorResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeTimeCursorResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Cursor: A cursor that describes the position of a message within a
 // topic partition.
 type Cursor struct {
@@ -924,6 +994,44 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimeTarget: A target publish or event time. Can be used for seeking
+// to or retrieving the corresponding cursor.
+type TimeTarget struct {
+	// EventTime: Request the cursor of the first message with event time
+	// greater than or equal to `event_time`. If messages are missing an
+	// event time, the publish time is used as a fallback. As event times
+	// are user supplied, subsequent messages may have event times less than
+	// `event_time` and should be filtered by the client, if necessary.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// PublishTime: Request the cursor of the first message with publish
+	// time greater than or equal to `publish_time`. All messages thereafter
+	// are guaranteed to have publish times >= `publish_time`.
+	PublishTime string `json:"publishTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Topic: Metadata about a topic resource.
 type Topic struct {
 	// Name: The name of the topic. Structured like:
@@ -1063,7 +1171,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1213,7 +1321,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1356,7 +1464,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1522,7 +1630,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1700,7 +1808,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1857,7 +1965,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2002,7 +2110,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2145,7 +2253,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2292,7 +2400,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2456,7 +2564,7 @@ func (c *AdminProjectsLocationsTopicsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2633,7 +2741,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2809,7 +2917,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Header() http.Header
 
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2978,7 +3086,7 @@ func (c *CursorProjectsLocationsSubscriptionsCommitCursorCall) Header() http.Hea
 
 func (c *CursorProjectsLocationsSubscriptionsCommitCursorCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3150,7 +3258,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Header() http.Head
 
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3324,7 +3432,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) Header() http.H
 
 func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3467,7 +3575,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Header() http
 
 func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3553,6 +3661,149 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Do(opts ...go
 	//   },
 	//   "response": {
 	//     "$ref": "ComputeMessageStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "pubsublite.topicStats.projects.locations.topics.computeTimeCursor":
+
+type TopicStatsProjectsLocationsTopicsComputeTimeCursorCall struct {
+	s                        *Service
+	topic                    string
+	computetimecursorrequest *ComputeTimeCursorRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// ComputeTimeCursor: Compute the corresponding cursor for a publish or
+// event time in a topic partition.
+//
+// - topic: The topic for which we should compute the cursor.
+func (r *TopicStatsProjectsLocationsTopicsService) ComputeTimeCursor(topic string, computetimecursorrequest *ComputeTimeCursorRequest) *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall {
+	c := &TopicStatsProjectsLocationsTopicsComputeTimeCursorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.topic = topic
+	c.computetimecursorrequest = computetimecursorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) Fields(s ...googleapi.Field) *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) Context(ctx context.Context) *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.computetimecursorrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/topicStats/{+topic}:computeTimeCursor")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"topic": c.topic,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsublite.topicStats.projects.locations.topics.computeTimeCursor" call.
+// Exactly one of *ComputeTimeCursorResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ComputeTimeCursorResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) Do(opts ...googleapi.CallOption) (*ComputeTimeCursorResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ComputeTimeCursorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Compute the corresponding cursor for a publish or event time in a topic partition.",
+	//   "flatPath": "v1/topicStats/projects/{projectsId}/locations/{locationsId}/topics/{topicsId}:computeTimeCursor",
+	//   "httpMethod": "POST",
+	//   "id": "pubsublite.topicStats.projects.locations.topics.computeTimeCursor",
+	//   "parameterOrder": [
+	//     "topic"
+	//   ],
+	//   "parameters": {
+	//     "topic": {
+	//       "description": "Required. The topic for which we should compute the cursor.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/topics/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/topicStats/{+topic}:computeTimeCursor",
+	//   "request": {
+	//     "$ref": "ComputeTimeCursorRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ComputeTimeCursorResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

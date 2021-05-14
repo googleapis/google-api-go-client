@@ -475,6 +475,9 @@ type GoogleCloudRecommenderV1beta1Impact struct {
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1beta1CostProjection `json:"costProjection,omitempty"`
 
+	// SecurityProjection: Use with CategoryType.SECURITY
+	SecurityProjection *GoogleCloudRecommenderV1beta1SecurityProjection `json:"securityProjection,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1210,6 +1213,36 @@ func (s *GoogleCloudRecommenderV1beta1RecommendationStateInfo) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1SecurityProjection: Contains various
+// ways of describing the impact on Security.
+type GoogleCloudRecommenderV1beta1SecurityProjection struct {
+	// Details: This field can be used by the recommender to define details
+	// specific to security impact.
+	Details googleapi.RawMessage `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1SecurityProjection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1SecurityProjection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1ValueMatcher: Contains various matching
 // options for values for a GCP resource field.
 type GoogleCloudRecommenderV1beta1ValueMatcher struct {
@@ -1342,7 +1375,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) Header() http.Head
 
 func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1466,8 +1499,13 @@ func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Filter(filter string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1529,7 +1567,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Header() http.Hea
 
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1602,7 +1640,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1710,7 +1748,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) Header() 
 
 func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1863,7 +1901,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) Header() ht
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1988,9 +2026,13 @@ func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Filter(filter string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2052,7 +2094,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Header() h
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2126,7 +2168,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2235,7 +2277,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) Hea
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +2428,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) Head
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2537,7 +2579,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) H
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2691,7 +2733,7 @@ func (c *FoldersLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2815,8 +2857,13 @@ func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *Folde
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *FoldersLocationsInsightTypesInsightsListCall) Filter(filter string) *FoldersLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2878,7 +2925,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *FoldersLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2951,7 +2998,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3059,7 +3106,7 @@ func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.Hea
 
 func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3212,7 +3259,7 @@ func (c *FoldersLocationsRecommendersRecommendationsGetCall) Header() http.Heade
 
 func (c *FoldersLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3337,9 +3384,13 @@ func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string)
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *FoldersLocationsRecommendersRecommendationsListCall) Filter(filter string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3401,7 +3452,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Header() http.Head
 
 func (c *FoldersLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3475,7 +3526,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3584,7 +3635,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) Header() ht
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3735,7 +3786,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) Header() htt
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3886,7 +3937,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Header() 
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4040,7 +4091,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsGetCall) Header() http.Header
 
 func (c *OrganizationsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4164,8 +4215,13 @@ func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) 
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) Filter(filter string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4227,7 +4283,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Header() http.Heade
 
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4300,7 +4356,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4408,7 +4464,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) Header() ht
 
 func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4561,7 +4617,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) Header() http
 
 func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4686,9 +4742,13 @@ func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent s
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Filter(filter string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4750,7 +4810,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Header() htt
 
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4824,7 +4884,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4933,7 +4993,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) Heade
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5084,7 +5144,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) Header
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5235,7 +5295,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) Hea
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5389,7 +5449,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5513,8 +5573,13 @@ func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *Proj
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *ProjectsLocationsInsightTypesInsightsListCall) Filter(filter string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5576,7 +5641,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5649,7 +5714,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5757,7 +5822,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.He
 
 func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5910,7 +5975,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6035,9 +6100,13 @@ func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) Filter(filter string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6099,7 +6168,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6173,7 +6242,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6282,7 +6351,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6433,7 +6502,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6584,7 +6653,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210512")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210513")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

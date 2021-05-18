@@ -294,7 +294,7 @@ type Attributes struct {
 
 	// SizeType: The size type of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#sizetype.
-	SizeType string `json:"sizeType,omitempty"`
+	SizeType []string `json:"sizeType,omitempty"`
 
 	// SuggestedRetailPrice: The suggested retail price (MSRP) of the
 	// product. For more information, see
@@ -852,7 +852,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210516")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1033,7 +1033,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210516")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1235,7 +1235,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210516")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1445,7 +1445,7 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210516")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

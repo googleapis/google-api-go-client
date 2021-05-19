@@ -1,5 +1,17 @@
 # Changes
 
+## [0.47.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.46.0...v0.47.0) (2021-05-19)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1029](https://www.github.com/googleapis/google-api-go-client/issues/1029) [#1027](https://www.github.com/googleapis/google-api-go-client/issues/1027) [#1026](https://www.github.com/googleapis/google-api-go-client/issues/1026) [#1024](https://www.github.com/googleapis/google-api-go-client/issues/1024) [#1023](https://www.github.com/googleapis/google-api-go-client/issues/1023) [#1022](https://www.github.com/googleapis/google-api-go-client/issues/1022) [#1021](https://www.github.com/googleapis/google-api-go-client/issues/1021) [#1018](https://www.github.com/googleapis/google-api-go-client/issues/1018) [#1017](https://www.github.com/googleapis/google-api-go-client/issues/1017) [#1015](https://www.github.com/googleapis/google-api-go-client/issues/1015) [#1013](https://www.github.com/googleapis/google-api-go-client/issues/1013) [#1012](https://www.github.com/googleapis/google-api-go-client/issues/1012) [#1011](https://www.github.com/googleapis/google-api-go-client/issues/1011) [#1009](https://www.github.com/googleapis/google-api-go-client/issues/1009) [#1008](https://www.github.com/googleapis/google-api-go-client/issues/1008) [#1005](https://www.github.com/googleapis/google-api-go-client/issues/1005)
+
+
+### Bug Fixes
+
+* **transport:** increase ReadIdleTimeout ([#1028](https://www.github.com/googleapis/google-api-go-client/issues/1028)) ([b3cd013](https://www.github.com/googleapis/google-api-go-client/commit/b3cd013353079b19a61d4e5a89c3385c586ddbad))
+
 ## [0.46.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.45.0...v0.46.0) (2021-05-03)
 
 ### Notice

@@ -1022,7 +1022,7 @@ func (c *PhotoCreateCall) Header() http.Header {
 
 func (c *PhotoCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1152,7 +1152,7 @@ func (c *PhotoDeleteCall) Header() http.Header {
 
 func (c *PhotoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1277,7 +1277,7 @@ func (c *PhotoGetCall) LanguageCode(languageCode string) *PhotoGetCall {
 // response.
 //
 // Possible values:
-//   "BASIC" - Server reponses do not include the download URL for the
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
 //   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
@@ -1323,7 +1323,7 @@ func (c *PhotoGetCall) Header() http.Header {
 
 func (c *PhotoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1411,7 +1411,7 @@ func (c *PhotoGetCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//         "INCLUDE_DOWNLOAD_URL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Server reponses do not include the download URL for the photo bytes. The default value.",
+	//         "Server responses do not include the download URL for the photo bytes. The default value.",
 	//         "Server responses include the download URL for the photo bytes."
 	//       ],
 	//       "location": "query",
@@ -1486,7 +1486,7 @@ func (c *PhotoStartUploadCall) Header() http.Header {
 
 func (c *PhotoStartUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1641,7 +1641,7 @@ func (c *PhotoUpdateCall) Header() http.Header {
 
 func (c *PhotoUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1790,7 +1790,7 @@ func (c *PhotosBatchDeleteCall) Header() http.Header {
 
 func (c *PhotosBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1916,7 +1916,7 @@ func (c *PhotosBatchGetCall) PhotoIds(photoIds ...string) *PhotosBatchGetCall {
 // response.
 //
 // Possible values:
-//   "BASIC" - Server reponses do not include the download URL for the
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
 //   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
@@ -1962,7 +1962,7 @@ func (c *PhotosBatchGetCall) Header() http.Header {
 
 func (c *PhotosBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2045,7 +2045,7 @@ func (c *PhotosBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetPhotosRe
 	//         "INCLUDE_DOWNLOAD_URL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Server reponses do not include the download URL for the photo bytes. The default value.",
+	//         "Server responses do not include the download URL for the photo bytes. The default value.",
 	//         "Server responses include the download URL for the photo bytes."
 	//       ],
 	//       "location": "query",
@@ -2119,7 +2119,7 @@ func (c *PhotosBatchUpdateCall) Header() http.Header {
 
 func (c *PhotosBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2259,7 +2259,7 @@ func (c *PhotosListCall) PageToken(pageToken string) *PhotosListCall {
 // response.
 //
 // Possible values:
-//   "BASIC" - Server reponses do not include the download URL for the
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
 //   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
@@ -2305,7 +2305,7 @@ func (c *PhotosListCall) Header() http.Header {
 
 func (c *PhotosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2398,7 +2398,7 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//         "INCLUDE_DOWNLOAD_URL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Server reponses do not include the download URL for the photo bytes. The default value.",
+	//         "Server responses do not include the download URL for the photo bytes. The default value.",
 	//         "Server responses include the download URL for the photo bytes."
 	//       ],
 	//       "location": "query",

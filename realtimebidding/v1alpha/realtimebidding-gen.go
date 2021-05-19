@@ -253,11 +253,19 @@ type BiddingFunction struct {
 	// `recent_impression_ages_secs`, that contains a list of estimated
 	// number value recent impression ages in seconds for a given interest
 	// group. The function returns the string creative ID of the selected
-	// ad, the bid price CPM, and (optionally) selected product IDs.
-	// Example: ``` function biddingFunction(inputs) { ... return {
+	// ad, the bid price CPM, and (optionally) selected product IDs. In
+	// addition, the bidding function may populate an optional string debug
+	// token that may be useful for remote debugging of a bidding function
+	// performing unexpectedly. This debug string is available in
+	// `BidResponseFeedback`
+	// (https://developers.google.com/authorized-buyers/rtb/realtime-bidding-guide#bidresponsefeedback-object)
+	// and BidFeedback
+	// (https://developers.google.com/authorized-buyers/rtb/openrtb-guide#bidfeedback),
+	// for the Google protocol and openRTB protocol respectively. Example:
+	// ``` function biddingFunction(inputs) { ... return {
 	// "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3,
-	// "productIds": ["product_id_1", "product_id_2", "product_id_3"] } }
-	// ```
+	// "productIds": ["product_id_1", "product_id_2", "product_id_3"]
+	// "debugString": "Bidding function executed successfully!" } } ```
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -376,7 +384,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -545,7 +553,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210517")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

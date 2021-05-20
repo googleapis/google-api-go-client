@@ -1586,6 +1586,9 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	// matching container available for use during execution.
 	//   "CONFIG_MISMATCH" - Container Manager is enabled, but there was no
 	// matching container available for execution.
+	//   "CONFIG_MISSING_CONTAINER" - Container Manager is enabled and we
+	// attempted to execute on a matching container, but the container was
+	// no longer running. The task was retried without an async container.
 	CmUsage string `json:"cmUsage,omitempty"`
 
 	// DockerCacheHit: Indicates whether we are using a cached Docker image
@@ -1757,6 +1760,9 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	//   "DOCKER_IMAGE_VPCSC_PERMISSION_DENIED" - Docker failed because a
 	// request was denied by the organization's policy.
 	//   "WORKING_DIR_NOT_RELATIVE" - Working directory is not relative
+	//   "DOCKER_MISSING_CONTAINER" - Docker cannot find the container
+	// specified in the command. This error is likely to only occur if an
+	// asynchronous container is not running when the command is run.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -1794,6 +1800,8 @@ type GoogleDevtoolsRemotebuildbotResourceUsage struct {
 
 	MemoryUsage *GoogleDevtoolsRemotebuildbotResourceUsageStat `json:"memoryUsage,omitempty"`
 
+	TotalDiskIoStats *GoogleDevtoolsRemotebuildbotResourceUsageIOStats `json:"totalDiskIoStats,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CpuUsedPercent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1830,6 +1838,43 @@ func (s *GoogleDevtoolsRemotebuildbotResourceUsage) UnmarshalJSON(data []byte) e
 	}
 	s.CpuUsedPercent = float64(s1.CpuUsedPercent)
 	return nil
+}
+
+type GoogleDevtoolsRemotebuildbotResourceUsageIOStats struct {
+	ReadBytesCount uint64 `json:"readBytesCount,omitempty,string"`
+
+	ReadCount uint64 `json:"readCount,omitempty,string"`
+
+	ReadTimeMs uint64 `json:"readTimeMs,omitempty,string"`
+
+	WriteBytesCount uint64 `json:"writeBytesCount,omitempty,string"`
+
+	WriteCount uint64 `json:"writeCount,omitempty,string"`
+
+	WriteTimeMs uint64 `json:"writeTimeMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ReadBytesCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReadBytesCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsRemotebuildbotResourceUsageIOStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsRemotebuildbotResourceUsageIOStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type GoogleDevtoolsRemotebuildbotResourceUsageStat struct {
@@ -3502,7 +3547,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3698,7 +3743,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3889,7 +3934,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4032,7 +4077,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4205,7 +4250,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4391,7 +4436,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

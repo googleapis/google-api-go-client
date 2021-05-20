@@ -959,7 +959,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1106,7 +1106,7 @@ func (c *ProjectsAssessmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1251,7 +1251,7 @@ func (c *ProjectsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1393,7 +1393,7 @@ func (c *ProjectsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1537,7 +1537,7 @@ func (c *ProjectsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1686,7 +1686,7 @@ func (c *ProjectsKeysGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1849,7 +1849,7 @@ func (c *ProjectsKeysListCall) Header() http.Header {
 
 func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1985,8 +1985,10 @@ type ProjectsKeysMigrateCall struct {
 
 // Migrate: Migrates an existing key from reCAPTCHA to reCAPTCHA
 // Enterprise. Once a key is migrated, it can be used from either
-// product. SiteVerify requests will be billed as CreateAssessment
-// calls.
+// product. SiteVerify requests are billed as CreateAssessment calls.
+// You must be authenticated as one of the current owners of the
+// reCAPTCHA Site Key, and your user must have the reCAPTCHA Enterprise
+// Admin IAM role in the destination project.
 //
 // - name: The name of the key to be migrated, in the format
 //   "projects/{project}/keys/{key}".
@@ -2024,7 +2026,7 @@ func (c *ProjectsKeysMigrateCall) Header() http.Header {
 
 func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2089,7 +2091,7 @@ func (c *ProjectsKeysMigrateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	}
 	return ret, nil
 	// {
-	//   "description": "Migrates an existing key from reCAPTCHA to reCAPTCHA Enterprise. Once a key is migrated, it can be used from either product. SiteVerify requests will be billed as CreateAssessment calls.",
+	//   "description": "Migrates an existing key from reCAPTCHA to reCAPTCHA Enterprise. Once a key is migrated, it can be used from either product. SiteVerify requests are billed as CreateAssessment calls. You must be authenticated as one of the current owners of the reCAPTCHA Site Key, and your user must have the reCAPTCHA Enterprise Admin IAM role in the destination project.",
 	//   "flatPath": "v1/projects/{projectsId}/keys/{keysId}:migrate",
 	//   "httpMethod": "POST",
 	//   "id": "recaptchaenterprise.projects.keys.migrate",
@@ -2142,7 +2144,7 @@ func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev
 }
 
 // UpdateMask sets the optional parameter "updateMask": The mask to
-// control which field of the key get updated. If the mask is not
+// control which fields of the key get updated. If the mask is not
 // present, all fields will be updated.
 func (c *ProjectsKeysPatchCall) UpdateMask(updateMask string) *ProjectsKeysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -2176,7 +2178,7 @@ func (c *ProjectsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2257,7 +2259,7 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Optional. The mask to control which field of the key get updated. If the mask is not present, all fields will be updated.",
+	//       "description": "Optional. The mask to control which fields of the key get updated. If the mask is not present, all fields will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

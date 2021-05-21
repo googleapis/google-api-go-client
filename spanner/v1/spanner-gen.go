@@ -131,6 +131,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Projects = NewProjectsService(s)
+	s.Scans = NewScansService(s)
 	return s, nil
 }
 
@@ -140,6 +141,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Projects *ProjectsService
+
+	Scans *ScansService
 }
 
 func (s *Service) userAgent() string {
@@ -275,6 +278,15 @@ func NewProjectsInstancesOperationsService(s *Service) *ProjectsInstancesOperati
 }
 
 type ProjectsInstancesOperationsService struct {
+	s *Service
+}
+
+func NewScansService(s *Service) *ScansService {
+	rs := &ScansService{s: s}
+	return rs
+}
+
+type ScansService struct {
 	s *Service
 }
 
@@ -749,6 +761,65 @@ func (s *CommitStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContextValue: A message representing context for a KeyRangeInfo,
+// including a label, value, unit, and severity.
+type ContextValue struct {
+	// Label: The label for the context value. e.g. "latency".
+	Label *LocalizedString `json:"label,omitempty"`
+
+	// Severity: The severity of this context.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Required default value.
+	//   "INFO" - Lowest severity level "Info".
+	//   "WARNING" - Middle severity level "Warning".
+	//   "ERROR" - Severity level signaling an error "Error"
+	//   "FATAL" - Severity level signaling a non recoverable error "Fatal"
+	Severity string `json:"severity,omitempty"`
+
+	// Unit: The unit of the context value.
+	Unit string `json:"unit,omitempty"`
+
+	// Value: The value for the context.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContextValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ContextValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ContextValue) UnmarshalJSON(data []byte) error {
+	type NoMethod ContextValue
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
 // CreateBackupMetadata: Metadata type for the operation returned by
 // CreateBackup.
 type CreateBackupMetadata struct {
@@ -1093,6 +1164,91 @@ type Delete struct {
 
 func (s *Delete) MarshalJSON() ([]byte, error) {
 	type NoMethod Delete
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DerivedMetric: A message representing a derived metric.
+type DerivedMetric struct {
+	// Denominator: The name of the denominator metric. e.g. "rows".
+	Denominator *LocalizedString `json:"denominator,omitempty"`
+
+	// Numerator: The name of the numerator metric. e.g. "latency".
+	Numerator *LocalizedString `json:"numerator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Denominator") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Denominator") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DerivedMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod DerivedMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiagnosticMessage: A message representing the key visualizer
+// diagnostic messages.
+type DiagnosticMessage struct {
+	// Info: Information about this diagnostic information.
+	Info *LocalizedString `json:"info,omitempty"`
+
+	// Metric: The metric.
+	Metric *LocalizedString `json:"metric,omitempty"`
+
+	// MetricSpecific: Whether this message is specific only for the current
+	// metric. By default Diagnostics are shown for all metrics, regardless
+	// which metric is the currently selected metric in the UI. However
+	// occasionally a metric will generate so many messages that the
+	// resulting visual clutter becomes overwhelming. In this case setting
+	// this to true, will show the diagnostic messages for that metric only
+	// if it is the currently selected metric.
+	MetricSpecific bool `json:"metricSpecific,omitempty"`
+
+	// Severity: The severity of the diagnostic message.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Required default value.
+	//   "INFO" - Lowest severity level "Info".
+	//   "WARNING" - Middle severity level "Warning".
+	//   "ERROR" - Severity level signaling an error "Error"
+	//   "FATAL" - Severity level signaling a non recoverable error "Fatal"
+	Severity string `json:"severity,omitempty"`
+
+	// ShortMessage: The short message.
+	ShortMessage *LocalizedString `json:"shortMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Info") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Info") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiagnosticMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod DiagnosticMessage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1597,6 +1753,68 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IndexedHotKey: A message representing a (sparse) collection of hot
+// keys for specific key buckets.
+type IndexedHotKey struct {
+	// SparseHotKeys: A (sparse) mapping from key bucket index to the index
+	// of the specific hot row key for that key bucket. The index of the hot
+	// row key can be translated to the actual row key via the
+	// ScanData.VisualizationData.indexed_keys repeated field.
+	SparseHotKeys map[string]int64 `json:"sparseHotKeys,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SparseHotKeys") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SparseHotKeys") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexedHotKey) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexedHotKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IndexedKeyRangeInfos: A message representing a (sparse) collection of
+// KeyRangeInfos for specific key buckets.
+type IndexedKeyRangeInfos struct {
+	// KeyRangeInfos: A (sparse) mapping from key bucket index to the
+	// KeyRangeInfos for that key bucket.
+	KeyRangeInfos map[string]KeyRangeInfos `json:"keyRangeInfos,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyRangeInfos") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyRangeInfos") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexedKeyRangeInfos) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexedKeyRangeInfos
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Instance: An isolated set of Cloud Spanner resources on which
 // databases can be hosted.
 type Instance struct {
@@ -1805,6 +2023,106 @@ type KeyRange struct {
 
 func (s *KeyRange) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyRangeInfo: A message representing information for a key range
+// (possibly one key).
+type KeyRangeInfo struct {
+	// ContextValues: The list of context values for this key range.
+	ContextValues []*ContextValue `json:"contextValues,omitempty"`
+
+	// EndKeyIndex: The index of the end key in indexed_keys.
+	EndKeyIndex int64 `json:"endKeyIndex,omitempty"`
+
+	// Info: Information about this key range, for all metrics.
+	Info *LocalizedString `json:"info,omitempty"`
+
+	// KeysCount: The number of keys this range covers.
+	KeysCount int64 `json:"keysCount,omitempty,string"`
+
+	// Metric: The name of the metric. e.g. "latency".
+	Metric *LocalizedString `json:"metric,omitempty"`
+
+	// StartKeyIndex: The index of the start key in indexed_keys.
+	StartKeyIndex int64 `json:"startKeyIndex,omitempty"`
+
+	// Unit: The unit of the metric. This is an unstructured field and will
+	// be mapped as is to the user.
+	Unit *LocalizedString `json:"unit,omitempty"`
+
+	// Value: The value of the metric.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyRangeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyRangeInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *KeyRangeInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod KeyRangeInfo
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// KeyRangeInfos: A message representing a list of specific information
+// for multiple key ranges.
+type KeyRangeInfos struct {
+	// Infos: The list individual KeyRangeInfos.
+	Infos []*KeyRangeInfo `json:"infos,omitempty"`
+
+	// TotalSize: The total size of the list of all KeyRangeInfos. This may
+	// be larger than the number of repeated messages above. If that is the
+	// case, this number may be used to determine how many are not being
+	// shown.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Infos") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Infos") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyRangeInfos) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyRangeInfos
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2126,6 +2444,42 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListScansResponse: Response method from the ListScans method.
+type ListScansResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Scans: Available scans based on the list query parameters.
+	Scans []*Scan `json:"scans,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListScansResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListScansResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSessionsResponse: The response for ListSessions.
 type ListSessionsResponse struct {
 	// NextPageToken: `next_page_token` can be sent in a subsequent
@@ -2158,6 +2512,193 @@ type ListSessionsResponse struct {
 
 func (s *ListSessionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSessionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LocalizedString: A message representing a user-facing string whose
+// value may need to be translated before being displayed.
+type LocalizedString struct {
+	// Args: A map of arguments used when creating the localized message.
+	// Keys represent parameter names which may be used by the localized
+	// version when substituting dynamic values.
+	Args map[string]string `json:"args,omitempty"`
+
+	// Message: The canonical English version of this message. If no token
+	// is provided or the front-end has no message associated with the
+	// token, this text will be displayed as-is.
+	Message string `json:"message,omitempty"`
+
+	// Token: The token identifying the message, e.g. 'METRIC_READ_CPU'.
+	// This should be unique within the service.
+	Token string `json:"token,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocalizedString) MarshalJSON() ([]byte, error) {
+	type NoMethod LocalizedString
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Metric: A message representing the actual monitoring data, values for
+// each key bucket over time, of a metric.
+type Metric struct {
+	// Aggregation: The aggregation function used to aggregate each key
+	// bucket
+	//
+	// Possible values:
+	//   "AGGREGATION_UNSPECIFIED" - Required default value.
+	//   "MAX" - Use the maximum of all values.
+	//   "SUM" - Use the sum of all values.
+	Aggregation string `json:"aggregation,omitempty"`
+
+	// Category: The category of the metric, e.g. "Activity", "Alerts",
+	// "Reads", etc.
+	Category *LocalizedString `json:"category,omitempty"`
+
+	// Derived: The references to numerator and denominator metrics for a
+	// derived metric.
+	Derived *DerivedMetric `json:"derived,omitempty"`
+
+	// DisplayLabel: The displayed label of the metric.
+	DisplayLabel *LocalizedString `json:"displayLabel,omitempty"`
+
+	// HasNonzeroData: Whether the metric has any non-zero data.
+	HasNonzeroData bool `json:"hasNonzeroData,omitempty"`
+
+	// HotValue: The value that is considered hot for the metric. On a per
+	// metric basis hotness signals high utilization and something that
+	// might potentially be a cause for concern by the end user. hot_value
+	// is used to calibrate and scale visual color scales.
+	HotValue float64 `json:"hotValue,omitempty"`
+
+	// IndexedHotKeys: The (sparse) mapping from time index to an
+	// IndexedHotKey message, representing those time intervals for which
+	// there are hot keys.
+	IndexedHotKeys map[string]IndexedHotKey `json:"indexedHotKeys,omitempty"`
+
+	// IndexedKeyRangeInfos: The (sparse) mapping from time interval index
+	// to an IndexedKeyRangeInfos message, representing those time intervals
+	// for which there are informational messages concerning key ranges.
+	IndexedKeyRangeInfos map[string]IndexedKeyRangeInfos `json:"indexedKeyRangeInfos,omitempty"`
+
+	// Info: Information about the metric.
+	Info *LocalizedString `json:"info,omitempty"`
+
+	// Matrix: The data for the metric as a matrix.
+	Matrix *MetricMatrix `json:"matrix,omitempty"`
+
+	// Unit: The unit of the metric.
+	Unit *LocalizedString `json:"unit,omitempty"`
+
+	// Visible: Whether the metric is visible to the end user.
+	Visible bool `json:"visible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aggregation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aggregation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metric) MarshalJSON() ([]byte, error) {
+	type NoMethod Metric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Metric) UnmarshalJSON(data []byte) error {
+	type NoMethod Metric
+	var s1 struct {
+		HotValue gensupport.JSONFloat64 `json:"hotValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.HotValue = float64(s1.HotValue)
+	return nil
+}
+
+// MetricMatrix: A message representing a matrix of floats.
+type MetricMatrix struct {
+	// Rows: The rows of the matrix.
+	Rows []*MetricMatrixRow `json:"rows,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Rows") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Rows") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricMatrix) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricMatrix
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MetricMatrixRow: A message representing a row of a matrix of floats.
+type MetricMatrixRow struct {
+	// Cols: The columns of the row.
+	Cols []float64 `json:"cols,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cols") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cols") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricMatrixRow) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricMatrixRow
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2839,6 +3380,55 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrefixNode: A message representing a key prefix node in the key
+// prefix hierarchy. for eg. Bigtable keyspaces are lexicographically
+// ordered mappings of keys to values. Keys often have a shared prefix
+// structure where users use the keys to organize data. Eg ///employee
+// In this case Keysight will possibly use one node for a company and
+// reuse it for all employees that fall under the company. Doing so
+// improves legibility in the UI.
+type PrefixNode struct {
+	// DataSourceNode: Whether this corresponds to a data_source name.
+	DataSourceNode bool `json:"dataSourceNode,omitempty"`
+
+	// Depth: The depth in the prefix hierarchy.
+	Depth int64 `json:"depth,omitempty"`
+
+	// EndIndex: The index of the end key bucket of the range that this node
+	// spans.
+	EndIndex int64 `json:"endIndex,omitempty"`
+
+	// StartIndex: The index of the start key bucket of the range that this
+	// node spans.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// Word: The string represented by the prefix node.
+	Word string `json:"word,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceNode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSourceNode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrefixNode) MarshalJSON() ([]byte, error) {
+	type NoMethod PrefixNode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3545,6 +4135,92 @@ type RollbackRequest struct {
 
 func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Scan: Scan is a structure which describes Cloud Key Visualizer scan
+// information.
+type Scan struct {
+	// Details: Additional information provided by the implementer.
+	Details googleapi.RawMessage `json:"details,omitempty"`
+
+	// EndTime: The upper bound for when the scan is defined.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The unique name of the scan, specific to the Database service
+	// implementing this interface.
+	Name string `json:"name,omitempty"`
+
+	// ScanData: Output only. Cloud Key Visualizer scan data. Note, this
+	// field is not available to the ListScans method.
+	ScanData *ScanData `json:"scanData,omitempty"`
+
+	// StartTime: A range of time (inclusive) for when the scan is defined.
+	// The lower bound for when the scan is defined.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Scan) MarshalJSON() ([]byte, error) {
+	type NoMethod Scan
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScanData: ScanData contains Cloud Key Visualizer scan data used by
+// the caller to construct a visualization.
+type ScanData struct {
+	// Data: Cloud Key Visualizer scan data. The range of time this
+	// information covers is captured via the above time range fields. Note,
+	// this field is not available to the ListScans method.
+	Data *VisualizationData `json:"data,omitempty"`
+
+	// EndTime: The upper bound for when the contained data is defined.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: A range of time (inclusive) for when the contained data is
+	// defined. The lower bound for when the contained data is defined.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScanData) MarshalJSON() ([]byte, error) {
+	type NoMethod ScanData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4415,6 +5091,72 @@ func (s *UpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type VisualizationData struct {
+	// DataSourceEndToken: The token signifying the end of a data_source.
+	DataSourceEndToken string `json:"dataSourceEndToken,omitempty"`
+
+	// DataSourceSeparatorToken: The token delimiting a datasource name from
+	// the rest of a key in a data_source.
+	DataSourceSeparatorToken string `json:"dataSourceSeparatorToken,omitempty"`
+
+	// DiagnosticMessages: The list of messages (info, alerts, ...)
+	DiagnosticMessages []*DiagnosticMessage `json:"diagnosticMessages,omitempty"`
+
+	// EndKeyStrings: We discretize the entire keyspace into buckets.
+	// Assuming each bucket has an inclusive keyrange and covers keys from
+	// k(i) ... k(n). In this case k(n) would be an end key for a given
+	// range. end_key_string is the collection of all such end keys
+	EndKeyStrings []string `json:"endKeyStrings,omitempty"`
+
+	// HasPii: Whether this scan contains PII.
+	HasPii bool `json:"hasPii,omitempty"`
+
+	// IndexedKeys: Keys of key ranges that contribute significantly to a
+	// given metric Can be thought of as heavy hitters.
+	IndexedKeys []string `json:"indexedKeys,omitempty"`
+
+	// KeySeparator: The token delimiting the key prefixes.
+	KeySeparator string `json:"keySeparator,omitempty"`
+
+	// KeyUnit: The unit for the key: e.g. 'key' or 'chunk'.
+	//
+	// Possible values:
+	//   "KEY_UNIT_UNSPECIFIED" - Required default value
+	//   "KEY" - Each entry corresponds to one key
+	//   "CHUNK" - Each entry corresponds to a chunk of keys
+	KeyUnit string `json:"keyUnit,omitempty"`
+
+	// Metrics: The list of data objects for each metric.
+	Metrics []*Metric `json:"metrics,omitempty"`
+
+	// PrefixNodes: The list of extracted key prefix nodes used in the key
+	// prefix hierarchy.
+	PrefixNodes []*PrefixNode `json:"prefixNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceEndToken")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSourceEndToken") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VisualizationData) MarshalJSON() ([]byte, error) {
+	type NoMethod VisualizationData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Write: Arguments to insert, update, insert_or_update, and replace
 // operations.
 type Write struct {
@@ -4516,7 +5258,7 @@ func (c *ProjectsInstanceConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4682,7 +5424,7 @@ func (c *ProjectsInstanceConfigsListCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4871,7 +5613,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5017,7 +5759,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5170,7 +5912,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5320,7 +6062,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5515,7 +6257,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5721,7 +6463,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5869,7 +6611,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6019,7 +6761,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6230,7 +6972,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6454,7 +7196,7 @@ func (c *ProjectsInstancesBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6623,7 +7365,7 @@ func (c *ProjectsInstancesBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6768,7 +7510,7 @@ func (c *ProjectsInstancesBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6914,7 +7656,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7114,7 +7856,7 @@ func (c *ProjectsInstancesBackupsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7307,7 +8049,7 @@ func (c *ProjectsInstancesBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7463,7 +8205,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7616,7 +8358,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7766,7 +8508,7 @@ func (c *ProjectsInstancesBackupsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7902,7 +8644,7 @@ func (c *ProjectsInstancesBackupsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8048,7 +8790,7 @@ func (c *ProjectsInstancesBackupsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8225,7 +8967,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8466,7 +9208,7 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabaseOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8646,7 +9388,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8789,7 +9531,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesDropDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8934,7 +9676,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9084,7 +9826,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9230,7 +9972,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9325,6 +10067,218 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 
 }
 
+// method id "spanner.projects.instances.databases.getScans":
+
+type ProjectsInstancesDatabasesGetScansCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetScans: Request a specific scan with Database-specific data for
+// Cloud Key Visualizer.
+//
+// - name: The unique name of the scan containing the requested
+//   information, specific to the Database service implementing this
+//   interface.
+func (r *ProjectsInstancesDatabasesService) GetScans(name string) *ProjectsInstancesDatabasesGetScansCall {
+	c := &ProjectsInstancesDatabasesGetScansCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": The upper bound for
+// the time range to retrieve Scan data for.
+func (c *ProjectsInstancesDatabasesGetScansCall) EndTime(endTime string) *ProjectsInstancesDatabasesGetScansCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": These fields
+// restrict the Database-specific information returned in the
+// `Scan.data` field. If a `View` is provided that does not include the
+// `Scan.data` field, these are ignored. This range of time must be
+// entirely contained within the defined time range of the targeted
+// scan. The lower bound for the time range to retrieve Scan data for.
+func (c *ProjectsInstancesDatabasesGetScansCall) StartTime(startTime string) *ProjectsInstancesDatabasesGetScansCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which parts of the
+// Scan should be returned in the response. Note, if left unspecified,
+// the FULL view is assumed.
+//
+// Possible values:
+//   "VIEW_UNSPECIFIED" - Not specified, equivalent to SUMMARY.
+//   "SUMMARY" - Server responses only include `name`, `details`,
+// `start_time` and `end_time`. The default value. Note, the ListScans
+// method may only use this view type, others view types are not
+// supported.
+//   "FULL" - Full representation of the scan is returned in the server
+// response, including `data`.
+func (c *ProjectsInstancesDatabasesGetScansCall) View(view string) *ProjectsInstancesDatabasesGetScansCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabasesGetScansCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesGetScansCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesDatabasesGetScansCall) IfNoneMatch(entityTag string) *ProjectsInstancesDatabasesGetScansCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabasesGetScansCall) Context(ctx context.Context) *ProjectsInstancesDatabasesGetScansCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabasesGetScansCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesGetScansCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/scans")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.getScans" call.
+// Exactly one of *Scan or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Scan.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsInstancesDatabasesGetScansCall) Do(opts ...googleapi.CallOption) (*Scan, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Scan{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request a specific scan with Database-specific data for Cloud Key Visualizer.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/scans",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.databases.getScans",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "endTime": {
+	//       "description": "The upper bound for the time range to retrieve Scan data for.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The unique name of the scan containing the requested information, specific to the Database service implementing this interface.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "These fields restrict the Database-specific information returned in the `Scan.data` field. If a `View` is provided that does not include the `Scan.data` field, these are ignored. This range of time must be entirely contained within the defined time range of the targeted scan. The lower bound for the time range to retrieve Scan data for.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the Scan should be returned in the response. Note, if left unspecified, the FULL view is assumed.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "SUMMARY",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified, equivalent to SUMMARY.",
+	//         "Server responses only include `name`, `details`, `start_time` and `end_time`. The default value. Note, the ListScans method may only use this view type, others view types are not supported.",
+	//         "Full representation of the scan is returned in the server response, including `data`."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/scans",
+	//   "response": {
+	//     "$ref": "Scan"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.data"
+	//   ]
+	// }
+
+}
+
 // method id "spanner.projects.instances.databases.list":
 
 type ProjectsInstancesDatabasesListCall struct {
@@ -9399,7 +10353,7 @@ func (c *ProjectsInstancesDatabasesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9584,7 +10538,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9734,7 +10688,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9887,7 +10841,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10035,7 +10989,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesUpdateDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10185,7 +11139,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10321,7 +11275,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10467,7 +11421,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10644,7 +11598,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10821,7 +11775,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Header() http.Header
 
 func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10966,7 +11920,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Header() http.H
 
 func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11121,7 +12075,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11276,7 +12230,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11419,7 +12373,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11563,7 +12517,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.He
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11713,7 +12667,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11859,7 +12813,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Header() htt
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12013,7 +12967,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12188,7 +13142,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12373,7 +13327,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Header() http.Hea
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12528,7 +13482,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12679,7 +13633,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12828,7 +13782,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12974,7 +13928,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13124,7 +14078,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13260,7 +14214,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13406,7 +14360,7 @@ func (c *ProjectsInstancesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13583,7 +14537,7 @@ func (c *ProjectsInstancesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210519")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13693,6 +14647,246 @@ func (c *ProjectsInstancesOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsInstancesOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "spanner.scans.list":
+
+type ScansListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Return available scans given a Database-specific resource name.
+//
+// - parent: The unique name of the parent resource, specific to the
+//   Database service implementing this interface.
+func (r *ScansService) List(parent string) *ScansListCall {
+	c := &ScansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression to
+// restrict the results based on information present in the available
+// Scan collection. The filter applies to all fields within the Scan
+// message except for `data`.
+func (c *ScansListCall) Filter(filter string) *ScansListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return.
+func (c *ScansListCall) PageSize(pageSize int64) *ScansListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous List request, if any.
+func (c *ScansListCall) PageToken(pageToken string) *ScansListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which parts of the
+// Scan should be returned in the response. Note, only the SUMMARY view
+// (the default) is currently supported for ListScans.
+//
+// Possible values:
+//   "VIEW_UNSPECIFIED" - Not specified, equivalent to SUMMARY.
+//   "SUMMARY" - Server responses only include `name`, `details`,
+// `start_time` and `end_time`. The default value. Note, the ListScans
+// method may only use this view type, others view types are not
+// supported.
+//   "FULL" - Full representation of the scan is returned in the server
+// response, including `data`.
+func (c *ScansListCall) View(view string) *ScansListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScansListCall) Fields(s ...googleapi.Field) *ScansListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ScansListCall) IfNoneMatch(entityTag string) *ScansListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ScansListCall) Context(ctx context.Context) *ScansListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ScansListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ScansListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.scans.list" call.
+// Exactly one of *ListScansResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListScansResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ScansListCall) Do(opts ...googleapi.CallOption) (*ListScansResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListScansResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return available scans given a Database-specific resource name.",
+	//   "flatPath": "v1/scans",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.scans.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression to restrict the results based on information present in the available Scan collection. The filter applies to all fields within the Scan message except for `data`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The unique name of the parent resource, specific to the Database service implementing this interface.",
+	//       "location": "path",
+	//       "pattern": "^scans$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the Scan should be returned in the response. Note, only the SUMMARY view (the default) is currently supported for ListScans.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "SUMMARY",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified, equivalent to SUMMARY.",
+	//         "Server responses only include `name`, `details`, `start_time` and `end_time`. The default value. Note, the ListScans method may only use this view type, others view types are not supported.",
+	//         "Full representation of the scan is returned in the server response, including `data`."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}",
+	//   "response": {
+	//     "$ref": "ListScansResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.data"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ScansListCall) Pages(ctx context.Context, f func(*ListScansResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

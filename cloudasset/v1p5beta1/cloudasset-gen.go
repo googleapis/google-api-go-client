@@ -2204,8 +2204,8 @@ type AssetsListCall struct {
 //
 // - parent: Name of the organization or project the assets belong to.
 //   Format: "organizations/[organization-number]" (such as
-//   "organizations/123"), "projects/[project-number]" (such as
-//   "projects/my-project-id"), or "projects/[project-id]" (such as
+//   "organizations/123"), "projects/[project-id]" (such as
+//   "projects/my-project-id"), or "projects/[project-number]" (such as
 //   "projects/12345").
 func (r *AssetsService) List(parent string) *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2315,7 +2315,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2422,7 +2422,7 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization or project the assets belong to. Format: \"organizations/[organization-number]\" (such as \"organizations/123\"), \"projects/[project-number]\" (such as \"projects/my-project-id\"), or \"projects/[project-id]\" (such as \"projects/12345\").",
+	//       "description": "Required. Name of the organization or project the assets belong to. Format: \"organizations/[organization-number]\" (such as \"organizations/123\"), \"projects/[project-id]\" (such as \"projects/my-project-id\"), or \"projects/[project-number]\" (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

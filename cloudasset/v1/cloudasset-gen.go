@@ -297,6 +297,40 @@ func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnalyzeMoveResponse: The response message for resource move analysis.
+type AnalyzeMoveResponse struct {
+	// MoveAnalysis: The list of analyses returned from performing the
+	// intended resource move analysis. The analysis is grouped by different
+	// Cloud services.
+	MoveAnalysis []*MoveAnalysis `json:"moveAnalysis,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MoveAnalysis") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MoveAnalysis") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeMoveResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeMoveResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Asset: An asset in Google Cloud. An asset can be any resource in the
 // Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
@@ -3539,6 +3573,105 @@ func (s *ListFeedsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MoveAnalysis: A message to group the analysis information.
+type MoveAnalysis struct {
+	// Analysis: Analysis result of moving the target resource.
+	Analysis *MoveAnalysisResult `json:"analysis,omitempty"`
+
+	// DisplayName: The user friendly display name of the analysis. E.g.
+	// IAM, Organization Policy etc.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Error: Description of error encountered when performing the analysis.
+	Error *Status `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Analysis") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Analysis") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveAnalysis
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MoveAnalysisResult: An analysis result including blockers and
+// warnings.
+type MoveAnalysisResult struct {
+	// Blockers: Blocking information that would prevent the target resource
+	// from moving to the specified destination at runtime.
+	Blockers []*MoveImpact `json:"blockers,omitempty"`
+
+	// Warnings: Warning information indicating that moving the target
+	// resource to the specified destination might be unsafe. This can
+	// include important policy information and configuration changes, but
+	// will not block moves at runtime.
+	Warnings []*MoveImpact `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Blockers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Blockers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveAnalysisResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveAnalysisResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MoveImpact: A message to group impacts of moving the target resource.
+type MoveImpact struct {
+	// Detail: User friendly impact detail in a free form message.
+	Detail string `json:"detail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Detail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Detail") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveImpact) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveImpact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -4795,8 +4928,8 @@ type AssetsListCall struct {
 //
 // - parent: Name of the organization or project the assets belong to.
 //   Format: "organizations/[organization-number]" (such as
-//   "organizations/123"), "projects/[project-number]" (such as
-//   "projects/my-project-id"), or "projects/[project-id]" (such as
+//   "organizations/123"), "projects/[project-id]" (such as
+//   "projects/my-project-id"), or "projects/[project-number]" (such as
 //   "projects/12345").
 func (r *AssetsService) List(parent string) *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4907,7 +5040,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5016,7 +5149,7 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization or project the assets belong to. Format: \"organizations/[organization-number]\" (such as \"organizations/123\"), \"projects/[project-number]\" (such as \"projects/my-project-id\"), or \"projects/[project-id]\" (such as \"projects/12345\").",
+	//       "description": "Required. Name of the organization or project the assets belong to. Format: \"organizations/[organization-number]\" (such as \"organizations/123\"), \"projects/[project-id]\" (such as \"projects/my-project-id\"), or \"projects/[project-number]\" (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -5114,7 +5247,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5257,7 +5390,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5403,7 +5536,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5552,7 +5685,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5695,7 +5828,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5848,7 +5981,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6158,7 +6291,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6376,7 +6509,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6462,6 +6595,206 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Do(opts ...googleapi.CallOption) (*O
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.analyzeMove":
+
+type V1AnalyzeMoveCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeMove: Analyze moving a resource to a specified destination
+// without kicking off the actual move. The analysis is best effort
+// depending on the user's permissions of viewing different hierarchical
+// policies and configurations. The policies and configuration are
+// subject to change before the actual resource migration takes place.
+//
+// - resource: Name of the resource to perform the analysis against.
+//   Only GCP Project are supported as of today. Hence, this can only be
+//   Project ID (such as "projects/my-project-id") or a Project Number
+//   (such as "projects/12345").
+func (r *V1Service) AnalyzeMove(resource string) *V1AnalyzeMoveCall {
+	c := &V1AnalyzeMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// DestinationParent sets the optional parameter "destinationParent":
+// Required. Name of the GCP Folder or Organization to reparent the
+// target resource. The analysis will be performed against
+// hypothetically moving the resource to this specified desitination
+// parent. This can only be a Folder number (such as "folders/123") or
+// an Organization number (such as "organizations/123").
+func (c *V1AnalyzeMoveCall) DestinationParent(destinationParent string) *V1AnalyzeMoveCall {
+	c.urlParams_.Set("destinationParent", destinationParent)
+	return c
+}
+
+// View sets the optional parameter "view": Analysis view indicating
+// what information should be included in the analysis response. If
+// unspecified, the default view is FULL.
+//
+// Possible values:
+//   "ANALYSIS_VIEW_UNSPECIFIED" - The default/unset value. The API will
+// default to the FULL view.
+//   "FULL" - Full analysis including all level of impacts of the
+// specified resource move.
+//   "BASIC" - Basic analysis only including blockers which will prevent
+// the specified resource move at runtime.
+func (c *V1AnalyzeMoveCall) View(view string) *V1AnalyzeMoveCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeMoveCall) Fields(s ...googleapi.Field) *V1AnalyzeMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeMoveCall) IfNoneMatch(entityTag string) *V1AnalyzeMoveCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeMoveCall) Context(ctx context.Context) *V1AnalyzeMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:analyzeMove")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeMove" call.
+// Exactly one of *AnalyzeMoveResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AnalyzeMoveResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1AnalyzeMoveCall) Do(opts ...googleapi.CallOption) (*AnalyzeMoveResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AnalyzeMoveResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyze moving a resource to a specified destination without kicking off the actual move. The analysis is best effort depending on the user's permissions of viewing different hierarchical policies and configurations. The policies and configuration are subject to change before the actual resource migration takes place.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeMove",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeMove",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "destinationParent": {
+	//       "description": "Required. Name of the GCP Folder or Organization to reparent the target resource. The analysis will be performed against hypothetically moving the resource to this specified desitination parent. This can only be a Folder number (such as \"folders/123\") or an Organization number (such as \"organizations/123\").",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Required. Name of the resource to perform the analysis against. Only GCP Project are supported as of today. Hence, this can only be Project ID (such as \"projects/my-project-id\") or a Project Number (such as \"projects/12345\").",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Analysis view indicating what information should be included in the analysis response. If unspecified, the default view is FULL.",
+	//       "enum": [
+	//         "ANALYSIS_VIEW_UNSPECIFIED",
+	//         "FULL",
+	//         "BASIC"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default/unset value. The API will default to the FULL view.",
+	//         "Full analysis including all level of impacts of the specified resource move.",
+	//         "Basic analysis only including blockers which will prevent the specified resource move at runtime."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:analyzeMove",
+	//   "response": {
+	//     "$ref": "AnalyzeMoveResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6580,7 +6913,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6769,7 +7102,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6990,7 +7323,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7164,15 +7497,16 @@ func (c *V1SearchAllResourcesCall) AssetTypes(assetTypes ...string) *V1SearchAll
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A comma separated list
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
 // of fields specifying the sorting order of the results. The default
 // order is ascending. Add " DESC" after the field name to indicate
 // descending order. Redundant space characters are ignored. Example:
-// "location DESC, name". Only string fields in the response are
-// sortable, including `name`, `displayName`, `description`, `location`.
-// All the other fields such as repeated fields (e.g., `networkTags`),
-// map fields (e.g., `labels`) and struct fields (e.g.,
-// `additionalAttributes`) are not supported.
+// "location DESC, name". Only singular primitive fields in the response
+// are sortable: * name * assetType * project * displayName *
+// description * location * kmsKey * createTime * updateTime * state *
+// parentFullResourceName * parentAssetType All the other fields such as
+// repeated fields (e.g., `networkTags`), map fields (e.g., `labels`)
+// and struct fields (e.g., `additionalAttributes`) are not supported.
 func (c *V1SearchAllResourcesCall) OrderBy(orderBy string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7272,7 +7606,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210520")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7349,7 +7683,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. A comma separated list of fields specifying the sorting order of the results. The default order is ascending. Add \" DESC\" after the field name to indicate descending order. Redundant space characters are ignored. Example: \"location DESC, name\". Only string fields in the response are sortable, including `name`, `displayName`, `description`, `location`. All the other fields such as repeated fields (e.g., `networkTags`), map fields (e.g., `labels`) and struct fields (e.g., `additionalAttributes`) are not supported.",
+	//       "description": "Optional. A comma-separated list of fields specifying the sorting order of the results. The default order is ascending. Add \" DESC\" after the field name to indicate descending order. Redundant space characters are ignored. Example: \"location DESC, name\". Only singular primitive fields in the response are sortable: * name * assetType * project * displayName * description * location * kmsKey * createTime * updateTime * state * parentFullResourceName * parentAssetType All the other fields such as repeated fields (e.g., `networkTags`), map fields (e.g., `labels`) and struct fields (e.g., `additionalAttributes`) are not supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -384,7 +384,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -553,7 +553,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210521")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

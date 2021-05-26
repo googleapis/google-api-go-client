@@ -164,7 +164,7 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// token.
 	Scope string `json:"scope,omitempty"`
 
-	// SubjectToken: Required. The input token. This token is a either an
+	// SubjectToken: Required. The input token. This token is either an
 	// external credential issued by a workload identity pool provider, or a
 	// short-lived access token issued by Google. If the token is an OIDC
 	// JWT, it must use the JWT format defined in RFC 7523
@@ -377,7 +377,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

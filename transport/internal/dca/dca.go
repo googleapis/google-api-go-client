@@ -34,12 +34,6 @@ import (
 	"google.golang.org/api/transport/cert"
 )
 
-const (
-	mTLSModeAlways = "always"
-	mTLSModeNever  = "never"
-	mTLSModeAuto   = "auto"
-)
-
 // GetClientCertificateSourceAndEndpoint is a convenience function that invokes
 // getClientCertificateSource and getEndpoint sequentially and returns the client
 // cert source and endpoint as a tuple.
@@ -94,10 +88,9 @@ func isClientCertificateEnabled() bool {
 // URL (ex. https://...), then the user-provided address will be merged into
 // the default endpoint. For example, WithEndpoint("myhost:8000") and
 // WithDefaultEndpoint("https://foo.com/bar/baz") will return "https://myhost:8080/bar/baz"
-func getEndpoint(settings *internal.DialSettings, clientCertSource cert.Source) (string, error) {
+func getEndpoint(settings *internal.DialSettings, certSource cert.Source) (string, error) {
 	if settings.Endpoint == "" {
-		mtlsMode := getMTLSMode()
-		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
+		if cert.ShouldUseMTLSEndpoint(certSource) {
 			return settings.DefaultMTLSEndpoint, nil
 		}
 		return settings.DefaultEndpoint, nil
@@ -114,17 +107,6 @@ func getEndpoint(settings *internal.DialSettings, clientCertSource cert.Source) 
 
 	// Assume user-provided endpoint is host[:port], merge it with the default endpoint.
 	return mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
-}
-
-func getMTLSMode() string {
-	mode := os.Getenv("GOOGLE_API_USE_MTLS_ENDPOINT")
-	if mode == "" {
-		mode = os.Getenv("GOOGLE_API_USE_MTLS") // Deprecated.
-	}
-	if mode == "" {
-		return mTLSModeAuto
-	}
-	return strings.ToLower(mode)
 }
 
 func mergeEndpoints(baseURL, newHost string) (string, error) {

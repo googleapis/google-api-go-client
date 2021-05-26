@@ -23,6 +23,7 @@ import (
 	"os/exec"
 	"os/user"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 )
@@ -30,6 +31,10 @@ import (
 const (
 	metadataPath = ".secureConnect"
 	metadataFile = "context_aware_metadata.json"
+
+	mTLSModeAlways = "always"
+	mTLSModeNever  = "never"
+	mTLSModeAuto   = "auto"
 )
 
 // defaultCertData holds all the variables pertaining to
@@ -58,6 +63,24 @@ func DefaultSource() (Source, error) {
 		defaultCert.source, defaultCert.err = newSecureConnectSource()
 	})
 	return defaultCert.source, defaultCert.err
+}
+
+// ShouldUseMTLSEndpoint returns if the mTLS endpoint should be used.
+func ShouldUseMTLSEndpoint(certSource Source) bool {
+	mtlsMode := getMTLSMode()
+	return mtlsMode == mTLSModeAlways ||
+		(certSource != nil && mtlsMode == mTLSModeAuto)
+}
+
+func getMTLSMode() string {
+	mode := os.Getenv("GOOGLE_API_USE_MTLS_ENDPOINT")
+	if mode == "" {
+		mode = os.Getenv("GOOGLE_API_USE_MTLS") // Deprecated.
+	}
+	if mode == "" {
+		return mTLSModeAuto
+	}
+	return strings.ToLower(mode)
 }
 
 type secureConnectSource struct {

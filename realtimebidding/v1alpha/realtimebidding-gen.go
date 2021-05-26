@@ -176,17 +176,18 @@ type BiddingFunction struct {
 	// used.
 	//   "TURTLEDOVE_SIMULATION_BIDDING_FUNCTION" - Bidding function that
 	// can be used by Authorized Buyers in the original TURTLEDOVE
-	// simulation. See The function takes in a Javascript object, `inputs`,
-	// that contains the following named fields:
-	// `openrtbContextualBidRequest` OR `googleContextualBidRequest`,
-	// `customContextualSignal`, `interestBasedBidData`,
-	// `interestGroupData`, `recentImpressionAges`, and returns the bid
+	// simulation. See documentation on the TURTLEDOVE simulation at
+	// https://developers.google.com/authorized-buyers/rtb/turtledove. The
+	// function takes in a Javascript object, `inputs`, that contains the
+	// following named fields: `openrtbContextualBidRequest` OR
+	// `googleContextualBidRequest`, `customContextualSignal`,
+	// `interestBasedBidData`, `interestGroupData`, and returns the bid
 	// price CPM. Example: ``` /* Returns a bid price CPM. * * @param
 	// {Object} inputs an object with the * following named fields: * -
 	// openrtbContextualBidRequest * OR googleContextualBidRequest * -
 	// customContextualSignal * - interestBasedBidData * - interestGroupData
-	// * - recentImpressionAges */ function biddingFunction(inputs) { ...
-	// return inputs.interestBasedBidData.cpm *
+	// */ function biddingFunction(inputs) { ... return
+	// inputs.interestBasedBidData.cpm *
 	// inputs.customContextualSignals.placementMultiplier; } ```
 	//   "FLEDGE_BIDDING_FUNCTION" - Buyer's interest group bidding function
 	// that can be used by Authorized Buyers in the FLEDGE simulation. See
@@ -194,21 +195,21 @@ type BiddingFunction struct {
 	// https://github.com/WICG/turtledove/blob/main/FLEDGE.md#32-on-device-bidding.
 	// The function takes one argument, `inputs`, that contains an object
 	// with the following named fields of the form: ``` { "interestGroup" :
-	// [ { "buyerCreativeId": "...", # Ad creative ID "adData": { # any JSON
-	// of your choosing }, "userBiddingSignals": { . # any JSON of your
-	// choosing } } ], "auctionSignals": { "url: # string, "slotVisibility":
-	// # enum value, "slotDimensions": [ { "height": # number value "width":
-	// # number value } ] }, "perBuyerSignals": { # Any JSON },
-	// "trustedBiddingSignals": { # Any JSON }, "browserSignals": {
-	// "recent_impression_ages_secs: [ # number ] } } ``` `interestGroup`:
-	// An object containing a list of `ad` objects, which contain the
-	// following named fields: - `buyerCreativeId`: The ad creative ID
-	// string. - `adData`: Any JSON value of the bidder's choosing to
-	// contain data associated with an ad provided in
-	// `BidResponse.ad.adslot.ad_data` for the Google Authorized Buyers
-	// protocol and `BidResponse.seatbid.bid.ext.ad_data` for the OpenRTB
-	// protocol. - `userBiddingSignals`: Any JSON value of the bidder's
-	// choosing containing interest group data that corresponds to
+	// { "ad" : [ "buyerCreativeId": "...", # Ad creative ID "adData": { #
+	// JSON object } ], "userBiddingSignals": { . # JSON object } },
+	// "auctionSignals": { "url": # string, "slotVisibility": # enum value,
+	// "slotDimensions": [ { "height": # number value "width": # number
+	// value } ] }, "perBuyerSignals": { # JSON object },
+	// "trustedBiddingSignals": { # JSON object }, "browserSignals": {
+	// "recent_impression_ages_secs": [ # Array of integers. Not yet
+	// populated. ] } } ``` `interestGroup`: An object containing a list of
+	// `ad` objects, which contain the following named fields: -
+	// `buyerCreativeId`: The ad creative ID string. - `adData`: Any JSON
+	// value of the bidder's choosing to contain data associated with an ad
+	// provided in `BidResponse.ad.adslot.ad_data` for the Google Authorized
+	// Buyers protocol and `BidResponse.seatbid.bid.ext.ad_data` for the
+	// OpenRTB protocol. - `userBiddingSignals`: Any JSON value of the
+	// bidder's choosing containing interest group data that corresponds to
 	// user_bidding_signals (as in FLEDGE). This field will be populated
 	// from `BidResponse.interest_group_map.user_bidding_signals` for Google
 	// Authorized Buyers protocol and
@@ -252,12 +253,12 @@ type BiddingFunction struct {
 	// is an object with a single named field,
 	// `recent_impression_ages_secs`, that contains a list of estimated
 	// number value recent impression ages in seconds for a given interest
-	// group. The function returns the string creative ID of the selected
-	// ad, the bid price CPM, and (optionally) selected product IDs. In
-	// addition, the bidding function may populate an optional string debug
-	// token that may be useful for remote debugging of a bidding function
-	// performing unexpectedly. This debug string is available in
-	// `BidResponseFeedback`
+	// group. `recent_impression_ages_secs` is not yet populated. The
+	// function returns the string creative ID of the selected ad, the bid
+	// price CPM, and (optionally) selected product IDs. In addition, the
+	// bidding function may populate an optional string debug token that may
+	// be useful for remote debugging of a bidding function performing
+	// unexpectedly. This debug string is available in `BidResponseFeedback`
 	// (https://developers.google.com/authorized-buyers/rtb/realtime-bidding-guide#bidresponsefeedback-object)
 	// and BidFeedback
 	// (https://developers.google.com/authorized-buyers/rtb/openrtb-guide#bidfeedback),
@@ -384,7 +385,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -553,7 +554,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

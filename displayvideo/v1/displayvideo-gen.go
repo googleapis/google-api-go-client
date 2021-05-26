@@ -200,6 +200,7 @@ func NewAdvertisersService(s *Service) *AdvertisersService {
 	rs.Channels = NewAdvertisersChannelsService(s)
 	rs.Creatives = NewAdvertisersCreativesService(s)
 	rs.InsertionOrders = NewAdvertisersInsertionOrdersService(s)
+	rs.Invoices = NewAdvertisersInvoicesService(s)
 	rs.LineItems = NewAdvertisersLineItemsService(s)
 	rs.LocationLists = NewAdvertisersLocationListsService(s)
 	rs.ManualTriggers = NewAdvertisersManualTriggersService(s)
@@ -220,6 +221,8 @@ type AdvertisersService struct {
 	Creatives *AdvertisersCreativesService
 
 	InsertionOrders *AdvertisersInsertionOrdersService
+
+	Invoices *AdvertisersInvoicesService
 
 	LineItems *AdvertisersLineItemsService
 
@@ -334,6 +337,15 @@ func NewAdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService(
 }
 
 type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService struct {
+	s *Service
+}
+
+func NewAdvertisersInvoicesService(s *Service) *AdvertisersInvoicesService {
+	rs := &AdvertisersInvoicesService{s: s}
+	return rs
+}
+
+type AdvertisersInvoicesService struct {
 	s *Service
 }
 
@@ -850,6 +862,14 @@ type Advertiser struct {
 	// PartnerId: Required. Immutable. The unique ID of the partner that the
 	// advertiser belongs to.
 	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// PrismaEnabled: Whether integration with Mediaocean (Prisma) is
+	// enabled. By enabling this: On behalf of my company, I authorize
+	// Mediaocean (Prisma) to send budget segment plans to Google, and I
+	// authorize Google to send corresponding reporting and invoices from
+	// DV360 to Mediaocean for the purposes of budget planning, billing, and
+	// reconciliation for this advertiser.
+	PrismaEnabled bool `json:"prismaEnabled,omitempty"`
 
 	// ServingConfig: Targeting settings related to ad serving of the
 	// advertiser.
@@ -1761,6 +1781,11 @@ type AssignedTargetingOption struct {
 	// option.
 	Name string `json:"name,omitempty"`
 
+	// NativeContentPositionDetails: Native content position details. This
+	// field will be populated when the targeting_type is
+	// `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+	NativeContentPositionDetails *NativeContentPositionAssignedTargetingOptionDetails `json:"nativeContentPositionDetails,omitempty"`
+
 	// NegativeKeywordListDetails: Keyword details. This field will be
 	// populated when the targeting_type is
 	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`. A maximum of 4 negative
@@ -1890,6 +1915,8 @@ type AssignedTargetingOption struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
@@ -2429,6 +2456,55 @@ type BrowserTargetingOptionDetails struct {
 
 func (s *BrowserTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BrowserTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BudgetSummary: Represents a summarized budget information associated
+// with this invoice.
+type BudgetSummary struct {
+	// ExternalBudgetId: Output only. External budget id.
+	ExternalBudgetId string `json:"externalBudgetId,omitempty"`
+
+	// PreTaxAmountMicros: Output only. The pre-tax amount for this budget,
+	// in micros of the invoice's currency. For example if currency_code is
+	// `USD`, then 1000000 micros is one US dollar.
+	PreTaxAmountMicros int64 `json:"preTaxAmountMicros,omitempty,string"`
+
+	// PrismaCpeCode: Output only. Codes specific to the MediaOcean Prisma
+	// tool.
+	PrismaCpeCode *PrismaCpeCode `json:"prismaCpeCode,omitempty"`
+
+	// TaxAmountMicros: Output only. The tax amount for this budget, in
+	// micros of the invoice's currency. For example if currency_code is
+	// `USD`, then 1000000 micros is one US dollar.
+	TaxAmountMicros int64 `json:"taxAmountMicros,omitempty,string"`
+
+	// TotalAmountMicros: Output only. The total amount of charges for this
+	// budget, in micros of the invoice's currency. For example if
+	// currency_code is `USD`, then 1000000 micros is one US dollar.
+	TotalAmountMicros int64 `json:"totalAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalBudgetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalBudgetId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BudgetSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod BudgetSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3193,6 +3269,10 @@ type Campaign struct {
 	// campaign belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
+	// CampaignBudgets: The list of budgets available to this campaign.
+	// Setting no budget gives an unlimited campaign budget.
+	CampaignBudgets []*CampaignBudget `json:"campaignBudgets,omitempty"`
+
 	// CampaignFlight: Required. The planned spend and duration of the
 	// campaign.
 	CampaignFlight *CampaignFlight `json:"campaignFlight,omitempty"`
@@ -3263,6 +3343,87 @@ type Campaign struct {
 
 func (s *Campaign) MarshalJSON() ([]byte, error) {
 	type NoMethod Campaign
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CampaignBudget: Settings that control how the campaign budget is
+// allocated.
+type CampaignBudget struct {
+	// BudgetAmountMicros: Required. The budget amount the insertion order
+	// will spend for the given date_range. The amount is in micros. Must be
+	// greater than 0. For example, 500000000 represents 500 standard units
+	// of the currency.
+	BudgetAmountMicros int64 `json:"budgetAmountMicros,omitempty,string"`
+
+	// BudgetId: The unique ID of the campaign budget. If not included,
+	// budget is assumed to be new.
+	BudgetId int64 `json:"budgetId,omitempty,string"`
+
+	// BudgetUnit: Required. Immutable. The budget unit specifies whether
+	// the budget is currency based or impression based.
+	//
+	// Possible values:
+	//   "BUDGET_UNIT_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "BUDGET_UNIT_CURRENCY" - Budgeting in currency amounts.
+	//   "BUDGET_UNIT_IMPRESSIONS" - Budgeting in impression amounts.
+	BudgetUnit string `json:"budgetUnit,omitempty"`
+
+	// DateRange: Required. The flight start and end time settings of the
+	// segment. Both `start_date` and `end_date` must be before the year
+	// 2037.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+
+	// DisplayName: Required. The display name of the budget. Must be UTF-8
+	// encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExternalBudgetId: Immutable. Must be unique under the campaign. If
+	// set, all impressions served against this budget will include this ID
+	// on the invoice if the customer has opted into budget-segment-level
+	// billing.
+	ExternalBudgetId string `json:"externalBudgetId,omitempty"`
+
+	// ExternalBudgetSource: Required. The external source of the budget
+	// segment.
+	//
+	// Possible values:
+	//   "EXTERNAL_BUDGET_SOURCE_UNSPECIFIED" - External budget source value
+	// is not specified or unknown in this version.
+	//   "EXTERNAL_BUDGET_SOURCE_NONE" - Budget has no external source.
+	//   "EXTERNAL_BUDGET_SOURCE_MEDIA_OCEAN" - Budget source is MediaOcean.
+	ExternalBudgetSource string `json:"externalBudgetSource,omitempty"`
+
+	// InvoiceGroupingId: Immutable. If set, all external_budget_id sharing
+	// the same invoice_grouping_id will include this ID on the invoice if
+	// the customer has opted into budget-segment-level billing.
+	InvoiceGroupingId string `json:"invoiceGroupingId,omitempty"`
+
+	// PrismaConfig: Required for MediaOcean budgets. Additional metadata
+	// set by the MediaOcean Prisma tool.
+	PrismaConfig *PrismaConfig `json:"prismaConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BudgetAmountMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CampaignBudget) MarshalJSON() ([]byte, error) {
+	type NoMethod CampaignBudget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4263,6 +4424,8 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -5316,6 +5479,8 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6259,6 +6424,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_MEDIANET" - Media.net.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -6367,6 +6533,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_MEDIANET" - Media.net.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -6474,6 +6641,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_MEDIANET" - Media.net.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -6770,6 +6938,7 @@ type FirstAndThirdPartyAudienceTargetingSetting struct {
 	//   "RECENCY_28_DAYS" - Recency is 28 days.
 	//   "RECENCY_30_DAYS" - Recency is 30 days.
 	//   "RECENCY_40_DAYS" - Recency is 40 days.
+	//   "RECENCY_45_DAYS" - Recency is 45 days.
 	//   "RECENCY_60_DAYS" - Recency is 60 days.
 	//   "RECENCY_90_DAYS" - Recency is 90 days.
 	//   "RECENCY_120_DAYS" - Recency is 120 days.
@@ -8165,6 +8334,7 @@ type InventorySource struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_MEDIANET" - Media.net.
 	Exchange string `json:"exchange,omitempty"`
 
 	// InventorySourceId: Output only. The unique ID of the inventory
@@ -8520,6 +8690,130 @@ type InventorySourceVideoCreativeConfig struct {
 
 func (s *InventorySourceVideoCreativeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceVideoCreativeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Invoice: A single Invoice.
+type Invoice struct {
+	// BudgetInvoiceGroupingId: Output only. Budget invoice grouping ID
+	// associated with the budget segment in the insertion order.
+	BudgetInvoiceGroupingId string `json:"budgetInvoiceGroupingId,omitempty"`
+
+	// BudgetSummaries: Output only. The list of summarized budget
+	// information associated with this invoice.
+	BudgetSummaries []*BudgetSummary `json:"budgetSummaries,omitempty"`
+
+	// CorrectedInvoiceId: Output only. The originally issued invoice that
+	// is being adjusted by this invoice, if applicable. If there is a
+	// corrected invoice, the replaced_invoice_ids field will be empty. May
+	// appear on invoice PDF as `Reference invoice number`.
+	CorrectedInvoiceId string `json:"correctedInvoiceId,omitempty"`
+
+	// CurrencyCode: Output only. Invoice currency code in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DisplayName: Output only. Display name of the invoice.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DueDate: Output only. The invoice due date.
+	DueDate *Date `json:"dueDate,omitempty"`
+
+	// InvoiceId: Output only. The unique ID of the invoice.
+	InvoiceId string `json:"invoiceId,omitempty"`
+
+	// InvoiceType: Output only. The type of invoice document.
+	//
+	// Possible values:
+	//   "INVOICE_TYPE_UNSPECIFIED" - Not specified or is unknown in this
+	// version.
+	//   "INVOICE_TYPE_CREDIT" - An Invoice with a negative amount.
+	//   "INVOICE_TYPE_INVOICE" - An Invoice with a positive amount.
+	InvoiceType string `json:"invoiceType,omitempty"`
+
+	// IssueDate: Output only. The date when the invoice was issued.
+	IssueDate *Date `json:"issueDate,omitempty"`
+
+	// Name: Output only. The resource name of the invoice.
+	Name string `json:"name,omitempty"`
+
+	// NonBudgetMicros: Output only. The total amount of costs or
+	// adjustments not tied to a particular budget, in micros of the
+	// invoice's currency. For example if currency_code is `USD`, then
+	// 1000000 micros is one US dollar.
+	NonBudgetMicros int64 `json:"nonBudgetMicros,omitempty,string"`
+
+	// PaymentsAccountId: Output only. The ID of the payments account the
+	// invoice belongs to. Appears on the invoice PDF as `Billing Account
+	// Number`.
+	PaymentsAccountId string `json:"paymentsAccountId,omitempty"`
+
+	// PaymentsProfileId: Output only. The ID of the payments profile the
+	// invoice belongs to. Appears on the invoice PDF as `Billing ID`.
+	PaymentsProfileId string `json:"paymentsProfileId,omitempty"`
+
+	// PdfUrl: Output only. The URL to download a PDF copy of the invoice.
+	// Note that this URL is user specific and requires a valid OAuth 2.0
+	// access token to access. The access token must be provided in an
+	// `Authorization: Bearer` HTTP header and be authorized for one of the
+	// following scopes: *
+	// `https://www.googleapis.com/auth/display-video-mediaplanning` *
+	// `https://www.googleapis.com/auth/display-video` The URL will only be
+	// usable for 7 days from when the api is called.
+	PdfUrl string `json:"pdfUrl,omitempty"`
+
+	// PurchaseOrderNumber: Output only. Purchase order number associated
+	// with the invoice.
+	PurchaseOrderNumber string `json:"purchaseOrderNumber,omitempty"`
+
+	// ReplacedInvoiceIds: Output only. The originally issued invoice(s)
+	// that is being cancelled by this invoice, if applicable. If there are
+	// any replaced invoices, the corrected_invoice_id field will be empty.
+	// May appear on invoice PDF as `Replaced invoice numbers`. Note: There
+	// may be multiple replaced invoices due to consolidation of multiple
+	// invoices into a single invoice.
+	ReplacedInvoiceIds []string `json:"replacedInvoiceIds,omitempty"`
+
+	// ServiceDateRange: Output only. Service start and end dates which are
+	// covered by this invoice.
+	ServiceDateRange *DateRange `json:"serviceDateRange,omitempty"`
+
+	// SubtotalAmountMicros: Output only. The pre-tax subtotal amount, in
+	// micros of the invoice's currency. For example if currency_code is
+	// `USD`, then 1000000 micros is one US dollar.
+	SubtotalAmountMicros int64 `json:"subtotalAmountMicros,omitempty,string"`
+
+	// TotalAmountMicros: Output only. The invoice total amount, in micros
+	// of the invoice's currency. For example if currency_code is `USD`,
+	// then 1000000 micros is one US dollar.
+	TotalAmountMicros int64 `json:"totalAmountMicros,omitempty,string"`
+
+	// TotalTaxAmountMicros: Output only. The sum of all taxes in invoice,
+	// in micros of the invoice's currency. For example if currency_code is
+	// `USD`, then 1000000 micros is one US dollar.
+	TotalTaxAmountMicros int64 `json:"totalTaxAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BudgetInvoiceGroupingId") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BudgetInvoiceGroupingId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Invoice) MarshalJSON() ([]byte, error) {
+	type NoMethod Invoice
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9631,6 +9925,45 @@ func (s *ListInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListInvoicesResponse: Response message for
+// InvoiceService.ListInvoices.
+type ListInvoicesResponse struct {
+	// Invoices: The list of invoices. This list will be absent if empty.
+	Invoices []*Invoice `json:"invoices,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the [ListInvoicesRequest.page_token] field in the
+	// subsequent call to `ListInvoices` method to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Invoices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Invoices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInvoicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInvoicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListLineItemAssignedTargetingOptionsResponse: Response message for
 // ListLineItemAssignedTargetingOptions.
 type ListLineItemAssignedTargetingOptionsResponse struct {
@@ -10147,6 +10480,39 @@ func (s *LookbackWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LookupInvoiceCurrencyResponse: Response message for
+// InvoiceService.LookupInvoiceCurrency.
+type LookupInvoiceCurrencyResponse struct {
+	// CurrencyCode: Output only. Invoice currency code in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupInvoiceCurrencyResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ManualTrigger: A single manual trigger in Display & Video 360.
 type ManualTrigger struct {
 	// ActivationDurationMinutes: Required. The maximum duration of each
@@ -10390,6 +10756,114 @@ type Money struct {
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NativeContentPositionAssignedTargetingOptionDetails: Details for
+// native content position assigned targeting option. This will be
+// populated in the native_content_position_details field when
+// targeting_type is `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+// Explicitly targeting all options is not supported. Remove all native
+// content position targeting options to achieve this effect.
+type NativeContentPositionAssignedTargetingOptionDetails struct {
+	// ContentPosition: Output only. The content position.
+	//
+	// Possible values:
+	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
+	// not specified in this version. This enum is a place holder for a
+	// default value and does not represent a real native content position.
+	//   "NATIVE_CONTENT_POSITION_UNKNOWN" - The native content position is
+	// unknown.
+	//   "NATIVE_CONTENT_POSITION_IN_ARTICLE" - Native content position is
+	// in-article, i.e., ads appear between the paragraphs of pages.
+	//   "NATIVE_CONTENT_POSITION_IN_FEED" - Native content position is
+	// in-feed, i.e., ads appear in a scrollable stream of content. A feed
+	// is typically editorial (e.g. a list of articles or news) or listings
+	// (e.g. a list of products or services).
+	//   "NATIVE_CONTENT_POSITION_PERIPHERAL" - Native content position is
+	// peripheral, i.e., ads appear outside of core content on pages, such
+	// as the right- or left-hand side of the page.
+	//   "NATIVE_CONTENT_POSITION_RECOMMENDATION" - Native content position
+	// is recommendation, i.e., ads appear in sections for recommended
+	// content.
+	ContentPosition string `json:"contentPosition,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NativeContentPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NativeContentPositionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NativeContentPositionTargetingOptionDetails: Represents a targetable
+// native content position. This will be populated in the
+// native_content_position_details field when targeting_type is
+// `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+type NativeContentPositionTargetingOptionDetails struct {
+	// ContentPosition: Output only. The content position.
+	//
+	// Possible values:
+	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
+	// not specified in this version. This enum is a place holder for a
+	// default value and does not represent a real native content position.
+	//   "NATIVE_CONTENT_POSITION_UNKNOWN" - The native content position is
+	// unknown.
+	//   "NATIVE_CONTENT_POSITION_IN_ARTICLE" - Native content position is
+	// in-article, i.e., ads appear between the paragraphs of pages.
+	//   "NATIVE_CONTENT_POSITION_IN_FEED" - Native content position is
+	// in-feed, i.e., ads appear in a scrollable stream of content. A feed
+	// is typically editorial (e.g. a list of articles or news) or listings
+	// (e.g. a list of products or services).
+	//   "NATIVE_CONTENT_POSITION_PERIPHERAL" - Native content position is
+	// peripheral, i.e., ads appear outside of core content on pages, such
+	// as the right- or left-hand side of the page.
+	//   "NATIVE_CONTENT_POSITION_RECOMMENDATION" - Native content position
+	// is recommendation, i.e., ads appear in sections for recommended
+	// content.
+	ContentPosition string `json:"contentPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NativeContentPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NativeContentPositionTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11595,6 +12069,88 @@ func (s *PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PrismaConfig: Settings specific to the MediaOcean Prisma tool.
+type PrismaConfig struct {
+	// PrismaCpeCode: Required. Google Payments Center supports searching
+	// and filtering on this code.
+	PrismaCpeCode *PrismaCpeCode `json:"prismaCpeCode,omitempty"`
+
+	// PrismaType: Required. The Prisma type.
+	//
+	// Possible values:
+	//   "PRISMA_TYPE_UNSPECIFIED" - Type is not specified or unknown in
+	// this version.
+	//   "PRISMA_TYPE_DISPLAY" - Display type.
+	//   "PRISMA_TYPE_SEARCH" - Search type.
+	//   "PRISMA_TYPE_VIDEO" - Video type.
+	//   "PRISMA_TYPE_AUDIO" - Audio type.
+	//   "PRISMA_TYPE_SOCIAL" - Social type.
+	//   "PRISMA_TYPE_FEE" - Fee type.
+	PrismaType string `json:"prismaType,omitempty"`
+
+	// Supplier: Required. The entity allocated this budget (DSP, site,
+	// etc.).
+	Supplier string `json:"supplier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrismaCpeCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrismaCpeCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrismaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrismaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrismaCpeCode: Google Payments Center supports searching and
+// filtering on the component fields of this code.
+type PrismaCpeCode struct {
+	// PrismaClientCode: The Prisma client code.
+	PrismaClientCode string `json:"prismaClientCode,omitempty"`
+
+	// PrismaEstimateCode: The Prisma estimate code.
+	PrismaEstimateCode string `json:"prismaEstimateCode,omitempty"`
+
+	// PrismaProductCode: The Prisma product code.
+	PrismaProductCode string `json:"prismaProductCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrismaClientCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrismaClientCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrismaCpeCode) MarshalJSON() ([]byte, error) {
+	type NoMethod PrismaCpeCode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProximityLocationListAssignedTargetingOptionDetails: Targeting
 // details for proximity location list. This will be populated in the
 // details field of an AssignedTargetingOption when targeting_type is
@@ -12627,6 +13183,9 @@ type TargetingOption struct {
 	// Name: Output only. The resource name for this targeting option.
 	Name string `json:"name,omitempty"`
 
+	// NativeContentPositionDetails: Native content position details.
+	NativeContentPositionDetails *NativeContentPositionTargetingOptionDetails `json:"nativeContentPositionDetails,omitempty"`
+
 	// OnScreenPositionDetails: On screen position details.
 	OnScreenPositionDetails *OnScreenPositionTargetingOptionDetails `json:"onScreenPositionDetails,omitempty"`
 
@@ -12730,6 +13289,8 @@ type TargetingOption struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details.
@@ -13591,7 +14152,7 @@ func (c *AdvertisersAuditCall) Header() http.Header {
 
 func (c *AdvertisersAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13740,7 +14301,7 @@ func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13938,7 +14499,7 @@ func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14118,7 +14679,7 @@ func (c *AdvertisersCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14247,7 +14808,7 @@ func (c *AdvertisersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14391,7 +14952,7 @@ func (c *AdvertisersGetCall) Header() http.Header {
 
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14593,7 +15154,7 @@ func (c *AdvertisersListCall) Header() http.Header {
 
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14775,7 +15336,7 @@ func (c *AdvertisersPatchCall) Header() http.Header {
 
 func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14966,7 +15527,7 @@ func (c *AdvertisersAssetsUploadCall) Header() http.Header {
 
 func (c *AdvertisersAssetsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15210,7 +15771,7 @@ func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15404,7 +15965,7 @@ func (c *AdvertisersCampaignsCreateCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15551,7 +16112,7 @@ func (c *AdvertisersCampaignsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15709,7 +16270,7 @@ func (c *AdvertisersCampaignsGetCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15920,7 +16481,7 @@ func (c *AdvertisersCampaignsListCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16114,7 +16675,7 @@ func (c *AdvertisersCampaignsPatchCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16311,7 +16872,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Head
 
 func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16450,7 +17011,8 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -16490,7 +17052,8 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -16636,7 +17199,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Hea
 
 func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16789,7 +17352,8 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -16829,7 +17393,8 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -16926,7 +17491,7 @@ func (c *AdvertisersChannelsCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17095,7 +17660,7 @@ func (c *AdvertisersChannelsGetCall) Header() http.Header {
 
 func (c *AdvertisersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17307,7 +17872,7 @@ func (c *AdvertisersChannelsListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17512,7 +18077,7 @@ func (c *AdvertisersChannelsPatchCall) Header() http.Header {
 
 func (c *AdvertisersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17682,7 +18247,7 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17846,7 +18411,7 @@ func (c *AdvertisersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18016,7 +18581,7 @@ func (c *AdvertisersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18236,7 +18801,7 @@ func (c *AdvertisersChannelsSitesListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18439,7 +19004,7 @@ func (c *AdvertisersChannelsSitesReplaceCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesReplaceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18593,7 +19158,7 @@ func (c *AdvertisersCreativesCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18740,7 +19305,7 @@ func (c *AdvertisersCreativesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18897,7 +19462,7 @@ func (c *AdvertisersCreativesGetCall) Header() http.Header {
 
 func (c *AdvertisersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19128,7 +19693,7 @@ func (c *AdvertisersCreativesListCall) Header() http.Header {
 
 func (c *AdvertisersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19321,7 +19886,7 @@ func (c *AdvertisersCreativesPatchCall) Header() http.Header {
 
 func (c *AdvertisersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19542,7 +20107,7 @@ func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOption
 
 func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19737,7 +20302,7 @@ func (c *AdvertisersInsertionOrdersCreateCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19885,7 +20450,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20044,7 +20609,7 @@ func (c *AdvertisersInsertionOrdersGetCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20265,7 +20830,7 @@ func (c *AdvertisersInsertionOrdersListCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20458,7 +21023,7 @@ func (c *AdvertisersInsertionOrdersPatchCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20640,7 +21205,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 
 func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20779,7 +21344,8 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -20819,7 +21385,8 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -20950,7 +21517,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 
 func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21103,7 +21670,8 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -21143,7 +21711,8 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -21181,6 +21750,406 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "displayvideo.advertisers.invoices.list":
+
+type AdvertisersInvoicesListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List invoices for an advertiser.
+//
+// - advertiserId: The ID of the advertiser to list invoices for.
+func (r *AdvertisersInvoicesService) List(advertiserId int64) *AdvertisersInvoicesListCall {
+	c := &AdvertisersInvoicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// IssueMonth sets the optional parameter "issueMonth": Required. Month
+// for which invoices are needed in the format YYYYMM.
+func (c *AdvertisersInvoicesListCall) IssueMonth(issueMonth string) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("issueMonth", issueMonth)
+	return c
+}
+
+// LoiSapinInvoiceType sets the optional parameter
+// "loiSapinInvoiceType": Select type of invoice to query for Loi Sapin
+// advertisers. Otherwise its ignored.
+//
+// Possible values:
+//   "LOI_SAPIN_INVOICE_TYPE_UNSPECIFIED" - Value is not specified.
+//   "LOI_SAPIN_INVOICE_TYPE_MEDIA" - Invoices with Media cost.
+//   "LOI_SAPIN_INVOICE_TYPE_PLATFORM" - Invoices with Platform fee.
+func (c *AdvertisersInvoicesListCall) LoiSapinInvoiceType(loiSapinInvoiceType string) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("loiSapinInvoiceType", loiSapinInvoiceType)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersInvoicesListCall) PageSize(pageSize int64) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of [ListInvoicesResponse.next_page_token] returned
+// from the previous call to `ListInvoice` method. If not specified, the
+// first page of results will be returned.
+func (c *AdvertisersInvoicesListCall) PageToken(pageToken string) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInvoicesListCall) Fields(s ...googleapi.Field) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInvoicesListCall) IfNoneMatch(entityTag string) *AdvertisersInvoicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInvoicesListCall) Context(ctx context.Context) *AdvertisersInvoicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInvoicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInvoicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/invoices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.invoices.list" call.
+// Exactly one of *ListInvoicesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListInvoicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInvoicesListCall) Do(opts ...googleapi.CallOption) (*ListInvoicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInvoicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List invoices for an advertiser.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/invoices",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.invoices.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to list invoices for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "issueMonth": {
+	//       "description": "Required. Month for which invoices are needed in the format YYYYMM.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "loiSapinInvoiceType": {
+	//       "description": "Select type of invoice to query for Loi Sapin advertisers. Otherwise its ignored.",
+	//       "enum": [
+	//         "LOI_SAPIN_INVOICE_TYPE_UNSPECIFIED",
+	//         "LOI_SAPIN_INVOICE_TYPE_MEDIA",
+	//         "LOI_SAPIN_INVOICE_TYPE_PLATFORM"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Value is not specified.",
+	//         "Invoices with Media cost.",
+	//         "Invoices with Platform fee."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of [ListInvoicesResponse.next_page_token] returned from the previous call to `ListInvoice` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/invoices",
+	//   "response": {
+	//     "$ref": "ListInvoicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersInvoicesListCall) Pages(ctx context.Context, f func(*ListInvoicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.invoices.lookupInvoiceCurrency":
+
+type AdvertisersInvoicesLookupInvoiceCurrencyCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// LookupInvoiceCurrency: Lookup invoice currency for an advertiser.
+//
+// - advertiserId: The ID of the advertiser to lookup currency for.
+func (r *AdvertisersInvoicesService) LookupInvoiceCurrency(advertiserId int64) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c := &AdvertisersInvoicesLookupInvoiceCurrencyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// InvoiceMonth sets the optional parameter "invoiceMonth": Month for
+// which currency is needed in the format YYYYMM. If not set Api would
+// return currency based on current settings.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) InvoiceMonth(invoiceMonth string) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.urlParams_.Set("invoiceMonth", invoiceMonth)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Fields(s ...googleapi.Field) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) IfNoneMatch(entityTag string) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Context(ctx context.Context) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/invoices:lookupInvoiceCurrency")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.invoices.lookupInvoiceCurrency" call.
+// Exactly one of *LookupInvoiceCurrencyResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *LookupInvoiceCurrencyResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Do(opts ...googleapi.CallOption) (*LookupInvoiceCurrencyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LookupInvoiceCurrencyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup invoice currency for an advertiser.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/invoices:lookupInvoiceCurrency",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.invoices.lookupInvoiceCurrency",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to lookup currency for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "invoiceMonth": {
+	//       "description": "Month for which currency is needed in the format YYYYMM. If not set Api would return currency based on current settings.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/invoices:lookupInvoiceCurrency",
+	//   "response": {
+	//     "$ref": "LookupInvoiceCurrencyResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
+	//   ]
+	// }
+
 }
 
 // method id "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions":
@@ -21240,7 +22209,7 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21456,7 +22425,7 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21650,7 +22619,7 @@ func (c *AdvertisersLineItemsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21797,7 +22766,7 @@ func (c *AdvertisersLineItemsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21947,7 +22916,7 @@ func (c *AdvertisersLineItemsGenerateDefaultCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsGenerateDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22102,7 +23071,7 @@ func (c *AdvertisersLineItemsGetCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22330,7 +23299,7 @@ func (c *AdvertisersLineItemsListCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22523,7 +23492,7 @@ func (c *AdvertisersLineItemsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22691,7 +23660,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22823,7 +23792,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -22863,7 +23833,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22943,7 +23914,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23079,7 +24050,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -23119,7 +24091,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23208,7 +24181,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Head
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23347,7 +24320,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -23387,7 +24361,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23517,7 +24492,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Hea
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23670,7 +24645,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -23710,7 +24686,8 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23800,7 +24777,7 @@ func (c *AdvertisersLocationListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23956,7 +24933,7 @@ func (c *AdvertisersLocationListsGetCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24156,7 +25133,7 @@ func (c *AdvertisersLocationListsListCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24349,7 +25326,7 @@ func (c *AdvertisersLocationListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24517,7 +25494,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Header() http.He
 
 func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24675,7 +25652,7 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24833,7 +25810,7 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25041,7 +26018,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Header() http.Header
 
 func (c *AdvertisersLocationListsAssignedLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25235,7 +26212,7 @@ func (c *AdvertisersManualTriggersActivateCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25390,7 +26367,7 @@ func (c *AdvertisersManualTriggersCreateCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25537,7 +26514,7 @@ func (c *AdvertisersManualTriggersDeactivateCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25703,7 +26680,7 @@ func (c *AdvertisersManualTriggersGetCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25904,7 +26881,7 @@ func (c *AdvertisersManualTriggersListCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26096,7 +27073,7 @@ func (c *AdvertisersManualTriggersPatchCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26257,7 +27234,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26404,7 +27381,7 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26564,7 +27541,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26740,7 +27717,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26923,7 +27900,7 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27092,7 +28069,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Header() h
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27249,7 +28226,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27407,7 +28384,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27615,7 +28592,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Header() http.
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27813,7 +28790,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Header() ht
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27972,7 +28949,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28094,7 +29071,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28134,7 +29112,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28212,7 +29191,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28338,7 +29317,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28378,7 +29358,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28465,7 +29446,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Header() http
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28594,7 +29575,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28634,7 +29616,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28759,7 +29742,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Header() htt
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28902,7 +29885,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28942,7 +29926,8 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -29053,7 +30038,7 @@ func (c *CombinedAudiencesGetCall) Header() http.Header {
 
 func (c *CombinedAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29265,7 +30250,7 @@ func (c *CombinedAudiencesListCall) Header() http.Header {
 
 func (c *CombinedAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29468,7 +30453,7 @@ func (c *CustomBiddingAlgorithmsGetCall) Header() http.Header {
 
 func (c *CustomBiddingAlgorithmsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29691,7 +30676,7 @@ func (c *CustomBiddingAlgorithmsListCall) Header() http.Header {
 
 func (c *CustomBiddingAlgorithmsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29887,7 +30872,7 @@ func (c *CustomListsGetCall) Header() http.Header {
 
 func (c *CustomListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30086,7 +31071,7 @@ func (c *CustomListsListCall) Header() http.Header {
 
 func (c *CustomListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30285,7 +31270,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30500,7 +31485,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30696,7 +31681,7 @@ func (c *FloodlightGroupsGetCall) Header() http.Header {
 
 func (c *FloodlightGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30856,7 +31841,7 @@ func (c *FloodlightGroupsPatchCall) Header() http.Header {
 
 func (c *FloodlightGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31033,7 +32018,7 @@ func (c *GoogleAudiencesGetCall) Header() http.Header {
 
 func (c *GoogleAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31245,7 +32230,7 @@ func (c *GoogleAudiencesListCall) Header() http.Header {
 
 func (c *GoogleAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31438,7 +32423,7 @@ func (c *InventorySourceGroupsCreateCall) Header() http.Header {
 
 func (c *InventorySourceGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31595,7 +32580,7 @@ func (c *InventorySourceGroupsDeleteCall) Header() http.Header {
 
 func (c *InventorySourceGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31769,7 +32754,7 @@ func (c *InventorySourceGroupsGetCall) Header() http.Header {
 
 func (c *InventorySourceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31981,7 +32966,7 @@ func (c *InventorySourceGroupsListCall) Header() http.Header {
 
 func (c *InventorySourceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32186,7 +33171,7 @@ func (c *InventorySourceGroupsPatchCall) Header() http.Header {
 
 func (c *InventorySourceGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32353,7 +33338,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Header() htt
 
 func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32517,7 +33502,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32693,7 +33678,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32920,7 +33905,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Header() http.He
 
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33130,7 +34115,7 @@ func (c *InventorySourcesGetCall) Header() http.Header {
 
 func (c *InventorySourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33342,7 +34327,7 @@ func (c *InventorySourcesListCall) Header() http.Header {
 
 func (c *InventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33533,7 +34518,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33693,7 +34678,7 @@ func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Header() http.Head
 
 func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33847,7 +34832,7 @@ func (c *PartnersGetCall) Header() http.Header {
 
 func (c *PartnersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34032,7 +35017,7 @@ func (c *PartnersListCall) Header() http.Header {
 
 func (c *PartnersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34207,7 +35192,7 @@ func (c *PartnersChannelsCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34375,7 +35360,7 @@ func (c *PartnersChannelsGetCall) Header() http.Header {
 
 func (c *PartnersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34587,7 +35572,7 @@ func (c *PartnersChannelsListCall) Header() http.Header {
 
 func (c *PartnersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34791,7 +35776,7 @@ func (c *PartnersChannelsPatchCall) Header() http.Header {
 
 func (c *PartnersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34960,7 +35945,7 @@ func (c *PartnersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35123,7 +36108,7 @@ func (c *PartnersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35292,7 +36277,7 @@ func (c *PartnersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35511,7 +36496,7 @@ func (c *PartnersChannelsSitesListCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35713,7 +36698,7 @@ func (c *PartnersChannelsSitesReplaceCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesReplaceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35870,7 +36855,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Header() http
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35992,7 +36977,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -36032,7 +37018,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -36108,7 +37095,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36234,7 +37221,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -36274,7 +37262,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -36359,7 +37348,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Header() http.He
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36488,7 +37477,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -36528,7 +37518,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -36651,7 +37642,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Header() http.H
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36794,7 +37785,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -36834,7 +37826,8 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -36926,7 +37919,7 @@ func (c *SdfdownloadtasksCreateCall) Header() http.Header {
 
 func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37066,7 +38059,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37223,7 +38216,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37348,7 +38341,8 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -37388,7 +38382,8 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -37520,7 +38515,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37657,7 +38652,8 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -37697,7 +38693,8 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -37787,7 +38784,7 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37899,7 +38896,8 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -37939,7 +38937,8 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads to a specific native content position."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -38034,7 +39033,7 @@ func (c *UsersBulkEditAssignedUserRolesCall) Header() http.Header {
 
 func (c *UsersBulkEditAssignedUserRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38175,7 +39174,7 @@ func (c *UsersCreateCall) Header() http.Header {
 
 func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38302,7 +39301,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38446,7 +39445,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38648,7 +39647,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38824,7 +39823,7 @@ func (c *UsersPatchCall) Header() http.Header {
 
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210522")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

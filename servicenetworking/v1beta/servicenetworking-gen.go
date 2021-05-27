@@ -678,10 +678,6 @@ type BackendRule struct {
 	// "authorization" header, and sent to the backend.
 	JwtAudience string `json:"jwtAudience,omitempty"`
 
-	// MinDeadline: Minimum deadline in seconds needed for this method.
-	// Calls having deadline value lower than this will be rejected.
-	MinDeadline float64 `json:"minDeadline,omitempty"`
-
 	// OperationDeadline: The number of seconds to wait for the completion
 	// of a long running operation. The default is no deadline.
 	OperationDeadline float64 `json:"operationDeadline,omitempty"`
@@ -757,7 +753,6 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 	type NoMethod BackendRule
 	var s1 struct {
 		Deadline          gensupport.JSONFloat64 `json:"deadline"`
-		MinDeadline       gensupport.JSONFloat64 `json:"minDeadline"`
 		OperationDeadline gensupport.JSONFloat64 `json:"operationDeadline"`
 		*NoMethod
 	}
@@ -766,7 +761,6 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.Deadline = float64(s1.Deadline)
-	s.MinDeadline = float64(s1.MinDeadline)
 	s.OperationDeadline = float64(s1.OperationDeadline)
 	return nil
 }
@@ -4147,7 +4141,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4301,7 +4295,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4452,7 +4446,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4615,7 +4609,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4780,7 +4774,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4950,7 +4944,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210525")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

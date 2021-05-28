@@ -331,7 +331,8 @@ type Alert struct {
 
 	// Type: Required. The type of the alert. This is output only after
 	// alert is created. For a list of available alert types see Google
-	// Workspace Alert types (/admin-sdk/alertcenter/reference/alert-types).
+	// Workspace Alert types
+	// (https://developers.google.com/admin-sdk/alertcenter/reference/alert-types).
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. The time this alert was last updated.
@@ -1379,7 +1380,7 @@ func (s *MatchInfo) MarshalJSON() ([]byte, error) {
 
 // Notification: Settings for callback notifications. For more details
 // see Google Workspace Alert Notification
-// (/admin-sdk/alertcenter/guides/notifications).
+// (https://developers.google.com/admin-sdk/alertcenter/guides/notifications).
 type Notification struct {
 	// CloudPubsubTopic: A Google Cloud Pub/sub topic destination.
 	CloudPubsubTopic *CloudPubsubTopic `json:"cloudPubsubTopic,omitempty"`
@@ -2065,7 +2066,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2190,7 +2191,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2330,7 +2331,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2487,7 +2488,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2647,7 +2648,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2767,9 +2768,9 @@ func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 
 // Filter sets the optional parameter "filter": A query string for
 // filtering alert results. For more details, see Query filters
-// (/admin-sdk/alertcenter/guides/query-filters) and Supported query
-// filter fields
-// (/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
+// (https://developers.google.com/admin-sdk/alertcenter/guides/query-filters)
+// and Supported query filter fields
+// (https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
 func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2840,7 +2841,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2911,7 +2912,7 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. A query string for filtering alert results. For more details, see [Query filters](/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
+	//       "description": "Optional. A query string for filtering alert results. For more details, see [Query filters](https://developers.google.com/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3017,7 +3018,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3170,7 +3171,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3301,9 +3302,9 @@ func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackLi
 
 // Filter sets the optional parameter "filter": A query string for
 // filtering alert feedback results. For more details, see Query filters
-// (/admin-sdk/alertcenter/guides/query-filters) and Supported query
-// filter fields
-// (/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).
+// (https://developers.google.com/admin-sdk/alertcenter/guides/query-filters)
+// and Supported query filter fields
+// (https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).
 func (c *AlertsFeedbackListCall) Filter(filter string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3346,7 +3347,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3428,7 +3429,7 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. A query string for filtering alert feedback results. For more details, see [Query filters](/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
+	//       "description": "Optional. A query string for filtering alert feedback results. For more details, see [Query filters](https://developers.google.com/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3506,7 +3507,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3641,7 +3642,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210526")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

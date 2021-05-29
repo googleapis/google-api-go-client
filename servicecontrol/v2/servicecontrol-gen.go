@@ -1007,6 +1007,19 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 
 // ResourceInfo: Describes a resource referenced in the request.
 type ResourceInfo struct {
+	// Container: Optional. The identifier of the container of this
+	// resource. For Google Cloud APIs, the resource container must be one
+	// of the following formats: - `projects/` - `folders/` -
+	// `organizations/` For the policy enforcement on the container level
+	// (VPCSC and Location Policy check), this field takes precedence on the
+	// container extracted from name when presents.
+	Container string `json:"container,omitempty"`
+
+	// Location: Optional. The location of the resource. The value must be a
+	// valid zone, region or multiregion. For example: "europe-west4" or
+	// "northamerica-northeast1-a"
+	Location string `json:"location,omitempty"`
+
 	// Name: The name of the resource referenced in the request.
 	Name string `json:"name,omitempty"`
 
@@ -1017,7 +1030,7 @@ type ResourceInfo struct {
 	// Type: The resource type in the format of "{service}/{kind}".
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Container") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1025,8 +1038,8 @@ type ResourceInfo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Container") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1342,7 +1355,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210528")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1500,7 +1513,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210527")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210528")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

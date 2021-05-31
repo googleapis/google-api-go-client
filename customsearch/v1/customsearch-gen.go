@@ -1729,7 +1729,7 @@ func (c *CseListCall) Header() http.Header {
 
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210529")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210530")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2491,7 +2491,7 @@ func (c *CseSiterestrictListCall) Header() http.Header {
 
 func (c *CseSiterestrictListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210529")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210530")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

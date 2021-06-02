@@ -283,7 +283,7 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210531")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -347,8 +347,8 @@ type SynthesizeSpeechRequest struct {
 	// Possible values:
 	//   "TIMEPOINT_TYPE_UNSPECIFIED" - Not specified. No timepoint
 	// information will be returned.
-	//   "SSML_MARK" - Timepoint information of tags in SSML input will be
-	// returned.
+	//   "SSML_MARK" - Timepoint information of `` tags in SSML input will
+	// be returned.
 	EnableTimePointing []string `json:"enableTimePointing,omitempty"`
 
 	// Input: Required. The Synthesizer requires either plain text or SSML
@@ -396,7 +396,7 @@ type SynthesizeSpeechResponse struct {
 
 	// Timepoints: A link between a position in the original request input
 	// and a corresponding time in the output audio. It's only supported via
-	// of SSML input.
+	// `` of SSML input.
 	Timepoints []*Timepoint `json:"timepoints,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -429,7 +429,7 @@ func (s *SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
 // Timepoint: This contains a mapping between a certain point in the
 // input text and a corresponding time in the output audio.
 type Timepoint struct {
-	// MarkName: Timepoint name as received from the client within tag.
+	// MarkName: Timepoint name as received from the client within `` tag.
 	MarkName string `json:"markName,omitempty"`
 
 	// TimeSeconds: Time offset in seconds from the start of the synthesized
@@ -634,7 +634,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210603")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210604")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -782,7 +782,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210603")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210604")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

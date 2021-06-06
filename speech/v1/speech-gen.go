@@ -1091,7 +1091,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210604")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1270,7 +1270,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210604")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1438,7 +1438,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210604")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1564,7 +1564,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210604")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1,5 +1,17 @@
 # Changes
 
+## [0.48.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.47.0...v0.48.0) (2021-06-07)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1059](https://www.github.com/googleapis/google-api-go-client/issues/1059) [#1057](https://www.github.com/googleapis/google-api-go-client/issues/1057) [#1056](https://www.github.com/googleapis/google-api-go-client/issues/1056) [#1054](https://www.github.com/googleapis/google-api-go-client/issues/1054) [#1053](https://www.github.com/googleapis/google-api-go-client/issues/1053) [#1052](https://www.github.com/googleapis/google-api-go-client/issues/1052) [#1051](https://www.github.com/googleapis/google-api-go-client/issues/1051) [#1050](https://www.github.com/googleapis/google-api-go-client/issues/1050) [#1046](https://www.github.com/googleapis/google-api-go-client/issues/1046) [#1045](https://www.github.com/googleapis/google-api-go-client/issues/1045) [#1044](https://www.github.com/googleapis/google-api-go-client/issues/1044) [#1043](https://www.github.com/googleapis/google-api-go-client/issues/1043) [#1042](https://www.github.com/googleapis/google-api-go-client/issues/1042) [#1039](https://www.github.com/googleapis/google-api-go-client/issues/1039) [#1033](https://www.github.com/googleapis/google-api-go-client/issues/1033) [#1032](https://www.github.com/googleapis/google-api-go-client/issues/1032) [#1030](https://www.github.com/googleapis/google-api-go-client/issues/1030)
+
+
+### Bug Fixes
+
+* **transport:** perform mTLS endpoint switching when custom http client is provided ([#1038](https://www.github.com/googleapis/google-api-go-client/issues/1038)) ([c07165f](https://www.github.com/googleapis/google-api-go-client/commit/c07165fb384c6107778c7b54116c92188821f9e5))
+
 ## [0.47.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.46.0...v0.47.0) (2021-05-19)
 
 

@@ -382,6 +382,8 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
@@ -596,6 +598,8 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
@@ -1123,6 +1127,8 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1296,6 +1302,8 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
@@ -1381,6 +1389,8 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
@@ -1475,6 +1485,8 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to
@@ -1572,7 +1584,7 @@ func (c *EncodedFullHashesGetCall) Header() http.Header {
 
 func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1742,7 +1754,7 @@ func (c *EncodedUpdatesGetCall) Header() http.Header {
 
 func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1885,7 +1897,7 @@ func (c *FullHashesFindCall) Header() http.Header {
 
 func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2010,7 +2022,7 @@ func (c *ThreatHitsCreateCall) Header() http.Header {
 
 func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2133,7 +2145,7 @@ func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 
 func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2267,7 +2279,7 @@ func (c *ThreatListsListCall) Header() http.Header {
 
 func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +2398,7 @@ func (c *ThreatMatchesFindCall) Header() http.Header {
 
 func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210606")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210607")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

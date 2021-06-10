@@ -1460,6 +1460,9 @@ type GoogleCloudDocumentaiV1DocumentPage struct {
 	// A collection of lines that a human would perceive as a paragraph.
 	Paragraphs []*GoogleCloudDocumentaiV1DocumentPageParagraph `json:"paragraphs,omitempty"`
 
+	// Provenance: The history of this page.
+	Provenance *GoogleCloudDocumentaiV1DocumentProvenance `json:"provenance,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1DocumentPageTable `json:"tables,omitempty"`
 
@@ -1557,7 +1560,9 @@ type GoogleCloudDocumentaiV1DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element.
+	// using Document.pages to locate the related page element. This field
+	// is skipped when its value is the default 0. See
+	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
@@ -1746,6 +1751,9 @@ type GoogleCloudDocumentaiV1DocumentPageFormField struct {
 	// NameDetectedLanguages: A list of detected languages for name together
 	// with confidence.
 	NameDetectedLanguages []*GoogleCloudDocumentaiV1DocumentPageDetectedLanguage `json:"nameDetectedLanguages,omitempty"`
+
+	// Provenance: The history of this annotation.
+	Provenance *GoogleCloudDocumentaiV1DocumentProvenance `json:"provenance,omitempty"`
 
 	// ValueDetectedLanguages: A list of detected languages for value
 	// together with confidence.
@@ -2963,7 +2971,7 @@ func (s *GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata) MarshalJSON() (
 }
 
 // GoogleCloudDocumentaiV1ReviewDocumentRequest: Request message for
-// review document method. Next Id: 5.
+// review document method. Next Id: 6.
 type GoogleCloudDocumentaiV1ReviewDocumentRequest struct {
 	// EnableSchemaValidation: Whether the validation should be performed on
 	// the ad-hoc review request.
@@ -2971,6 +2979,15 @@ type GoogleCloudDocumentaiV1ReviewDocumentRequest struct {
 
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1Document `json:"inlineDocument,omitempty"`
+
+	// Priority: The priority of the human review task.
+	//
+	// Possible values:
+	//   "DEFAULT" - The default priority level.
+	//   "URGENT" - The urgent priority level. The labeling manager should
+	// allocate labeler resource to the urgent task queue to respect this
+	// priority level.
+	Priority string `json:"priority,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableSchemaValidation") to unconditionally include in API requests.
@@ -3415,6 +3432,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// A collection of lines that a human would perceive as a paragraph.
 	Paragraphs []*GoogleCloudDocumentaiV1beta1DocumentPageParagraph `json:"paragraphs,omitempty"`
 
+	// Provenance: The history of this page.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta1DocumentPageTable `json:"tables,omitempty"`
 
@@ -3512,7 +3532,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element.
+	// using Document.pages to locate the related page element. This field
+	// is skipped when its value is the default 0. See
+	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
@@ -3702,6 +3724,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 	// NameDetectedLanguages: A list of detected languages for name together
 	// with confidence.
 	NameDetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"nameDetectedLanguages,omitempty"`
+
+	// Provenance: The history of this annotation.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
 
 	// ValueDetectedLanguages: A list of detected languages for value
 	// together with confidence.
@@ -5301,6 +5326,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// A collection of lines that a human would perceive as a paragraph.
 	Paragraphs []*GoogleCloudDocumentaiV1beta2DocumentPageParagraph `json:"paragraphs,omitempty"`
 
+	// Provenance: The history of this page.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta2DocumentPageTable `json:"tables,omitempty"`
 
@@ -5398,7 +5426,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element.
+	// using Document.pages to locate the related page element. This field
+	// is skipped when its value is the default 0. See
+	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
@@ -5588,6 +5618,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 	// NameDetectedLanguages: A list of detected languages for name together
 	// with confidence.
 	NameDetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"nameDetectedLanguages,omitempty"`
+
+	// Provenance: The history of this annotation.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
 
 	// ValueDetectedLanguages: A list of detected languages for value
 	// together with confidence.
@@ -7910,7 +7943,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8053,7 +8086,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8225,7 +8258,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8408,7 +8441,7 @@ func (c *ProjectsLocationsOperationsCancelOperationCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelOperationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8553,7 +8586,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8729,7 +8762,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8908,7 +8941,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9055,7 +9088,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9200,7 +9233,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9346,7 +9379,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9493,7 +9526,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9647,7 +9680,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9793,7 +9826,7 @@ func (c *Uiv1beta3ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9965,7 +9998,7 @@ func (c *Uiv1beta3ProjectsLocationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10148,7 +10181,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsCancelOperationCall) Header() http.
 
 func (c *Uiv1beta3ProjectsLocationsOperationsCancelOperationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10293,7 +10326,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10469,7 +10502,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

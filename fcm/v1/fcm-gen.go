@@ -502,14 +502,16 @@ type ApnsConfig struct {
 	// Headers: HTTP request headers defined in Apple Push Notification
 	// Service. Refer to APNs request headers
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)
-	// for supported headers, e.g. "apns-priority": "10".
+	// for supported headers such as `apns-expiration` and `apns-priority`.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Payload: APNs payload as a JSON object, including both `aps`
 	// dictionary and custom payload. See Payload Key Reference
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification).
 	// If present, it overrides google.firebase.fcm.v1.Notification.title
-	// and google.firebase.fcm.v1.Notification.body.
+	// and google.firebase.fcm.v1.Notification.body. The backend sets a
+	// default value for `apns-expiration` of 30 days and a default value
+	// for `apns-priority` of 10 if not explicitly set.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FcmOptions") to
@@ -773,9 +775,12 @@ type Message struct {
 	// 'bar' in topics".
 	Condition string `json:"condition,omitempty"`
 
-	// Data: Input only. Arbitrary key/value payload. The key should not be
-	// a reserved word ("from", "message_type", or any word starting with
-	// "google" or "gcm").
+	// Data: Input only. Arbitrary key/value payload, which must be UTF-8
+	// encoded. The key should not be a reserved word ("from",
+	// "message_type", or any word starting with "google" or "gcm"). When
+	// sending payloads containing only data fields to iOS devices, only
+	// normal priority ("apns-priority": "5") is allowed in `ApnsConfig`
+	// (/docs/reference/fcm/rest/v1/projects.messages#apnsconfig).
 	Data map[string]string `json:"data,omitempty"`
 
 	// FcmOptions: Input only. Template for FCM SDK feature options to use
@@ -1034,7 +1039,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210608")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

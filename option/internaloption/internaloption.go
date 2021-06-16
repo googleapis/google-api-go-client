@@ -94,3 +94,15 @@ func (w withDefaultScopes) Apply(o *internal.DialSettings) {
 	o.DefaultScopes = make([]string, len(w))
 	copy(o.DefaultScopes, w)
 }
+
+// EnableScopeForJWT returns a ClientOption that specifies if scope can be used
+// with self-signed JWT.
+func EnableScopeForJWT(scopeForJWT bool) ClientOption {
+	return enableScopeForJWT(audience)
+}
+
+type enableScopeForJWT bool
+
+func (w enableScopeForJWT) Apply(o *internal.DialSettings) {
+	o.EnableScopeForJWT = w
+}

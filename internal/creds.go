@@ -7,6 +7,7 @@ package internal
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 
@@ -64,36 +65,30 @@ const (
 
 // credentialsFromJSON returns a google.Credentials based on the input.
 //
-// - A self-signed JWT auth flow will be executed if: the data file is a service
-//   account, no user are scopes provided, an audience is provided, a user
-//   specified endpoint is not provided, and credentials will not be
-//   impersonated.
+// - A standard OAuth 2.0 flow will be executed if at least one of the
+//   following conditions is met:
+//   (1) the scope is non-empty and the scope for self-signed JWT flow is
+//       disabled.
+//   (2) Service Account Impersontation
 //
-// - Otherwise, executes a stanard OAuth 2.0 flow.
+// - Otherwise, executes a self-signed JWT flow (google.aip.dev/auth/4111)
 func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*google.Credentials, error) {
 	cred, err := google.CredentialsFromJSON(ctx, data, ds.GetScopes()...)
 	if err != nil {
 		return nil, err
 	}
-	// Standard OAuth 2.0 Flow
-	if len(data) == 0 ||
-		len(ds.Scopes) > 0 ||
-		(ds.DefaultAudience == "" && len(ds.Audiences) == 0) ||
-		ds.ImpersonationConfig != nil ||
-		ds.Endpoint != "" {
+	if isOAuthFlow(data, ds) {
+		// Standard OAuth 2.0 Flow
 		return cred, nil
 	}
 
-	// Check if JSON is a service account and if so create a self-signed JWT.
-	var f struct {
-		Type string `json:"type"`
-		// The rest JSON fields are omitted because they are not used.
-	}
-	if err := json.Unmarshal(cred.JSON, &f); err != nil {
+	isJWTFlow, err := isSelfSignedJWTFlow(cred.JSON)
+	if err != nil {
 		return nil, err
 	}
-	if f.Type == serviceAccountKey {
-		ts, err := selfSignedJWTTokenSource(data, ds.DefaultAudience, ds.Audiences)
+
+	if isJWTFlow {
+		ts, err := selfSignedJWTTokenSource(data, ds.GetAudience(), ds.GetScopes())
 		if err != nil {
 			return nil, err
 		}
@@ -102,16 +97,35 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 	return cred, err
 }
 
-func selfSignedJWTTokenSource(data []byte, defaultAudience string, audiences []string) (oauth2.TokenSource, error) {
-	audience := defaultAudience
-	if len(audiences) > 0 {
-		// TODO(shinfan): Update golang oauth to support multiple audiences.
-		if len(audiences) > 1 {
-			return nil, fmt.Errorf("multiple audiences support is not implemented")
-		}
-		audience = audiences[0]
+func isOAuthFlow(data []byte, ds *DialSettings) bool {
+	// Standard OAuth 2.0 Flow
+	return len(data) == 0 ||
+		(len(ds.GetScopes()) > 0 && !ds.EnableScopeForJWT) ||
+		ds.ImpersonationConfig != nil
+}
+
+func isSelfSignedJWTFlow(data []byte) (bool, error) {
+	// Check if JSON is a service account and if so create a self-signed JWT.
+	var f struct {
+		Type string `json:"type"`
+		// The rest JSON fields are omitted because they are not used.
 	}
-	return google.JWTAccessTokenSourceFromJSON(data, audience)
+	if err := json.Unmarshal(data, &f); err != nil {
+		return false, err
+	}
+	return f.Type == serviceAccountKey, nil
+}
+
+func selfSignedJWTTokenSource(data []byte, audience string, scopes []string) (oauth2.TokenSource, error) {
+	if len(scopes) > 0 {
+		// Scopes are preferred in self-signed JWT
+		return google.JWTAccessTokenSourceWithScope(data, scopes...)
+	} else if audience != "" {
+		// Fallback to audience if scope is not provided
+		return google.JWTAccessTokenSourceFromJSON(data, audience)
+	} else {
+		return nil, errors.New("Neither scopes or audience are provided for the self-signed JWT.")
+	}
 }
 
 // QuotaProjectFromCreds returns the quota project from the JSON blob in the provided credentials.

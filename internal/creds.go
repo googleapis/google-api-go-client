@@ -63,12 +63,14 @@ const (
 	serviceAccountKey = "service_account"
 )
 
-// credentialsFromJSON returns a google.Credentials based on the input.
+// credentialsFromJSON returns a google.Credentials from the JSON data
 //
 // - A self-signed JWT flow will be executed if the following conditions are
 // met:
-//   (1) Either the scope for self-signed JWT flow is enabled or audiences are
-//       explicitly provided by users.
+//   (1) At least one of the following is true:
+//       (a) Scope for self-signed JWT flow is enabled
+//       (b) Audiences are explicitly provided by users
+//       (b) No scope is provided
 //   (2) No service account impersontation
 //
 // - Otherwise, executes standard OAuth 2.0 flow
@@ -97,7 +99,7 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 }
 
 func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
-	if (ds.EnableJwtWithScope || ds.HasCustomAudience()) &&
+	if (ds.EnableJwtWithScope || ds.HasCustomAudience() || len(ds.GetScopes()) == 0) &&
 		ds.ImpersonationConfig == nil {
 		// Check if JSON is a service account and if so create a self-signed JWT.
 		var f struct {

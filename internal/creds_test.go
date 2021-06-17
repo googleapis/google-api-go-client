@@ -118,6 +118,56 @@ func TestJWTWithScope(t *testing.T) {
 	}
 }
 
+func TestJWTWithDefaultScopes(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		DefaultScopes:      []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		DefaultScopes:      []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestJWTWithDefaultAudience(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile: "testdata/service-account.json",
+		DefaultAudience: "foo",
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON: []byte(validServiceAccountJSON),
+		DefaultAudience: "foo",
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
 func TestOAuth(t *testing.T) {
 	ctx := context.Background()
 

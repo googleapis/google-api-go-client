@@ -124,7 +124,7 @@ func selfSignedJWTTokenSource(data []byte, audience string, scopes []string) (oa
 		// Fallback to audience if scope is not provided
 		return google.JWTAccessTokenSourceFromJSON(data, audience)
 	} else {
-		return nil, errors.New("Neither scopes or audience are provided for the self-signed JWT.")
+		return nil, errors.New("neither scopes or audience are provided for the self-signed JWT")
 	}
 }
 

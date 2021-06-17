@@ -65,28 +65,26 @@ const (
 
 // credentialsFromJSON returns a google.Credentials based on the input.
 //
-// - A standard OAuth 2.0 flow will be executed if at least one of the
-//   following conditions is met:
-//   (1) the scope is non-empty and the scope for self-signed JWT flow is
-//       disabled.
-//   (2) Service Account Impersontation
+// - A self-signed JWT flow will be executed if the following conditions are
+// met:
+//   (1) Either the scope for self-signed JWT flow is enabled or audiences are
+//       explicitly provided by users.
+//   (2) No service account impersontation
 //
-// - Otherwise, executes a self-signed JWT flow (google.aip.dev/auth/4111)
+// - Otherwise, executes standard OAuth 2.0 flow
+// More details: google.aip.dev/auth/4111
 func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*google.Credentials, error) {
+	// By default, a standard OAuth 2.0 token source is created
 	cred, err := google.CredentialsFromJSON(ctx, data, ds.GetScopes()...)
 	if err != nil {
 		return nil, err
 	}
-	if isOAuthFlow(data, ds) {
-		// Standard OAuth 2.0 Flow
-		return cred, nil
-	}
 
-	isJWTFlow, err := isSelfSignedJWTFlow(cred.JSON)
+	// Override the token source to use self-signed JWT if conditions are met
+	isJWTFlow, err := isSelfSignedJWTFlow(cred.JSON, ds)
 	if err != nil {
 		return nil, err
 	}
-
 	if isJWTFlow {
 		ts, err := selfSignedJWTTokenSource(data, ds.GetAudience(), ds.GetScopes())
 		if err != nil {
@@ -94,26 +92,24 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 		}
 		cred.TokenSource = ts
 	}
+
 	return cred, err
 }
 
-func isOAuthFlow(data []byte, ds *DialSettings) bool {
-	// Standard OAuth 2.0 Flow
-	return len(data) == 0 ||
-		(len(ds.GetScopes()) > 0 && !ds.EnableScopeForJWT) ||
-		ds.ImpersonationConfig != nil
-}
-
-func isSelfSignedJWTFlow(data []byte) (bool, error) {
-	// Check if JSON is a service account and if so create a self-signed JWT.
-	var f struct {
-		Type string `json:"type"`
-		// The rest JSON fields are omitted because they are not used.
+func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
+	if (ds.UseJwtWithScope || len(ds.Audiences) > 0) &&
+		ds.ImpersonationConfig == nil {
+		// Check if JSON is a service account and if so create a self-signed JWT.
+		var f struct {
+			Type string `json:"type"`
+			// The rest JSON fields are omitted because they are not used.
+		}
+		if err := json.Unmarshal(data, &f); err != nil {
+			return false, err
+		}
+		return f.Type == serviceAccountKey, nil
 	}
-	if err := json.Unmarshal(data, &f); err != nil {
-		return false, err
-	}
-	return f.Type == serviceAccountKey, nil
+	return false, nil
 }
 
 func selfSignedJWTTokenSource(data []byte, audience string, scopes []string) (oauth2.TokenSource, error) {

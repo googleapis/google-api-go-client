@@ -24,7 +24,7 @@ type DialSettings struct {
 	DefaultMTLSEndpoint string
 	Scopes              []string
 	DefaultScopes       []string
-	EnableScopeForJWT   bool
+	UseJwtWithScope     bool
 	TokenSource         oauth2.TokenSource
 	Credentials         *google.Credentials
 	CredentialsFile     string // if set, Token Source is ignored.

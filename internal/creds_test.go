@@ -98,9 +98,9 @@ func TestJWTWithScope(t *testing.T) {
 	// Load a valid JSON file. No way to really test the contents; we just
 	// verify that there is no error.
 	ds := &DialSettings{
-		CredentialsFile:   "testdata/service-account.json",
-		Scopes:            []string{"foo"},
-		EnableScopeForJWT: true,
+		CredentialsFile: "testdata/service-account.json",
+		Scopes:          []string{"foo"},
+		UseJwtWithScope: true,
 	}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
@@ -109,9 +109,9 @@ func TestJWTWithScope(t *testing.T) {
 	// Load valid JSON. No way to really test the contents; we just
 	// verify that there is no error.
 	ds = &DialSettings{
-		CredentialsJSON:   []byte(validServiceAccountJSON),
-		Scopes:            []string{"foo"},
-		EnableScopeForJWT: true,
+		CredentialsJSON: []byte(validServiceAccountJSON),
+		Scopes:          []string{"foo"},
+		UseJwtWithScope: true,
 	}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)

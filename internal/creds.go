@@ -81,12 +81,12 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 	}
 
 	// Override the token source to use self-signed JWT if conditions are met
-	isJWTFlow, err := isSelfSignedJWTFlow(cred.JSON, ds)
+	isJWTFlow, err := isSelfSignedJWTFlow(data, ds)
 	if err != nil {
 		return nil, err
 	}
 	if isJWTFlow {
-		ts, err := selfSignedJWTTokenSource(data, ds.GetAudience(), ds.GetScopes())
+		ts, err := selfSignedJWTTokenSource(data, ds)
 		if err != nil {
 			return nil, err
 		}
@@ -97,7 +97,7 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 }
 
 func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
-	if (ds.UseJwtWithScope || len(ds.Audiences) > 0) &&
+	if (ds.EnableJwtWithScope || ds.HasCustomAudience()) &&
 		ds.ImpersonationConfig == nil {
 		// Check if JSON is a service account and if so create a self-signed JWT.
 		var f struct {
@@ -112,13 +112,14 @@ func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
 	return false, nil
 }
 
-func selfSignedJWTTokenSource(data []byte, audience string, scopes []string) (oauth2.TokenSource, error) {
-	if len(scopes) > 0 {
-		// Scopes are preferred in self-signed JWT
-		return google.JWTAccessTokenSourceWithScope(data, scopes...)
-	} else if audience != "" {
+func selfSignedJWTTokenSource(data []byte, ds *DialSettings) (oauth2.TokenSource, error) {
+	if len(ds.GetScopes()) > 0 && !ds.HasCustomAudience() {
+		// Scopes are preferred in self-signed JWT unless the scope is not available
+		// or a custom audience is used.
+		return google.JWTAccessTokenSourceWithScope(data, ds.GetScopes()...)
+	} else if ds.GetAudience() != "" {
 		// Fallback to audience if scope is not provided
-		return google.JWTAccessTokenSourceFromJSON(data, audience)
+		return google.JWTAccessTokenSourceFromJSON(data, ds.GetAudience())
 	} else {
 		return nil, errors.New("neither scopes or audience are provided for the self-signed JWT")
 	}

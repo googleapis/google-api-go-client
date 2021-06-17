@@ -4002,6 +4002,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "resourcesettings:v1",
+      "name": "resourcesettings",
+      "version": "v1",
+      "title": "Resource Settings API",
+      "description": "The Resource Settings API allows users to control and modify the behavior of their GCP resources (e.g., VM, firewall, Project, etc.) across the Cloud Resource Hierarchy.",
+      "discoveryRestUrl": "https://resourcesettings.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/resource-manager/docs/resource-settings/overview",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "retail:v2alpha",
       "name": "retail",
       "version": "v2alpha",

@@ -327,6 +327,233 @@ func (s *GoogleIdentityStsV1ExchangeTokenResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIdentityStsV1IntrospectTokenRequest: Request message for
+// IntrospectToken.
+type GoogleIdentityStsV1IntrospectTokenRequest struct {
+	// Token: Required. The OAuth 2.0 security token issued by the Security
+	// Token Service API.
+	Token string `json:"token,omitempty"`
+
+	// TokenTypeHint: Optional. The type of the given token. Supported
+	// values are `urn:ietf:params:oauth:token-type:access_token` and
+	// `access_token`.
+	TokenTypeHint string `json:"tokenTypeHint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Token") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Token") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityStsV1IntrospectTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityStsV1IntrospectTokenRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityStsV1IntrospectTokenResponse: Response message for
+// IntrospectToken.
+type GoogleIdentityStsV1IntrospectTokenResponse struct {
+	// Active: A boolean value that indicates whether the provided access
+	// token is currently active.
+	Active bool `json:"active,omitempty"`
+
+	// ClientId: The client identifier for the OAuth 2.0 client that
+	// requested the provided token.
+	ClientId string `json:"client_id,omitempty"`
+
+	// Exp: The expiration timestamp, measured in the number of seconds
+	// since January 1 1970 UTC, indicating when this token will expire.
+	Exp int64 `json:"exp,omitempty,string"`
+
+	// Iat: The issued timestamp, measured in the number of seconds since
+	// January 1 1970 UTC, indicating when this token was originally issued.
+	Iat int64 `json:"iat,omitempty,string"`
+
+	// Iss: The issuer of the provided token.
+	Iss string `json:"iss,omitempty"`
+
+	// Scope: A list of scopes associated with the provided token.
+	Scope string `json:"scope,omitempty"`
+
+	// Sub: The unique user ID associated with the provided token. For
+	// Google Accounts, this value is based on the Google Account's user ID.
+	// For federated identities, this value is based on the identity pool ID
+	// and the value of the mapped `google.subject` attribute.
+	Sub string `json:"sub,omitempty"`
+
+	// Username: The human-readable identifier for the token principal
+	// subject. For example, if the provided token is associated with a
+	// workload identity pool, this field contains a value in the following
+	// format:
+	// `principal://iam.googleapis.com/projects//locations//workloadIdentityP
+	// ools//subject/`
+	Username string `json:"username,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityStsV1IntrospectTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityStsV1IntrospectTokenResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "sts.introspect":
+
+type V1IntrospectCall struct {
+	s                                         *Service
+	googleidentitystsv1introspecttokenrequest *GoogleIdentityStsV1IntrospectTokenRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Introspect: Gets information about a Google OAuth 2.0 access token
+// issued by the Google Cloud Security Token Service API
+// (https://cloud.google.com/iam/docs/reference/sts/rest).
+func (r *V1Service) Introspect(googleidentitystsv1introspecttokenrequest *GoogleIdentityStsV1IntrospectTokenRequest) *V1IntrospectCall {
+	c := &V1IntrospectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleidentitystsv1introspecttokenrequest = googleidentitystsv1introspecttokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1IntrospectCall) Fields(s ...googleapi.Field) *V1IntrospectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1IntrospectCall) Context(ctx context.Context) *V1IntrospectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1IntrospectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1IntrospectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleidentitystsv1introspecttokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/introspect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sts.introspect" call.
+// Exactly one of *GoogleIdentityStsV1IntrospectTokenResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleIdentityStsV1IntrospectTokenResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V1IntrospectCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1IntrospectTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleIdentityStsV1IntrospectTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a Google OAuth 2.0 access token issued by the Google Cloud [Security Token Service API](https://cloud.google.com/iam/docs/reference/sts/rest).",
+	//   "flatPath": "v1/introspect",
+	//   "httpMethod": "POST",
+	//   "id": "sts.introspect",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/introspect",
+	//   "request": {
+	//     "$ref": "GoogleIdentityStsV1IntrospectTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIdentityStsV1IntrospectTokenResponse"
+	//   }
+	// }
+
+}
+
 // method id "sts.token":
 
 type V1TokenCall struct {
@@ -377,7 +604,7 @@ func (c *V1TokenCall) Header() http.Header {
 
 func (c *V1TokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

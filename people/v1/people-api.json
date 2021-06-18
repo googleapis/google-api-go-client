@@ -413,7 +413,7 @@
               "type": "string"
             },
             "readMask": {
-              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers",
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -456,7 +456,7 @@
               "type": "string"
             },
             "readMask": {
-              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers",
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -1154,7 +1154,7 @@
       }
     }
   },
-  "revision": "20210613",
+  "revision": "20210616",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

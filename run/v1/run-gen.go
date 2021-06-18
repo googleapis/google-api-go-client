@@ -558,23 +558,20 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapEnvSource: Cloud Run fully managed: not supported Cloud Run
-// for Anthos: supported ConfigMapEnvSource selects a ConfigMap to
-// populate the environment variables with. The contents of the target
-// ConfigMap's Data field will represent the key-value pairs as
-// environment variables.
+// ConfigMapEnvSource: Not supported by Cloud Run ConfigMapEnvSource
+// selects a ConfigMap to populate the environment variables with. The
+// contents of the target ConfigMap's Data field will represent the
+// key-value pairs as environment variables.
 type ConfigMapEnvSource struct {
 	// LocalObjectReference: This field should not be used directly as it is
 	// meant to be inlined directly into the message. Use the "name" field
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The ConfigMap to select from.
+	// Name: The ConfigMap to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the ConfigMap must be defined
+	// Optional: (Optional) Specify whether the ConfigMap must be defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -602,11 +599,10 @@ func (s *ConfigMapEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapKeySelector: Cloud Run fully managed: not supported Cloud
-// Run for Anthos: supported Selects a key from a ConfigMap.
+// ConfigMapKeySelector: Not supported by Cloud Run Selects a key from a
+// ConfigMap.
 type ConfigMapKeySelector struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The key to select.
+	// Key: The key to select.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -614,13 +610,11 @@ type ConfigMapKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The ConfigMap to select from.
+	// Name: The ConfigMap to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the ConfigMap or its key must
-	// be defined
+	// Optional: (Optional) Specify whether the ConfigMap or its key must be
+	// defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -646,23 +640,20 @@ func (s *ConfigMapKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapVolumeSource: Cloud Run fully managed: not supported Cloud
-// Run for Anthos: supported Adapts a ConfigMap into a volume. The
-// contents of the target ConfigMap's Data field will be presented in a
-// volume as files using the keys in the Data field as the file names,
-// unless the items element is populated with specific mappings of keys
-// to paths.
+// ConfigMapVolumeSource: Not supported by Cloud Run Adapts a ConfigMap
+// into a volume. The contents of the target ConfigMap's Data field will
+// be presented in a volume as files using the keys in the Data field as
+// the file names, unless the items element is populated with specific
+// mappings of keys to paths.
 type ConfigMapVolumeSource struct {
-	// DefaultMode: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Mode bits to use on created files by
-	// default. Must be a value between 0 and 0777. Defaults to 0644.
-	// Directories within the path are not affected by this setting. This
-	// might be in conflict with other options that affect the file mode,
-	// like fsGroup, and the result can be other mode bits set.
+	// DefaultMode: (Optional) Mode bits to use on created files by default.
+	// Must be a value between 0 and 0777. Defaults to 0644. Directories
+	// within the path are not affected by this setting. This might be in
+	// conflict with other options that affect the file mode, like fsGroup,
+	// and the result can be other mode bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported If unspecified, each key-value pair in the Data
+	// Items: (Optional) If unspecified, each key-value pair in the Data
 	// field of the referenced Secret will be projected into the volume as a
 	// file whose name is the key and content is the value. If specified,
 	// the listed keys will be projected into the specified paths, and
@@ -671,12 +662,10 @@ type ConfigMapVolumeSource struct {
 	// marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported Name of the config.
+	// Name: Name of the config.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret or its keys must be
+	// Optional: (Optional) Specify whether the Secret or its keys must be
 	// defined.
 	Optional bool `json:"optional,omitempty"`
 
@@ -842,8 +831,7 @@ func (s *ConfigurationStatus) MarshalJSON() ([]byte, error) {
 // arguments to supply to it. Note that additional arguments may be
 // supplied by the system to the container at runtime.
 type Container struct {
-	// Args: (Optional) Cloud Run fully managed: supported Cloud Run for
-	// Anthos: supported Arguments to the entrypoint. The docker image's CMD
+	// Args: (Optional) Arguments to the entrypoint. The docker image's CMD
 	// is used if this is not provided. Variable references $(VAR_NAME) are
 	// expanded using the container's environment. If a variable cannot be
 	// resolved, the reference in the input string will be unchanged. The
@@ -855,36 +843,31 @@ type Container struct {
 
 	Command []string `json:"command,omitempty"`
 
-	// Env: (Optional) Cloud Run fully managed: supported Cloud Run for
-	// Anthos: supported List of environment variables to set in the
+	// Env: (Optional) List of environment variables to set in the
 	// container.
 	Env []*EnvVar `json:"env,omitempty"`
 
-	// EnvFrom: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported List of sources to populate environment
-	// variables in the container. The keys defined within a source must be
-	// a C_IDENTIFIER. All invalid keys will be reported as an event when
-	// the container is starting. When a key exists in multiple sources, the
+	// EnvFrom: (Optional) List of sources to populate environment variables
+	// in the container. The keys defined within a source must be a
+	// C_IDENTIFIER. All invalid keys will be reported as an event when the
+	// container is starting. When a key exists in multiple sources, the
 	// value associated with the last source will take precedence. Values
 	// defined by an Env with a duplicate key will take precedence. Cannot
 	// be updated.
 	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
-	// Image: Cloud Run fully managed: only supports containers from Google
-	// Container Registry Cloud Run for Anthos: supported URL of the
-	// Container image. More info:
+	// Image: Only supports containers from Google Container Registry or
+	// Artifact Registry URL of the Container image. More info:
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 
-	// ImagePullPolicy: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Image pull policy. One of Always,
-	// Never, IfNotPresent. Defaults to Always if :latest tag is specified,
-	// or IfNotPresent otherwise. More info:
+	// ImagePullPolicy: (Optional) Image pull policy. One of Always, Never,
+	// IfNotPresent. Defaults to Always if :latest tag is specified, or
+	// IfNotPresent otherwise. More info:
 	// https://kubernetes.io/docs/concepts/containers/images#updating-images
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
-	// LivenessProbe: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Periodic probe of container liveness.
+	// LivenessProbe: (Optional) Periodic probe of container liveness.
 	// Container will be restarted if the probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
@@ -901,49 +884,43 @@ type Container struct {
 	// through the PORT environment variable for the container to listen on.
 	Ports []*ContainerPort `json:"ports,omitempty"`
 
-	// ReadinessProbe: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Periodic probe of container service
+	// ReadinessProbe: (Optional) Periodic probe of container service
 	// readiness. Container will be removed from service endpoints if the
 	// probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
 
-	// Resources: (Optional) Cloud Run fully managed: supported Cloud Run
-	// for Anthos: supported Compute Resources required by this container.
+	// Resources: (Optional) Compute Resources required by this container.
 	// More info:
 	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources *ResourceRequirements `json:"resources,omitempty"`
 
-	// SecurityContext: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Security options the pod should run
-	// with. More info:
+	// SecurityContext: (Optional) Security options the pod should run with.
+	// More info:
 	// https://kubernetes.io/docs/concepts/policy/security-context/ More
 	// info:
 	// https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 	SecurityContext *SecurityContext `json:"securityContext,omitempty"`
 
-	// StartupProbe: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: not supported Startup probe of application within the
+	// StartupProbe: (Optional) Startup probe of application within the
 	// container. All other probes are disabled if a startup probe is
 	// provided, until it succeeds. Container will not be added to service
 	// endpoints if the probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	StartupProbe *Probe `json:"startupProbe,omitempty"`
 
-	// TerminationMessagePath: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Path at which the file to
-	// which the container's termination message will be written is mounted
-	// into the container's filesystem. Message written is intended to be
-	// brief final status, such as an assertion failure message. Will be
-	// truncated by the node if greater than 4096 bytes. The total message
-	// length across all containers will be limited to 12kb. Defaults to
+	// TerminationMessagePath: (Optional) Path at which the file to which
+	// the container's termination message will be written is mounted into
+	// the container's filesystem. Message written is intended to be brief
+	// final status, such as an assertion failure message. Will be truncated
+	// by the node if greater than 4096 bytes. The total message length
+	// across all containers will be limited to 12kb. Defaults to
 	// /dev/termination-log.
 	TerminationMessagePath string `json:"terminationMessagePath,omitempty"`
 
-	// TerminationMessagePolicy: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Indicate how the
-	// termination message should be populated. File will use the contents
-	// of terminationMessagePath to populate the container status message on
+	// TerminationMessagePolicy: (Optional) Indicate how the termination
+	// message should be populated. File will use the contents of
+	// terminationMessagePath to populate the container status message on
 	// both success and failure. FallbackToLogsOnError will use the last
 	// chunk of container log output if the termination message file is
 	// empty and the container exited with an error. The log output is
@@ -951,14 +928,12 @@ type Container struct {
 	// File. Cannot be updated.
 	TerminationMessagePolicy string `json:"terminationMessagePolicy,omitempty"`
 
-	// VolumeMounts: (Optional) Cloud Run fully managed: supported Volume to
-	// mount into the container's filesystem. Only supports
-	// SecretVolumeSources. Cloud Run for Anthos: supported Pod volumes to
-	// mount into the container's filesystem.
+	// VolumeMounts: (Optional) Volume to mount into the container's
+	// filesystem. Only supports SecretVolumeSources. Pod volumes to mount
+	// into the container's filesystem.
 	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
-	// WorkingDir: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Container's working directory. If not
+	// WorkingDir: (Optional) Container's working directory. If not
 	// specified, the container runtime's default will be used, which might
 	// be configured in the container image.
 	WorkingDir string `json:"workingDir,omitempty"`
@@ -997,8 +972,7 @@ type ContainerPort struct {
 	// Allowed values are "http1" and "h2c".
 	Name string `json:"name,omitempty"`
 
-	// Protocol: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Protocol for port. Must be "TCP". Defaults to
+	// Protocol: (Optional) Protocol for port. Must be "TCP". Defaults to
 	// "TCP".
 	Protocol string `json:"protocol,omitempty"`
 
@@ -1167,21 +1141,17 @@ func (s *DomainMappingStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnvFromSource: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported EnvFromSource represents the source of a set of
-// ConfigMaps
+// EnvFromSource: Not supported by Cloud Run EnvFromSource represents
+// the source of a set of ConfigMaps
 type EnvFromSource struct {
-	// ConfigMapRef: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The ConfigMap to select from
+	// ConfigMapRef: (Optional) The ConfigMap to select from
 	ConfigMapRef *ConfigMapEnvSource `json:"configMapRef,omitempty"`
 
-	// Prefix: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported An optional identifier to prepend to each key
-	// in the ConfigMap. Must be a C_IDENTIFIER.
+	// Prefix: (Optional) An optional identifier to prepend to each key in
+	// the ConfigMap. Must be a C_IDENTIFIER.
 	Prefix string `json:"prefix,omitempty"`
 
-	// SecretRef: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The Secret to select from
+	// SecretRef: (Optional) The Secret to select from
 	SecretRef *SecretEnvSource `json:"secretRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapRef") to
@@ -1222,9 +1192,8 @@ type EnvVar struct {
 	// exists or not. Defaults to "".
 	Value string `json:"value,omitempty"`
 
-	// ValueFrom: (Optional) Cloud Run fully managed: supported Source for
-	// the environment variable's value. Only supports secret_key_ref. Cloud
-	// Run for Anthos: supported Source for the environment variable's
+	// ValueFrom: (Optional) Source for the environment variable's value.
+	// Only supports secret_key_ref. Source for the environment variable's
 	// value. Cannot be used if value is not empty.
 	ValueFrom *EnvVarSource `json:"valueFrom,omitempty"`
 
@@ -1251,17 +1220,15 @@ func (s *EnvVar) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnvVarSource: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported EnvVarSource represents a source for the value of
-// an EnvVar.
+// EnvVarSource: EnvVarSource represents a source for the value of an
+// EnvVar.
 type EnvVarSource struct {
-	// ConfigMapKeyRef: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Selects a key of a ConfigMap.
+	// ConfigMapKeyRef: (Optional) Not supported by Cloud Run Selects a key
+	// of a ConfigMap.
 	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
 
-	// SecretKeyRef: (Optional) Cloud Run fully managed: supported. Selects
-	// a key (version) of a secret in Secret Manager. Cloud Run for Anthos:
-	// supported. Selects a key of a secret in the pod's namespace.
+	// SecretKeyRef: (Optional) Selects a key (version) of a secret in
+	// Secret Manager.
 	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapKeyRef") to
@@ -1288,16 +1255,15 @@ func (s *EnvVarSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExecAction: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported ExecAction describes a "run in container" action.
+// ExecAction: Not supported by Cloud Run ExecAction describes a "run in
+// container" action.
 type ExecAction struct {
-	// Command: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Command is the command line to execute inside
-	// the container, the working directory for the command is root ('/') in
-	// the container's filesystem. The command is simply exec'd, it is not
-	// run inside a shell, so traditional shell instructions ('|', etc)
-	// won't work. To use a shell, you need to explicitly call out to that
-	// shell. Exit status of 0 is treated as live/healthy and non-zero is
+	// Command: (Optional) Command is the command line to execute inside the
+	// container, the working directory for the command is root ('/') in the
+	// container's filesystem. The command is simply exec'd, it is not run
+	// inside a shell, so traditional shell instructions ('|', etc) won't
+	// work. To use a shell, you need to explicitly call out to that shell.
+	// Exit status of 0 is treated as live/healthy and non-zero is
 	// unhealthy.
 	Command []string `json:"command,omitempty"`
 
@@ -1437,27 +1403,22 @@ func (s *GoogleCloudRunV1Condition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPGetAction: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported HTTPGetAction describes an action based on HTTP Get
-// requests.
+// HTTPGetAction: Not supported by Cloud Run HTTPGetAction describes an
+// action based on HTTP Get requests.
 type HTTPGetAction struct {
-	// Host: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Host name to connect to, defaults to the pod IP.
-	// You probably want to set "Host" in httpHeaders instead.
+	// Host: (Optional) Host name to connect to, defaults to the pod IP. You
+	// probably want to set "Host" in httpHeaders instead.
 	Host string `json:"host,omitempty"`
 
-	// HttpHeaders: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Custom headers to set in the request. HTTP
+	// HttpHeaders: (Optional) Custom headers to set in the request. HTTP
 	// allows repeated headers.
 	HttpHeaders []*HTTPHeader `json:"httpHeaders,omitempty"`
 
-	// Path: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Path to access on the HTTP server.
+	// Path: (Optional) Path to access on the HTTP server.
 	Path string `json:"path,omitempty"`
 
-	// Scheme: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Scheme to use for connecting to the host.
-	// Defaults to HTTP.
+	// Scheme: (Optional) Scheme to use for connecting to the host. Defaults
+	// to HTTP.
 	Scheme string `json:"scheme,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
@@ -1483,16 +1444,13 @@ func (s *HTTPGetAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPHeader: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported HTTPHeader describes a custom header to be used in
-// HTTP probes
+// HTTPHeader: Not supported by Cloud Run HTTPHeader describes a custom
+// header to be used in HTTP probes
 type HTTPHeader struct {
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The header field name
+	// Name: The header field name
 	Name string `json:"name,omitempty"`
 
-	// Value: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The header field value
+	// Value: The header field value
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1518,26 +1476,22 @@ func (s *HTTPHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// KeyToPath: Cloud Run fully managed: supported Cloud Run for Anthos:
-// supported Maps a string key to a path within a volume.
+// KeyToPath: Maps a string key to a path within a volume.
 type KeyToPath struct {
-	// Key: Cloud Run fully managed: supported The Cloud Secret Manager
-	// secret version. Can be 'latest' for the latest value or an integer
-	// for a specific version. Cloud Run for Anthos: supported The key to
+	// Key: The Cloud Secret Manager secret version. Can be 'latest' for the
+	// latest value or an integer for a specific version. The key to
 	// project.
 	Key string `json:"key,omitempty"`
 
-	// Mode: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Mode bits to use on this file, must be a value
+	// Mode: (Optional) Mode bits to use on this file, must be a value
 	// between 0000 and 0777. If not specified, the volume defaultMode will
 	// be used. This might be in conflict with other options that affect the
 	// file mode, like fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 
-	// Path: Cloud Run fully managed: supported Cloud Run for Anthos:
-	// supported The relative path of the file to map the key to. May not be
-	// an absolute path. May not contain the path element '..'. May not
-	// start with the string '..'.
+	// Path: The relative path of the file to map the key to. May not be an
+	// absolute path. May not contain the path element '..'. May not start
+	// with the string '..'.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1914,13 +1868,11 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LocalObjectReference: Cloud Run fully managed: not supported Cloud
-// Run for Anthos: supported LocalObjectReference contains enough
-// information to let you locate the referenced object inside the same
-// namespace.
+// LocalObjectReference: Not supported by Cloud Run LocalObjectReference
+// contains enough information to let you locate the referenced object
+// inside the same namespace.
 type LocalObjectReference struct {
-	// Name: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Name of the referent. More info:
+	// Name: (Optional) Name of the referent. More info:
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 	Name string `json:"name,omitempty"`
 
@@ -2004,12 +1956,11 @@ type ObjectMeta struct {
 	// http://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// ClusterName: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The name of the cluster which the object
-	// belongs to. This is used to distinguish resources with same name and
-	// namespace in different clusters. This field is not set anywhere right
-	// now and apiserver is going to ignore it if set in create or update
-	// request.
+	// ClusterName: (Optional) Not supported by Cloud Run The name of the
+	// cluster which the object belongs to. This is used to distinguish
+	// resources with same name and namespace in different clusters. This
+	// field is not set anywhere right now and apiserver is going to ignore
+	// it if set in create or update request.
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// CreationTimestamp: (Optional) CreationTimestamp is a timestamp
@@ -2021,59 +1972,57 @@ type ObjectMeta struct {
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// DeletionGracePeriodSeconds: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Number of seconds allowed
-	// for this object to gracefully terminate before it will be removed
-	// from the system. Only set when deletionTimestamp is also set. May
-	// only be shortened. Read-only.
+	// DeletionGracePeriodSeconds: (Optional) Not supported by Cloud Run
+	// Number of seconds allowed for this object to gracefully terminate
+	// before it will be removed from the system. Only set when
+	// deletionTimestamp is also set. May only be shortened. Read-only.
 	DeletionGracePeriodSeconds int64 `json:"deletionGracePeriodSeconds,omitempty"`
 
-	// DeletionTimestamp: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported DeletionTimestamp is RFC 3339 date
-	// and time at which this resource will be deleted. This field is set by
-	// the server when a graceful deletion is requested by the user, and is
-	// not directly settable by a client. The resource is expected to be
-	// deleted (no longer visible from resource lists, and not reachable by
-	// name) after the time in this field, once the finalizers list is
-	// empty. As long as the finalizers list contains items, deletion is
-	// blocked. Once the deletionTimestamp is set, this value may not be
-	// unset or be set further into the future, although it may be shortened
-	// or the resource may be deleted prior to this time. For example, a
-	// user may request that a pod is deleted in 30 seconds. The Kubelet
-	// will react by sending a graceful termination signal to the containers
-	// in the pod. After that 30 seconds, the Kubelet will send a hard
-	// termination signal (SIGKILL) to the container and after cleanup,
-	// remove the pod from the API. In the presence of network partitions,
-	// this object may still exist after this timestamp, until an
-	// administrator or automated process can determine the resource is
-	// fully terminated. If not set, graceful deletion of the object has not
-	// been requested. Populated by the system when a graceful deletion is
-	// requested. Read-only. More info:
+	// DeletionTimestamp: (Optional) Not supported by Cloud Run
+	// DeletionTimestamp is RFC 3339 date and time at which this resource
+	// will be deleted. This field is set by the server when a graceful
+	// deletion is requested by the user, and is not directly settable by a
+	// client. The resource is expected to be deleted (no longer visible
+	// from resource lists, and not reachable by name) after the time in
+	// this field, once the finalizers list is empty. As long as the
+	// finalizers list contains items, deletion is blocked. Once the
+	// deletionTimestamp is set, this value may not be unset or be set
+	// further into the future, although it may be shortened or the resource
+	// may be deleted prior to this time. For example, a user may request
+	// that a pod is deleted in 30 seconds. The Kubelet will react by
+	// sending a graceful termination signal to the containers in the pod.
+	// After that 30 seconds, the Kubelet will send a hard termination
+	// signal (SIGKILL) to the container and after cleanup, remove the pod
+	// from the API. In the presence of network partitions, this object may
+	// still exist after this timestamp, until an administrator or automated
+	// process can determine the resource is fully terminated. If not set,
+	// graceful deletion of the object has not been requested. Populated by
+	// the system when a graceful deletion is requested. Read-only. More
+	// info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 
-	// Finalizers: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Must be empty before the object is deleted
-	// from the registry. Each entry is an identifier for the responsible
-	// component that will remove the entry from the list. If the
-	// deletionTimestamp of the object is non-nil, entries in this list can
-	// only be removed. +patchStrategy=merge
+	// Finalizers: (Optional) Not supported by Cloud Run Must be empty
+	// before the object is deleted from the registry. Each entry is an
+	// identifier for the responsible component that will remove the entry
+	// from the list. If the deletionTimestamp of the object is non-nil,
+	// entries in this list can only be removed. +patchStrategy=merge
 	Finalizers []string `json:"finalizers,omitempty"`
 
-	// GenerateName: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported GenerateName is an optional prefix, used by
-	// the server, to generate a unique name ONLY IF the Name field has not
-	// been provided. If this field is used, the name returned to the client
-	// will be different than the name passed. This value will also be
-	// combined with a unique suffix. The provided value has the same
-	// validation rules as the Name field, and may be truncated by the
-	// length of the suffix required to make the value unique on the server.
-	// If this field is specified and the generated name exists, the server
-	// will NOT return a 409 - instead, it will either return 201 Created or
-	// 500 with Reason ServerTimeout indicating a unique name could not be
-	// found in the time allotted, and the client should retry (optionally
-	// after the time indicated in the Retry-After header). Applied only if
-	// Name is not specified. More info:
+	// GenerateName: (Optional) Not supported by Cloud Run GenerateName is
+	// an optional prefix, used by the server, to generate a unique name
+	// ONLY IF the Name field has not been provided. If this field is used,
+	// the name returned to the client will be different than the name
+	// passed. This value will also be combined with a unique suffix. The
+	// provided value has the same validation rules as the Name field, and
+	// may be truncated by the length of the suffix required to make the
+	// value unique on the server. If this field is specified and the
+	// generated name exists, the server will NOT return a 409 - instead, it
+	// will either return 201 Created or 500 with Reason ServerTimeout
+	// indicating a unique name could not be found in the time allotted, and
+	// the client should retry (optionally after the time indicated in the
+	// Retry-After header). Applied only if Name is not specified. More
+	// info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
 	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
@@ -2101,10 +2050,9 @@ type ObjectMeta struct {
 	// equal to either the project ID or project number.
 	Namespace string `json:"namespace,omitempty"`
 
-	// OwnerReferences: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported List of objects that own this object.
-	// If ALL objects in the list have been deleted, this object will be
-	// garbage collected.
+	// OwnerReferences: (Optional) Not supported by Cloud Run List of
+	// objects that own this object. If ALL objects in the list have been
+	// deleted, this object will be garbage collected.
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
 	// ResourceVersion: Optional. An opaque value that represents the
@@ -2311,55 +2259,45 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Probe: Cloud Run fully managed: not supported Cloud Run for Anthos:
-// supported Probe describes a health check to be performed against a
-// container to determine whether it is alive or ready to receive
-// traffic.
+// Probe: Not supported by Cloud Run Probe describes a health check to
+// be performed against a container to determine whether it is alive or
+// ready to receive traffic.
 type Probe struct {
-	// Exec: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported One and only one of the following should be
+	// Exec: (Optional) One and only one of the following should be
 	// specified. Exec specifies the action to take. A field inlined from
 	// the Handler message.
 	Exec *ExecAction `json:"exec,omitempty"`
 
-	// FailureThreshold: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Minimum consecutive failures for the
+	// FailureThreshold: (Optional) Minimum consecutive failures for the
 	// probe to be considered failed after having succeeded. Defaults to 3.
 	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
-	// HttpGet: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported HTTPGet specifies the http request to perform.
-	// A field inlined from the Handler message.
+	// HttpGet: (Optional) HTTPGet specifies the http request to perform. A
+	// field inlined from the Handler message.
 	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
 
-	// InitialDelaySeconds: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Number of seconds after the
-	// container has started before liveness probes are initiated. More
-	// info:
+	// InitialDelaySeconds: (Optional) Number of seconds after the container
+	// has started before liveness probes are initiated. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
-	// PeriodSeconds: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported How often (in seconds) to perform the
+	// PeriodSeconds: (Optional) How often (in seconds) to perform the
 	// probe. Default to 10 seconds. Minimum value is 1.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
-	// SuccessThreshold: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Minimum consecutive successes for the
+	// SuccessThreshold: (Optional) Minimum consecutive successes for the
 	// probe to be considered successful after having failed. Defaults to 1.
 	// Must be 1 for liveness. Minimum value is 1.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
-	// TcpSocket: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported TCPSocket specifies an action involving a
-	// TCP port. TCP hooks not yet supported A field inlined from the
-	// Handler message.
+	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
+	// port. TCP hooks not yet supported A field inlined from the Handler
+	// message.
 	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
 
-	// TimeoutSeconds: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Number of seconds after which the
-	// probe times out. Defaults to 1 second. Minimum value is 1. More info:
+	// TimeoutSeconds: (Optional) Number of seconds after which the probe
+	// times out. Defaults to 1 second. Minimum value is 1. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
@@ -2432,22 +2370,20 @@ func (s *ResourceRecord) MarshalJSON() ([]byte, error) {
 // ResourceRequirements: ResourceRequirements describes the compute
 // resource requirements.
 type ResourceRequirements struct {
-	// Limits: (Optional) Cloud Run fully managed: Only memory and CPU are
-	// supported. Note: The only supported values for CPU are '1', '2', and
-	// '4'. Setting 4 CPU requires at least 2Gi of memory. Cloud Run for
-	// Anthos: supported Limits describes the maximum amount of compute
-	// resources allowed. The values of the map is string form of the
-	// 'quantity' k8s type:
+	// Limits: (Optional) Only memory and CPU are supported. Note: The only
+	// supported values for CPU are '1', '2', and '4'. Setting 4 CPU
+	// requires at least 2Gi of memory. Limits describes the maximum amount
+	// of compute resources allowed. The values of the map is string form of
+	// the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Limits map[string]string `json:"limits,omitempty"`
 
-	// Requests: (Optional) Cloud Run fully managed: Only memory and CPU are
-	// supported. Note: The only supported values for CPU are '1' and '2'.
-	// Cloud Run for Anthos: supported Requests describes the minimum amount
-	// of compute resources required. If Requests is omitted for a
-	// container, it defaults to Limits if that is explicitly specified,
-	// otherwise to an implementation-defined value. The values of the map
-	// is string form of the 'quantity' k8s type:
+	// Requests: (Optional) Only memory and CPU are supported. Note: The
+	// only supported values for CPU are '1' and '2'. Requests describes the
+	// minimum amount of compute resources required. If Requests is omitted
+	// for a container, it defaults to Limits if that is explicitly
+	// specified, otherwise to an implementation-defined value. The values
+	// of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Requests map[string]string `json:"requests,omitempty"`
 
@@ -2833,22 +2769,20 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretEnvSource: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported SecretEnvSource selects a Secret to populate the
-// environment variables with. The contents of the target Secret's Data
-// field will represent the key-value pairs as environment variables.
+// SecretEnvSource: Not supported by Cloud Run SecretEnvSource selects a
+// Secret to populate the environment variables with. The contents of
+// the target Secret's Data field will represent the key-value pairs as
+// environment variables.
 type SecretEnvSource struct {
 	// LocalObjectReference: This field should not be used directly as it is
 	// meant to be inlined directly into the message. Use the "name" field
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The Secret to select from.
+	// Name: The Secret to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret must be defined
+	// Optional: (Optional) Specify whether the Secret must be defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2876,12 +2810,10 @@ func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretKeySelector: Cloud Run fully managed: supported Cloud Run for
-// Anthos: supported SecretKeySelector selects a key of a Secret.
+// SecretKeySelector: SecretKeySelector selects a key of a Secret.
 type SecretKeySelector struct {
-	// Key: Cloud Run fully managed: supported A Cloud Secret Manager secret
-	// version. Must be 'latest' for the latest version or an integer for a
-	// specific version. Cloud Run for Anthos: supported The key of the
+	// Key: A Cloud Secret Manager secret version. Must be 'latest' for the
+	// latest version or an integer for a specific version. The key of the
 	// secret to select from. Must be a valid secret key.
 	Key string `json:"key,omitempty"`
 
@@ -2890,19 +2822,16 @@ type SecretKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: supported The name of the secret in
-	// Cloud Secret Manager. By default, the secret is assumed to be in the
-	// same project. If the secret is in another project, you must define an
-	// alias. An alias definition has the form: :projects//secrets/. If
-	// multiple alias definitions are needed, they must be separated by
-	// commas. The alias definitions must be set on the
-	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
-	// supported The name of the secret in the pod's namespace to select
-	// from.
+	// Name: The name of the secret in Cloud Secret Manager. By default, the
+	// secret is assumed to be in the same project. If the secret is in
+	// another project, you must define an alias. An alias definition has
+	// the form: :projects//secrets/. If multiple alias definitions are
+	// needed, they must be separated by commas. The alias definitions must
+	// be set on the run.googleapis.com/secrets annotation. The name of the
+	// secret in the pod's namespace to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret or its key must be
+	// Optional: (Optional) Specify whether the Secret or its key must be
 	// defined
 	Optional bool `json:"optional,omitempty"`
 
@@ -2929,51 +2858,46 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretVolumeSource: Cloud Run fully managed: supported The secret's
-// value will be presented as the content of a file whose name is
-// defined in the item path. If no items are defined, the name of the
-// file is the secret_name. Cloud Run for Anthos: supported The contents
-// of the target Secret's Data field will be presented in a volume as
-// files using the keys in the Data field as the file names.
+// SecretVolumeSource: The secret's value will be presented as the
+// content of a file whose name is defined in the item path. If no items
+// are defined, the name of the file is the secret_name. The contents of
+// the target Secret's Data field will be presented in a volume as files
+// using the keys in the Data field as the file names.
 type SecretVolumeSource struct {
-	// DefaultMode: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Mode bits to use on created files by
-	// default. Must be a value between 0000 and 0777. Defaults to 0644.
-	// Directories within the path are not affected by this setting. This
-	// might be in conflict with other options that affect the file mode,
-	// like fsGroup, and the result can be other mode bits set. NOTE: This
-	// is an integer representation of the mode bits. So, the integer value
-	// should look exactly as the chmod numeric notation, i.e. Unix chmod
-	// "777" (a=rwx) should have the integer value 777.
+	// DefaultMode: (Optional) Mode bits to use on created files by default.
+	// Must be a value between 0000 and 0777. Defaults to 0644. Directories
+	// within the path are not affected by this setting. This might be in
+	// conflict with other options that affect the file mode, like fsGroup,
+	// and the result can be other mode bits set. NOTE: This is an integer
+	// representation of the mode bits. So, the integer value should look
+	// exactly as the chmod numeric notation, i.e. Unix chmod "777" (a=rwx)
+	// should have the integer value 777.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: (Optional) Cloud Run fully managed: supported If unspecified,
-	// the volume will expose a file whose name is the secret_name. If
-	// specified, the key will be used as the version to fetch from Cloud
-	// Secret Manager and the path will be the name of the file exposed in
-	// the volume. When items are defined, they must specify a key and a
-	// path. Cloud Run for Anthos: supported If unspecified, each key-value
-	// pair in the Data field of the referenced Secret will be projected
-	// into the volume as a file whose name is the key and content is the
-	// value. If specified, the listed keys will be projected into the
-	// specified paths, and unlisted keys will not be present. If a key is
-	// specified that is not present in the Secret, the volume setup will
-	// error unless it is marked optional.
+	// Items: (Optional) If unspecified, the volume will expose a file whose
+	// name is the secret_name. If specified, the key will be used as the
+	// version to fetch from Cloud Secret Manager and the path will be the
+	// name of the file exposed in the volume. When items are defined, they
+	// must specify a key and a path. If unspecified, each key-value pair in
+	// the Data field of the referenced Secret will be projected into the
+	// volume as a file whose name is the key and content is the value. If
+	// specified, the listed keys will be projected into the specified
+	// paths, and unlisted keys will not be present. If a key is specified
+	// that is not present in the Secret, the volume setup will error unless
+	// it is marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret or its keys must be
+	// Optional: (Optional) Specify whether the Secret or its keys must be
 	// defined.
 	Optional bool `json:"optional,omitempty"`
 
-	// SecretName: Cloud Run fully managed: supported The name of the secret
-	// in Cloud Secret Manager. By default, the secret is assumed to be in
-	// the same project. If the secret is in another project, you must
-	// define an alias. An alias definition has the form:
-	// :projects//secrets/. If multiple alias definitions are needed, they
-	// must be separated by commas. The alias definitions must be set on the
-	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
-	// supported Name of the secret in the container's namespace to use.
+	// SecretName: The name of the secret in Cloud Secret Manager. By
+	// default, the secret is assumed to be in the same project. If the
+	// secret is in another project, you must define an alias. An alias
+	// definition has the form: :projects//secrets/. If multiple alias
+	// definitions are needed, they must be separated by commas. The alias
+	// definitions must be set on the run.googleapis.com/secrets annotation.
+	// Name of the secret in the container's namespace to use.
 	SecretName string `json:"secretName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
@@ -2999,18 +2923,16 @@ func (s *SecretVolumeSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecurityContext: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported SecurityContext holds security configuration that
-// will be applied to a container. Some fields are present in both
-// SecurityContext and PodSecurityContext. When both are set, the values
-// in SecurityContext take precedence.
+// SecurityContext: Not supported by Cloud Run SecurityContext holds
+// security configuration that will be applied to a container. Some
+// fields are present in both SecurityContext and PodSecurityContext.
+// When both are set, the values in SecurityContext take precedence.
 type SecurityContext struct {
-	// RunAsUser: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The UID to run the entrypoint of the
-	// container process. Defaults to user specified in image metadata if
-	// unspecified. May also be set in PodSecurityContext. If set in both
-	// SecurityContext and PodSecurityContext, the value specified in
-	// SecurityContext takes precedence.
+	// RunAsUser: (Optional) The UID to run the entrypoint of the container
+	// process. Defaults to user specified in image metadata if unspecified.
+	// May also be set in PodSecurityContext. If set in both SecurityContext
+	// and PodSecurityContext, the value specified in SecurityContext takes
+	// precedence.
 	RunAsUser int64 `json:"runAsUser,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RunAsUser") to
@@ -3412,21 +3334,17 @@ func (s *StatusDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TCPSocketAction: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported TCPSocketAction describes an action based on
-// opening a socket
+// TCPSocketAction: Not supported by Cloud Run TCPSocketAction describes
+// an action based on opening a socket
 type TCPSocketAction struct {
-	// Host: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Optional: Host name to connect to, defaults to the
+	// Host: (Optional) Optional: Host name to connect to, defaults to the
 	// pod IP.
 	Host string `json:"host,omitempty"`
 
-	// Port: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported Number or name of the port to access on the container.
-	// Number must be in the range 1 to 65535. Name must be an
-	// IANA_SVC_NAME. This field is currently limited to integer types only
-	// because of proto's inability to properly support the IntOrString
-	// golang type.
+	// Port: Number or name of the port to access on the container. Number
+	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. This
+	// field is currently limited to integer types only because of proto's
+	// inability to properly support the IntOrString golang type.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
@@ -3583,19 +3501,14 @@ func (s *TrafficTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Volume: Cloud Run fully managed: not supported Cloud Run for Anthos:
-// supported Volume represents a named volume in a container.
+// Volume: Not supported by Cloud Run Volume represents a named volume
+// in a container.
 type Volume struct {
-	// ConfigMap: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
-	// Name: Cloud Run fully managed: supported Cloud Run for Anthos:
-	// supported Volume's name.
+	// Name: Volume's name.
 	Name string `json:"name,omitempty"`
 
-	// Secret: Cloud Run fully managed: supported Cloud Run for Anthos:
-	// supported
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMap") to
@@ -3621,26 +3534,21 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeMount: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported VolumeMount describes a mounting of a Volume within
-// a container.
+// VolumeMount: Not supported by Cloud Run VolumeMount describes a
+// mounting of a Volume within a container.
 type VolumeMount struct {
-	// MountPath: Cloud Run fully managed: supported Cloud Run for Anthos:
-	// supported Path within the container at which the volume should be
+	// MountPath: Path within the container at which the volume should be
 	// mounted. Must not contain ':'.
 	MountPath string `json:"mountPath,omitempty"`
 
-	// Name: Cloud Run fully managed: supported Cloud Run for Anthos:
-	// supported This must match the Name of a Volume.
+	// Name: This must match the Name of a Volume.
 	Name string `json:"name,omitempty"`
 
-	// ReadOnly: (Optional) Cloud Run fully managed: supported Cloud Run for
-	// Anthos: supported Only true is accepted. Defaults to true.
+	// ReadOnly: (Optional) Only true is accepted. Defaults to true.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// SubPath: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Path within the volume from which the
-	// container's volume should be mounted. Defaults to "" (volume's root).
+	// SubPath: (Optional) Path within the volume from which the container's
+	// volume should be mounted. Defaults to "" (volume's root).
 	SubPath string `json:"subPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MountPath") to
@@ -3738,7 +3646,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3918,7 +3826,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4120,7 +4028,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4303,7 +4211,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4482,7 +4390,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4647,7 +4555,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4849,7 +4757,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5053,7 +4961,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5217,7 +5125,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5419,7 +5327,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5602,7 +5510,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5804,7 +5712,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5987,7 +5895,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6167,7 +6075,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6331,7 +6239,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6533,7 +6441,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6719,7 +6627,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6890,7 +6798,7 @@ func (c *ProjectsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7094,7 +7002,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7292,7 +7200,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7472,7 +7380,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7674,7 +7582,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7857,7 +7765,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8036,7 +7944,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8201,7 +8109,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8403,7 +8311,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8607,7 +8515,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8771,7 +8679,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8973,7 +8881,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9156,7 +9064,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9358,7 +9266,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9541,7 +9449,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9721,7 +9629,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9885,7 +9793,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10049,7 +9957,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10257,7 +10165,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10443,7 +10351,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10593,7 +10501,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10739,7 +10647,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

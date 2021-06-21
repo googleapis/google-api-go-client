@@ -68,9 +68,9 @@ const (
 // - A self-signed JWT flow will be executed if the following conditions are
 // met:
 //   (1) At least one of the following is true:
-//       (a) Scope for self-signed JWT flow is enabled
-//       (b) Audiences are explicitly provided by users
-//       (b) No scope is provided
+//       (a) No scope is provided
+//       (b) Scope for self-signed JWT flow is enabled
+//       (c) Audiences are explicitly provided by users
 //   (2) No service account impersontation
 //
 // - Otherwise, executes standard OAuth 2.0 flow
@@ -123,7 +123,7 @@ func selfSignedJWTTokenSource(data []byte, ds *DialSettings) (oauth2.TokenSource
 		// Fallback to audience if scope is not provided
 		return google.JWTAccessTokenSourceFromJSON(data, ds.GetAudience())
 	} else {
-		return nil, errors.New("neither scopes or audience are provided for the self-signed JWT")
+		return nil, errors.New("neither scopes or audience are available for the self-signed JWT")
 	}
 }
 

@@ -3311,10 +3311,32 @@ func (s *IamPolicyAnalysisState) MarshalJSON() ([]byte, error) {
 // IamPolicySearchResult: A result of IAM Policy search, containing
 // information of an IAM policy.
 type IamPolicySearchResult struct {
+	// AssetType: The type of the resource associated with this IAM policy.
+	// Example: `compute.googleapis.com/Disk`. To search against the
+	// `asset_type`: * specify the `asset_types` field in your search
+	// request.
+	AssetType string `json:"assetType,omitempty"`
+
 	// Explanation: Explanation about the IAM policy search result. It
 	// contains additional information to explain why the search result
 	// matches the query.
 	Explanation *Explanation `json:"explanation,omitempty"`
+
+	// Folders: The folder(s) that the IAM policy belongs to, in the form of
+	// folders/{FOLDER_NUMBER}. This field is available when the IAM policy
+	// belongs to one or more folders. To search against `folders`: * use a
+	// field query. Example: `folders:(123 OR 456)` * use a free text query.
+	// Example: `123` * specify the `scope` field as this folder in your
+	// search request.
+	Folders []string `json:"folders,omitempty"`
+
+	// Organization: The organization that the IAM policy belongs to, in the
+	// form of organizations/{ORGANIZATION_NUMBER}. This field is available
+	// when the IAM policy belongs to an organization. To search against
+	// `organization`: * use a field query. Example: `organization:123` *
+	// use a free text query. Example: `123` * specify the `scope` field as
+	// this organization in your search request.
+	Organization string `json:"organization,omitempty"`
 
 	// Policy: The IAM policy directly set on the given resource. Note that
 	// the original IAM policy can contain multiple bindings. This only
@@ -3346,7 +3368,7 @@ type IamPolicySearchResult struct {
 	// query. Example: `resource:organizations/123`
 	Resource string `json:"resource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Explanation") to
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3354,10 +3376,10 @@ type IamPolicySearchResult struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Explanation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AssetType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -5040,7 +5062,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5247,7 +5269,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5390,7 +5412,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5536,7 +5558,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5685,7 +5707,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5828,7 +5850,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5981,7 +6003,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6291,7 +6313,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6509,7 +6531,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6694,7 +6716,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6913,7 +6935,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7102,7 +7124,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7227,6 +7249,37 @@ func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCa
 	return c
 }
 
+// AssetTypes sets the optional parameter "assetTypes": A list of asset
+// types that the IAM policies are attached to. If empty, it will search
+// the IAM policies that are attached to all the searchable asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// Regular expressions are also supported. For example: *
+// "compute.googleapis.com.*" snapshots IAM policies attached to asset
+// type starts with "compute.googleapis.com". * ".*Instance" snapshots
+// IAM policies attached to asset type ends with "Instance". *
+// ".*Instance.*" snapshots IAM policies attached to asset type contains
+// "Instance". See RE2 (https://github.com/google/re2/wiki/Syntax) for
+// all supported regular expression syntax. If the regular expression
+// does not match any supported asset type, an INVALID_ARGUMENT error
+// will be returned.
+func (c *V1SearchAllIamPoliciesCall) AssetTypes(assetTypes ...string) *V1SearchAllIamPoliciesCall {
+	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of fields specifying the sorting order of the results. The default
+// order is ascending. Add " DESC" after the field name to indicate
+// descending order. Redundant space characters are ignored. Example:
+// "assetType DESC, resource". Only singular primitive fields in the
+// response are sortable: * resource * assetType * project All the other
+// fields such as repeated fields (e.g., `folders`) and non-primitive
+// fields (e.g., `policy`) are not supported.
+func (c *V1SearchAllIamPoliciesCall) OrderBy(orderBy string) *V1SearchAllIamPoliciesCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The page size for
 // search result pagination. Page size is capped at 500 even if a larger
 // value is given. If set to zero, server will pick an appropriate
@@ -7280,7 +7333,10 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // "Important" as a word in any of the searchable fields (except for the
 // included permissions). * `resource:(instance1 OR instance2)
 // policy:amy` to find IAM policy bindings that are set on resources
-// "instance1" or "instance2" and also specify user "amy".
+// "instance1" or "instance2" and also specify user "amy". *
+// `roles:roles/compute.admin` to find IAM policy bindings that specify
+// the Compute Admin role. * `memberTypes:user` to find IAM policy
+// bindings that contain the "user" member type.
 func (c *V1SearchAllIamPoliciesCall) Query(query string) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -7323,7 +7379,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7393,6 +7449,17 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//     "scope"
 	//   ],
 	//   "parameters": {
+	//     "assetTypes": {
+	//       "description": "Optional. A list of asset types that the IAM policies are attached to. If empty, it will search the IAM policies that are attached to all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots IAM policies attached to asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots IAM policies attached to asset type ends with \"Instance\". * \".*Instance.*\" snapshots IAM policies attached to asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. A comma-separated list of fields specifying the sorting order of the results. The default order is ascending. Add \" DESC\" after the field name to indicate descending order. Redundant space characters are ignored. Example: \"assetType DESC, resource\". Only singular primitive fields in the response are sortable: * resource * assetType * project All the other fields such as repeated fields (e.g., `folders`) and non-primitive fields (e.g., `policy`) are not supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
 	//       "format": "int32",
@@ -7405,7 +7472,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\".",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the \"user\" member type.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7606,7 +7673,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210615")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

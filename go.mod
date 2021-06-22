@@ -12,9 +12,9 @@ require (
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
 	golang.org/x/oauth2 v0.0.0-20210615190721-d04028783cf1
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	golang.org/x/sys v0.0.0-20210611083646-a4fc73990273
+	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22
 	golang.org/x/tools v0.1.3
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20210611144927-798beca9d670
+	google.golang.org/genproto v0.0.0-20210617175327-b9e0b3197ced
 	google.golang.org/grpc v1.38.0
 )

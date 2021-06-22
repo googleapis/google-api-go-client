@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.SdmThermostatServiceScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -81,12 +85,16 @@ const mtlsBasePath = "https://smartdevicemanagement.mtls.googleapis.com/"
 const (
 	// See and/or control the devices that you selected
 	SdmServiceScope = "https://www.googleapis.com/auth/sdm.service"
+
+	// See and control the Nest thermostats that you select
+	SdmThermostatServiceScope = "https://www.googleapis.com/auth/sdm.thermostat.service"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/sdm.service",
+		"https://www.googleapis.com/auth/sdm.thermostat.service",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -565,7 +573,7 @@ func (c *EnterprisesDevicesExecuteCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesExecuteCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -655,7 +663,8 @@ func (c *EnterprisesDevicesExecuteCommandCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -719,7 +728,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -802,7 +811,8 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleHom
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Device"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -889,7 +899,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -990,7 +1000,8 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1075,7 +1086,7 @@ func (c *EnterprisesStructuresGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1159,7 +1170,8 @@ func (c *EnterprisesStructuresGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Structure"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1245,7 +1257,7 @@ func (c *EnterprisesStructuresListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1346,7 +1358,8 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListStructuresResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1431,7 +1444,7 @@ func (c *EnterprisesStructuresRoomsGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1514,7 +1527,8 @@ func (c *EnterprisesStructuresRoomsGetCall) Do(opts ...googleapi.CallOption) (*G
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1593,7 +1607,7 @@ func (c *EnterprisesStructuresRoomsListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1689,7 +1703,8 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListRoomsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 

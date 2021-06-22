@@ -830,6 +830,22 @@ type MediationReportSpec struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -949,6 +965,22 @@ type MediationReportSpecDimensionFilter struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -1014,6 +1046,22 @@ type MediationReportSpecSortCondition struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -1141,6 +1189,14 @@ type NetworkReportSpec struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -1256,6 +1312,14 @@ type NetworkReportSpecDimensionFilter struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -1317,6 +1381,14 @@ type NetworkReportSpecSortCondition struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -1765,7 +1837,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1927,7 +1999,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2114,7 +2186,7 @@ func (c *AccountsAdUnitsListCall) Header() http.Header {
 
 func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2312,7 +2384,7 @@ func (c *AccountsAppsListCall) Header() http.Header {
 
 func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2485,7 +2557,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2632,7 +2704,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

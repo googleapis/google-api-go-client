@@ -602,6 +602,160 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CardWithId: Widgets for chatbots to specify.
+type CardWithId struct {
+	// Card: Card proto that allows chatbots to specify UI elements and
+	// editable widgets.
+	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
+
+	// CardId: Chatbot-specified identifier for this widget. Scoped within a
+	// message.
+	CardId string `json:"cardId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Card") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Card") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CardWithId) MarshalJSON() ([]byte, error) {
+	type NoMethod CardWithId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Color: Represents a color in the RGBA color space. This
+// representation is designed for simplicity of conversion to/from color
+// representations in various languages over compactness. For example,
+// the fields of this representation can be trivially provided to the
+// constructor of `java.awt.Color` in Java; it can also be trivially
+// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
+// and, with just a little work, it can be easily formatted into a CSS
+// `rgba()` string in JavaScript. This reference page doesn't carry
+// information about the absolute color space that should be used to
+// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
+// etc.). By default, applications should assume the sRGB color space.
+// When color equality needs to be decided, implementations, unless
+// documented otherwise, treat two colors as equal if all their red,
+// green, blue, and alpha values each differ by at most 1e-5. Example
+// (Java): import com.google.type.Color; // ... public static
+// java.awt.Color fromProto(Color protocolor) { float alpha =
+// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
+// return new java.awt.Color( protocolor.getRed(),
+// protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
+// Color toProto(java.awt.Color color) { float red = (float)
+// color.getRed(); float green = (float) color.getGreen(); float blue =
+// (float) color.getBlue(); float denominator = 255.0; Color.Builder
+// resultBuilder = Color .newBuilder() .setRed(red / denominator)
+// .setGreen(green / denominator) .setBlue(blue / denominator); int
+// alpha = color.getAlpha(); if (alpha != 255) { result.setAlpha(
+// FloatValue .newBuilder() .setValue(((float) alpha) / denominator)
+// .build()); } return resultBuilder.build(); } // ... Example (iOS /
+// Obj-C): // ... static UIColor* fromProto(Color* protocolor) { float
+// red = [protocolor red]; float green = [protocolor green]; float blue
+// = [protocolor blue]; FloatValue* alpha_wrapper = [protocolor alpha];
+// float alpha = 1.0; if (alpha_wrapper != nil) { alpha = [alpha_wrapper
+// value]; } return [UIColor colorWithRed:red green:green blue:blue
+// alpha:alpha]; } static Color* toProto(UIColor* color) { CGFloat red,
+// green, blue, alpha; if (![color getRed:&red green:&green blue:&blue
+// alpha:&alpha]) { return nil; } Color* result = [[Color alloc] init];
+// [result setRed:red]; [result setGreen:green]; [result setBlue:blue];
+// if (alpha <= 0.9999) { [result
+// setAlpha:floatWrapperWithValue(alpha)]; } [result autorelease];
+// return result; } // ... Example (JavaScript): // ... var
+// protoToCssColor = function(rgb_color) { var redFrac = rgb_color.red
+// || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac =
+// rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green
+// = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255);
+// if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
+// blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
+// = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
+// blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
+// hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
+// missingZeros; i++) { resultBuilder.push('0'); }
+// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
+// ...
+type Color struct {
+	// Alpha: The fraction of this color that should be applied to the
+	// pixel. That is, the final pixel color is defined by the equation:
+	// `pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)` This means that a value of 1.0 corresponds to a solid color,
+	// whereas a value of 0.0 corresponds to a completely transparent color.
+	// This uses a wrapper message rather than a simple float scalar so that
+	// it is possible to distinguish between a default value and the value
+	// being unset. If omitted, this color object is rendered as a solid
+	// color (as if the alpha value had been explicitly given a value of
+	// 1.0).
+	Alpha float64 `json:"alpha,omitempty"`
+
+	// Blue: The amount of blue in the color as a value in the interval [0,
+	// 1].
+	Blue float64 `json:"blue,omitempty"`
+
+	// Green: The amount of green in the color as a value in the interval
+	// [0, 1].
+	Green float64 `json:"green,omitempty"`
+
+	// Red: The amount of red in the color as a value in the interval [0,
+	// 1].
+	Red float64 `json:"red,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alpha") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alpha") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Color) MarshalJSON() ([]byte, error) {
+	type NoMethod Color
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Color) UnmarshalJSON(data []byte) error {
+	type NoMethod Color
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		Blue  gensupport.JSONFloat64 `json:"blue"`
+		Green gensupport.JSONFloat64 `json:"green"`
+		Red   gensupport.JSONFloat64 `json:"red"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	s.Blue = float64(s1.Blue)
+	s.Green = float64(s1.Green)
+	s.Red = float64(s1.Red)
+	return nil
+}
+
 // DeprecatedEvent: Google Chat events.
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
@@ -747,6 +901,1323 @@ type FormAction struct {
 
 func (s *FormAction) MarshalJSON() ([]byte, error) {
 	type NoMethod FormAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Action: An action that describes the behavior when
+// the form is submitted. For example, an Apps Script can be invoked to
+// handle the form.
+type GoogleAppsCardV1Action struct {
+	// Function: Apps Script function to invoke when the containing element
+	// is clicked/activated.
+	Function string `json:"function,omitempty"`
+
+	// Possible values:
+	//   "SPINNER" - Displays a spinner to indicate that content is loading.
+	//   "NONE" - Nothing is displayed.
+	LoadIndicator string `json:"loadIndicator,omitempty"`
+
+	// Parameters: List of action parameters.
+	Parameters []*GoogleAppsCardV1ActionParameter `json:"parameters,omitempty"`
+
+	// PersistValues: Indicates whether form values persist after the
+	// action. The default value is `false`. If `true`, form values remain
+	// after the action is triggered. When using LoadIndicator.NONE
+	// (workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+	// for actions, `persist_values` = `true`is recommended, as it ensures
+	// that any changes made by the user after form or on change actions are
+	// sent to the server are not overwritten by the response. If `false`,
+	// the form values are cleared when the action is triggered. When
+	// `persist_values` is set to `false`, it is strongly recommended that
+	// the card use LoadIndicator.SPINNER
+	// (workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+	// for all actions, as this locks the UI to ensure no changes are made
+	// by the user while the action is being processed.
+	PersistValues bool `json:"persistValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Function") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Function") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Action) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Action
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1ActionParameter: List of string parameters to supply
+// when the action method is invoked. For example, consider three snooze
+// buttons: snooze now, snooze 1 day, snooze next week. You might use
+// action method = snooze(), passing the snooze type and snooze time in
+// the list of string parameters.
+type GoogleAppsCardV1ActionParameter struct {
+	// Key: The name of the parameter for the action script.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the parameter.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ActionParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1BorderStyle: Represents the complete border style
+// applied to widgets.
+type GoogleAppsCardV1BorderStyle struct {
+	// CornerRadius: The corner radius for the border.
+	CornerRadius int64 `json:"cornerRadius,omitempty"`
+
+	// StrokeColor: The colors to use when the type is `BORDER_TYPE_STROKE`.
+	StrokeColor *Color `json:"strokeColor,omitempty"`
+
+	// Type: The border type.
+	//
+	// Possible values:
+	//   "BORDER_TYPE_UNSPECIFIED" - No value specified.
+	//   "NO_BORDER" - No border.
+	//   "STROKE" - Outline.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CornerRadius") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CornerRadius") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1BorderStyle) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1BorderStyle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Button: A button. Can be a text button or an image
+// button.
+type GoogleAppsCardV1Button struct {
+	// AltText: The alternative text used for accessibility. Has no effect
+	// when an icon is set; use `icon.alt_text` instead.
+	AltText string `json:"altText,omitempty"`
+
+	// Color: If set, the button is filled with a solid background.
+	Color *Color `json:"color,omitempty"`
+
+	// Disabled: If true, the button is displayed in a disabled state and
+	// doesn't respond to user actions.
+	Disabled bool `json:"disabled,omitempty"`
+
+	// Icon: The icon image.
+	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
+
+	// OnClick: The action to perform when the button is clicked.
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+
+	// Text: The text of the button.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Button) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Button
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1ButtonList: A list of buttons layed out horizontally.
+type GoogleAppsCardV1ButtonList struct {
+	Buttons []*GoogleAppsCardV1Button `json:"buttons,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Buttons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Buttons") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ButtonList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Card: A card is a UI element that can contain UI
+// widgets such as text and images. For more information, see Cards .
+// For example, the following JSON creates a card that has a header with
+// the name, position, icons, and link for a contact, followed by a
+// section with contact information like email and phone number. ``` {
+// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
+// "imageStyle": "ImageStyle.AVATAR", "imageUrl":
+// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
+// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
+// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
+// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
+// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
+// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
+// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
+// "openLink": { "url": "https://example.com/share" } } }, {
+// "textButton": { "text": "Edit", }, "onClick": { "action": {
+// "function": "goToView", "parameters": [ { "key": "viewType", "value":
+// "EDIT" } ], "loadIndicator": "LoadIndicator.SPINNER" } } } ] } ],
+// "collapsible": true, "uncollapsibleWidgetsCount": 3 } ],
+// "cardActions": [ { "actionLabel": "Send Feedback", "onClick": {
+// "openLink": { "url": "https://example.com/feedback" } } } ], "name":
+// "contact-card-K3wB6arF2H9L" } ```
+type GoogleAppsCardV1Card struct {
+	// CardActions: The actions of this card. They are added to a card's
+	// generated toolbar menu. For example, the following JSON constructs a
+	// card action menu with Settings and Send Feedback options: ```
+	// "card_actions": [ { "actionLabel": "Setting", "onClick": { "action":
+	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
+	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
+	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
+	// "url": "https://example.com/feedback" } } } ] ```
+	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
+
+	// DisplayStyle: The display style for peekCardHeader.
+	//
+	// Possible values:
+	//   "DISPLAY_STYLE_UNSPECIFIED"
+	//   "PEEK" - The header of the card appears at the bottom of the
+	// sidebar, partially covering the current top card of the stack.
+	// Clicking the header pops the card into the card stack. If the card
+	// has no header, a generated header is used instead.
+	//   "REPLACE" - The card is shown by replacing the view of the top card
+	// in the card stack.
+	DisplayStyle string `json:"displayStyle,omitempty"`
+
+	// FixedFooter: The fixed footer shown at the bottom of this card.
+	FixedFooter *GoogleAppsCardV1CardFixedFooter `json:"fixedFooter,omitempty"`
+
+	// Header: The header of the card. A header usually contains a title and
+	// an image.
+	Header *GoogleAppsCardV1CardHeader `json:"header,omitempty"`
+
+	// Name: Name of the card, which is used as a identifier for the card in
+	// card navigation.
+	Name string `json:"name,omitempty"`
+
+	// PeekCardHeader: When displaying contextual content, the peek card
+	// header acts as a placeholder so that the user can navigate forward
+	// between the homepage cards and the contextual cards.
+	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
+
+	// Sections: Sections are separated by a line divider.
+	Sections []*GoogleAppsCardV1Section `json:"sections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardActions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardActions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Card) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Card
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1CardAction: A card action is the action associated
+// with the card. For example, an invoice card might include actions
+// such as delete invoice, email invoice, or open the invoice in a
+// browser.
+type GoogleAppsCardV1CardAction struct {
+	// ActionLabel: The label that displays as the action menu item.
+	ActionLabel string `json:"actionLabel,omitempty"`
+
+	// OnClick: The onclick action for this action item.
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionLabel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1CardAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1CardFixedFooter: A persistent (sticky) footer that is
+// added to the bottom of the card.
+type GoogleAppsCardV1CardFixedFooter struct {
+	// PrimaryButton: The primary button of the fixed footer. The button
+	// must be a text button with text and color set.
+	PrimaryButton *GoogleAppsCardV1Button `json:"primaryButton,omitempty"`
+
+	// SecondaryButton: The secondary button of the fixed footer. The button
+	// must be a text button with text and color set. `primaryButton` must
+	// be set if `secondaryButton` is set.
+	SecondaryButton *GoogleAppsCardV1Button `json:"secondaryButton,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryButton") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryButton") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1CardFixedFooter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1CardFixedFooter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleAppsCardV1CardHeader struct {
+	// ImageAltText: The alternative text of this image which is used for
+	// accessibility.
+	ImageAltText string `json:"imageAltText,omitempty"`
+
+	// ImageType: The image's type.
+	//
+	// Possible values:
+	//   "SQUARE" - Applies no cropping to the image.
+	//   "CIRCLE" - Applies a circular mask to the image.
+	ImageType string `json:"imageType,omitempty"`
+
+	// ImageUrl: The URL of the image in the card header.
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	// Subtitle: The subtitle of the card header.
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// Title: The title of the card header. The title must be specified. The
+	// header has a fixed height: if both a title and subtitle are
+	// specified, each takes up one line. If only the title is specified, it
+	// takes up both lines.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageAltText") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1CardHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1DateTimePicker: The widget that lets users to specify
+// a date and time.
+type GoogleAppsCardV1DateTimePicker struct {
+	// Label: The label for the field that displays to the user.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the text input that's used in formInput, and
+	// uniquely identifies this input.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: Triggered when the user clicks Save or Clear from the
+	// date/time picker dialog. This is only triggered if the value changed
+	// as a result of the Save/Clear operation.
+	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
+
+	// TimezoneOffsetDate: The number representing the time zone offset from
+	// UTC, in minutes. If set, the `value_ms_epoch` is displayed in the
+	// specified time zone. If not set, it uses the user's time zone setting
+	// on the client side.
+	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
+
+	// Type: The type of the date/time picker.
+	//
+	// Possible values:
+	//   "DATE_AND_TIME" - The user can select a date and time.
+	//   "DATE_ONLY" - The user can only select a date.
+	//   "TIME_ONLY" - The user can only select a time.
+	Type string `json:"type,omitempty"`
+
+	// ValueMsEpoch: The value to display as the default value before user
+	// input or previous user input. It is represented in milliseconds
+	// (Epoch time). For `DATE_AND_TIME` type, the full epoch value is used.
+	// For `DATE_ONLY` type, only date of the epoch time is used. For
+	// `TIME_ONLY` type, only time of the epoch time is used. For example,
+	// you can set epoch time to `3 * 60 * 60 * 1000` to represent 3am.
+	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1DateTimePicker
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1DecoratedText: A widget that displays text with
+// optional decorations such as a label above or below the text, an icon
+// in front of the text, a selection widget or a button after the text.
+type GoogleAppsCardV1DecoratedText struct {
+	// BottomLabel: The formatted text label that shows below the main text.
+	BottomLabel string `json:"bottomLabel,omitempty"`
+
+	// Button: A button that can be clicked to trigger an action.
+	Button *GoogleAppsCardV1Button `json:"button,omitempty"`
+
+	// EndIcon: An icon displayed after the text.
+	EndIcon *GoogleAppsCardV1Icon `json:"endIcon,omitempty"`
+
+	// Icon: Deprecated in favor of start_icon.
+	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
+
+	// OnClick: Only the top and bottom label and content region are
+	// clickable.
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+
+	// StartIcon: The icon displayed in front of the text.
+	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
+
+	// SwitchControl: A switch widget can be clicked to change its state or
+	// trigger an action.
+	SwitchControl *GoogleAppsCardV1SwitchControl `json:"switchControl,omitempty"`
+
+	// Text: Required. The main widget formatted text. See Text formatting
+	// for details.
+	Text string `json:"text,omitempty"`
+
+	// TopLabel: The formatted text label that shows above the main text.
+	TopLabel string `json:"topLabel,omitempty"`
+
+	// WrapText: The wrap text setting. If `true`, the text is wrapped and
+	// displayed in multiline. Otherwise, the text is truncated.
+	WrapText bool `json:"wrapText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BottomLabel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1DecoratedText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Divider: A divider that appears in between widgets.
+type GoogleAppsCardV1Divider struct {
+}
+
+// GoogleAppsCardV1Grid: Represents a Grid widget that displays items in
+// a configurable grid layout.
+type GoogleAppsCardV1Grid struct {
+	// BorderStyle: The border style to apply to each grid item.
+	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
+
+	// ColumnCount: The number of columns to display in the grid. A default
+	// value is used if this field isn't specified, and that default value
+	// is different depending on where the grid is shown (dialog versus
+	// companion).
+	ColumnCount int64 `json:"columnCount,omitempty"`
+
+	// Items: The items to display in the grid.
+	Items []*GoogleAppsCardV1GridItem `json:"items,omitempty"`
+
+	// OnClick: This callback is reused by each individual grid item, but
+	// with the item's identifier and index in the items list added to the
+	// callback's parameters.
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+
+	// Title: The text that displays in the grid header.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BorderStyle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BorderStyle") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Grid) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Grid
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1GridItem: Represents a single item in the grid
+// layout.
+type GoogleAppsCardV1GridItem struct {
+	// Id: A user-specified identifier for this grid item. This identifier
+	// is returned in the parent Grid's onClick callback parameters.
+	Id string `json:"id,omitempty"`
+
+	// Image: The image that displays in the grid item.
+	Image *GoogleAppsCardV1ImageComponent `json:"image,omitempty"`
+
+	// Layout: The layout to use for the grid item.
+	//
+	// Possible values:
+	//   "GRID_ITEM_LAYOUT_UNSPECIFIED" - No layout specified.
+	//   "TEXT_BELOW" - The title and subtitle are shown below the grid
+	// item's image.
+	//   "TEXT_ABOVE" - The title and subtitle are shown above the grid
+	// item's image.
+	Layout string `json:"layout,omitempty"`
+
+	// Subtitle: The grid item's subtitle.
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// TextAlignment: The horizontal alignment of the grid item's text.
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
+	//   "START" - Alignment to the start position.
+	//   "CENTER" - Alignment to the center position.
+	//   "END" - Alignment to the end position.
+	TextAlignment string `json:"textAlignment,omitempty"`
+
+	// Title: The grid item's title.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1GridItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1GridItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleAppsCardV1Icon struct {
+	// AltText: The description of the icon, used for accessibility. The
+	// default value is provided if you don't specify one.
+	AltText string `json:"altText,omitempty"`
+
+	// IconUrl: The icon specified by a URL.
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// ImageType: The crop style applied to the image. In some cases,
+	// applying a `CIRCLE` crop causes the image to be drawn larger than a
+	// standard icon.
+	//
+	// Possible values:
+	//   "SQUARE" - Applies no cropping to the image.
+	//   "CIRCLE" - Applies a circular mask to the image.
+	ImageType string `json:"imageType,omitempty"`
+
+	// KnownIcon: The icon specified by the string name of a list of known
+	// icons
+	KnownIcon string `json:"knownIcon,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Icon) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Icon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Image: An image that is specified by a URL and can
+// have an onClick action.
+type GoogleAppsCardV1Image struct {
+	// AltText: The alternative text of this image, used for accessibility.
+	AltText string `json:"altText,omitempty"`
+
+	// ImageUrl: An image URL.
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Image) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Image
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleAppsCardV1ImageComponent struct {
+	// AltText: The accessibility label for the image.
+	AltText string `json:"altText,omitempty"`
+
+	// BorderStyle: The border style to apply to the image.
+	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
+
+	// CropStyle: The crop style to apply to the image.
+	CropStyle *GoogleAppsCardV1ImageCropStyle `json:"cropStyle,omitempty"`
+
+	// ImageUri: The image URL.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1ImageComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ImageComponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1ImageCropStyle: Represents the crop style applied to
+// an image.
+type GoogleAppsCardV1ImageCropStyle struct {
+	// AspectRatio: The aspect ratio to use if the crop type is
+	// `RECTANGLE_CUSTOM`.
+	AspectRatio float64 `json:"aspectRatio,omitempty"`
+
+	// Type: The crop type.
+	//
+	// Possible values:
+	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified.
+	//   "SQUARE" - Applies a square crop.
+	//   "CIRCLE" - Applies a circular crop.
+	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
+	// aspect ratio.
+	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
+	// ratio.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AspectRatio") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1ImageCropStyle) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ImageCropStyle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAppsCardV1ImageCropStyle
+	var s1 struct {
+		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AspectRatio = float64(s1.AspectRatio)
+	return nil
+}
+
+type GoogleAppsCardV1OnClick struct {
+	// Action: If specified, an action is triggered by this onClick.
+	Action *GoogleAppsCardV1Action `json:"action,omitempty"`
+
+	// Card: A new card is pushed to the card stack after clicking if
+	// specified.
+	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
+
+	// OpenDynamicLinkAction: An add-on triggers this action when the action
+	// needs to open a link. This differs from the open_link above in that
+	// this needs to talk to server to get the link. Thus some preparation
+	// work is required for web client to do before the open link action
+	// response comes back.
+	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
+
+	// OpenLink: If specified, this onClick triggers an open link action.
+	OpenLink *GoogleAppsCardV1OpenLink `json:"openLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1OnClick) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1OnClick
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleAppsCardV1OpenLink struct {
+	// Possible values:
+	//   "NOTHING" - Doesn’t reload the card after the child window
+	// closes. Reloads the card after the child window closes. If used in
+	// conjunction with
+	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
+	// openas), the child window acts as a modal dialog and the main card is
+	// blocked until the child window closes.
+	//   "RELOAD"
+	OnClose string `json:"onClose,omitempty"`
+
+	// Possible values:
+	//   "FULL_SIZE" - The link opens as a full size window (if that's the
+	// frame used by the client.
+	//   "OVERLAY" - The link opens as an overlay, such as a pop-up.
+	OpenAs string `json:"openAs,omitempty"`
+
+	// Url: The URL to open.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OnClose") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OnClose") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1OpenLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Section: A section contains a collection of widgets
+// that are rendered vertically in the order that they are specified.
+// Across all platforms, cards have a narrow fixed width, so there is
+// currently no need for layout properties, for example, float.
+type GoogleAppsCardV1Section struct {
+	// Collapsible: Indicates whether this section is collapsible. If a
+	// section is collapsible, the description must be given.
+	Collapsible bool `json:"collapsible,omitempty"`
+
+	// Header: The header of the section. Formatted text is supported.
+	Header string `json:"header,omitempty"`
+
+	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
+	// example, when a section contains five widgets and the
+	// `numUncollapsibleWidget` is set to `2`, the first two widgets are
+	// always shown and the last three are collapsed as default. The
+	// `numUncollapsibleWidget` is taken into account only when collapsible
+	// is set to `true`.
+	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
+
+	// Widgets: A section must contain at least 1 widget.
+	Widgets []*GoogleAppsCardV1Widget `json:"widgets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collapsible") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collapsible") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Section
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1SelectionInput: A widget that creates a UI item (for
+// example, a drop-down list) with options for users to select.
+type GoogleAppsCardV1SelectionInput struct {
+	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
+
+	// Label: The label displayed ahead of the switch control.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the text input which is used in formInput.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: If specified, the form is submitted when the
+	// selection changes. If not specified, you must specify a separate
+	// button.
+	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
+
+	// Possible values:
+	//   "CHECK_BOX" - The selection type is a checkbox.
+	//   "RADIO_BUTTON" - The selection type is a radio button.
+	//   "SWITCH" - The selection type is a switch.
+	//   "DROPDOWN" - The selection type is a dropdown.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1SelectionInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1SelectionItem: The item in the switch control. A
+// radio button, at most one of the items is selected.
+type GoogleAppsCardV1SelectionItem struct {
+	// Selected: If more than one item is selected for `RADIO_BUTTON` and
+	// `DROPDOWN`, the first selected item is treated as selected and the
+	// ones after are ignored.
+	Selected bool `json:"selected,omitempty"`
+
+	// Text: The text to be displayed.
+	Text string `json:"text,omitempty"`
+
+	// Value: The value associated with this item. The client should use
+	// this as a form input value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Selected") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Selected") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1SelectionItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1SelectionItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1SuggestionItem: A suggestion item. Only supports text
+// for now.
+type GoogleAppsCardV1SuggestionItem struct {
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1SuggestionItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1SuggestionItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Suggestions: A container wrapping elements necessary
+// for showing suggestion items used in text input autocomplete.
+type GoogleAppsCardV1Suggestions struct {
+	// Items: A list of suggestions items which will be used in are used in
+	// autocomplete.
+	Items []*GoogleAppsCardV1SuggestionItem `json:"items,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Suggestions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleAppsCardV1SwitchControl struct {
+	// ControlType: The control type, either switch or checkbox.
+	//
+	// Possible values:
+	//   "SWITCH"
+	//   "CHECKBOX" - Deprecated in favor of `CHECK_BOX`.
+	//   "CHECK_BOX"
+	ControlType string `json:"controlType,omitempty"`
+
+	// Name: The name of the switch widget that's used in formInput.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: The action when the switch state is changed.
+	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
+
+	// Selected: If the switch is selected.
+	Selected bool `json:"selected,omitempty"`
+
+	// Value: The value is what is passed back in the callback.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ControlType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ControlType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1SwitchControl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1TextInput: A text input is a UI item where users can
+// input text. A text input can also have an onChange action and
+// suggestions.
+type GoogleAppsCardV1TextInput struct {
+	// AutoCompleteAction: The refresh function that returns suggestions
+	// based on the user's input text. If the callback is not specified,
+	// autocomplete is done in client side based on the initial suggestion
+	// items.
+	AutoCompleteAction *GoogleAppsCardV1Action `json:"autoCompleteAction,omitempty"`
+
+	// HintText: The hint text.
+	HintText string `json:"hintText,omitempty"`
+
+	// InitialSuggestions: The initial suggestions made before any user
+	// input.
+	InitialSuggestions *GoogleAppsCardV1Suggestions `json:"initialSuggestions,omitempty"`
+
+	// Label: At least one of label and hintText must be specified.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the text input which is used in formInput.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: The onChange action, for example, invoke a function.
+	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
+
+	// Type: The style of the text, for example, a single line or multiple
+	// lines.
+	//
+	// Possible values:
+	//   "SINGLE_LINE" - The text is put into a single line.
+	//   "MULTIPLE_LINE" - The text is put into multiple lines.
+	Type string `json:"type,omitempty"`
+
+	// Value: The default value when there is no input from the user.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoCompleteAction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoCompleteAction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1TextInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1TextParagraph: A paragraph of text that supports
+// formatting. See Text formatting
+// (workspace/add-ons/concepts/widgets#text_formatting") for details.
+type GoogleAppsCardV1TextParagraph struct {
+	// Text: The text that's shown in the widget.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1TextParagraph
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Widget: A widget is a UI element that presents texts,
+// images, etc.
+type GoogleAppsCardV1Widget struct {
+	// ButtonList: A list of buttons. For example, the following JSON
+	// creates two buttons. The first is a filled text button and the second
+	// is an image button that opens a link: ``` "buttonList": { "buttons":
+	// [ "button": { "text": "Edit", "Color": { "Red": 255 "Green": 255
+	// "Blue": 255 } "disabled": true }, "button": { "icon": { "knownIcon":
+	// "INVITE" "altText": "check calendar" }, "onClick": { "openLink": {
+	// "url": "https://example.com/calendar" } } }, ] } ```
+	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
+
+	// DateTimePicker: Displays a selection/input widget for date/time. For
+	// example, the following JSON creates a date/time picker for an
+	// appointment time: ``` "date_time_picker": { "name":
+	// "appointment_time", "label": "Book your appointment at:", "type":
+	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
+	// ```
+	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
+
+	// DecoratedText: Displays a decorated text item in this widget. For
+	// example, the following JSON creates a decorated text widget showing
+	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
+	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
+	// "bottomLabel": "This is a new Email address!", "switchWidget": {
+	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
+	// "controlType": "ControlType.CHECKBOX" } } ```
+	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
+
+	// Divider: Displays a divider. For example, the following JSON creates
+	// a divider: ``` "divider": { } ```
+	Divider *GoogleAppsCardV1Divider `json:"divider,omitempty"`
+
+	// Grid: Displays a grid with a collection of items. For example, the
+	// following JSON creates a 2 column grid with a single item: ```
+	// "grid": { "title": "A fine collection of items", "numColumns": 2,
+	// "borderStyle": { "type": "STROKE", "cornerRadius": 4.0 }, "items": [
+	// "image": { "imageUri": "https://www.example.com/image.png",
+	// "cropStyle": { "type": "SQUARE" }, "borderStyle": { "type": "STROKE"
+	// } }, "title": "An item", "textAlignment": "CENTER" ], "onClick": {
+	// "openLink": { "url":"https://www.example.com" } } } ```
+	Grid *GoogleAppsCardV1Grid `json:"grid,omitempty"`
+
+	// HorizontalAlignment: The horizontal alignment of this widget.
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
+	//   "START" - Alignment to the start position.
+	//   "CENTER" - Alignment to the center position.
+	//   "END" - Alignment to the end position.
+	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
+
+	// Image: Displays an image in this widget. For example, the following
+	// JSON creates an image with alternative text: ``` "image": {
+	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
+	// for Heba Salam" } ```
+	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
+
+	// SelectionInput: Displays a switch control in this widget. For
+	// example, the following JSON creates a dropdown selection for size:
+	// ``` "switchControl": { "name": "size", "label": "Size" "type":
+	// "SelectionType.DROPDOWN", "items": [ { "text": "S", "value": "small",
+	// "selected": false }, { "text": "M", "value": "medium", "selected":
+	// true }, { "text": "L", "value": "large", "selected": false }, {
+	// "text": "XL", "value": "extra_large", "selected": false } ] } ```
+	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
+
+	// TextInput: Displays a text input in this widget. For example, the
+	// following JSON creates a text input for mail address: ```
+	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
+	// } ``` As another example, the following JSON creates a text input for
+	// programming language with static suggestions: ``` "textInput": {
+	// "name": "preferred_programing_language", "label": "Preferred
+	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
+	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
+	// } ```
+	TextInput *GoogleAppsCardV1TextInput `json:"textInput,omitempty"`
+
+	// TextParagraph: Displays a text paragraph in this widget. For example,
+	// the following JSON creates a bolded text: ``` "textParagraph": {
+	// "text": " *bold text*" } ```
+	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ButtonList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ButtonList") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1Widget) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Widget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1138,6 +2609,14 @@ type Message struct {
 	// images. Cards are normally displayed below the plain-text body of the
 	// message.
 	Cards []*Card `json:"cards,omitempty"`
+
+	// CardsV2: Rich, formatted and interactive cards that can be used to
+	// display UI elements and editable widgets, such as: formatted text,
+	// buttons, clickable images, checkboxes, radio buttons. Cards are
+	// normally displayed below the plain-text body of the message. This v2
+	// allows input widgets. The string key is a unique identifier among
+	// cards in the same message for identifying inputs.
+	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// CreateTime: Output only. The time at which the message was created in
 	// Hangouts Chat server.
@@ -1691,7 +3170,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1851,7 +3330,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2011,7 +3490,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2166,7 +3645,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2333,7 +3812,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2493,7 +3972,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2653,7 +4132,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2807,7 +4286,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2961,7 +4440,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3131,7 +4610,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3286,7 +4765,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3445,7 +4924,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3626,7 +5105,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3770,7 +5249,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3912,7 +5391,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4054,7 +5533,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4209,7 +5688,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

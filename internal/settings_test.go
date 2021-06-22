@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/sphinkx/google-api-go-client/internal/impersonate"
+	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 
 	"golang.org/x/oauth2"

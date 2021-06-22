@@ -1,4 +1,4 @@
-# Changes'
+# Changes
 
 ## [0.49.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.48.0...v0.49.0) (2021-06-21)
 

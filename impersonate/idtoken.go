@@ -14,9 +14,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sphinkx/google-api-go-client/option"
-	htransport "github.com/sphinkx/google-api-go-client/transport/http"
 	"golang.org/x/oauth2"
+	"google.golang.org/api/option"
+	htransport "google.golang.org/api/transport/http"
 )
 
 // IDTokenConfig for generating an impersonated ID token.

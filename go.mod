@@ -1,4 +1,4 @@
-module github.com/sphinkx/google-api-go-client
+module google.golang.org/api
 
 go 1.11
 

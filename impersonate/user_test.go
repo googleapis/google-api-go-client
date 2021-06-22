@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sphinkx/google-api-go-client/option"
+	"google.golang.org/api/option"
 )
 
 func TestTokenSource_user(t *testing.T) {

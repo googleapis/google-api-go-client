@@ -2796,7 +2796,7 @@
       }
     }
   },
-  "revision": "20210608",
+  "revision": "20210613",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -3209,6 +3209,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "custom": {
+          "description": "Output only. If set to true, this conversion event refers to a custom event. If set to false, this conversion event refers to a default event in GA. Default events typically have special meaning in GA. Default events are usually created for you by the GA system, but in some cases can be created by property admins. Custom events count towards the maximum number of custom conversion events that may be created per property.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "eventName": {
           "description": "Immutable. The event name for this conversion event. Examples: 'click', 'purchase'",
           "type": "string"
@@ -3511,13 +3516,13 @@
           "readOnly": true,
           "type": "string"
         },
-        "customerId": {
-          "description": "Immutable. Google Ads customer ID.",
-          "type": "string"
-        },
-        "emailAddress": {
+        "creatorEmailAddress": {
           "description": "Output only. Email address of the user that created the link. An empty string will be returned if the email address can't be retrieved.",
           "readOnly": true,
+          "type": "string"
+        },
+        "customerId": {
+          "description": "Immutable. Google Ads customer ID.",
           "type": "string"
         },
         "name": {

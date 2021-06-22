@@ -1138,11 +1138,11 @@ func (s *JobCondition) MarshalJSON() ([]byte, error) {
 
 // JobSpec: JobSpec describes how the job execution will look like.
 type JobSpec struct {
-	// ActiveDeadlineSeconds: Optional. Specifies the duration in seconds
-	// relative to the startTime that the job may be active before the
-	// system tries to terminate it. If set to zero, the system will never
-	// attempt to terminate the job based on time. Otherwise, the value must
-	// be positive integer. +optional
+	// ActiveDeadlineSeconds: Optional. Not supported. Specifies the
+	// duration in seconds relative to the startTime that the job may be
+	// active before the system tries to terminate it. If set to zero, the
+	// system will never attempt to terminate the job based on time.
+	// Otherwise, the value must be positive integer. +optional
 	ActiveDeadlineSeconds int64 `json:"activeDeadlineSeconds,omitempty,string"`
 
 	// BackoffLimit: Optional. Specifies the number of retries per instance,
@@ -1172,13 +1172,13 @@ type JobSpec struct {
 	// executing a job.
 	Template *InstanceTemplateSpec `json:"template,omitempty"`
 
-	// TtlSecondsAfterFinished: Optional. ttlSecondsAfterFinished limits the
-	// lifetime of a Job that has finished execution (either Complete or
-	// Failed). If this field is set, ttlSecondsAfterFinished after the Job
-	// finishes, it is eligible to be automatically deleted. When the Job is
-	// being deleted, its lifecycle guarantees (e.g. finalizers) will be
-	// honored. If this field is set to zero, the Job won't be automatically
-	// deleted. +optional
+	// TtlSecondsAfterFinished: Optional. Not supported.
+	// ttlSecondsAfterFinished limits the lifetime of a Job that has
+	// finished execution (either Complete or Failed). If this field is set,
+	// ttlSecondsAfterFinished after the Job finishes, it is eligible to be
+	// automatically deleted. When the Job is being deleted, its lifecycle
+	// guarantees (e.g. finalizers) will be honored. If this field is set to
+	// zero, the Job won't be automatically deleted. +optional
 	TtlSecondsAfterFinished int64 `json:"ttlSecondsAfterFinished,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2329,7 +2329,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2494,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2653,7 +2653,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2854,7 +2854,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

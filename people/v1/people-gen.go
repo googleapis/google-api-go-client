@@ -2336,7 +2336,14 @@ type Person struct {
 	// CoverPhotos: Output only. The person's cover photos.
 	CoverPhotos []*CoverPhoto `json:"coverPhotos,omitempty"`
 
-	// EmailAddresses: The person's email addresses.
+	// EmailAddresses: The person's email addresses. For `connections.list`
+	// (/people/api/rest/v1/people.connections/list), `otherContacts.list`
+	// (/people/api/rest/v1/otherContacts/list), and
+	// `people.listDirectoryPeople`
+	// (/people/api/rest/v1/people/listDirectoryPeople) the number of email
+	// addresses is limited to 100. If a Person has more email addresses the
+	// entire set can be obtained by calling 'people.get'
+	// (/people/api/rest/v1/people/get).
 	EmailAddresses []*EmailAddress `json:"emailAddresses,omitempty"`
 
 	// Etag: The HTTP entity tag (https://en.wikipedia.org/wiki/HTTP_ETag)
@@ -2390,7 +2397,14 @@ type Person struct {
 	// Organizations: The person's past or current organizations.
 	Organizations []*Organization `json:"organizations,omitempty"`
 
-	// PhoneNumbers: The person's phone numbers.
+	// PhoneNumbers: The person's phone numbers. For `connections.list`
+	// (/people/api/rest/v1/people.connections/list), `otherContacts.list`
+	// (/people/api/rest/v1/otherContacts/list), and
+	// `people.listDirectoryPeople`
+	// (/people/api/rest/v1/people/listDirectoryPeople) the number of phone
+	// numbers is limited to 100. If a Person has more phone numbers the
+	// entire set can be obtained by calling 'people.get'
+	// (/people/api/rest/v1/people/get).
 	PhoneNumbers []*PhoneNumber `json:"phoneNumbers,omitempty"`
 
 	// Photos: Output only. The person's photos.
@@ -2463,8 +2477,9 @@ func (s *Person) MarshalJSON() ([]byte, error) {
 type PersonMetadata struct {
 	// Deleted: Output only. True if the person resource has been deleted.
 	// Populated only for `connections.list`
-	// (/people/api/rest/v1/people.connections/list) requests that include a
-	// sync token.
+	// (/people/api/rest/v1/people.connections/list) and
+	// `otherContacts.list` (/people/api/rest/v1/otherContacts/list)
+	// requests that include a sync token.
 	Deleted bool `json:"deleted,omitempty"`
 
 	// LinkedPeopleResourceNames: Output only. Resource names of people
@@ -3450,7 +3465,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3590,7 +3605,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3725,7 +3740,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3892,7 +3907,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4083,7 +4098,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4255,7 +4270,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4401,7 +4416,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4545,7 +4560,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4679,7 +4694,7 @@ func (c *OtherContactsListCall) PageToken(pageToken string) *OtherContactsListCa
 // ReadMask sets the optional parameter "readMask": Required. A field
 // mask to restrict which fields on each person are returned. Multiple
 // fields can be specified by separating them with commas. Valid values
-// are: * emailAddresses * names * phoneNumbers
+// are: * emailAddresses * metadata * names * phoneNumbers
 func (c *OtherContactsListCall) ReadMask(readMask string) *OtherContactsListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -4699,8 +4714,12 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 // received from a previous `ListOtherContacts` call. Provide this to
 // retrieve only the resources changed since the last request. Sync
 // requests that specify `sync_token` have an additional rate limit.
-// When syncing, all other parameters provided to `ListOtherContacts`
-// must match the call that provided the sync token.
+// When the `syncToken` is specified, resources deleted since the last
+// sync will be returned as a person with `PersonMetadata.deleted`
+// (/people/api/rest/v1/people#Person.PersonMetadata.FIELDS.deleted) set
+// to true. When the `syncToken` is specified, all other parameters
+// provided to `ListOtherContacts` must match the call that provided the
+// sync token.
 func (c *OtherContactsListCall) SyncToken(syncToken string) *OtherContactsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -4743,7 +4762,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4820,7 +4839,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4831,7 +4850,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	//       "type": "boolean"
 	//     },
 	//     "syncToken": {
-	//       "description": "Optional. A sync token, received from a previous `ListOtherContacts` call. Provide this to retrieve only the resources changed since the last request. Sync requests that specify `sync_token` have an additional rate limit. When syncing, all other parameters provided to `ListOtherContacts` must match the call that provided the sync token.",
+	//       "description": "Optional. A sync token, received from a previous `ListOtherContacts` call. Provide this to retrieve only the resources changed since the last request. Sync requests that specify `sync_token` have an additional rate limit. When the `syncToken` is specified, resources deleted since the last sync will be returned as a person with [`PersonMetadata.deleted`](/people/api/rest/v1/people#Person.PersonMetadata.FIELDS.deleted) set to true. When the `syncToken` is specified, all other parameters provided to `ListOtherContacts` must match the call that provided the sync token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4911,7 +4930,7 @@ func (c *OtherContactsSearchCall) Query(query string) *OtherContactsSearchCall {
 // ReadMask sets the optional parameter "readMask": Required. A field
 // mask to restrict which fields on each person are returned. Multiple
 // fields can be specified by separating them with commas. Valid values
-// are: * emailAddresses * names * phoneNumbers
+// are: * emailAddresses * metadata * names * phoneNumbers
 func (c *OtherContactsSearchCall) ReadMask(readMask string) *OtherContactsSearchCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -4954,7 +4973,7 @@ func (c *OtherContactsSearchCall) Header() http.Header {
 
 func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5031,7 +5050,7 @@ func (c *OtherContactsSearchCall) Do(opts ...googleapi.CallOption) (*SearchRespo
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5094,7 +5113,7 @@ func (c *PeopleBatchCreateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5220,7 +5239,7 @@ func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
 
 func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5347,7 +5366,7 @@ func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5506,7 +5525,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5659,7 +5678,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5823,7 +5842,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6037,7 +6056,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6276,7 +6295,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6530,7 +6549,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6791,7 +6810,7 @@ func (c *PeopleSearchContactsCall) Header() http.Header {
 
 func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7025,7 +7044,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7284,7 +7303,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7456,7 +7475,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7664,11 +7683,15 @@ func (c *PeopleConnectionsListCall) Sources(sources ...string) *PeopleConnection
 
 // SyncToken sets the optional parameter "syncToken": A sync token,
 // received from a previous `ListConnections` call. Provide this to
-// retrieve only the resources changed since the last request. When
-// syncing, all other parameters provided to `ListConnections` except
-// `page_size` and `page_token` must match the initial call that
-// provided the sync token. Sync tokens expire after seven days, after
-// which a full sync request without a `sync_token` should be made.
+// retrieve only the resources changed since the last request. When the
+// `syncToken` is specified, resources deleted since the last sync will
+// be returned as a person with `PersonMetadata.deleted`
+// (/people/api/rest/v1/people#Person.PersonMetadata.FIELDS.deleted) set
+// to true. When the `syncToken` is specified, all other parameters
+// provided to `ListConnections` except `page_size` and `page_token`
+// must match the initial call that provided the sync token. Sync tokens
+// expire after seven days, after which a full sync request without a
+// `sync_token` should be made.
 func (c *PeopleConnectionsListCall) SyncToken(syncToken string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -7711,7 +7734,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7852,7 +7875,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "syncToken": {
-	//       "description": "Optional. A sync token, received from a previous `ListConnections` call. Provide this to retrieve only the resources changed since the last request. When syncing, all other parameters provided to `ListConnections` except `page_size` and `page_token` must match the initial call that provided the sync token. Sync tokens expire after seven days, after which a full sync request without a `sync_token` should be made.",
+	//       "description": "Optional. A sync token, received from a previous `ListConnections` call. Provide this to retrieve only the resources changed since the last request. When the `syncToken` is specified, resources deleted since the last sync will be returned as a person with [`PersonMetadata.deleted`](/people/api/rest/v1/people#Person.PersonMetadata.FIELDS.deleted) set to true. When the `syncToken` is specified, all other parameters provided to `ListConnections` except `page_size` and `page_token` must match the initial call that provided the sync token. Sync tokens expire after seven days, after which a full sync request without a `sync_token` should be made.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

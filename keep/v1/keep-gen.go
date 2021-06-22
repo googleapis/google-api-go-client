@@ -444,8 +444,7 @@ func (s *ListItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListNotesResponse: The response when listing a page of notes (see
-// KeepService documentation).
+// ListNotesResponse: The response when listing a page of notes.
 type ListNotesResponse struct {
 	// NextPageToken: Next page's `page_token` field.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -503,14 +502,13 @@ type Note struct {
 	// characters.
 	Title string `json:"title,omitempty"`
 
-	// TrashTime: Output only. If this note has been trashed, when that
-	// happened. If trashed, the note will eventually be deleted. If the
-	// note is not trashed, this is not set (and the trashed field is
-	// false).
+	// TrashTime: Output only. When this note was trashed. If `trashed`, the
+	// note is eventually deleted. If the note is not trashed, this field is
+	// not set (and the trashed field is `false`).
 	TrashTime string `json:"trashTime,omitempty"`
 
-	// Trashed: Output only. True if this note has been trashed. If trashed,
-	// the note will eventually be deleted.
+	// Trashed: Output only. `true` if this note has been trashed. If
+	// trashed, the note is eventually deleted.
 	Trashed bool `json:"trashed,omitempty"`
 
 	// UpdateTime: Output only. When this note was last modified.
@@ -552,9 +550,9 @@ type Permission struct {
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Email: The email associated with the member. If set on create, the
-	// email field in the User or Group message must either be empty or
-	// match this field. On read, may be unset if the member does not have
-	// an associated email.
+	// `email` field in the `User` or `Group` message must either be empty
+	// or match this field. On read, may be unset if the member does not
+	// have an associated email.
 	Email string `json:"email,omitempty"`
 
 	// Family: Output only. The Google Family to which this role applies.
@@ -762,7 +760,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -918,7 +916,7 @@ func (c *NotesCreateCall) Header() http.Header {
 
 func (c *NotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1047,7 +1045,7 @@ func (c *NotesDeleteCall) Header() http.Header {
 
 func (c *NotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1190,7 +1188,7 @@ func (c *NotesGetCall) Header() http.Header {
 
 func (c *NotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1306,10 +1304,10 @@ func (r *NotesService) List() *NotesListCall {
 }
 
 // Filter sets the optional parameter "filter": Filter for list results.
-// If no filter is supplied, the "-trashed" filter is applied by
-// default. Valid fields to filter by are: - `create_time` -
-// `update_time` - `trash_time` - `trashed` Filter syntax follows the
-// Google AIP filtering spec: https://aip.dev/160
+// If no filter is supplied, the `trashed` filter is applied by default.
+// Valid fields to filter by are: `create_time`, `update_time`,
+// `trash_time`, and `trashed`. Filter syntax follows the Google AIP
+// filtering spec (https://aip.dev/160).
 func (c *NotesListCall) Filter(filter string) *NotesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1366,7 +1364,7 @@ func (c *NotesListCall) Header() http.Header {
 
 func (c *NotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1432,7 +1430,7 @@ func (c *NotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesResponse, er
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter for list results. If no filter is supplied, the \"-trashed\" filter is applied by default. Valid fields to filter by are: - `create_time` - `update_time` - `trash_time` - `trashed` Filter syntax follows the Google AIP filtering spec: https://aip.dev/160",
+	//       "description": "Filter for list results. If no filter is supplied, the `trashed` filter is applied by default. Valid fields to filter by are: `create_time`, `update_time`, `trash_time`, and `trashed`. Filter syntax follows the [Google AIP filtering spec](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1491,7 +1489,7 @@ type NotesPermissionsBatchCreateCall struct {
 	header_                       http.Header
 }
 
-// BatchCreate: Creates one or more permission on the note. Only
+// BatchCreate: Creates one or more permissions on the note. Only
 // permissions with the `WRITER` role may be created. If adding any
 // permission fails, then the entire request fails and no changes are
 // made.
@@ -1534,7 +1532,7 @@ func (c *NotesPermissionsBatchCreateCall) Header() http.Header {
 
 func (c *NotesPermissionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1598,7 +1596,7 @@ func (c *NotesPermissionsBatchCreateCall) Do(opts ...googleapi.CallOption) (*Bat
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates one or more permission on the note. Only permissions with the `WRITER` role may be created. If adding any permission fails, then the entire request fails and no changes are made.",
+	//   "description": "Creates one or more permissions on the note. Only permissions with the `WRITER` role may be created. If adding any permission fails, then the entire request fails and no changes are made.",
 	//   "flatPath": "v1/notes/{notesId}/permissions:batchCreate",
 	//   "httpMethod": "POST",
 	//   "id": "keep.notes.permissions.batchCreate",
@@ -1684,7 +1682,7 @@ func (c *NotesPermissionsBatchDeleteCall) Header() http.Header {
 
 func (c *NotesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

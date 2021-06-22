@@ -153,6 +153,7 @@ func NewPlatformsPropertiesService(s *Service) *PlatformsPropertiesService {
 	rs.IdeaStates = NewPlatformsPropertiesIdeaStatesService(s)
 	rs.Ideas = NewPlatformsPropertiesIdeasService(s)
 	rs.Locales = NewPlatformsPropertiesLocalesService(s)
+	rs.TopicStates = NewPlatformsPropertiesTopicStatesService(s)
 	return rs
 }
 
@@ -164,6 +165,8 @@ type PlatformsPropertiesService struct {
 	Ideas *PlatformsPropertiesIdeasService
 
 	Locales *PlatformsPropertiesLocalesService
+
+	TopicStates *PlatformsPropertiesTopicStatesService
 }
 
 func NewPlatformsPropertiesIdeaStatesService(s *Service) *PlatformsPropertiesIdeaStatesService {
@@ -190,6 +193,15 @@ func NewPlatformsPropertiesLocalesService(s *Service) *PlatformsPropertiesLocale
 }
 
 type PlatformsPropertiesLocalesService struct {
+	s *Service
+}
+
+func NewPlatformsPropertiesTopicStatesService(s *Service) *PlatformsPropertiesTopicStatesService {
+	rs := &PlatformsPropertiesTopicStatesService{s: s}
+	return rs
+}
+
+type PlatformsPropertiesTopicStatesService struct {
 	s *Service
 }
 
@@ -410,6 +422,46 @@ func (s *GoogleSearchIdeahubV1alphaTopic) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleSearchIdeahubV1alphaTopicState: Represents topic state specific
+// to a web property.
+type GoogleSearchIdeahubV1alphaTopicState struct {
+	// Dismissed: Whether the topic is dismissed.
+	Dismissed bool `json:"dismissed,omitempty"`
+
+	// Name: Unique identifier for the topic state. Format:
+	// platforms/{platform}/properties/{property}/topicStates/{topic_state}
+	Name string `json:"name,omitempty"`
+
+	// Saved: Whether the topic is saved.
+	Saved bool `json:"saved,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Dismissed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dismissed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleSearchIdeahubV1alphaTopicState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSearchIdeahubV1alphaTopicState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "ideahub.ideas.list":
 
 type IdeasListCall struct {
@@ -446,8 +498,17 @@ func (c *IdeasListCall) CreatorPlatformId(creatorPlatformId string) *IdeasListCa
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter semantics
-// described below.
+// Filter sets the optional parameter "filter": Allows filtering.
+// Supported syntax: * Filter expressions are made up of one or more
+// restrictions. * Restrictions are implicitly combined, as if the `AND`
+// operator was always used. The `OR` operator is currently unsupported.
+// * Supported functions: - `saved(bool)`: If set to true, fetches only
+// saved ideas. Can't be simultaneously used with `dismissed(bool)`. The
+// `false` value is currently unsupported. - `dismissed(bool)`: If set
+// to true, fetches only dismissed ideas. Can't be simultaneously used
+// with `saved(bool)`. The `false` value is currently unsupported.
+// Examples: * `saved(true)` * `dismissed(true)` The length of this
+// field should be no more than 500 characters.
 func (c *IdeasListCall) Filter(filter string) *IdeasListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -520,7 +581,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -608,7 +669,7 @@ func (c *IdeasListCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Filter semantics described below.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. Can't be simultaneously used with `dismissed(bool)`. The `false` value is currently unsupported. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -719,7 +780,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -858,8 +919,17 @@ func (c *PlatformsPropertiesIdeasListCall) CreatorPlatformId(creatorPlatformId s
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter semantics
-// described below.
+// Filter sets the optional parameter "filter": Allows filtering.
+// Supported syntax: * Filter expressions are made up of one or more
+// restrictions. * Restrictions are implicitly combined, as if the `AND`
+// operator was always used. The `OR` operator is currently unsupported.
+// * Supported functions: - `saved(bool)`: If set to true, fetches only
+// saved ideas. Can't be simultaneously used with `dismissed(bool)`. The
+// `false` value is currently unsupported. - `dismissed(bool)`: If set
+// to true, fetches only dismissed ideas. Can't be simultaneously used
+// with `saved(bool)`. The `false` value is currently unsupported.
+// Examples: * `saved(true)` * `dismissed(true)` The length of this
+// field should be no more than 500 characters.
 func (c *PlatformsPropertiesIdeasListCall) Filter(filter string) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -924,7 +994,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1017,7 +1087,7 @@ func (c *PlatformsPropertiesIdeasListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Filter semantics described below.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. Can't be simultaneously used with `dismissed(bool)`. The `false` value is currently unsupported. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1152,7 +1222,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210620")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1271,4 +1341,158 @@ func (c *PlatformsPropertiesLocalesListCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "ideahub.platforms.properties.topicStates.patch":
+
+type PlatformsPropertiesTopicStatesPatchCall struct {
+	s                                    *Service
+	nameid                               string
+	googlesearchideahubv1alphatopicstate *GoogleSearchIdeahubV1alphaTopicState
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Update a topic state resource.
+//
+// - name: Unique identifier for the topic state. Format:
+//   platforms/{platform}/properties/{property}/topicStates/{topic_state}.
+func (r *PlatformsPropertiesTopicStatesService) Patch(nameid string, googlesearchideahubv1alphatopicstate *GoogleSearchIdeahubV1alphaTopicState) *PlatformsPropertiesTopicStatesPatchCall {
+	c := &PlatformsPropertiesTopicStatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googlesearchideahubv1alphatopicstate = googlesearchideahubv1alphatopicstate
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *PlatformsPropertiesTopicStatesPatchCall) UpdateMask(updateMask string) *PlatformsPropertiesTopicStatesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlatformsPropertiesTopicStatesPatchCall) Fields(s ...googleapi.Field) *PlatformsPropertiesTopicStatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PlatformsPropertiesTopicStatesPatchCall) Context(ctx context.Context) *PlatformsPropertiesTopicStatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesearchideahubv1alphatopicstate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ideahub.platforms.properties.topicStates.patch" call.
+// Exactly one of *GoogleSearchIdeahubV1alphaTopicState or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleSearchIdeahubV1alphaTopicState.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PlatformsPropertiesTopicStatesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1alphaTopicState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleSearchIdeahubV1alphaTopicState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a topic state resource.",
+	//   "flatPath": "v1alpha/platforms/{platformsId}/properties/{propertiesId}/topicStates/{topicStatesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "ideahub.platforms.properties.topicStates.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Unique identifier for the topic state. Format: platforms/{platform}/properties/{property}/topicStates/{topic_state}",
+	//       "location": "path",
+	//       "pattern": "^platforms/[^/]+/properties/[^/]+/topicStates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleSearchIdeahubV1alphaTopicState"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleSearchIdeahubV1alphaTopicState"
+	//   }
+	// }
+
 }

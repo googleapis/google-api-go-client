@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	impersonate "github.com/sphinkx/google-api-go-client/impersonate"
 	"golang.org/x/oauth2"
-	"google.golang.org/api/internal/impersonate"
 
 	"golang.org/x/oauth2/google"
 )

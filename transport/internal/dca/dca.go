@@ -30,8 +30,8 @@ import (
 	"os"
 	"strings"
 
-	"google.golang.org/api/internal"
-	"google.golang.org/api/transport/cert"
+	"github.com/sphinkx/google-api-go-client/internal"
+	"github.com/sphinkx/google-api-go-client/transport/cert"
 )
 
 const (

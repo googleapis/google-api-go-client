@@ -53,11 +53,11 @@ import (
 	"strconv"
 	"strings"
 
-	googleapi "google.golang.org/api/googleapi"
-	gensupport "google.golang.org/api/internal/gensupport"
-	option "google.golang.org/api/option"
-	internaloption "google.golang.org/api/option/internaloption"
-	htransport "google.golang.org/api/transport/http"
+	googleapi "github.com/sphinkx/google-api-go-client/googleapi"
+	gensupport "github.com/sphinkx/google-api-go-client/internal/gensupport"
+	option "github.com/sphinkx/google-api-go-client/option"
+	internaloption "github.com/sphinkx/google-api-go-client/option/internaloption"
+	htransport "github.com/sphinkx/google-api-go-client/transport/http"
 )
 
 // Always reference these packages, just in case the auto-generated code

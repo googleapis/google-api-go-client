@@ -9,9 +9,9 @@ import (
 	"crypto/tls"
 	"net/http"
 
+	"github.com/sphinkx/google-api-go-client/impersonate"
+	"github.com/sphinkx/google-api-go-client/internal"
 	"golang.org/x/oauth2"
-	"google.golang.org/api/internal"
-	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 )
 

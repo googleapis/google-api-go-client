@@ -38,6 +38,7 @@ func TestTokenSource(t *testing.T) {
 	ds = &DialSettings{
 		TokenSource:     ts,
 		CredentialsFile: "testdata/service-account.json",
+		DefaultScopes:   []string{"foo"},
 	}
 	got, err = Creds(ctx, ds)
 	if err != nil {
@@ -54,14 +55,20 @@ func TestDefaultServiceAccount(t *testing.T) {
 
 	// Load a valid JSON file. No way to really test the contents; we just
 	// verify that there is no error.
-	ds := &DialSettings{CredentialsFile: "testdata/service-account.json"}
+	ds := &DialSettings{
+		CredentialsFile: "testdata/service-account.json",
+		DefaultScopes:   []string{"foo"},
+	}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
 
 	// Load valid JSON. No way to really test the contents; we just
 	// verify that there is no error.
-	ds = &DialSettings{CredentialsJSON: []byte(validServiceAccountJSON)}
+	ds = &DialSettings{
+		CredentialsJSON: []byte(validServiceAccountJSON),
+		DefaultScopes:   []string{"foo"},
+	}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
@@ -80,6 +87,82 @@ func TestJWTWithAudience(t *testing.T) {
 	// Load valid JSON. No way to really test the contents; we just
 	// verify that there is no error.
 	ds = &DialSettings{CredentialsJSON: []byte(validServiceAccountJSON), Audiences: []string{"foo"}}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestJWTWithScope(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestJWTWithDefaultScopes(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		DefaultScopes:      []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		DefaultScopes:      []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestJWTWithDefaultAudience(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile: "testdata/service-account.json",
+		DefaultAudience: "foo",
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON: []byte(validServiceAccountJSON),
+		DefaultAudience: "foo",
+	}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
@@ -119,7 +202,13 @@ const validServiceAccountJSON = `{
 func TestQuotaProjectFromCreds(t *testing.T) {
 	ctx := context.Background()
 
-	cred, err := credentialsFromJSON(ctx, []byte(validServiceAccountJSON), &DialSettings{Endpoint: "foo.googleapis.com"})
+	cred, err := credentialsFromJSON(
+		ctx,
+		[]byte(validServiceAccountJSON),
+		&DialSettings{
+			Endpoint:      "foo.googleapis.com",
+			DefaultScopes: []string{"foo"},
+		})
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
@@ -133,7 +222,13 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 	"quota_project_id": "foobar"
 }`)
 
-	cred, err = credentialsFromJSON(ctx, []byte(quotaProjectJSON), &DialSettings{Endpoint: "foo.googleapis.com"})
+	cred, err = credentialsFromJSON(
+		ctx,
+		[]byte(quotaProjectJSON),
+		&DialSettings{
+			Endpoint:      "foo.googleapis.com",
+			DefaultScopes: []string{"foo"},
+		})
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}

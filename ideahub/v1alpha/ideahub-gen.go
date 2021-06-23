@@ -503,12 +503,12 @@ func (c *IdeasListCall) CreatorPlatformId(creatorPlatformId string) *IdeasListCa
 // restrictions. * Restrictions are implicitly combined, as if the `AND`
 // operator was always used. The `OR` operator is currently unsupported.
 // * Supported functions: - `saved(bool)`: If set to true, fetches only
-// saved ideas. Can't be simultaneously used with `dismissed(bool)`. The
-// `false` value is currently unsupported. - `dismissed(bool)`: If set
-// to true, fetches only dismissed ideas. Can't be simultaneously used
-// with `saved(bool)`. The `false` value is currently unsupported.
-// Examples: * `saved(true)` * `dismissed(true)` The length of this
-// field should be no more than 500 characters.
+// saved ideas. If set to false, fetches all except saved ideas. Can't
+// be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`:
+// If set to true, fetches only dismissed ideas. Can't be simultaneously
+// used with `saved(bool)`. The `false` value is currently unsupported.
+// Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The
+// length of this field should be no more than 500 characters.
 func (c *IdeasListCall) Filter(filter string) *IdeasListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -581,7 +581,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -669,7 +669,7 @@ func (c *IdeasListCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. Can't be simultaneously used with `dismissed(bool)`. The `false` value is currently unsupported. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. If set to false, fetches all except saved ideas. Can't be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -780,7 +780,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -924,12 +924,12 @@ func (c *PlatformsPropertiesIdeasListCall) CreatorPlatformId(creatorPlatformId s
 // restrictions. * Restrictions are implicitly combined, as if the `AND`
 // operator was always used. The `OR` operator is currently unsupported.
 // * Supported functions: - `saved(bool)`: If set to true, fetches only
-// saved ideas. Can't be simultaneously used with `dismissed(bool)`. The
-// `false` value is currently unsupported. - `dismissed(bool)`: If set
-// to true, fetches only dismissed ideas. Can't be simultaneously used
-// with `saved(bool)`. The `false` value is currently unsupported.
-// Examples: * `saved(true)` * `dismissed(true)` The length of this
-// field should be no more than 500 characters.
+// saved ideas. If set to false, fetches all except saved ideas. Can't
+// be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`:
+// If set to true, fetches only dismissed ideas. Can't be simultaneously
+// used with `saved(bool)`. The `false` value is currently unsupported.
+// Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The
+// length of this field should be no more than 500 characters.
 func (c *PlatformsPropertiesIdeasListCall) Filter(filter string) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -994,7 +994,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1087,7 +1087,7 @@ func (c *PlatformsPropertiesIdeasListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. Can't be simultaneously used with `dismissed(bool)`. The `false` value is currently unsupported. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. If set to false, fetches all except saved ideas. Can't be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1222,7 +1222,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1399,7 +1399,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

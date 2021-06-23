@@ -1,5 +1,13 @@
 # Changes
 
+## [0.49.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.48.0...v0.49.0) (2021-06-23)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1085](https://www.github.com/googleapis/google-api-go-client/issues/1085) [#1084](https://www.github.com/googleapis/google-api-go-client/issues/1084) [#1082](https://www.github.com/googleapis/google-api-go-client/issues/1082) [#1080](https://www.github.com/googleapis/google-api-go-client/issues/1080) [#1079](https://www.github.com/googleapis/google-api-go-client/issues/1079) [#1078](https://www.github.com/googleapis/google-api-go-client/issues/1078) [#1076](https://www.github.com/googleapis/google-api-go-client/issues/1076) [#1073](https://www.github.com/googleapis/google-api-go-client/issues/1073) [#1071](https://www.github.com/googleapis/google-api-go-client/issues/1071) [#1070](https://www.github.com/googleapis/google-api-go-client/issues/1070) [#1068](https://www.github.com/googleapis/google-api-go-client/issues/1068) [#1067](https://www.github.com/googleapis/google-api-go-client/issues/1067) [#1066](https://www.github.com/googleapis/google-api-go-client/issues/1066) [#1064](https://www.github.com/googleapis/google-api-go-client/issues/1064) [#1063](https://www.github.com/googleapis/google-api-go-client/issues/1063) [#1060](https://www.github.com/googleapis/google-api-go-client/issues/1060)
+* **internal:** [AIP-4111] support scopes for self-signed JWT auth flow ([#1075](https://www.github.com/googleapis/google-api-go-client/issues/1075)) ([29cab68](https://www.github.com/googleapis/google-api-go-client/commit/29cab68ebd5b9ca017503baf46d91a29f8e84716))
+
 ## [0.48.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.47.0...v0.48.0) (2021-06-07)
 
 

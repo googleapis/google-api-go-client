@@ -1336,7 +1336,7 @@
       }
     }
   },
-  "revision": "20210614",
+  "revision": "20210622",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AndroidAttributes": {
@@ -1915,6 +1915,18 @@
         "userEmail": {
           "description": "Email address of the user registered on the device.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DsaPublicKeyInfo": {
+      "description": "DSA public key information.",
+      "id": "DsaPublicKeyInfo",
+      "properties": {
+        "keySize": {
+          "description": "Key size in bits (size of parameter P)",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -2633,6 +2645,13 @@
           "description": "Required. Immutable. The resource name of the entity under which this `Group` resides in the Cloud Identity resource hierarchy. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
           "type": "string"
         },
+        "posixGroups": {
+          "description": "Optional. The POSIX groups associated with the `Group`.",
+          "items": {
+            "$ref": "PosixGroup"
+          },
+          "type": "array"
+        },
         "updateTime": {
           "description": "Output only. The time when the `Group` was last updated.",
           "format": "google-datetime",
@@ -2687,6 +2706,58 @@
             "$ref": "TransitiveMembershipRole"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "IdpSigningKey": {
+      "description": "Signing validation key.",
+      "id": "IdpSigningKey",
+      "properties": {
+        "dsaKeyInfo": {
+          "$ref": "DsaPublicKeyInfo",
+          "description": "Output only. DSA public key information.",
+          "readOnly": true
+        },
+        "name": {
+          "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the key.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "rsaKeyInfo": {
+          "$ref": "RsaPublicKeyInfo",
+          "description": "Output only. RSA public key information.",
+          "readOnly": true
+        },
+        "updateTime": {
+          "description": "Output only. When the key data was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InboundSamlSsoProfile": {
+      "description": "A SAML 2.0 (https://www.oasis-open.org/standards#samlv2.0) federation between a Google enterprise customer and a SAML IDP.",
+      "id": "InboundSamlSsoProfile",
+      "properties": {
+        "displayName": {
+          "description": "Human-readable name of the SAML SSO profile.",
+          "type": "string"
+        },
+        "idpConfig": {
+          "$ref": "SamlIdpConfig",
+          "description": "SAML IDP configuration."
+        },
+        "name": {
+          "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the SAML SSO profile.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "spConfig": {
+          "$ref": "SamlSpConfig",
+          "description": "SAML SP configuration for this SAML SSO profile. These are the SP details provided by Google that should be configured on the corresponding IDP."
         }
       },
       "type": "object"
@@ -3059,6 +3130,78 @@
           },
           "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "PosixGroup": {
+      "description": "POSIX Group definition to represent a group in a POSIX compliant system.",
+      "id": "PosixGroup",
+      "properties": {
+        "gid": {
+          "description": "GID of the POSIX group.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the POSIX group.",
+          "type": "string"
+        },
+        "systemId": {
+          "description": "System identifier for which group name and gid apply to. If not specified it will default to empty value.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RsaPublicKeyInfo": {
+      "description": "RSA public key information.",
+      "id": "RsaPublicKeyInfo",
+      "properties": {
+        "keySize": {
+          "description": "Key size in bits (size of the modulus).",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "SamlIdpConfig": {
+      "description": "SAML IDP configuration.",
+      "id": "SamlIdpConfig",
+      "properties": {
+        "changePasswordUri": {
+          "description": "Change password URL. Users will be sent to this URL when changing their passwords at myaccount.google.com. This takes precedence over the customer-level change password URL. Must use HTTPS.",
+          "type": "string"
+        },
+        "entityId": {
+          "description": "Required. The SAML Entity ID of the IDP.",
+          "type": "string"
+        },
+        "logoutRedirectUri": {
+          "description": "Logout redirect URL/Sign-out page URL. When a user clicks the sign out link on a Google page, they will be redirected to this URL. This is pure redirect with no attached SAML LogoutRequest (SAML Single Logout is currently not supported). Must use HTTPS.",
+          "type": "string"
+        },
+        "singleSignOnServiceUri": {
+          "description": "Required. SingleSignOnService endpoint location/Sign-in page URL. This is the URL where the AuthnRequest will be sent. Must use HTTPS. Currently assumed to accept the HTTP-Redirect binding.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SamlSpConfig": {
+      "description": "SAML SP configuration.",
+      "id": "SamlSpConfig",
+      "properties": {
+        "assertionConsumerServiceUri": {
+          "description": "Output only. The SAML Assertion Consumer Service (ACS) URL to be used for IDP-initiated login. Currently assumed to accept Response messages via the HTTP-POST binding.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "entityId": {
+          "description": "Output only. The SAML Entity ID for this SP.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"

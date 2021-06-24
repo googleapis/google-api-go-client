@@ -7232,9 +7232,6 @@ type GoogleCloudDocumentaiV1beta3ProcessorType struct {
 	// projects/{project}/processorTypes/{processor_type}
 	Name string `json:"name,omitempty"`
 
-	// Schema: The schema of the default version of this processor type.
-	Schema *GoogleCloudDocumentaiV1beta3Schema `json:"schema,omitempty"`
-
 	// Type: The type of the processor, e.g, "invoice_parsing".
 	Type string `json:"type,omitempty"`
 
@@ -7447,121 +7444,6 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentResponse struct {
 
 func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ReviewDocumentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1beta3Schema: The schema defines the output of
-// the processed document by a processor.
-type GoogleCloudDocumentaiV1beta3Schema struct {
-	// Description: Description of the schema.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Display name to show to users.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// EntityTypes: Entity types of the schema.
-	EntityTypes []*GoogleCloudDocumentaiV1beta3SchemaEntityType `json:"entityTypes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta3Schema) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3Schema
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1beta3SchemaEntityType: EntityType is the
-// wrapper of a label of the corresponding model with detailed
-// attributes and limitations for entity-based processors. Multiple
-// types can also compose a dependency tree to represent nested types.
-type GoogleCloudDocumentaiV1beta3SchemaEntityType struct {
-	// BaseType: Type of the entity. It must be one of the following:
-	// `document` - the entity represents a classification of a logical
-	// document. `object` - if the entity has properties it is likely an
-	// object (or or a document.) `datetime` - the entity is a date or time
-	// value. `money` - the entity represents a money value amount. `number`
-	// - the entity is a number - integer or floating point. `string` - the
-	// entity is a string value. `boolean` - the entity is a boolean value.
-	// `address` - the entity is a location address.
-	BaseType string `json:"baseType,omitempty"`
-
-	// Description: Description of the entity type.
-	Description string `json:"description,omitempty"`
-
-	// EnumValues: If specified, lists all the possible values for this
-	// entity.
-	EnumValues []string `json:"enumValues,omitempty"`
-
-	// OccurrenceType: Occurrence type limits the number of times an entity
-	// type appears in the document.
-	//
-	// Possible values:
-	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
-	//   "OPTIONAL_ONCE" - The entity type will appear zero times or once.
-	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
-	// times.
-	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
-	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
-	// times.
-	OccurrenceType string `json:"occurrenceType,omitempty"`
-
-	// Properties: Describing the nested structure of an entity. An
-	// EntityType may consist of several other EntityTypes. For example, in
-	// a document there can be an EntityType 'ID', which consists of
-	// EntityType 'name' and 'address', with corresponding attributes, such
-	// as TEXT for both types and ONCE for occurrence types.
-	Properties []*GoogleCloudDocumentaiV1beta3SchemaEntityType `json:"properties,omitempty"`
-
-	// Source: Source of this entity type.
-	//
-	// Possible values:
-	//   "SOURCE_UNSPECIFIED" - Unspecified source.
-	//   "PREDEFINED" - The entity type is in the predefined schema of a
-	// pretrained version of a processor.
-	//   "USER_INPUT" - The entity type is added by the users either: -
-	// during an uptraining of an existing processor, or - during the
-	// process of creating a customized processor.
-	Source string `json:"source,omitempty"`
-
-	// Type: Name of the type. It must be unique within the set of same
-	// level types.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BaseType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta3SchemaEntityType) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3SchemaEntityType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8339,7 +8221,7 @@ func (c *ProjectsLocationsFetchProcessorTypesCall) Header() http.Header {
 
 func (c *ProjectsLocationsFetchProcessorTypesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8488,7 +8370,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8660,7 +8542,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8843,7 +8725,7 @@ func (c *ProjectsLocationsOperationsCancelOperationCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelOperationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8988,7 +8870,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9164,7 +9046,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9343,7 +9225,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9488,7 +9370,7 @@ func (c *ProjectsLocationsProcessorsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9631,7 +9513,7 @@ func (c *ProjectsLocationsProcessorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9765,7 +9647,7 @@ func (c *ProjectsLocationsProcessorsDisableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9907,7 +9789,7 @@ func (c *ProjectsLocationsProcessorsEnableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10077,7 +9959,7 @@ func (c *ProjectsLocationsProcessorsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10253,7 +10135,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10399,7 +10281,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10545,7 +10427,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10692,7 +10574,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

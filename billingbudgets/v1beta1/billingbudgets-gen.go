@@ -266,7 +266,8 @@ type GoogleCloudBillingBudgetsV1beta1Budget struct {
 
 	// ThresholdRules: Optional. Rules that trigger alerts (notifications of
 	// thresholds being crossed) when spend exceeds the specified
-	// percentages of the budget.
+	// percentages of the budget. Optional for `pubsubTopic` notifications.
+	// Required if using email notifications.
 	ThresholdRules []*GoogleCloudBillingBudgetsV1beta1ThresholdRule `json:"thresholdRules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -553,12 +554,19 @@ func (s *GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse) MarshalJSON() ([]b
 }
 
 // GoogleCloudBillingBudgetsV1beta1ThresholdRule: ThresholdRule contains
-// a definition of a threshold which triggers an alert (a notification
-// of a threshold being crossed) to be sent when spend goes above the
-// specified amount. Alerts are automatically e-mailed to users with the
-// Billing Account Administrator role or the Billing Account User role.
-// The thresholds here have no effect on notifications sent to anything
-// configured under `Budget.all_updates_rule`.
+// the definition of a threshold. Threshold rules define the triggering
+// events used to generate a budget notification email. When a threshold
+// is crossed (spend exceeds the specified percentages of the budget),
+// budget alert emails are sent to the email recipients you specify in
+// the NotificationsRule (#notificationsrule). Threshold rules also
+// affect the fields included in the JSON data object
+// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format)
+// sent to a Pub/Sub topic. Threshold rules are _required_ if using
+// email notifications. Threshold rules are _optional_ if only setting a
+// `pubsubTopic` NotificationsRule (#NotificationsRule), unless you want
+// your JSON data object to include data about the thresholds you set.
+// For more information, see set budget threshold rules and actions
+// (https://cloud.google.com/billing/docs/how-to/budgets#budget-actions).
 type GoogleCloudBillingBudgetsV1beta1ThresholdRule struct {
 	// SpendBasis: Optional. The type of basis used to determine if spend
 	// has passed the threshold. Behavior defaults to CURRENT_SPEND if not
@@ -803,7 +811,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -946,7 +954,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1094,7 +1102,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1263,7 +1271,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1440,7 +1448,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210622")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1986,6 +1986,36 @@ func (s *EphemeralStorageConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GcfsConfig: GcfsConfig contains configuration for the Google Container
+// Filesystem (GCFS).
+type GcfsConfig struct {
+	// Enabled: Whether Google Container Filesystem (GCFS) is enabled on the
+	// node pool or not.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcfsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GcfsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GcePersistentDiskCsiDriverConfig: Configuration for the Compute
 // Engine PD CSI driver.
 type GcePersistentDiskCsiDriverConfig struct {
@@ -3327,6 +3357,10 @@ type NodeConfig struct {
 	// filesystem. If unspecified, ephemeral storage is backed by the boot
 	// disk.
 	EphemeralStorageConfig *EphemeralStorageConfig `json:"ephemeralStorageConfig,omitempty"`
+
+	// GcfsConfig: Parameters for the Google Container Filesystem (GCFS).  If
+	// unspecified, GCFS will not be enabled on the node pool.
+	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`
 
 	// ImageType: The image type to use for this node. Note that for a given
 	// image type, the latest version of it will be used.

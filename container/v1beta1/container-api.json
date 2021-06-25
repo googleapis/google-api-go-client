@@ -3526,6 +3526,17 @@
       },
       "type": "object"
     },
+    "GcfsConfig": {
+      "description": "GcfsConfig contains configuration for the Google Container Filesystem (GCFS).",
+      "id": "GcfsConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether Google Container Filesystem (GCFS) is enabled on the node pool or not.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GcePersistentDiskCsiDriverConfig": {
       "description": "Configuration for the Compute Engine PD CSI driver.",
       "id": "GcePersistentDiskCsiDriverConfig",
@@ -4238,6 +4249,10 @@
         "ephemeralStorageConfig": {
           "$ref": "EphemeralStorageConfig",
           "description": "Parameters for the ephemeral storage filesystem. If unspecified, ephemeral storage is backed by the boot disk."
+        },
+        "gcfsConfig": {
+          "$ref": "GcfsConfig",
+          "description": "Parameters for the Google Container Filesystem (GCFS). If unspecified, GCFS will not be enabled on the node pool."
         },
         "imageType": {
           "description": "The image type to use for this node. Note that for a given image type, the latest version of it will be used.",

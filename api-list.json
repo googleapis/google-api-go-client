@@ -1614,51 +1614,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "corp_autopush_learningstate:v1",
-      "name": "corp_autopush_learningstate",
-      "version": "v1",
-      "title": "learningstate Corp API (autopush)",
-      "description": "",
-      "discoveryRestUrl": "https://autopush-learningstate.corp.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "http://boq/java/com/google/corp/learning/state/server",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "corp_learningstate:v1",
-      "name": "corp_learningstate",
-      "version": "v1",
-      "title": "learningstate Corp API",
-      "description": "",
-      "discoveryRestUrl": "https://learningstate.corp.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "http://boq/java/com/google/corp/learning/state/server",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "corp_spatialanalytics:v1",
-      "name": "corp_spatialanalytics",
-      "version": "v1",
-      "title": "Spatial Analytics API",
-      "description": "Google Corp Spatial Analytics API that performs floorplan spatial analyis.",
-      "discoveryRestUrl": "https://spatialanalytics.corp.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "go/spatialanalytics",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "customsearch:v1",
       "name": "customsearch",
       "version": "v1",
@@ -5092,19 +5047,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/vision/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "vision_jose:v1",
-      "name": "vision_jose",
-      "version": "v1",
-      "description": "",
-      "discoveryRestUrl": "https://vision-jose.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
       "preferred": true
     },
     {

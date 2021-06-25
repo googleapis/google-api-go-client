@@ -1841,7 +1841,7 @@
       }
     }
   },
-  "revision": "20210601",
+  "revision": "20210618",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1937,6 +1937,20 @@
           "description": "Output only. The table name prefix of the shards. The name of any given shard is `[table_prefix]YYYYMMDD`. For example, for the `MyTable20180101` shard, the `table_prefix` is `MyTable`.",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1BigQueryRoutineSpec": {
+      "description": "Fields specific for BigQuery routines.",
+      "id": "GoogleCloudDatacatalogV1BigQueryRoutineSpec",
+      "properties": {
+        "importedLibraries": {
+          "description": "Paths of the imported libraries.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2123,6 +2137,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "routineSpec": {
+          "$ref": "GoogleCloudDatacatalogV1RoutineSpec",
+          "description": "Specification that applies to a user-defined function or procedure. Valid only for entries with the `ROUTINE` type."
+        },
         "schema": {
           "$ref": "GoogleCloudDatacatalogV1Schema",
           "description": "Schema of the entry. An entry might not have any schema attached to it."
@@ -2139,7 +2157,9 @@
             "MODEL",
             "DATA_STREAM",
             "FILESET",
+            "CLUSTER",
             "DATABASE",
+            "ROUTINE",
             "SERVICE"
           ],
           "enumDescriptions": [
@@ -2148,7 +2168,9 @@
             "Output only. The type of models. For more information, see [Supported models in BigQuery ML] (https://cloud.google.com/bigquery-ml/docs/introduction#supported_models_in).",
             "An entry type for streaming entries. For example, a Pub/Sub topic.",
             "An entry type for a set of files or objects. For example, a Cloud Storage fileset.",
+            "A group of servers that work together. For example, a Kafka cluster.",
             "A database.",
+            "Output only. Routine, for example, a BigQuery routine.",
             "A service, for example, a Dataproc Metastore service."
           ],
           "type": "string"
@@ -2496,6 +2518,81 @@
         "serializedTaxonomy": {
           "$ref": "GoogleCloudDatacatalogV1SerializedTaxonomy",
           "description": "Required. Taxonomy to update along with its child policy tags."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1RoutineSpec": {
+      "description": "Specification that applies to a routine. Valid only for entries with the `ROUTINE` type.",
+      "id": "GoogleCloudDatacatalogV1RoutineSpec",
+      "properties": {
+        "bigqueryRoutineSpec": {
+          "$ref": "GoogleCloudDatacatalogV1BigQueryRoutineSpec",
+          "description": "Fields specific for BigQuery routines."
+        },
+        "definitionBody": {
+          "description": "The body of the routine.",
+          "type": "string"
+        },
+        "language": {
+          "description": "The language the routine is written in. The exact value depends on the source system. For BigQuery routines, possible values are: * `SQL` * `JAVASCRIPT`",
+          "type": "string"
+        },
+        "returnType": {
+          "description": "Return type of the argument. The exact value depends on the source system and the language.",
+          "type": "string"
+        },
+        "routineArguments": {
+          "description": "Arguments of the routine.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1RoutineSpecArgument"
+          },
+          "type": "array"
+        },
+        "routineType": {
+          "description": "The type of the routine.",
+          "enum": [
+            "ROUTINE_TYPE_UNSPECIFIED",
+            "SCALAR_FUNCTION",
+            "PROCEDURE"
+          ],
+          "enumDescriptions": [
+            "Unspecified type.",
+            "Non-builtin permanent scalar function.",
+            "Stored procedure."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1RoutineSpecArgument": {
+      "description": "Input or output argument of a function or stored procedure.",
+      "id": "GoogleCloudDatacatalogV1RoutineSpecArgument",
+      "properties": {
+        "mode": {
+          "description": "Specifies whether the argument is input or output.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "IN",
+            "OUT",
+            "INOUT"
+          ],
+          "enumDescriptions": [
+            "Unspecified mode.",
+            "The argument is input-only.",
+            "The argument is output-only.",
+            "The argument is both an input and an output."
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the argument. A return argument of a function might not have a name.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of the argument. The exact value depends on the source system and the language.",
+          "type": "string"
         }
       },
       "type": "object"

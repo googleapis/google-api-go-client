@@ -212,12 +212,13 @@ type OperationsService struct {
 	s *Service
 }
 
-// AccountCount: Count number for each account.
+// AccountCount: The results count for each account.
 type AccountCount struct {
 	// Account: Account owner.
 	Account *UserInfo `json:"account,omitempty"`
 
-	// Count: The number of artifacts found for this account.
+	// Count: The number of results (messages or files) found for this
+	// account.
 	Count int64 `json:"count,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -285,7 +286,7 @@ func (s *AccountCountError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AccountInfo: Accounts to search
+// AccountInfo: The accounts to search
 type AccountInfo struct {
 	// Emails: A set of accounts to search.
 	Emails []string `json:"emails,omitempty"`
@@ -313,13 +314,14 @@ func (s *AccountInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AddHeldAccountResult: A status detailing the status of each account
-// creation, and the HeldAccount, if successful.
+// AddHeldAccountResult: The status of each account creation, and the
+// **HeldAccount**, if successful.
 type AddHeldAccountResult struct {
-	// Account: If present, this account was successfully created.
+	// Account: Returned when the account was successfully created.
 	Account *HeldAccount `json:"account,omitempty"`
 
-	// Status: This represents the success status. If failed, check message.
+	// Status: Reports the request status. If it failed, returns an error
+	// message.
 	Status *Status `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -347,12 +349,14 @@ func (s *AddHeldAccountResult) MarshalJSON() ([]byte, error) {
 
 // AddHeldAccountsRequest: Add a list of accounts to a hold.
 type AddHeldAccountsRequest struct {
-	// AccountIds: Account IDs to identify which accounts to add. Only
-	// account_ids or only emails should be specified, but not both.
+	// AccountIds: A comma-separated list of the account IDs of the accounts
+	// to add to the hold. Specify either **emails** or **account_ids**, but
+	// not both.
 	AccountIds []string `json:"accountIds,omitempty"`
 
-	// Emails: Emails to identify which accounts to add. Only emails or only
-	// account_ids should be specified, but not both.
+	// Emails: A comma-separated list of the emails of the accounts to add
+	// to the hold. Specify either **emails** or **account_ids**, but not
+	// both.
 	Emails []string `json:"emails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountIds") to
@@ -413,17 +417,18 @@ func (s *AddHeldAccountsResponse) MarshalJSON() ([]byte, error) {
 
 // AddMatterPermissionsRequest: Add an account with the permission
 // specified. The role cannot be owner. If an account already has a role
-// in the matter, it will be overwritten.
+// in the matter, the existing role is overwritten.
 type AddMatterPermissionsRequest struct {
-	// CcMe: Only relevant if send_emails is true. True to CC requestor in
-	// the email message. False to not CC requestor.
+	// CcMe: Only relevant if **sendEmails** is **true**. To CC the
+	// requestor in the email message, set to **true**. To not CC requestor,
+	// set to **false**.
 	CcMe bool `json:"ccMe,omitempty"`
 
-	// MatterPermission: The MatterPermission to add.
+	// MatterPermission: The account and its role to add.
 	MatterPermission *MatterPermission `json:"matterPermission,omitempty"`
 
-	// SendEmails: True to send notification email to the added account.
-	// False to not send notification email.
+	// SendEmails: To send a notification email to the added account, set to
+	// **true**. To not send a notification email, set to **false**.
 	SendEmails bool `json:"sendEmails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CcMe") to
@@ -460,7 +465,7 @@ type CloseMatterRequest struct {
 
 // CloseMatterResponse: Response to a CloseMatterRequest.
 type CloseMatterResponse struct {
-	// Matter: The updated matter, with state CLOSED.
+	// Matter: The updated matter, with state **CLOSED**.
 	Matter *Matter `json:"matter,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -490,22 +495,25 @@ func (s *CloseMatterResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CloudStorageFile: An export file on cloud storage
+// CloudStorageFile: The export file in Cloud Storage
 type CloudStorageFile struct {
-	// BucketName: The cloud storage bucket name of this export file. Can be
-	// used in cloud storage JSON/XML API, but not to list the bucket
-	// contents. Instead, you can get individual export files by object
-	// name.
+	// BucketName: The name of the Cloud Storage bucket for the export file.
+	// You can use this value in the Cloud Storage JSON or XML APIs
+	// (https://cloud.google.com/storage/docs/apis), but not to list the
+	// bucket contents. Instead, you can get individual export files
+	// (https://cloud.google.com/storage/docs/json_api/v1/objects/get) by
+	// object name.
 	BucketName string `json:"bucketName,omitempty"`
 
 	// Md5Hash: The md5 hash of the file.
 	Md5Hash string `json:"md5Hash,omitempty"`
 
-	// ObjectName: The cloud storage object name of this export file. Can be
-	// used in cloud storage JSON/XML API.
+	// ObjectName: The name of the Cloud Storage object for the export file.
+	// You can use this value in the Cloud Storage JSON or XML APIs
+	// (https://cloud.google.com/storage/docs/apis).
 	ObjectName string `json:"objectName,omitempty"`
 
-	// Size: The size of the export file.
+	// Size: The export file size.
 	Size int64 `json:"size,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
@@ -531,9 +539,9 @@ func (s *CloudStorageFile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CloudStorageSink: Export sink for cloud storage files.
+// CloudStorageSink: Export sink for Cloud Storage files.
 type CloudStorageSink struct {
-	// Files: Output only. The exported files on cloud storage.
+	// Files: Output only. The exported files in Cloud Storage.
 	Files []*CloudStorageFile `json:"files,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Files") to
@@ -559,26 +567,26 @@ func (s *CloudStorageSink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CorpusQuery: Corpus specific queries.
+// CorpusQuery: Service-specific options for holds.
 type CorpusQuery struct {
-	// DriveQuery: Details pertaining to Drive holds. If set, corpus must be
-	// Drive.
+	// DriveQuery: Service-specific options for Drive holds. If set,
+	// **CorpusType** must be **DRIVE**.
 	DriveQuery *HeldDriveQuery `json:"driveQuery,omitempty"`
 
-	// GroupsQuery: Details pertaining to Groups holds. If set, corpus must
-	// be Groups.
+	// GroupsQuery: Service-specific options for Groups holds. If set,
+	// **CorpusType** must be **GROUPS**.
 	GroupsQuery *HeldGroupsQuery `json:"groupsQuery,omitempty"`
 
-	// HangoutsChatQuery: Details pertaining to Hangouts Chat holds. If set,
-	// corpus must be Hangouts Chat.
+	// HangoutsChatQuery: Service-specific options for Chat holds. If set,
+	// **CorpusType** must be **HANGOUTS_CHAT**.
 	HangoutsChatQuery *HeldHangoutsChatQuery `json:"hangoutsChatQuery,omitempty"`
 
-	// MailQuery: Details pertaining to mail holds. If set, corpus must be
-	// mail.
+	// MailQuery: Service-specific options for Gmail holds. If set,
+	// **CorpusType** must be **MAIL**.
 	MailQuery *HeldMailQuery `json:"mailQuery,omitempty"`
 
-	// VoiceQuery: Details pertaining to Voice holds. If set, corpus must be
-	// Voice.
+	// VoiceQuery: Service-specific options for Voice holds. If set,
+	// **CorpusType** must be **VOICE**.
 	VoiceQuery *HeldVoiceQuery `json:"voiceQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DriveQuery") to
@@ -648,16 +656,15 @@ type CountArtifactsRequest struct {
 	// Query: The search query.
 	Query *Query `json:"query,omitempty"`
 
-	// View: Specifies the granularity of the count result returned in
-	// response.
+	// View: Sets the granularity of the count results.
 	//
 	// Possible values:
-	//   "COUNT_RESULT_VIEW_UNSPECIFIED" - Default. It works the same as
-	// TOTAL_COUNT.
-	//   "TOTAL_COUNT" - Response includes: total count, queried accounts
-	// count, matching accounts count, non-queryable accounts, queried
-	// account errors.
-	//   "ALL" - Response includes additional breakdown of account count.
+	//   "COUNT_RESULT_VIEW_UNSPECIFIED" - Default. Same as **TOTAL_COUNT**.
+	//   "TOTAL_COUNT" - Response includes counts of the total accounts,
+	// queried accounts, matching accounts, non-queryable accounts, and
+	// queried account errors.
+	//   "ALL" - Response includes the same details as **TOTAL_COUNT**, plus
+	// additional account breakdown.
 	View string `json:"view,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Query") to
@@ -686,14 +693,13 @@ func (s *CountArtifactsRequest) MarshalJSON() ([]byte, error) {
 // CountArtifactsResponse: Definition of the response for method
 // CountArtifacts.
 type CountArtifactsResponse struct {
-	// GroupsCountResult: Count metrics of Groups.
+	// GroupsCountResult: Count metrics for Groups.
 	GroupsCountResult *GroupsCountResult `json:"groupsCountResult,omitempty"`
 
-	// MailCountResult: Count metrics of Mail.
+	// MailCountResult: Count metrics for Gmail and classic Hangouts.
 	MailCountResult *MailCountResult `json:"mailCountResult,omitempty"`
 
-	// TotalCount: Total count of artifacts. For mail and groups, artifacts
-	// refers to messages.
+	// TotalCount: Total count of messages.
 	TotalCount int64 `json:"totalCount,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "GroupsCountResult")
@@ -720,10 +726,12 @@ func (s *CountArtifactsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DriveExportOptions: The options for Drive export.
+// DriveExportOptions: Options for Drive exports.
 type DriveExportOptions struct {
-	// IncludeAccessInfo: Set to true to include access level information
-	// for users with indirect access to files.
+	// IncludeAccessInfo: To include access level information for users with
+	// indirect access
+	// (https://support.google.com/vault/answer/6099459#metadata) to files,
+	// set to **true**.
 	IncludeAccessInfo bool `json:"includeAccessInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeAccessInfo")
@@ -750,17 +758,17 @@ func (s *DriveExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DriveOptions: Drive search advanced options
+// DriveOptions: Additional options for Drive search
 type DriveOptions struct {
-	// IncludeSharedDrives: Set to true to include shared drive.
+	// IncludeSharedDrives: Set to **true** to include shared drives.
 	IncludeSharedDrives bool `json:"includeSharedDrives,omitempty"`
 
 	// IncludeTeamDrives: Set to true to include Team Drive.
 	IncludeTeamDrives bool `json:"includeTeamDrives,omitempty"`
 
-	// VersionDate: Search the versions of the Drive file as of the
-	// reference date. These timestamps are in GMT and rounded down to the
-	// given date.
+	// VersionDate: Search the current version of the Drive file, but export
+	// the contents of the last version saved before 12:00 AM UTC on the
+	// specified date. Enter the date in UTC.
 	VersionDate string `json:"versionDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeSharedDrives")
@@ -799,20 +807,21 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Export: An export To work with Vault resources, the account must have
-// the [required Vault privileges]
+// Export: An export. To work with Vault resources, the account must
+// have the required Vault privileges
 // (https://support.google.com/vault/answer/2799699) and access to the
 // matter. To access a matter, the account must have created the matter,
 // have the matter shared with them, or have the **View All Matters**
 // privilege.
 type Export struct {
-	// CloudStorageSink: Output only. Export sink for cloud storage files.
+	// CloudStorageSink: Output only. The sink for export files in Cloud
+	// Storage.
 	CloudStorageSink *CloudStorageSink `json:"cloudStorageSink,omitempty"`
 
 	// CreateTime: Output only. The time when the export was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// ExportOptions: Advanced options of the export.
+	// ExportOptions: Additional export options.
 	ExportOptions *ExportOptions `json:"exportOptions,omitempty"`
 
 	// Id: Output only. The generated export ID.
@@ -824,22 +833,22 @@ type Export struct {
 	// Name: The export name.
 	Name string `json:"name,omitempty"`
 
-	// Query: The search query being exported.
+	// Query: The query parameters used to create the export.
 	Query *Query `json:"query,omitempty"`
 
 	// Requester: Output only. The requester of the export.
 	Requester *UserInfo `json:"requester,omitempty"`
 
-	// Stats: Output only. Export statistics.
+	// Stats: Output only. Details about the export progress and size.
 	Stats *ExportStats `json:"stats,omitempty"`
 
-	// Status: Output only. The export status.
+	// Status: Output only. The status of the export.
 	//
 	// Possible values:
 	//   "EXPORT_STATUS_UNSPECIFIED" - The status is unspecified.
 	//   "COMPLETED" - The export completed.
 	//   "FAILED" - The export failed.
-	//   "IN_PROGRESS" - The export is still being executed.
+	//   "IN_PROGRESS" - The export is in progress.
 	Status string `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -870,31 +879,31 @@ func (s *Export) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExportOptions: Export advanced options
+// ExportOptions: Additional options for exports
 type ExportOptions struct {
-	// DriveOptions: Option available for Drive export.
+	// DriveOptions: Options for Drive exports.
 	DriveOptions *DriveExportOptions `json:"driveOptions,omitempty"`
 
-	// GroupsOptions: Option available for groups export.
+	// GroupsOptions: Options for Groups exports.
 	GroupsOptions *GroupsExportOptions `json:"groupsOptions,omitempty"`
 
-	// HangoutsChatOptions: Option available for hangouts chat export.
+	// HangoutsChatOptions: Options for Chat exports.
 	HangoutsChatOptions *HangoutsChatExportOptions `json:"hangoutsChatOptions,omitempty"`
 
-	// MailOptions: Option available for mail export.
+	// MailOptions: Options for Gmail exports.
 	MailOptions *MailExportOptions `json:"mailOptions,omitempty"`
 
-	// Region: The requested export location.
+	// Region: The requested data region for the export.
 	//
 	// Possible values:
-	//   "EXPORT_REGION_UNSPECIFIED" - The region is unspecified. Will be
-	// treated the same as ANY.
+	//   "EXPORT_REGION_UNSPECIFIED" - The region is unspecified. Defaults
+	// to ANY.
 	//   "ANY" - Any region.
-	//   "US" - US region.
+	//   "US" - United States region.
 	//   "EUROPE" - Europe region.
 	Region string `json:"region,omitempty"`
 
-	// VoiceOptions: Option available for voice export.
+	// VoiceOptions: Options for Voice exports.
 	VoiceOptions *VoiceExportOptions `json:"voiceOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DriveOptions") to
@@ -920,16 +929,16 @@ func (s *ExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExportStats: Stats of an export.
+// ExportStats: Progress information for an export.
 type ExportStats struct {
-	// ExportedArtifactCount: The number of documents already processed by
-	// the export.
+	// ExportedArtifactCount: The number of messages or files already
+	// processed for export.
 	ExportedArtifactCount int64 `json:"exportedArtifactCount,omitempty,string"`
 
 	// SizeInBytes: The size of export in bytes.
 	SizeInBytes int64 `json:"sizeInBytes,omitempty,string"`
 
-	// TotalArtifactCount: The number of documents to be exported.
+	// TotalArtifactCount: The number of messages or files to be exported.
 	TotalArtifactCount int64 `json:"totalArtifactCount,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -970,9 +979,9 @@ type GroupsCountResult struct {
 	// and have more than zero messages.
 	MatchingAccountsCount int64 `json:"matchingAccountsCount,omitempty,string"`
 
-	// NonQueryableAccounts: When data scope is HELD_DATA in the request
-	// Query, these accounts in the request are not queried because they are
-	// not on hold. For other data scope, this field is not set.
+	// NonQueryableAccounts: When **DataScope** is **HELD_DATA**, these
+	// accounts in the request are not queried because they are not on hold.
+	// For other data scope, this field is not set.
 	NonQueryableAccounts []string `json:"nonQueryableAccounts,omitempty"`
 
 	// QueriedAccountsCount: Total number of accounts involved in this count
@@ -1003,14 +1012,14 @@ func (s *GroupsCountResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GroupsExportOptions: The options for groups export.
+// GroupsExportOptions: Options for Groups exports.
 type GroupsExportOptions struct {
-	// ExportFormat: The export format for groups export.
+	// ExportFormat: The file format for exported messages.
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - MBOX as export format.
-	//   "PST" - PST as export format
+	//   "MBOX" - Export as MBOX.
+	//   "PST" - Export as PST.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1036,14 +1045,14 @@ func (s *GroupsExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HangoutsChatExportOptions: The options for hangouts chat export.
+// HangoutsChatExportOptions: Options for Chat exports.
 type HangoutsChatExportOptions struct {
-	// ExportFormat: The export format for hangouts chat export.
+	// ExportFormat: The file format for exported messages.
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - MBOX as export format.
-	//   "PST" - PST as export format
+	//   "MBOX" - Export as MBOX.
+	//   "PST" - Export as PST.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1069,9 +1078,10 @@ func (s *HangoutsChatExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HangoutsChatInfo: Accounts to search
+// HangoutsChatInfo: The Chat spaces to search
 type HangoutsChatInfo struct {
-	// RoomId: A set of rooms to search.
+	// RoomId: A list of Chat spaces IDs, as provided by the Chat API
+	// (https://developers.google.com/hangouts/chat).
 	RoomId []string `json:"roomId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RoomId") to
@@ -1097,9 +1107,10 @@ func (s *HangoutsChatInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HangoutsChatOptions: Hangouts chat search advanced options
+// HangoutsChatOptions: Additional options for Google Chat search
 type HangoutsChatOptions struct {
-	// IncludeRooms: Set to true to include rooms.
+	// IncludeRooms: For searches by account or organizational unit, set to
+	// **true** to include rooms.
 	IncludeRooms bool `json:"includeRooms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeRooms") to
@@ -1125,20 +1136,21 @@ func (s *HangoutsChatOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldAccount: An account being held in a particular hold. This
-// structure is immutable. This can be either a single user or a google
-// group, depending on the corpus. To work with Vault resources, the
-// account must have the [required Vault privileges]
+// HeldAccount: An account covered by a hold. This structure is
+// immutable. It can be an individual account or a Google Group,
+// depending on the service. To work with Vault resources, the account
+// must have the [required Vault privileges]
 // (https://support.google.com/vault/answer/2799699) and access to the
 // matter. To access a matter, the account must have created the matter,
 // have the matter shared with them, or have the **View All Matters**
 // privilege.
 type HeldAccount struct {
-	// AccountId: The account's ID as provided by the Admin SDK.
+	// AccountId: The account ID, as provided by the Admin SDK
+	// (https://developers.google.com/admin-sdk/).
 	AccountId string `json:"accountId,omitempty"`
 
 	// Email: The primary email address of the account. If used as an input,
-	// this takes precedence over account ID.
+	// this takes precedence over **accountId**.
 	Email string `json:"email,omitempty"`
 
 	// FirstName: Output only. The first name of the account holder.
@@ -1177,14 +1189,14 @@ func (s *HeldAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldDriveQuery: Query options for Drive holds.
+// HeldDriveQuery: Options for Drive holds.
 type HeldDriveQuery struct {
-	// IncludeSharedDriveFiles: If true, include files in shared drives in
-	// the hold.
+	// IncludeSharedDriveFiles: To include files in shared drives in the
+	// hold, set to **true**.
 	IncludeSharedDriveFiles bool `json:"includeSharedDriveFiles,omitempty"`
 
-	// IncludeTeamDriveFiles: If true, include files in Team Drives in the
-	// hold.
+	// IncludeTeamDriveFiles: To include files in Team Drives in the hold,
+	// set to **true**.
 	IncludeTeamDriveFiles bool `json:"includeTeamDriveFiles,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1214,16 +1226,17 @@ func (s *HeldDriveQuery) MarshalJSON() ([]byte, error) {
 
 // HeldGroupsQuery: Query options for group holds.
 type HeldGroupsQuery struct {
-	// EndTime: The end time range for the search query. These timestamps
-	// are in GMT and rounded down to the start of the given date.
+	// EndTime: The end time for the query. Specify in GMT. The value is
+	// rounded to 12 AM on the specified date.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The start time range for the search query. These
-	// timestamps are in GMT and rounded down to the start of the given
-	// date.
+	// StartTime: The start time for the query. Specify in GMT. The value is
+	// rounded to 12 AM on the specified date.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Terms: The search terms for the hold.
+	// Terms: The search operators
+	// (https://support.google.com/vault/answer/2474474) used to refine the
+	// messages covered by the hold.
 	Terms string `json:"terms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1249,9 +1262,10 @@ func (s *HeldGroupsQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldHangoutsChatQuery: Query options for hangouts chat holds.
+// HeldHangoutsChatQuery: Options for Chat holds.
 type HeldHangoutsChatQuery struct {
-	// IncludeRooms: If true, include rooms the user has participated in.
+	// IncludeRooms: To include messages in Chat spaces the user was a
+	// member of, set to **true**.
 	IncludeRooms bool `json:"includeRooms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeRooms") to
@@ -1277,18 +1291,19 @@ func (s *HeldHangoutsChatQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldMailQuery: Query options for mail holds.
+// HeldMailQuery: Query options for Gmail holds.
 type HeldMailQuery struct {
-	// EndTime: The end time range for the search query. These timestamps
-	// are in GMT and rounded down to the start of the given date.
+	// EndTime: The end time for the query. Specify in GMT. The value is
+	// rounded to 12 AM on the specified date.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The start time range for the search query. These
-	// timestamps are in GMT and rounded down to the start of the given
-	// date.
+	// StartTime: The start time for the query. Specify in GMT. The value is
+	// rounded to 12 AM on the specified date.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Terms: The search terms for the hold.
+	// Terms: The search operators
+	// (https://support.google.com/vault/answer/2474474) used to refine the
+	// messages covered by the hold.
 	Terms string `json:"terms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1314,14 +1329,15 @@ func (s *HeldMailQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldOrgUnit: A organizational unit being held in a particular hold.
-// This structure is immutable.
+// HeldOrgUnit: The organizational unit covered by a hold. This
+// structure is immutable.
 type HeldOrgUnit struct {
-	// HoldTime: When the org unit was put on hold. This property is
-	// immutable.
+	// HoldTime: When the organizational unit was put on hold. This property
+	// is immutable.
 	HoldTime string `json:"holdTime,omitempty"`
 
-	// OrgUnitId: The org unit's immutable ID as provided by the Admin SDK.
+	// OrgUnitId: The organizational unit's immutable ID as provided by the
+	// Admin SDK (https://developers.google.com/admin-sdk/).
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HoldTime") to
@@ -1347,16 +1363,16 @@ func (s *HeldOrgUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldVoiceQuery: Query options for Voice holds.
+// HeldVoiceQuery: Options for Voice holds.
 type HeldVoiceQuery struct {
-	// CoveredData: Data covered by this rule. Should be non-empty. Order
-	// does not matter and duplicates will be ignored.
+	// CoveredData: A list of data types covered by the hold. Should be
+	// non-empty. Order does not matter and duplicates are ignored.
 	//
 	// Possible values:
 	//   "COVERED_DATA_UNSPECIFIED" - Covered data unspecified.
-	//   "TEXT_MESSAGES" - Voice text message will be covered.
-	//   "VOICEMAILS" - Voicemail will be covered.
-	//   "CALL_LOGS" - Call logs will be covered.
+	//   "TEXT_MESSAGES" - Voice text messages.
+	//   "VOICEMAILS" - Voicemails and their transcripts.
+	//   "CALL_LOGS" - Call logs.
 	CoveredData []string `json:"coveredData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CoveredData") to
@@ -1382,29 +1398,29 @@ func (s *HeldVoiceQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Hold: Represents a hold within Vault. A hold restricts purging of
-// artifacts based on the combination of the query and accounts
-// restrictions. A hold can be configured to either apply to an
-// explicitly configured set of accounts, or can be applied to all
-// members of an organizational unit. To work with Vault resources, the
-// account must have the [required Vault privileges]
+// Hold: A hold. A hold prevents the specified Google Workspace service
+// from purging data for specific accounts or all members of an
+// organizational unit. To work with Vault resources, the account must
+// have the [required Vault privileges]
 // (https://support.google.com/vault/answer/2799699) and access to the
 // matter. To access a matter, the account must have created the matter,
 // have the matter shared with them, or have the **View All Matters**
 // privilege.
 type Hold struct {
-	// Accounts: If set, the hold applies to the enumerated accounts and
-	// org_unit must be empty.
+	// Accounts: If set, the hold applies to the specified accounts and
+	// **orgUnit** must be empty.
 	Accounts []*HeldAccount `json:"accounts,omitempty"`
 
-	// Corpus: The corpus to be searched.
+	// Corpus: The service to be searched.
 	//
 	// Possible values:
-	//   "CORPUS_TYPE_UNSPECIFIED" - No corpus specified.
-	//   "DRIVE" - Drive.
-	//   "MAIL" - Mail.
+	//   "CORPUS_TYPE_UNSPECIFIED" - No service specified.
+	//   "DRIVE" - Drive, including Meet and Sites.
+	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
+	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - Hangouts Chat.
+	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
 
@@ -1416,12 +1432,12 @@ type Hold struct {
 	Name string `json:"name,omitempty"`
 
 	// OrgUnit: If set, the hold applies to all members of the
-	// organizational unit and accounts must be empty. This property is
-	// mutable. For groups holds, set the accounts field.
+	// organizational unit and **accounts** must be empty. This property is
+	// mutable. For Groups holds, set **accounts**.
 	OrgUnit *HeldOrgUnit `json:"orgUnit,omitempty"`
 
-	// Query: The corpus-specific query. If set, the corpusQuery must match
-	// corpus type.
+	// Query: Service-specific options. If set, **CorpusQuery** must match
+	// **CorpusType**.
 	Query *CorpusQuery `json:"query,omitempty"`
 
 	// UpdateTime: The last time this hold was modified.
@@ -1454,7 +1470,7 @@ func (s *Hold) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListExportsResponse: The holds for a matter.
+// ListExportsResponse: The exports for a matter.
 type ListExportsResponse struct {
 	// Exports: The list of exports.
 	Exports []*Export `json:"exports,omitempty"`
@@ -1490,7 +1506,8 @@ func (s *ListExportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListHeldAccountsResponse: Returns a list of held accounts for a hold.
+// ListHeldAccountsResponse: Returns a list of the accounts covered by a
+// hold.
 type ListHeldAccountsResponse struct {
 	// Accounts: The held accounts on a hold.
 	Accounts []*HeldAccount `json:"accounts,omitempty"`
@@ -1638,7 +1655,7 @@ type ListSavedQueriesResponse struct {
 	// list. If this is empty, then there are no more saved queries to list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SavedQueries: List of output saved queries.
+	// SavedQueries: List of saved queries.
 	SavedQueries []*SavedQuery `json:"savedQueries,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1668,9 +1685,9 @@ func (s *ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MailCountResult: Mail specific count metrics.
+// MailCountResult: Gmail and classic Hangouts-specific count metrics.
 type MailCountResult struct {
-	// AccountCountErrors: Error occurred when querying these accounts.
+	// AccountCountErrors: Errors occurred when querying these accounts.
 	AccountCountErrors []*AccountCountError `json:"accountCountErrors,omitempty"`
 
 	// AccountCounts: Subtotal count per matching account that have more
@@ -1681,9 +1698,9 @@ type MailCountResult struct {
 	// and have more than zero messages.
 	MatchingAccountsCount int64 `json:"matchingAccountsCount,omitempty,string"`
 
-	// NonQueryableAccounts: When data scope is HELD_DATA in the request
-	// Query, these accounts in the request are not queried because they are
-	// not on hold. For other data scope, this field is not set.
+	// NonQueryableAccounts: When **DataScope** is **HELD_DATA**, the number
+	// of accounts in the request that are not queried because they are not
+	// on hold. For other data scopes, this field is not set.
 	NonQueryableAccounts []string `json:"nonQueryableAccounts,omitempty"`
 
 	// QueriedAccountsCount: Total number of accounts involved in this count
@@ -1714,18 +1731,18 @@ func (s *MailCountResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MailExportOptions: The options for mail export.
+// MailExportOptions: Options for Gmail exports.
 type MailExportOptions struct {
-	// ExportFormat: The export file format.
+	// ExportFormat: The file format for exported messages.
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - MBOX as export format.
-	//   "PST" - PST as export format
+	//   "MBOX" - Export as MBOX.
+	//   "PST" - Export as PST.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
-	// ShowConfidentialModeContent: Set to true to export confidential mode
-	// content.
+	// ShowConfidentialModeContent: To export confidential mode content, set
+	// to **true**.
 	ShowConfidentialModeContent bool `json:"showConfidentialModeContent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1751,9 +1768,9 @@ func (s *MailExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MailOptions: Mail search advanced options
+// MailOptions: Additional options for Gmail search
 type MailOptions struct {
-	// ExcludeDrafts: Set to true to exclude drafts.
+	// ExcludeDrafts: Set to **true** to exclude drafts.
 	ExcludeDrafts bool `json:"excludeDrafts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludeDrafts") to
@@ -1786,16 +1803,16 @@ func (s *MailOptions) MarshalJSON() ([]byte, error) {
 // have the matter shared with them, or have the **View All Matters**
 // privilege.
 type Matter struct {
-	// Description: The description of the matter.
+	// Description: An optional description for the matter.
 	Description string `json:"description,omitempty"`
 
-	// MatterId: The matter ID which is generated by the server. Should be
-	// blank when creating a new matter.
+	// MatterId: The matter ID, which is generated by the server. Leave
+	// blank when creating a matter.
 	MatterId string `json:"matterId,omitempty"`
 
-	// MatterPermissions: List of users and access to the matter. Currently
-	// there is no programmer defined limit on the number of permissions a
-	// matter can have.
+	// MatterPermissions: Lists the users and their permission for the
+	// matter. Currently there is no programmer defined limit on the number
+	// of permissions a matter can have.
 	MatterPermissions []*MatterPermission `json:"matterPermissions,omitempty"`
 
 	// Name: The name of the matter.
@@ -1805,9 +1822,9 @@ type Matter struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The matter has no specified state.
-	//   "OPEN" - This matter is open.
-	//   "CLOSED" - This matter is closed.
-	//   "DELETED" - This matter is deleted.
+	//   "OPEN" - The matter is open.
+	//   "CLOSED" - The matter is closed.
+	//   "DELETED" - The matter is deleted.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1837,18 +1854,20 @@ func (s *Matter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MatterPermission: Currently each matter only has one owner, and all
-// others are collaborators. When an account is purged, its
-// corresponding MatterPermission resources cease to exist.
+// MatterPermission: Users can be matter owners or collaborators. Each
+// matter has only one owner. All others users who can access the matter
+// are collaborators. When an account is purged, its corresponding
+// MatterPermission resources cease to exist.
 type MatterPermission struct {
-	// AccountId: The account ID, as provided by Admin SDK.
+	// AccountId: The account ID, as provided by the Admin SDK
+	// (https://developers.google.com/admin-sdk/).
 	AccountId string `json:"accountId,omitempty"`
 
-	// Role: The user's role in this matter.
+	// Role: The user's role for the matter.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - No role assigned.
-	//   "COLLABORATOR" - A collaborator to the matter.
+	//   "COLLABORATOR" - A collaborator on the matter.
 	//   "OWNER" - The owner of the matter.
 	Role string `json:"role,omitempty"`
 
@@ -1941,10 +1960,11 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OrgUnitInfo: Org Unit to search
+// OrgUnitInfo: The organizational unit to search
 type OrgUnitInfo struct {
-	// OrgUnitId: Org unit to search, as provided by the Admin SDK Directory
-	// API.
+	// OrgUnitId: The name of the organizational unit to search, as provided
+	// by the Admin SDK Directory API
+	// (https://developers.google.com/admin-sdk/directory/).
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OrgUnitId") to
@@ -1970,117 +1990,129 @@ func (s *OrgUnitInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Query: A query definition relevant for search & export.
+// Query: The query definition used for search and export.
 type Query struct {
-	// AccountInfo: When 'ACCOUNT' is chosen as search method, account_info
-	// needs to be specified.
+	// AccountInfo: Required when **SearchMethod** is **ACCOUNT**.
 	AccountInfo *AccountInfo `json:"accountInfo,omitempty"`
 
-	// Corpus: The corpus to search.
+	// Corpus: The Google Workspace service to search.
 	//
 	// Possible values:
-	//   "CORPUS_TYPE_UNSPECIFIED" - No corpus specified.
-	//   "DRIVE" - Drive.
-	//   "MAIL" - Mail.
+	//   "CORPUS_TYPE_UNSPECIFIED" - No service specified.
+	//   "DRIVE" - Drive, including Meet and Sites.
+	//   "MAIL" - For search, Gmail and classic Hangouts. For holds, Gmail
+	// only.
 	//   "GROUPS" - Groups.
-	//   "HANGOUTS_CHAT" - Hangouts Chat.
+	//   "HANGOUTS_CHAT" - For search, Google Chat only. For holds, Google
+	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
 	Corpus string `json:"corpus,omitempty"`
 
-	// DataScope: The data source to search from.
+	// DataScope: The data source to search.
 	//
 	// Possible values:
-	//   "DATA_SCOPE_UNSPECIFIED" - No data scope specified.
+	//   "DATA_SCOPE_UNSPECIFIED" - No data source specified.
 	//   "ALL_DATA" - All available data.
-	//   "HELD_DATA" - Data on hold.
-	//   "UNPROCESSED_DATA" - Data not processed.
+	//   "HELD_DATA" - Only data on hold.
+	//   "UNPROCESSED_DATA" - Only data not yet processed by Vault. (Gmail
+	// and Groups only)
 	DataScope string `json:"dataScope,omitempty"`
 
-	// DriveOptions: For Drive search, specify more options in this field.
+	// DriveOptions: Set Drive search-specific options.
 	DriveOptions *DriveOptions `json:"driveOptions,omitempty"`
 
-	// EndTime: The end time range for the search query. These timestamps
-	// are in GMT and rounded down to the start of the given date.
+	// EndTime: The end time for the search query. Specify in GMT. The value
+	// is rounded to 12 AM on the specified date.
 	EndTime string `json:"endTime,omitempty"`
 
-	// HangoutsChatInfo: When 'ROOM' is chosen as search method,
-	// hangout_chats_info needs to be specified. (read-only)
+	// HangoutsChatInfo: Required when **SearchMethod** is **ROOM**.
+	// (read-only)
 	HangoutsChatInfo *HangoutsChatInfo `json:"hangoutsChatInfo,omitempty"`
 
-	// HangoutsChatOptions: For hangouts chat search, specify more options
-	// in this field. (read-only)
+	// HangoutsChatOptions: Set Chat search-specific options. (read-only)
 	HangoutsChatOptions *HangoutsChatOptions `json:"hangoutsChatOptions,omitempty"`
 
-	// MailOptions: For mail search, specify more options in this field.
+	// MailOptions: Set Gmail search-specific options.
 	MailOptions *MailOptions `json:"mailOptions,omitempty"`
 
-	// Method: The search method to use. This field is similar to the
-	// search_method field but is introduced to support shared drives. It
-	// supports all search method types. In case the search_method is
-	// TEAM_DRIVE the response of this field will be SHARED_DRIVE only.
+	// Method: The entity to search. This field replaces **searchMethod** to
+	// support shared drives. When **searchMethod** is **TEAM_DRIVE**, the
+	// response of this field is **SHARED_DRIVE**.
 	//
 	// Possible values:
-	//   "SEARCH_METHOD_UNSPECIFIED" - A search method must be specified. If
-	// a request does not specify a search method, it will be rejected.
-	//   "ACCOUNT" - Will search all accounts provided in account_info.
-	//   "ORG_UNIT" - Will search all accounts in the OU specified in
-	// org_unit_info.
-	//   "TEAM_DRIVE" - Will search for all accounts in the Team Drive
-	// specified in team_drive_info.
-	//   "ENTIRE_ORG" - Will search for all accounts in the organization. No
-	// need to set account_info or org_unit_info. Not all CORPUS_TYPE
-	// support this scope. Supported by MAIL.
-	//   "ROOM" - Will search in the Room specified in hangout_chats_info.
-	// (read-only)
-	//   "SHARED_DRIVE" - Will search for all accounts in the shared drive
-	// specified in shared_drive_info.
+	//   "SEARCH_METHOD_UNSPECIFIED" - A search method must be specified or
+	// else it is rejected.
+	//   "ACCOUNT" - Search the data of the accounts specified in
+	// [AccountInfo](https://developers.google.com/vault/reference/rest/v1/Qu
+	// ery#accountinfo).
+	//   "ORG_UNIT" - Search the data of all accounts in the organizational
+	// unit specified in
+	// [OrgUnitInfo](https://developers.google.com/vault/reference/rest/v1/Qu
+	// ery#orgunitinfo).
+	//   "TEAM_DRIVE" - Search the data in the Team Drive specified in
+	// **team_drive_info**.
+	//   "ENTIRE_ORG" - Search the data of all accounts in the organization.
+	// Supported only for Gmail. When specified, you don't need to specify
+	// **AccountInfo** or **OrgUnitInfo**.
+	//   "ROOM" - Search messages in the Chat spaces specified in
+	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/
+	// v1/Query#hangoutschatinfo).
+	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
+	// [SharedDriveInfo](https://developers.devsite.corp.google.com/vault/ref
+	// erence/rest/v1/Query#shareddriveinfo).
 	Method string `json:"method,omitempty"`
 
-	// OrgUnitInfo: When 'ORG_UNIT' is chosen as as search method,
-	// org_unit_info needs to be specified.
+	// OrgUnitInfo: Required when **SearchMethod** is **ORG_UNIT**.
 	OrgUnitInfo *OrgUnitInfo `json:"orgUnitInfo,omitempty"`
 
 	// SearchMethod: The search method to use.
 	//
 	// Possible values:
-	//   "SEARCH_METHOD_UNSPECIFIED" - A search method must be specified. If
-	// a request does not specify a search method, it will be rejected.
-	//   "ACCOUNT" - Will search all accounts provided in account_info.
-	//   "ORG_UNIT" - Will search all accounts in the OU specified in
-	// org_unit_info.
-	//   "TEAM_DRIVE" - Will search for all accounts in the Team Drive
-	// specified in team_drive_info.
-	//   "ENTIRE_ORG" - Will search for all accounts in the organization. No
-	// need to set account_info or org_unit_info. Not all CORPUS_TYPE
-	// support this scope. Supported by MAIL.
-	//   "ROOM" - Will search in the Room specified in hangout_chats_info.
-	// (read-only)
-	//   "SHARED_DRIVE" - Will search for all accounts in the shared drive
-	// specified in shared_drive_info.
+	//   "SEARCH_METHOD_UNSPECIFIED" - A search method must be specified or
+	// else it is rejected.
+	//   "ACCOUNT" - Search the data of the accounts specified in
+	// [AccountInfo](https://developers.google.com/vault/reference/rest/v1/Qu
+	// ery#accountinfo).
+	//   "ORG_UNIT" - Search the data of all accounts in the organizational
+	// unit specified in
+	// [OrgUnitInfo](https://developers.google.com/vault/reference/rest/v1/Qu
+	// ery#orgunitinfo).
+	//   "TEAM_DRIVE" - Search the data in the Team Drive specified in
+	// **team_drive_info**.
+	//   "ENTIRE_ORG" - Search the data of all accounts in the organization.
+	// Supported only for Gmail. When specified, you don't need to specify
+	// **AccountInfo** or **OrgUnitInfo**.
+	//   "ROOM" - Search messages in the Chat spaces specified in
+	// [HangoutsChatInfo](https://developers.google.com/vault/reference/rest/
+	// v1/Query#hangoutschatinfo).
+	//   "SHARED_DRIVE" - Search the files in the shared drives specified in
+	// [SharedDriveInfo](https://developers.devsite.corp.google.com/vault/ref
+	// erence/rest/v1/Query#shareddriveinfo).
 	SearchMethod string `json:"searchMethod,omitempty"`
 
-	// SharedDriveInfo: When 'SHARED_DRIVE' is chosen as search method,
-	// shared_drive_info needs to be specified.
+	// SharedDriveInfo: Required when **SearchMethod** is **SHARED_DRIVE**.
 	SharedDriveInfo *SharedDriveInfo `json:"sharedDriveInfo,omitempty"`
 
-	// StartTime: The start time range for the search query. These
-	// timestamps are in GMT and rounded down to the start of the given
-	// date.
+	// StartTime: The start time for the search query. Specify in GMT. The
+	// value is rounded to 12 AM on the specified date.
 	StartTime string `json:"startTime,omitempty"`
 
-	// TeamDriveInfo: When 'TEAM_DRIVE' is chosen as search method,
-	// team_drive_info needs to be specified.
+	// TeamDriveInfo: Required when **SearchMethod** is **TEAM_DRIVE**.
 	TeamDriveInfo *TeamDriveInfo `json:"teamDriveInfo,omitempty"`
 
-	// Terms: The corpus-specific search operators used to generate search
+	// Terms: Service-specific search operators
+	// (https://support.google.com/vault/answer/2474474) to filter search
 	// results.
 	Terms string `json:"terms,omitempty"`
 
 	// TimeZone: The time zone name. It should be an IANA TZ name, such as
-	// "America/Los_Angeles". For more information, see Time Zone.
+	// "America/Los_Angeles". For a list of time zone names, see Time Zone
+	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For
+	// more information about how Vault uses time zones, see the Vault help
+	// center (https://support.google.com/vault/answer/6092995#time).
 	TimeZone string `json:"timeZone,omitempty"`
 
-	// VoiceOptions: For voice search, specify more options in this field.
+	// VoiceOptions: Set Voice search-specific options.
 	VoiceOptions *VoiceOptions `json:"voiceOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountInfo") to
@@ -2108,7 +2140,7 @@ func (s *Query) MarshalJSON() ([]byte, error) {
 
 // RemoveHeldAccountsRequest: Remove a list of accounts from a hold.
 type RemoveHeldAccountsRequest struct {
-	// AccountIds: Account IDs to identify HeldAccounts to remove.
+	// AccountIds: The account IDs of the accounts to remove from the hold.
 	AccountIds []string `json:"accountIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountIds") to
@@ -2136,8 +2168,8 @@ func (s *RemoveHeldAccountsRequest) MarshalJSON() ([]byte, error) {
 
 // RemoveHeldAccountsResponse: Response for batch delete held accounts.
 type RemoveHeldAccountsResponse struct {
-	// Statuses: A list of statuses for deleted accounts. Results have the
-	// same order as the request.
+	// Statuses: A list of statuses for the deleted accounts. Results have
+	// the same order as the request.
 	Statuses []*Status `json:"statuses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2202,7 +2234,7 @@ type ReopenMatterRequest struct {
 
 // ReopenMatterResponse: Response to a ReopenMatterRequest.
 type ReopenMatterResponse struct {
-	// Matter: The updated matter, with state OPEN.
+	// Matter: The updated matter, with state **OPEN**.
 	Matter *Matter `json:"matter,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2232,27 +2264,26 @@ func (s *ReopenMatterResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SavedQuery: Definition of the saved query. To work with Vault
-// resources, the account must have the [required Vault privileges]
+// SavedQuery: The definition of a saved query. To work with Vault
+// resources, the account must have the required Vault privileges
 // (https://support.google.com/vault/answer/2799699) and access to the
 // matter. To access a matter, the account must have created the matter,
 // have the matter shared with them, or have the **View All Matters**
 // privilege.
 type SavedQuery struct {
-	// CreateTime: Output only. The server generated timestamp at which
+	// CreateTime: Output only. The server-generated timestamp when the
 	// saved query was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DisplayName: Name of the saved query.
+	// DisplayName: The name of the saved query.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// MatterId: Output only. The matter ID of the associated matter. The
-	// server does not look at this field during create and always uses
-	// matter id in the URL.
+	// MatterId: Output only. The matter ID of the matter the saved query is
+	// saved in. The server does not use this field during create and always
+	// uses matter ID in the URL.
 	MatterId string `json:"matterId,omitempty"`
 
-	// Query: The underlying Query object which contains all the information
-	// of the saved query.
+	// Query: The search parameters of the saved query.
 	Query *Query `json:"query,omitempty"`
 
 	// SavedQueryId: A unique identifier for the saved query.
@@ -2285,9 +2316,10 @@ func (s *SavedQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SharedDriveInfo: Shared drives to search
+// SharedDriveInfo: The shared drives to search
 type SharedDriveInfo struct {
-	// SharedDriveIds: List of Shared drive IDs, as provided by Drive API.
+	// SharedDriveIds: A list of shared drive IDs, as provided by the Drive
+	// API (https://developers.google.com/drive).
 	SharedDriveIds []string `json:"sharedDriveIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SharedDriveIds") to
@@ -2360,7 +2392,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // TeamDriveInfo: Team Drives to search
 type TeamDriveInfo struct {
-	// TeamDriveIds: List of Team Drive IDs, as provided by Drive API.
+	// TeamDriveIds: List of Team Drive IDs, as provided by the Drive API
+	// (https://developers.google.com/drive).
 	TeamDriveIds []string `json:"teamDriveIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TeamDriveIds") to
@@ -2421,14 +2454,14 @@ func (s *UserInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VoiceExportOptions: The options for voice export.
+// VoiceExportOptions: The options for Voice exports.
 type VoiceExportOptions struct {
-	// ExportFormat: The export format for voice export.
+	// ExportFormat: The file format for exported text messages.
 	//
 	// Possible values:
 	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
-	//   "MBOX" - MBOX as export format.
-	//   "PST" - PST as export format
+	//   "MBOX" - Export as MBOX.
+	//   "PST" - Export as PST.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -2454,15 +2487,15 @@ func (s *VoiceExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VoiceOptions: Voice search options
+// VoiceOptions: Additional options for Voice search
 type VoiceOptions struct {
 	// CoveredData: Datatypes to search
 	//
 	// Possible values:
 	//   "COVERED_DATA_UNSPECIFIED" - Covered data unspecified.
-	//   "TEXT_MESSAGES" - Voice text message will be covered.
-	//   "VOICEMAILS" - Voicemail will be covered.
-	//   "CALL_LOGS" - Call logs will be covered.
+	//   "TEXT_MESSAGES" - Voice text messages.
+	//   "VOICEMAILS" - Voicemails and their transcripts.
+	//   "CALL_LOGS" - Call logs.
 	CoveredData []string `json:"coveredData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CoveredData") to
@@ -2536,7 +2569,7 @@ func (c *MattersAddPermissionsCall) Header() http.Header {
 
 func (c *MattersAddPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2640,7 +2673,7 @@ type MattersCloseCall struct {
 	header_            http.Header
 }
 
-// Close: Closes the specified matter. Returns matter with updated
+// Close: Closes the specified matter. Returns the matter with updated
 // state.
 //
 // - matterId: The matter ID.
@@ -2678,7 +2711,7 @@ func (c *MattersCloseCall) Header() http.Header {
 
 func (c *MattersCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2742,7 +2775,7 @@ func (c *MattersCloseCall) Do(opts ...googleapi.CallOption) (*CloseMatterRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Closes the specified matter. Returns matter with updated state.",
+	//   "description": "Closes the specified matter. Returns the matter with updated state.",
 	//   "flatPath": "v1/matters/{matterId}:close",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.close",
@@ -2782,8 +2815,7 @@ type MattersCountCall struct {
 	header_               http.Header
 }
 
-// Count: Counts the artifacts within the context of a matter and
-// returns a detailed breakdown of metrics.
+// Count: Counts the accounts processed by the specified query.
 //
 // - matterId: The matter ID.
 func (r *MattersService) Count(matterId string, countartifactsrequest *CountArtifactsRequest) *MattersCountCall {
@@ -2820,7 +2852,7 @@ func (c *MattersCountCall) Header() http.Header {
 
 func (c *MattersCountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2884,7 +2916,7 @@ func (c *MattersCountCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Counts the artifacts within the context of a matter and returns a detailed breakdown of metrics.",
+	//   "description": "Counts the accounts processed by the specified query.",
 	//   "flatPath": "v1/matters/{matterId}:count",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.count",
@@ -2923,7 +2955,7 @@ type MattersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new matter with the given name and description. The
+// Create: Creates a matter with the given name and description. The
 // initial state is open, and the owner is the method caller. Returns
 // the created matter with default view.
 func (r *MattersService) Create(matter *Matter) *MattersCreateCall {
@@ -2959,7 +2991,7 @@ func (c *MattersCreateCall) Header() http.Header {
 
 func (c *MattersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3020,7 +3052,7 @@ func (c *MattersCreateCall) Do(opts ...googleapi.CallOption) (*Matter, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new matter with the given name and description. The initial state is open, and the owner is the method caller. Returns the created matter with default view.",
+	//   "description": "Creates a matter with the given name and description. The initial state is open, and the owner is the method caller. Returns the created matter with default view.",
 	//   "flatPath": "v1/matters",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.create",
@@ -3050,7 +3082,7 @@ type MattersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified matter. Returns matter with updated
+// Delete: Deletes the specified matter. Returns the matter with updated
 // state.
 //
 // - matterId: The matter ID.
@@ -3087,7 +3119,7 @@ func (c *MattersDeleteCall) Header() http.Header {
 
 func (c *MattersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3146,7 +3178,7 @@ func (c *MattersDeleteCall) Do(opts ...googleapi.CallOption) (*Matter, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified matter. Returns matter with updated state.",
+	//   "description": "Deletes the specified matter. Returns the matter with updated state.",
 	//   "flatPath": "v1/matters/{matterId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vault.matters.delete",
@@ -3192,15 +3224,18 @@ func (r *MattersService) Get(matterId string) *MattersGetCall {
 	return c
 }
 
-// View sets the optional parameter "view": Specifies which parts of the
-// Matter to return in the response.
+// View sets the optional parameter "view": Specifies how much
+// information about the matter to return in the response.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - There is no specified view.
-//   "BASIC" - Response includes the matter_id, name, description, and
-// state. Default choice.
-//   "FULL" - Full representation of matter is returned. Everything
-// above and including MatterPermissions list.
+//   "VIEW_UNSPECIFIED" - The amount of detail is unspecified. Same as
+// **BASIC**.
+//   "BASIC" - Returns the matter ID, name, description, and state.
+// Default choice.
+//   "FULL" - Returns the basic details and a list of matter owners and
+// collaborators (see
+// [MatterPermissions](https://developers.google.com/vault/reference/rest
+// /v1/matters#matterpermission)).
 func (c *MattersGetCall) View(view string) *MattersGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3243,7 +3278,7 @@ func (c *MattersGetCall) Header() http.Header {
 
 func (c *MattersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3320,16 +3355,16 @@ func (c *MattersGetCall) Do(opts ...googleapi.CallOption) (*Matter, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies which parts of the Matter to return in the response.",
+	//       "description": "Specifies how much information about the matter to return in the response.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "There is no specified view.",
-	//         "Response includes the matter_id, name, description, and state. Default choice.",
-	//         "Full representation of matter is returned. Everything above and including MatterPermissions list."
+	//         "The amount of detail is unspecified. Same as **BASIC**.",
+	//         "Returns the matter ID, name, description, and state. Default choice.",
+	//         "Returns the basic details and a list of matter owners and collaborators (see [MatterPermissions](https://developers.google.com/vault/reference/rest/v1/matters#matterpermission))."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3357,7 +3392,7 @@ type MattersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists matters the user has access to.
+// List: Lists matters the requestor has access to.
 func (r *MattersService) List() *MattersListCall {
 	c := &MattersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3377,29 +3412,31 @@ func (c *MattersListCall) PageToken(pageToken string) *MattersListCall {
 	return c
 }
 
-// State sets the optional parameter "state": If set, list only matters
-// with that specific state. The default is listing matters of all
-// states.
+// State sets the optional parameter "state": If set, lists only matters
+// with the specified state. The default lists matters of all states.
 //
 // Possible values:
 //   "STATE_UNSPECIFIED" - The matter has no specified state.
-//   "OPEN" - This matter is open.
-//   "CLOSED" - This matter is closed.
-//   "DELETED" - This matter is deleted.
+//   "OPEN" - The matter is open.
+//   "CLOSED" - The matter is closed.
+//   "DELETED" - The matter is deleted.
 func (c *MattersListCall) State(state string) *MattersListCall {
 	c.urlParams_.Set("state", state)
 	return c
 }
 
-// View sets the optional parameter "view": Specifies which parts of the
-// matter to return in response.
+// View sets the optional parameter "view": Specifies how much
+// information about the matter to return in response.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - There is no specified view.
-//   "BASIC" - Response includes the matter_id, name, description, and
-// state. Default choice.
-//   "FULL" - Full representation of matter is returned. Everything
-// above and including MatterPermissions list.
+//   "VIEW_UNSPECIFIED" - The amount of detail is unspecified. Same as
+// **BASIC**.
+//   "BASIC" - Returns the matter ID, name, description, and state.
+// Default choice.
+//   "FULL" - Returns the basic details and a list of matter owners and
+// collaborators (see
+// [MatterPermissions](https://developers.google.com/vault/reference/rest
+// /v1/matters#matterpermission)).
 func (c *MattersListCall) View(view string) *MattersListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3442,7 +3479,7 @@ func (c *MattersListCall) Header() http.Header {
 
 func (c *MattersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3501,7 +3538,7 @@ func (c *MattersListCall) Do(opts ...googleapi.CallOption) (*ListMattersResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists matters the user has access to.",
+	//   "description": "Lists matters the requestor has access to.",
 	//   "flatPath": "v1/matters",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.list",
@@ -3519,7 +3556,7 @@ func (c *MattersListCall) Do(opts ...googleapi.CallOption) (*ListMattersResponse
 	//       "type": "string"
 	//     },
 	//     "state": {
-	//       "description": "If set, list only matters with that specific state. The default is listing matters of all states.",
+	//       "description": "If set, lists only matters with the specified state. The default lists matters of all states.",
 	//       "enum": [
 	//         "STATE_UNSPECIFIED",
 	//         "OPEN",
@@ -3528,24 +3565,24 @@ func (c *MattersListCall) Do(opts ...googleapi.CallOption) (*ListMattersResponse
 	//       ],
 	//       "enumDescriptions": [
 	//         "The matter has no specified state.",
-	//         "This matter is open.",
-	//         "This matter is closed.",
-	//         "This matter is deleted."
+	//         "The matter is open.",
+	//         "The matter is closed.",
+	//         "The matter is deleted."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies which parts of the matter to return in response.",
+	//       "description": "Specifies how much information about the matter to return in response.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "There is no specified view.",
-	//         "Response includes the matter_id, name, description, and state. Default choice.",
-	//         "Full representation of matter is returned. Everything above and including MatterPermissions list."
+	//         "The amount of detail is unspecified. Same as **BASIC**.",
+	//         "Returns the matter ID, name, description, and state. Default choice.",
+	//         "Returns the basic details and a list of matter owners and collaborators (see [MatterPermissions](https://developers.google.com/vault/reference/rest/v1/matters#matterpermission))."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3632,7 +3669,7 @@ func (c *MattersRemovePermissionsCall) Header() http.Header {
 
 func (c *MattersRemovePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3736,7 +3773,7 @@ type MattersReopenCall struct {
 	header_             http.Header
 }
 
-// Reopen: Reopens the specified matter. Returns matter with updated
+// Reopen: Reopens the specified matter. Returns the matter with updated
 // state.
 //
 // - matterId: The matter ID.
@@ -3774,7 +3811,7 @@ func (c *MattersReopenCall) Header() http.Header {
 
 func (c *MattersReopenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3838,7 +3875,7 @@ func (c *MattersReopenCall) Do(opts ...googleapi.CallOption) (*ReopenMatterRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Reopens the specified matter. Returns matter with updated state.",
+	//   "description": "Reopens the specified matter. Returns the matter with updated state.",
 	//   "flatPath": "v1/matters/{matterId}:reopen",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.reopen",
@@ -3878,8 +3915,8 @@ type MattersUndeleteCall struct {
 	header_               http.Header
 }
 
-// Undelete: Undeletes the specified matter. Returns matter with updated
-// state.
+// Undelete: Undeletes the specified matter. Returns the matter with
+// updated state.
 //
 // - matterId: The matter ID.
 func (r *MattersService) Undelete(matterId string, undeletematterrequest *UndeleteMatterRequest) *MattersUndeleteCall {
@@ -3916,7 +3953,7 @@ func (c *MattersUndeleteCall) Header() http.Header {
 
 func (c *MattersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3980,7 +4017,7 @@ func (c *MattersUndeleteCall) Do(opts ...googleapi.CallOption) (*Matter, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Undeletes the specified matter. Returns matter with updated state.",
+	//   "description": "Undeletes the specified matter. Returns the matter with updated state.",
 	//   "flatPath": "v1/matters/{matterId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.undelete",
@@ -4059,7 +4096,7 @@ func (c *MattersUpdateCall) Header() http.Header {
 
 func (c *MattersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4163,7 +4200,7 @@ type MattersExportsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an Export.
+// Create: Creates an export.
 //
 // - matterId: The matter ID.
 func (r *MattersExportsService) Create(matterId string, export *Export) *MattersExportsCreateCall {
@@ -4200,7 +4237,7 @@ func (c *MattersExportsCreateCall) Header() http.Header {
 
 func (c *MattersExportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4264,7 +4301,7 @@ func (c *MattersExportsCreateCall) Do(opts ...googleapi.CallOption) (*Export, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an Export.",
+	//   "description": "Creates an export.",
 	//   "flatPath": "v1/matters/{matterId}/exports",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.exports.create",
@@ -4304,7 +4341,7 @@ type MattersExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an Export.
+// Delete: Deletes an export.
 //
 // - exportId: The export ID.
 // - matterId: The matter ID.
@@ -4342,7 +4379,7 @@ func (c *MattersExportsDeleteCall) Header() http.Header {
 
 func (c *MattersExportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4402,7 +4439,7 @@ func (c *MattersExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an Export.",
+	//   "description": "Deletes an export.",
 	//   "flatPath": "v1/matters/{matterId}/exports/{exportId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vault.matters.exports.delete",
@@ -4447,7 +4484,7 @@ type MattersExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an Export.
+// Get: Gets an export.
 //
 // - exportId: The export ID.
 // - matterId: The matter ID.
@@ -4495,7 +4532,7 @@ func (c *MattersExportsGetCall) Header() http.Header {
 
 func (c *MattersExportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4558,7 +4595,7 @@ func (c *MattersExportsGetCall) Do(opts ...googleapi.CallOption) (*Export, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an Export.",
+	//   "description": "Gets an export.",
 	//   "flatPath": "v1/matters/{matterId}/exports/{exportId}",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.exports.get",
@@ -4603,7 +4640,7 @@ type MattersExportsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Exports.
+// List: Lists details about the exports in the specified matter.
 //
 // - matterId: The matter ID.
 func (r *MattersExportsService) List(matterId string) *MattersExportsListCall {
@@ -4663,7 +4700,7 @@ func (c *MattersExportsListCall) Header() http.Header {
 
 func (c *MattersExportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4725,7 +4762,7 @@ func (c *MattersExportsListCall) Do(opts ...googleapi.CallOption) (*ListExportsR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Exports.",
+	//   "description": "Lists details about the exports in the specified matter.",
 	//   "flatPath": "v1/matters/{matterId}/exports",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.exports.list",
@@ -4796,9 +4833,9 @@ type MattersHoldsAddHeldAccountsCall struct {
 	header_                http.Header
 }
 
-// AddHeldAccounts: Adds HeldAccounts to a hold. Returns a list of
-// accounts that have been successfully added. Accounts can only be
-// added to an existing account-based hold.
+// AddHeldAccounts: Adds accounts to a hold. Returns a list of accounts
+// that have been successfully added. Accounts can be added only to an
+// existing account-based hold.
 //
 // - holdId: The hold ID.
 // - matterId: The matter ID.
@@ -4837,7 +4874,7 @@ func (c *MattersHoldsAddHeldAccountsCall) Header() http.Header {
 
 func (c *MattersHoldsAddHeldAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4902,7 +4939,7 @@ func (c *MattersHoldsAddHeldAccountsCall) Do(opts ...googleapi.CallOption) (*Add
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds HeldAccounts to a hold. Returns a list of accounts that have been successfully added. Accounts can only be added to an existing account-based hold.",
+	//   "description": "Adds accounts to a hold. Returns a list of accounts that have been successfully added. Accounts can be added only to an existing account-based hold.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}:addHeldAccounts",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.holds.addHeldAccounts",
@@ -4949,7 +4986,7 @@ type MattersHoldsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a hold in the given matter.
+// Create: Creates a hold in the specified matter.
 //
 // - matterId: The matter ID.
 func (r *MattersHoldsService) Create(matterId string, hold *Hold) *MattersHoldsCreateCall {
@@ -4986,7 +5023,7 @@ func (c *MattersHoldsCreateCall) Header() http.Header {
 
 func (c *MattersHoldsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5050,7 +5087,7 @@ func (c *MattersHoldsCreateCall) Do(opts ...googleapi.CallOption) (*Hold, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a hold in the given matter.",
+	//   "description": "Creates a hold in the specified matter.",
 	//   "flatPath": "v1/matters/{matterId}/holds",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.holds.create",
@@ -5090,8 +5127,9 @@ type MattersHoldsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes a hold by ID. This will release any HeldAccounts on
-// this Hold.
+// Delete: Removes the specified hold and releases the accounts or
+// organizational unit covered by the hold. If the data is not preserved
+// by another hold or retention rule, it might be purged.
 //
 // - holdId: The hold ID.
 // - matterId: The matter ID.
@@ -5129,7 +5167,7 @@ func (c *MattersHoldsDeleteCall) Header() http.Header {
 
 func (c *MattersHoldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5189,7 +5227,7 @@ func (c *MattersHoldsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes a hold by ID. This will release any HeldAccounts on this Hold.",
+	//   "description": "Removes the specified hold and releases the accounts or organizational unit covered by the hold. If the data is not preserved by another hold or retention rule, it might be purged.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vault.matters.holds.delete",
@@ -5234,7 +5272,7 @@ type MattersHoldsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a hold by ID.
+// Get: Gets the specified hold.
 //
 // - holdId: The hold ID.
 // - matterId: The matter ID.
@@ -5245,17 +5283,16 @@ func (r *MattersHoldsService) Get(matterId string, holdId string) *MattersHoldsG
 	return c
 }
 
-// View sets the optional parameter "view": Specifies which parts of the
-// Hold to return.
+// View sets the optional parameter "view": The amount of detail to
+// return for a hold.
 //
 // Possible values:
-//   "HOLD_VIEW_UNSPECIFIED" - There is no specified view. Defaults to
-// FULL_HOLD.
-//   "BASIC_HOLD" - Response includes the id, name, update time, corpus,
-// and query.
-//   "FULL_HOLD" - Full representation of a Hold. Response includes all
-// fields of 'BASIC' and the entities the Hold applies to, such as
-// accounts, or OU.
+//   "HOLD_VIEW_UNSPECIFIED" - Not specified. Defaults to **FULL_HOLD**.
+//   "BASIC_HOLD" - Returns the hold ID, name, update time, service, and
+// query.
+//   "FULL_HOLD" - Returns all details of **BASIC_HOLD** and the
+// entities the hold applies to, such as accounts or organizational
+// unit.
 func (c *MattersHoldsGetCall) View(view string) *MattersHoldsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5298,7 +5335,7 @@ func (c *MattersHoldsGetCall) Header() http.Header {
 
 func (c *MattersHoldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5361,7 +5398,7 @@ func (c *MattersHoldsGetCall) Do(opts ...googleapi.CallOption) (*Hold, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a hold by ID.",
+	//   "description": "Gets the specified hold.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.holds.get",
@@ -5383,16 +5420,16 @@ func (c *MattersHoldsGetCall) Do(opts ...googleapi.CallOption) (*Hold, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies which parts of the Hold to return.",
+	//       "description": "The amount of detail to return for a hold.",
 	//       "enum": [
 	//         "HOLD_VIEW_UNSPECIFIED",
 	//         "BASIC_HOLD",
 	//         "FULL_HOLD"
 	//       ],
 	//       "enumDescriptions": [
-	//         "There is no specified view. Defaults to FULL_HOLD.",
-	//         "Response includes the id, name, update time, corpus, and query.",
-	//         "Full representation of a Hold. Response includes all fields of 'BASIC' and the entities the Hold applies to, such as accounts, or OU."
+	//         "Not specified. Defaults to **FULL_HOLD**.",
+	//         "Returns the hold ID, name, update time, service, and query.",
+	//         "Returns all details of **BASIC_HOLD** and the entities the hold applies to, such as accounts or organizational unit."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5421,8 +5458,7 @@ type MattersHoldsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists holds within a matter. An empty page token in
-// ListHoldsResponse denotes no more holds to list.
+// List: Lists the holds in a matter.
 //
 // - matterId: The matter ID.
 func (r *MattersHoldsService) List(matterId string) *MattersHoldsListCall {
@@ -5433,7 +5469,7 @@ func (r *MattersHoldsService) List(matterId string) *MattersHoldsListCall {
 
 // PageSize sets the optional parameter "pageSize": The number of holds
 // to return in the response, between 0 and 100 inclusive. Leaving this
-// empty, or as 0, is the same as page_size = 100.
+// empty, or as 0, is the same as **page_size** = 100.
 func (c *MattersHoldsListCall) PageSize(pageSize int64) *MattersHoldsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5447,17 +5483,16 @@ func (c *MattersHoldsListCall) PageToken(pageToken string) *MattersHoldsListCall
 	return c
 }
 
-// View sets the optional parameter "view": Specifies which parts of the
-// Hold to return.
+// View sets the optional parameter "view": The amount of detail to
+// return for a hold.
 //
 // Possible values:
-//   "HOLD_VIEW_UNSPECIFIED" - There is no specified view. Defaults to
-// FULL_HOLD.
-//   "BASIC_HOLD" - Response includes the id, name, update time, corpus,
-// and query.
-//   "FULL_HOLD" - Full representation of a Hold. Response includes all
-// fields of 'BASIC' and the entities the Hold applies to, such as
-// accounts, or OU.
+//   "HOLD_VIEW_UNSPECIFIED" - Not specified. Defaults to **FULL_HOLD**.
+//   "BASIC_HOLD" - Returns the hold ID, name, update time, service, and
+// query.
+//   "FULL_HOLD" - Returns all details of **BASIC_HOLD** and the
+// entities the hold applies to, such as accounts or organizational
+// unit.
 func (c *MattersHoldsListCall) View(view string) *MattersHoldsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5500,7 +5535,7 @@ func (c *MattersHoldsListCall) Header() http.Header {
 
 func (c *MattersHoldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5562,7 +5597,7 @@ func (c *MattersHoldsListCall) Do(opts ...googleapi.CallOption) (*ListHoldsRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists holds within a matter. An empty page token in ListHoldsResponse denotes no more holds to list.",
+	//   "description": "Lists the holds in a matter.",
 	//   "flatPath": "v1/matters/{matterId}/holds",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.holds.list",
@@ -5577,7 +5612,7 @@ func (c *MattersHoldsListCall) Do(opts ...googleapi.CallOption) (*ListHoldsRespo
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The number of holds to return in the response, between 0 and 100 inclusive. Leaving this empty, or as 0, is the same as page_size = 100.",
+	//       "description": "The number of holds to return in the response, between 0 and 100 inclusive. Leaving this empty, or as 0, is the same as **page_size** = 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5588,16 +5623,16 @@ func (c *MattersHoldsListCall) Do(opts ...googleapi.CallOption) (*ListHoldsRespo
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies which parts of the Hold to return.",
+	//       "description": "The amount of detail to return for a hold.",
 	//       "enum": [
 	//         "HOLD_VIEW_UNSPECIFIED",
 	//         "BASIC_HOLD",
 	//         "FULL_HOLD"
 	//       ],
 	//       "enumDescriptions": [
-	//         "There is no specified view. Defaults to FULL_HOLD.",
-	//         "Response includes the id, name, update time, corpus, and query.",
-	//         "Full representation of a Hold. Response includes all fields of 'BASIC' and the entities the Hold applies to, such as accounts, or OU."
+	//         "Not specified. Defaults to **FULL_HOLD**.",
+	//         "Returns the hold ID, name, update time, service, and query.",
+	//         "Returns all details of **BASIC_HOLD** and the entities the hold applies to, such as accounts or organizational unit."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5648,10 +5683,8 @@ type MattersHoldsRemoveHeldAccountsCall struct {
 	header_                   http.Header
 }
 
-// RemoveHeldAccounts: Removes HeldAccounts from a hold. Returns a list
-// of statuses in the same order as the request. If this request leaves
-// the hold with no held accounts, the hold will not apply to any
-// accounts.
+// RemoveHeldAccounts: Removes the specified accounts from a hold.
+// Returns a list of statuses in the same order as the request.
 //
 // - holdId: The hold ID.
 // - matterId: The matter ID.
@@ -5690,7 +5723,7 @@ func (c *MattersHoldsRemoveHeldAccountsCall) Header() http.Header {
 
 func (c *MattersHoldsRemoveHeldAccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5755,7 +5788,7 @@ func (c *MattersHoldsRemoveHeldAccountsCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes HeldAccounts from a hold. Returns a list of statuses in the same order as the request. If this request leaves the hold with no held accounts, the hold will not apply to any accounts.",
+	//   "description": "Removes the specified accounts from a hold. Returns a list of statuses in the same order as the request.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}:removeHeldAccounts",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.holds.removeHeldAccounts",
@@ -5803,10 +5836,11 @@ type MattersHoldsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the OU and/or query parameters of a hold. You cannot
-// add accounts to a hold that covers an OU, nor can you add OUs to a
-// hold that covers individual accounts. Accounts listed in the hold
-// will be ignored.
+// Update: Updates the scope (organizational unit or accounts) and query
+// parameters of a hold. You cannot add accounts to a hold that covers
+// an organizational unit, nor can you add organizational units to a
+// hold that covers individual accounts. If you try, the unsupported
+// values are ignored.
 //
 // - holdId: The ID of the hold.
 // - matterId: The matter ID.
@@ -5845,7 +5879,7 @@ func (c *MattersHoldsUpdateCall) Header() http.Header {
 
 func (c *MattersHoldsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5910,7 +5944,7 @@ func (c *MattersHoldsUpdateCall) Do(opts ...googleapi.CallOption) (*Hold, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the OU and/or query parameters of a hold. You cannot add accounts to a hold that covers an OU, nor can you add OUs to a hold that covers individual accounts. Accounts listed in the hold will be ignored.",
+	//   "description": "Updates the scope (organizational unit or accounts) and query parameters of a hold. You cannot add accounts to a hold that covers an organizational unit, nor can you add organizational units to a hold that covers individual accounts. If you try, the unsupported values are ignored.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}",
 	//   "httpMethod": "PUT",
 	//   "id": "vault.matters.holds.update",
@@ -5958,9 +5992,10 @@ type MattersHoldsAccountsCreateCall struct {
 	header_     http.Header
 }
 
-// Create: Adds a HeldAccount to a hold. Accounts can only be added to a
-// hold that has no held_org_unit set. Attempting to add an account to
-// an OU-based hold will result in an error.
+// Create: Adds an account to a hold. Accounts can be added only to a
+// hold that does not have an organizational unit set. If you try to add
+// an account to an organizational unit-based hold, an error is
+// returned.
 //
 // - holdId: The hold ID.
 // - matterId: The matter ID.
@@ -5999,7 +6034,7 @@ func (c *MattersHoldsAccountsCreateCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6064,7 +6099,7 @@ func (c *MattersHoldsAccountsCreateCall) Do(opts ...googleapi.CallOption) (*Held
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a HeldAccount to a hold. Accounts can only be added to a hold that has no held_org_unit set. Attempting to add an account to an OU-based hold will result in an error.",
+	//   "description": "Adds an account to a hold. Accounts can be added only to a hold that does not have an organizational unit set. If you try to add an account to an organizational unit-based hold, an error is returned.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts",
 	//   "httpMethod": "POST",
 	//   "id": "vault.matters.holds.accounts.create",
@@ -6112,8 +6147,7 @@ type MattersHoldsAccountsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes a HeldAccount from a hold. If this request leaves the
-// hold with no held accounts, the hold will not apply to any accounts.
+// Delete: Removes an account from a hold.
 //
 // - accountId: The ID of the account to remove from the hold.
 // - holdId: The hold ID.
@@ -6153,7 +6187,7 @@ func (c *MattersHoldsAccountsDeleteCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6214,7 +6248,7 @@ func (c *MattersHoldsAccountsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes a HeldAccount from a hold. If this request leaves the hold with no held accounts, the hold will not apply to any accounts.",
+	//   "description": "Removes an account from a hold.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts/{accountId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vault.matters.holds.accounts.delete",
@@ -6266,9 +6300,11 @@ type MattersHoldsAccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists HeldAccounts for a hold. This will only list individually
-// specified held accounts. If the hold is on an OU, then use Admin SDK
-// to enumerate its members.
+// List: Lists the accounts covered by a hold. This can list only
+// individually-specified accounts covered by the hold. If the hold
+// covers an organizational unit, use the Admin SDK
+// (https://developers.google.com/admin-sdk/). to list the members of
+// the organizational unit on hold.
 //
 // - holdId: The hold ID.
 // - matterId: The matter ID.
@@ -6316,7 +6352,7 @@ func (c *MattersHoldsAccountsListCall) Header() http.Header {
 
 func (c *MattersHoldsAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6379,7 +6415,7 @@ func (c *MattersHoldsAccountsListCall) Do(opts ...googleapi.CallOption) (*ListHe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists HeldAccounts for a hold. This will only list individually specified held accounts. If the hold is on an OU, then use Admin SDK to enumerate its members.",
+	//   "description": "Lists the accounts covered by a hold. This can list only individually-specified accounts covered by the hold. If the hold covers an organizational unit, use the [Admin SDK](https://developers.google.com/admin-sdk/). to list the members of the organizational unit on hold.",
 	//   "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.holds.accounts.list",
@@ -6426,8 +6462,7 @@ type MattersSavedQueriesCreateCall struct {
 
 // Create: Creates a saved query.
 //
-// - matterId: The matter ID of the parent matter for which the saved
-//   query is to be created.
+// - matterId: The ID of the matter to create the saved query in.
 func (r *MattersSavedQueriesService) Create(matterId string, savedquery *SavedQuery) *MattersSavedQueriesCreateCall {
 	c := &MattersSavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6462,7 +6497,7 @@ func (c *MattersSavedQueriesCreateCall) Header() http.Header {
 
 func (c *MattersSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6535,7 +6570,7 @@ func (c *MattersSavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*Saved
 	//   ],
 	//   "parameters": {
 	//     "matterId": {
-	//       "description": "The matter ID of the parent matter for which the saved query is to be created.",
+	//       "description": "The ID of the matter to create the saved query in.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6566,11 +6601,10 @@ type MattersSavedQueriesDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes a saved query by Id.
+// Delete: Deletes the specified saved query.
 //
-// - matterId: The matter ID of the parent matter for which the saved
-//   query is to be deleted.
-// - savedQueryId: ID of the saved query to be deleted.
+// - matterId: The ID of the matter to delete the saved query from.
+// - savedQueryId: ID of the saved query to delete.
 func (r *MattersSavedQueriesService) Delete(matterId string, savedQueryId string) *MattersSavedQueriesDeleteCall {
 	c := &MattersSavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6605,7 +6639,7 @@ func (c *MattersSavedQueriesDeleteCall) Header() http.Header {
 
 func (c *MattersSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6665,7 +6699,7 @@ func (c *MattersSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a saved query by Id.",
+	//   "description": "Deletes the specified saved query.",
 	//   "flatPath": "v1/matters/{matterId}/savedQueries/{savedQueryId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vault.matters.savedQueries.delete",
@@ -6675,13 +6709,13 @@ func (c *MattersSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   ],
 	//   "parameters": {
 	//     "matterId": {
-	//       "description": "The matter ID of the parent matter for which the saved query is to be deleted.",
+	//       "description": "The ID of the matter to delete the saved query from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "ID of the saved query to be deleted.",
+	//       "description": "ID of the saved query to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6710,11 +6744,10 @@ type MattersSavedQueriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a saved query by Id.
+// Get: Retrieves the specified saved query.
 //
-// - matterId: The matter ID of the parent matter for which the saved
-//   query is to be retrieved.
-// - savedQueryId: ID of the saved query to be retrieved.
+// - matterId: The ID of the matter to get the saved query from.
+// - savedQueryId: ID of the saved query to retrieve.
 func (r *MattersSavedQueriesService) Get(matterId string, savedQueryId string) *MattersSavedQueriesGetCall {
 	c := &MattersSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6759,7 +6792,7 @@ func (c *MattersSavedQueriesGetCall) Header() http.Header {
 
 func (c *MattersSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6822,7 +6855,7 @@ func (c *MattersSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQue
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a saved query by Id.",
+	//   "description": "Retrieves the specified saved query.",
 	//   "flatPath": "v1/matters/{matterId}/savedQueries/{savedQueryId}",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.savedQueries.get",
@@ -6832,13 +6865,13 @@ func (c *MattersSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQue
 	//   ],
 	//   "parameters": {
 	//     "matterId": {
-	//       "description": "The matter ID of the parent matter for which the saved query is to be retrieved.",
+	//       "description": "The ID of the matter to get the saved query from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "ID of the saved query to be retrieved.",
+	//       "description": "ID of the saved query to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6867,11 +6900,9 @@ type MattersSavedQueriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists saved queries within a matter. An empty page token in
-// ListSavedQueriesResponse denotes no more saved queries to list.
+// List: Lists the saved queries in a matter.
 //
-// - matterId: The matter ID of the parent matter for which the saved
-//   queries are to be retrieved.
+// - matterId: The ID of the matter to get the saved queries for.
 func (r *MattersSavedQueriesService) List(matterId string) *MattersSavedQueriesListCall {
 	c := &MattersSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matterId = matterId
@@ -6930,7 +6961,7 @@ func (c *MattersSavedQueriesListCall) Header() http.Header {
 
 func (c *MattersSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6992,7 +7023,7 @@ func (c *MattersSavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSav
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists saved queries within a matter. An empty page token in ListSavedQueriesResponse denotes no more saved queries to list.",
+	//   "description": "Lists the saved queries in a matter.",
 	//   "flatPath": "v1/matters/{matterId}/savedQueries",
 	//   "httpMethod": "GET",
 	//   "id": "vault.matters.savedQueries.list",
@@ -7001,7 +7032,7 @@ func (c *MattersSavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSav
 	//   ],
 	//   "parameters": {
 	//     "matterId": {
-	//       "description": "The matter ID of the parent matter for which the saved queries are to be retrieved.",
+	//       "description": "The ID of the matter to get the saved queries for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7108,7 +7139,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7248,7 +7279,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7390,7 +7421,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7567,7 +7598,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

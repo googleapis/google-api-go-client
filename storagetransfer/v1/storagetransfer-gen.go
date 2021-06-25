@@ -557,17 +557,15 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 // `updated` property of Cloud Storage objects, which changes when the
 // content or the metadata of the object is updated.
 type GcsData struct {
-	// BucketName: Required. Cloud Storage bucket name (see Bucket Name
-	// Requirements
-	// (https://cloud.google.com/storage/docs/naming#requirements)).
+	// BucketName: Required. Cloud Storage bucket name. Must meet Bucket
+	// Name Requirements (/storage/docs/naming#requirements).
 	BucketName string `json:"bucketName,omitempty"`
 
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
-	// prefix. As such, it should generally not begin with a '/'. (must meet
-	// Object Name
-	// Requirements](https://cloud.google.com/storage/docs/naming#objectnames
-	// )).
+	// prefix. As such, it should generally not begin with a '/'. The root
+	// path value must meet Object Name Requirements
+	// (/storage/docs/naming#objectnames).
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
@@ -645,11 +643,11 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // from the transferred bytes, the object transfer will fail. * Ensure
 // that each URL you specify is publicly accessible. For example, in
 // Cloud Storage you can [share an object publicly]
-// (https://cloud.google.com/storage/docs/cloud-console#_sharingdata)
-// and get a link to it. * Storage Transfer Service obeys `robots.txt`
-// rules and requires the source HTTP server to support `Range` requests
-// and to return a `Content-Length` header in each response. *
-// ObjectConditions have no effect when filtering objects to transfer.
+// (/storage/docs/cloud-console#_sharingdata) and get a link to it. *
+// Storage Transfer Service obeys `robots.txt` rules and requires the
+// source HTTP server to support `Range` requests and to return a
+// `Content-Length` header in each response. * ObjectConditions have no
+// effect when filtering objects to transfer.
 type HttpData struct {
 	// ListUrl: Required. The URL that points to the file that stores the
 	// object list entries. This file must allow public access. Currently,
@@ -1545,7 +1543,7 @@ type UpdateTransferJobRequest struct {
 	// to specify only four fields: description, transfer_spec,
 	// notification_config, and status. An `UpdateTransferJobRequest` that
 	// specifies other fields are rejected with the error INVALID_ARGUMENT.
-	// Updating a job satus to DELETED requires
+	// Updating a job status to DELETED requires
 	// `storagetransfer.jobs.delete` permissions.
 	TransferJob *TransferJob `json:"transferJob,omitempty"`
 
@@ -1646,7 +1644,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1778,7 +1776,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1919,7 +1917,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2092,7 +2090,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2260,7 +2258,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2405,7 +2403,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2565,7 +2563,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2718,7 +2716,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2891,7 +2889,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3067,7 +3065,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3209,7 +3207,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210623")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210624")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

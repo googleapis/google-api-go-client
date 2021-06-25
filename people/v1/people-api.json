@@ -413,7 +413,7 @@
               "type": "string"
             },
             "readMask": {
-              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers",
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers * photos",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -445,7 +445,7 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 10 will be capped to 10.",
+              "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 30 will be capped to 30.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -853,7 +853,7 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 10 will be capped to 10.",
+              "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 30 will be capped to 30.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -1154,7 +1154,7 @@
       }
     }
   },
-  "revision": "20210621",
+  "revision": "20210623",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

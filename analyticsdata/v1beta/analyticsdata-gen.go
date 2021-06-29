@@ -1291,6 +1291,60 @@ func (s *MetricValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MinuteRange: A contiguous set of minutes: startMinutesAgo,
+// startMinutesAgo + 1, ..., endMinutesAgo. Requests are allowed up to 2
+// minute ranges.
+type MinuteRange struct {
+	// EndMinutesAgo: The inclusive end minute for the query as a number of
+	// minutes before now. Cannot be before `startMinutesAgo`. For example,
+	// "endMinutesAgo": 15` specifies the report should include event data
+	// from prior to 15 minutes ago. If unspecified, `endMinutesAgo` is
+	// defaulted to 0. Standard Analytics properties can request any minute
+	// in the last 30 minutes of event data (`endMinutesAgo <= 29`), and 360
+	// Analytics properties can request any minute in the last 60 minutes of
+	// event data (`endMinutesAgo <= 59`).
+	EndMinutesAgo int64 `json:"endMinutesAgo,omitempty"`
+
+	// Name: Assigns a name to this minute range. The dimension `dateRange`
+	// is valued to this name in a report response. If set, cannot begin
+	// with `date_range_` or `RESERVED_`. If not set, minute ranges are
+	// named by their zero based index in the request: `date_range_0`,
+	// `date_range_1`, etc.
+	Name string `json:"name,omitempty"`
+
+	// StartMinutesAgo: The inclusive start minute for the query as a number
+	// of minutes before now. For example, "startMinutesAgo": 29` specifies
+	// the report should include event data from 29 minutes ago and after.
+	// Cannot be after `endMinutesAgo`. If unspecified, `startMinutesAgo` is
+	// defaulted to 29. Standard Analytics properties can request up to the
+	// last 30 minutes of event data (`startMinutesAgo <= 29`), and 360
+	// Analytics properties can request up to the last 60 minutes of event
+	// data (`startMinutesAgo <= 59`).
+	StartMinutesAgo int64 `json:"startMinutesAgo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndMinutesAgo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndMinutesAgo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MinuteRange) MarshalJSON() ([]byte, error) {
+	type NoMethod MinuteRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NumericFilter: Filters for numeric or date values.
 type NumericFilter struct {
 	// Operation: The operation type for this filter.
@@ -1983,6 +2037,14 @@ type RunRealtimeReportRequest struct {
 	// Metrics: The metrics requested and displayed.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
+	// MinuteRanges: The minute ranges of event data to read. If
+	// unspecified, one minute range for the last 30 minutes will be used.
+	// If multiple minute ranges are requested, each response row will
+	// contain a zero based minute range index. If two minute ranges
+	// overlap, the event data for the overlapping minutes is included in
+	// the response rows for both minute ranges.
+	MinuteRanges []*MinuteRange `json:"minuteRanges,omitempty"`
+
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 
@@ -2370,7 +2432,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2520,7 +2582,7 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2688,7 +2750,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2836,7 +2898,7 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2985,7 +3047,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3140,7 +3202,7 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

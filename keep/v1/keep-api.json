@@ -14,7 +14,7 @@
   "canonicalName": "Keep",
   "description": "This API is an enterprise-only API used to create and manage the Keep notes within your domain, including resolving issues identified by CASB software.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://support.google.com/keep",
+  "documentationLink": "https://developers.google.com/keep/api",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -308,7 +308,7 @@
       }
     }
   },
-  "revision": "20210621",
+  "revision": "20210622",
   "rootUrl": "https://keep.googleapis.com/",
   "schemas": {
     "Attachment": {

@@ -1103,7 +1103,7 @@
       }
     }
   },
-  "revision": "20210613",
+  "revision": "20210625",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1591,6 +1591,10 @@
       "description": "Configuration for an automated build in response to source repository changes.",
       "id": "BuildTrigger",
       "properties": {
+        "autodetect": {
+          "description": "Autodetect build configuration. The following precedence is used (case insensitive): 1. cloudbuild.yaml 2. cloudbuild.yml 3. cloudbuild.json 4. Dockerfile Currently only available for GitHub App Triggers.",
+          "type": "boolean"
+        },
         "build": {
           "$ref": "Build",
           "description": "Contents of the build template."
@@ -2365,7 +2369,7 @@
         },
         "storageSourceManifest": {
           "$ref": "StorageSourceManifest",
-          "description": "If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview."
+          "description": "If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview; see description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher)."
         }
       },
       "type": "object"
@@ -2445,7 +2449,7 @@
       "type": "object"
     },
     "StorageSourceManifest": {
-      "description": "Location of the source manifest in Google Cloud Storage. This feature is in Preview.",
+      "description": "Location of the source manifest in Google Cloud Storage. This feature is in Preview; see description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).",
       "id": "StorageSourceManifest",
       "properties": {
         "bucket": {

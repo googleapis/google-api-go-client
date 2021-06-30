@@ -497,6 +497,7 @@ type Contest struct {
 	//   "judge"
 	//   "schoolBoard"
 	//   "specialPurposeOfficer"
+	//   "otherRole"
 	Roles []string `json:"roles,omitempty"`
 
 	// Sources: A list of sources for this contest. If multiple sources are
@@ -880,6 +881,7 @@ type Office struct {
 	//   "judge"
 	//   "schoolBoard"
 	//   "specialPurposeOfficer"
+	//   "otherRole"
 	Roles []string `json:"roles,omitempty"`
 
 	// Sources: A list of sources for this office. If multiple sources are
@@ -1355,7 +1357,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210629")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1489,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210629")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1645,7 +1647,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210629")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1815,6 +1817,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 //   "judge"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
+//   "otherRole"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
@@ -1857,7 +1860,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210629")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1974,9 +1977,11 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	//         "highestCourtJudge",
 	//         "judge",
 	//         "schoolBoard",
-	//         "specialPurposeOfficer"
+	//         "specialPurposeOfficer",
+	//         "otherRole"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2071,6 +2076,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "judge"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
+//   "otherRole"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
@@ -2113,7 +2119,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210628")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210629")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2235,9 +2241,11 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	//         "highestCourtJudge",
 	//         "judge",
 	//         "schoolBoard",
-	//         "specialPurposeOfficer"
+	//         "specialPurposeOfficer",
+	//         "otherRole"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

@@ -1,5 +1,17 @@
 # Changes
 
+## [0.50.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.49.0...v0.50.0) (2021-06-30)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1097](https://www.github.com/googleapis/google-api-go-client/issues/1097) [#1095](https://www.github.com/googleapis/google-api-go-client/issues/1095) [#1093](https://www.github.com/googleapis/google-api-go-client/issues/1093) [#1090](https://www.github.com/googleapis/google-api-go-client/issues/1090) [#1089](https://www.github.com/googleapis/google-api-go-client/issues/1089) [#1088](https://www.github.com/googleapis/google-api-go-client/issues/1088) [#1086](https://www.github.com/googleapis/google-api-go-client/issues/1086)
+
+
+### Bug Fixes
+
+* **internal:** fix self-signed detection with scopes ([#1096](https://www.github.com/googleapis/google-api-go-client/issues/1096)) ([ff1d20b](https://www.github.com/googleapis/google-api-go-client/commit/ff1d20ba85c66fcaed1c1e466fbc647e09339854)), refs [#1092](https://www.github.com/googleapis/google-api-go-client/issues/1092)
+
 ## [0.49.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.48.0...v0.49.0) (2021-06-23)
 
 

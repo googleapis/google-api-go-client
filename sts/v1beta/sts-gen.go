@@ -169,7 +169,8 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// short-lived access token issued by Google. If the token is an OIDC
 	// JWT, it must use the JWT format defined in RFC 7523
 	// (https://tools.ietf.org/html/rfc7523), and the `subject_token_type`
-	// must be `urn:ietf:params:oauth:token-type:jwt`. The following headers
+	// must be either `urn:ietf:params:oauth:token-type:jwt` or
+	// `urn:ietf:params:oauth:token-type:id_token`. The following headers
 	// are required: - `kid`: The identifier of the signing key securing the
 	// JWT. - `alg`: The cryptographic algorithm securing the JWT. Must be
 	// `RS256` or `ES256`. The following payload fields are required. For
@@ -249,6 +250,7 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// SubjectTokenType: Required. An identifier that indicates the type of
 	// the security token in the `subject_token` parameter. Supported values
 	// are `urn:ietf:params:oauth:token-type:jwt`,
+	// `urn:ietf:params:oauth:token-type:id_token`,
 	// `urn:ietf:params:aws:token-type:aws4_request`, and
 	// `urn:ietf:params:oauth:token-type:access_token`.
 	SubjectTokenType string `json:"subjectTokenType,omitempty"`
@@ -377,7 +379,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210629")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

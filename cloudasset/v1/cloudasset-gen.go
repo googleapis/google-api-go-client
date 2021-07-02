@@ -4363,6 +4363,14 @@ type ResourceSearchResult struct {
 	// quoted). Example: `updateTime < "2021-01-01T00:00:00"
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// VersionedResources: Versioned resource representations of this
+	// resource. This is repeated because there could be multiple versions
+	// of resource representations during version migration. This
+	// `versioned_resources` field is not searchable. Some attributes of the
+	// resource representations are exposed in `additional_attributes`
+	// field, so as to allow users to search on them.
+	VersionedResources []*VersionedResource `json:"versionedResources,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalAttributes") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.
@@ -4763,6 +4771,50 @@ func (s *VersionedPackage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VersionedResource: Resource representation as defined by the
+// corresponding service providing the resource for a given API version.
+type VersionedResource struct {
+	// Resource: JSON representation of the resource as defined by the
+	// corresponding service providing this resource. Example: If the
+	// resource is an instance provided by Compute Engine, this field will
+	// contain the JSON representation of the instance as defined by Compute
+	// Engine:
+	// `https://cloud.google.com/compute/docs/reference/rest/v1/instances`.
+	// You can find the resource definition for each supported resource type
+	// in this table:
+	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
+	// earchable_asset_types`
+	Resource googleapi.RawMessage `json:"resource,omitempty"`
+
+	// Version: API version of the resource. Example: If the resource is an
+	// instance provided by Compute Engine v1 API as defined in
+	// `https://cloud.google.com/compute/docs/reference/rest/v1/instances`,
+	// version will be "v1".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Resource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VersionedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod VersionedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WindowsQuickFixEngineeringPackage: Information related to a Quick Fix
 // Engineering package. Fields are taken from Windows
 // QuickFixEngineering Interface and match the source names:
@@ -5062,7 +5114,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5269,7 +5321,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5412,7 +5464,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5558,7 +5610,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5707,7 +5759,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5850,7 +5902,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6003,7 +6055,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6313,7 +6365,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6531,7 +6583,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6716,7 +6768,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6935,7 +6987,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7124,7 +7176,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7379,7 +7431,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7636,6 +7688,27 @@ func (c *V1SearchAllResourcesCall) Query(query string) *V1SearchAllResourcesCall
 	return c
 }
 
+// ReadMask sets the optional parameter "readMask": A comma-separated
+// list of fields specifying which fields to be returned in
+// ResourceSearchResult. Only '*' or combination of top level fields can
+// be specified. Field names of both snake_case and camelCase are
+// supported. Examples: "*", "name,location",
+// "name,versionedResources". The read_mask paths must be valid field
+// paths listed but not limited to (both snake_case and camelCase are
+// supported): * name * asset_type or assetType * project * display_name
+// or displayName * description * location * labels * network_tags or
+// networkTags * kms_key or kmsKey * create_time or createTime *
+// update_time or updateTime * state * additional_attributes or
+// additionalAttributes * versioned_resources or versionedResources If
+// read_mask is not specified, all fields except versionedResources will
+// be returned. If only '*' is specified, all fields including
+// versionedResources will be returned. Any invalid field path will
+// trigger INVALID_ARGUMENT error.
+func (c *V1SearchAllResourcesCall) ReadMask(readMask string) *V1SearchAllResourcesCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7673,7 +7746,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210701")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7767,6 +7840,12 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//     },
 	//     "query": {
 	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key whose name contains the word \"key\". * `state:ACTIVE` to find Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find {{gcp_name}} resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * asset_type or assetType * project * display_name or displayName * description * location * labels * network_tags or networkTags * kms_key or kmsKey * create_time or createTime * update_time or updateTime * state * additional_attributes or additionalAttributes * versioned_resources or versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
+	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

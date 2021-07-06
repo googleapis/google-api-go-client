@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/google-api-go-client.git",
-        "sha": "beef2d9596c49a90d01b8f3a3ce857c730f5718e"
+        "sha": "377be50ab1b374769b3f1a083fb79e11d73179c3"
       }
     }
   ]

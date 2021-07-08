@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   keepService, err := keep.NewService(ctx, option.WithScopes(keep.KeepReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   keepService, err := keep.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -81,12 +85,16 @@ const mtlsBasePath = "https://keep.mtls.googleapis.com/"
 const (
 	// See, edit, create and permanently delete all your Google Keep data
 	KeepScope = "https://www.googleapis.com/auth/keep"
+
+	// View all your Google Keep data
+	KeepReadonlyScope = "https://www.googleapis.com/auth/keep.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/keep",
+		"https://www.googleapis.com/auth/keep.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -760,7 +768,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -864,7 +872,8 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Attachment, error
 	//     "$ref": "Attachment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
+	//     "https://www.googleapis.com/auth/keep",
+	//     "https://www.googleapis.com/auth/keep.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
 	//   "useMediaDownloadService": true
@@ -916,7 +925,7 @@ func (c *NotesCreateCall) Header() http.Header {
 
 func (c *NotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1045,7 +1054,7 @@ func (c *NotesDeleteCall) Header() http.Header {
 
 func (c *NotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1188,7 +1197,7 @@ func (c *NotesGetCall) Header() http.Header {
 
 func (c *NotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1271,7 +1280,8 @@ func (c *NotesGetCall) Do(opts ...googleapi.CallOption) (*Note, error) {
 	//     "$ref": "Note"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
+	//     "https://www.googleapis.com/auth/keep",
+	//     "https://www.googleapis.com/auth/keep.readonly"
 	//   ]
 	// }
 
@@ -1364,7 +1374,7 @@ func (c *NotesListCall) Header() http.Header {
 
 func (c *NotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1451,7 +1461,8 @@ func (c *NotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesResponse, er
 	//     "$ref": "ListNotesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
+	//     "https://www.googleapis.com/auth/keep",
+	//     "https://www.googleapis.com/auth/keep.readonly"
 	//   ]
 	// }
 
@@ -1532,7 +1543,7 @@ func (c *NotesPermissionsBatchCreateCall) Header() http.Header {
 
 func (c *NotesPermissionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1682,7 +1693,7 @@ func (c *NotesPermissionsBatchDeleteCall) Header() http.Header {
 
 func (c *NotesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210706")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

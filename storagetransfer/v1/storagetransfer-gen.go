@@ -225,11 +225,14 @@ type AwsS3Data struct {
 	// prefix. As such, it should generally not begin with a '/'.
 	Path string `json:"path,omitempty"`
 
-	// RoleArn: Input only. Role arn to support temporary credentials via
-	// AssumeRoleWithWebIdentity. When role arn is provided, transfer
-	// service will fetch temporary credentials for the session using
-	// AssumeRoleWithWebIdentity call for the provided role using the
-	// [GoogleServiceAccount] for this project.
+	// RoleArn: Input only. The Amazon Resource Name (ARN) of the role to
+	// support temporary credentials via `AssumeRoleWithWebIdentity`. For
+	// more information about ARNs, see IAM ARNs
+	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns).
+	// When a role ARN is provided, Transfer Service fetches temporary
+	// credentials for the session using a `AssumeRoleWithWebIdentity` call
+	// for the provided role using the GoogleServiceAccount for this
+	// project.
 	RoleArn string `json:"roleArn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AwsAccessKey") to
@@ -535,7 +538,7 @@ type ErrorSummary struct {
 	// ErrorCount: Required. Count of this type of error.
 	ErrorCount int64 `json:"errorCount,omitempty,string"`
 
-	// ErrorLogEntries: Error samples. At most 5 error log entries will be
+	// ErrorLogEntries: Error samples. At most 5 error log entries are
 	// recorded for a given error code for a single transfer operation.
 	ErrorLogEntries []*ErrorLogEntry `json:"errorLogEntries,omitempty"`
 
@@ -651,11 +654,11 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // mind: * When an object located at `http(s)://hostname:port/` is
 // transferred to a data sink, the name of the object at the data sink
 // is `/`. * If the specified size of an object does not match the
-// actual size of the object fetched, the object will not be
-// transferred. * If the specified MD5 does not match the MD5 computed
-// from the transferred bytes, the object transfer will fail. * Ensure
-// that each URL you specify is publicly accessible. For example, in
-// Cloud Storage you can [share an object publicly]
+// actual size of the object fetched, the object is not transferred. *
+// If the specified MD5 does not match the MD5 computed from the
+// transferred bytes, the object transfer fails. * Ensure that each URL
+// you specify is publicly accessible. For example, in Cloud Storage you
+// can [share an object publicly]
 // (/storage/docs/cloud-console#_sharingdata) and get a link to it. *
 // Storage Transfer Service obeys `robots.txt` rules and requires the
 // source HTTP server to support `Range` requests and to return a
@@ -763,15 +766,15 @@ func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // NotificationConfig: Specification to configure notifications
-// published to Cloud Pub/Sub. Notifications will be published to the
+// published to Pub/Sub. Notifications are published to the
 // customer-provided topic using the following
 // `PubsubMessage.attributes`: * "eventType": one of the EventType
 // values * "payloadFormat": one of the PayloadFormat values *
 // "projectId": the project_id of the `TransferOperation` *
 // "transferJobName": the transfer_job_name of the `TransferOperation`
 // * "transferOperationName": the name of the `TransferOperation` The
-// `PubsubMessage.data` will contain a TransferOperation resource
-// formatted according to the specified `PayloadFormat`.
+// `PubsubMessage.data` contains a TransferOperation resource formatted
+// according to the specified `PayloadFormat`.
 type NotificationConfig struct {
 	// EventTypes: Event types for which a notification is desired. If
 	// empty, send notifications for all event types.
@@ -799,10 +802,10 @@ type NotificationConfig struct {
 	// son), in application/json.
 	PayloadFormat string `json:"payloadFormat,omitempty"`
 
-	// PubsubTopic: Required. The `Topic.name` of the Cloud Pub/Sub topic to
-	// which to publish notifications. Must be of the format:
-	// `projects/{project}/topics/{topic}`. Not matching this format will
-	// result in an INVALID_ARGUMENT error.
+	// PubsubTopic: Required. The `Topic.name` of the Pub/Sub topic to which
+	// to publish notifications. Must be of the format:
+	// `projects/{project}/topics/{topic}`. Not matching this format results
+	// in an INVALID_ARGUMENT error.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventTypes") to
@@ -828,7 +831,7 @@ func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ObjectConditions: Conditions that determine which objects will be
+// ObjectConditions: Conditions that determine which objects are
 // transferred. Applies only to Cloud Data Sources such as S3, Azure,
 // and Cloud Storage. The "last modification time" refers to the time of
 // the last change to the object's content or metadata — specifically,
@@ -882,7 +885,7 @@ type ObjectConditions struct {
 
 	// LastModifiedBefore: If specified, only objects with a "last
 	// modification time" before this timestamp and objects that don't have
-	// a "last modification time" will be transferred.
+	// a "last modification time" are transferred.
 	LastModifiedBefore string `json:"lastModifiedBefore,omitempty"`
 
 	// LastModifiedSince: If specified, only objects with a "last
@@ -1051,13 +1054,13 @@ type Schedule struct {
 	RepeatInterval string `json:"repeatInterval,omitempty"`
 
 	// ScheduleEndDate: The last day a transfer runs. Date boundaries are
-	// determined relative to UTC time. A job will run once per 24 hours
-	// within the following guidelines: * If `schedule_end_date` and
+	// determined relative to UTC time. A job runs once per 24 hours within
+	// the following guidelines: * If `schedule_end_date` and
 	// schedule_start_date are the same and in the future relative to UTC,
 	// the transfer is executed only one time. * If `schedule_end_date` is
 	// later than `schedule_start_date` and `schedule_end_date` is in the
-	// future relative to UTC, the job will run each day at
-	// start_time_of_day through `schedule_end_date`.
+	// future relative to UTC, the job runs each day at start_time_of_day
+	// through `schedule_end_date`.
 	ScheduleEndDate *Date `json:"scheduleEndDate,omitempty"`
 
 	// ScheduleStartDate: Required. The start date of a transfer. Date
@@ -1065,13 +1068,13 @@ type Schedule struct {
 	// `schedule_start_date` and start_time_of_day are in the past relative
 	// to the job's creation time, the transfer starts the day after you
 	// schedule the transfer request. **Note:** When starting jobs at or
-	// near midnight UTC it is possible that a job will start later than
+	// near midnight UTC it is possible that a job starts later than
 	// expected. For example, if you send an outbound request on June 1 one
 	// millisecond prior to midnight UTC and the Storage Transfer Service
-	// server receives the request on June 2, then it will create a
-	// TransferJob with `schedule_start_date` set to June 2 and a
-	// `start_time_of_day` set to midnight UTC. The first scheduled
-	// TransferOperation will take place on June 3 at midnight UTC.
+	// server receives the request on June 2, then it creates a TransferJob
+	// with `schedule_start_date` set to June 2 and a `start_time_of_day`
+	// set to midnight UTC. The first scheduled TransferOperation takes
+	// place on June 3 at midnight UTC.
 	ScheduleStartDate *Date `json:"scheduleStartDate,omitempty"`
 
 	// StartTimeOfDay: The time in UTC that a transfer job is scheduled to
@@ -1308,7 +1311,7 @@ type TransferJob struct {
 
 	// Name: A unique name (within the transfer project) assigned when the
 	// job is created. If this field is empty in a CreateTransferJobRequest,
-	// Storage Transfer Service will assign a unique name. Otherwise, the
+	// Storage Transfer Service assigns a unique name. Otherwise, the
 	// specified name is used as the unique name for this job. If the
 	// specified name is in use by a job, the creation request fails with an
 	// ALREADY_EXISTS error. This name must start with "transferJobs/"
@@ -1316,7 +1319,7 @@ type TransferJob struct {
 	// 128 characters. This name must not start with 'transferJobs/OPI'.
 	// 'transferJobs/OPI' is a reserved prefix. Example:
 	// "transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$" Invalid job
-	// names will fail with an INVALID_ARGUMENT error.
+	// names fail with an INVALID_ARGUMENT error.
 	Name string `json:"name,omitempty"`
 
 	// NotificationConfig: Notification configuration.
@@ -1327,9 +1330,9 @@ type TransferJob struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Schedule: Specifies schedule for the transfer job. This is an
-	// optional field. When the field is not set, the job will never execute
-	// a transfer, unless you invoke RunTransferJob or update the job to
-	// have a non-empty schedule.
+	// optional field. When the field is not set, the job never executes a
+	// transfer, unless you invoke RunTransferJob or update the job to have
+	// a non-empty schedule.
 	Schedule *Schedule `json:"schedule,omitempty"`
 
 	// Status: Status of the job. This value MUST be specified for
@@ -1341,8 +1344,8 @@ type TransferJob struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Zero is an illegal value.
-	//   "ENABLED" - New transfers will be performed based on the schedule.
-	//   "DISABLED" - New transfers will not be scheduled.
+	//   "ENABLED" - New transfers are performed based on the schedule.
+	//   "DISABLED" - New transfers are not scheduled.
 	//   "DELETED" - This is a soft delete state. After a transfer job is
 	// set to this state, the job and all the transfer executions are
 	// subject to garbage collection. Transfer jobs become eligible for
@@ -1464,8 +1467,8 @@ type TransferOptions struct {
 	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
 	// already exist in the sink. The default is that only objects that are
 	// different from the source are ovewritten. If true, all objects in the
-	// sink whose name matches an object in the source will be overwritten
-	// with the source object.
+	// sink whose name matches an object in the source are overwritten with
+	// the source object.
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1657,7 +1660,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1789,7 +1792,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1930,7 +1933,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2103,7 +2106,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2271,7 +2274,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2416,7 +2419,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2576,7 +2579,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2729,7 +2732,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2902,7 +2905,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,7 +3081,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3220,7 +3223,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

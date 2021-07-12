@@ -15,6 +15,6 @@ require (
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
 	golang.org/x/tools v0.1.4
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20210701191553-46259e63a0a9
+	google.golang.org/genproto v0.0.0-20210708141623-e76da96a951f
 	google.golang.org/grpc v1.39.0
 )

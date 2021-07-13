@@ -4248,6 +4248,9 @@ type Request struct {
 	// UpdateShapeProperties: Updates the properties of a Shape.
 	UpdateShapeProperties *UpdateShapePropertiesRequest `json:"updateShapeProperties,omitempty"`
 
+	// UpdateSlideProperties: Updates the properties of a Slide
+	UpdateSlideProperties *UpdateSlidePropertiesRequest `json:"updateSlideProperties,omitempty"`
+
 	// UpdateSlidesPosition: Updates the position of a set of slides in the
 	// presentation.
 	UpdateSlidesPosition *UpdateSlidesPositionRequest `json:"updateSlidesPosition,omitempty"`
@@ -6578,6 +6581,45 @@ func (s *UpdateShapePropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateSlidePropertiesRequest: Updates the properties of a Slide.
+type UpdateSlidePropertiesRequest struct {
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root 'slideProperties' is implied and should not be
+	// specified. A single "*" can be used as short-hand for listing every
+	// field. For example to update whether a slide is skipped, set `fields`
+	// to "isSkipped". To reset a property to its default value, include
+	// its field name in the field mask but leave the field itself unset.
+	Fields string `json:"fields,omitempty"`
+
+	// ObjectId: The object ID of the slide the update is applied to.
+	ObjectId string `json:"objectId,omitempty"`
+
+	// SlideProperties: The slide properties to update.
+	SlideProperties *SlideProperties `json:"slideProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSlidePropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSlidePropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateSlidesPositionRequest: Updates the position of slides in the
 // presentation.
 type UpdateSlidesPositionRequest struct {
@@ -7174,7 +7216,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210712")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7320,7 +7362,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210712")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7460,7 +7502,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210712")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7614,7 +7656,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210712")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7807,7 +7849,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210712")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

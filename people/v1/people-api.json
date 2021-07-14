@@ -423,6 +423,24 @@
               "location": "query",
               "type": "boolean"
             },
+            "sources": {
+              "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
+              "enum": [
+                "READ_SOURCE_TYPE_UNSPECIFIED",
+                "READ_SOURCE_TYPE_PROFILE",
+                "READ_SOURCE_TYPE_CONTACT",
+                "READ_SOURCE_TYPE_DOMAIN_CONTACT"
+              ],
+              "enumDescriptions": [
+                "Unspecified.",
+                "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
+                "Returns SourceType.CONTACT.",
+                "Returns SourceType.DOMAIN_CONTACT."
+              ],
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
             "syncToken": {
               "description": "Optional. A sync token, received from a previous `ListOtherContacts` call. Provide this to retrieve only the resources changed since the last request. Sync requests that specify `sync_token` have an additional rate limit. When the `syncToken` is specified, resources deleted since the last sync will be returned as a person with [`PersonMetadata.deleted`](/people/api/rest/v1/people#Person.PersonMetadata.FIELDS.deleted) set to true. When the `syncToken` is specified, all other parameters provided to `ListOtherContacts` must match the call that provided the sync token.",
               "location": "query",
@@ -1154,7 +1172,7 @@
       }
     }
   },
-  "revision": "20210623",
+  "revision": "20210712",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

@@ -572,6 +572,30 @@ func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata) MarshalJS
 // Response message associated with the ExportProcessorVersion
 // operation.
 type GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse struct {
+	// GcsUri: The Cloud Storage URI containing the output artifacts.
+	GcsUri string `json:"gcsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
@@ -6177,7 +6201,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210713")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210714")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6322,7 +6346,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210713")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210714")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6468,7 +6492,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210713")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210714")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6613,7 +6637,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210713")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210714")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6767,7 +6791,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210713")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210714")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6915,7 +6939,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210713")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210714")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

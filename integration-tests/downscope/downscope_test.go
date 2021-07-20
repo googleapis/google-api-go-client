@@ -8,12 +8,13 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"google.golang.org/api/option"
 	"io/ioutil"
 	"log"
 	"os"
 	"testing"
 	"time"
+
+	"google.golang.org/api/option"
 
 	"cloud.google.com/go/storage"
 	"golang.org/x/oauth2"
@@ -22,20 +23,14 @@ import (
 )
 
 const (
-	envObject1            = "OBJECT_NAME_1"
-	envBucket1            = "BUCKET_NAME_1"
-	envObject2            = "OBJECT_NAME_2"
-	envBucket2            = "BUCKET_NAME_2"
 	envServiceAccountFile = "GCLOUD_TESTS_GOLANG_KEY"
 	rootTokenScope        = "https://www.googleapis.com/auth/cloud-platform"
-	projectID             = "dulcet-port-762"
 )
 
 var (
-	object1        string
-	object2        string
-	bucket1 = "dulcet-port-762"
-	bucket2        string
+	object1        = "cab-first-c45wknuy.txt"
+	object2        = "cab-second-c45wknuy.txt"
+	bucket1        = "dulcet-port-762"
 	rootCredential *google.Credentials
 )
 
@@ -47,22 +42,6 @@ func TestMain(m *testing.M) {
 		os.Exit(m.Run())
 	}
 	ctx := context.Background()
-	object1 = os.Getenv(envObject1)
-	if object1 == "" {
-		log.Fatalf("failed to find envObject1")
-	}
-	object2 = os.Getenv(envObject2)
-	if object2 == "" {
-		log.Fatalf("failed to find envObject2")
-	}
-	bucket1 = os.Getenv(envBucket1)
-	if bucket1 == "" {
-		log.Fatalf("failed to find envBucket1")
-	}
-	bucket2 = os.Getenv(envBucket2)
-	if bucket2 == "" {
-		log.Fatalf("failed to find envBucket2")
-	}
 	credentialFileName := os.Getenv(envServiceAccountFile)
 	credentialsFileData, err := os.ReadFile(credentialFileName)
 	if err != nil {
@@ -89,7 +68,6 @@ type downscopeTest struct {
 	expectError          bool
 }
 
-
 func TestDownscopedToken(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration test")
@@ -100,27 +78,27 @@ func TestDownscopedToken(t *testing.T) {
 			name:                 "successfulDownscopedRead",
 			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket1,
 			availablePermissions: []string{"inRole:roles/storage.objectViewer"},
-			conditions:			  []downscope.AvailabilityCondition{
+			conditions: []downscope.AvailabilityCondition{
 				{
-					Expression:  "resource.name.startsWith('projects/_/buckets/" + bucket1 + "/objects/" + object1 + "')",
+					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket1 + "/objects/" + object1 + "')",
 				},
 			},
-			rootSource:           rootCredential.TokenSource,
-			objectName:           object1,
-			expectError:          false,
+			rootSource:  rootCredential.TokenSource,
+			objectName:  object1,
+			expectError: false,
 		},
 		{
 			name:                 "readOWithoutPermission",
 			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket1,
 			availablePermissions: []string{"inRole:roles/storage.objectViewer"},
-			conditions:			  []downscope.AvailabilityCondition{
+			conditions: []downscope.AvailabilityCondition{
 				{
-					Expression:  "resource.name.startsWith('projects/_/buckets/" + bucket1 + "/objects/" + object1 + "')",
+					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket1 + "/objects/" + object1 + "')",
 				},
 			},
-			rootSource:           rootCredential.TokenSource,
-			objectName:           object2,
-			expectError:          true,
+			rootSource:  rootCredential.TokenSource,
+			objectName:  object2,
+			expectError: true,
 		},
 	}
 

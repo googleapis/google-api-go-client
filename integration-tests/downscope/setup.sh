@@ -7,9 +7,12 @@
 # In order to run this script, you need to fill in the project_id and
 # service_account_email variables. 
 #
+# If an argument is provided, the script will use the provided argument
+# as the bucket name.  Otherwise, it will create a new bucket.
+#
 # This script needs to be run once. It will do the following:
 # 1. Sets the current project to the one specified.
-# 2. Creates a GCS bucket in the specified project.
+# 2. If no bucket name was provided, creates a GCS bucket in the specified project.
 # 3. Gives the specified service account the objectAdmin role for this bucket.
 # 4. Creates two text files to be uploaded to the created bucket.
 # 5. Uploads both text files.
@@ -35,7 +38,6 @@ function generate_random_string () {
 
 generate_random_string
 
-bucket_id="cab-int-bucket-"${suffix}
 first_object="cab-first-"${suffix}.txt
 second_object="cab-second-"${suffix}.txt
 
@@ -45,8 +47,14 @@ service_account_email="kokoro@dulcet-port-762.iam.gserviceaccount.com"
 
 gcloud config set project ${project_id}
 
-# Create the GCS bucket.
-gsutil mb -b on -l us-east1 gs://${bucket_id}
+if (( $# != 1 ))
+then
+	# Create the GCS bucket.
+	bucket_id="cab-int-bucket-"${suffix}
+	gsutil mb -b on -l us-east1 gs://${bucket_id}  
+else
+	bucket_id="$1"
+fi
 
 # Give the specified service account the objectAdmin role for this bucket.
 gsutil iam ch serviceAccount:${service_account_email}:objectAdmin gs://${bucket_id}

@@ -417,4 +417,23 @@ type traceTok string
 
 func (t traceTok) Get() (string, string) { return "trace", "token:" + string(t) }
 
+type queryParameter struct {
+	key    string
+	values []string
+}
+
+// QueryParameter allows setting the value(s) of an arbitrary key.
+func QueryParameter(key string, values ...string) CallOption {
+	return queryParameter{key: key, values: append([]string{}, values...)}
+}
+
+// Get will never actually be called -- GetMulti will.
+func (q queryParameter) Get() (string, string) {
+	return "", ""
+}
+
+func (q queryParameter) GetMulti() (string, []string) {
+	return q.key, q.values
+}
+
 // TODO: Fields too

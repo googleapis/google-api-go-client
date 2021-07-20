@@ -221,6 +221,128 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMe
+// tadata: Metadata for MigrateLocationDestructively LRO.
+type GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata struct {
+	// CreateTime: The time the LRO was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// LastUpdateTime: The time the LRO was last updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// State: The current state of the migration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. Should not be used.
+	//   "PENDING" - The MigrateLocationDestructively request has passed
+	// precondition checks and the bucket migration will begin soon.
+	//   "CREATING_TEMP_BUCKET" - Generating a unique bucket name, storing
+	// the source -> temp mapping in Spanner, and actually creating the
+	// temporary bucket via Bigstore.
+	//   "TRANSFERRING_TO_TEMP" - The first STS transfer to move all objects
+	// from the source bucket to the temp bucket is underway.
+	//   "DELETING_SOURCE_BUCKET" - The source bucket is being emptied and
+	// deleted.
+	//   "CREATING_DESTINATION_BUCKET" - The source bucket is being
+	// recreated in the new location.
+	//   "TRANSFERRING_TO_DESTINATION" - The second STS transfer to move all
+	// objects from the temp bucket to the final bucket is underway.
+	//   "DELETING_TEMP_BUCKET" - The temp bucket is being emptied and
+	// deleted.
+	//   "SUCCEEDED" - All stages of the migration have completed and the
+	// operation has been marked done and updated with a response.
+	//   "FAILED" - The migration failed at some stage and it is not
+	// possible to continue retrying that stage. Manual recovery may be
+	// needed.
+	//   "ROLLING_BACK" - The migration has encountered a permanent failure
+	// and is now being rolled back so that the source bucket is restored to
+	// its original state.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMet
+// adata: Metadata for MigrateLocationDestructively LRO.
+type GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata struct {
+	// CreateTime: The time the LRO was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// LastUpdateTime: The time the LRO was last updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// State: The current state of the migration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. Should not be used.
+	//   "PENDING" - The MigrateLocationDestructively request has passed
+	// precondition checks and the bucket migration will begin soon.
+	//   "CREATING_TEMP_BUCKET" - Generating a unique bucket name, storing
+	// the source -> temp mapping in Spanner, and actually creating the
+	// temporary bucket via Bigstore.
+	//   "TRANSFERRING_TO_TEMP" - The first STS transfer to move all objects
+	// from the source bucket to the temp bucket is underway.
+	//   "DELETING_SOURCE_BUCKET" - The source bucket is being emptied and
+	// deleted.
+	//   "CREATING_DESTINATION_BUCKET" - The source bucket is being
+	// recreated in the new location.
+	//   "TRANSFERRING_TO_DESTINATION" - The second STS transfer to move all
+	// objects from the temp bucket to the final bucket is underway.
+	//   "DELETING_TEMP_BUCKET" - The temp bucket is being emptied and
+	// deleted.
+	//   "SUCCEEDED" - All stages of the migration have completed and the
+	// operation has been marked done and updated with a response.
+	//   "FAILED" - The migration failed at some stage and it is not
+	// possible to continue retrying that stage. Manual recovery may be
+	// needed.
+	//   "ROLLING_BACK" - The migration has encountered a permanent failure
+	// and is now being rolled back so that the source bucket is restored to
+	// its original state.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListBucketsResponse: The response returned by `ListBuckets`.
 type ListBucketsResponse struct {
 	// Buckets: The list of linked buckets.
@@ -314,7 +436,7 @@ func (c *ProjectsBucketsAddFirebaseCall) Header() http.Header {
 
 func (c *ProjectsBucketsAddFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -468,7 +590,7 @@ func (c *ProjectsBucketsGetCall) Header() http.Header {
 
 func (c *ProjectsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -633,7 +755,7 @@ func (c *ProjectsBucketsListCall) Header() http.Header {
 
 func (c *ProjectsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -806,7 +928,7 @@ func (c *ProjectsBucketsRemoveFirebaseCall) Header() http.Header {
 
 func (c *ProjectsBucketsRemoveFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

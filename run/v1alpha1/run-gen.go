@@ -156,55 +156,20 @@ type NamespacesJobsService struct {
 	s *Service
 }
 
-// Capabilities: Adds and removes POSIX capabilities from running
-// containers.
-type Capabilities struct {
-	// Add: Added capabilities +optional
-	Add []string `json:"add,omitempty"`
-
-	// Drop: Removed capabilities +optional
-	Drop []string `json:"drop,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Add") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Add") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Capabilities) MarshalJSON() ([]byte, error) {
-	type NoMethod Capabilities
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ConfigMapEnvSource: ConfigMapEnvSource selects a ConfigMap to
-// populate the environment variables with. The contents of the target
-// ConfigMap's Data field will represent the key-value pairs as
-// environment variables.
+// ConfigMapEnvSource: Not supported by Cloud Run ConfigMapEnvSource
+// selects a ConfigMap to populate the environment variables with. The
+// contents of the target ConfigMap's Data field will represent the
+// key-value pairs as environment variables.
 type ConfigMapEnvSource struct {
 	// LocalObjectReference: This field should not be used directly as it is
 	// meant to be inlined directly into the message. Use the "name" field
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The ConfigMap to select from.
+	// Name: The ConfigMap to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Specify whether the ConfigMap must be defined
-	// +optional
+	// Optional: (Optional) Specify whether the ConfigMap must be defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -232,11 +197,10 @@ func (s *ConfigMapEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapKeySelector: Cloud Run fully managed: not supported Cloud
-// Run on GKE: supported Selects a key from a ConfigMap.
+// ConfigMapKeySelector: Not supported by Cloud Run Selects a key from a
+// ConfigMap.
 type ConfigMapKeySelector struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported The key to select.
+	// Key: The key to select.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -244,13 +208,11 @@ type ConfigMapKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported The ConfigMap to select from.
+	// Name: The ConfigMap to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported Specify whether the ConfigMap or its key must be defined
-	// +optional
+	// Optional: (Optional) Specify whether the ConfigMap or its key must be
+	// defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -276,30 +238,33 @@ func (s *ConfigMapKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapVolumeSource: Adapts a ConfigMap into a volume. The contents
-// of the target ConfigMap's Data field will be presented in a volume as
-// files using the keys in the Data field as the file names, unless the
-// items element is populated with specific mappings of keys to paths.
+// ConfigMapVolumeSource: Not supported by Cloud Run Adapts a ConfigMap
+// into a volume. The contents of the target ConfigMap's Data field will
+// be presented in a volume as files using the keys in the Data field as
+// the file names, unless the items element is populated with specific
+// mappings of keys to paths.
 type ConfigMapVolumeSource struct {
-	// DefaultMode: Mode bits to use on created files by default. Must be a
-	// value between 0 and 0777. Defaults to 0644. Directories within the
-	// path are not affected by this setting. This might be in conflict with
-	// other options that affect the file mode, like fsGroup, and the result
-	// can be other mode bits set.
+	// DefaultMode: (Optional) Mode bits to use on created files by default.
+	// Must be a value between 0 and 0777. Defaults to 0644. Directories
+	// within the path are not affected by this setting. This might be in
+	// conflict with other options that affect the file mode, like fsGroup,
+	// and the result can be other mode bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: If unspecified, each key-value pair in the Data field of the
-	// referenced Secret will be projected into the volume as a file whose
-	// name is the key and content is the value. If specified, the listed
-	// keys will be projected into the specified paths, and unlisted keys
-	// will not be present. If a key is specified which is not present in
-	// the Secret, the volume setup will error unless it is marked optional.
+	// Items: (Optional) If unspecified, each key-value pair in the Data
+	// field of the referenced Secret will be projected into the volume as a
+	// file whose name is the key and content is the value. If specified,
+	// the listed keys will be projected into the specified paths, and
+	// unlisted keys will not be present. If a key is specified that is not
+	// present in the Secret, the volume setup will error unless it is
+	// marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
 	// Name: Name of the config.
 	Name string `json:"name,omitempty"`
 
-	// Optional: Specify whether the Secret or its keys must be defined.
+	// Optional: (Optional) Specify whether the Secret or its keys must be
+	// defined.
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
@@ -330,146 +295,111 @@ func (s *ConfigMapVolumeSource) MarshalJSON() ([]byte, error) {
 // arguments to supply to it. Note that additional arguments may be
 // supplied by the system to the container at runtime.
 type Container struct {
-	// Args: Arguments to the entrypoint. The docker image's CMD is used if
-	// this is not provided. Variable references $(VAR_NAME) are expanded
-	// using the container's environment. If a variable cannot be resolved,
-	// the reference in the input string will be unchanged. The $(VAR_NAME)
-	// syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped
-	// references will never be expanded, regardless of whether the variable
-	// exists or not. Cannot be updated. More info:
+	// Args: (Optional) Arguments to the entrypoint. The docker image's CMD
+	// is used if this is not provided. Variable references $(VAR_NAME) are
+	// expanded using the container's environment. If a variable cannot be
+	// resolved, the reference in the input string will be unchanged. The
+	// $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
+	// Escaped references will never be expanded, regardless of whether the
+	// variable exists or not. More info:
 	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-	// +optional
 	Args []string `json:"args,omitempty"`
 
-	// Command: Entrypoint array. Not executed within a shell. The docker
-	// image's ENTRYPOINT is used if this is not provided. Variable
-	// references $(VAR_NAME) are expanded using the container's
-	// environment. If a variable cannot be resolved, the reference in the
-	// input string will be unchanged. The $(VAR_NAME) syntax can be escaped
-	// with a double $$, ie: $$(VAR_NAME). Escaped references will never be
-	// expanded, regardless of whether the variable exists or not. Cannot be
-	// updated. More info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-	// +optional
 	Command []string `json:"command,omitempty"`
 
-	// Env: List of environment variables to set in the container. Cannot be
-	// updated. +optional
+	// Env: (Optional) List of environment variables to set in the
+	// container.
 	Env []*EnvVar `json:"env,omitempty"`
 
-	// EnvFrom: List of sources to populate environment variables in the
-	// container. The keys defined within a source must be a C_IDENTIFIER.
-	// All invalid keys will be reported as an event when the container is
-	// starting. When a key exists in multiple sources, the value associated
-	// with the last source will take precedence. Values defined by an Env
-	// with a duplicate key will take precedence. Cannot be updated.
-	// +optional
+	// EnvFrom: (Optional) List of sources to populate environment variables
+	// in the container. The keys defined within a source must be a
+	// C_IDENTIFIER. All invalid keys will be reported as an event when the
+	// container is starting. When a key exists in multiple sources, the
+	// value associated with the last source will take precedence. Values
+	// defined by an Env with a duplicate key will take precedence. Cannot
+	// be updated.
 	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
-	// Image: Docker image name. More info:
+	// Image: Only supports containers from Google Container Registry or
+	// Artifact Registry URL of the Container image. More info:
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 
-	// ImagePullPolicy: Image pull policy. One of Always, Never,
+	// ImagePullPolicy: (Optional) Image pull policy. One of Always, Never,
 	// IfNotPresent. Defaults to Always if :latest tag is specified, or
-	// IfNotPresent otherwise. Cannot be updated. More info:
+	// IfNotPresent otherwise. More info:
 	// https://kubernetes.io/docs/concepts/containers/images#updating-images
-	// +optional
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
-	// Lifecycle: Actions that the management system should take in response
-	// to container lifecycle events. Cannot be updated. +optional
-	Lifecycle *Lifecycle `json:"lifecycle,omitempty"`
-
-	// LivenessProbe: Periodic probe of container liveness. Container will
-	// be restarted if the probe fails. Cannot be updated. More info:
+	// LivenessProbe: (Optional) Periodic probe of container liveness.
+	// Container will be restarted if the probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-	// +optional
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
 
-	// Name: Name of the container specified as a DNS_LABEL. Each container
-	// must have a unique name (DNS_LABEL). Cannot be updated.
+	// Name: (Optional) Name of the container specified as a DNS_LABEL.
+	// Currently unused in Cloud Run. More info:
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
 	Name string `json:"name,omitempty"`
 
-	// Ports: List of ports to expose from the container. Exposing a port
-	// here gives the system additional information about the network
-	// connections a container uses, but is primarily informational. Not
-	// specifying a port here DOES NOT prevent that port from being exposed.
-	// Any port which is listening on the default "0.0.0.0" address inside a
-	// container will be accessible from the network. Cannot be updated.
-	// +optional
+	// Ports: (Optional) List of ports to expose from the container. Only a
+	// single port can be specified. The specified ports must be listening
+	// on all interfaces (0.0.0.0) within the container to be accessible. If
+	// omitted, a port number will be chosen and passed to the container
+	// through the PORT environment variable for the container to listen on.
 	Ports []*ContainerPort `json:"ports,omitempty"`
 
-	// ReadinessProbe: Periodic probe of container service readiness.
-	// Container will be removed from service endpoints if the probe fails.
-	// Cannot be updated. More info:
+	// ReadinessProbe: (Optional) Periodic probe of container service
+	// readiness. Container will be removed from service endpoints if the
+	// probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-	// +optional
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
 
-	// Resources: Compute Resources required by this container. Cannot be
-	// updated. More info:
+	// Resources: (Optional) Compute Resources required by this container.
+	// More info:
 	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-	// +optional
 	Resources *ResourceRequirements `json:"resources,omitempty"`
 
-	// SecurityContext: Security options the pod should run with. More info:
+	// SecurityContext: (Optional) Security options the pod should run with.
+	// More info:
 	// https://kubernetes.io/docs/concepts/policy/security-context/ More
 	// info:
 	// https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-	// +optional
 	SecurityContext *SecurityContext `json:"securityContext,omitempty"`
 
-	// Stdin: Whether this container should allocate a buffer for stdin in
-	// the container runtime. If this is not set, reads from stdin in the
-	// container will always result in EOF. Default is false. +optional
-	Stdin bool `json:"stdin,omitempty"`
+	// StartupProbe: (Optional) Startup probe of application within the
+	// container. All other probes are disabled if a startup probe is
+	// provided, until it succeeds. Container will not be added to service
+	// endpoints if the probe fails. More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	StartupProbe *Probe `json:"startupProbe,omitempty"`
 
-	// StdinOnce: Whether the container runtime should close the stdin
-	// channel after it has been opened by a single attach. When stdin is
-	// true the stdin stream will remain open across multiple attach
-	// sessions. If stdinOnce is set to true, stdin is opened on container
-	// start, is empty until the first client attaches to stdin, and then
-	// remains open and accepts data until the client disconnects, at which
-	// time stdin is closed and remains closed until the container is
-	// restarted. If this flag is false, a container processes that reads
-	// from stdin will never receive an EOF. Default is false +optional
-	StdinOnce bool `json:"stdinOnce,omitempty"`
-
-	// TerminationMessagePath: Optional: Path at which the file to which the
-	// container's termination message will be written is mounted into the
-	// container's filesystem. Message written is intended to be brief final
-	// status, such as an assertion failure message. Will be truncated by
-	// the node if greater than 4096 bytes. The total message length across
-	// all containers will be limited to 12kb. Defaults to
-	// /dev/termination-log. Cannot be updated. +optional
+	// TerminationMessagePath: (Optional) Path at which the file to which
+	// the container's termination message will be written is mounted into
+	// the container's filesystem. Message written is intended to be brief
+	// final status, such as an assertion failure message. Will be truncated
+	// by the node if greater than 4096 bytes. The total message length
+	// across all containers will be limited to 12kb. Defaults to
+	// /dev/termination-log.
 	TerminationMessagePath string `json:"terminationMessagePath,omitempty"`
 
-	// TerminationMessagePolicy: Indicate how the termination message should
-	// be populated. File will use the contents of terminationMessagePath to
-	// populate the container status message on both success and failure.
-	// FallbackToLogsOnError will use the last chunk of container log output
-	// if the termination message file is empty and the container exited
-	// with an error. The log output is limited to 2048 bytes or 80 lines,
-	// whichever is smaller. Defaults to File. Cannot be updated. +optional
+	// TerminationMessagePolicy: (Optional) Indicate how the termination
+	// message should be populated. File will use the contents of
+	// terminationMessagePath to populate the container status message on
+	// both success and failure. FallbackToLogsOnError will use the last
+	// chunk of container log output if the termination message file is
+	// empty and the container exited with an error. The log output is
+	// limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to
+	// File. Cannot be updated.
 	TerminationMessagePolicy string `json:"terminationMessagePolicy,omitempty"`
 
-	// Tty: Whether this container should allocate a TTY for itself, also
-	// requires 'stdin' to be true. Default is false. +optional
-	Tty bool `json:"tty,omitempty"`
-
-	// VolumeDevices: volumeDevices is the list of block devices to be used
-	// by the container. This is an alpha feature and may change in the
-	// future. +optional
-	VolumeDevices []*VolumeDevice `json:"volumeDevices,omitempty"`
-
-	// VolumeMounts: Pod volumes to mount into the container's filesystem.
-	// Cannot be updated. +optional
+	// VolumeMounts: (Optional) Volume to mount into the container's
+	// filesystem. Only supports SecretVolumeSources. Pod volumes to mount
+	// into the container's filesystem.
 	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
-	// WorkingDir: Container's working directory. If not specified, the
-	// container runtime's default will be used, which might be configured
-	// in the container image. Cannot be updated. +optional
+	// WorkingDir: (Optional) Container's working directory. If not
+	// specified, the container runtime's default will be used, which might
+	// be configured in the container image.
 	WorkingDir string `json:"workingDir,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -498,26 +428,16 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 // ContainerPort: ContainerPort represents a network port in a single
 // container.
 type ContainerPort struct {
-	// ContainerPort: Number of port to expose on the pod's IP address. This
+	// ContainerPort: (Optional) Port number the container listens on. This
 	// must be a valid port number, 0 < x < 65536.
 	ContainerPort int64 `json:"containerPort,omitempty"`
 
-	// HostIP: What host IP to bind the external port to. +optional
-	HostIP string `json:"hostIP,omitempty"`
-
-	// HostPort: Number of port to expose on the host. If specified, this
-	// must be a valid port number, 0 < x < 65536. If HostNetwork is
-	// specified, this must match ContainerPort. Most containers do not need
-	// this. +optional
-	HostPort int64 `json:"hostPort,omitempty"`
-
-	// Name: If specified, this must be an IANA_SVC_NAME and unique within
-	// the pod. Each named port in a pod must have a unique name. Name for
-	// the port that can be referred to by services. +optional
+	// Name: (Optional) If specified, used to specify which protocol to use.
+	// Allowed values are "http1" and "h2c".
 	Name string `json:"name,omitempty"`
 
-	// Protocol: Protocol for port. Must be UDP or TCP. Defaults to "TCP".
-	// +optional
+	// Protocol: (Optional) Protocol for port. Must be "TCP". Defaults to
+	// "TCP".
 	Protocol string `json:"protocol,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerPort") to
@@ -555,17 +475,17 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EnvFromSource: EnvFromSource represents the source of a set of
-// ConfigMaps
+// EnvFromSource: Not supported by Cloud Run EnvFromSource represents
+// the source of a set of ConfigMaps
 type EnvFromSource struct {
-	// ConfigMapRef: The ConfigMap to select from +optional
+	// ConfigMapRef: (Optional) The ConfigMap to select from
 	ConfigMapRef *ConfigMapEnvSource `json:"configMapRef,omitempty"`
 
-	// Prefix: An optional identifier to prepend to each key in the
-	// ConfigMap. Must be a C_IDENTIFIER. +optional
+	// Prefix: (Optional) An optional identifier to prepend to each key in
+	// the ConfigMap. Must be a C_IDENTIFIER.
 	Prefix string `json:"prefix,omitempty"`
 
-	// SecretRef: The Secret to select from +optional
+	// SecretRef: (Optional) The Secret to select from
 	SecretRef *SecretEnvSource `json:"secretRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapRef") to
@@ -597,19 +517,18 @@ type EnvVar struct {
 	// Name: Name of the environment variable. Must be a C_IDENTIFIER.
 	Name string `json:"name,omitempty"`
 
-	// Value: Variable references $(VAR_NAME) are expanded using the
-	// previous defined environment variables in the container and any route
-	// environment variables. If a variable cannot be resolved, the
+	// Value: (Optional) Variable references $(VAR_NAME) are expanded using
+	// the previous defined environment variables in the container and any
+	// route environment variables. If a variable cannot be resolved, the
 	// reference in the input string will be unchanged. The $(VAR_NAME)
 	// syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped
 	// references will never be expanded, regardless of whether the variable
-	// exists or not. Defaults to "". +optional
+	// exists or not. Defaults to "".
 	Value string `json:"value,omitempty"`
 
-	// ValueFrom: Cloud Run fully managed: supported Source for the
-	// environment variable's value. Only supports secret_key_ref. Cloud Run
-	// for Anthos: supported Source for the environment variable's value.
-	// Cannot be used if value is not empty. +optional
+	// ValueFrom: (Optional) Source for the environment variable's value.
+	// Only supports secret_key_ref. Source for the environment variable's
+	// value. Cannot be used if value is not empty.
 	ValueFrom *EnvVarSource `json:"valueFrom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -635,18 +554,15 @@ func (s *EnvVar) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnvVarSource: Cloud Run fully managed: not supported Cloud Run on
-// GKE: supported EnvVarSource represents a source for the value of an
+// EnvVarSource: EnvVarSource represents a source for the value of an
 // EnvVar.
 type EnvVarSource struct {
-	// ConfigMapKeyRef: Cloud Run fully managed: not supported Cloud Run on
-	// GKE: supported Selects a key of a ConfigMap. +optional
+	// ConfigMapKeyRef: (Optional) Not supported by Cloud Run Selects a key
+	// of a ConfigMap.
 	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
 
-	// SecretKeyRef: Cloud Run fully managed: supported. Selects a key
-	// (version) of a secret in Secret Manager. Cloud Run for Anthos:
-	// supported. Selects a key of a secret in the pod's namespace.
-	// +optional
+	// SecretKeyRef: (Optional) Selects a key (version) of a secret in
+	// Secret Manager.
 	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapKeyRef") to
@@ -673,15 +589,16 @@ func (s *EnvVarSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExecAction: ExecAction describes a "run in container" action.
+// ExecAction: Not supported by Cloud Run ExecAction describes a "run in
+// container" action.
 type ExecAction struct {
-	// Command: Command is the command line to execute inside the container,
-	// the working directory for the command is root ('/') in the
+	// Command: (Optional) Command is the command line to execute inside the
+	// container, the working directory for the command is root ('/') in the
 	// container's filesystem. The command is simply exec'd, it is not run
 	// inside a shell, so traditional shell instructions ('|', etc) won't
 	// work. To use a shell, you need to explicitly call out to that shell.
 	// Exit status of 0 is treated as live/healthy and non-zero is
-	// unhealthy. +optional
+	// unhealthy.
 	Command []string `json:"command,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Command") to
@@ -707,26 +624,22 @@ func (s *ExecAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPGetAction: HTTPGetAction describes an action based on HTTP Get
-// requests.
+// HTTPGetAction: Not supported by Cloud Run HTTPGetAction describes an
+// action based on HTTP Get requests.
 type HTTPGetAction struct {
-	// Host: Host name to connect to, defaults to the pod IP. You probably
-	// want to set "Host" in httpHeaders instead. +optional
+	// Host: (Optional) Host name to connect to, defaults to the pod IP. You
+	// probably want to set "Host" in httpHeaders instead.
 	Host string `json:"host,omitempty"`
 
-	// HttpHeaders: Custom headers to set in the request. HTTP allows
-	// repeated headers. +optional
+	// HttpHeaders: (Optional) Custom headers to set in the request. HTTP
+	// allows repeated headers.
 	HttpHeaders []*HTTPHeader `json:"httpHeaders,omitempty"`
 
-	// Path: Path to access on the HTTP server. +optional
+	// Path: (Optional) Path to access on the HTTP server.
 	Path string `json:"path,omitempty"`
 
-	// Port: Name or number of the port to access on the container. Number
-	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-	Port *IntOrString `json:"port,omitempty"`
-
-	// Scheme: Scheme to use for connecting to the host. Defaults to HTTP.
-	// +optional
+	// Scheme: (Optional) Scheme to use for connecting to the host. Defaults
+	// to HTTP.
 	Scheme string `json:"scheme,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
@@ -752,8 +665,8 @@ func (s *HTTPGetAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPHeader: HTTPHeader describes a custom header to be used in HTTP
-// probes
+// HTTPHeader: Not supported by Cloud Run HTTPHeader describes a custom
+// header to be used in HTTP probes
 type HTTPHeader struct {
 	// Name: The header field name
 	Name string `json:"name,omitempty"`
@@ -780,42 +693,6 @@ type HTTPHeader struct {
 
 func (s *HTTPHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod HTTPHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Handler: Handler defines a specific action that should be taken
-type Handler struct {
-	// Exec: One and only one of the following should be specified. Exec
-	// specifies the action to take. +optional
-	Exec *ExecAction `json:"exec,omitempty"`
-
-	// HttpGet: HTTPGet specifies the http request to perform. +optional
-	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
-
-	// TcpSocket: TCPSocket specifies an action involving a TCP port. TCP
-	// hooks not yet supported
-	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Exec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Exec") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Handler) MarshalJSON() ([]byte, error) {
-	type NoMethod Handler
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -976,43 +853,6 @@ type InstanceTemplateSpec struct {
 
 func (s *InstanceTemplateSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceTemplateSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// IntOrString: IntOrString is a type that can hold an int32 or a
-// string. When used in JSON or YAML marshalling and unmarshalling, it
-// produces or consumes the inner type. This allows you to have, for
-// example, a JSON field that can accept a name or number.
-type IntOrString struct {
-	// IntVal: The int value.
-	IntVal int64 `json:"intVal,omitempty"`
-
-	// StrVal: The string value.
-	StrVal string `json:"strVal,omitempty"`
-
-	// Type: The type of the value.
-	Type int64 `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IntVal") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IntVal") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IntOrString) MarshalJSON() ([]byte, error) {
-	type NoMethod IntOrString
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1277,22 +1117,20 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 
 // KeyToPath: Maps a string key to a path within a volume.
 type KeyToPath struct {
-	// Key: Cloud Run fully managed: supported The Cloud Secret Manager
-	// secret version. Can be 'latest' for the latest value or an integer
-	// for a specific version. Cloud Run for Anthos: supported The key to
+	// Key: The Cloud Secret Manager secret version. Can be 'latest' for the
+	// latest value or an integer for a specific version. The key to
 	// project.
 	Key string `json:"key,omitempty"`
 
-	// Mode: Mode bits to use on this file, must be a value between 0 and
-	// 0777. If not specified, the volume defaultMode will be used. This
-	// might be in conflict with other options that affect the file mode,
-	// like fsGroup, and the result can be other mode bits set. +optional
+	// Mode: (Optional) Mode bits to use on this file, must be a value
+	// between 0000 and 0777. If not specified, the volume defaultMode will
+	// be used. This might be in conflict with other options that affect the
+	// file mode, like fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 
-	// Path: Cloud Run fully managed: supported Cloud Run for Anthos:
-	// supported The relative path of the file to map the key to. May not be
-	// an absolute path. May not contain the path element '..'. May not
-	// start with the string '..'.
+	// Path: The relative path of the file to map the key to. May not be an
+	// absolute path. May not contain the path element '..'. May not start
+	// with the string '..'.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1314,53 +1152,6 @@ type KeyToPath struct {
 
 func (s *KeyToPath) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyToPath
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Lifecycle: Lifecycle describes actions that the management system
-// should take in response to container lifecycle events. For the
-// PostStart and PreStop lifecycle handlers, management of the container
-// blocks until the action is complete, unless the container process
-// fails, in which case the handler is aborted.
-type Lifecycle struct {
-	// PostStart: PostStart is called immediately after a container is
-	// created. If the handler fails, the container is terminated and
-	// restarted according to its restart policy. Other management of the
-	// container blocks until the hook completes. More info:
-	// https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-	// +optional
-	PostStart *Handler `json:"postStart,omitempty"`
-
-	// PreStop: PreStop is called immediately before a container is
-	// terminated. The container is terminated after the handler completes.
-	// The reason for termination is passed to the handler. Regardless of
-	// the outcome of the handler, the container is eventually terminated.
-	// Other management of the container blocks until the hook completes.
-	// More info:
-	// https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
-	// +optional
-	PreStop *Handler `json:"preStop,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PostStart") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PostStart") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Lifecycle) MarshalJSON() ([]byte, error) {
-	type NoMethod Lifecycle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1471,11 +1262,11 @@ func (s *ListMeta) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LocalObjectReference: LocalObjectReference contains enough
-// information to let you locate the referenced object inside the same
-// namespace.
+// LocalObjectReference: Not supported by Cloud Run LocalObjectReference
+// contains enough information to let you locate the referenced object
+// inside the same namespace.
 type LocalObjectReference struct {
-	// Name: Name of the referent. More info:
+	// Name: (Optional) Name of the referent. More info:
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 	Name string `json:"name,omitempty"`
 
@@ -1502,47 +1293,48 @@ func (s *LocalObjectReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ObjectMeta: ObjectMeta is metadata that all persisted resources must
-// have, which includes all objects users must create.
+// ObjectMeta: k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is
+// metadata that all persisted resources must have, which includes all
+// objects users must create.
 type ObjectMeta struct {
-	// Annotations: Annotations is an unstructured key value map stored with
-	// a resource that may be set by external tools to store and retrieve
-	// arbitrary metadata. They are not queryable and should be preserved
-	// when modifying objects. More info:
-	// http://kubernetes.io/docs/user-guide/annotations +optional
+	// Annotations: (Optional) Annotations is an unstructured key value map
+	// stored with a resource that may be set by external tools to store and
+	// retrieve arbitrary metadata. They are not queryable and should be
+	// preserved when modifying objects. More info:
+	// http://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// ClusterName: Not currently supported by Cloud Run. The name of the
+	// ClusterName: (Optional) Not supported by Cloud Run The name of the
 	// cluster which the object belongs to. This is used to distinguish
 	// resources with same name and namespace in different clusters. This
 	// field is not set anywhere right now and apiserver is going to ignore
-	// it if set in create or update request. +optional
+	// it if set in create or update request.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// CreationTimestamp: CreationTimestamp is a timestamp representing the
-	// server time when this object was created. It is not guaranteed to be
-	// set in happens-before order across separate operations. Clients may
-	// not set this value. It is represented in RFC3339 form and is in UTC.
-	// Populated by the system. Read-only. Null for lists. More info:
+	// CreationTimestamp: (Optional) CreationTimestamp is a timestamp
+	// representing the server time when this object was created. It is not
+	// guaranteed to be set in happens-before order across separate
+	// operations. Clients may not set this value. It is represented in
+	// RFC3339 form and is in UTC. Populated by the system. Read-only. Null
+	// for lists. More info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-	// +optional
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// DeletionGracePeriodSeconds: Not currently supported by Cloud Run.
+	// DeletionGracePeriodSeconds: (Optional) Not supported by Cloud Run
 	// Number of seconds allowed for this object to gracefully terminate
 	// before it will be removed from the system. Only set when
 	// deletionTimestamp is also set. May only be shortened. Read-only.
-	// +optional
 	DeletionGracePeriodSeconds int64 `json:"deletionGracePeriodSeconds,omitempty"`
 
-	// DeletionTimestamp: DeletionTimestamp is RFC 3339 date and time at
-	// which this resource will be deleted. This field is set by the server
-	// when a graceful deletion is requested by the user, and is not
-	// directly settable by a client. The resource is expected to be deleted
-	// (no longer visible from resource lists, and not reachable by name)
-	// after the time in this field, once the finalizers list is empty. As
-	// long as the finalizers list contains items, deletion is blocked. Once
-	// the deletionTimestamp is set, this value may not be unset or be set
+	// DeletionTimestamp: (Optional) Not supported by Cloud Run
+	// DeletionTimestamp is RFC 3339 date and time at which this resource
+	// will be deleted. This field is set by the server when a graceful
+	// deletion is requested by the user, and is not directly settable by a
+	// client. The resource is expected to be deleted (no longer visible
+	// from resource lists, and not reachable by name) after the time in
+	// this field, once the finalizers list is empty. As long as the
+	// finalizers list contains items, deletion is blocked. Once the
+	// deletionTimestamp is set, this value may not be unset or be set
 	// further into the future, although it may be shortened or the resource
 	// may be deleted prior to this time. For example, a user may request
 	// that a pod is deleted in 30 seconds. The Kubelet will react by
@@ -1556,18 +1348,16 @@ type ObjectMeta struct {
 	// the system when a graceful deletion is requested. Read-only. More
 	// info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-	// +optional
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 
-	// Finalizers: Not currently supported by Cloud Run. Must be empty
+	// Finalizers: (Optional) Not supported by Cloud Run Must be empty
 	// before the object is deleted from the registry. Each entry is an
 	// identifier for the responsible component that will remove the entry
 	// from the list. If the deletionTimestamp of the object is non-nil,
-	// entries in this list can only be removed. +optional
-	// +patchStrategy=merge
+	// entries in this list can only be removed. +patchStrategy=merge
 	Finalizers []string `json:"finalizers,omitempty"`
 
-	// GenerateName: Not currently supported by Cloud Run. GenerateName is
+	// GenerateName: (Optional) Not supported by Cloud Run GenerateName is
 	// an optional prefix, used by the server, to generate a unique name
 	// ONLY IF the Name field has not been provided. If this field is used,
 	// the name returned to the client will be different than the name
@@ -1582,17 +1372,17 @@ type ObjectMeta struct {
 	// Retry-After header). Applied only if Name is not specified. More
 	// info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
-	// +optional string generateName = 2;
+	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
 
-	// Generation: A sequence number representing a specific generation of
-	// the desired state. Populated by the system. Read-only. +optional
+	// Generation: (Optional) A sequence number representing a specific
+	// generation of the desired state. Populated by the system. Read-only.
 	Generation int64 `json:"generation,omitempty"`
 
-	// Labels: Map of string keys and values that can be used to organize
-	// and categorize (scope and select) objects. May match selectors of
-	// replication controllers and routes. More info:
-	// http://kubernetes.io/docs/user-guide/labels +optional
+	// Labels: (Optional) Map of string keys and values that can be used to
+	// organize and categorize (scope and select) objects. May match
+	// selectors of replication controllers and routes. More info:
+	// http://kubernetes.io/docs/user-guide/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Name must be unique within a namespace, within a Cloud Run
@@ -1608,32 +1398,32 @@ type ObjectMeta struct {
 	// equal to either the project ID or project number.
 	Namespace string `json:"namespace,omitempty"`
 
-	// OwnerReferences: List of objects that own this object. If ALL objects
-	// in the list have been deleted, this object will be garbage collected.
-	// +optional
+	// OwnerReferences: (Optional) Not supported by Cloud Run List of
+	// objects that own this object. If ALL objects in the list have been
+	// deleted, this object will be garbage collected.
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
-	// ResourceVersion: An opaque value that represents the internal version
-	// of this object that can be used by clients to determine when objects
-	// have changed. May be used for optimistic concurrency, change
-	// detection, and the watch operation on a resource or set of resources.
-	// Clients must treat these values as opaque and passed unmodified back
-	// to the server. They may only be valid for a particular resource or
-	// set of resources. Populated by the system. Read-only. Value must be
-	// treated as opaque by clients and . More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
-	// +optional
+	// ResourceVersion: Optional. An opaque value that represents the
+	// internal version of this object that can be used by clients to
+	// determine when objects have changed. May be used for optimistic
+	// concurrency, change detection, and the watch operation on a resource
+	// or set of resources. Clients must treat these values as opaque and
+	// passed unmodified back to the server or omit the value to disable
+	// conflict-detection. They may only be valid for a particular resource
+	// or set of resources. Populated by the system. Read-only. Value must
+	// be treated as opaque by clients or omitted. More info:
+	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
-	// SelfLink: SelfLink is a URL representing this object. Populated by
-	// the system. Read-only. +optional string selfLink = 4;
+	// SelfLink: (Optional) SelfLink is a URL representing this object.
+	// Populated by the system. Read-only. string selfLink = 4;
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Uid: UID is the unique in time and space value for this object. It is
-	// typically generated by the server on successful creation of a
-	// resource and is not allowed to change on PUT operations. Populated by
-	// the system. Read-only. More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#uids +optional
+	// Uid: (Optional) UID is the unique in time and space value for this
+	// object. It is typically generated by the server on successful
+	// creation of a resource and is not allowed to change on PUT
+	// operations. Populated by the system. Read-only. More info:
+	// http://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
@@ -1713,40 +1503,49 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Probe: Probe describes a health check to be performed against a
-// container to determine whether it is alive or ready to receive
-// traffic.
+// Probe: Not supported by Cloud Run Probe describes a health check to
+// be performed against a container to determine whether it is alive or
+// ready to receive traffic.
 type Probe struct {
-	// FailureThreshold: Minimum consecutive failures for the probe to be
-	// considered failed after having succeeded. Defaults to 3. Minimum
-	// value is 1. +optional
+	// Exec: (Optional) One and only one of the following should be
+	// specified. Exec specifies the action to take. A field inlined from
+	// the Handler message.
+	Exec *ExecAction `json:"exec,omitempty"`
+
+	// FailureThreshold: (Optional) Minimum consecutive failures for the
+	// probe to be considered failed after having succeeded. Defaults to 3.
+	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
-	// Handler: The action taken to determine the health of a container
-	Handler *Handler `json:"handler,omitempty"`
+	// HttpGet: (Optional) HTTPGet specifies the http request to perform. A
+	// field inlined from the Handler message.
+	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
 
-	// InitialDelaySeconds: Number of seconds after the container has
-	// started before liveness probes are initiated. More info:
+	// InitialDelaySeconds: (Optional) Number of seconds after the container
+	// has started before liveness probes are initiated. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-	// +optional
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
-	// PeriodSeconds: How often (in seconds) to perform the probe. Default
-	// to 10 seconds. Minimum value is 1. +optional
+	// PeriodSeconds: (Optional) How often (in seconds) to perform the
+	// probe. Default to 10 seconds. Minimum value is 1.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
-	// SuccessThreshold: Minimum consecutive successes for the probe to be
-	// considered successful after having failed. Defaults to 1. Must be 1
-	// for liveness. Minimum value is 1. +optional
+	// SuccessThreshold: (Optional) Minimum consecutive successes for the
+	// probe to be considered successful after having failed. Defaults to 1.
+	// Must be 1 for liveness. Minimum value is 1.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
-	// TimeoutSeconds: Number of seconds after which the probe times out.
-	// Defaults to 1 second. Minimum value is 1. More info:
+	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
+	// port. TCP hooks not yet supported A field inlined from the Handler
+	// message.
+	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
+
+	// TimeoutSeconds: (Optional) Number of seconds after which the probe
+	// times out. Defaults to 1 second. Minimum value is 1. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-	// +optional
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FailureThreshold") to
+	// ForceSendFields is a list of field names (e.g. "Exec") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1754,13 +1553,12 @@ type Probe struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FailureThreshold") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Exec") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1770,67 +1568,25 @@ func (s *Probe) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Quantity: The view model of a single quantity, e.g. "800 MiB".
-// Corresponds to
-// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/generated.proto
-type Quantity struct {
-	// String: Stringified version of the quantity, e.g., "800 MiB".
-	String string `json:"string,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "String") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "String") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Quantity) MarshalJSON() ([]byte, error) {
-	type NoMethod Quantity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ResourceRequirements: ResourceRequirements describes the compute
 // resource requirements.
 type ResourceRequirements struct {
-	// Limits: Limits describes the maximum amount of compute resources
-	// allowed. The values of the map is string form of the 'quantity' k8s
-	// type:
+	// Limits: (Optional) Only memory and CPU are supported. Note: The only
+	// supported values for CPU are '1', '2', and '4'. Setting 4 CPU
+	// requires at least 2Gi of memory. Limits describes the maximum amount
+	// of compute resources allowed. The values of the map is string form of
+	// the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Limits map[string]string `json:"limits,omitempty"`
 
-	// LimitsInMap: Limits describes the maximum amount of compute resources
-	// allowed. This is a temporary field created to migrate away from the
-	// map limits field. This is done to become compliant with k8s style
-	// API. This field is deprecated in favor of limits field.
-	LimitsInMap map[string]Quantity `json:"limitsInMap,omitempty"`
-
-	// Requests: Requests describes the minimum amount of compute resources
-	// required. If Requests is omitted for a container, it defaults to
-	// Limits if that is explicitly specified, otherwise to an
-	// implementation-defined value. The values of the map is string form of
-	// the 'quantity' k8s type:
+	// Requests: (Optional) Only memory and CPU are supported. Note: The
+	// only supported values for CPU are '1' and '2'. Requests describes the
+	// minimum amount of compute resources required. If Requests is omitted
+	// for a container, it defaults to Limits if that is explicitly
+	// specified, otherwise to an implementation-defined value. The values
+	// of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Requests map[string]string `json:"requests,omitempty"`
-
-	// RequestsInMap: Requests describes the minimum amount of compute
-	// resources required. If Requests is omitted for a container, it
-	// defaults to Limits if that is explicitly specified, otherwise to an
-	// implementation-defined value. This is a temporary field created to
-	// migrate away from the map requests field. This is done to become
-	// compliant with k8s style API. This field is deprecated in favor of
-	// requests field.
-	RequestsInMap map[string]Quantity `json:"requestsInMap,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Limits") to
 	// unconditionally include in API requests. By default, fields with
@@ -1855,64 +1611,20 @@ func (s *ResourceRequirements) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SELinuxOptions: SELinuxOptions are the labels to be applied to the
-// container
-type SELinuxOptions struct {
-	// Level: Level is SELinux level label that applies to the container.
-	// +optional
-	Level string `json:"level,omitempty"`
-
-	// Role: Role is a SELinux role label that applies to the container.
-	// +optional
-	Role string `json:"role,omitempty"`
-
-	// Type: Type is a SELinux type label that applies to the container.
-	// +optional
-	Type string `json:"type,omitempty"`
-
-	// User: User is a SELinux user label that applies to the container.
-	// +optional
-	User string `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Level") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Level") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SELinuxOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod SELinuxOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SecretEnvSource: SecretEnvSource selects a Secret to populate the
-// environment variables with. The contents of the target Secret's Data
-// field will represent the key-value pairs as environment variables.
+// SecretEnvSource: Not supported by Cloud Run SecretEnvSource selects a
+// Secret to populate the environment variables with. The contents of
+// the target Secret's Data field will represent the key-value pairs as
+// environment variables.
 type SecretEnvSource struct {
 	// LocalObjectReference: This field should not be used directly as it is
 	// meant to be inlined directly into the message. Use the "name" field
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The Secret to select from.
+	// Name: The Secret to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Specify whether the Secret must be defined
-	// +optional
+	// Optional: (Optional) Specify whether the Secret must be defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1940,12 +1652,10 @@ func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretKeySelector: Cloud Run fully managed: supported Cloud Run on
-// GKE: supported SecretKeySelector selects a key of a Secret.
+// SecretKeySelector: SecretKeySelector selects a key of a Secret.
 type SecretKeySelector struct {
-	// Key: Cloud Run fully managed: supported A Cloud Secret Manager secret
-	// version. Must be 'latest' for the latest version or an integer for a
-	// specific version. Cloud Run for Anthos: supported The key of the
+	// Key: A Cloud Secret Manager secret version. Must be 'latest' for the
+	// latest version or an integer for a specific version. The key of the
 	// secret to select from. Must be a valid secret key.
 	Key string `json:"key,omitempty"`
 
@@ -1954,20 +1664,17 @@ type SecretKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: supported The name of the secret in
-	// Cloud Secret Manager. By default, the secret is assumed to be in the
-	// same project. If the secret is in another project, you must define an
-	// alias. An alias definition has the form: :projects//secrets/. If
-	// multiple alias definitions are needed, they must be separated by
-	// commas. The alias definitions must be set on the
-	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
-	// supported The name of the secret in the pod's namespace to select
-	// from.
+	// Name: The name of the secret in Cloud Secret Manager. By default, the
+	// secret is assumed to be in the same project. If the secret is in
+	// another project, you must define an alias. An alias definition has
+	// the form: :projects//secrets/. If multiple alias definitions are
+	// needed, they must be separated by commas. The alias definitions must
+	// be set on the run.googleapis.com/secrets annotation. The name of the
+	// secret in the pod's namespace to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported Specify whether the Secret or its key must be defined
-	// +optional
+	// Optional: (Optional) Specify whether the Secret or its key must be
+	// defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1993,42 +1700,46 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretVolumeSource: The contents of the target Secret's Data field
-// will be presented in a volume as files using the keys in the Data
-// field as the file names.
+// SecretVolumeSource: The secret's value will be presented as the
+// content of a file whose name is defined in the item path. If no items
+// are defined, the name of the file is the secret_name. The contents of
+// the target Secret's Data field will be presented in a volume as files
+// using the keys in the Data field as the file names.
 type SecretVolumeSource struct {
-	// DefaultMode: Mode bits to use on created files by default. Must be a
-	// value between 0 and 0777. Defaults to 0644. Directories within the
-	// path are not affected by this setting. This might be in conflict with
-	// other options that affect the file mode, like fsGroup, and the result
-	// can be other mode bits set.
+	// DefaultMode: (Optional) Mode bits to use on created files by default.
+	// Must be a value between 0000 and 0777. Defaults to 0644. Directories
+	// within the path are not affected by this setting. This might be in
+	// conflict with other options that affect the file mode, like fsGroup,
+	// and the result can be other mode bits set. NOTE: This is an integer
+	// representation of the mode bits. So, the integer value should look
+	// exactly as the chmod numeric notation, i.e. Unix chmod "777" (a=rwx)
+	// should have the integer value 777.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: Cloud Run fully managed: supported If unspecified, the volume
-	// will expose a file whose name is the secret_name. If specified, the
-	// key will be used as the version to fetch from Cloud Secret Manager
-	// and the path will be the name of the file exposed in the volume. When
-	// items are defined, they must specify a key and a path. Cloud Run for
-	// Anthos: supported If unspecified, each key-value pair in the Data
-	// field of the referenced Secret will be projected into the volume as a
-	// file whose name is the key and content is the value. If specified,
-	// the listed keys will be projected into the specified paths, and
-	// unlisted keys will not be present. If a key is specified which is not
-	// present in the Secret, the volume setup will error unless it is
-	// marked optional.
+	// Items: (Optional) If unspecified, the volume will expose a file whose
+	// name is the secret_name. If specified, the key will be used as the
+	// version to fetch from Cloud Secret Manager and the path will be the
+	// name of the file exposed in the volume. When items are defined, they
+	// must specify a key and a path. If unspecified, each key-value pair in
+	// the Data field of the referenced Secret will be projected into the
+	// volume as a file whose name is the key and content is the value. If
+	// specified, the listed keys will be projected into the specified
+	// paths, and unlisted keys will not be present. If a key is specified
+	// that is not present in the Secret, the volume setup will error unless
+	// it is marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
-	// Optional: Specify whether the Secret or its keys must be defined.
+	// Optional: (Optional) Specify whether the Secret or its keys must be
+	// defined.
 	Optional bool `json:"optional,omitempty"`
 
-	// SecretName: Cloud Run fully managed: supported The name of the secret
-	// in Cloud Secret Manager. By default, the secret is assumed to be in
-	// the same project. If the secret is in another project, you must
-	// define an alias. An alias definition has the form:
-	// :projects//secrets/. If multiple alias definitions are needed, they
-	// must be separated by commas. The alias definitions must be set on the
-	// run.googleapis.com/secrets annotation. Cloud Run for Anthos:
-	// supported Name of the secret in the container's namespace to use.
+	// SecretName: The name of the secret in Cloud Secret Manager. By
+	// default, the secret is assumed to be in the same project. If the
+	// secret is in another project, you must define an alias. An alias
+	// definition has the form: :projects//secrets/. If multiple alias
+	// definitions are needed, they must be separated by commas. The alias
+	// definitions must be set on the run.googleapis.com/secrets annotation.
+	// Name of the secret in the container's namespace to use.
 	SecretName string `json:"secretName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
@@ -2054,77 +1765,32 @@ func (s *SecretVolumeSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecurityContext: SecurityContext holds security configuration that
-// will be applied to a container. Some fields are present in both
-// SecurityContext and PodSecurityContext. When both are set, the values
-// in SecurityContext take precedence.
+// SecurityContext: Not supported by Cloud Run SecurityContext holds
+// security configuration that will be applied to a container. Some
+// fields are present in both SecurityContext and PodSecurityContext.
+// When both are set, the values in SecurityContext take precedence.
 type SecurityContext struct {
-	// AllowPrivilegeEscalation: AllowPrivilegeEscalation controls whether a
-	// process can gain more privileges than its parent process. This bool
-	// directly controls if the no_new_privs flag will be set on the
-	// container process. AllowPrivilegeEscalation is true always when the
-	// container is: 1) run as Privileged 2) has CAP_SYS_ADMIN +optional
-	AllowPrivilegeEscalation bool `json:"allowPrivilegeEscalation,omitempty"`
-
-	// Capabilities: The capabilities to add/drop when running containers.
-	// Defaults to the default set of capabilities granted by the container
-	// runtime. +optional
-	Capabilities *Capabilities `json:"capabilities,omitempty"`
-
-	// Privileged: Run container in privileged mode. Processes in privileged
-	// containers are essentially equivalent to root on the host. Defaults
-	// to false. +optional
-	Privileged bool `json:"privileged,omitempty"`
-
-	// ReadOnlyRootFilesystem: Whether this container has a read-only root
-	// filesystem. Default is false. +optional
-	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem,omitempty"`
-
-	// RunAsGroup: The GID to run the entrypoint of the container process.
-	// Uses runtime default if unset. May also be set in PodSecurityContext.
-	// If set in both SecurityContext and PodSecurityContext, the value
-	// specified in SecurityContext takes precedence. +optional
-	RunAsGroup int64 `json:"runAsGroup,omitempty"`
-
-	// RunAsNonRoot: Indicates that the container must run as a non-root
-	// user. If true, the Kubelet will validate the image at runtime to
-	// ensure that it does not run as UID 0 (root) and fail to start the
-	// container if it does. If unset or false, no such validation will be
-	// performed. May also be set in PodSecurityContext. If set in both
-	// SecurityContext and PodSecurityContext, the value specified in
-	// SecurityContext takes precedence. +optional
-	RunAsNonRoot bool `json:"runAsNonRoot,omitempty"`
-
-	// RunAsUser: The UID to run the entrypoint of the container process.
-	// Defaults to user specified in image metadata if unspecified. May also
-	// be set in PodSecurityContext. If set in both SecurityContext and
-	// PodSecurityContext, the value specified in SecurityContext takes
-	// precedence. +optional
+	// RunAsUser: (Optional) The UID to run the entrypoint of the container
+	// process. Defaults to user specified in image metadata if unspecified.
+	// May also be set in PodSecurityContext. If set in both SecurityContext
+	// and PodSecurityContext, the value specified in SecurityContext takes
+	// precedence.
 	RunAsUser int64 `json:"runAsUser,omitempty"`
 
-	// SeLinuxOptions: The SELinux context to be applied to the container.
-	// If unspecified, the container runtime will allocate a random SELinux
-	// context for each container. May also be set in PodSecurityContext. If
-	// set in both SecurityContext and PodSecurityContext, the value
-	// specified in SecurityContext takes precedence. +optional
-	SeLinuxOptions *SELinuxOptions `json:"seLinuxOptions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllowPrivilegeEscalation") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RunAsUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowPrivilegeEscalation")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RunAsUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2134,16 +1800,18 @@ func (s *SecurityContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TCPSocketAction: TCPSocketAction describes an action based on opening
-// a socket
+// TCPSocketAction: Not supported by Cloud Run TCPSocketAction describes
+// an action based on opening a socket
 type TCPSocketAction struct {
-	// Host: Optional: Host name to connect to, defaults to the pod IP.
-	// +optional
+	// Host: (Optional) Optional: Host name to connect to, defaults to the
+	// pod IP.
 	Host string `json:"host,omitempty"`
 
 	// Port: Number or name of the port to access on the container. Number
-	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-	Port *IntOrString `json:"port,omitempty"`
+	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. This
+	// field is currently limited to integer types only because of proto's
+	// inability to properly support the IntOrString golang type.
+	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
@@ -2168,7 +1836,8 @@ func (s *TCPSocketAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Volume: Volume represents a named volume in a container.
+// Volume: Not supported by Cloud Run Volume represents a named volume
+// in a container.
 type Volume struct {
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
@@ -2200,61 +1869,21 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeDevice: volumeDevice describes a mapping of a raw block device
-// within a container.
-type VolumeDevice struct {
-	// DevicePath: devicePath is the path inside of the container that the
-	// device will be mapped to.
-	DevicePath string `json:"devicePath,omitempty"`
-
-	// Name: name must match the name of a persistentVolumeClaim in the pod
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DevicePath") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DevicePath") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VolumeDevice) MarshalJSON() ([]byte, error) {
-	type NoMethod VolumeDevice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// VolumeMount: VolumeMount describes a mounting of a Volume within a
-// container.
+// VolumeMount: Not supported by Cloud Run VolumeMount describes a
+// mounting of a Volume within a container.
 type VolumeMount struct {
 	// MountPath: Path within the container at which the volume should be
 	// mounted. Must not contain ':'.
 	MountPath string `json:"mountPath,omitempty"`
 
-	// MountPropagation: mountPropagation determines how mounts are
-	// propagated from the host to container and the other way around. When
-	// not set, MountPropagationHostToContainer is used. This field is beta
-	// in 1.10. +optional
-	MountPropagation string `json:"mountPropagation,omitempty"`
-
 	// Name: This must match the Name of a Volume.
 	Name string `json:"name,omitempty"`
 
-	// ReadOnly: Mounted read-only if true, read-write otherwise (false or
-	// unspecified). Defaults to false. +optional
+	// ReadOnly: (Optional) Only true is accepted. Defaults to true.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// SubPath: Path within the volume from which the container's volume
-	// should be mounted. Defaults to "" (volume's root). +optional
+	// SubPath: (Optional) Path within the volume from which the container's
+	// volume should be mounted. Defaults to "" (volume's root).
 	SubPath string `json:"subPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MountPath") to
@@ -2329,7 +1958,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2123,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2653,7 +2282,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2854,7 +2483,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

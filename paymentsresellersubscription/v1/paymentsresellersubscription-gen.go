@@ -675,6 +675,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// maximum.
 	PartnerUserToken string `json:"partnerUserToken,omitempty"`
 
+	// ProcessingState: Output only. Describes the processing state of the
+	// subscription. See more details at the lifecycle of a subscription
+	// (/payments/reseller/subscription/reference/index/Receive.Notifications
+	// #payments-subscription-lifecycle).
+	//
+	// Possible values:
+	//   "PROCESSING_STATE_UNSPECIFIED" - The processing state is
+	// unspecified.
+	//   "PROCESSING_STATE_CANCELLING" - The subscription is being
+	// cancelled.
+	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
+	ProcessingState string `json:"processingState,omitempty"`
+
 	// Products: Required. Resource name that identifies one or more
 	// subscription products. The format will be
 	// 'partners/{partner_id}/products/{product_id}'.
@@ -696,7 +709,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// as indicated by the partner.
 	ServiceLocation *GoogleCloudPaymentsResellerSubscriptionV1Location `json:"serviceLocation,omitempty"`
 
-	// State: Output only. Descibes the state of the subscription. See more
+	// State: Output only. Describes the state of the subscription. See more
 	// details at the lifecycle of a subscription
 	// (/payments/reseller/subscription/reference/index/Receive.Notifications
 	// #payments-subscription-lifecycle).
@@ -752,7 +765,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetai
-// ls: Describes the details of a cancelled subscription.
+// ls: Describes the details of a cancelled or cancelling subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails struct {
 	// Reason: The reason of the cancellation.
 	//
@@ -990,7 +1003,7 @@ func (c *PartnersProductsListCall) Header() http.Header {
 
 func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1200,7 +1213,7 @@ func (c *PartnersPromotionsListCall) Header() http.Header {
 
 func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1337,9 +1350,10 @@ type PartnersSubscriptionsCancelCall struct {
 	header_                                                            http.Header
 }
 
-// Cancel: Used by partners to cancel a subscription service by the end
-// of the current billing cycle for their customers. It should be called
-// directly by the partner using service accounts.
+// Cancel: Used by partners to cancel a subscription service either
+// immediately or by the end of the current billing cycle for their
+// customers. It should be called directly by the partner using service
+// accounts.
 //
 // - name: The name of the subscription resource to be cancelled. It
 //   will have the format of
@@ -1378,7 +1392,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1445,7 +1459,7 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to cancel a subscription service by the end of the current billing cycle for their customers. It should be called directly by the partner using service accounts.",
+	//   "description": "Used by partners to cancel a subscription service either immediately or by the end of the current billing cycle for their customers. It should be called directly by the partner using service accounts.",
 	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "paymentsresellersubscription.partners.subscriptions.cancel",
@@ -1534,7 +1548,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1685,7 +1699,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1831,7 +1845,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1985,7 +1999,7 @@ func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2137,7 +2151,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2289,7 +2303,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -43,9 +43,18 @@ func (u URLParams) Encode() string {
 	return url.Values(u).Encode()
 }
 
+type getMultiValue interface {
+	GetMulti() (string, []string)
+}
+
 // SetOptions sets the URL params and any additional call options.
 func SetOptions(u URLParams, opts ...googleapi.CallOption) {
 	for _, o := range opts {
+		m, ok := o.(getMultiValue)
+		if ok {
+			u.SetMulti(m.GetMulti())
+			continue
+		}
 		u.Set(o.Get())
 	}
 }

@@ -145,7 +145,7 @@ func downscopeQuery(t *testing.T, tt downscopeTest) error {
 	if err != nil {
 		return fmt.Errorf("failed to retrieve object from GCP project with error: %v", err)
 	}
-	defer resp.Body().Close()
+	defer resp.Body.Close()
 	_, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return fmt.Errorf("ioutil.ReadAll: %v", err)

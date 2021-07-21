@@ -167,7 +167,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/admin-sdk/",
+      "documentationLink": "https://developers.google.com/admin-sdk/",
       "preferred": false
     },
     {
@@ -182,7 +182,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/admin-sdk/",
+      "documentationLink": "https://developers.google.com/admin-sdk/",
       "preferred": false
     },
     {
@@ -197,7 +197,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/admin-sdk/",
+      "documentationLink": "https://developers.google.com/admin-sdk/",
       "preferred": true
     },
     {

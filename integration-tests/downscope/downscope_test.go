@@ -20,18 +20,18 @@ import (
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/google/downscope"
 	storage "google.golang.org/api/storage/v1"
+	"google.golang.org/api/transport"
 )
 
 const (
-	envServiceAccountFile = "GCLOUD_TESTS_GOLANG_KEY"
 	rootTokenScope        = "https://www.googleapis.com/auth/cloud-platform"
+	envServiceAccountFile = "GCLOUD_TESTS_GOLANG_KEY"
+	object1               = "cab-first-c45wknuy.txt"
+	object2               = "cab-second-c45wknuy.txt"
+	bucket                = "dulcet-port-762"
 )
 
 var (
-	object1 = "cab-first-c45wknuy.txt"
-	object2 = "cab-second-c45wknuy.txt"
-	bucket1 = "dulcet-port-762"
-
 	rootCredential *google.Credentials
 )
 
@@ -44,11 +44,15 @@ func TestMain(m *testing.M) {
 	}
 	ctx := context.Background()
 	credentialFileName := os.Getenv(envServiceAccountFile)
-	credentialsFileData, err := os.ReadFile(credentialFileName)
-	if err != nil {
-		log.Fatalf("failed to open credentials file: %v", err)
-	}
-	rootCredential, err = google.CredentialsFromJSON(ctx, credentialsFileData, rootTokenScope)
+	//credentialsFileData, err := os.ReadFile(credentialFileName)
+	//if err != nil {
+	//	log.Fatalf("failed to open credentials file: %v", err)
+	//}
+
+	var err error
+	rootCredential, err = transport.Creds(ctx, option.WithCredentialsFile(credentialFileName), option.WithScopes(rootTokenScope))
+
+	//rootCredential, err = google.CredentialsFromJSON(ctx, credentialsFileData, rootTokenScope)
 	if err != nil {
 		log.Fatalf("failed to construct root credential: %v", err)
 	}
@@ -77,11 +81,11 @@ func TestDownscopedToken(t *testing.T) {
 	var downscopeTests = []downscopeTest{
 		{
 			name:                 "successfulDownscopedRead",
-			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket1,
+			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket,
 			availablePermissions: []string{"inRole:roles/storage.objectViewer"},
 			conditions: []downscope.AvailabilityCondition{
 				{
-					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket1 + "/objects/" + object1 + "')",
+					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket + "/objects/" + object1 + "')",
 				},
 			},
 			rootSource:  rootCredential.TokenSource,
@@ -90,11 +94,11 @@ func TestDownscopedToken(t *testing.T) {
 		},
 		{
 			name:                 "readOWithoutPermission",
-			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket1,
+			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket,
 			availablePermissions: []string{"inRole:roles/storage.objectViewer"},
 			conditions: []downscope.AvailabilityCondition{
 				{
-					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket1 + "/objects/" + object1 + "')",
+					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket + "/objects/" + object1 + "')",
 				},
 			},
 			rootSource:  rootCredential.TokenSource,
@@ -105,23 +109,24 @@ func TestDownscopedToken(t *testing.T) {
 
 	for _, tt := range downscopeTests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := helper(tt)
+			err := helper(t, tt)
 			// If a test isn't supposed to fail, it shouldn't fail.
 			if !tt.expectError && err != nil {
 				t.Errorf("test case %v should have succeeded, but instead returned %v", tt.name, err)
 			} else if tt.expectError && err == nil { // If a test is supposed to fail, it should return a non-nil error.
-				t.Errorf(" test case %v should have returned an error, but instaed returned nil", tt.name)
+				t.Errorf(" test case %v should have returned an error, but instead returned nil", tt.name)
 			}
 		})
 	}
 }
 
 // I'm not sure what I should name this according to convention.
-func helper(tt downscopeTest) error {
+func helper(t *testing.T, tt downscopeTest) error {
+	t.Helper()
 	ctx := context.Background()
 
 	// Initializes an accessBoundary
-	AccessBoundaryRules := make([]downscope.AccessBoundaryRule, 0)
+	var AccessBoundaryRules []downscope.AccessBoundaryRule
 	AccessBoundaryRules = append(AccessBoundaryRules, downscope.AccessBoundaryRule{AvailableResource: tt.availableResource, AvailablePermissions: tt.availablePermissions})
 
 	downscopedTokenSource, err := downscope.NewTokenSource(context.Background(), downscope.DownscopingConfig{RootSource: tt.rootSource, Rules: AccessBoundaryRules})
@@ -136,15 +141,14 @@ func helper(tt downscopeTest) error {
 	if err != nil {
 		return fmt.Errorf("failed to create the storage service: %v", err)
 	}
-	obj, err := storageService.Objects.Get(bucket1, tt.objectName).Download()
+	obj, err := storageService.Objects.Get(bucket, tt.objectName).Download()
 	if err != nil {
 		return fmt.Errorf("failed to retrieve object from GCP project with error: %v", err)
 	}
-	dat, err := ioutil.ReadAll(obj.Body)
-	defer obj.Body.Close()
+	_, err = ioutil.ReadAll(obj.Body)
 	if err != nil {
 		return fmt.Errorf("ioutil.ReadAll: %v", err)
 	}
-
+	defer obj.Body.Close()
 	return nil
 }

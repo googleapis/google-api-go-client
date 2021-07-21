@@ -1172,7 +1172,7 @@
       }
     }
   },
-  "revision": "20210714",
+  "revision": "20210718",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1832,12 +1832,16 @@
       "id": "FieldMetadata",
       "properties": {
         "primary": {
-          "description": "True if the field is the primary field; false if the field is a secondary field.",
+          "description": "True if the field is the primary field for the person.",
           "type": "boolean"
         },
         "source": {
           "$ref": "Source",
           "description": "The source of the field."
+        },
+        "sourcePrimary": {
+          "description": "True if the field is the primary field for the source.",
+          "type": "boolean"
         },
         "verified": {
           "description": "Output only. True if the field is verified; false if the field is unverified. A verified field is typically a name, email address, phone number, or website that has been confirmed to be owned by the person.",

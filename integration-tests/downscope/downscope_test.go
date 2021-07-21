@@ -109,7 +109,7 @@ func TestDownscopedToken(t *testing.T) {
 
 	for _, tt := range downscopeTests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := helper(t, tt)
+			err := downscopeQuery(t, tt)
 			// If a test isn't supposed to fail, it shouldn't fail.
 			if !tt.expectError && err != nil {
 				t.Errorf("test case %v should have succeeded, but instead returned %v", tt.name, err)
@@ -121,7 +121,7 @@ func TestDownscopedToken(t *testing.T) {
 }
 
 // I'm not sure what I should name this according to convention.
-func helper(t *testing.T, tt downscopeTest) error {
+func downscopeQuery(t *testing.T, tt downscopeTest) error {
 	t.Helper()
 	ctx := context.Background()
 
@@ -141,14 +141,15 @@ func helper(t *testing.T, tt downscopeTest) error {
 	if err != nil {
 		return fmt.Errorf("failed to create the storage service: %v", err)
 	}
-	obj, err := storageService.Objects.Get(bucket, tt.objectName).Download()
+	resp, err := storageService.Objects.Get(bucket, tt.objectName).Download()
 	if err != nil {
 		return fmt.Errorf("failed to retrieve object from GCP project with error: %v", err)
 	}
-	_, err = ioutil.ReadAll(obj.Body)
+	_, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
+		resp.Body.Close()
 		return fmt.Errorf("ioutil.ReadAll: %v", err)
 	}
-	defer obj.Body.Close()
+	resp.Body.Close()
 	return nil
 }

@@ -785,14 +785,15 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn(" client *http.Client")
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
+	pn(" UserAgentPrefix string // optional User-Agent prefix fragment")
 
 	for _, res := range a.doc.Resources {
 		pn("\n\t%s\t*%s", resourceGoField(res, nil), resourceGoType(res))
 	}
 	pn("}")
 	pn("\nfunc (s *%s) userAgent() string {", service)
-	pn(` if s.UserAgent == "" { return googleapi.UserAgent }`)
-	pn(` return googleapi.UserAgent + " " + s.UserAgent`)
+	pn(` if s.UserAgent == "" && s.UserAgentPrefix == "" { return googleapi.UserAgent }`)
+	pn(` return strings.Trim(s.UserAgentPrefix + " " + googleapi.UserAgent + " " + s.UserAgent)`)
 	pn("}\n")
 
 	for _, res := range a.doc.Resources {

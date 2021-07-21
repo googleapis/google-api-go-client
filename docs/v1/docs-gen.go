@@ -83,10 +83,10 @@ const mtlsBasePath = "https://docs.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, create, and edit all Google Docs documents you have access to
+	// See, edit, create, and delete all your Google Docs documents
 	DocumentsScope = "https://www.googleapis.com/auth/documents"
 
-	// View your Google Docs documents
+	// See all your Google Docs documents
 	DocumentsReadonlyScope = "https://www.googleapis.com/auth/documents.readonly"
 
 	// See, edit, create, and delete all of your Google Drive files
@@ -3787,6 +3787,10 @@ type ParagraphElement struct {
 	// Person: A paragraph element that links to a person or email address.
 	Person *Person `json:"person,omitempty"`
 
+	// RichLink: A paragraph element that links to a Google resource (such
+	// as a file in Drive, a Youtube video, a Calendar event, etc.)
+	RichLink *RichLink `json:"richLink,omitempty"`
+
 	// StartIndex: The zero-based start index of this paragraph element, in
 	// UTF-16 code units.
 	StartIndex int64 `json:"startIndex,omitempty"`
@@ -4835,6 +4839,98 @@ func (s *RgbColor) UnmarshalJSON(data []byte) error {
 	s.Green = float64(s1.Green)
 	s.Red = float64(s1.Red)
 	return nil
+}
+
+// RichLink: A link to a Google resource (e.g., a file in Drive, a
+// YouTube video, a Calendar event, etc.).
+type RichLink struct {
+	// RichLinkId: Output only. The ID of this link.
+	RichLinkId string `json:"richLinkId,omitempty"`
+
+	// RichLinkProperties: Output only. The properties of this RichLink.
+	// This field is always present.
+	RichLinkProperties *RichLinkProperties `json:"richLinkProperties,omitempty"`
+
+	// SuggestedDeletionIds: IDs for suggestions that remove this link from
+	// the document. A RichLink might have multiple deletion IDs if, for
+	// example, multiple users suggest to delete it. If empty, then this
+	// person link isn't suggested for deletion.
+	SuggestedDeletionIds []string `json:"suggestedDeletionIds,omitempty"`
+
+	// SuggestedInsertionIds: IDs for suggestions that insert this link into
+	// the document. A RichLink might have multiple insertion IDs if it is a
+	// nested suggested change (a suggestion within a suggestion made by a
+	// different user, for example). If empty, then this person link isn't a
+	// suggested insertion.
+	SuggestedInsertionIds []string `json:"suggestedInsertionIds,omitempty"`
+
+	// SuggestedTextStyleChanges: The suggested text style changes to this
+	// RichLink, keyed by suggestion ID.
+	SuggestedTextStyleChanges map[string]SuggestedTextStyle `json:"suggestedTextStyleChanges,omitempty"`
+
+	// TextStyle: The text style of this RichLink.
+	TextStyle *TextStyle `json:"textStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RichLinkId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RichLinkId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RichLink) MarshalJSON() ([]byte, error) {
+	type NoMethod RichLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RichLinkProperties: Properties specific to a RichLink.
+type RichLinkProperties struct {
+	// MimeType: Output only. The MIME type
+	// (https://developers.google.com/drive/api/v3/mime-types) of the
+	// RichLink, if there is one (i.e., when it is a file in Drive).
+	MimeType string `json:"mimeType,omitempty"`
+
+	// Title: Output only. The title of the RichLink as displayed in the
+	// link. This title matches the title of the linked resource at the time
+	// of the insertion or last update of the link. This field is always
+	// present.
+	Title string `json:"title,omitempty"`
+
+	// Uri: Output only. The URI to the RichLink. This is always present.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MimeType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MimeType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RichLinkProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod RichLinkProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SectionBreak: A StructuralElement representing a section break. A
@@ -7120,7 +7216,7 @@ func (c *DocumentsBatchUpdateCall) Header() http.Header {
 
 func (c *DocumentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7261,7 +7357,7 @@ func (c *DocumentsCreateCall) Header() http.Header {
 
 func (c *DocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7430,7 +7526,7 @@ func (c *DocumentsGetCall) Header() http.Header {
 
 func (c *DocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

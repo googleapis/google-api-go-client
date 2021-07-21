@@ -558,9 +558,9 @@ func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) Mars
 // GoogleCloudAssuredworkloadsV1beta1Workload: An Workload object for
 // managing highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsV1beta1Workload struct {
-	// BillingAccount: Required. Input only. The billing account used for
-	// the resources which are direct children of workload. This billing
-	// account is initially associated with the resources created as part of
+	// BillingAccount: Input only. The billing account used for the
+	// resources which are direct children of workload. This billing account
+	// is initially associated with the resources created as part of
 	// Workload creation. After the initial creation of these resources, the
 	// customer can change the assigned billing account. The resource name
 	// has the form `billingAccounts/{billing_account_id}`. For example,
@@ -839,7 +839,10 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
-	//   "CONSUMER_PROJECT" - Consumer project.
+	//   "CONSUMER_PROJECT" - Deprecated. Existing workloads will continue
+	// to support this, but new CreateWorkloadRequests should not specify
+	// this as an input value.
+	//   "CONSUMER_FOLDER" - Consumer Folder.
 	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
 	// keys.
 	//   "KEYRING" - Keyring resource that hosts encryption keys.
@@ -886,7 +889,10 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
-	//   "CONSUMER_PROJECT" - Consumer project.
+	//   "CONSUMER_PROJECT" - Deprecated. Existing workloads will continue
+	// to support this, but new CreateWorkloadRequests should not specify
+	// this as an input value.
+	//   "CONSUMER_FOLDER" - Consumer Folder.
 	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
 	// keys.
 	//   "KEYRING" - Keyring resource that hosts encryption keys.
@@ -1129,7 +1135,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1305,7 +1311,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1491,7 +1497,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1647,7 +1653,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1799,7 +1805,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1970,7 +1976,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2158,7 +2164,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

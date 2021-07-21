@@ -592,6 +592,18 @@ type AndroidRoboTest struct {
 	// username and password for a test account can be provided.
 	RoboDirectives []*RoboDirective `json:"roboDirectives,omitempty"`
 
+	// RoboMode: The mode in which Robo should run. Most clients should
+	// allow the server to populate this field automatically.
+	//
+	// Possible values:
+	//   "ROBO_MODE_UNSPECIFIED" - LINT.IfChange This means that the server
+	// should choose the mode. Recommended.
+	//   "ROBO_VERSION_1" - Runs Robo in UIAutomator-only mode without app
+	// resigning
+	//   "ROBO_VERSION_2" - Runs Robo in standard Espresso with UIAutomator
+	// fallback
+	RoboMode string `json:"roboMode,omitempty"`
+
 	// RoboScript: A JSON file with a sequence of actions Robo should
 	// perform as a prologue for the crawl.
 	RoboScript *FileReference `json:"roboScript,omitempty"`
@@ -2877,10 +2889,13 @@ type TestSetup struct {
 	// TestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.
 	NetworkProfile string `json:"networkProfile,omitempty"`
 
-	// Systrace: Systrace configuration for the run. If set a systrace will
-	// be taken, starting on test start and lasting for the configured
-	// duration. The systrace file thus obtained is put in the results
-	// bucket together with the other artifacts from the run.
+	// Systrace: Deprecated: Systrace uses Python 2 which has been sunset
+	// 2020-01-01. Support of Systrace may stop at any time, at which point
+	// no Systrace file will be provided in the results. Systrace
+	// configuration for the run. If set a systrace will be taken, starting
+	// on test start and lasting for the configured duration. The systrace
+	// file thus obtained is put in the results bucket together with the
+	// other artifacts from the run.
 	Systrace *SystraceSetup `json:"systrace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -3276,7 +3291,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3412,7 +3427,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3568,7 +3583,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3730,7 +3745,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3894,7 +3909,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

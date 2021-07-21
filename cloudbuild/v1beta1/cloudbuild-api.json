@@ -317,7 +317,7 @@
       }
     }
   },
-  "revision": "20210625",
+  "revision": "20210709",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -639,6 +639,10 @@
           ],
           "type": "string"
         },
+        "pool": {
+          "$ref": "PoolOption",
+          "description": "Optional. Specification for execution on a `WorkerPool`. See [running builds in a private pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information."
+        },
         "requestedVerifyOption": {
           "description": "Requested verifiability options.",
           "enum": [
@@ -695,7 +699,7 @@
           "type": "array"
         },
         "workerPool": {
-          "description": "Option to specify a `WorkerPool` for the build. Format: projects/{project}/locations/{location}/workerPools/{workerPool} This field is in beta and is available only to restricted users.",
+          "description": "This field deprecated; please use `pool.name` instead.",
           "type": "string"
         }
       },
@@ -825,6 +829,48 @@
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
+      "type": "object"
+    },
+    "CreateWorkerPoolOperationMetadata": {
+      "description": "Metadata for the `CreateWorkerPool` operation.",
+      "id": "CreateWorkerPoolOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "The resource name of the `WorkerPool` to create. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteWorkerPoolOperationMetadata": {
+      "description": "Metadata for the `DeleteWorkerPool` operation.",
+      "id": "DeleteWorkerPoolOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "The resource name of the `WorkerPool` being deleted. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "Empty": {
@@ -1072,6 +1118,17 @@
           },
           "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "PoolOption": {
+      "description": "Details about how a build should be executed on a `WorkerPool`. See [running builds in a private pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.",
+      "id": "PoolOption",
+      "properties": {
+        "name": {
+          "description": "The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1347,7 +1404,7 @@
           "type": "string"
         },
         "object": {
-          "description": "Google Cloud Storage object containing the source. This object must be a gzipped archive file (`.tar.gz`) containing source to build.",
+          "description": "Google Cloud Storage object containing the source. This object must be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing source to build.",
           "type": "string"
         }
       },
@@ -1385,6 +1442,27 @@
         "startTime": {
           "description": "Start of time span.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateWorkerPoolOperationMetadata": {
+      "description": "Metadata for the `UpdateWorkerPool` operation.",
+      "id": "UpdateWorkerPoolOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "The resource name of the `WorkerPool` being updated. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
           "type": "string"
         }
       },

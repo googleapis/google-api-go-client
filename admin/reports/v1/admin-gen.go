@@ -930,7 +930,9 @@ type ActivitiesListCall struct {
 // - userKey: Represents the profile ID or the user email for which the
 //   data should be filtered. Can be `all` for all information, or
 //   `userKey` for a user's unique Google Workspace profile ID or their
-//   primary email address.
+//   primary email address. Must not be a deleted user. For a deleted
+//   user, call `users.list` in Directory API with `showDeleted=true`,
+//   then use the returned `ID` as the `userKey`.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1035,7 +1037,7 @@ func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 
 // GroupIdFilter sets the optional parameter "groupIdFilter": Comma
 // separated group ids (obfuscated) on which user activities are
-// filtered, i.e, the response will contain activities for only those
+// filtered, i.e. the response will contain activities for only those
 // users that are a part of at least one of the group ids mentioned
 // here. Format: "id:abc123,id:xyz456"
 func (c *ActivitiesListCall) GroupIdFilter(groupIdFilter string) *ActivitiesListCall {
@@ -1121,7 +1123,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1275,7 +1277,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
@@ -1308,7 +1310,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1366,7 +1368,9 @@ type ActivitiesWatchCall struct {
 // - userKey: Represents the profile ID or the user email for which the
 //   data should be filtered. Can be `all` for all information, or
 //   `userKey` for a user's unique Google Workspace profile ID or their
-//   primary email address.
+//   primary email address. Must not be a deleted user. For a deleted
+//   user, call `users.list` in Directory API with `showDeleted=true`,
+//   then use the returned `ID` as the `userKey`.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1472,7 +1476,7 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 
 // GroupIdFilter sets the optional parameter "groupIdFilter": Comma
 // separated group ids (obfuscated) on which user activities are
-// filtered, i.e, the response will contain activities for only those
+// filtered, i.e. the response will contain activities for only those
 // users that are a part of at least one of the group ids mentioned
 // here. Format: "id:abc123,id:xyz456"
 func (c *ActivitiesWatchCall) GroupIdFilter(groupIdFilter string) *ActivitiesWatchCall {
@@ -1548,7 +1552,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1704,7 +1708,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
@@ -1737,7 +1741,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1801,7 +1805,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1955,7 +1959,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2222,7 +2226,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2418,7 +2422,9 @@ type UserUsageReportGetCall struct {
 // - userKey: Represents the profile ID or the user email for which the
 //   data should be filtered. Can be `all` for all information, or
 //   `userKey` for a user's unique Google Workspace profile ID or their
-//   primary email address.
+//   primary email address. Must not be a deleted user. For a deleted
+//   user, call `users.list` in Directory API with `showDeleted=true`,
+//   then use the returned `ID` as the `userKey`.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -2457,7 +2463,7 @@ func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall
 
 // GroupIdFilter sets the optional parameter "groupIdFilter": Comma
 // separated group ids (obfuscated) on which user activities are
-// filtered, i.e, the response will contain activities for only those
+// filtered, i.e. the response will contain activities for only those
 // users that are a part of at least one of the group ids mentioned
 // here. Format: "id:abc123,id:xyz456"
 func (c *UserUsageReportGetCall) GroupIdFilter(groupIdFilter string) *UserUsageReportGetCall {
@@ -2553,7 +2559,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2645,7 +2651,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
@@ -2678,7 +2684,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

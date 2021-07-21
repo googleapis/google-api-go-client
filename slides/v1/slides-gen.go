@@ -93,16 +93,16 @@ const (
 	// See and download all your Google Drive files
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
-	// View and manage your Google Slides presentations
+	// See, edit, create, and delete all your Google Slides presentations
 	PresentationsScope = "https://www.googleapis.com/auth/presentations"
 
-	// View your Google Slides presentations
+	// See all your Google Slides presentations
 	PresentationsReadonlyScope = "https://www.googleapis.com/auth/presentations.readonly"
 
-	// See, edit, create, and delete your spreadsheets in Google Drive
+	// See, edit, create, and delete all your Google Sheets spreadsheets
 	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
-	// View your Google Spreadsheets
+	// See all your Google Sheets spreadsheets
 	SpreadsheetsReadonlyScope = "https://www.googleapis.com/auth/spreadsheets.readonly"
 )
 
@@ -1213,7 +1213,10 @@ type CreateSheetsChartRequest struct {
 	ObjectId string `json:"objectId,omitempty"`
 
 	// SpreadsheetId: The ID of the Google Sheets spreadsheet that contains
-	// the chart.
+	// the chart. You might need to add a resource key to the HTTP header
+	// for a subset of old files. For more information, see Access
+	// link-shared files using resource keys
+	// (https://developers.google.com/drive/api/v3/resource-keys).
 	SpreadsheetId string `json:"spreadsheetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChartId") to
@@ -1443,7 +1446,11 @@ type CreateVideoRequest struct {
 	// YouTube video https://www.youtube.com/watch?v=7U3axjORYZ0, the ID is
 	// 7U3axjORYZ0. For a Google Drive video
 	// https://drive.google.com/file/d/1xCgQLFTJi5_Xl8DgW_lcUYq5e-q6Hi5Q the
-	// ID is 1xCgQLFTJi5_Xl8DgW_lcUYq5e-q6Hi5Q.
+	// ID is 1xCgQLFTJi5_Xl8DgW_lcUYq5e-q6Hi5Q. To access a Google Drive
+	// video file, you might need to add a resource key to the HTTP header
+	// for a subset of old files. For more information, see Access
+	// link-shared files using resource keys
+	// (https://developers.google.com/drive/api/v3/resource-keys).
 	Id string `json:"id,omitempty"`
 
 	// ObjectId: A user-supplied object ID. If you specify an ID, it must be
@@ -1607,7 +1614,7 @@ type DeleteObjectRequest struct {
 	// ObjectId: The object ID of the page or page element to delete. If
 	// after a delete operation a group contains only 1 or no page elements,
 	// the group is also deleted. If a placeholder is deleted on a layout,
-	// any empty inheriting shapes are also deleted.
+	// any empty inheriting placeholders are also deleted.
 	ObjectId string `json:"objectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ObjectId") to
@@ -1956,8 +1963,7 @@ type GroupObjectsRequest struct {
 	// ChildrenObjectIds: The object IDs of the objects to group. Only page
 	// elements can be grouped. There should be at least two page elements
 	// on the same page that are not already in another group. Some page
-	// elements, such as videos, tables and placeholder shapes cannot be
-	// grouped.
+	// elements, such as videos, tables and placeholders cannot be grouped.
 	ChildrenObjectIds []string `json:"childrenObjectIds,omitempty"`
 
 	// GroupObjectId: A user-supplied object ID for the group to be created.
@@ -4242,6 +4248,9 @@ type Request struct {
 	// UpdateShapeProperties: Updates the properties of a Shape.
 	UpdateShapeProperties *UpdateShapePropertiesRequest `json:"updateShapeProperties,omitempty"`
 
+	// UpdateSlideProperties: Updates the properties of a Slide
+	UpdateSlideProperties *UpdateSlidePropertiesRequest `json:"updateSlideProperties,omitempty"`
+
 	// UpdateSlidesPosition: Updates the position of a set of slides in the
 	// presentation.
 	UpdateSlidesPosition *UpdateSlidesPositionRequest `json:"updateSlidesPosition,omitempty"`
@@ -4548,7 +4557,7 @@ func (s *Shadow) UnmarshalJSON(data []byte) error {
 // Shape: A PageElement kind representing a generic shape that does not
 // have a more specific classification.
 type Shape struct {
-	// Placeholder: Placeholders are shapes that are inherit from
+	// Placeholder: Placeholders are page elements that inherit from
 	// corresponding placeholders on layouts and masters. If set, the shape
 	// is a placeholder shape and any inherited properties can be resolved
 	// by looking at the parent placeholder identified by the
@@ -6572,6 +6581,45 @@ func (s *UpdateShapePropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateSlidePropertiesRequest: Updates the properties of a Slide.
+type UpdateSlidePropertiesRequest struct {
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root 'slideProperties' is implied and should not be
+	// specified. A single "*" can be used as short-hand for listing every
+	// field. For example to update whether a slide is skipped, set `fields`
+	// to "isSkipped". To reset a property to its default value, include
+	// its field name in the field mask but leave the field itself unset.
+	Fields string `json:"fields,omitempty"`
+
+	// ObjectId: The object ID of the slide the update is applied to.
+	ObjectId string `json:"objectId,omitempty"`
+
+	// SlideProperties: The slide properties to update.
+	SlideProperties *SlideProperties `json:"slideProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSlidePropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSlidePropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateSlidesPositionRequest: Updates the position of slides in the
 // presentation.
 type UpdateSlidesPositionRequest struct {
@@ -7168,7 +7216,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7314,7 +7362,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7454,7 +7502,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7608,7 +7656,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7801,7 +7849,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210719")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

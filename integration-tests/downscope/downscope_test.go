@@ -67,7 +67,7 @@ type downscopeTest struct {
 	name                 string
 	availableResource    string
 	availablePermissions []string
-	conditions           []downscope.AvailabilityCondition
+	condition            downscope.AvailabilityCondition
 	objectName           string
 	rootSource           oauth2.TokenSource
 	expectError          bool
@@ -83,23 +83,19 @@ func TestDownscopedToken(t *testing.T) {
 			name:                 "successfulDownscopedRead",
 			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket,
 			availablePermissions: []string{"inRole:roles/storage.objectViewer"},
-			conditions: []downscope.AvailabilityCondition{
-				{
-					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket + "/objects/" + object1 + "')",
-				},
+			condition: downscope.AvailabilityCondition{
+				Expression: "resource.name.startsWith('projects/_/buckets/" + bucket + "/objects/" + object1 + "')",
 			},
 			rootSource:  rootCredential.TokenSource,
 			objectName:  object1,
 			expectError: false,
 		},
 		{
-			name:                 "readOWithoutPermission",
+			name:                 "readWithoutPermission",
 			availableResource:    "//storage.googleapis.com/projects/_/buckets/" + bucket,
 			availablePermissions: []string{"inRole:roles/storage.objectViewer"},
-			conditions: []downscope.AvailabilityCondition{
-				{
-					Expression: "resource.name.startsWith('projects/_/buckets/" + bucket + "/objects/" + object1 + "')",
-				},
+			condition: downscope.AvailabilityCondition{
+				Expression: "resource.name.startsWith('projects/_/buckets/" + bucket + "/objects/" + object1 + "')",
 			},
 			rootSource:  rootCredential.TokenSource,
 			objectName:  object2,
@@ -127,7 +123,7 @@ func downscopeQuery(t *testing.T, tt downscopeTest) error {
 
 	// Initializes an accessBoundary
 	var AccessBoundaryRules []downscope.AccessBoundaryRule
-	AccessBoundaryRules = append(AccessBoundaryRules, downscope.AccessBoundaryRule{AvailableResource: tt.availableResource, AvailablePermissions: tt.availablePermissions})
+	AccessBoundaryRules = append(AccessBoundaryRules, downscope.AccessBoundaryRule{AvailableResource: tt.availableResource, AvailablePermissions: tt.availablePermissions, Condition: &tt.condition})
 
 	downscopedTokenSource, err := downscope.NewTokenSource(context.Background(), downscope.DownscopingConfig{RootSource: tt.rootSource, Rules: AccessBoundaryRules})
 	if err != nil {

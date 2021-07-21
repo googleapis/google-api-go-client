@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Copyright 2021 Google LLC.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+
 # This script is used to generate the project configurations needed to
 # end-to-end test Downscoping with Credential Access Boundaries in the Auth
 # library. This script only needs to be run once.

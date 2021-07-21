@@ -16,10 +16,10 @@ import (
 
 	"google.golang.org/api/option"
 
-	"cloud.google.com/go/storage"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/google/downscope"
+	storage "google.golang.org/api/storage/v1"
 )
 
 const (
@@ -28,9 +28,10 @@ const (
 )
 
 var (
-	object1        = "cab-first-c45wknuy.txt"
-	object2        = "cab-second-c45wknuy.txt"
-	bucket1        = "dulcet-port-762"
+	object1 = "cab-first-c45wknuy.txt"
+	object2 = "cab-second-c45wknuy.txt"
+	bucket1 = "dulcet-port-762"
+
 	rootCredential *google.Credentials
 )
 
@@ -129,22 +130,18 @@ func helper(tt downscopeTest) error {
 	}
 	downscopedTokenSource = oauth2.ReuseTokenSource(nil, downscopedTokenSource)
 
-	storageClient, err := storage.NewClient(ctx, option.WithTokenSource(downscopedTokenSource))
-	if err != nil {
-		return fmt.Errorf("error creating storage client: %v", err)
-	}
-
-	bkt := storageClient.Bucket(bucket1)
 	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
-	obj := bkt.Object(tt.objectName)
-	rc, err := obj.NewReader(ctx)
+	storageService, err := storage.NewService(ctx, option.WithTokenSource(downscopedTokenSource))
 	if err != nil {
-		return fmt.Errorf("failed to construct the reader: %v\n", err)
+		return fmt.Errorf("failed to create the storage service: %v", err)
 	}
-	defer rc.Close()
-
-	_, err = ioutil.ReadAll(rc)
+	obj, err := storageService.Objects.Get(bucket1, tt.objectName).Download()
+	if err != nil {
+		return fmt.Errorf("failed to retrieve object from GCP project with error: %v", err)
+	}
+	dat, err := ioutil.ReadAll(obj.Body)
+	defer obj.Body.Close()
 	if err != nil {
 		return fmt.Errorf("ioutil.ReadAll: %v", err)
 	}

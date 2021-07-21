@@ -44,15 +44,10 @@ func TestMain(m *testing.M) {
 	}
 	ctx := context.Background()
 	credentialFileName := os.Getenv(envServiceAccountFile)
-	//credentialsFileData, err := os.ReadFile(credentialFileName)
-	//if err != nil {
-	//	log.Fatalf("failed to open credentials file: %v", err)
-	//}
 
 	var err error
 	rootCredential, err = transport.Creds(ctx, option.WithCredentialsFile(credentialFileName), option.WithScopes(rootTokenScope))
 
-	//rootCredential, err = google.CredentialsFromJSON(ctx, credentialsFileData, rootTokenScope)
 	if err != nil {
 		log.Fatalf("failed to construct root credential: %v", err)
 	}

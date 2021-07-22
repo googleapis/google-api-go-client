@@ -15,12 +15,11 @@ import (
 	"time"
 
 	"google.golang.org/api/option"
-
 	"google.golang.org/api/storage/v1"
 )
 
 var (
-	// envReaderCredentialFile points to a service accountthat is a "Service
+	// envReaderCredentialFile points to a service account that is a "Service
 	// Account Token Creator" on envReaderSA.
 	envBaseSACredentialFile = "API_GO_CLIENT_IMPERSONATE_BASE"
 	// envUserCredentialFile points to a user credential that is a "Service

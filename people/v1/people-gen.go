@@ -3460,7 +3460,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3603,7 +3603,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3738,7 +3738,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3905,7 +3905,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4096,7 +4096,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4270,7 +4270,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4416,7 +4416,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4560,7 +4560,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4676,8 +4676,10 @@ type OtherContactsListCall struct {
 // `sync_token` is specified, resources deleted since the last sync will
 // be returned as a person with `PersonMetadata.deleted` set to true.
 // When the `page_token` or `sync_token` is specified, all other request
-// parameters must match the first call. See example usage at List the
-// user's other contacts that have changed
+// parameters must match the first call. Writes may have a propagation
+// delay of several minutes for sync requests. Incremental syncs are not
+// intended for read-after-write use cases. See example usage at List
+// the user's other contacts that have changed
 // (/people/v1/other-contacts#list_the_users_other_contacts_that_have_cha
 // nged).
 func (r *OtherContactsService) List() *OtherContactsListCall {
@@ -4785,7 +4787,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4844,7 +4846,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	}
 	return ret, nil
 	// {
-	//   "description": "List all \"Other contacts\", that is contacts that are not in a contact group. \"Other contacts\" are typically auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an expired sync token will result in a 410 error. In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. See example usage at [List the user's other contacts that have changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).",
+	//   "description": "List all \"Other contacts\", that is contacts that are not in a contact group. \"Other contacts\" are typically auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an expired sync token will result in a 410 error. In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's other contacts that have changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).",
 	//   "flatPath": "v1/otherContacts",
 	//   "httpMethod": "GET",
 	//   "id": "people.otherContacts.list",
@@ -5014,7 +5016,7 @@ func (c *OtherContactsSearchCall) Header() http.Header {
 
 func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5154,7 +5156,7 @@ func (c *PeopleBatchCreateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5280,7 +5282,7 @@ func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
 
 func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5407,7 +5409,7 @@ func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
 
 func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5566,7 +5568,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5719,7 +5721,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5883,7 +5885,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6096,7 +6098,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6334,7 +6336,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6472,8 +6474,10 @@ type PeopleListDirectoryPeopleCall struct {
 // `sync_token` is specified, resources deleted since the last sync will
 // be returned as a person with `PersonMetadata.deleted` set to true.
 // When the `page_token` or `sync_token` is specified, all other request
-// parameters must match the first call. See example usage at List the
-// directory people that have changed
+// parameters must match the first call. Writes may have a propagation
+// delay of several minutes for sync requests. Incremental syncs are not
+// intended for read-after-write use cases. See example usage at List
+// the directory people that have changed
 // (/people/v1/directory#list_the_directory_people_that_have_changed).
 func (r *PeopleService) ListDirectoryPeople() *PeopleListDirectoryPeopleCall {
 	c := &PeopleListDirectoryPeopleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6597,7 +6601,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6656,7 +6660,7 @@ func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListD
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of domain profiles and domain contacts in the authenticated user's domain directory. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. See example usage at [List the directory people that have changed](/people/v1/directory#list_the_directory_people_that_have_changed).",
+	//   "description": "Provides a list of domain profiles and domain contacts in the authenticated user's domain directory. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the directory people that have changed](/people/v1/directory#list_the_directory_people_that_have_changed).",
 	//   "flatPath": "v1/people:listDirectoryPeople",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.listDirectoryPeople",
@@ -6858,7 +6862,7 @@ func (c *PeopleSearchContactsCall) Header() http.Header {
 
 func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7092,7 +7096,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7351,7 +7355,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7523,7 +7527,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7638,8 +7642,10 @@ type PeopleConnectionsListCall struct {
 // resources deleted since the last sync will be returned as a person
 // with `PersonMetadata.deleted` set to true. When the `page_token` or
 // `sync_token` is specified, all other request parameters must match
-// the first call. See example usage at List the user's contacts that
-// have changed
+// the first call. Writes may have a propagation delay of several
+// minutes for sync requests. Incremental syncs are not intended for
+// read-after-write use cases. See example usage at List the user's
+// contacts that have changed
 // (/people/v1/contacts#list_the_users_contacts_that_have_changed).
 //
 // - resourceName: The resource name to return connections for. Only
@@ -7781,7 +7787,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210720")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7843,7 +7849,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A request with an expired sync token will result in a 410 error. In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. See example usage at [List the user's contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).",
+	//   "description": "Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A request with an expired sync token will result in a 410 error. In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).",
 	//   "flatPath": "v1/people/{peopleId}/connections",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.connections.list",

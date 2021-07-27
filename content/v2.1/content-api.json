@@ -245,8 +245,8 @@
                 "CSS"
               ],
               "enumDescriptions": [
-                "",
-                ""
+                "Default. View is populated with Merchant Center fields.",
+                "View is populated with Comparison Shopping Services fields."
               ],
               "location": "query",
               "type": "string"
@@ -369,8 +369,8 @@
                 "CSS"
               ],
               "enumDescriptions": [
-                "",
-                ""
+                "Default. View is populated with Merchant Center fields.",
+                "View is populated with Comparison Shopping Services fields."
               ],
               "location": "query",
               "type": "string"
@@ -423,6 +423,42 @@
           "path": "{merchantId}/accounts/{accountId}/listlinks",
           "response": {
             "$ref": "AccountsListLinksResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "requestphoneverification": {
+          "description": "Request verification code to start phone verification.",
+          "flatPath": "{merchantId}/accounts/{accountId}/requestphoneverification",
+          "httpMethod": "POST",
+          "id": "content.accounts.requestphoneverification",
+          "parameterOrder": [
+            "merchantId",
+            "accountId"
+          ],
+          "parameters": {
+            "accountId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "merchantId": {
+              "description": "Required. The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/accounts/{accountId}/requestphoneverification",
+          "request": {
+            "$ref": "RequestPhoneVerificationRequest"
+          },
+          "response": {
+            "$ref": "RequestPhoneVerificationResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -495,6 +531,42 @@
           },
           "response": {
             "$ref": "AccountsUpdateLabelsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "verifyphonenumber": {
+          "description": "Validates verification code to verify phone number for the account.",
+          "flatPath": "{merchantId}/accounts/{accountId}/verifyphonenumber",
+          "httpMethod": "POST",
+          "id": "content.accounts.verifyphonenumber",
+          "parameterOrder": [
+            "merchantId",
+            "accountId"
+          ],
+          "parameters": {
+            "accountId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "merchantId": {
+              "description": "Required. The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/accounts/{accountId}/verifyphonenumber",
+          "request": {
+            "$ref": "VerifyPhoneNumberRequest"
+          },
+          "response": {
+            "$ref": "VerifyPhoneNumberResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -1821,6 +1893,60 @@
         }
       }
     },
+    "freelistingsprogram": {
+      "methods": {
+        "get": {
+          "description": "Retrieves the status and review eligibility for the free listing program.",
+          "flatPath": "{merchantId}/freelistingsprogram",
+          "httpMethod": "GET",
+          "id": "content.freelistingsprogram.get",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/freelistingsprogram",
+          "response": {
+            "$ref": "FreeListingsProgramStatus"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "requestreview": {
+          "description": "Requests a review for Free Listings program in the provided region. Important: This method is only whitelisted for selected merchants.",
+          "flatPath": "{merchantId}/freelistingsprogram/requestreview",
+          "httpMethod": "POST",
+          "id": "content.freelistingsprogram.requestreview",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/freelistingsprogram/requestreview",
+          "request": {
+            "$ref": "RequestReviewFreeListingsRequest"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
     "liasettings": {
       "methods": {
         "custombatch": {
@@ -2569,8 +2695,8 @@
                 "RETURN_CREATION_TIME_ASC"
               ],
               "enumDescriptions": [
-                "",
-                ""
+                "Return results in descending order.",
+                "Return results in ascending order."
               ],
               "location": "query",
               "type": "string"
@@ -2590,11 +2716,11 @@
                 "PENDING"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Return shipments with `new` state only.",
+                "Return shipments with `shipped` state only.",
+                "Return shipments with `completed` state only.",
+                "Return shipments with `undeliverable` state only.",
+                "Return shipments with `pending` state only."
               ],
               "location": "query",
               "repeated": true,
@@ -2608,9 +2734,9 @@
                 "PROCESSED"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                ""
+                "Return shipments with `new` status only.",
+                "Return shipments with `inProgress` status only.",
+                "Return shipments with `processed` status only."
               ],
               "location": "query",
               "repeated": true,
@@ -2630,9 +2756,9 @@
                 "CONTACT_CUSTOMER_SUPPORT"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                ""
+                "Return shipments with type `byMail` only.",
+                "Return shipments with type `returnless` only.",
+                "Return shipments with type `contactCustomerSupport` only."
               ],
               "location": "query",
               "repeated": true,
@@ -3059,12 +3185,12 @@
                 "TEMPLATE4"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Get `template1`.",
+                "Get `template2`.",
+                "Get `template1A`.",
+                "Get `template1B`.",
+                "Get `template3`.",
+                "Get `template4`."
               ],
               "location": "path",
               "required": true,
@@ -3177,17 +3303,17 @@
                 "RETURNED"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Return orders with status `active`. The `active` status includes `pendingShipment` and `partiallyShipped` orders.",
+                "Return orders with status `completed`. The `completed` status includes `shipped`, `partiallyDelivered`, `delivered`, `partiallyReturned`, `returned`, and `canceled` orders.",
+                "Return orders with status `canceled`.",
+                "Return orders with status `inProgress`.",
+                "Return orders with status `pendingShipment`.",
+                "Return orders with status `partiallyShipped`.",
+                "Return orders with status `shipped`.",
+                "Return orders with status `partiallyDelivered`.",
+                "Return orders with status `delivered`.",
+                "Return orders with status `partiallyReturned`.",
+                "Return orders with status `returned`."
               ],
               "location": "query",
               "repeated": true,
@@ -3822,7 +3948,7 @@
           ],
           "parameters": {
             "feedId": {
-              "description": "The Content API Supplemental Feed ID.",
+              "description": "The Content API Supplemental Feed ID. If present then product deletion applies to the data in a supplemental feed. If absent, entire product will be deleted.",
               "format": "uint64",
               "location": "query",
               "type": "string"
@@ -3888,7 +4014,7 @@
           ],
           "parameters": {
             "feedId": {
-              "description": "The Content API Supplemental Feed ID.",
+              "description": "The Content API Supplemental Feed ID. If present then product insertion applies to the data in a supplemental feed.",
               "format": "uint64",
               "location": "query",
               "type": "string"
@@ -5493,9 +5619,63 @@
           ]
         }
       }
+    },
+    "shoppingadsprogram": {
+      "methods": {
+        "get": {
+          "description": "Retrieves the status and review eligibility for the Shopping Ads program.",
+          "flatPath": "{merchantId}/shoppingadsprogram",
+          "httpMethod": "GET",
+          "id": "content.shoppingadsprogram.get",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/shoppingadsprogram",
+          "response": {
+            "$ref": "ShoppingAdsProgramStatus"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "requestreview": {
+          "description": "Requests a review for Shopping Ads program in the provided country.",
+          "flatPath": "{merchantId}/shoppingadsprogram/requestreview",
+          "httpMethod": "POST",
+          "id": "content.shoppingadsprogram.requestreview",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/shoppingadsprogram/requestreview",
+          "request": {
+            "$ref": "RequestReviewShoppingAdsRequest"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
     }
   },
-  "revision": "20210707",
+  "revision": "20210722",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5503,7 +5683,8 @@
       "id": "Account",
       "properties": {
         "accountManagement": {
-          "description": "How the account is managed. Acceptable values are: - \"`manual`\" - \"`automatic`\" ",
+          "description": "Output only. How the account is managed. Acceptable values are: - \"`manual`\" - \"`automatic`\" ",
+          "readOnly": true,
           "type": "string"
         },
         "adsLinks": {
@@ -5544,7 +5725,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#account`\"",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#account`\".",
           "type": "string"
         },
         "labelIds": {
@@ -5974,7 +6155,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountTax\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountTax`\".",
           "type": "string"
         },
         "rules": {
@@ -6066,7 +6247,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsAuthInfoResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsAuthInfoResponse`\".",
           "type": "string"
         }
       },
@@ -6076,7 +6257,7 @@
       "id": "AccountsClaimWebsiteResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsClaimWebsiteResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsClaimWebsiteResponse`\".",
           "type": "string"
         }
       },
@@ -6185,7 +6366,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -6248,7 +6429,7 @@
       "id": "AccountsLinkResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsLinkResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsLinkResponse`\".",
           "type": "string"
         }
       },
@@ -6258,7 +6439,7 @@
       "id": "AccountsListLinksResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsListLinksResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsListLinksResponse`\".",
           "type": "string"
         },
         "links": {
@@ -6279,7 +6460,7 @@
       "id": "AccountsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -6313,7 +6494,7 @@
       "id": "AccountsUpdateLabelsResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsUpdateLabelsResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountsUpdateLabelsResponse`\".",
           "type": "string"
         }
       },
@@ -6376,7 +6557,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountstatusesCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountstatusesCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -6406,7 +6587,7 @@
       "id": "AccountstatusesListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountstatusesListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accountstatusesListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -6476,7 +6657,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accounttaxCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accounttaxCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -6510,7 +6691,7 @@
       "id": "AccounttaxListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accounttaxListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#accounttaxListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -7227,7 +7408,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedsCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#datafeedsCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -7257,7 +7438,7 @@
       "id": "DatafeedsFetchNowResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedsFetchNowResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#datafeedsFetchNowResponse`\".",
           "type": "string"
         }
       },
@@ -7267,7 +7448,7 @@
       "id": "DatafeedsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#datafeedsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -7341,7 +7522,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedstatusesCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#datafeedstatusesCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -7371,7 +7552,7 @@
       "id": "DatafeedstatusesListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedstatusesListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#datafeedstatusesListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -7554,6 +7735,121 @@
         "message": {
           "description": "The message of the first error in `errors`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FreeListingsProgramStatus": {
+      "description": "Response message for GetFreeListingsProgramStatus.",
+      "id": "FreeListingsProgramStatus",
+      "properties": {
+        "regionStatuses": {
+          "description": "Status of the program in each region. Regions with the same status and review eligibility are grouped together in `regionCodes`.",
+          "items": {
+            "$ref": "FreeListingsProgramStatusRegionStatus"
+          },
+          "type": "array"
+        },
+        "state": {
+          "description": "If program is successfully onboarded for at least one region.",
+          "enum": [
+            "PROGRAM_STATE_UNSPECIFIED",
+            "ONBOARDED",
+            "NOT_ONBOARDED"
+          ],
+          "enumDescriptions": [
+            "State is not known.",
+            "Program is onboarded for at least one country.",
+            "Program is not onboarded for any country."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FreeListingsProgramStatusRegionStatus": {
+      "description": "Status of program and region.",
+      "id": "FreeListingsProgramStatusRegionStatus",
+      "properties": {
+        "disapprovalDate": {
+          "description": "Date by which `eligibility_status` will go from `WARNING` to `DISAPPROVED`. It will be present when `eligibility_status` is `WARNING`. Date will be provided in ISO 8601 format i.e. YYYY-MM-DD",
+          "type": "string"
+        },
+        "eligibilityStatus": {
+          "description": "Eligibility status of the standard free listing program.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "APPROVED",
+            "DISAPPROVED",
+            "WARNING",
+            "UNDER_REVIEW",
+            "PENDING_REVIEW",
+            "ONBOARDING"
+          ],
+          "enumDescriptions": [
+            "State is not known.",
+            "If the account has no issues and review is completed successfully.",
+            "There are one or more issues that needs to be resolved for account to be active for the program. Detailed list of account issues are available in [accountstatuses](https://developers.google.com/shopping-content/reference/rest/v2.1/accountstatuses) API.",
+            "If account has issues but offers are servable. Some of the issue can make account DISAPPROVED after a certain deadline.",
+            "Account is under review.",
+            "Account is waiting for review to start.",
+            "Program is currently onboarding."
+          ],
+          "type": "string"
+        },
+        "enhancedEligibilityStatus": {
+          "description": "Eligibility status of the enhanced free listing program.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "APPROVED",
+            "DISAPPROVED",
+            "WARNING",
+            "UNDER_REVIEW",
+            "PENDING_REVIEW",
+            "ONBOARDING"
+          ],
+          "enumDescriptions": [
+            "State is not known.",
+            "If the account has no issues and review is completed successfully.",
+            "There are one or more issues that needs to be resolved for account to be active for the program. Detailed list of account issues are available in [accountstatuses](https://developers.google.com/shopping-content/reference/rest/v2.1/accountstatuses) API.",
+            "If account has issues but offers are servable. Some of the issue can make account DISAPPROVED after a certain deadline.",
+            "Account is under review.",
+            "Account is waiting for review to start.",
+            "Program is currently onboarding."
+          ],
+          "type": "string"
+        },
+        "ineligibilityReason": {
+          "description": "Reason if a program in a given country is not eligible for review. Populated only if `review_eligibility_status` is `INELIGIBLE`.",
+          "type": "string"
+        },
+        "regionCodes": {
+          "description": "The two-letter [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes for all the regions with the same `eligibilityStatus` and `reviewEligibility`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "reviewEligibilityStatus": {
+          "description": "If a program in a given country is eligible for review. It will be present only if eligibility status is `DISAPPROVED`.",
+          "enum": [
+            "REVIEW_ELIGIBILITY_UNSPECIFIED",
+            "ELIGIBLE",
+            "INELIGIBLE"
+          ],
+          "enumDescriptions": [
+            "Review eligibility state is unknown.",
+            "Account for a region code is eligible for review.",
+            "Account for a region code is not eligible for review."
+          ],
+          "type": "string"
+        },
+        "reviewIssues": {
+          "description": "These issues will be evaluated in review process. Fix all the issues before requesting the review.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -7998,7 +8294,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -8054,7 +8350,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsGetAccessibleGmbAccountsResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsGetAccessibleGmbAccountsResponse`\".",
           "type": "string"
         }
       },
@@ -8064,7 +8360,7 @@
       "id": "LiasettingsListPosDataProvidersResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsListPosDataProvidersResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsListPosDataProvidersResponse`\".",
           "type": "string"
         },
         "posDataProviders": {
@@ -8081,7 +8377,7 @@
       "id": "LiasettingsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -8101,7 +8397,7 @@
       "id": "LiasettingsRequestGmbAccessResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsRequestGmbAccessResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsRequestGmbAccessResponse`\".",
           "type": "string"
         }
       },
@@ -8111,7 +8407,7 @@
       "id": "LiasettingsRequestInventoryVerificationResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsRequestInventoryVerificationResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsRequestInventoryVerificationResponse`\".",
           "type": "string"
         }
       },
@@ -8121,7 +8417,7 @@
       "id": "LiasettingsSetInventoryVerificationContactResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsSetInventoryVerificationContactResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsSetInventoryVerificationContactResponse`\".",
           "type": "string"
         }
       },
@@ -8131,7 +8427,7 @@
       "id": "LiasettingsSetPosDataProviderResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsSetPosDataProviderResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsSetPosDataProviderResponse`\".",
           "type": "string"
         }
       },
@@ -8441,7 +8737,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#localinventoryCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#localinventoryCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -9862,7 +10158,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderinvoicesCreateChargeInvoiceResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderinvoicesCreateChargeInvoiceResponse`\".",
           "type": "string"
         }
       },
@@ -9905,7 +10201,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderinvoicesCreateRefundInvoiceResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderinvoicesCreateRefundInvoiceResponse`\".",
           "type": "string"
         }
       },
@@ -9950,7 +10246,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreportsListDisbursementsResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderreportsListDisbursementsResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -9964,7 +10260,7 @@
       "id": "OrderreportsListTransactionsResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreportsListTransactionsResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderreportsListTransactionsResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -9999,7 +10295,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreturnsAcknowledgeResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderreturnsAcknowledgeResponse`\".",
           "type": "string"
         }
       },
@@ -10038,7 +10334,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreturnsCreateOrderReturnResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderreturnsCreateOrderReturnResponse`\".",
           "type": "string"
         },
         "orderReturn": {
@@ -10071,7 +10367,7 @@
       "id": "OrderreturnsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreturnsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderreturnsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -10134,7 +10430,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreturnsProcessResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#orderreturnsProcessResponse`\".",
           "type": "string"
         }
       },
@@ -10216,7 +10512,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersAcknowledgeResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersAcknowledgeResponse`\".",
           "type": "string"
         }
       },
@@ -10226,7 +10522,7 @@
       "id": "OrdersAdvanceTestOrderResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersAdvanceTestOrderResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersAdvanceTestOrderResponse`\".",
           "type": "string"
         }
       },
@@ -10271,7 +10567,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCancelLineItemResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersCancelLineItemResponse`\".",
           "type": "string"
         }
       },
@@ -10303,7 +10599,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCancelResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersCancelResponse`\".",
           "type": "string"
         }
       },
@@ -10323,7 +10619,7 @@
       "id": "OrdersCancelTestOrderByCustomerResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCancelTestOrderByCustomerResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersCancelTestOrderByCustomerResponse`\".",
           "type": "string"
         }
       },
@@ -10351,7 +10647,7 @@
       "id": "OrdersCreateTestOrderResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCreateTestOrderResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersCreateTestOrderResponse`\".",
           "type": "string"
         },
         "orderId": {
@@ -10378,7 +10674,7 @@
       "id": "OrdersCreateTestReturnResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCreateTestReturnResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersCreateTestReturnResponse`\".",
           "type": "string"
         },
         "returnId": {
@@ -10481,7 +10777,7 @@
       "id": "OrdersGetByMerchantOrderIdResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersGetByMerchantOrderIdResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersGetByMerchantOrderIdResponse`\".",
           "type": "string"
         },
         "order": {
@@ -10495,7 +10791,7 @@
       "id": "OrdersGetTestOrderTemplateResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersGetTestOrderTemplateResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersGetTestOrderTemplateResponse`\".",
           "type": "string"
         },
         "template": {
@@ -10552,7 +10848,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersInStoreRefundLineItemResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersInStoreRefundLineItemResponse`\".",
           "type": "string"
         }
       },
@@ -10562,7 +10858,7 @@
       "id": "OrdersListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -10615,7 +10911,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersRefundItemResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersRefundItemResponse`\".",
           "type": "string"
         }
       },
@@ -10655,7 +10951,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersRefundOrderResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersRefundOrderResponse`\".",
           "type": "string"
         }
       },
@@ -10700,7 +10996,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersRejectReturnLineItemResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersRejectReturnLineItemResponse`\".",
           "type": "string"
         }
       },
@@ -10753,7 +11049,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersReturnRefundLineItemResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersReturnRefundLineItemResponse`\".",
           "type": "string"
         }
       },
@@ -10791,7 +11087,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersSetLineItemMetadataResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersSetLineItemMetadataResponse`\".",
           "type": "string"
         }
       },
@@ -10833,7 +11129,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersShipLineItemsResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersShipLineItemsResponse`\".",
           "type": "string"
         }
       },
@@ -10873,7 +11169,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersUpdateLineItemShippingDetailsResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersUpdateLineItemShippingDetailsResponse`\".",
           "type": "string"
         }
       },
@@ -10901,7 +11197,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersUpdateMerchantOrderIdResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersUpdateMerchantOrderIdResponse`\".",
           "type": "string"
         }
       },
@@ -10961,7 +11257,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersUpdateShipmentResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#ordersUpdateShipmentResponse`\".",
           "type": "string"
         }
       },
@@ -11085,7 +11381,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#posCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#posCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -11257,7 +11553,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#posInventoryResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#posInventoryResponse`\".",
           "type": "string"
         },
         "price": {
@@ -11288,7 +11584,7 @@
       "id": "PosListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#posListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#posListResponse`\".",
           "type": "string"
         },
         "resources": {
@@ -11407,7 +11703,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#posSaleResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#posSaleResponse`\".",
           "type": "string"
         },
         "price": {
@@ -12269,7 +12565,7 @@
           "type": "integer"
         },
         "feedId": {
-          "description": "The Content API feed id.",
+          "description": "The Content API Supplemental Feed ID. If present then product insertion or deletion applies to a supplemental feed instead of primary Content API feed.",
           "format": "uint64",
           "type": "string"
         },
@@ -12309,7 +12605,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#productsCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#productsCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -12343,7 +12639,7 @@
       "id": "ProductsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#productsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#productsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -12418,7 +12714,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#productstatusesCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#productstatusesCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -12452,7 +12748,7 @@
       "id": "ProductstatusesListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#productstatusesListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#productstatusesListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -12647,7 +12943,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#regionalInventory\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#regionalInventory`\".",
           "type": "string"
         },
         "price": {
@@ -12722,7 +13018,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#regionalinventoryCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#regionalinventoryCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -12742,7 +13038,7 @@
           "description": "A list of errors defined if and only if the request failed."
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#regionalinventoryCustomBatchResponseEntry\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#regionalinventoryCustomBatchResponseEntry`\".",
           "type": "string"
         },
         "regionalInventory": {
@@ -13133,10 +13429,76 @@
       },
       "type": "object"
     },
+    "RequestPhoneVerificationRequest": {
+      "description": "Request message for the RequestPhoneVerification method.",
+      "id": "RequestPhoneVerificationRequest",
+      "properties": {
+        "languageCode": {
+          "description": "Language code [IETF BCP 47 syntax](https://tools.ietf.org/html/bcp47) (for example, en-US). Language code is used to provide localized `SMS` and `PHONE_CALL`. Default language used is en-US if not provided.",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "Phone number to be verified.",
+          "type": "string"
+        },
+        "phoneRegionCode": {
+          "description": "Required. Two letter country code for the phone number, for example `CA` for Canadian numbers. See the [ISO 3166-1 alpha-2](https://wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) officially assigned codes.",
+          "type": "string"
+        },
+        "phoneVerificationMethod": {
+          "description": "Verification method to receive verification code.",
+          "enum": [
+            "PHONE_VERIFICATION_METHOD_UNSPECIFIED",
+            "SMS",
+            "PHONE_CALL"
+          ],
+          "enumDescriptions": [
+            "Unknown method.",
+            "Receive verification code by SMS.",
+            "Receive verification code by phone call."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RequestPhoneVerificationResponse": {
+      "description": "Response message for the RequestPhoneVerification method.",
+      "id": "RequestPhoneVerificationResponse",
+      "properties": {
+        "verificationId": {
+          "description": "The verification ID to use in subsequent calls to `verifyphonenumber`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RequestReviewBuyOnGoogleProgramRequest": {
       "description": "Request message for the RequestReviewProgram method.",
       "id": "RequestReviewBuyOnGoogleProgramRequest",
       "properties": {},
+      "type": "object"
+    },
+    "RequestReviewFreeListingsRequest": {
+      "description": "Request message for the RequestReviewFreeListings Program method.",
+      "id": "RequestReviewFreeListingsRequest",
+      "properties": {
+        "regionCode": {
+          "description": "The code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the country for which review is to be requested.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RequestReviewShoppingAdsRequest": {
+      "description": "Request message for the RequestReviewShoppingAds program method.",
+      "id": "RequestReviewShoppingAdsRequest",
+      "properties": {
+        "regionCode": {
+          "description": "The code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the country for which review is to be requested.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "ReturnAddress": {
@@ -13619,7 +13981,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#returnaddressCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#returnaddressCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -13652,7 +14014,7 @@
       "id": "ReturnaddressListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#returnaddressListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#returnaddressListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -13720,7 +14082,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#returnpolicyCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#returnpolicyCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -13753,7 +14115,7 @@
       "id": "ReturnpolicyListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#returnpolicyListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#returnpolicyListResponse`\".",
           "type": "string"
         },
         "resources": {
@@ -13792,7 +14154,7 @@
           "type": "string"
         },
         "query": {
-          "description": "Required. Query that defines performance metrics to retrieve and dimensions according to which the metrics are to be segmented.",
+          "description": "Required. Query that defines performance metrics to retrieve and dimensions according to which the metrics are to be segmented. For details on how to construct your query, see the [Query Language guide](https://developers.google.com/shopping-content/guides/reports/query-language/overview).",
           "type": "string"
         }
       },
@@ -13825,23 +14187,23 @@
           "type": "string"
         },
         "categoryL1": {
-          "description": "Product category (1st level) in Google's product taxonomy.",
+          "description": "[Product category (1st level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in Google's product taxonomy.",
           "type": "string"
         },
         "categoryL2": {
-          "description": "Product category (2nd level) in Google's product taxonomy.",
+          "description": "[Product category (2nd level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in Google's product taxonomy.",
           "type": "string"
         },
         "categoryL3": {
-          "description": "Product category (3rd level) in Google's product taxonomy.",
+          "description": "[Product category (3rd level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in Google's product taxonomy.",
           "type": "string"
         },
         "categoryL4": {
-          "description": "Product category (4th level) in Google's product taxonomy.",
+          "description": "[Product category (4th level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in Google's product taxonomy.",
           "type": "string"
         },
         "categoryL5": {
-          "description": "Product category (5th level) in Google's product taxonomy.",
+          "description": "[Product category (5th level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in Google's product taxonomy.",
           "type": "string"
         },
         "currencyCode": {
@@ -13877,23 +14239,23 @@
           "type": "string"
         },
         "productTypeL1": {
-          "description": "Product category (1st level) in merchant's own product taxonomy.",
+          "description": "[Product type (1st level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in merchant's own product taxonomy.",
           "type": "string"
         },
         "productTypeL2": {
-          "description": "Product category (2nd level) in merchant's own product taxonomy.",
+          "description": "[Product type (2nd level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in merchant's own product taxonomy.",
           "type": "string"
         },
         "productTypeL3": {
-          "description": "Product category (3rd level) in merchant's own product taxonomy.",
+          "description": "[Product type (3rd level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in merchant's own product taxonomy.",
           "type": "string"
         },
         "productTypeL4": {
-          "description": "Product category (4th level) in merchant's own product taxonomy.",
+          "description": "[Product type (4th level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in merchant's own product taxonomy.",
           "type": "string"
         },
         "productTypeL5": {
-          "description": "Product category (5th level) in merchant's own product taxonomy.",
+          "description": "[Product type (5th level)](https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type) in merchant's own product taxonomy.",
           "type": "string"
         },
         "program": {
@@ -14129,7 +14491,7 @@
       "id": "SettlementreportsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#settlementreportsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#settlementreportsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -14149,7 +14511,7 @@
       "id": "SettlementtransactionsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#settlementtransactionsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#settlementtransactionsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -14305,7 +14667,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsCustomBatchResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#shippingsettingsCustomBatchResponse`\".",
           "type": "string"
         }
       },
@@ -14346,7 +14708,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedCarriersResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#shippingsettingsGetSupportedCarriersResponse`\".",
           "type": "string"
         }
       },
@@ -14363,7 +14725,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedHolidaysResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#shippingsettingsGetSupportedHolidaysResponse`\".",
           "type": "string"
         }
       },
@@ -14373,7 +14735,7 @@
       "id": "ShippingsettingsGetSupportedPickupServicesResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedPickupServicesResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#shippingsettingsGetSupportedPickupServicesResponse`\".",
           "type": "string"
         },
         "pickupServices": {
@@ -14390,7 +14752,7 @@
       "id": "ShippingsettingsListResponse",
       "properties": {
         "kind": {
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsListResponse\".",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#shippingsettingsListResponse`\".",
           "type": "string"
         },
         "nextPageToken": {
@@ -14400,6 +14762,99 @@
         "resources": {
           "items": {
             "$ref": "ShippingSettings"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ShoppingAdsProgramStatus": {
+      "description": "Response message for GetShoppingAdsProgramStatus.",
+      "id": "ShoppingAdsProgramStatus",
+      "properties": {
+        "regionStatuses": {
+          "description": "Status of the program in each region. Regions with the same status and review eligibility are grouped together in `regionCodes`.",
+          "items": {
+            "$ref": "ShoppingAdsProgramStatusRegionStatus"
+          },
+          "type": "array"
+        },
+        "state": {
+          "description": "If program is successfully onboarded for at least one region.",
+          "enum": [
+            "PROGRAM_STATE_UNSPECIFIED",
+            "ONBOARDED",
+            "NOT_ONBOARDED"
+          ],
+          "enumDescriptions": [
+            "State is not known.",
+            "Program is onboarded for at least one country.",
+            "Program is not onboarded for any country."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ShoppingAdsProgramStatusRegionStatus": {
+      "description": "Status of program and region.",
+      "id": "ShoppingAdsProgramStatusRegionStatus",
+      "properties": {
+        "disapprovalDate": {
+          "description": "Date by which `eligibility_status` will go from `WARNING` to `DISAPPROVED`. It will be present when `eligibility_status` is `WARNING`. Date will be provided in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format i.e. YYYY-MM-DD",
+          "type": "string"
+        },
+        "eligibilityStatus": {
+          "description": "Eligibility status of the Shopping Ads program.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "APPROVED",
+            "DISAPPROVED",
+            "WARNING",
+            "UNDER_REVIEW",
+            "PENDING_REVIEW",
+            "ONBOARDING"
+          ],
+          "enumDescriptions": [
+            "State is not known.",
+            "If the account has no issues and review is completed successfully.",
+            "There are one or more issues that needs to be resolved for account to be active for the program. Detailed list of account issues are available in [accountstatuses](https://developers.google.com/shopping-content/reference/rest/v2.1/accountstatuses) API.",
+            "If account has issues but offers are servable. Some of the issue can make account DISAPPROVED after a certain deadline.",
+            "Account is under review.",
+            "Account is waiting for review to start.",
+            "Program is currently onboarding."
+          ],
+          "type": "string"
+        },
+        "ineligibilityReason": {
+          "description": "Reason if a program in a given country is not eligible for review. Populated only if `review_eligibility_status` is `INELIGIBLE`.",
+          "type": "string"
+        },
+        "regionCodes": {
+          "description": "The two-letter [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes for all the regions with the same `eligibilityStatus` and `reviewEligibility`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "reviewEligibilityStatus": {
+          "description": "If a program in a given country is eligible for review. It will be present only if eligibility status is `DISAPPROVED`.",
+          "enum": [
+            "REVIEW_ELIGIBILITY_UNSPECIFIED",
+            "ELIGIBLE",
+            "INELIGIBLE"
+          ],
+          "enumDescriptions": [
+            "Review eligibility state is unknown.",
+            "Account for a region code is eligible for review.",
+            "Account for a region code is not eligible for review."
+          ],
+          "type": "string"
+        },
+        "reviewIssues": {
+          "description": "These issues will be evaluated in review process. Fix all the issues before requesting the review.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }
@@ -14830,6 +15285,46 @@
         },
         "subtableName": {
           "description": "The name of a subtable. Can only be set in table cells (i.e., not for single values), and only if all other fields are not set.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VerifyPhoneNumberRequest": {
+      "description": "Request message for the VerifyPhoneNumber method.",
+      "id": "VerifyPhoneNumberRequest",
+      "properties": {
+        "phoneVerificationMethod": {
+          "description": "Verification method used to receive verification code.",
+          "enum": [
+            "PHONE_VERIFICATION_METHOD_UNSPECIFIED",
+            "SMS",
+            "PHONE_CALL"
+          ],
+          "enumDescriptions": [
+            "Unknown method.",
+            "Receive verification code by SMS.",
+            "Receive verification code by phone call."
+          ],
+          "type": "string"
+        },
+        "verificationCode": {
+          "description": "The verification code that was sent to the phone number for validation.",
+          "type": "string"
+        },
+        "verificationId": {
+          "description": "The verification ID returned by `requestphoneverification`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VerifyPhoneNumberResponse": {
+      "description": "Response message for the VerifyPhoneNumber method.",
+      "id": "VerifyPhoneNumberResponse",
+      "properties": {
+        "verifiedPhoneNumber": {
+          "description": "Verified phone number if verification is successful.",
           "type": "string"
         }
       },

@@ -775,7 +775,7 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 // Mediation report. For example, the specification to get observed ECPM
 // sliced by ad source and app for the 'US' and 'CN' countries can look
 // like the following example: { "date_range": { "start_date": {"year":
-// 2018, "month": 9, "day": 1}, "end_date": {"year": 2018, "month": 9,
+// 2021, "month": 9, "day": 1}, "end_date": {"year": 2021, "month": 9,
 // "day": 30} }, "dimensions": ["AD_SOURCE", "APP", "COUNTRY"],
 // "metrics": ["OBSERVED_ECPM"], "dimension_filters": [ { "dimension":
 // "COUNTRY", "matches_any": {"values": [{"value": "US", "value":
@@ -784,7 +784,7 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 // "language_code": "en-US" } } For a better understanding, you can
 // treat the preceding specification like the following pseudo SQL:
 // SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT
-// WHERE DATE >= '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN
+// WHERE DATE >= '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN
 // ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;
 type MediationReportSpec struct {
 	// DateRange: The date range for which the report is generated.
@@ -802,13 +802,13 @@ type MediationReportSpec struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
@@ -937,13 +937,13 @@ type MediationReportSpecDimensionFilter struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
@@ -1018,13 +1018,13 @@ type MediationReportSpecSortCondition struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
@@ -1136,8 +1136,8 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 // NetworkReportSpec: The specification for generating an AdMob Network
 // report. For example, the specification to get clicks and estimated
 // earnings for only the 'US' and 'CN' countries can look like the
-// following example: { 'date_range': { 'start_date': {'year': 2018,
-// 'month': 9, 'day': 1}, 'end_date': {'year': 2018, 'month': 9, 'day':
+// following example: { 'date_range': { 'start_date': {'year': 2021,
+// 'month': 9, 'day': 1}, 'end_date': {'year': 2021, 'month': 9, 'day':
 // 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics':
 // ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ {
 // 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US',
@@ -1147,7 +1147,7 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 // 'en-US' } } For a better understanding, you can treat the preceding
 // specification like the following pseudo SQL: SELECT DATE, APP,
 // COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE >=
-// '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN ('US', 'CN')
+// '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN ('US', 'CN')
 // GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;
 type NetworkReportSpec struct {
 	// DateRange: The date range for which the report is generated.
@@ -1165,13 +1165,13 @@ type NetworkReportSpec struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1288,13 +1288,13 @@ type NetworkReportSpecDimensionFilter struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1357,13 +1357,13 @@ type NetworkReportSpecSortCondition struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1837,7 +1837,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1999,7 +1999,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2186,7 +2186,7 @@ func (c *AccountsAdUnitsListCall) Header() http.Header {
 
 func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2384,7 +2384,7 @@ func (c *AccountsAppsListCall) Header() http.Header {
 
 func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2557,7 +2557,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2704,7 +2704,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

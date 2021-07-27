@@ -1113,9 +1113,9 @@ type DomainMappingStatus struct {
 	// mapping.
 	ResourceRecords []*ResourceRecord `json:"resourceRecords,omitempty"`
 
-	// Url: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported Holds the URL that will serve the traffic of the
-	// DomainMapping. +optional
+	// Url: Optional. Cloud Run fully managed: not supported Cloud Run on
+	// GKE: supported Holds the URL that will serve the traffic of the
+	// DomainMapping.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
@@ -2463,7 +2463,7 @@ func (s *Revision) MarshalJSON() ([]byte, error) {
 // RevisionSpec: RevisionSpec holds the desired state of the Revision
 // (from the client).
 type RevisionSpec struct {
-	// ContainerConcurrency: (Optional) ContainerConcurrency specifies the
+	// ContainerConcurrency: Optional. ContainerConcurrency specifies the
 	// maximum allowed in-flight (concurrent) requests per container
 	// instance of the Revision. Cloud Run fully managed: supported,
 	// defaults to 80 Cloud Run for Anthos: supported, defaults to 0, which
@@ -2541,9 +2541,9 @@ type RevisionStatus struct {
 	// Container object.
 	ImageDigest string `json:"imageDigest,omitempty"`
 
-	// LogUrl: Specifies the generated logging url for this particular
-	// revision based on the revision url template specified in the
-	// controller's config. +optional
+	// LogUrl: Optional. Specifies the generated logging url for this
+	// particular revision based on the revision url template specified in
+	// the controller's config.
 	LogUrl string `json:"logUrl,omitempty"`
 
 	// ObservedGeneration: ObservedGeneration is the 'Generation' of the
@@ -3448,11 +3448,11 @@ type TrafficTarget struct {
 	// Cloud Run currently supports a single ConfigurationName.
 	ConfigurationName string `json:"configurationName,omitempty"`
 
-	// LatestRevision: LatestRevision may be optionally provided to indicate
+	// LatestRevision: Optional. LatestRevision may be provided to indicate
 	// that the latest ready Revision of the Configuration should be used
 	// for this traffic target. When provided LatestRevision must be true if
 	// RevisionName is empty; it must be false when RevisionName is
-	// non-empty. +optional
+	// non-empty.
 	LatestRevision bool `json:"latestRevision,omitempty"`
 
 	// Percent: Percent specifies percent of the traffic to this Revision or
@@ -3467,8 +3467,8 @@ type TrafficTarget struct {
 	// supported by Cloud Run.
 	RevisionName string `json:"revisionName,omitempty"`
 
-	// Tag: Tag is optionally used to expose a dedicated url for referencing
-	// this target exclusively. +optional
+	// Tag: Optional. Tag is used to expose a dedicated url for referencing
+	// this target exclusively.
 	Tag string `json:"tag,omitempty"`
 
 	// Url: Output only. URL displays the URL for accessing tagged traffic
@@ -3646,7 +3646,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3826,7 +3826,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3937,8 +3937,8 @@ func (r *NamespacesConfigurationsService) List(parent string) *NamespacesConfigu
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesConfigurationsListCall) Continue(continue_ string) *NamespacesConfigurationsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -4028,7 +4028,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4099,7 +4099,7 @@ func (c *NamespacesConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4119,7 +4119,7 @@ func (c *NamespacesConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4211,7 +4211,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4390,7 +4390,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4555,7 +4555,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4666,8 +4666,8 @@ func (r *NamespacesDomainmappingsService) List(parent string) *NamespacesDomainm
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesDomainmappingsListCall) Continue(continue_ string) *NamespacesDomainmappingsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -4757,7 +4757,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4828,7 +4828,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4848,7 +4848,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4961,7 +4961,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5125,7 +5125,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5236,8 +5236,8 @@ func (r *NamespacesRevisionsService) List(parent string) *NamespacesRevisionsLis
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesRevisionsListCall) Continue(continue_ string) *NamespacesRevisionsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -5327,7 +5327,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5398,7 +5398,7 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5418,7 +5418,7 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5510,7 +5510,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5621,8 +5621,8 @@ func (r *NamespacesRoutesService) List(parent string) *NamespacesRoutesListCall 
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesRoutesListCall) Continue(continue_ string) *NamespacesRoutesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -5712,7 +5712,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5783,7 +5783,7 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5803,7 +5803,7 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5895,7 +5895,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6075,7 +6075,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6239,7 +6239,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6350,8 +6350,8 @@ func (r *NamespacesServicesService) List(parent string) *NamespacesServicesListC
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesServicesListCall) Continue(continue_ string) *NamespacesServicesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -6441,7 +6441,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6512,7 +6512,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6532,7 +6532,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6627,7 +6627,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6798,7 +6798,7 @@ func (c *ProjectsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7002,7 +7002,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7200,7 +7200,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7380,7 +7380,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7491,8 +7491,8 @@ func (r *ProjectsLocationsConfigurationsService) List(parent string) *ProjectsLo
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsConfigurationsListCall) Continue(continue_ string) *ProjectsLocationsConfigurationsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -7582,7 +7582,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7653,7 +7653,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7673,7 +7673,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7765,7 +7765,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7944,7 +7944,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8109,7 +8109,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8220,8 +8220,8 @@ func (r *ProjectsLocationsDomainmappingsService) List(parent string) *ProjectsLo
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsDomainmappingsListCall) Continue(continue_ string) *ProjectsLocationsDomainmappingsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -8311,7 +8311,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8382,7 +8382,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8402,7 +8402,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8515,7 +8515,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8679,7 +8679,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8790,8 +8790,8 @@ func (r *ProjectsLocationsRevisionsService) List(parent string) *ProjectsLocatio
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsRevisionsListCall) Continue(continue_ string) *ProjectsLocationsRevisionsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -8881,7 +8881,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8952,7 +8952,7 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8972,7 +8972,7 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9064,7 +9064,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9175,8 +9175,8 @@ func (r *ProjectsLocationsRoutesService) List(parent string) *ProjectsLocationsR
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsRoutesListCall) Continue(continue_ string) *ProjectsLocationsRoutesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -9266,7 +9266,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9337,7 +9337,7 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9357,7 +9357,7 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9449,7 +9449,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9629,7 +9629,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9793,7 +9793,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9957,7 +9957,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10074,8 +10074,8 @@ func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocation
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsServicesListCall) Continue(continue_ string) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -10165,7 +10165,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10236,7 +10236,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10256,7 +10256,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -10351,7 +10351,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10501,7 +10501,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10647,7 +10647,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

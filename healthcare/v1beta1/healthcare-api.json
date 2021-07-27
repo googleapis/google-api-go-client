@@ -4829,7 +4829,7 @@
                 "nlp": {
                   "methods": {
                     "analyzeEntities": {
-                      "description": "Analyze heathcare entity in a document. Its response includes the recognized entity mentions and the relationships between them. AnalyzeEntities uses context aware models to detect entities.",
+                      "description": "Analyze heathcare entity in a document. Its response includes the recognized entity mentions and the relationships between them. AnalyzeEntities uses context aware models to detect entities. This method can only analyze documents written in English.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/services/nlp:analyzeEntities",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.services.nlp.analyzeEntities",
@@ -4865,7 +4865,7 @@
       }
     }
   },
-  "revision": "20210702",
+  "revision": "20210715",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "ActivateConsentRequest": {
@@ -5992,7 +5992,7 @@
         },
         "bigqueryDestination": {
           "$ref": "GoogleCloudHealthcareV1beta1FhirBigQueryDestination",
-          "description": "The BigQuery output destination. The Cloud Healthcare Service Agent requires two IAM roles on the BigQuery location: `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`. The output is one BigQuery table per resource type. Note that unlike in FhirStore.StreamConfig.BigQueryDestination, BigQuery views will not be created by ExportResources."
+          "description": "The BigQuery output destination. The Cloud Healthcare Service Agent requires two IAM roles on the BigQuery location: `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`. The output is one BigQuery table per resource type. Unlike when setting `BigQueryDestination` for `StreamConfig`, `ExportResources` does not create BigQuery views."
         },
         "gcsDestination": {
           "$ref": "GoogleCloudHealthcareV1beta1FhirGcsDestination",

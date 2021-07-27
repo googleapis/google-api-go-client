@@ -391,6 +391,14 @@ type CallOption interface {
 	Get() (key, value string)
 }
 
+// A MultiCallOption is an option argument to an API call and can be passed
+// anywhere a CallOption is accepted. It additionally supports returning a slice
+// of values for a given key.
+type MultiCallOption interface {
+	CallOption
+	GetMulti() (key string, value []string)
+}
+
 // QuotaUser returns a CallOption that will set the quota user for a call.
 // The quota user can be used by server-side applications to control accounting.
 // It can be an arbitrary string up to 40 characters, and will override UserIP
@@ -432,6 +440,7 @@ func (q queryParameter) Get() (string, string) {
 	return "", ""
 }
 
+// GetMulti returns the key and values values associated to that key.
 func (q queryParameter) GetMulti() (string, []string) {
 	return q.key, q.values
 }

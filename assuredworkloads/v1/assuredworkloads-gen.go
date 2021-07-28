@@ -198,6 +198,8 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "HIPAA" - Health Insurance Portability and Accountability Act
 	// controls
 	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -297,6 +299,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "HIPAA" - Health Insurance Portability and Accountability Act
 	// controls
 	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -327,10 +331,10 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	Name string `json:"name,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
-	// resources managed by this Assured Workload. May be either an
-	// organization or a folder. Must be the same or a child of the Workload
-	// parent. If not specified all resources are created under the Workload
-	// parent. Formats: folders/{folder_id} organizations/{organization_id}
+	// resources managed by this Assured Workload. May be either empty or a
+	// folder resource which is a child of the Workload parent. If not
+	// specified all resources are created under the parent organization.
+	// Format: folders/{folder_id}
 	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
 
 	// ResourceSettings: Input only. Resource properties that are used to
@@ -516,6 +520,8 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "HIPAA" - Health Insurance Portability and Accountability Act
 	// controls
 	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -586,6 +592,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "HIPAA" - Health Insurance Portability and Accountability Act
 	// controls
 	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -628,10 +636,10 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	Name string `json:"name,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
-	// resources managed by this Assured Workload. May be either an
-	// organization or a folder. Must be the same or a child of the Workload
-	// parent. If not specified all resources are created under the Workload
-	// parent. Formats: folders/{folder_id} organizations/{organization_id}
+	// resources managed by this Assured Workload. May be either empty or a
+	// folder resource which is a child of the Workload parent. If not
+	// specified all resources are created under the parent organization.
+	// Format: folders/{folder_id}
 	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
 
 	// ResourceSettings: Input only. Resource properties that are used to
@@ -1135,7 +1143,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1311,7 +1319,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1497,7 +1505,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1653,7 +1661,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1805,7 +1813,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1976,7 +1984,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2164,7 +2172,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210727")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

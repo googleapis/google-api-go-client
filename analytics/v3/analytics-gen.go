@@ -1326,7 +1326,7 @@ type CustomDimension struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Active: Boolean indicating whether the custom dimension is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Created: Time the custom dimension was created.
 	Created string `json:"created,omitempty"`

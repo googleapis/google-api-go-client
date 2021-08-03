@@ -2459,7 +2459,7 @@
       }
     }
   },
-  "revision": "20210708",
+  "revision": "20210714",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2983,6 +2983,20 @@
         "autoprovisioningNodePoolDefaults": {
           "$ref": "AutoprovisioningNodePoolDefaults",
           "description": "AutoprovisioningNodePoolDefaults contains defaults for a node pool created by NAP."
+        },
+        "autoscalingProfile": {
+          "description": "Defines autoscaling behaviour.",
+          "enum": [
+            "PROFILE_UNSPECIFIED",
+            "OPTIMIZE_UTILIZATION",
+            "BALANCED"
+          ],
+          "enumDescriptions": [
+            "No change to autoscaling configuration.",
+            "Prioritize optimizing utilization of resources.",
+            "Use default (balanced) autoscaling configuration."
+          ],
+          "type": "string"
         },
         "enableNodeAutoprovisioning": {
           "description": "Enables automatic node pool creation and deletion.",

@@ -1526,8 +1526,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// CancelRequested: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have
-	// successfully been cancelled have Operation.error value with a
+	// requested cancellation of the operation. Operations that have been
+	// cancelled successfully have Operation.error value with a
 	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 
@@ -2306,7 +2306,7 @@ func (c *ProjectsLocationsJobTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2453,7 +2453,7 @@ func (c *ProjectsLocationsJobTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2598,7 +2598,7 @@ func (c *ProjectsLocationsJobTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2760,7 +2760,7 @@ func (c *ProjectsLocationsJobTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2930,7 +2930,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3071,7 +3071,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3215,7 +3215,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3376,7 +3376,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210731")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

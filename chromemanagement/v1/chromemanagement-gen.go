@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithScopes(chromemanagement.ChromeManagementReportsReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -79,6 +83,10 @@ const mtlsBasePath = "https://chromemanagement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See detailed information about apps installed on Chrome browsers and
+	// devices managed by your organization
+	ChromeManagementAppdetailsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+
 	// See reports about devices and Chrome browsers managed within your
 	// organization
 	ChromeManagementReportsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.reports.readonly"
@@ -87,6 +95,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/chrome.management.appdetails.readonly",
 		"https://www.googleapis.com/auth/chrome.management.reports.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -138,6 +147,7 @@ func (s *Service) userAgent() string {
 
 func NewCustomersService(s *Service) *CustomersService {
 	rs := &CustomersService{s: s}
+	rs.Apps = NewCustomersAppsService(s)
 	rs.Reports = NewCustomersReportsService(s)
 	return rs
 }
@@ -145,7 +155,54 @@ func NewCustomersService(s *Service) *CustomersService {
 type CustomersService struct {
 	s *Service
 
+	Apps *CustomersAppsService
+
 	Reports *CustomersReportsService
+}
+
+func NewCustomersAppsService(s *Service) *CustomersAppsService {
+	rs := &CustomersAppsService{s: s}
+	rs.Android = NewCustomersAppsAndroidService(s)
+	rs.Chrome = NewCustomersAppsChromeService(s)
+	rs.Web = NewCustomersAppsWebService(s)
+	return rs
+}
+
+type CustomersAppsService struct {
+	s *Service
+
+	Android *CustomersAppsAndroidService
+
+	Chrome *CustomersAppsChromeService
+
+	Web *CustomersAppsWebService
+}
+
+func NewCustomersAppsAndroidService(s *Service) *CustomersAppsAndroidService {
+	rs := &CustomersAppsAndroidService{s: s}
+	return rs
+}
+
+type CustomersAppsAndroidService struct {
+	s *Service
+}
+
+func NewCustomersAppsChromeService(s *Service) *CustomersAppsChromeService {
+	rs := &CustomersAppsChromeService{s: s}
+	return rs
+}
+
+type CustomersAppsChromeService struct {
+	s *Service
+}
+
+func NewCustomersAppsWebService(s *Service) *CustomersAppsWebService {
+	rs := &CustomersAppsWebService{s: s}
+	return rs
+}
+
+type CustomersAppsWebService struct {
+	s *Service
 }
 
 func NewCustomersReportsService(s *Service) *CustomersReportsService {
@@ -155,6 +212,186 @@ func NewCustomersReportsService(s *Service) *CustomersReportsService {
 
 type CustomersReportsService struct {
 	s *Service
+}
+
+// GoogleChromeManagementV1AndroidAppInfo: Android app information.
+type GoogleChromeManagementV1AndroidAppInfo struct {
+	// Permissions: Output only. Permissions requested by an Android app.
+	Permissions []*GoogleChromeManagementV1AndroidAppPermission `json:"permissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1AndroidAppInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1AndroidAppInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1AndroidAppPermission: Permission requested by
+// an Android app.
+type GoogleChromeManagementV1AndroidAppPermission struct {
+	// Type: Output only. The type of the permission.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1AndroidAppPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1AndroidAppPermission
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1AppDetails: Resource representing app
+// details.
+type GoogleChromeManagementV1AppDetails struct {
+	// AndroidAppInfo: Output only. Android app information.
+	AndroidAppInfo *GoogleChromeManagementV1AndroidAppInfo `json:"androidAppInfo,omitempty"`
+
+	// AppId: Output only. Unique store identifier for the item. Examples:
+	// "gmbmikajjgmnabiglmofipeabaddhgne" for the Save to Google Drive
+	// Chrome extension, "com.google.android.apps.docs" for the Google Drive
+	// Android app.
+	AppId string `json:"appId,omitempty"`
+
+	// ChromeAppInfo: Output only. Chrome Web Store app information.
+	ChromeAppInfo *GoogleChromeManagementV1ChromeAppInfo `json:"chromeAppInfo,omitempty"`
+
+	// Description: Output only. App's description.
+	Description string `json:"description,omitempty"`
+
+	// DetailUri: Output only. The uri for the detail page of the item.
+	DetailUri string `json:"detailUri,omitempty"`
+
+	// DisplayName: Output only. App's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FirstPublishTime: Output only. First published time.
+	FirstPublishTime string `json:"firstPublishTime,omitempty"`
+
+	// HomepageUri: Output only. Home page or Website uri.
+	HomepageUri string `json:"homepageUri,omitempty"`
+
+	// IconUri: Output only. A link to an image that can be used as an icon
+	// for the product.
+	IconUri string `json:"iconUri,omitempty"`
+
+	// IsPaidApp: Output only. Indicates if the app has to be paid for OR
+	// has paid content.
+	IsPaidApp bool `json:"isPaidApp,omitempty"`
+
+	// LatestPublishTime: Output only. Latest published time.
+	LatestPublishTime string `json:"latestPublishTime,omitempty"`
+
+	// Name: Output only. Format:
+	// name=customers/{customer_id}/apps/{chrome|android|web}/{app_id}@{versi
+	// on}
+	Name string `json:"name,omitempty"`
+
+	// PrivacyPolicyUri: Output only. The URI pointing to the privacy policy
+	// of the app, if it was provided by the developer. Version-specific
+	// field that will only be set when the requested app version is found.
+	PrivacyPolicyUri string `json:"privacyPolicyUri,omitempty"`
+
+	// Publisher: Output only. The publisher of the item.
+	Publisher string `json:"publisher,omitempty"`
+
+	// ReviewNumber: Output only. Number of reviews received. Chrome Web
+	// Store review information will always be for the latest version of an
+	// app.
+	ReviewNumber int64 `json:"reviewNumber,omitempty,string"`
+
+	// ReviewRating: Output only. The rating of the app (on 5 stars). Chrome
+	// Web Store review information will always be for the latest version of
+	// an app.
+	ReviewRating float64 `json:"reviewRating,omitempty"`
+
+	// RevisionId: Output only. App version. A new revision is committed
+	// whenever a new version of the app is published.
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// ServiceError: Output only. Information about a partial service error
+	// if applicable.
+	ServiceError *GoogleRpcStatus `json:"serviceError,omitempty"`
+
+	// Type: Output only. App type.
+	//
+	// Possible values:
+	//   "APP_ITEM_TYPE_UNSPECIFIED" - App type unspecified.
+	//   "CHROME" - Chrome app.
+	//   "ANDROID" - ARC++ app.
+	//   "WEB" - Web app.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AndroidAppInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndroidAppInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1AppDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1AppDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleChromeManagementV1AppDetails
+	var s1 struct {
+		ReviewRating gensupport.JSONFloat64 `json:"reviewRating"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ReviewRating = float64(s1.ReviewRating)
+	return nil
 }
 
 // GoogleChromeManagementV1BrowserVersion: Describes a browser version
@@ -212,6 +449,133 @@ type GoogleChromeManagementV1BrowserVersion struct {
 
 func (s *GoogleChromeManagementV1BrowserVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1BrowserVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1ChromeAppInfo: Chrome Web Store app
+// information.
+type GoogleChromeManagementV1ChromeAppInfo struct {
+	// GoogleOwned: Output only. Whether the app or extension is built and
+	// maintained by Google. Version-specific field that will only be set
+	// when the requested app version is found.
+	GoogleOwned bool `json:"googleOwned,omitempty"`
+
+	// IsCwsHosted: Output only. Whether the app or extension is in a
+	// published state in the Chrome Web Store.
+	IsCwsHosted bool `json:"isCwsHosted,omitempty"`
+
+	// IsTheme: Output only. Whether the app or extension is a theme.
+	IsTheme bool `json:"isTheme,omitempty"`
+
+	// MinUserCount: Output only. The minimum number of users using this
+	// app.
+	MinUserCount int64 `json:"minUserCount,omitempty"`
+
+	// Permissions: Output only. Every custom permission requested by the
+	// app. Version-specific field that will only be set when the requested
+	// app version is found.
+	Permissions []*GoogleChromeManagementV1ChromeAppPermission `json:"permissions,omitempty"`
+
+	// SiteAccess: Output only. Every permission giving access to domains or
+	// broad host patterns. ( e.g. www.google.com). This includes the
+	// matches from content scripts as well as hosts in the permissions node
+	// of the manifest. Version-specific field that will only be set when
+	// the requested app version is found.
+	SiteAccess []*GoogleChromeManagementV1ChromeAppSiteAccess `json:"siteAccess,omitempty"`
+
+	// SupportEnabled: Output only. The app developer has enabled support
+	// for their app. Version-specific field that will only be set when the
+	// requested app version is found.
+	SupportEnabled bool `json:"supportEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogleOwned") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogleOwned") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ChromeAppInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ChromeAppInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1ChromeAppPermission: Permission requested by
+// a Chrome app or extension.
+type GoogleChromeManagementV1ChromeAppPermission struct {
+	// AccessUserData: Output only. If available, whether this permissions
+	// grants the app/extension access to user data.
+	AccessUserData bool `json:"accessUserData,omitempty"`
+
+	// DocumentationUri: Output only. If available, a URI to a page that has
+	// documentation for the current permission.
+	DocumentationUri string `json:"documentationUri,omitempty"`
+
+	// Type: Output only. The type of the permission.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessUserData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessUserData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ChromeAppPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ChromeAppPermission
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1ChromeAppSiteAccess: Represent one host
+// permission.
+type GoogleChromeManagementV1ChromeAppSiteAccess struct {
+	// HostMatch: Output only. This can contain very specific hosts, or
+	// patterns like "*.com" for instance.
+	HostMatch string `json:"hostMatch,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HostMatch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HostMatch") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ChromeAppSiteAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ChromeAppSiteAccess
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -456,6 +820,503 @@ func (s *GoogleChromeManagementV1InstalledApp) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleRpcStatus: The `Status` type defines a logical error model that
+// is suitable for different programming environments, including REST
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type GoogleRpcStatus struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleRpcStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "chromemanagement.customers.apps.android.get":
+
+type CustomersAppsAndroidGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a specific app for a customer by its resource name.
+//
+// - name: The app for which details are being queried. Examples:
+//   "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
+//   2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
+//   "customers/my_customer/apps/android/com.google.android.apps.docs"
+//   for the Google Drive Android app's latest version.
+func (r *CustomersAppsAndroidService) Get(name string) *CustomersAppsAndroidGetCall {
+	c := &CustomersAppsAndroidGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersAppsAndroidGetCall) Fields(s ...googleapi.Field) *CustomersAppsAndroidGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersAppsAndroidGetCall) IfNoneMatch(entityTag string) *CustomersAppsAndroidGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersAppsAndroidGetCall) Context(ctx context.Context) *CustomersAppsAndroidGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersAppsAndroidGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersAppsAndroidGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.apps.android.get" call.
+// Exactly one of *GoogleChromeManagementV1AppDetails or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleChromeManagementV1AppDetails.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersAppsAndroidGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1AppDetails, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1AppDetails{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a specific app for a customer by its resource name.",
+	//   "flatPath": "v1/customers/{customersId}/apps/android/{androidId}",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.apps.android.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The app for which details are being queried. Examples: \"customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@2.1.2\" for the Save to Google Drive Chrome extension version 2.1.2, \"customers/my_customer/apps/android/com.google.android.apps.docs\" for the Google Drive Android app's latest version.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/apps/android/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1AppDetails"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chromemanagement.customers.apps.chrome.get":
+
+type CustomersAppsChromeGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a specific app for a customer by its resource name.
+//
+// - name: The app for which details are being queried. Examples:
+//   "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
+//   2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
+//   "customers/my_customer/apps/android/com.google.android.apps.docs"
+//   for the Google Drive Android app's latest version.
+func (r *CustomersAppsChromeService) Get(name string) *CustomersAppsChromeGetCall {
+	c := &CustomersAppsChromeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersAppsChromeGetCall) Fields(s ...googleapi.Field) *CustomersAppsChromeGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersAppsChromeGetCall) IfNoneMatch(entityTag string) *CustomersAppsChromeGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersAppsChromeGetCall) Context(ctx context.Context) *CustomersAppsChromeGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersAppsChromeGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersAppsChromeGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.apps.chrome.get" call.
+// Exactly one of *GoogleChromeManagementV1AppDetails or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleChromeManagementV1AppDetails.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersAppsChromeGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1AppDetails, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1AppDetails{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a specific app for a customer by its resource name.",
+	//   "flatPath": "v1/customers/{customersId}/apps/chrome/{chromeId}",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.apps.chrome.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The app for which details are being queried. Examples: \"customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@2.1.2\" for the Save to Google Drive Chrome extension version 2.1.2, \"customers/my_customer/apps/android/com.google.android.apps.docs\" for the Google Drive Android app's latest version.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/apps/chrome/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1AppDetails"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chromemanagement.customers.apps.web.get":
+
+type CustomersAppsWebGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a specific app for a customer by its resource name.
+//
+// - name: The app for which details are being queried. Examples:
+//   "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
+//   2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
+//   "customers/my_customer/apps/android/com.google.android.apps.docs"
+//   for the Google Drive Android app's latest version.
+func (r *CustomersAppsWebService) Get(name string) *CustomersAppsWebGetCall {
+	c := &CustomersAppsWebGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersAppsWebGetCall) Fields(s ...googleapi.Field) *CustomersAppsWebGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersAppsWebGetCall) IfNoneMatch(entityTag string) *CustomersAppsWebGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersAppsWebGetCall) Context(ctx context.Context) *CustomersAppsWebGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersAppsWebGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersAppsWebGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.apps.web.get" call.
+// Exactly one of *GoogleChromeManagementV1AppDetails or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleChromeManagementV1AppDetails.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersAppsWebGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1AppDetails, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1AppDetails{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a specific app for a customer by its resource name.",
+	//   "flatPath": "v1/customers/{customersId}/apps/web/{webId}",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.apps.web.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The app for which details are being queried. Examples: \"customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@2.1.2\" for the Save to Google Drive Chrome extension version 2.1.2, \"customers/my_customer/apps/android/com.google.android.apps.docs\" for the Google Drive Android app's latest version.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/apps/web/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1AppDetails"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "chromemanagement.customers.reports.countChromeVersions":
 
 type CustomersReportsCountChromeVersionsCall struct {
@@ -544,7 +1405,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -774,7 +1635,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1031,7 +1892,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210802")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
